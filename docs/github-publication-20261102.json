@@ -1,0 +1,25 @@
+{
+  "repository": "wanzhaokun531-star/building-construction-drawing-automation",
+  "url": "https://github.com/wanzhaokun531-star/building-construction-drawing-automation",
+  "visibility": "private",
+  "privateConfirmedByGitHubAPI": true,
+  "branch": "main",
+  "sourceCommit": "3697726f418128ecac158e1ff44fbd7eb138cb47",
+  "sourceCommitMatchesRemote": true,
+  "sourceFilesVerified": 4230,
+  "codexFilesVerified": 30,
+  "requiredPathsVerified": [
+    "AGENTS.md",
+    ".codex/config.toml",
+    ".codex/backups/config.user.toml.example",
+    "阶段2/示意/原生轴号与可拉伸轴线_20261102/方案施工图_二层_原生轴号与可拉伸轴线确认样张_v12.dwg"
+  ],
+  "authCredentialsUploaded": false,
+  "cadLockFilesUploaded": false,
+  "cleanupArchive": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100",
+  "cleanupPlannedBytes": 12869603062,
+  "retainedLockedFileCount": 4,
+  "permanentlyDeletedFiles": 0,
+  "verifiedAt": "2026-11-02T18:19:17.846802+08:00",
+  "note": "This record verifies the first source upload; a following documentation-only commit adds this record."
+}
