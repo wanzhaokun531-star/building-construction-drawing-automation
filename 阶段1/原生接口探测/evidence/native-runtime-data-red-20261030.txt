@@ -1,0 +1,14 @@
+...F
+======================================================================
+FAIL: test_startup_executable_never_allowed (test_native_runtime_data_policy.NativeRuntimeDataPolicy.test_startup_executable_never_allowed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Codex\建筑施工图自动化\阶段1\tests\test_native_runtime_data_policy.py", line 8, in test_startup_executable_never_allowed
+    for n in ['acaddoc.lsp','acad.rx','test.arx','test.dll','form.dcl','font.shx','../linetype.dbf']:self.assertFalse(data_names_allowed(['linetype.dbf',n]),n)
+                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false : acaddoc.lsp
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.000s
+
+FAILED (failures=1)

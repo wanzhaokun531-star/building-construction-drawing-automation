@@ -1,0 +1,45 @@
+{
+  "contract": "stage1.four-axis-seed-v1-readonly-diagnosis.v1",
+  "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-seed-20261029-094645-181680\\four-axis-seed-native.json",
+  "sourceSHA256": "E02C78E68BC3EE59C03CC1315202257DBDE2EDA1C1FB733220A4872C74488167",
+  "originalV1Status": "FAIL; source report and original 45/36/9 validator evidence preserved",
+  "nativeV2RerunCompleted": false,
+  "verticalRawSixStationGripsAndFourStretchPreserved": true,
+  "verticalBeforeAuxiliaryState": {
+    "sign": -1,
+    "radius": 400.0,
+    "points": [
+      [
+        34681.381329980984,
+        35657.75046854775,
+        0
+      ],
+      [
+        34681.38132998037,
+        13159.78032736835,
+        0
+      ]
+    ],
+    "boundsValid": true
+  },
+  "verticalAfterAuxiliaryState": {
+    "sign": 1,
+    "radius": 400.0,
+    "points": [
+      [
+        35481.381329980984,
+        35657.75046854772,
+        0
+      ],
+      [
+        35481.38132998037,
+        13159.780327368328,
+        0
+      ]
+    ],
+    "boundsValid": true
+  },
+  "horizontalNativePruneExecuted": false,
+  "fullGridOrNumberingVerified": false,
+  "note": "The two auxiliary UI controls jointly mirror at unchanged +/-R. They are near-edge bounding-corner controls, not circle tangent points. Horizontal synthetic validator tests do not constitute native execution."
+}

@@ -1,0 +1,51 @@
+test_existing_negative_evidence_stays_negative (__main__.ClosureEvidenceTests.test_existing_negative_evidence_stays_negative) ... ok
+test_missing_exit_code_is_not_proof_of_normal_quit (__main__.ClosureEvidenceTests.test_missing_exit_code_is_not_proof_of_normal_quit) ... 
+  test_missing_exit_code_is_not_proof_of_normal_quit (__main__.ClosureEvidenceTests.test_missing_exit_code_is_not_proof_of_normal_quit) (watcher='watch_native_case.py') ... FAIL
+  test_missing_exit_code_is_not_proof_of_normal_quit (__main__.ClosureEvidenceTests.test_missing_exit_code_is_not_proof_of_normal_quit) (watcher='watch_command_case.py') ... FAIL
+test_no_fallback_normal_control (__main__.ClosureEvidenceTests.test_no_fallback_normal_control) ... ok
+test_recorded_exit_70_without_stop_flag_is_not_normal (__main__.ClosureEvidenceTests.test_recorded_exit_70_without_stop_flag_is_not_normal) ... 
+  test_recorded_exit_70_without_stop_flag_is_not_normal (__main__.ClosureEvidenceTests.test_recorded_exit_70_without_stop_flag_is_not_normal) (watcher='watch_native_case.py') ... FAIL
+  test_recorded_exit_70_without_stop_flag_is_not_normal (__main__.ClosureEvidenceTests.test_recorded_exit_70_without_stop_flag_is_not_normal) (watcher='watch_command_case.py') ... FAIL
+test_recorded_fallback_is_not_normal_quit (__main__.ClosureEvidenceTests.test_recorded_fallback_is_not_normal_quit) ... ok
+test_request_alone_does_not_invent_forced_termination (__main__.ClosureEvidenceTests.test_request_alone_does_not_invent_forced_termination) ... ok
+
+======================================================================
+FAIL: test_missing_exit_code_is_not_proof_of_normal_quit (__main__.ClosureEvidenceTests.test_missing_exit_code_is_not_proof_of_normal_quit) (watcher='watch_native_case.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Codex\建筑施工图自动化\立面插件\tests\test_watcher_closure_evidence.py", line 83, in test_missing_exit_code_is_not_proof_of_normal_quit
+    self.assertFalse(aggregate(watcher, final, False)['normalQuit'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_missing_exit_code_is_not_proof_of_normal_quit (__main__.ClosureEvidenceTests.test_missing_exit_code_is_not_proof_of_normal_quit) (watcher='watch_command_case.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Codex\建筑施工图自动化\立面插件\tests\test_watcher_closure_evidence.py", line 83, in test_missing_exit_code_is_not_proof_of_normal_quit
+    self.assertFalse(aggregate(watcher, final, False)['normalQuit'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_recorded_exit_70_without_stop_flag_is_not_normal (__main__.ClosureEvidenceTests.test_recorded_exit_70_without_stop_flag_is_not_normal) (watcher='watch_native_case.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Codex\建筑施工图自动化\立面插件\tests\test_watcher_closure_evidence.py", line 76, in test_recorded_exit_70_without_stop_flag_is_not_normal
+    self.assertFalse(result['normalQuit'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_recorded_exit_70_without_stop_flag_is_not_normal (__main__.ClosureEvidenceTests.test_recorded_exit_70_without_stop_flag_is_not_normal) (watcher='watch_command_case.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Codex\建筑施工图自动化\立面插件\tests\test_watcher_closure_evidence.py", line 76, in test_recorded_exit_70_without_stop_flag_is_not_normal
+    self.assertFalse(result['normalQuit'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.021s
+
+FAILED (failures=4)

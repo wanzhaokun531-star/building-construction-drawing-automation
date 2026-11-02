@@ -1,0 +1,3 @@
+FAIL: scheme-axis result missing: �׶�1\tests\missing-scheme-axis.json
+assertions=1 passed=0 failed=1 result=FAIL
+Scope: native template transfer and controlled editing in scheme input; not complete axis generation.

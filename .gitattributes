@@ -1,0 +1,13 @@
+# Preserve original file bytes: existing validation records bind exact hashes.
+* -text
+*.dwg binary
+*.dxf -text
+*.arx binary
+*.dbx binary
+*.exe binary
+*.dll binary
+*.zip binary
+*.png binary
+*.jpg binary
+*.pdf binary
+

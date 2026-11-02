@@ -1,0 +1,12 @@
+{
+  "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-plaintextreplacementnative-20261030-123733-079793\\方案副本_独立文字转原生_内容保持.dwg",
+  "output": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\文字替换验证\\方案副本_32条独立文字转原生_内容保持.dwg",
+  "SHA256": "7AFA2DD0CA3EF732205620E2359F5F9D69C40EE82F26EC411A7583601BA81FD6",
+  "technicalFixtureOnly": true,
+  "stage1FullAcceptance": false,
+  "converted": 32,
+  "complexTchRetained": [
+    "CFCF",
+    "CFD4"
+  ]
+}

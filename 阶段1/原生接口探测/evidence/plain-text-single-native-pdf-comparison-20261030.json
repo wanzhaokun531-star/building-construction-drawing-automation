@@ -1,0 +1,29 @@
+[
+  {
+    "name": "A1-1-100.pdf",
+    "size": [
+      4768,
+      3368
+    ],
+    "differentBytes": 4971,
+    "totalBytes": 48175872
+  },
+  {
+    "name": "A2-1-100.pdf",
+    "size": [
+      3368,
+      2382
+    ],
+    "differentBytes": 4938,
+    "totalBytes": 24067728
+  },
+  {
+    "name": "A3-1-100.pdf",
+    "size": [
+      2382,
+      1684
+    ],
+    "differentBytes": 5109,
+    "totalBytes": 12033864
+  }
+]

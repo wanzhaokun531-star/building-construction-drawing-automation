@@ -1,0 +1,2406 @@
+{
+  "contract": "bcp.dimension-text-grip-escape-proposal.v1",
+  "source": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门号沿洞口与尺寸避让_20261101\\door-caption-complete-and-dimension-plan.json",
+  "sourceSHA256": "51768907E71BEC884ECCDD4D7C771F2F4445C6BB3AB11B6B27FA8A95DA982C53",
+  "otherTextPlan": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门号沿洞口与尺寸避让_20261101\\three-other-chains-text-grips.json",
+  "otherTextPlanSHA256": "DCDA834DE0A4515266A2D0A3505D7197A5E75400DD619D397D4C29B0B2D2512A",
+  "scope": "Offline candidate data only, no CAD action or C++ change; parent must recompute contacts after overall merge and actual native shifts",
+  "clearancesModelMm": {
+    "textAndBaseline": 60,
+    "wall": 40,
+    "opening": 80
+  },
+  "clearanceStatus": "Previously used sample clearance choices, not newly user-specified construction values",
+  "floors": [
+    {
+      "floor": 1,
+      "actualPreview": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161104-floor1\\stage2-preview-native.json",
+      "actualPreviewSHA256": "A21FB0DD01D415815763345FC9A206601FB3E0003B75A8FAAE99B0B3B6284D42",
+      "captionWitness": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-caption-clearance.json",
+      "captionWitnessSHA256": "81A6A1ACC4A58DC2822840E9BBD2B6A9C70AC53046ADDB67219BCAEC85537720",
+      "baselineAssumptions": [],
+      "baseline8475MustMoveBeforeText": false,
+      "jointTextSolutionFound": true,
+      "textMoves": [
+        {
+          "handle": "846C",
+          "segment": 1,
+          "value": 899.9999999999964,
+          "segments": 3,
+          "textIndex": 7,
+          "originalGrip": [
+            39001.70152820693,
+            31535.213801995444,
+            0
+          ],
+          "gripAfterPrerequisiteBaseline": [
+            39001.70152820693,
+            31535.213801995444,
+            0
+          ],
+          "prerequisiteBaselineDelta": [
+            0,
+            0,
+            0
+          ],
+          "prerequisiteComment": "No baseline change needed for this text proposal",
+          "windowAfterPrerequisite": {
+            "min": [
+              38971.70152820693,
+              31505.213801995444,
+              0
+            ],
+            "max": [
+              39031.70152820693,
+              31565.213801995444,
+              0
+            ]
+          },
+          "ownOtherGripInside": [],
+          "otherChainGripsInside": [],
+          "nativeSelectionGuard": "Only the target text grip must be inside; actual ssget and all unlocked entity identities still require live guard. Lock unrelated layers, not other same-layer dimensions. No prebuilt individual selection for STRETCH.",
+          "preferredPoint": [
+            39481.70152820693,
+            31535.213801995444,
+            0
+          ],
+          "candidateCount": 107,
+          "candidates": [
+            {
+              "target": [
+                39481.70152820693,
+                31535.213801995444,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                480.0,
+                0.0,
+                0
+              ],
+              "boundsAfter": [
+                39322.70152820693,
+                31189.213801995444,
+                39640.70152820693,
+                31881.213801995444
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 0.0,
+              "cost": 0.0
+            },
+            {
+              "target": [
+                39481.70152820693,
+                31435.213801995444,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                480.0,
+                -100.0,
+                0
+              ],
+              "boundsAfter": [
+                39322.70152820693,
+                31089.213801995444,
+                39640.70152820693,
+                31781.213801995444
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 100.0,
+              "cost": 100.0
+            },
+            {
+              "target": [
+                39481.70152820693,
+                31635.213801995444,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                480.0,
+                100.0,
+                0
+              ],
+              "boundsAfter": [
+                39322.70152820693,
+                31289.213801995444,
+                39640.70152820693,
+                31981.213801995444
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 100.0,
+              "cost": 100.0
+            },
+            {
+              "target": [
+                39581.70152820693,
+                31535.213801995444,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                580.0,
+                0.0,
+                0
+              ],
+              "boundsAfter": [
+                39422.70152820693,
+                31189.213801995444,
+                39740.70152820693,
+                31881.213801995444
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 100.0,
+              "cost": 100.0
+            },
+            {
+              "target": [
+                39581.70152820693,
+                31435.213801995444,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                580.0,
+                -100.0,
+                0
+              ],
+              "boundsAfter": [
+                39422.70152820693,
+                31089.213801995444,
+                39740.70152820693,
+                31781.213801995444
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 141.4213562373095,
+              "cost": 141.4213562373095
+            },
+            {
+              "target": [
+                39581.70152820693,
+                31635.213801995444,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                580.0,
+                100.0,
+                0
+              ],
+              "boundsAfter": [
+                39422.70152820693,
+                31289.213801995444,
+                39740.70152820693,
+                31981.213801995444
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 141.4213562373095,
+              "cost": 141.4213562373095
+            },
+            {
+              "target": [
+                39481.70152820693,
+                31335.213801995444,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                480.0,
+                -200.0,
+                0
+              ],
+              "boundsAfter": [
+                39322.70152820693,
+                30989.213801995444,
+                39640.70152820693,
+                31681.213801995444
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 200.0,
+              "cost": 200.0
+            },
+            {
+              "target": [
+                39481.70152820693,
+                31735.213801995444,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                480.0,
+                200.0,
+                0
+              ],
+              "boundsAfter": [
+                39322.70152820693,
+                31389.213801995444,
+                39640.70152820693,
+                32081.213801995444
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 200.0,
+              "cost": 200.0
+            },
+            {
+              "target": [
+                39681.70152820693,
+                31535.213801995444,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                680.0,
+                0.0,
+                0
+              ],
+              "boundsAfter": [
+                39522.70152820693,
+                31189.213801995444,
+                39840.70152820693,
+                31881.213801995444
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 200.0,
+              "cost": 200.0
+            },
+            {
+              "target": [
+                39581.70152820693,
+                31335.213801995444,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                580.0,
+                -200.0,
+                0
+              ],
+              "boundsAfter": [
+                39422.70152820693,
+                30989.213801995444,
+                39740.70152820693,
+                31681.213801995444
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 223.60679774997897,
+              "cost": 223.60679774997897
+            },
+            {
+              "target": [
+                39581.70152820693,
+                31735.213801995444,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                580.0,
+                200.0,
+                0
+              ],
+              "boundsAfter": [
+                39422.70152820693,
+                31389.213801995444,
+                39740.70152820693,
+                32081.213801995444
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 223.60679774997897,
+              "cost": 223.60679774997897
+            },
+            {
+              "target": [
+                39681.70152820693,
+                31435.213801995444,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                680.0,
+                -100.0,
+                0
+              ],
+              "boundsAfter": [
+                39522.70152820693,
+                31089.213801995444,
+                39840.70152820693,
+                31781.213801995444
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 223.60679774997897,
+              "cost": 223.60679774997897
+            }
+          ],
+          "selected": {
+            "target": [
+              39481.70152820693,
+              31535.213801995444,
+              0
+            ],
+            "deltaFromAfterPrerequisite": [
+              480.0,
+              0.0,
+              0
+            ],
+            "boundsAfter": [
+              39322.70152820693,
+              31189.213801995444,
+              39640.70152820693,
+              31881.213801995444
+            ],
+            "hardContacts": [],
+            "furnitureRootBoundsAdvisory": [],
+            "displacementFromPreferred": 0.0,
+            "cost": 0.0
+          }
+        },
+        {
+          "handle": "848C",
+          "segment": 2,
+          "value": 220.00000016298873,
+          "segments": 3,
+          "textIndex": 8,
+          "originalGrip": [
+            48081.70152812614,
+            30765.213801956677,
+            0
+          ],
+          "gripAfterPrerequisiteBaseline": [
+            48081.70152812614,
+            30765.213801956677,
+            0
+          ],
+          "prerequisiteBaselineDelta": [
+            0,
+            0,
+            0
+          ],
+          "prerequisiteComment": "No baseline change needed for this text proposal",
+          "windowAfterPrerequisite": {
+            "min": [
+              48051.70152812614,
+              30735.213801956677,
+              0
+            ],
+            "max": [
+              48111.70152812614,
+              30795.213801956677,
+              0
+            ]
+          },
+          "ownOtherGripInside": [],
+          "otherChainGripsInside": [],
+          "nativeSelectionGuard": "Only the target text grip must be inside; actual ssget and all unlocked entity identities still require live guard. Lock unrelated layers, not other same-layer dimensions. No prebuilt individual selection for STRETCH.",
+          "preferredPoint": [
+            46431.70152820693,
+            31215.213801956677,
+            0
+          ],
+          "candidateCount": 74,
+          "candidates": [
+            {
+              "target": [
+                46231.70152820693,
+                31015.213801956677,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1849.9999999192078,
+                250.0,
+                0
+              ],
+              "boundsAfter": [
+                45885.70152820693,
+                30856.213801956677,
+                46577.70152820693,
+                31174.213801956677
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 282.842712474619,
+              "cost": 282.842712474619
+            },
+            {
+              "target": [
+                46431.70152820693,
+                30815.213801956677,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1649.9999999192078,
+                50.0,
+                0
+              ],
+              "boundsAfter": [
+                46085.70152820693,
+                30656.213801956677,
+                46777.70152820693,
+                30974.213801956677
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 400.0,
+              "cost": 400.0
+            },
+            {
+              "target": [
+                46231.70152820693,
+                31215.213801956677,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1849.9999999192078,
+                450.0,
+                0
+              ],
+              "boundsAfter": [
+                45885.70152820693,
+                31056.213801956677,
+                46577.70152820693,
+                31374.213801956677
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [
+                "7F48"
+              ],
+              "displacementFromPreferred": 200.0,
+              "cost": 400.0
+            },
+            {
+              "target": [
+                46531.70152820693,
+                30815.213801956677,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1549.9999999192078,
+                50.0,
+                0
+              ],
+              "boundsAfter": [
+                46185.70152820693,
+                30656.213801956677,
+                46877.70152820693,
+                30974.213801956677
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 412.31056256176606,
+              "cost": 412.31056256176606
+            },
+            {
+              "target": [
+                46331.70152820693,
+                30815.213801956677,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1749.9999999192078,
+                50.0,
+                0
+              ],
+              "boundsAfter": [
+                45985.70152820693,
+                30656.213801956677,
+                46677.70152820693,
+                30974.213801956677
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 412.31056256176606,
+              "cost": 412.31056256176606
+            },
+            {
+              "target": [
+                46231.70152820693,
+                31115.213801956677,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1849.9999999192078,
+                350.0,
+                0
+              ],
+              "boundsAfter": [
+                45885.70152820693,
+                30956.213801956677,
+                46577.70152820693,
+                31274.213801956677
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [
+                "7F48"
+              ],
+              "displacementFromPreferred": 223.60679774997897,
+              "cost": 423.60679774997897
+            },
+            {
+              "target": [
+                46231.70152820693,
+                31315.213801956677,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1849.9999999192078,
+                550.0,
+                0
+              ],
+              "boundsAfter": [
+                45885.70152820693,
+                31156.213801956677,
+                46577.70152820693,
+                31474.213801956677
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [
+                "7F48"
+              ],
+              "displacementFromPreferred": 223.60679774997897,
+              "cost": 423.60679774997897
+            },
+            {
+              "target": [
+                46231.70152820693,
+                30815.213801956677,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1849.9999999192078,
+                50.0,
+                0
+              ],
+              "boundsAfter": [
+                45885.70152820693,
+                30656.213801956677,
+                46577.70152820693,
+                30974.213801956677
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 447.21359549995793,
+              "cost": 447.21359549995793
+            },
+            {
+              "target": [
+                46031.70152820693,
+                31015.213801956677,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -2049.9999999192078,
+                250.0,
+                0
+              ],
+              "boundsAfter": [
+                45685.70152820693,
+                30856.213801956677,
+                46377.70152820693,
+                31174.213801956677
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 447.21359549995793,
+              "cost": 447.21359549995793
+            },
+            {
+              "target": [
+                46231.70152820693,
+                31415.213801956677,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1849.9999999192078,
+                650.0,
+                0
+              ],
+              "boundsAfter": [
+                45885.70152820693,
+                31256.213801956677,
+                46577.70152820693,
+                31574.213801956677
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [
+                "7F48"
+              ],
+              "displacementFromPreferred": 282.842712474619,
+              "cost": 482.842712474619
+            },
+            {
+              "target": [
+                46031.70152820693,
+                30815.213801956677,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -2049.9999999192078,
+                50.0,
+                0
+              ],
+              "boundsAfter": [
+                45685.70152820693,
+                30656.213801956677,
+                46377.70152820693,
+                30974.213801956677
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 565.685424949238,
+              "cost": 565.685424949238
+            },
+            {
+              "target": [
+                46431.70152820693,
+                30615.213801956677,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1649.9999999192078,
+                -150.0,
+                0
+              ],
+              "boundsAfter": [
+                46085.70152820693,
+                30456.213801956677,
+                46777.70152820693,
+                30774.213801956677
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 600.0,
+              "cost": 600.0
+            }
+          ],
+          "selected": {
+            "target": [
+              46231.70152820693,
+              31015.213801956677,
+              0
+            ],
+            "deltaFromAfterPrerequisite": [
+              -1849.9999999192078,
+              250.0,
+              0
+            ],
+            "boundsAfter": [
+              45885.70152820693,
+              30856.213801956677,
+              46577.70152820693,
+              31174.213801956677
+            ],
+            "hardContacts": [],
+            "furnitureRootBoundsAdvisory": [],
+            "displacementFromPreferred": 282.842712474619,
+            "cost": 282.842712474619
+          }
+        }
+      ],
+      "limitations": [
+        "The baseline +700Y for 8475 is a proposal selected to clear the preferred 84AA caption, not a native result.",
+        "Manual/default text follow after a baseline shift must be read back; do not assume all text follows.",
+        "Furniture root bounds are advisory, not leaf collision proof.",
+        "New automatic leaders after text grip moves are not predicted; actual rendered inspection is required.",
+        "Crossing windows are selection aids, not drawing tolerances; calculate them from fresh actual native grips."
+      ]
+    },
+    {
+      "floor": 2,
+      "actualPreview": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161107-floor2\\stage2-preview-native.json",
+      "actualPreviewSHA256": "3C5766D52CF1B831B8975621002F289BACFCC1C04F3EB6CC080580FE12F863E8",
+      "captionWitness": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层_生成记录_9752_499508390\\过程\\caption\\door-caption-clearance.json",
+      "captionWitnessSHA256": "7C813014E0D9EF7B89CCE7A483BA532082EE0596F63CD3B6AE5661A0E206EB5D",
+      "baselineAssumptions": [
+        {
+          "handle": "8475",
+          "delta": [
+            0,
+            700,
+            0
+          ]
+        }
+      ],
+      "baseline8475MustMoveBeforeText": true,
+      "jointTextSolutionFound": true,
+      "textMoves": [
+        {
+          "handle": "8475",
+          "segment": 2,
+          "value": 160.0000000046275,
+          "segments": 3,
+          "textIndex": 8,
+          "originalGrip": [
+            89073.70152820458,
+            33115.21380195621,
+            0
+          ],
+          "gripAfterPrerequisiteBaseline": [
+            89073.70152820458,
+            33815.21380195621,
+            0
+          ],
+          "prerequisiteBaselineDelta": [
+            0,
+            700,
+            0
+          ],
+          "prerequisiteComment": "For 8475 the baseline first moves +700Y; default-text follow must be checked from actual native grips before the text selection window is used",
+          "windowAfterPrerequisite": {
+            "min": [
+              89043.70152820458,
+              33785.21380195621,
+              0
+            ],
+            "max": [
+              89103.70152820458,
+              33845.21380195621,
+              0
+            ]
+          },
+          "ownOtherGripInside": [],
+          "otherChainGripsInside": [],
+          "nativeSelectionGuard": "Only the target text grip must be inside; actual ssget and all unlocked entity identities still require live guard. Lock unrelated layers, not other same-layer dimensions. No prebuilt individual selection for STRETCH.",
+          "preferredPoint": [
+            88603.70152820226,
+            35015.21380195621,
+            0
+          ],
+          "candidateCount": 89,
+          "candidates": [
+            {
+              "target": [
+                88603.70152820226,
+                35015.21380195621,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -470.00000000231375,
+                1200.0,
+                0
+              ],
+              "boundsAfter": [
+                88280.36819486893,
+                34856.21380195621,
+                88927.0348615356,
+                35174.21380195621
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 0.0,
+              "cost": 0.0
+            },
+            {
+              "target": [
+                88603.70152820226,
+                34915.21380195621,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -470.00000000231375,
+                1100.0,
+                0
+              ],
+              "boundsAfter": [
+                88280.36819486893,
+                34756.21380195621,
+                88927.0348615356,
+                35074.21380195621
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 100.0,
+              "cost": 100.0
+            },
+            {
+              "target": [
+                88703.70152820226,
+                35015.21380195621,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -370.00000000231375,
+                1200.0,
+                0
+              ],
+              "boundsAfter": [
+                88380.36819486893,
+                34856.21380195621,
+                89027.0348615356,
+                35174.21380195621
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 100.0,
+              "cost": 100.0
+            },
+            {
+              "target": [
+                88503.70152820226,
+                35015.21380195621,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -570.0000000023138,
+                1200.0,
+                0
+              ],
+              "boundsAfter": [
+                88180.36819486893,
+                34856.21380195621,
+                88827.0348615356,
+                35174.21380195621
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 100.0,
+              "cost": 100.0
+            },
+            {
+              "target": [
+                88603.70152820226,
+                35115.21380195621,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -470.00000000231375,
+                1300.0,
+                0
+              ],
+              "boundsAfter": [
+                88280.36819486893,
+                34956.21380195621,
+                88927.0348615356,
+                35274.21380195621
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 100.0,
+              "cost": 100.0
+            },
+            {
+              "target": [
+                88703.70152820226,
+                34915.21380195621,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -370.00000000231375,
+                1100.0,
+                0
+              ],
+              "boundsAfter": [
+                88380.36819486893,
+                34756.21380195621,
+                89027.0348615356,
+                35074.21380195621
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 141.4213562373095,
+              "cost": 141.4213562373095
+            },
+            {
+              "target": [
+                88503.70152820226,
+                34915.21380195621,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -570.0000000023138,
+                1100.0,
+                0
+              ],
+              "boundsAfter": [
+                88180.36819486893,
+                34756.21380195621,
+                88827.0348615356,
+                35074.21380195621
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 141.4213562373095,
+              "cost": 141.4213562373095
+            },
+            {
+              "target": [
+                88703.70152820226,
+                35115.21380195621,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -370.00000000231375,
+                1300.0,
+                0
+              ],
+              "boundsAfter": [
+                88380.36819486893,
+                34956.21380195621,
+                89027.0348615356,
+                35274.21380195621
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 141.4213562373095,
+              "cost": 141.4213562373095
+            },
+            {
+              "target": [
+                88503.70152820226,
+                35115.21380195621,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -570.0000000023138,
+                1300.0,
+                0
+              ],
+              "boundsAfter": [
+                88180.36819486893,
+                34956.21380195621,
+                88827.0348615356,
+                35274.21380195621
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 141.4213562373095,
+              "cost": 141.4213562373095
+            },
+            {
+              "target": [
+                88603.70152820226,
+                34815.21380195621,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -470.00000000231375,
+                1000.0,
+                0
+              ],
+              "boundsAfter": [
+                88280.36819486893,
+                34656.21380195621,
+                88927.0348615356,
+                34974.21380195621
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 200.0,
+              "cost": 200.0
+            },
+            {
+              "target": [
+                88403.70152820226,
+                35015.21380195621,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -670.0000000023138,
+                1200.0,
+                0
+              ],
+              "boundsAfter": [
+                88080.36819486893,
+                34856.21380195621,
+                88727.0348615356,
+                35174.21380195621
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 200.0,
+              "cost": 200.0
+            },
+            {
+              "target": [
+                88603.70152820226,
+                35215.21380195621,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -470.00000000231375,
+                1400.0,
+                0
+              ],
+              "boundsAfter": [
+                88280.36819486893,
+                35056.21380195621,
+                88927.0348615356,
+                35374.21380195621
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 200.0,
+              "cost": 200.0
+            }
+          ],
+          "selected": {
+            "target": [
+              88603.70152820226,
+              35015.21380195621,
+              0
+            ],
+            "deltaFromAfterPrerequisite": [
+              -470.00000000231375,
+              1200.0,
+              0
+            ],
+            "boundsAfter": [
+              88280.36819486893,
+              34856.21380195621,
+              88927.0348615356,
+              35174.21380195621
+            ],
+            "hardContacts": [],
+            "furnitureRootBoundsAdvisory": [],
+            "displacementFromPreferred": 0.0,
+            "cost": 0.0
+          }
+        },
+        {
+          "handle": "8478",
+          "segment": 2,
+          "value": 100.00000004608592,
+          "segments": 3,
+          "textIndex": 8,
+          "originalGrip": [
+            89103.70152818436,
+            30765.213801956095,
+            0
+          ],
+          "gripAfterPrerequisiteBaseline": [
+            89103.70152818436,
+            30765.213801956095,
+            0
+          ],
+          "prerequisiteBaselineDelta": [
+            0,
+            0,
+            0
+          ],
+          "prerequisiteComment": "No baseline change needed for this text proposal",
+          "windowAfterPrerequisite": {
+            "min": [
+              89073.70152818436,
+              30735.213801956095,
+              0
+            ],
+            "max": [
+              89133.70152818436,
+              30795.213801956095,
+              0
+            ]
+          },
+          "ownOtherGripInside": [],
+          "otherChainGripsInside": [],
+          "nativeSelectionGuard": "Only the target text grip must be inside; actual ssget and all unlocked entity identities still require live guard. Lock unrelated layers, not other same-layer dimensions. No prebuilt individual selection for STRETCH.",
+          "preferredPoint": [
+            89903.70152818436,
+            31215.213801956095,
+            0
+          ],
+          "candidateCount": 104,
+          "candidates": [
+            {
+              "target": [
+                89903.70152818436,
+                31215.213801956095,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                800.0,
+                450.0,
+                0
+              ],
+              "boundsAfter": [
+                89580.36819485103,
+                31056.213801956095,
+                90227.0348615177,
+                31374.213801956095
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 0.0,
+              "cost": 0.0
+            },
+            {
+              "target": [
+                89803.70152818436,
+                31215.213801956095,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                700.0,
+                450.0,
+                0
+              ],
+              "boundsAfter": [
+                89480.36819485103,
+                31056.213801956095,
+                90127.0348615177,
+                31374.213801956095
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 100.0,
+              "cost": 100.0
+            },
+            {
+              "target": [
+                89903.70152818436,
+                31115.213801956095,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                800.0,
+                350.0,
+                0
+              ],
+              "boundsAfter": [
+                89580.36819485103,
+                30956.213801956095,
+                90227.0348615177,
+                31274.213801956095
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 100.0,
+              "cost": 100.0
+            },
+            {
+              "target": [
+                89903.70152818436,
+                31315.213801956095,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                800.0,
+                550.0,
+                0
+              ],
+              "boundsAfter": [
+                89580.36819485103,
+                31156.213801956095,
+                90227.0348615177,
+                31474.213801956095
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 100.0,
+              "cost": 100.0
+            },
+            {
+              "target": [
+                90003.70152818436,
+                31215.213801956095,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                900.0,
+                450.0,
+                0
+              ],
+              "boundsAfter": [
+                89680.36819485103,
+                31056.213801956095,
+                90327.0348615177,
+                31374.213801956095
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 100.0,
+              "cost": 100.0
+            },
+            {
+              "target": [
+                89803.70152818436,
+                31115.213801956095,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                700.0,
+                350.0,
+                0
+              ],
+              "boundsAfter": [
+                89480.36819485103,
+                30956.213801956095,
+                90127.0348615177,
+                31274.213801956095
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 141.4213562373095,
+              "cost": 141.4213562373095
+            },
+            {
+              "target": [
+                89803.70152818436,
+                31315.213801956095,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                700.0,
+                550.0,
+                0
+              ],
+              "boundsAfter": [
+                89480.36819485103,
+                31156.213801956095,
+                90127.0348615177,
+                31474.213801956095
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 141.4213562373095,
+              "cost": 141.4213562373095
+            },
+            {
+              "target": [
+                90003.70152818436,
+                31115.213801956095,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                900.0,
+                350.0,
+                0
+              ],
+              "boundsAfter": [
+                89680.36819485103,
+                30956.213801956095,
+                90327.0348615177,
+                31274.213801956095
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 141.4213562373095,
+              "cost": 141.4213562373095
+            },
+            {
+              "target": [
+                90003.70152818436,
+                31315.213801956095,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                900.0,
+                550.0,
+                0
+              ],
+              "boundsAfter": [
+                89680.36819485103,
+                31156.213801956095,
+                90327.0348615177,
+                31474.213801956095
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 141.4213562373095,
+              "cost": 141.4213562373095
+            },
+            {
+              "target": [
+                89703.70152818436,
+                31215.213801956095,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                600.0,
+                450.0,
+                0
+              ],
+              "boundsAfter": [
+                89380.36819485103,
+                31056.213801956095,
+                90027.0348615177,
+                31374.213801956095
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 200.0,
+              "cost": 200.0
+            },
+            {
+              "target": [
+                89903.70152818436,
+                31015.213801956095,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                800.0,
+                250.0,
+                0
+              ],
+              "boundsAfter": [
+                89580.36819485103,
+                30856.213801956095,
+                90227.0348615177,
+                31174.213801956095
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 200.0,
+              "cost": 200.0
+            },
+            {
+              "target": [
+                89903.70152818436,
+                31415.213801956095,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                800.0,
+                650.0,
+                0
+              ],
+              "boundsAfter": [
+                89580.36819485103,
+                31256.213801956095,
+                90227.0348615177,
+                31574.213801956095
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 200.0,
+              "cost": 200.0
+            }
+          ],
+          "selected": {
+            "target": [
+              89903.70152818436,
+              31215.213801956095,
+              0
+            ],
+            "deltaFromAfterPrerequisite": [
+              800.0,
+              450.0,
+              0
+            ],
+            "boundsAfter": [
+              89580.36819485103,
+              31056.213801956095,
+              90227.0348615177,
+              31374.213801956095
+            ],
+            "hardContacts": [],
+            "furnitureRootBoundsAdvisory": [],
+            "displacementFromPreferred": 0.0,
+            "cost": 0.0
+          }
+        },
+        {
+          "handle": "847B",
+          "segment": 2,
+          "value": 220.00000016298145,
+          "segments": 3,
+          "textIndex": 8,
+          "originalGrip": [
+            94503.70152812637,
+            30765.213801956677,
+            0
+          ],
+          "gripAfterPrerequisiteBaseline": [
+            94503.70152812637,
+            30765.213801956677,
+            0
+          ],
+          "prerequisiteBaselineDelta": [
+            0,
+            0,
+            0
+          ],
+          "prerequisiteComment": "No baseline change needed for this text proposal",
+          "windowAfterPrerequisite": {
+            "min": [
+              94473.70152812637,
+              30735.213801956677,
+              0
+            ],
+            "max": [
+              94533.70152812637,
+              30795.213801956677,
+              0
+            ]
+          },
+          "ownOtherGripInside": [],
+          "otherChainGripsInside": [],
+          "nativeSelectionGuard": "Only the target text grip must be inside; actual ssget and all unlocked entity identities still require live guard. Lock unrelated layers, not other same-layer dimensions. No prebuilt individual selection for STRETCH.",
+          "preferredPoint": [
+            92853.70152820693,
+            31215.213801956677,
+            0
+          ],
+          "candidateCount": 60,
+          "candidates": [
+            {
+              "target": [
+                92653.70152820693,
+                31215.213801956677,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1849.9999999194406,
+                450.0,
+                0
+              ],
+              "boundsAfter": [
+                92307.70152820693,
+                31056.213801956677,
+                92999.70152820693,
+                31374.213801956677
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 200.0,
+              "cost": 200.0
+            },
+            {
+              "target": [
+                92653.70152820693,
+                31115.213801956677,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1849.9999999194406,
+                350.0,
+                0
+              ],
+              "boundsAfter": [
+                92307.70152820693,
+                30956.213801956677,
+                92999.70152820693,
+                31274.213801956677
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 223.60679774997897,
+              "cost": 223.60679774997897
+            },
+            {
+              "target": [
+                92653.70152820693,
+                31315.213801956677,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1849.9999999194406,
+                550.0,
+                0
+              ],
+              "boundsAfter": [
+                92307.70152820693,
+                31156.213801956677,
+                92999.70152820693,
+                31474.213801956677
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 223.60679774997897,
+              "cost": 223.60679774997897
+            },
+            {
+              "target": [
+                92653.70152820693,
+                31015.213801956677,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1849.9999999194406,
+                250.0,
+                0
+              ],
+              "boundsAfter": [
+                92307.70152820693,
+                30856.213801956677,
+                92999.70152820693,
+                31174.213801956677
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 282.842712474619,
+              "cost": 282.842712474619
+            },
+            {
+              "target": [
+                92853.70152820693,
+                30815.213801956677,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1649.9999999194406,
+                50.0,
+                0
+              ],
+              "boundsAfter": [
+                92507.70152820693,
+                30656.213801956677,
+                93199.70152820693,
+                30974.213801956677
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 400.0,
+              "cost": 400.0
+            },
+            {
+              "target": [
+                92453.70152820693,
+                31215.213801956677,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -2049.9999999194406,
+                450.0,
+                0
+              ],
+              "boundsAfter": [
+                92107.70152820693,
+                31056.213801956677,
+                92799.70152820693,
+                31374.213801956677
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 400.0,
+              "cost": 400.0
+            },
+            {
+              "target": [
+                92953.70152820693,
+                30815.213801956677,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1549.9999999194406,
+                50.0,
+                0
+              ],
+              "boundsAfter": [
+                92607.70152820693,
+                30656.213801956677,
+                93299.70152820693,
+                30974.213801956677
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 412.31056256176606,
+              "cost": 412.31056256176606
+            },
+            {
+              "target": [
+                92753.70152820693,
+                30815.213801956677,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1749.9999999194406,
+                50.0,
+                0
+              ],
+              "boundsAfter": [
+                92407.70152820693,
+                30656.213801956677,
+                93099.70152820693,
+                30974.213801956677
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 412.31056256176606,
+              "cost": 412.31056256176606
+            },
+            {
+              "target": [
+                92453.70152820693,
+                31115.213801956677,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -2049.9999999194406,
+                350.0,
+                0
+              ],
+              "boundsAfter": [
+                92107.70152820693,
+                30956.213801956677,
+                92799.70152820693,
+                31274.213801956677
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 412.31056256176606,
+              "cost": 412.31056256176606
+            },
+            {
+              "target": [
+                92453.70152820693,
+                31315.213801956677,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -2049.9999999194406,
+                550.0,
+                0
+              ],
+              "boundsAfter": [
+                92107.70152820693,
+                31156.213801956677,
+                92799.70152820693,
+                31474.213801956677
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 412.31056256176606,
+              "cost": 412.31056256176606
+            },
+            {
+              "target": [
+                92653.70152820693,
+                30815.213801956677,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1849.9999999194406,
+                50.0,
+                0
+              ],
+              "boundsAfter": [
+                92307.70152820693,
+                30656.213801956677,
+                92999.70152820693,
+                30974.213801956677
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 447.21359549995793,
+              "cost": 447.21359549995793
+            },
+            {
+              "target": [
+                92453.70152820693,
+                31015.213801956677,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -2049.9999999194406,
+                250.0,
+                0
+              ],
+              "boundsAfter": [
+                92107.70152820693,
+                30856.213801956677,
+                92799.70152820693,
+                31174.213801956677
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 447.21359549995793,
+              "cost": 447.21359549995793
+            }
+          ],
+          "selected": {
+            "target": [
+              92653.70152820693,
+              31215.213801956677,
+              0
+            ],
+            "deltaFromAfterPrerequisite": [
+              -1849.9999999194406,
+              450.0,
+              0
+            ],
+            "boundsAfter": [
+              92307.70152820693,
+              31056.213801956677,
+              92999.70152820693,
+              31374.213801956677
+            ],
+            "hardContacts": [],
+            "furnitureRootBoundsAdvisory": [],
+            "displacementFromPreferred": 200.0,
+            "cost": 200.0
+          }
+        },
+        {
+          "handle": "8481",
+          "segment": 0,
+          "value": 119.99999953457154,
+          "segments": 3,
+          "textIndex": 6,
+          "originalGrip": [
+            85423.70152820693,
+            32285.213801723497,
+            0
+          ],
+          "gripAfterPrerequisiteBaseline": [
+            85423.70152820693,
+            32285.213801723497,
+            0
+          ],
+          "prerequisiteBaselineDelta": [
+            0,
+            0,
+            0
+          ],
+          "prerequisiteComment": "No baseline change needed for this text proposal",
+          "windowAfterPrerequisite": {
+            "min": [
+              85393.70152820693,
+              32255.213801723497,
+              0
+            ],
+            "max": [
+              85453.70152820693,
+              32315.213801723497,
+              0
+            ]
+          },
+          "ownOtherGripInside": [],
+          "otherChainGripsInside": [],
+          "nativeSelectionGuard": "Only the target text grip must be inside; actual ssget and all unlocked entity identities still require live guard. Lock unrelated layers, not other same-layer dimensions. No prebuilt individual selection for STRETCH.",
+          "preferredPoint": [
+            83700,
+            32285.213801723497,
+            0
+          ],
+          "candidateCount": 93,
+          "candidates": [
+            {
+              "target": [
+                83700,
+                32285.213801723497,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1723.7015282069333,
+                0.0,
+                0
+              ],
+              "boundsAfter": [
+                83541.0,
+                31961.880468390165,
+                83859.0,
+                32608.547135056833
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 0.0,
+              "cost": 0.0
+            },
+            {
+              "target": [
+                83700,
+                32185.213801723497,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1723.7015282069333,
+                -100.0,
+                0
+              ],
+              "boundsAfter": [
+                83541.0,
+                31861.880468390165,
+                83859.0,
+                32508.547135056833
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 100.0,
+              "cost": 100.0
+            },
+            {
+              "target": [
+                83700,
+                32385.213801723497,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1723.7015282069333,
+                100.0,
+                0
+              ],
+              "boundsAfter": [
+                83541.0,
+                32061.880468390165,
+                83859.0,
+                32708.547135056833
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 100.0,
+              "cost": 100.0
+            },
+            {
+              "target": [
+                83600,
+                32285.213801723497,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1823.7015282069333,
+                0.0,
+                0
+              ],
+              "boundsAfter": [
+                83441.0,
+                31961.880468390165,
+                83759.0,
+                32608.547135056833
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 100.0,
+              "cost": 100.0
+            },
+            {
+              "target": [
+                83600,
+                32185.213801723497,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1823.7015282069333,
+                -100.0,
+                0
+              ],
+              "boundsAfter": [
+                83441.0,
+                31861.880468390165,
+                83759.0,
+                32508.547135056833
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 141.4213562373095,
+              "cost": 141.4213562373095
+            },
+            {
+              "target": [
+                83600,
+                32385.213801723497,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1823.7015282069333,
+                100.0,
+                0
+              ],
+              "boundsAfter": [
+                83441.0,
+                32061.880468390165,
+                83759.0,
+                32708.547135056833
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 141.4213562373095,
+              "cost": 141.4213562373095
+            },
+            {
+              "target": [
+                83700,
+                32085.213801723497,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1723.7015282069333,
+                -200.0,
+                0
+              ],
+              "boundsAfter": [
+                83541.0,
+                31761.880468390165,
+                83859.0,
+                32408.547135056833
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 200.0,
+              "cost": 200.0
+            },
+            {
+              "target": [
+                83700,
+                32485.213801723497,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1723.7015282069333,
+                200.0,
+                0
+              ],
+              "boundsAfter": [
+                83541.0,
+                32161.880468390165,
+                83859.0,
+                32808.54713505683
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 200.0,
+              "cost": 200.0
+            },
+            {
+              "target": [
+                83500,
+                32285.213801723497,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1923.7015282069333,
+                0.0,
+                0
+              ],
+              "boundsAfter": [
+                83341.0,
+                31961.880468390165,
+                83659.0,
+                32608.547135056833
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 200.0,
+              "cost": 200.0
+            },
+            {
+              "target": [
+                83600,
+                32085.213801723497,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1823.7015282069333,
+                -200.0,
+                0
+              ],
+              "boundsAfter": [
+                83441.0,
+                31761.880468390165,
+                83759.0,
+                32408.547135056833
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 223.60679774997897,
+              "cost": 223.60679774997897
+            },
+            {
+              "target": [
+                83600,
+                32485.213801723497,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1823.7015282069333,
+                200.0,
+                0
+              ],
+              "boundsAfter": [
+                83441.0,
+                32161.880468390165,
+                83759.0,
+                32808.54713505683
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 223.60679774997897,
+              "cost": 223.60679774997897
+            },
+            {
+              "target": [
+                83500,
+                32185.213801723497,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                -1923.7015282069333,
+                -100.0,
+                0
+              ],
+              "boundsAfter": [
+                83341.0,
+                31861.880468390165,
+                83659.0,
+                32508.547135056833
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 223.60679774997897,
+              "cost": 223.60679774997897
+            }
+          ],
+          "selected": {
+            "target": [
+              83700,
+              32285.213801723497,
+              0
+            ],
+            "deltaFromAfterPrerequisite": [
+              -1723.7015282069333,
+              0.0,
+              0
+            ],
+            "boundsAfter": [
+              83541.0,
+              31961.880468390165,
+              83859.0,
+              32608.547135056833
+            ],
+            "hardContacts": [],
+            "furnitureRootBoundsAdvisory": [],
+            "displacementFromPreferred": 0.0,
+            "cost": 0.0
+          },
+          "leaderReview": {
+            "status": "actual-TCH-leader-render-required",
+            "illustrativeBaselineAttachment": [
+              85663.70152820693,
+              32285.213801723497,
+              0
+            ],
+            "nearestDoorCaption": "84AA",
+            "illustrativeStraightLeaderDistanceBelowCaptionMm": 55.00000023271423,
+            "note": "An illustrative straight leader would not cross the caption box but has only about 55 mm gap; this is not the actual TCH leader shape or a passed leader-clearance check."
+          }
+        },
+        {
+          "handle": "8481",
+          "segment": 1,
+          "value": 899.9999999999964,
+          "segments": 3,
+          "textIndex": 7,
+          "originalGrip": [
+            85423.70152820693,
+            32995.21380149078,
+            0
+          ],
+          "gripAfterPrerequisiteBaseline": [
+            85423.70152820693,
+            32995.21380149078,
+            0
+          ],
+          "prerequisiteBaselineDelta": [
+            0,
+            0,
+            0
+          ],
+          "prerequisiteComment": "No baseline change needed for this text proposal",
+          "windowAfterPrerequisite": {
+            "min": [
+              85393.70152820693,
+              32965.21380149078,
+              0
+            ],
+            "max": [
+              85453.70152820693,
+              33025.21380149078,
+              0
+            ]
+          },
+          "ownOtherGripInside": [],
+          "otherChainGripsInside": [],
+          "nativeSelectionGuard": "Only the target text grip must be inside; actual ssget and all unlocked entity identities still require live guard. Lock unrelated layers, not other same-layer dimensions. No prebuilt individual selection for STRETCH.",
+          "preferredPoint": [
+            85903.70152820693,
+            32995.21380149078,
+            0
+          ],
+          "candidateCount": 35,
+          "candidates": [
+            {
+              "target": [
+                85903.70152820693,
+                32995.21380149078,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                480.0,
+                0.0,
+                0
+              ],
+              "boundsAfter": [
+                85744.70152820693,
+                32649.213801490783,
+                86062.70152820693,
+                33341.21380149078
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 0.0,
+              "cost": 0.0
+            },
+            {
+              "target": [
+                85903.70152820693,
+                32895.21380149078,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                480.0,
+                -100.0,
+                0
+              ],
+              "boundsAfter": [
+                85744.70152820693,
+                32549.213801490783,
+                86062.70152820693,
+                33241.21380149078
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 100.0,
+              "cost": 100.0
+            },
+            {
+              "target": [
+                85903.70152820693,
+                33095.21380149078,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                480.0,
+                100.0,
+                0
+              ],
+              "boundsAfter": [
+                85744.70152820693,
+                32749.213801490783,
+                86062.70152820693,
+                33441.21380149078
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 100.0,
+              "cost": 100.0
+            },
+            {
+              "target": [
+                86003.70152820693,
+                32995.21380149078,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                580.0,
+                0.0,
+                0
+              ],
+              "boundsAfter": [
+                85844.70152820693,
+                32649.213801490783,
+                86162.70152820693,
+                33341.21380149078
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 100.0,
+              "cost": 100.0
+            },
+            {
+              "target": [
+                86003.70152820693,
+                32895.21380149078,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                580.0,
+                -100.0,
+                0
+              ],
+              "boundsAfter": [
+                85844.70152820693,
+                32549.213801490783,
+                86162.70152820693,
+                33241.21380149078
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 141.4213562373095,
+              "cost": 141.4213562373095
+            },
+            {
+              "target": [
+                86003.70152820693,
+                33095.21380149078,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                580.0,
+                100.0,
+                0
+              ],
+              "boundsAfter": [
+                85844.70152820693,
+                32749.213801490783,
+                86162.70152820693,
+                33441.21380149078
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 141.4213562373095,
+              "cost": 141.4213562373095
+            },
+            {
+              "target": [
+                85903.70152820693,
+                32795.21380149078,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                480.0,
+                -200.0,
+                0
+              ],
+              "boundsAfter": [
+                85744.70152820693,
+                32449.213801490783,
+                86062.70152820693,
+                33141.21380149078
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 200.0,
+              "cost": 200.0
+            },
+            {
+              "target": [
+                86103.70152820693,
+                32995.21380149078,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                680.0,
+                0.0,
+                0
+              ],
+              "boundsAfter": [
+                85944.70152820693,
+                32649.213801490783,
+                86262.70152820693,
+                33341.21380149078
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 200.0,
+              "cost": 200.0
+            },
+            {
+              "target": [
+                86003.70152820693,
+                32795.21380149078,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                580.0,
+                -200.0,
+                0
+              ],
+              "boundsAfter": [
+                85844.70152820693,
+                32449.213801490783,
+                86162.70152820693,
+                33141.21380149078
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 223.60679774997897,
+              "cost": 223.60679774997897
+            },
+            {
+              "target": [
+                86103.70152820693,
+                32895.21380149078,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                680.0,
+                -100.0,
+                0
+              ],
+              "boundsAfter": [
+                85944.70152820693,
+                32549.213801490783,
+                86262.70152820693,
+                33241.21380149078
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 223.60679774997897,
+              "cost": 223.60679774997897
+            },
+            {
+              "target": [
+                86103.70152820693,
+                33095.21380149078,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                680.0,
+                100.0,
+                0
+              ],
+              "boundsAfter": [
+                85944.70152820693,
+                32749.213801490783,
+                86262.70152820693,
+                33441.21380149078
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 223.60679774997897,
+              "cost": 223.60679774997897
+            },
+            {
+              "target": [
+                86103.70152820693,
+                32795.21380149078,
+                0
+              ],
+              "deltaFromAfterPrerequisite": [
+                680.0,
+                -200.0,
+                0
+              ],
+              "boundsAfter": [
+                85944.70152820693,
+                32449.213801490783,
+                86262.70152820693,
+                33141.21380149078
+              ],
+              "hardContacts": [],
+              "furnitureRootBoundsAdvisory": [],
+              "displacementFromPreferred": 282.842712474619,
+              "cost": 282.842712474619
+            }
+          ],
+          "selected": {
+            "target": [
+              85903.70152820693,
+              32995.21380149078,
+              0
+            ],
+            "deltaFromAfterPrerequisite": [
+              480.0,
+              0.0,
+              0
+            ],
+            "boundsAfter": [
+              85744.70152820693,
+              32649.213801490783,
+              86062.70152820693,
+              33341.21380149078
+            ],
+            "hardContacts": [],
+            "furnitureRootBoundsAdvisory": [],
+            "displacementFromPreferred": 0.0,
+            "cost": 0.0
+          }
+        }
+      ],
+      "limitations": [
+        "The baseline +700Y for 8475 is a proposal selected to clear the preferred 84AA caption, not a native result.",
+        "Manual/default text follow after a baseline shift must be read back; do not assume all text follows.",
+        "Furniture root bounds are advisory, not leaf collision proof.",
+        "New automatic leaders after text grip moves are not predicted; actual rendered inspection is required.",
+        "Crossing windows are selection aids, not drawing tolerances; calculate them from fresh actual native grips."
+      ]
+    }
+  ]
+}

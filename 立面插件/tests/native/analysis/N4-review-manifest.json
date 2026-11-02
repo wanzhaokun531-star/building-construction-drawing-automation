@@ -1,0 +1,74 @@
+{
+  "contract": "bce.analysis-review.v1",
+  "status": "awaiting-native-final",
+  "finalReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-195113-243-cold-source-and-nested-world-bounds-799a1a21\\receipt.json",
+  "finalReceiptSHA256": "CB019D6E048BF4D26BFFA73E6DB27EC248B977C31E6E53FA226DB9F13FF5AF33",
+  "binarySHA256": "92E664C2D7725A231B4278790416D9F6BEC3CB5273D43B5B894662C750148512",
+  "diff": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\analysis\\N4-review.diff",
+  "diffSHA256": "C57D44A3E8297F165933E8C5471A6BDF2E6CDCA2B2906A888853617E92389B70",
+  "files": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\AnalysisReader.h",
+      "sha256": "D8AB3EDC592127193154AC440B9B49CF6E00A34E83B43E6BE3F6E61552ADC655",
+      "baseline": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-185853-746-red-final-183bc435\\src\\AnalysisReader.h",
+      "baselineSHA256": "0B265E2D2D7A8A7A4B5628D544D6076BA087D900E0D62F5AB95739ACD2AEF610"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\AnalysisReader.cpp",
+      "sha256": "D5287349B3E6A57B5283BF31E386BA232AFCD7335C26004DD8ECE54741823429",
+      "baseline": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-185853-746-red-final-183bc435\\src\\AnalysisReader.cpp",
+      "baselineSHA256": "2F1737D6951006E0D5866411742110BF3C7648EE8303567137F3143C38651ECC"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\analysis\\AnalysisDriver.cpp",
+      "sha256": "50B2184BE3093E40C1563F3C4EF2AB9F83E6256EF52F594AC30EBAEBDAB58DDD",
+      "baseline": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-185853-746-red-final-183bc435\\src\\AnalysisDriver.cpp",
+      "baselineSHA256": "B645072A8E61B695982A28CBA4FA387202855E8D20C87CA1F07698B12FF2D8EC"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\analysis\\AnalysisFixtures.h",
+      "sha256": "A148F1BC9D423D6D5CD4F47A115157C8C730FEEDB19F72C7E28144613D754564",
+      "baseline": null,
+      "baselineSHA256": null
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\analysis\\ElevationAnalysisCases.vcxproj",
+      "sha256": "68C5ED4BD554E09EEA5FB7CA70C6387CF3DE03F3B519ECAF839DB9E12D1DE889",
+      "baseline": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-185853-746-red-final-183bc435\\src\\ElevationAnalysisCases.vcxproj",
+      "baselineSHA256": "32DCC523261839866661DA7A2BF3DC177AB5F4E3FC6F42AB32637EB3B50BEB4F"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\build_analysis.ps1",
+      "sha256": "A9DFBE0E7CE4968FA8D7B9F75319C6CF98902766E7A412A22FAB971970B1ED63",
+      "baseline": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-185853-746-red-final-183bc435\\build_analysis.ps1",
+      "baselineSHA256": "8CCACFED059E0E798A7296F6043BD0A27C98C85D901C546735F3A7CAF45CCF02"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\ElevationModel.h",
+      "sha256": "094EAB9687EB8A761E012CE5EF1DC09661B37BA3309D360E268B6A8C1C96454B",
+      "baseline": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-185853-746-red-final-183bc435\\src\\ElevationModel.h",
+      "baselineSHA256": "F96148EFDA1813CE1457267FD0A3A3DAB9CEAC00CE962AF9405763123D3D2374"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\Recognition.cpp",
+      "sha256": "50ED72F123EA1FF1CBAC85DCC56BD43A1C1C69FE686180DA43AD11C8D38CF63F",
+      "baseline": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-185853-746-red-final-183bc435\\src\\Recognition.cpp",
+      "baselineSHA256": "1067FE1F95A24836B1FA4A3E5CEF1EAE7A725DC97F4BDA3D45FCFF4DDC379BC1"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\CoreTests.cpp",
+      "sha256": "48CEAEA36B1FB5C4CAA376AFE3DF07DC3BF702F368039D04E13693B42248EBA9",
+      "baseline": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\f1-20261101-183921-540-g1-final-green-618ba70f\\input\\tests\\CoreTests.cpp",
+      "baselineSHA256": "C12F8B1345585226E82031B959AF49997E981BDA74AF800F911F4E2A5D3AD0D1"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\RecognitionTests.cpp",
+      "sha256": "E647283CEF871BE487CE22BBFD58E2BFD42EA2D1DF15730497283C7F18C96A34",
+      "baseline": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\f1-20261101-183921-540-g1-final-green-618ba70f\\input\\tests\\RecognitionTests.cpp",
+      "baselineSHA256": "41EB3B418995C5EC0371F0E754C4FEF6DCB30E3E80B6DADB028F4361B8B98085"
+    }
+  ],
+  "pureFinalReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\f1-20261101-192033-058-n4-hidden-semantics-green-ccc34b6e\\receipt.json",
+  "pureTests": 77,
+  "nativeExpectedAssertions": 22
+}

@@ -1,0 +1,76 @@
+--- before/ReferenceInspect.cpp
++++ after/ReferenceInspect.cpp
+@@ -359,7 +359,8 @@
+                 if (status == Acad::eOk) {
+                     for (int j = 0; j < points.length(); ++j) vertices.push_back(point(points[j]));
+                     for (int j = 0; j < bulges.length(); ++j) values.push_back(number(bulges[j]));
+-                    if (points.length() != bulges.length()) errors.push_back("hatch vertex/bulge count mismatch");
++                    if (!bce_capture::hatch_polyline_counts_valid(static_cast<std::size_t>(points.length()),
++                        static_cast<std::size_t>(bulges.length()))) errors.push_back("hatch vertex/bulge count mismatch");
+                 }
+                 loop.emplace_back("vertices", array(vertices)); loop.emplace_back("bulges", array(values));
+             } else {
+--- before/ReferenceCapturePolicy.h
++++ after/ReferenceCapturePolicy.h
+@@ -9,6 +9,11 @@
+ #include <vector>
+ 
+ namespace bce_capture {
++inline bool hatch_polyline_counts_valid(std::size_t vertex_count, std::size_t bulge_count) noexcept {
++    // AcDbHatch::getLoopAt may return no bulges when every segment is straight.
++    return bulge_count == 0 || vertex_count == bulge_count;
++}
++
+ struct Point2 { double x{}, y{}; };
+ struct CircularArc {
+     Point2 center;
+--- before/ReferenceCapturePolicyTests.cpp
++++ after/ReferenceCapturePolicyTests.cpp
+@@ -21,6 +21,13 @@
+ std::string field(const std::vector<std::pair<std::string, std::string>>& fields, const char* name) {
+     for (const auto& value : fields) if (value.first == name) return value.second;
+     throw std::runtime_error(std::string("missing serialized field: ") + name);
++}
++void test_hatch_empty_bulges_are_valid_straight_segments() {
++    expect(bce_capture::hatch_polyline_counts_valid(4, 0), "all-straight ring may omit every bulge");
++    expect(bce_capture::hatch_polyline_counts_valid(4, 4), "one bulge per vertex must remain valid");
++    expect(!bce_capture::hatch_polyline_counts_valid(4, 3), "nonempty partial bulge data must remain invalid");
++    expect(!bce_capture::hatch_polyline_counts_valid(0, 1), "bulges without vertices must remain invalid");
++    expect(bce_capture::hatch_polyline_counts_valid(0, 0), "empty arrays have no count mismatch");
+ }
+ void test_rotated_arc_serialization_preserves_geometry() {
+     // Explicit physical points: quarter circle centered (3,5), +Y reference,
+@@ -65,6 +72,7 @@
+ int main() {
+     struct Test { const char* name; void (*run)(); };
+     const Test tests[]{
++        {"hatch_empty_bulges_are_valid_straight_segments", test_hatch_empty_bulges_are_valid_straight_segments},
+         {"rotated_arc_serialization_preserves_geometry", test_rotated_arc_serialization_preserves_geometry},
+         {"two_large_loops_rejected_cumulatively", test_two_large_loops_rejected_cumulatively},
+         {"exact_boundary_then_one_rejected", test_exact_boundary_then_one_rejected},
+--- before/只读采集实现报告.md
++++ after/只读采集实现报告.md
+@@ -110,3 +110,23 @@
+ 图案定义条目及其dash数量与边界共用同一个Hatch累计LeafBudget，分别在定义遍历和dash编码前扣额；超过65536即进入原有不完整错误路径。captureItemCount记录成功读取的总计数。与边界一样，getPatternDefinitionAt可能先分配SDK数组，本工具不声称预算阻止了getter内部的分配。
+ 
+ 补齐后原4项共享纯C++测试以相同v141/C++17命令重新构建并运行，目录`C:\Users\PC\AppData\Local\Temp\bce-capture-policy-final-k9ylhil_`：compileExit=0、testExit=0、tests=4/failures=0。此处没有增加仅复述getter的测试；图案定义实际读取状态仍须由主代理的最终ARX构建和原生采集核对。上表已更新此次最终源码哈希，头和测试哈希未变。
++
++## 真实采集后的最小修复：允许全直线环省略bulges
++
++主代理原生采集发现，Hatch全直线多段线环可合法返回非空vertices与空bulges。此前无条件要求数量相等，误记为`hatch vertex/bulge count mismatch`。此轮仅修复这项误拒，不改其他complete语义，不扩展采集器，不操作CAD或覆盖已加载ARX。
++
++生产CPP现在直接调用共享头中的`hatch_polyline_counts_valid`，判断为`bulge_count==0 || vertex_count==bulge_count`。允许省略全部bulges；非空bulges仍须与vertices一一对应。顶点、原始空bulges和累计预算照原路径记录，不补造零值或替换原始数据。
++
++语义依据是主代理提供并确认的Autodesk同签名官方说明：[2018 getLoopAt](https://help.autodesk.com/cloudhelp/2018/ENU/OARXMAC-RefGuide/files/OREFMAC-AcDbHatch__getLoopAt_int_Adesk__Int32__AcGePoint2dArray__AcGeDoubleArray__const.html)、[2027 getLoopAt](https://help.autodesk.com/cloudhelp/2027/ENU/OARX-RefGuide/files/OARX-RefGuide-AcDbHatch__getLoopAt_int_Adesk__Int32__AcGePoint2dArray__AcGeDoubleArray__const.html)。本机2020 SDK `dbhatch.h:138–141`用于核对该重载签名；未把其他年份网页当成本机运行证据。
++
++新增一项有意义的共享策略测试：4顶点+0bulges接受、4+4接受、4+3拒绝、0+1拒绝、0+0无数量错配。先将旧的严格相等判断提取到生产实际调用的函数，再运行相同v141/C++17控制台命令，观察RED：`C:\Users\PC\AppData\Local\Temp\bce-empty-bulges-red-w4tp8y58`，compileExit=0，testExit=1，tests=5/failures=1，唯一失败是“all-straight ring may omit every bulge”；其余原4项通过。随后只更改共享判断，GREEN：`C:\Users\PC\AppData\Local\Temp\bce-empty-bulges-green-oi4p5l3l`，compileExit=0，testExit=0，tests=5/failures=0。编译/执行命令与前节相同，证据目录含源码副本、build-tests.cmd、build.log、test.log和EXE。
++
++本次新增增量diff为`只读采集空bulges增量修复.diff`，不覆盖前次复核包。修复前源码/头/测试副本保留在`C:\Users\PC\AppData\Local\Temp\bce-empty-bulges-before-w5pr9pf7`。此次最终SHA256覆盖前节所列当前候选指纹：
++
++| 文件 | SHA256 |
++|---|---|
++| ReferenceInspect.cpp | 1226D43386ABD3369B7211800826CCE8DB343D7C6233114B1AA991408A5D76E0 |
++| ReferenceCapturePolicy.h | 42F8600A69601026CC713BD462C722E13E388A7C07193FF6F6779EF1C8789EB4 |
++| ReferenceCapturePolicyTests.cpp | 6DE3D986F9B30B6524B9D88F2E36CE90016DC68F109C3B2E03AAE18489B8DDC6 |
++
++只读策略测试已经RED→GREEN；最终ARX重建和真实采集复验由主代理另做，此处不声称其已通过。

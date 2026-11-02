@@ -1,0 +1,91 @@
+{
+  "contract": "bcp.user-saved-sample-audit.v1",
+  "source": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门窗编号取消额外成组_20261102\\方案施工图_二层_天正编号取消额外成组_v9.dwg",
+  "sourceSHA256": "C7C4FD65AF4E2208BDDE3D4C5588481B634192B02B941D4F517CD3E821A48285",
+  "frozenCopy": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-144522\\inspection-input.dwg",
+  "nativePreviewJob": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-144818-325905-floor2",
+  "steps": [
+    {
+      "serial": "9837e1627a32412ab78c4845ed82d13c",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-144522\\dispatch_9837e1627a32412ab78c4845ed82d13c.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "319a91dfebfb42d581aa3798dcd67930",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-144522",
+        "processId": 43332,
+        "desktop": "CodexS1_319a91dfebfb42d581aa3798dcd67930",
+        "inputDesktop": "Default",
+        "serial": "9837e1627a32412ab78c4845ed82d13c",
+        "command": "S1OPENPROBECONTROL",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-144818-325905-floor2",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-144818-325905-floor2\\control.dwg",
+        "error": null
+      }
+    },
+    {
+      "serial": "a0b7c288427b408682e5f854f890d007",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-144522\\dispatch_a0b7c288427b408682e5f854f890d007.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "319a91dfebfb42d581aa3798dcd67930",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-144522",
+        "processId": 43332,
+        "desktop": "CodexS1_319a91dfebfb42d581aa3798dcd67930",
+        "inputDesktop": "Default",
+        "serial": "a0b7c288427b408682e5f854f890d007",
+        "command": "S1PHASE2EXECUTE",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-144818-325905-floor2",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-144818-325905-floor2\\control.dwg",
+        "error": null
+      }
+    },
+    {
+      "serial": "e9cfde516e8b4539b81d6fe63d6a96d9",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-144522\\dispatch_e9cfde516e8b4539b81d6fe63d6a96d9.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "319a91dfebfb42d581aa3798dcd67930",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-144522",
+        "processId": 43332,
+        "desktop": "CodexS1_319a91dfebfb42d581aa3798dcd67930",
+        "inputDesktop": "Default",
+        "serial": "e9cfde516e8b4539b81d6fe63d6a96d9",
+        "command": "S1PHASE2PREVIEW",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-144818-325905-floor2",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-144818-325905-floor2\\control.dwg",
+        "error": null
+      }
+    }
+  ],
+  "geometryChanged": [
+    "8018",
+    "8460",
+    "8475",
+    "8478"
+  ],
+  "publicFieldChanges": [],
+  "nativeAnnotationsEqual": false,
+  "groupsLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-144522\\current-groups.log",
+  "sourceWritten": false
+}

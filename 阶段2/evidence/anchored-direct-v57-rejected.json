@@ -1,0 +1,6 @@
+{
+  "candidate": "v57",
+  "nativeError": "failure: saved stock WIPEOUTVARIABLES frame70 is not zero",
+  "DWGProduced": false,
+  "next": "Generic raster base setter did not persist wipeout-specific DXF70=0; apply published stock WIPEOUTVARIABLES DXF70 via SDK entMod and require readback, then active-document audit"
+}

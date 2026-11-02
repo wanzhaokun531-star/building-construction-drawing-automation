@@ -1,0 +1,33 @@
+{
+  "contract": "bcp.perimeter-spacing-trial-delivery.v1",
+  "nativeRun": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\native-run-v18.json",
+  "nativeRunSHA256": "77CE79AC2642F8B5BDC350FBCAF014884A7891D2215CAED112C96E25B6029434",
+  "previewRun": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\native-preview-run-v18.json",
+  "previewRunSHA256": "91130739A65009BA7FAB9090C2287FB75852FE0983A947BCEFB8A9A3EAFD50F7",
+  "trial": true,
+  "axisLine4000Interpretation": "wall-to-outer-circle-edge;no-extra-tail;not-stroke-length",
+  "nearCircleGap": 600,
+  "axisDimensions": 24,
+  "bodyEnvelopeTotals": 4,
+  "innerGuides": 4,
+  "modelRoots": 265,
+  "threeRowsComplete": false,
+  "directTchEditingValidated": false,
+  "wholeBuildingTotalSemanticAcceptance": false,
+  "normalQuitPassed": false,
+  "stage2Complete": false,
+  "files": {
+    "analysis.json": "81B7558F4944BCFC406BF1D0C4196BA9D1CD17C233DCCD800A41BBDA4404DC8B",
+    "native-annotations.json": "AB2E21403208E3BE931D440BB3B6D32222DBAC083C02B8C43885301C086B6361",
+    "native-foundation.json": "339CD3D423271E124DE90E1E8C69E006C4DFDA553576F490880FCC280DEBC7C9",
+    "外围间距试排_A3.pdf": "A3240EF61BF2A09CF5DFEFBEB0AE9A8234B69BA9771F9611DE049641FF966A77",
+    "外围间距试排预览.png": "3CA58583A5D51A7B8C83CB8DF69DF401B15B2DC3317E966507B726211B0B4EE2",
+    "尺寸排布对照.csv": "6F873615BD874DAF91CFB0A79676B43D40A243B2AC8B35FF030A6A269A31C384",
+    "待确认清单.csv": "D65871C6DB8F788214950E3C09E59F982F26AEDE4DD6EE9F8764C1149B6F80A5",
+    "方案施工图_外围间距试排.dwg": "736238A3CB6E7900233BD34CA90CEA8C0B3912175438C091AEE459D9DD32361B",
+    "轴号间距对照.csv": "42EE57915AB54ABDD13E8C072049FB7F7666F7BE301478926534F1B5A8E82152",
+    "输入保护及宿主清理.json": "A4E04F6F5623A3A1DA50D787B91746956E78842061B8370706BA67A6C75D82E6",
+    "间距实测核对.json": "8502D85E0C28DC82CDE4EE1FF3C94002F244431791A076D05B37CA97F8BF904D",
+    "阅读说明.md": "2E016EBF945C97EBA6FAA690C129BB7065919F1055F23102F53D46FA66B164DB"
+  }
+}

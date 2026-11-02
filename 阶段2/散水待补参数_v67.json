@@ -1,0 +1,41 @@
+{
+  "contract": "bcp.interior-apron.pending.v1",
+  "sourceSHA256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+  "items": [
+    {
+      "id": "AP01",
+      "parameter": "散水坡度与排向",
+      "status": "待确认",
+      "requiredFrom": "用户提供坡度及排水去向",
+      "graph": "散水说明中显示坡度待确认"
+    },
+    {
+      "id": "AP02",
+      "parameter": "散水靠墙侧各区室外标高对应",
+      "status": "待确认",
+      "requiredFrom": "确认方案已有室外标高分区及各散水段对应；不将单一-0.100套全图",
+      "graph": "分段标高待确认"
+    },
+    {
+      "id": "AP03",
+      "parameter": "中央庭院灰线及走廊遮盖关系",
+      "status": "待确认",
+      "sourceHandles": [
+        "CF5D",
+        "CF5E",
+        "CFBC",
+        "CFBD"
+      ],
+      "requiredFrom": "确认灰线是墙体/构造界线及高度、散水沿哪侧和有盖走廊中断范围",
+      "graph": "中央庭院边界待确认",
+      "notGenerated": "中央灰色矩形三边散水闭环"
+    },
+    {
+      "id": "AP04",
+      "parameter": "明沟净宽/深/壁厚及接入纵坡",
+      "status": "后续明沟模块待补",
+      "notGenerated": "本轮仅新增散水，未按参考外300推生成明沟"
+    }
+  ],
+  "capabilityBoundary": "SDK direct TCH root baseline/measuring/shared-node/whole-chain probes passed; not a full Tianzheng command/UI operation test, no TCH business command used"
+}

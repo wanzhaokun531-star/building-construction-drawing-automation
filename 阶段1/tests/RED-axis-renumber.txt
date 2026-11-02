@@ -1,0 +1,3 @@
+FAIL: renumber evidence missing
+assertions=1 passed=0 failed=1 result=FAIL
+Scope: command trial and original-geometry preservation; label numbering still needs explicit DXF semantics or rendered verification.

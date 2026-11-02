@@ -1,0 +1,15 @@
+{
+  "contract": "bcp.whole-chain-release-QA.v1",
+  "nonce": "ee51ff0717e14c579dd51023db6bd26a",
+  "DWGSHA256": "4CAEC8BAABCAA0CCFB04594A3A01796FE68BBA5CE85ED8A389699AD9A7C8D6DF",
+  "reportSHA256": "424A6D95A559DF34D77D3A566407301499D611A3255309FBC570F5CE0CA39BAA",
+  "previewReportSHA256": "34EEAC3B74BFA29A547B2B360B235597536E8A32ADD65C2298710B5D94ECC525",
+  "protectedIndependentComparisonPassed": true,
+  "protectedRoots": 298,
+  "visualReviewed": true,
+  "visualFile": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\whole-chain-v74-visual.png",
+  "visualSHA256": "AEAF80326B65B4BF0389995FC7C050CA6486E0346BD1E5DBC4E08CC68133653A",
+  "visualScope": "Actual v74 full plan reviewed after native AcPl A2 1:100. Same measurement nodes and text grips as v67; no claim all historical aesthetic issues fixed. User requested DWG only.",
+  "apronWorkStopped": true,
+  "normalQuitPassed": false
+}

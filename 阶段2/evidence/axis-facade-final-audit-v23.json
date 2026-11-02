@@ -1,0 +1,39 @@
+{
+  "contract": "bcp.axis-facade-final-audit.v1",
+  "sourceFilesVerified": 13,
+  "businessARXSHA256": "BE285D719EADFFB1BABE5AAA9EE344DA631A2D414568B34A7F37F9C240FCFBDE",
+  "filesVerified": 14,
+  "testFiles": {
+    "PlanRulesTests.cpp": "5AA19C7BC802014F5FB6E2CE1B8BFB3DA03287264A960DA7292CCAFEDB411A68",
+    "AxisFacadeRegression.cpp": "7697FAA89ECE0B6EE1EFCBE4407E9A64D13926B67D70A1D1D5020DADAD419FB3"
+  },
+  "validators": {
+    "verify_autorun.py": "9B7444116FBA8699FC887AD10C7516A5178A8FCDF3E3E3F09419B63B1F5430DE",
+    "run_preview.py": "9611D0454F3F5B86D64321A744B7B816344C25365DE1EB4DD76392F45C8CAB76",
+    "verify_axis_facade.py": "2E1D946E5A12DA982CA4EFABFDDA35326F9B9AC732BBCCCD59D286A109E89317",
+    "publish_axis_facade_fix.py": "96212D1ED72536B77342B6F77BF1283F07263FA70F8B8DB3C4A3DEADF8880F9B"
+  },
+  "retiredAxisPublishersVerified": 6,
+  "sourceAnalysisPresenterUnchanged": true,
+  "sideGateReexecuted": true,
+  "logicalAxes": 20,
+  "nativeAxisSets": 18,
+  "visibleEnds": 24,
+  "axisDimensions": 20,
+  "totalSamples": 4,
+  "savedMeasurementEndpoints": 48,
+  "modelRoots": 259,
+  "snapshotsUnchanged": 6,
+  "sharedRegistrations": [
+    2,
+    2
+  ],
+  "ownHostGone": true,
+  "stagingRemoved": true,
+  "bottom3Hidden": true,
+  "top3Retained": true,
+  "threeRowsComplete": false,
+  "directTchEditingValidated": false,
+  "normalQuitPassed": false,
+  "stage2Complete": false
+}

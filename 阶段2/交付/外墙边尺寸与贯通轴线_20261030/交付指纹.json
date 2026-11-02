@@ -1,0 +1,80 @@
+{
+  "contract": "bcp.perimeter-full-axes.delivery.v1",
+  "directory": "D:\\Codex\\建筑施工图自动化\\阶段2\\交付\\外墙边尺寸与贯通轴线_20261030",
+  "files": [
+    {
+      "name": "analysis.json",
+      "SHA256": "D68380996B93510D16E548834014C1C923D85A50F9817EFEF922B49A4035E4C3",
+      "bytes": 26405
+    },
+    {
+      "name": "native-annotations.json",
+      "SHA256": "C65E5C38276451A53D6312F7DB1827D3F0A8325CA4786D7DDA5F52220DB3223D",
+      "bytes": 30390
+    },
+    {
+      "name": "native-foundation.json",
+      "SHA256": "CB2451A289DD84B21229F776ABF7DF850ECA5EBA0733880A01A061D5EEE83A4F",
+      "bytes": 760
+    },
+    {
+      "name": "全四侧尺寸与轴线出图检查.json",
+      "SHA256": "2F89207B8BBD6400517641615BDFC0510B7DCC2A3DAA3CF1E6676208AD81C705",
+      "bytes": 9785
+    },
+    {
+      "name": "外墙边尺寸及贯通轴线_A2.pdf",
+      "SHA256": "0655CBAA1850240C9A444ABF3FE0CEA7112441FCD5D097080705DFBA64E39530",
+      "bytes": 130428
+    },
+    {
+      "name": "完整逻辑轴线.csv",
+      "SHA256": "F6A403EC667166077962F2FD3ACDA900D5A64DF1367AF954204F149AEE729F40",
+      "bytes": 2845
+    },
+    {
+      "name": "待确认清单.csv",
+      "SHA256": "D65871C6DB8F788214950E3C09E59F982F26AEDE4DD6EE9F8764C1149B6F80A5",
+      "bytes": 2873
+    },
+    {
+      "name": "方案施工图_外墙边尺寸及贯通轴线.dwg",
+      "SHA256": "EFA3334FA5EC67579BD35223164808DC5CBC933481B30D25DDA654EB67A6F9E6",
+      "bytes": 3254219
+    },
+    {
+      "name": "施工图预览.png",
+      "SHA256": "D979518BAB8CD2BE38899FE0A8D01B7F859094FDCB7A7CD7814C5D8D8B907BFE",
+      "bytes": 168376
+    },
+    {
+      "name": "旧版拒绝及测试记录.json",
+      "SHA256": "01231E43D665BF66E917DF7E06DAD1138B6E1C9C5086CB9C876B8BCBA27A2A00",
+      "bytes": 652
+    },
+    {
+      "name": "第二道尺寸及测点.csv",
+      "SHA256": "715171DD6347E7614973F9474D1A54619E33DD6B6A84BD52FC95A6B938A1468D",
+      "bytes": 1760
+    },
+    {
+      "name": "输入保护及宿主清理.json",
+      "SHA256": "18D11282222552B59A2384E80BD18D27EC5338D55B5BA16C3D78F24376351DF3",
+      "bytes": 7664
+    },
+    {
+      "name": "阅读说明.txt",
+      "SHA256": "0C05E60B5A093CF8FED596ED94B966BB5562E00655950D3CF5B1C1E77342B326",
+      "bytes": 668
+    },
+    {
+      "name": "验证报告.md",
+      "SHA256": "7A64C8C4C18E3467CE1221B701A5C45F7917FD2178D7031080D44A711C1DDC89",
+      "bytes": 7177
+    }
+  ],
+  "nativeRun": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\native-run-v25.json",
+  "gate": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\perimeter-axes-release-v25-final.json",
+  "sourceCandidateARXSHA256": "ADF7D214FA030A49596BC0581BF7C4E9EC6CE25853DD028385EE796724075B15",
+  "constructionDrawingComplete": false
+}

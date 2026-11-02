@@ -1,0 +1,19 @@
+{
+  "contract": "bcp.door-caption-release-QA.v1",
+  "nonce": "e79780f7da654adc86e0ba898abdc844",
+  "DWGSHA256": "28383C173B790E05053F7BC5353138FDF3C7FDCE7A0523BDF5DCAD6933712D96",
+  "reportSHA256": "EB62506CAFE24E56E57CDF6AAA5A8E6705A0F9DAA59347ECD2B3C5BC53A3730D",
+  "previewReportSHA256": "4BEC9D955EB3EE10728E6555CEB4EC3DC9E05B2AF02EFB56DF9E70F3D9F3F80A",
+  "visualReviewed": true,
+  "visualFile": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\door-caption-v78-visual.png",
+  "visualSHA256": "682389DBC11CFAA228FB77AEFFF58E8F7EA1F33DD208C18F5AAE5B69061FAB5B",
+  "verification": {
+    "doorNumbers": 14,
+    "doorGraphicsOverlaps": 0,
+    "protectedRoots": 308,
+    "wholeDimensionsUnchanged": true
+  },
+  "wholeDimensionsUnchanged": true,
+  "apronWorkStopped": true,
+  "scope": "Actual v78 native AcPl A2 1:100 full plan reviewed; only door label correction, not all historical drawing aesthetics"
+}

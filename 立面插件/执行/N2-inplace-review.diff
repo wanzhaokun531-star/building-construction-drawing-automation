@@ -1,0 +1,834 @@
+--- a/src/SceneReader.h
++++ b/src/SceneReader.h
+@@ -1,6 +1,9 @@
+ #pragma once
+ #include "ElevationModel.h"
+ #include <memory>
++class AcDbDatabase;
++class AcDbObjectId;
++class AcDbSymbolTableRecord;
+ 
+ namespace bce {
+ class NativeSceneContext final {
+@@ -13,6 +16,9 @@
+     NativeSceneContext& operator=(NativeSceneContext&&) = delete;
+     struct Impl;
+     Impl& native() noexcept;
++    AcDbDatabase* currentDatabase() const noexcept;
++    std::string documentIdentity() const;
++    std::uint64_t revision() const noexcept;
+ private:
+     std::unique_ptr<Impl> impl_;
+ };
+@@ -22,4 +28,13 @@
+     std::optional<double> confirmedMmPerInputUnit;
+ };
+ [[nodiscard]] Result<SceneSnapshot> readScene(const SceneRequest& request);
++namespace native_scene {
++std::wstring utf16(const std::string& value);
++std::string utf8(const std::wstring& value);
++std::string handle(const AcDbObjectId& id);
++std::string symbolName(const AcDbObjectId& id);
++ResourceDefinition resourceDefinition(const AcDbSymbolTableRecord& record);
++std::vector<ResourceDefinition> readResources(AcDbDatabase& database);
++AcDbObjectId objectId(AcDbDatabase& database, const std::string& handle);
+ }
++}
+--- a/src/SceneReader.cpp
++++ b/src/SceneReader.cpp
+@@ -1,11 +1,216 @@
+ #include "SceneReader.h"
++#ifndef NOMINMAX
++#define NOMINMAX
++#endif
++#include <Windows.h>
++#include <wincrypt.h>
++#include <acdocman.h>
++#include <dbents.h>
++#include <dbsymtb.h>
++#include <dbtrans.h>
++#include <cmath>
++#include <iomanip>
++#include <limits>
++#include <set>
++#include <sstream>
++#include <stdexcept>
++
+ namespace bce {
+-struct NativeSceneContext::Impl {};
++namespace {
++void check(Acad::ErrorStatus status, const char* operation) {
++    if (status != Acad::eOk) throw std::runtime_error(std::string(operation) + ": " + std::to_string(status));
++}
++template<class T> class Read final {
++public:
++    explicit Read(AcDbObjectId id) { check(acdbOpenObject(value_,id,AcDb::kForRead),"read object"); }
++    ~Read() noexcept { if (value_) value_->close(); }
++    Read(const Read&) = delete;
++    Read& operator=(const Read&) = delete;
++    T* operator->() const noexcept { return value_; }
++    T* get() const noexcept { return value_; }
++private: T* value_{};
++};
++template<class T> Result<T> fail(const char* code,const std::string& message) { return {std::nullopt,{{code,message,{},true}}}; }
++std::string token() {
++    HCRYPTPROV provider{};
++    if (!CryptAcquireContextW(&provider,nullptr,nullptr,PROV_RSA_AES,CRYPT_VERIFYCONTEXT)) throw std::runtime_error("context identity unavailable");
++    struct Guard { HCRYPTPROV p; ~Guard() noexcept { CryptReleaseContext(p,0); } } guard{provider};
++    BYTE bytes[16]{};
++    if (!CryptGenRandom(provider,16,bytes)) throw std::runtime_error("context identity generation failed");
++    std::ostringstream out; out << "native-scene-";
++    for (const auto b : bytes) out << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(b);
++    return out.str();
++}
++std::string num(double value) {
++    if (!std::isfinite(value)) throw std::runtime_error("nonfinite native value");
++    std::ostringstream out; out << std::setprecision(17) << value; return out.str();
++}
++void field(std::string& output,const std::string& value) { output += std::to_string(value.size()) + ':' + value; }
++void field(std::string& output,double value) { field(output,num(value)); }
++void field(std::string& output,bool value) { field(output,std::string(value ? "true" : "false")); }
++std::string recordName(const AcDbSymbolTableRecord& value) {
++    AcString name; check(value.getName(name),"get symbol name"); return native_scene::utf8(name.kACharPtr());
++}
++}
++struct NativeSceneContext::Impl final : AcApDocManagerReactor, AcDbDatabaseReactor {
++    AcApDocument* document{};
++    AcDbDatabase* database{};
++    std::string identity{token()};
++    std::uint64_t version{1};
++    bool valid{true};
++    Impl() {
++        document = acDocManager->curDocument();
++        if (!document || !document->database()) throw std::runtime_error("current document unavailable");
++        database = document->database();
++        check(database->addReactor(static_cast<AcDbDatabaseReactor*>(this)),"attach scene database reactor");
++        acDocManager->addReactor(static_cast<AcApDocManagerReactor*>(this));
++    }
++    ~Impl() noexcept {
++        acDocManager->removeReactor(static_cast<AcApDocManagerReactor*>(this));
++        if (database) database->removeReactor(static_cast<AcDbDatabaseReactor*>(this));
++    }
++    void changed() noexcept { if (version == (std::numeric_limits<std::uint64_t>::max)()) valid = false; else ++version; }
++    void objectAppended(const AcDbDatabase*,const AcDbObject*) override { changed(); }
++    void objectUnAppended(const AcDbDatabase*,const AcDbObject*) override { changed(); }
++    void objectReAppended(const AcDbDatabase*,const AcDbObject*) override { changed(); }
++    void objectModified(const AcDbDatabase*,const AcDbObject*) override { changed(); }
++    void objectErased(const AcDbDatabase*,const AcDbObject*,Adesk::Boolean) override { changed(); }
++    void headerSysVarChanged(const AcDbDatabase*,const ACHAR*,Adesk::Boolean success) override { if (success) changed(); }
++    void goodbye(const AcDbDatabase*) override { valid=false; database=nullptr; document=nullptr; }
++    void documentToBeDestroyed(AcApDocument* doc) override {
++        if (doc == document) { valid=false; if (database) database->removeReactor(static_cast<AcDbDatabaseReactor*>(this)); database=nullptr; document=nullptr; }
++    }
++    void documentBecameCurrent(AcApDocument* doc) override { if (doc != document) valid=false; }
++};
+ NativeSceneContext::NativeSceneContext() : impl_(std::make_unique<Impl>()) {}
+ NativeSceneContext::~NativeSceneContext() = default;
+ NativeSceneContext::Impl& NativeSceneContext::native() noexcept { return *impl_; }
+-Result<SceneSnapshot> readScene(const SceneRequest&) {
+-    return {std::nullopt, {{diagnostic::unsupportedNativeWrite,
+-        "NOT_IMPLEMENTED: current unsaved document scene reader", {}, true}}};
+-}
+-}
++AcDbDatabase* NativeSceneContext::currentDatabase() const noexcept {
++    return impl_->valid && acDocManager->curDocument() == impl_->document ? impl_->database : nullptr;
++}
++std::string NativeSceneContext::documentIdentity() const { return impl_->identity; }
++std::uint64_t NativeSceneContext::revision() const noexcept { return impl_->version; }
++namespace native_scene {
++std::string utf8(const std::wstring& value) {
++    if (value.empty()) return {};
++    if (value.size() > static_cast<std::size_t>((std::numeric_limits<int>::max)())) throw std::runtime_error("UTF16 too long");
++    const auto n=static_cast<int>(value.size());
++    const int size=WideCharToMultiByte(CP_UTF8,WC_ERR_INVALID_CHARS,value.data(),n,nullptr,0,nullptr,nullptr);
++    if (size<=0) throw std::runtime_error("invalid UTF16");
++    std::string result(static_cast<std::size_t>(size),'\0');
++    if (WideCharToMultiByte(CP_UTF8,WC_ERR_INVALID_CHARS,value.data(),n,result.data(),size,nullptr,nullptr)!=size) throw std::runtime_error("UTF8 conversion");
++    return result;
++}
++std::wstring utf16(const std::string& value) {
++    if (value.empty()) return {};
++    if (value.find('\0') != std::string::npos || value.size()>static_cast<std::size_t>((std::numeric_limits<int>::max)())) throw std::runtime_error("invalid UTF8 symbol");
++    const int n=static_cast<int>(value.size()), size=MultiByteToWideChar(CP_UTF8,MB_ERR_INVALID_CHARS,value.data(),n,nullptr,0);
++    if(size<=0) throw std::runtime_error("invalid UTF8");
++    std::wstring result(static_cast<std::size_t>(size),L'\0');
++    if(MultiByteToWideChar(CP_UTF8,MB_ERR_INVALID_CHARS,value.data(),n,result.data(),size)!=size) throw std::runtime_error("UTF16 conversion");
++    return result;
++}
++std::string handle(const AcDbObjectId& id) {
++    if(id.isNull()) return {};
++    wchar_t buffer[32]{}; id.handle().getIntoAsciiBuffer(buffer); return utf8(buffer);
++}
++AcDbObjectId objectId(AcDbDatabase& db,const std::string& handleText) {
++    if(handleText.empty() || handleText.size()>16 || handleText.find_first_not_of("0123456789abcdefABCDEF")!=std::string::npos)
++        throw std::runtime_error("invalid entity handle");
++    const auto wide=utf16(handleText); AcDbHandle h(wide.c_str()); AcDbObjectId id;
++    check(db.getAcDbObjectId(id,false,h),"resolve handle");
++    if(id.isNull() || id.isErased()) throw std::runtime_error("invalid or erased entity handle");
++    return id;
++}
++std::string symbolName(const AcDbObjectId& id) {
++    if(id.isNull()) return {};
++    Read<AcDbSymbolTableRecord> record(id); return recordName(*record.get());
++}
++ResourceDefinition resourceDefinition(const AcDbSymbolTableRecord& record) {
++    ResourceDefinition result; result.name=recordName(record); auto& signature=result.definitionSignature;
++    if(const auto* layer=AcDbLayerTableRecord::cast(&record)) {
++        result.kind="layer";
++        field(signature,std::to_string(layer->color().color())); field(signature,symbolName(layer->linetypeObjectId()));
++        field(signature,std::to_string(layer->lineWeight())); field(signature,layer->isOff()); field(signature,layer->isFrozen());
++        field(signature,layer->isLocked()); field(signature,layer->isPlottable()); field(signature,std::to_string(layer->transparency().alpha()));
++    } else if(const auto* style=AcDbTextStyleTableRecord::cast(&record)) {
++        result.kind="textstyle"; AcString font,bigfont;
++        check(style->fileName(font),"font"); check(style->bigFontFileName(bigfont),"bigfont");
++        field(signature,utf8(font.kACharPtr())); field(signature,utf8(bigfont.kACharPtr())); field(signature,style->textSize());
++        field(signature,style->xScale()); field(signature,style->obliquingAngle()); field(signature,std::to_string(style->flagBits()));
++        field(signature,style->isVertical()!=0); field(signature,style->isShapeFile()!=0); field(signature,style->priorSize());
++    } else if(const auto* line=AcDbLinetypeTableRecord::cast(&record)) {
++        result.kind="linetype"; field(signature,line->patternLength()); field(signature,line->isScaledToFit());
++        field(signature,std::to_string(line->numDashes()));
++        for(int i=0;i<line->numDashes();++i) {
++            AcString text; const auto textStatus=line->textAt(i,text);
++            // SDK2020 acadstrc.h: 2 is eNotApplicable, not invalid input. A plain dash has
++            // neither a shape/text style nor a shape number; only that exact case permits no text.
++            const bool plainDash=textStatus==Acad::eNotApplicable && line->shapeStyleAt(i).isNull() &&
++                line->shapeNumberAt(i)==0 && text.isEmpty();
++            if(!plainDash) check(textStatus,"linetype text");
++            field(signature,std::to_string(textStatus));
++            field(signature,line->dashLengthAt(i)); field(signature,symbolName(line->shapeStyleAt(i)));
++            field(signature,std::to_string(line->shapeNumberAt(i))); field(signature,line->shapeScaleAt(i));
++            field(signature,line->shapeRotationAt(i)); field(signature,line->shapeOffsetAt(i).x); field(signature,line->shapeOffsetAt(i).y);
++            field(signature,line->shapeIsUcsOrientedAt(i)); field(signature,line->shapeIsUprightAt(i)); field(signature,utf8(text.kACharPtr()));
++        }
++    } else throw std::runtime_error("unsupported resource record");
++    return result;
++}
++std::vector<ResourceDefinition> readResources(AcDbDatabase& db) {
++    std::vector<ResourceDefinition> result;
++    for(const auto id:{db.layerTableId(),db.textStyleTableId(),db.linetypeTableId()}) {
++        Read<AcDbSymbolTable> table(id); AcDbSymbolTableIterator* raw{}; check(table->newIterator(raw),"resource iterator");
++        std::unique_ptr<AcDbSymbolTableIterator> iterator(raw);
++        for(;!iterator->done();iterator->step()) { AcDbObjectId rid; check(iterator->getRecordId(rid),"resource id");
++            Read<AcDbSymbolTableRecord> record(rid); result.push_back(resourceDefinition(*record.get())); }
++    }
++    return result;
++}
++}
++Result<SceneSnapshot> readScene(const SceneRequest& request) {
++    try {
++        auto* db=request.context.currentDatabase();
++        if(!db) return fail<SceneSnapshot>(diagnostic::staleDocument,"Document was destroyed, switched, or belongs to another context");
++        if(acDocManager->curDocument()->isReadOnly()) return fail<SceneSnapshot>("READ_ONLY_DOCUMENT","Current document is read-only");
++        SceneSnapshot scene; scene.documentIdentity=request.context.documentIdentity(); scene.databaseIdentity=scene.documentIdentity+"/database";
++        scene.revision=request.context.revision(); scene.units.insunits=static_cast<int>(db->insunits());
++        scene.units.confirmedMmPerInputUnit=request.confirmedMmPerInputUnit;
++        scene.resources=native_scene::readResources(*db);
++        std::set<std::string> targets;
++        for(const auto& key:request.targetHandles) targets.insert(native_scene::handle(native_scene::objectId(*db,key)));
++        Read<AcDbBlockTable> table(db->blockTableId()); AcDbObjectId ms; check(table->getAt(ACDB_MODEL_SPACE,ms),"model space");
++        Read<AcDbBlockTableRecord> space(ms); AcDbBlockTableRecordIterator* raw{}; check(space->newIterator(raw),"model iterator");
++        std::unique_ptr<AcDbBlockTableRecordIterator> iterator(raw);
++        std::set<std::string> found;
++        for(;!iterator->done();iterator->step()) {
++            AcDbObjectId id; check(iterator->getEntityId(id),"entity id"); Read<AcDbEntity> e(id);
++            const auto h=native_scene::handle(id); const EntityKey key{scene.databaseIdentity,h,scene.revision};
++            Primitive2 primitive; primitive.key=key; primitive.layer=native_scene::symbolName(e->layerId());
++            Bounds2 bounds{};
++            if(const auto* line=AcDbLine::cast(e.get())) {
++                const auto a=line->startPoint(), b=line->endPoint();
++                if(a.z!=0.0 || b.z!=0.0) return fail<SceneSnapshot>(diagnostic::unsupportedNativeWrite,"Only planar WCS Line snapshots are supported");
++                primitive.kind=PrimitiveKind::line; primitive.start=Point2{a.x,a.y}; primitive.end=Point2{b.x,b.y}; primitive.topologyComplete=true;
++                bounds={{(std::min)(a.x,b.x),(std::min)(a.y,b.y)},{(std::max)(a.x,b.x),(std::max)(a.y,b.y)}};
++            } else if(const auto* text=AcDbText::cast(e.get())) {
++                AcString content; check(text->textString(content),"text content"); const auto position=text->position();
++                primitive.kind=PrimitiveKind::text; primitive.text=native_scene::utf8(content.kACharPtr());
++                primitive.textPosition=Point2{position.x,position.y}; primitive.textHeight=text->height(); primitive.textRotation=text->rotation();
++                primitive.textMirroredX=text->isMirroredInX()!=0; primitive.textMirroredY=text->isMirroredInY()!=0;
++                AcDbExtents extents; check(text->getGeomExtents(extents),"text bounds");
++                bounds={{extents.minPoint().x,extents.minPoint().y},{extents.maxPoint().x,extents.maxPoint().y}};
++            } else return fail<SceneSnapshot>(diagnostic::unsupportedNativeWrite,"Unsupported native entity prevents complete current-scene protection");
++            primitive.bounds=bounds; scene.primitives.push_back(std::move(primitive));
++            SceneEntity entity{key,native_scene::symbolName(e->layerId()),bounds,""};
++            if(targets.count(h)) { found.insert(h); scene.targets.push_back(std::move(entity)); }
++            else scene.preserved.push_back(std::move(entity));
++        }
++        if(found!=targets) return fail<SceneSnapshot>(diagnostic::outsideWriteScope,"Explicit target is not a current model-space root");
++        for(auto& resource:scene.resources) resource.referencedByPreserved=!scene.preserved.empty();
++        if(scene.revision!=request.context.revision()) return fail<SceneSnapshot>(diagnostic::staleDocument,"Scene changed while reading");
++        return {std::move(scene),{}};
++    } catch(const std::exception& ex) { return fail<SceneSnapshot>(diagnostic::unsupportedNativeWrite,ex.what()); }
++}
++}
+--- a/src/PreparedBatch.h
++++ b/src/PreparedBatch.h
+@@ -19,6 +19,8 @@
+     PreparedBatch& operator=(PreparedBatch&&) = delete;
+     AcDbDatabase* database() noexcept;
+     const PreparedLine& line() const noexcept;
++    Result<ResourceDefinition> layerDefinition() const;
++    bool validateOrdinaryLine() const;
+ private:
+     struct Impl;
+     explicit PreparedBatch(std::unique_ptr<Impl> impl);
+--- a/src/PreparedBatch.cpp
++++ b/src/PreparedBatch.cpp
+@@ -1,12 +1,80 @@
+ #include "PreparedBatch.h"
++#include "SceneReader.h"
++#include <dbents.h>
++#include <dbsymtb.h>
++#include <cmath>
++#include <stdexcept>
+ namespace bce {
+-struct PreparedBatch::Impl { PreparedLine line; };
++namespace {
++void check(Acad::ErrorStatus status,const char* operation) { if(status!=Acad::eOk) throw std::runtime_error(std::string(operation)+": "+std::to_string(status)); }
++template<class T> class Opened final {
++public:
++    Opened(AcDbObjectId id,AcDb::OpenMode mode=AcDb::kForRead) { check(acdbOpenObject(value_,id,mode),"open prepared object"); }
++    ~Opened() noexcept { if(value_) value_->close(); }
++    Opened(const Opened&)=delete;
++    Opened& operator=(const Opened&)=delete;
++    T* operator->() const noexcept { return value_; }
++    T* get() const noexcept { return value_; }
++private:T* value_{};
++};
++}
++struct PreparedBatch::Impl {
++    PreparedLine line;
++    std::unique_ptr<AcDbDatabase> database;
++    AcDbObjectId lineId,layerId,modelId;
++    ResourceDefinition originalLayer;
++};
+ PreparedBatch::PreparedBatch(std::unique_ptr<Impl> impl) : impl_(std::move(impl)) {}
+ PreparedBatch::~PreparedBatch() = default;
+-AcDbDatabase* PreparedBatch::database() noexcept { return nullptr; }
++AcDbDatabase* PreparedBatch::database() noexcept { return impl_->database.get(); }
+ const PreparedLine& PreparedBatch::line() const noexcept { return impl_->line; }
+-Result<std::unique_ptr<PreparedBatch>> PreparedBatch::create(const PreparedLine&) {
+-    return {std::nullopt, {{diagnostic::unsupportedNativeWrite,
+-        "NOT_IMPLEMENTED: independent prepared Line database", {}, true}}};
++Result<std::unique_ptr<PreparedBatch>> PreparedBatch::create(const PreparedLine& line) {
++    try {
++        if(!std::isfinite(line.start.x)||!std::isfinite(line.start.y)||!std::isfinite(line.end.x)||!std::isfinite(line.end.y)||
++            line.layerName.empty()||line.layerColor<1||line.layerColor>255 || (line.start.x==line.end.x && line.start.y==line.end.y))
++            throw std::runtime_error("invalid ordinary Line specification");
++        auto impl=std::make_unique<Impl>(); impl->line=line; impl->database=std::make_unique<AcDbDatabase>(true,true);
++        auto& db=*impl->database; const auto layerName=native_scene::utf16(line.layerName);
++        {
++            Opened<AcDbLayerTable> layers(db.layerTableId(),AcDb::kForWrite);
++            if(layers->has(layerName.c_str())) throw std::runtime_error("prepared layer name conflicts with database default layer");
++            auto layer=std::make_unique<AcDbLayerTableRecord>(); check(layer->setName(layerName.c_str()),"prepared layer name");
++            AcCmColor color; color.setColorIndex(static_cast<Adesk::UInt16>(line.layerColor)); layer->setColor(color);
++            check(layers->add(impl->layerId,layer.get()),"prepared layer add"); auto* owned=layer.release(); check(owned->close(),"prepared layer close");
++        }
++        { Opened<AcDbLayerTableRecord> layer(impl->layerId); impl->originalLayer=native_scene::resourceDefinition(*layer.get()); }
++        { Opened<AcDbBlockTable> blocks(db.blockTableId()); check(blocks->getAt(ACDB_MODEL_SPACE,impl->modelId),"prepared model id"); }
++        {
++            Opened<AcDbBlockTableRecord> space(impl->modelId,AcDb::kForWrite);
++            auto entity=std::make_unique<AcDbLine>(AcGePoint3d(line.start.x,line.start.y,0.0),AcGePoint3d(line.end.x,line.end.y,0.0));
++            entity->setDatabaseDefaults(&db); check(entity->setLayer(impl->layerId),"prepared line layer");
++            check(space->appendAcDbEntity(impl->lineId,entity.get()),"prepared line append"); auto* owned=entity.release(); check(owned->close(),"prepared line close");
++        }
++        return {std::unique_ptr<PreparedBatch>(new PreparedBatch(std::move(impl))),{}};
++    } catch(const std::exception& ex) { return {std::nullopt,{{diagnostic::unsupportedNativeWrite,ex.what(),{},true}}}; }
++}
++Result<ResourceDefinition> PreparedBatch::layerDefinition() const {
++    try {
++        Opened<AcDbLayerTableRecord> layer(impl_->layerId);
++        const auto actual=native_scene::resourceDefinition(*layer.get());
++        if(actual.name!=impl_->originalLayer.name || actual.definitionSignature!=impl_->originalLayer.definitionSignature)
++            throw std::runtime_error("prepared resource changed after creation");
++        return {actual,{}};
++    } catch(const std::exception& ex) { return {std::nullopt,{{diagnostic::unsupportedNativeWrite,ex.what(),{},true}}}; }
++}
++bool PreparedBatch::validateOrdinaryLine() const {
++    try {
++        if(!layerDefinition().canCommit()) return false;
++        Opened<AcDbBlockTableRecord> space(impl_->modelId); AcDbBlockTableRecordIterator* raw{};
++        check(space->newIterator(raw),"prepared model iterator"); std::unique_ptr<AcDbBlockTableRecordIterator> iterator(raw);
++        if(iterator->done()) return false;
++        AcDbObjectId first; check(iterator->getEntityId(first),"prepared entity id"); iterator->step();
++        if(first!=impl_->lineId || !iterator->done()) return false;
++        Opened<AcDbLine> line(first);
++        return line->startPoint()==AcGePoint3d(impl_->line.start.x,impl_->line.start.y,0.0) &&
++            line->endPoint()==AcGePoint3d(impl_->line.end.x,impl_->line.end.y,0.0) && line->layerId()==impl_->layerId &&
++            line->normal()==AcGeVector3d::kZAxis && line->thickness()==0.0 && line->colorIndex()==256 &&
++            line->linetypeScale()==1.0 && native_scene::symbolName(line->linetypeId())=="ByLayer";
++    } catch(...) { return false; }
+ }
+ }
+--- a/src/InPlaceWriter.cpp
++++ b/src/InPlaceWriter.cpp
+@@ -1,11 +1,198 @@
+ #include "InPlaceWriter.h"
++#include <acdocman.h>
++#include <actrans.h>
++#include <aced.h>
++#include <adscodes.h>
++#include <dbents.h>
++#include <dbsymtb.h>
++#include <cmath>
++#include <set>
++#include <stdexcept>
+ namespace bce {
+-Result<WriteScopePlan> InPlaceWriter::beginWriteScope(const LayoutPlan&, const SceneSnapshot&) {
+-    return {std::nullopt, {{diagnostic::unsupportedNativeWrite,
+-        "NOT_IMPLEMENTED: native same-document scope revalidation", {}, true}}};
++namespace {
++template<class T> Result<T> fail(const char* code,const std::string& message) { return {std::nullopt,{{code,message,{},true}}}; }
++void check(Acad::ErrorStatus status,const char* operation) {
++    if(status!=Acad::eOk) throw std::runtime_error(std::string(operation)+": "+std::to_string(status));
+ }
+-Result<CommitReceipt> InPlaceWriter::applyToCurrentDocument(PreparedBatch&, const LayoutPlan&, const SceneSnapshot&) {
+-    return {std::nullopt, {{diagnostic::unsupportedNativeWrite,
+-        "NOT_IMPLEMENTED: native atomic in-place Line commit", {}, true}}};
++template<class T> class Read final {
++public:
++    explicit Read(AcDbObjectId id) { check(acdbOpenObject(value_,id,AcDb::kForRead),"read native write prerequisite"); }
++    ~Read() noexcept { if(value_) value_->close(); }
++    Read(const Read&)=delete;
++    Read& operator=(const Read&)=delete;
++    T* operator->() const noexcept { return value_; }
++    T* get() const noexcept { return value_; }
++private:T* value_{};
++};
++class Transaction final {
++public:
++    explicit Transaction(AcDbTransactionManager& manager):manager_(manager), transaction_(manager.startTransaction()) {
++        if(!transaction_) throw std::runtime_error("start transaction failed");
++    }
++    ~Transaction() noexcept { if(active_&&manager_.numActiveTransactions()==1&&manager_.topTransaction()==transaction_) manager_.abortTransaction(); }
++    Transaction(const Transaction&)=delete;
++    Transaction& operator=(const Transaction&)=delete;
++    template<class T> T* open(AcDbObjectId id,AcDb::OpenMode mode) {
++        AcDbObject* object{}; check(transaction_->getObject(object,id,mode),"transaction get object");
++        auto* typed=T::cast(object); if(!typed) throw std::runtime_error("unexpected native object type"); return typed;
++    }
++    void adopt(AcDbObject* object) {
++        const auto status=manager_.addNewlyCreatedDBRObject(object);
++        if(status!=Acad::eOk) {
++            // Already database-owned, but not transaction-owned: never delete. Close before abort.
++            object->erase(); object->close(); check(status,"transaction adopt newly created object");
++        }
++    }
++    void commit() { requireOwned(); check(manager_.endTransaction(),"commit transaction"); active_=false; }
++    void rollback() { requireOwned(); check(manager_.abortTransaction(),"abort transaction"); active_=false; }
++private:
++    void requireOwned() const {
++        if(!active_ || manager_.numActiveTransactions()!=1 || manager_.topTransaction()!=transaction_)
++            throw std::runtime_error("transaction ownership changed; refusing to close caller transaction");
++    }
++    AcDbTransactionManager& manager_;
++    AcTransaction* transaction_{};
++    bool active_{true};
++};
++struct Cancelled final {};
++void notify(CommitObserver* observer,CommitStage stage) { if(observer&&!observer->continueCommit(stage)) throw Cancelled{}; }
++int undoControl() {
++    resbuf value{};
++    if(acedGetVar(L"UNDOCTL",&value)!=RTNORM || value.restype!=RTSHORT) throw std::runtime_error("UNDOCTL unreadable");
++    return value.resval.rint;
++}
++std::string layerReadback(const AcDbLayerTableRecord& layer) {
++    const auto linetype=layer.linetypeObjectId();
++    const auto boolean=[](bool value){return std::string(value?"true":"false");};
++    AcString name; check(layer.getName(name),"diagnostic layer name");
++    return "{name="+native_scene::utf8(name.kACharPtr())+",handle="+native_scene::handle(layer.objectId())+
++        ",colorRaw="+std::to_string(layer.color().color())+",colorIndex="+std::to_string(layer.color().colorIndex())+
++        ",colorMethod="+std::to_string(layer.color().colorMethod())+",linetypeHandle="+native_scene::handle(linetype)+
++        ",linetypeName="+native_scene::symbolName(linetype)+",lineWeight="+std::to_string(layer.lineWeight())+
++        ",off="+boolean(layer.isOff())+",frozen="+boolean(layer.isFrozen())+",locked="+boolean(layer.isLocked())+
++        ",plottable="+boolean(layer.isPlottable())+",transparencyAlpha="+std::to_string(layer.transparency().alpha())+
++        ",transparencyRaw="+std::to_string(layer.transparency().serializeOut())+
++        ",isNewObject="+boolean(layer.isNewObject())+",isWriteEnabled="+boolean(layer.isWriteEnabled())+
++        ",isTransactionResident="+boolean(layer.isTransactionResident())+"}";
+ }
+ }
++Result<WriteScopePlan> InPlaceWriter::beginWriteScope(const LayoutPlan& plan, const SceneSnapshot& snapshot) {
++    try {
++        auto* database=context_.currentDatabase();
++        if(!database) return fail<WriteScopePlan>(diagnostic::staleDocument,"Current document context is invalid");
++        auto* document=acDocManager->curDocument();
++        if(database->transactionManager()->numActiveTransactions()!=0 || document->transactionManager()->numActiveTransactions()!=0)
++            return fail<WriteScopePlan>("OUTER_TRANSACTION_ACTIVE","Caller transaction must remain caller-owned; in-place service refuses nesting");
++        if(snapshot.documentIdentity!=context_.documentIdentity() || snapshot.databaseIdentity!=context_.documentIdentity()+"/database" ||
++            snapshot.revision!=context_.revision()) return fail<WriteScopePlan>(diagnostic::staleDocument,"Document context or revision changed");
++        if(acDocManager->isApplicationContext() || document->myLockMode()==AcAp::kNone || document->myLockMode()==AcAp::kNotLocked ||
++            document->myLockMode()==AcAp::kRead) return fail<WriteScopePlan>("COMMAND_CONTEXT_REQUIRED","A document write command is required");
++        const int undo=undoControl();
++        if(!(undo&1) || (undo&8)) return fail<WriteScopePlan>("UNDO_BOUNDARY_UNAVAILABLE","Undo must be enabled with no existing caller undo group");
++        SceneRequest request{context_,{},snapshot.units.confirmedMmPerInputUnit};
++        for(const auto& target:snapshot.targets) request.targetHandles.push_back(target.key.handle);
++        const auto actual=readScene(request);
++        if(!actual.canCommit()) return {std::nullopt,actual.issues};
++        if(actual.value->revision!=snapshot.revision) return fail<WriteScopePlan>(diagnostic::staleDocument,"Scene changed during current-document revalidation");
++        WriteRequest write{snapshot.documentIdentity,snapshot.revision,plan.viewIdentity,{},plan.requiredResources};
++        std::set<std::string> seen;
++        for(const auto& movement:plan.translations) {
++            if(!std::isfinite(movement.displacement.x)||!std::isfinite(movement.displacement.y))
++                return fail<WriteScopePlan>(diagnostic::outsideWriteScope,"Nonfinite translation rejected");
++            write.modifications.push_back(movement.target);
++        }
++        auto scope=planWriteScope(*actual.value,write);
++        if(!scope.canCommit()) return scope;
++        for(const auto& movement:plan.translations) {
++            const auto id=native_scene::objectId(*database,movement.target.handle);
++            if(!seen.insert(native_scene::handle(id)).second) return fail<WriteScopePlan>(diagnostic::outsideWriteScope,"Duplicate target translations rejected");
++            Read<AcDbEntity> entity(id);
++            if(!AcDbLine::cast(entity.get())) return fail<WriteScopePlan>(diagnostic::unsupportedNativeWrite,"Only ordinary Line translations are supported");
++            Read<AcDbLayerTableRecord> layer(entity->layerId());
++            if(layer->isLocked()) return fail<WriteScopePlan>("LOCKED_TARGET_LAYER","Target layer is locked");
++        }
++        return scope;
++    } catch(const std::exception& ex) { return fail<WriteScopePlan>(diagnostic::unsupportedNativeWrite,ex.what()); }
++}
++Result<CommitReceipt> InPlaceWriter::applyToCurrentDocument(PreparedBatch& batch, const LayoutPlan& plan, const SceneSnapshot& snapshot) {
++    // Do not touch the prepared/current database before rejecting stale or caller transaction state.
++    const auto initialScope=beginWriteScope(plan,snapshot);
++    if(!initialScope.canCommit()) return {std::nullopt,initialScope.issues};
++    if(!batch.validateOrdinaryLine()) return fail<CommitReceipt>(diagnostic::unsupportedNativeWrite,"Prepared database is not the unchanged supported single Line batch");
++    const auto layerDefinition=batch.layerDefinition();
++    if(!layerDefinition.canCommit()) return {std::nullopt,layerDefinition.issues};
++    LayoutPlan actualPlan=plan; actualPlan.requiredResources.push_back(*layerDefinition.value);
++    const auto scope=beginWriteScope(actualPlan,snapshot);
++    if(!scope.canCommit()) return {std::nullopt,scope.issues};
++    for(const auto& resource:scope.value->newResources) {
++        if(resource.kind!="layer"||resource.name!=layerDefinition.value->name||resource.definitionSignature!=layerDefinition.value->definitionSignature)
++            return fail<CommitReceipt>(diagnostic::unsupportedNativeWrite,"Creating this resource type is not supported by ordinary Line capability");
++    }
++    CommitReceipt receipt; receipt.documentIdentity=snapshot.documentIdentity;
++    try {
++        auto* database=context_.currentDatabase();
++        if(!database) return fail<CommitReceipt>(diagnostic::staleDocument,"Document changed before write");
++        Transaction transaction(*database->transactionManager());
++        try {
++            auto* layers=transaction.open<AcDbLayerTable>(database->layerTableId(),AcDb::kForWrite);
++            const auto layerName=native_scene::utf16(batch.line().layerName); AcDbObjectId layerId;
++            if(layers->has(layerName.c_str())) check(layers->getAt(layerName.c_str(),layerId),"reuse existing identical layer");
++            else {
++                auto layer=std::make_unique<AcDbLayerTableRecord>(); check(layer->setName(layerName.c_str()),"set requested layer name");
++                AcCmColor color; color.setColorIndex(static_cast<Adesk::UInt16>(batch.line().layerColor)); layer->setColor(color);
++                // A newly added transaction-resident layer has not received close-time defaults.
++                // Resolve the prepared layer's symbolic linetype in this target database explicitly;
++                // its prepared ObjectId must never be assigned across database boundaries.
++                Read<AcDbLayerTable> sourceLayers(batch.database()->layerTableId()); AcDbObjectId sourceLayerId;
++                check(sourceLayers->getAt(layerName.c_str(),sourceLayerId),"prepared layer dependency");
++                Read<AcDbLayerTableRecord> sourceLayer(sourceLayerId);
++                const auto sourceLinetypeName=native_scene::utf16(native_scene::symbolName(sourceLayer->linetypeObjectId()));
++                if(sourceLinetypeName.empty()) throw std::runtime_error("prepared layer has no resolved linetype dependency");
++                auto* targetLinetypes=transaction.open<AcDbLinetypeTable>(database->linetypeTableId(),AcDb::kForRead);
++                AcDbObjectId targetLinetypeId; check(targetLinetypes->getAt(sourceLinetypeName.c_str(),targetLinetypeId),"resolve target linetype dependency");
++                check(layer->setLinetypeObjectId(targetLinetypeId),"assign target linetype dependency");
++                check(layers->add(layerId,layer.get()),"add requested layer"); auto* owned=layer.release();
++                transaction.adopt(owned); receipt.createdResourceHandles.push_back(native_scene::handle(layerId));
++                const auto definition=native_scene::resourceDefinition(*owned);
++                if(definition.definitionSignature!=layerDefinition.value->definitionSignature) {
++                    Read<AcDbLayerTable> preparedLayers(batch.database()->layerTableId()); AcDbObjectId preparedId;
++                    check(preparedLayers->getAt(layerName.c_str(),preparedId),"diagnostic prepared layer id");
++                    Read<AcDbLayerTableRecord> preparedLayer(preparedId);
++                    throw std::runtime_error("created layer does not match prepared definition; expectedSignature="+
++                        layerDefinition.value->definitionSignature+"; actualSignature="+definition.definitionSignature+
++                        "; expectedFields="+layerReadback(*preparedLayer.get())+"; actualFields="+layerReadback(*owned));
++                }
++            }
++            notify(observer_,CommitStage::resourcesCreated);
++            auto* blocks=transaction.open<AcDbBlockTable>(database->blockTableId(),AcDb::kForRead); AcDbObjectId modelId;
++            check(blocks->getAt(ACDB_MODEL_SPACE,modelId),"model space id");
++            auto* model=transaction.open<AcDbBlockTableRecord>(modelId,AcDb::kForWrite);
++            const auto& spec=batch.line(); auto entity=std::make_unique<AcDbLine>(AcGePoint3d(spec.start.x,spec.start.y,0.0),AcGePoint3d(spec.end.x,spec.end.y,0.0));
++            entity->setDatabaseDefaults(database); check(entity->setLayer(layerId),"assign requested layer");
++            check(entity->setColorIndex(256),"line bylayer color"); check(entity->setLinetype(L"ByLayer"),"line bylayer linetype");
++            check(entity->setLinetypeScale(1.0),"line linetype scale"); check(entity->setLineWeight(AcDb::kLnWtByLayer),"line lineweight");
++            AcDbObjectId entityId; check(model->appendAcDbEntity(entityId,entity.get()),"append prepared ordinary Line"); auto* owned=entity.release();
++            transaction.adopt(owned); receipt.createdEntities.push_back({snapshot.databaseIdentity,native_scene::handle(entityId),snapshot.revision});
++            notify(observer_,CommitStage::entitiesAppended);
++            for(const auto& movement:plan.translations) {
++                const auto id=native_scene::objectId(*database,movement.target.handle);
++                auto* target=transaction.open<AcDbLine>(id,AcDb::kForWrite);
++                check(target->transformBy(AcGeMatrix3d::translation(AcGeVector3d(movement.displacement.x,movement.displacement.y,0.0))),"translate explicit target");
++            }
++            notify(observer_,CommitStage::targetsTranslated);
++            transaction.commit(); receipt.committed=true;
++            // One completed ACRX_CMD_MODAL caller forms the actual AutoCAD undo record.
++            // No manual inverse, database reload, global setting change, or caller transaction closure.
++            return {std::move(receipt),{}};
++        } catch(const Cancelled&) {
++            transaction.rollback(); return {std::move(receipt),{{"COMMIT_CANCELLED","Commit observer cancelled after mutation; own transaction aborted",{},true}}};
++        } catch(const std::exception& ex) {
++            transaction.rollback(); return {std::move(receipt),{{"INPLACE_COMMIT_FAILED",ex.what(),{},true}}};
++        } catch(...) {
++            transaction.rollback(); return {std::move(receipt),{{"INPLACE_COMMIT_FAILED","Non-standard observer exception; own transaction aborted",{},true}}};
++        }
++    } catch(const std::exception& ex) {
++        return {std::move(receipt),{{"INPLACE_RECOVERY_ERROR",ex.what(),{},true}}};
++    }
++}
++}
+--- a/tests/native/inplace/NativeInPlaceDriver.cpp
++++ b/tests/native/inplace/NativeInPlaceDriver.cpp
+@@ -9,7 +9,17 @@
+ using namespace bce::native;
+ using namespace bce::inplace_test;
+ HMODULE moduleHandle{};
+-enum class Phase { validated, setupComplete, checked, finished };
++enum class Phase { validated, setupComplete, rollbackComplete, cancelComplete, checked, committed, finished };
++class UndoWatcher final : public AcEditorReactor {
++public:
++    unsigned started{0}, ended{0}, failed{0};
++    UndoWatcher() { acedEditor->addReactor(this); }
++    ~UndoWatcher() { acedEditor->removeReactor(this); }
++    void commandWillStart(const ACHAR* name) override { if(_wcsicmp(name,L"U")==0) ++started; }
++    void commandEnded(const ACHAR* name) override { if(_wcsicmp(name,L"U")==0) ++ended; }
++    void commandCancelled(const ACHAR* name) override { if(_wcsicmp(name,L"U")==0) ++failed; }
++    void commandFailed(const ACHAR* name) override { if(_wcsicmp(name,L"U")==0) ++failed; }
++};
+ struct Case final {
+     Config config;
+     File report;
+@@ -19,7 +29,12 @@
+     std::unique_ptr<NativeSceneContext> context;
+     Phase phase{Phase::validated};
+     std::vector<std::string> assertions, checkpoints, errors;
+-    Audit baseline, after;
++    Audit baseline, after, rollbackAfter, cancelAfter, undoAfter;
++    std::vector<std::string> removedObjectEvidence;
++    std::vector<std::string> diskBefore, diskAfter;
++    std::unique_ptr<UndoWatcher> undoWatcher;
++    std::optional<CommitReceipt> successReceipt;
++    bool committed{false};
+     bool failed{false};
+ };
+ std::unique_ptr<Case> active;
+@@ -31,10 +46,15 @@
+         {"desktop", quote(c.config.desktop)}, {"moduleSHA256", quote(c.config.moduleSHA256)}, {"iniSHA256", quote(c.config.iniSHA256)},
+         {"sourceSHA256", object({{"scheme", quote(c.config.schemeSHA256)}, {"reference", quote(c.config.referenceSHA256)}})},
+         {"assertions", array(c.assertions)}, {"checkpoints", array(c.checkpoints)}, {"errors", array(c.errors)},
+-        {"baseline", c.baseline.json()}, {"after", c.after.json()}, {"undoAfter", "null"},
+-        {"supportedWriteClasses", "[]"}, {"sourceDrawingWritten", "false"}, {"saveCloseReopenUsed", "false"},
+-        {"realUndoExecuted", "false"}, {"limitations", array({q("RED candidate: production scene/preparation/writer services deliberately unimplemented"),
+-            q("No TCH support, no generation claim; seven recovery scenarios await service implementation and native execution")})}});
++        {"baseline", c.baseline.json()}, {"after", c.after.json()}, {"undoAfter", c.undoAfter.json()},
++        {"rollbackAfter", c.rollbackAfter.json()}, {"cancelAfter", c.cancelAfter.json()}, {"removedObjectEvidence",array(c.removedObjectEvidence)},
++        {"dwgFilesBefore",array(c.diskBefore)},{"dwgFilesAfter",array(c.diskAfter)},
++        {"supportedWriteClasses", c.committed && !c.failed ? array({q("AcDbLine")}) : "[]"}, {"sourceDrawingWritten", "false"}, {"saveCloseReopenUsed", "false"},
++        {"realUndoExecuted", c.undoWatcher && c.undoWatcher->ended==1 ? "true" : "false"},
++        {"undoCommandsStarted",std::to_string(c.undoWatcher?c.undoWatcher->started:0)},
++        {"undoCommandsEnded",std::to_string(c.undoWatcher?c.undoWatcher->ended:0)},
++        {"limitations", array({q("Only explicit ordinary planar Line batch and layer capability is under test"),
++            q("No TCH support, no full drawing generation; unsupported native types are rejected")})}});
+     replace_owned_report(c.report.get(), report);
+     replace_owned_report(c.compatibilityReport.get(), report);
+ }
+@@ -62,11 +82,28 @@
+ void queue(const wchar_t* command) {
+     ok(acDocManager->sendStringToExecute(active->document, command, false, false, false), "queue fixed command");
+ }
++std::vector<std::string> dwgFiles() {
++    std::vector<std::string> result;
++    for(const auto& directory:{active->config.session,active->config.output}) {
++        WIN32_FIND_DATAW data{}; const auto search=directory+L"\\*.dwg";
++        HANDLE find=FindFirstFileW(search.c_str(),&data);
++        if(find==INVALID_HANDLE_VALUE) { require(GetLastError()==ERROR_FILE_NOT_FOUND,"DWG inventory failed"); continue; }
++        struct FindScope { HANDLE handle; ~FindScope() { FindClose(handle); } } scope{find};
++        do { if(!(data.dwFileAttributes&FILE_ATTRIBUTE_DIRECTORY)) {
++            const auto path=directory+L"\\"+data.cFileName; result.push_back(object({{"path",quote(path)},{"sha256",quote(sha256(path))}}));
++        } } while(FindNextFileW(find,&data));
++        require(GetLastError()==ERROR_NO_MORE_FILES,"DWG inventory incomplete");
++    }
++    std::sort(result.begin(),result.end()); return result;
++}
+ void finish() {
+     require(sha256(active->config.scheme) == active->config.schemeSHA256 && sha256(active->config.reference) == active->config.referenceSHA256,
+         "bound source bytes changed");
++    active->diskAfter=dwgFiles();
++    expect("UnnamedDocumentAndDiskInputsRemainUnchanged",active->diskBefore==active->diskAfter&&sysvar(L"DWGTITLED")=="0",
++        array(active->diskAfter),"same session/output DWG files and unnamed current drawing; no save/close/reopen");
+     checkpoint("final-verification-complete"); active->phase = Phase::finished;
+-    write_report(active->failed ? "failed" : "partial");
++    write_report(active->failed ? "failed" : "passed");
+     active->report = File{}; active->compatibilityReport = File{};
+     acutPrintf(L"\nBCE_INPLACE_CASE_FINAL; inspect inplace-case.json\n");
+ }
+@@ -88,7 +125,7 @@
+     require(sysvar(L"DWGTITLED") == "0" && roots(*c->document->database()).empty(), "fixture document must be unnamed and empty");
+     c->report = create_new(c->config.output + L"\\inplace-case.json");
+     c->compatibilityReport = create_new(c->config.output + L"\\native-case.json");
+-    active = std::move(c); write_report("failed"); checkpoint("validated-before-fixture");
++    active = std::move(c); active->diskBefore=dwgFiles(); write_report("failed"); checkpoint("validated-before-fixture");
+     queue(L"BCE_IP_SETUP\n");
+ }); }
+ void setup() noexcept { boundary([] {
+@@ -121,6 +158,45 @@
+     c.context = std::make_unique<NativeSceneContext>(); c.phase = Phase::setupComplete;
+     checkpoint("setup-command-fixture-complete-no-save"); queue(L"BCE_IP_APPLY\n");
+ }); }
++bool hasIssue(const std::vector<Issue>& issues,const char* code) {
++    return std::any_of(issues.begin(),issues.end(),[code](const Issue& issue){return issue.code==code;});
++}
++SceneSnapshot currentScene() {
++    auto result=readScene({*active->context,{handle(active->target)},1.0});
++    require(result.canCommit(),"scene prerequisite failed: "+issue_codes(result.issues)); return *result.value;
++}
++std::unique_ptr<PreparedBatch> batch() {
++    auto result=PreparedBatch::create({{2000.0,0.0},{3000.0,0.0},"N2NewLayer",3});
++    require(result.canCommit(),"prepared prerequisite failed: "+issue_codes(result.issues)); return std::move(*result.value);
++}
++LayoutPlan planFor(PreparedBatch& prepared,const SceneSnapshot& scene) {
++    const auto layer=prepared.layerDefinition(); require(layer.canCommit(),"prepared layer not readable");
++    return {"N2",{{scene.targets.front().key,{500.0,200.0}}},{*layer.value}};
++}
++class StopAfterTranslation final : public CommitObserver {
++public:
++    explicit StopAfterTranslation(bool cancel):cancel_(cancel) {}
++    std::vector<CommitStage> stages;
++    bool continueCommit(CommitStage stage) override {
++        stages.push_back(stage);
++        if(stage==CommitStage::targetsTranslated) { if(cancel_) return false; throw std::runtime_error("injected exception after all mutations"); }
++        return true;
++    }
++    bool reachedAll() const { return stages==std::vector<CommitStage>{CommitStage::resourcesCreated,CommitStage::entitiesAppended,CommitStage::targetsTranslated}; }
++private:bool cancel_;
++};
++bool removed(const CommitReceipt& receipt,const char* phase) {
++    auto& db=*active->document->database(); bool all=true; std::vector<std::string> handles=receipt.createdResourceHandles;
++    for(const auto& key:receipt.createdEntities) handles.push_back(key.handle);
++    for(const auto& text:handles) {
++        AcDbObjectId id; const auto wide=bce::native_scene::utf16(text); const auto status=db.getAcDbObjectId(id,false,AcDbHandle(wide.c_str()));
++        const bool gone=status!=Acad::eOk || id.isNull() || !id.isValid() || id.isErased() || id.isEffectivelyErased(); all=all&&gone;
++        active->removedObjectEvidence.push_back(object({{"phase",q(phase)},{"handle",quote(text)},{"lookupStatus",std::to_string(status)},
++            {"null",id.isNull()?"true":"false"},{"valid",!id.isNull()&&id.isValid()?"true":"false"},
++            {"erased",!id.isNull()&&id.isValid()&&id.isErased()?"true":"false"},{"absentOrErased",gone?"true":"false"}}));
++    }
++    return all && receipt.createdEntities.size()==1 && receipt.createdResourceHandles.size()==1;
++}
+ void apply() noexcept { boundary([] {
+     check_state(Phase::setupComplete); auto& c = *active;
+     c.baseline = capture(); checkpoint("apply-command-baseline-after-setup-return");
+@@ -129,20 +205,104 @@
+     const auto scene = readScene({*c.context,{handle(c.target)},1.0});
+     expect("ReadSceneIncludesUnsavedEdits", scene.canCommit() && scene.value->targets.size() == 1 && scene.value->preserved.size() == 3,
+         issue_codes(scene.issues), "current unsaved scene read succeeds: one explicit target, three preserved roots");
+-    const auto prepared = PreparedBatch::create({{2000.0,0.0},{3000.0,0.0},"N2NewLayer",3});
++    auto prepared = PreparedBatch::create({{2000.0,0.0},{3000.0,0.0},"N2NewLayer",3});
+     expect("PreparedBatchOwnsIndependentDatabase", prepared.canCommit() && (*prepared.value)->database() &&
+         (*prepared.value)->database() != c.document->database(), issue_codes(prepared.issues), "prepared Line database exists and differs from current document");
+-    // These assertions are unconditionally reported as NOT RUN when the real prerequisites fail.
+-    // They must never be reported as rollback/undo passes merely because the stub wrote nothing.
+-    for (const auto* nameValue : {"RollbackPreservesUnsavedEdits", "CancelDuringCommit", "SharedStyleConflictKeepsOtherContent",
+-        "GlobalVariablesRemainUnchanged", "UndoRestoresSelectedAndProtectedContent", "StaleSceneRejectsWrite", "OuterTransactionIsNotClosed"}) {
+-        c.assertions.push_back(object({{"name", q(nameValue)}, {"status", q("not_run")},
+-            {"reason", q("RED prerequisites missing: no actual write or undo attempted")}}));
+-    }
+-    c.after = capture(); expect("RedStubDidNotMutateCurrentDocument", c.baseline.sameContents(c.after), c.after.json(), "unchanged public roots/resources/globals");
+-    c.phase = Phase::checked; queue(L"BCE_IP_VERIFY\n");
+-}); }
+-void verify() noexcept { boundary([] { check_state(Phase::checked); finish(); }); }
++    if(!scene.canCommit() || !prepared.canCommit()) { c.after=capture(); c.phase=Phase::checked; queue(L"BCE_IP_VERIFY\n"); return; }
++    auto& preparedBatch=**prepared.value; const auto plan=planFor(preparedBatch,*scene.value);
++    StopAfterTranslation fault(false); InPlaceWriter writer(*c.context,&fault);
++    const auto result=writer.applyToCurrentDocument(preparedBatch,plan,*scene.value);
++    c.rollbackAfter=capture(); const bool gone=result.value && removed(*result.value,"rollback");
++    expect("RollbackPreservesUnsavedEdits", !result.canCommit()&&hasIssue(result.issues,"INPLACE_COMMIT_FAILED")&&fault.reachedAll()&&
++        gone&&c.baseline.sameContents(c.rollbackAfter),issue_codes(result.issues)+"; stages="+std::to_string(fault.stages.size()),
++        "after resource/Line/target mutation injected exception: original roots/resources/globals restored and new handles invalid/erased");
++    c.phase=Phase::rollbackComplete; checkpoint("rollback-verified"); queue(L"BCE_IP_CANCEL\n");
++}); }
++void cancel() noexcept { boundary([] {
++    check_state(Phase::rollbackComplete); auto& c=*active; const auto scene=currentScene(); auto prepared=batch(); const auto plan=planFor(*prepared,scene);
++    const auto before=capture(); StopAfterTranslation cancellation(true); InPlaceWriter writer(*c.context,&cancellation);
++    const auto result=writer.applyToCurrentDocument(*prepared,plan,scene); c.cancelAfter=capture();
++    const bool gone=result.value&&removed(*result.value,"cancel");
++    expect("CancelDuringCommit",!result.canCommit()&&hasIssue(result.issues,"COMMIT_CANCELLED")&&cancellation.reachedAll()&&
++        gone&&before.sameContents(c.cancelAfter),issue_codes(result.issues),"cancel after target translation follows same rollback; all unsaved edits/resources remain");
++    c.phase=Phase::cancelComplete; checkpoint("cancel-verified"); queue(L"BCE_IP_CHECKS\n");
++}); }
++void checks() noexcept { boundary([] {
++    check_state(Phase::cancelComplete); auto& c=*active; auto& db=*c.document->database(); auto prepared=batch();
++    auto scene=currentScene(); auto plan=planFor(*prepared,scene); const auto before=capture();
++    auto shared=std::find_if(scene.resources.begin(),scene.resources.end(),[](const ResourceDefinition& r){return r.kind=="textstyle"&&r.name=="Shared";});
++    require(shared!=scene.resources.end(),"real Shared style missing"); auto conflict=*shared; conflict.name="sHaReD"; conflict.definitionSignature+="different width";
++    plan.requiredResources.push_back(conflict); InPlaceWriter writer(*c.context);
++    const auto conflictResult=writer.applyToCurrentDocument(*prepared,plan,scene);
++    expect("SharedStyleConflictKeepsOtherContent",!conflictResult.canCommit()&&hasIssue(conflictResult.issues,diagnostic::resourceConflict)&&before.sameContents(capture()),
++        issue_codes(conflictResult.issues),"actual case-insensitive Shared style conflict rejected before any mutation");
++    scene=currentScene(); plan=planFor(*prepared,scene);
++    auto* manager=db.transactionManager(); auto* outer=manager->startTransaction(); require(outer,"outer transaction start");
++    bool outerVerified=false; std::string outerIssues;
++    try {
++        AcDbObject* objectValue{}; ok(outer->getObject(objectValue,c.preserved,AcDb::kForWrite),"outer protected line");
++        auto* line=AcDbLine::cast(objectValue); require(line,"outer typed line"); ok(line->setEndPoint(AcGePoint3d(1777.0,100.0,0.0)),"outer content");
++        const auto result=writer.applyToCurrentDocument(*prepared,plan,scene); outerIssues=issue_codes(result.issues);
++        outerVerified=!result.canCommit()&&hasIssue(result.issues,"OUTER_TRANSACTION_ACTIVE")&&manager->numActiveTransactions()==1&&
++            manager->topTransaction()==outer&&line->endPoint()==AcGePoint3d(1777.0,100.0,0.0);
++        require(manager->topTransaction()==outer,"writer consumed caller transaction"); ok(manager->abortTransaction(),"caller abort outer");
++    } catch(...) { if(manager->numActiveTransactions()==1&&manager->topTransaction()==outer) manager->abortTransaction(); throw; }
++    expect("OuterTransactionIsNotClosed",outerVerified&&before.sameContents(capture()),outerIssues,"outer transaction depth/top/content unchanged; only caller aborts");
++    scene=currentScene(); plan=planFor(*prepared,scene);
++    { Opened<AcDbLine> line(c.preserved,AcDb::kForWrite); ok(line->setEndPoint(AcGePoint3d(1250.0,100.0,0.0)),"later unsaved protected edit"); }
++    const auto edited=capture(); const auto stale=writer.applyToCurrentDocument(*prepared,plan,scene);
++    expect("StaleSceneRejectsWrite",!stale.canCommit()&&hasIssue(stale.issues,diagnostic::staleDocument)&&edited.sameContents(capture()),
++        issue_codes(stale.issues),"actual protected geometry edit invalidates snapshot; no additional writer mutation");
++    scene=currentScene(); plan=planFor(*prepared,scene);
++    { NativeSceneContext other; InPlaceWriter otherWriter(other); const auto cross=otherWriter.applyToCurrentDocument(*prepared,plan,scene);
++        expect("CrossContextSceneRejectsWrite",!cross.canCommit()&&hasIssue(cross.issues,diagnostic::staleDocument)&&edited.sameContents(capture()),
++            issue_codes(cross.issues),"same drawing snapshot from another context rejected"); }
++    // Baseline now includes the deliberately added, still-unsaved protected edit.
++    c.baseline=capture(); c.phase=Phase::checked; checkpoint("scope-boundaries-verified"); queue(L"BCE_IP_SUCCESS\n");
++}); }
++void success() noexcept { boundary([] {
++    check_state(Phase::checked); auto& c=*active; const auto scene=currentScene(); auto prepared=batch(); const auto plan=planFor(*prepared,scene);
++    InPlaceWriter writer(*c.context); const auto result=writer.applyToCurrentDocument(*prepared,plan,scene); c.after=capture();
++    c.committed=result.canCommit()&&result.value->committed; c.successReceipt=result.value;
++    bool targetMoved=false,preservedSame=false;
++    if(c.committed) {
++        Opened<AcDbLine> target(c.target); targetMoved=target->startPoint()==AcGePoint3d(500.0,200.0,0.0)&&target->endPoint()==AcGePoint3d(1500.0,200.0,0.0);
++        Opened<AcDbLine> preserved(c.preserved); preservedSame=preserved->startPoint()==AcGePoint3d(0.0,100.0,0.0)&&preserved->endPoint()==AcGePoint3d(1250.0,100.0,0.0);
++        for(const auto id:{c.oldText,c.unsavedText}) { Opened<AcDbEntity> e(id); const auto value=entity(*e.get());
++            preservedSame=preservedSame&&std::find(c.baseline.entities.begin(),c.baseline.entities.end(),value)!=c.baseline.entities.end(); }
++    }
++    bool layerDependencyCorrect=false;
++    if(c.committed) {
++        auto& db=*c.document->database(); Opened<AcDbLayerTable> layers(db.layerTableId()); AcDbObjectId layerId;
++        ok(layers->getAt(L"N2NewLayer",layerId),"read committed new layer"); Opened<AcDbLayerTableRecord> layer(layerId);
++        Opened<AcDbLinetypeTable> linetypes(db.linetypeTableId()); AcDbObjectId continuous;
++        ok(linetypes->getAt(L"Continuous",continuous),"target Continuous id");
++        layerDependencyCorrect=!layer->linetypeObjectId().isNull() && layer->linetypeObjectId()==continuous &&
++            layer->color().colorIndex()==3 && layer->lineWeight()==AcDb::kLnWtByLwDefault && !layer->isOff() &&
++            !layer->isFrozen() && !layer->isLocked() && layer->isPlottable();
++    }
++    expect("CommittedLayerUsesTargetDatabaseLinetype",layerDependencyCorrect,
++        c.committed?c.after.json():issue_codes(result.issues),"new layer references this database's actual Continuous record and retains requested public definition");
++    expect("SuccessfulCommitHasActualMutations",c.committed&&targetMoved&&preservedSame&&c.after.entities.size()==5&&
++        c.after.resourceRecords.size()==c.baseline.resourceRecords.size()+1,issue_codes(result.issues),"one new Line/layer; only E translated; S and both old Text remain");
++    expect("GlobalVariablesRemainUnchanged",c.committed&&c.baseline.globalsJson==c.after.globalsJson,c.after.globalsJson,"actual successful mutation leaves every captured global unchanged");
++    if(!c.committed) {
++        expect("UndoRestoresSelectedAndProtectedContent",false,"NOT_RUN: commit did not occur","real single U restores baseline");
++        queue(L"BCE_IP_VERIFY\n"); return;
++    }
++    c.undoWatcher=std::make_unique<UndoWatcher>(); c.phase=Phase::committed; checkpoint("successful-write-command-about-to-return");
++    queue(L"_.U\nBCE_IP_VERIFY\n");
++}); }
++void verify() noexcept { boundary([] {
++    require(active!=nullptr,"no active case");
++    if(active->phase==Phase::committed) {
++        check_state(Phase::committed); auto& c=*active; c.undoAfter=capture();
++        const bool gone=c.successReceipt&&removed(*c.successReceipt,"undo");
++        expect("UndoRestoresSelectedAndProtectedContent",c.undoWatcher&&c.undoWatcher->started==1&&c.undoWatcher->ended==1&&c.undoWatcher->failed==0&&
++            gone&&c.baseline.sameContents(c.undoAfter),c.undoAfter.json(),"one observed native U after completed write command restores all baseline roots/resources/globals and preserves unsaved edits");
++    } else check_state(Phase::checked);
++    finish();
++}); }
+ }
+ BOOL APIENTRY DllMain(HMODULE module, DWORD reason, LPVOID) {
+     if (reason == DLL_PROCESS_ATTACH) { moduleHandle = module; DisableThreadLibraryCalls(module); } return TRUE;
+@@ -152,7 +312,8 @@
+         if (message == AcRx::kInitAppMsg) {
+             acrxDynamicLinker->unlockApplication(id); acrxRegisterAppMDIAware(id);
+             for (const auto& command : {std::pair<const wchar_t*, AcRxFunctionPtr>{L"BCE_TEST_RUN",run},
+-                {L"BCE_IP_SETUP",setup}, {L"BCE_IP_APPLY",apply}, {L"BCE_IP_VERIFY",verify}})
++                {L"BCE_IP_SETUP",setup}, {L"BCE_IP_APPLY",apply}, {L"BCE_IP_CANCEL",cancel},
++                {L"BCE_IP_CHECKS",checks}, {L"BCE_IP_SUCCESS",success}, {L"BCE_IP_VERIFY",verify}})
+                 if (acedRegCmds->addCommand(L"BCE_INPLACE_CASES", command.first, command.first, ACRX_CMD_MODAL, command.second) != Acad::eOk)
+                     return AcRx::kRetError;
+         } else if (message == AcRx::kUnloadAppMsg) {

@@ -1,0 +1,22 @@
+{
+  "candidate": "v60",
+  "nativeError": "failure: specific wipeout vars do not expose SDK raster base",
+  "beforeLayer": {
+    "class": "AcDbWipeoutVariables",
+    "baseCast": false,
+    "specificGetter": -9,
+    "DXF70": 1,
+    "WIPEOUTFRAME": 1,
+    "FRAME": 3
+  },
+  "afterLayer": {
+    "class": "AcDbWipeoutVariables",
+    "baseCast": false,
+    "specificGetter": -9,
+    "DXF70": 1,
+    "WIPEOUTFRAME": 1,
+    "FRAME": 3
+  },
+  "DWGProduced": false,
+  "next": "Actual AcDbWipeoutVariables does not derive SDK raster base. Apply SDK acedSetVar inside target Working scope and require actual target DXF70 zero, saved reopen zero, and active document audit zero"
+}

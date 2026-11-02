@@ -1,0 +1,35 @@
+{
+  "purpose": "Preserve v3 actual H first-modern-grip movement and extra500 mismatch; no compensation inferred",
+  "files": [
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\src\\NativeFourSideAxisSingletonProbe.inc",
+      "file": "NativeFourSideAxisSingletonProbe.inc",
+      "SHA256": "C2A4F4ABB8F10B6E01E9AB45B9BA825A4FBC16C9485E8E2CD4B778D0331F42F9"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_four_side_singletons_native.py",
+      "file": "verify_four_side_singletons_native.py",
+      "SHA256": "B01298E851B90FBF024A7C0DA9729DAB23E7E5DDA37AA5BEBE931109D8A4E9CE"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\test_four_side_singletons_contract.py",
+      "file": "test_four_side_singletons_contract.py",
+      "SHA256": "829BAFFFC0D046BD6EF05F10DC96B55B81984894F3F37FEECB506F36A0134119"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-singletons-20261029-105935-814393\\four-side-singletons-native.json",
+      "file": "four-side-singletons-native.json",
+      "SHA256": "23E468E270E81FAB3AD3702620B6D2567408C338415BFE83E36FBE76BEB5481B"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-singletons-20261029-105935-814393\\verify-result.txt",
+      "file": "verify-result.txt",
+      "SHA256": "1FA1EB8050D8D9E62E8F6B1D452DE344E14F0CC91029139B712CEA0D69D8940E"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-singletons-20261029-105935-814393\\quiet-job-receipt.json",
+      "file": "quiet-job-receipt.json",
+      "SHA256": "A5BE6BFB53415A594317FC562353611DAB065B83558EB7DCD619F6FED43812CC"
+    }
+  ]
+}

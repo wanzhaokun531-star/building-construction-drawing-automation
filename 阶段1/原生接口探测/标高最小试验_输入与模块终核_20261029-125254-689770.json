@@ -1,0 +1,554 @@
+{
+  "contract": "stage1.elevation-evidence-closure.v1",
+  "recorded": "2026-10-29T12:52:54.641244+08:00",
+  "inputs": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\方案平面图.dwg",
+      "sha256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+      "expected": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+      "unchanged": true
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\施工图平面参考图.dwg",
+      "sha256": "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27",
+      "expected": "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27",
+      "unchanged": true
+    },
+    {
+      "path": "D:\\cad插件\\方案平面图.dwg",
+      "sha256": "92E01E8DD5BD4BA2B65CA48C6A3E8F6C38E3CB5F7EF3C3C36E8B692980B8BDD6",
+      "expected": "92E01E8DD5BD4BA2B65CA48C6A3E8F6C38E3CB5F7EF3C3C36E8B692980B8BDD6",
+      "unchanged": true
+    },
+    {
+      "path": "D:\\cad插件\\施工图平面参考图.dwg",
+      "sha256": "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27",
+      "expected": "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27",
+      "unchanged": true
+    }
+  ],
+  "runs": [
+    {
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationcore-20261029-115421-799232",
+      "reports": [
+        {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationcore-20261029-115421-799232\\elevation-core-native.json",
+          "sha256": "171C10F5260DBC6B79A01CB0EB2EEA45EF06BDF99E2543DC17873315B446311C",
+          "contract": "stage1.elevation-roundtrip-core.v1",
+          "completed": false,
+          "result": null,
+          "verificationExitCode": null,
+          "error": "all6 original elevation actual-text baselines unavailable"
+        },
+        {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationcore-20261029-115421-799232\\native-open.json",
+          "sha256": "910EB4C624186A212C2EAA0DE127C25CD7CCC69AA0231F21351BDD4B9DE40D1C",
+          "contract": "stage1.native-control-open.v1",
+          "completed": null,
+          "result": null,
+          "verificationExitCode": null,
+          "error": null
+        },
+        {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationcore-20261029-115421-799232\\quiet-job-receipt.json",
+          "sha256": "41ECCECD08522B1FD2A532F5EA54A7203FA8CBCB19E0E76B2F748EE8BB4311DE",
+          "contract": "stage1.quiet-job.v1",
+          "completed": null,
+          "result": null,
+          "verificationExitCode": 1,
+          "error": "native business assertions failed; original evidence retained"
+        }
+      ]
+    },
+    {
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationcore-20261029-120237-634768",
+      "reports": [
+        {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationcore-20261029-120237-634768\\elevation-core-native.json",
+          "sha256": "9DF6B2B116F2BEE9EECBDC5F97C8DEBC8791EA744E29A402A042647E2242E242",
+          "contract": "stage1.elevation-roundtrip-core.v2",
+          "completed": true,
+          "result": null,
+          "verificationExitCode": null,
+          "error": null
+        },
+        {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationcore-20261029-120237-634768\\native-open.json",
+          "sha256": "23DC4CB2DEEE179CC7CC01636793E7B5500C7A5CB48850B7B9CAA6AC0F67332A",
+          "contract": "stage1.native-control-open.v1",
+          "completed": null,
+          "result": null,
+          "verificationExitCode": null,
+          "error": null
+        },
+        {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationcore-20261029-120237-634768\\quiet-job-receipt.json",
+          "sha256": "A066F39CF315C0BA33B44E7D65DB88F94EA80C14753AAA2A2D4173594651A64E",
+          "contract": "stage1.quiet-job.v1",
+          "completed": null,
+          "result": null,
+          "verificationExitCode": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationdialog-20261029-115138-764555",
+      "reports": [
+        {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationdialog-20261029-115138-764555\\elevation-dialog-native.json",
+          "sha256": "2B8EA5899A7221A02C83F645DCCA98D44331C39A3966C0383D5B5B9503A6DD41",
+          "contract": "stage1.elevation-dialog-discover-native.v1",
+          "completed": false,
+          "result": null,
+          "verificationExitCode": null,
+          "error": "elevation dialog discovery/cancellation or no-change contract not fully verified; no edit/radio/object selection was performed"
+        },
+        {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationdialog-20261029-115138-764555\\elevation-dialog-progress.json",
+          "sha256": "FDED27476AEB328BF8092BF316A5F8D3436EFC64119583F8FCC1F842AEEEF820",
+          "contract": null,
+          "completed": null,
+          "result": null,
+          "verificationExitCode": null,
+          "error": null
+        },
+        {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationdialog-20261029-115138-764555\\native-open.json",
+          "sha256": "F69A0C10AB9B7DC792CD1537DC595A3E96264965A93002C70AAAE8B63F083899",
+          "contract": "stage1.native-control-open.v1",
+          "completed": null,
+          "result": null,
+          "verificationExitCode": null,
+          "error": null
+        },
+        {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationdialog-20261029-115138-764555\\quiet-job-receipt.json",
+          "sha256": "D3DFC376B15C449F437A79BC5B6E2FCB8F8B10F23174884784D46DE796BA1F30",
+          "contract": "stage1.quiet-job.v1",
+          "completed": null,
+          "result": null,
+          "verificationExitCode": 1,
+          "error": "native business assertions failed; original evidence retained"
+        }
+      ]
+    },
+    {
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationdialog-20261029-120320-989844",
+      "reports": [
+        {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationdialog-20261029-120320-989844\\elevation-dialog-native.json",
+          "sha256": "0E1703EC678ED34444B3DA01D9A54351FBF71EE73E6C83E68110520CB5AC9B08",
+          "contract": "stage1.elevation-dialog-discover-native.v2",
+          "completed": true,
+          "result": null,
+          "verificationExitCode": null,
+          "error": null
+        },
+        {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationdialog-20261029-120320-989844\\elevation-dialog-progress.json",
+          "sha256": "26E82B905C8772A4E2158DD980664A913A2D3AB582266F540B02755ACFAC71A0",
+          "contract": null,
+          "completed": null,
+          "result": null,
+          "verificationExitCode": null,
+          "error": null
+        },
+        {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationdialog-20261029-120320-989844\\native-open.json",
+          "sha256": "ABE115779C6ABC032667F5A7CBA6FD43B9B245026B8BFD62CF8DEDAF8ED6F3FD",
+          "contract": "stage1.native-control-open.v1",
+          "completed": null,
+          "result": null,
+          "verificationExitCode": null,
+          "error": null
+        },
+        {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationdialog-20261029-120320-989844\\quiet-job-receipt.json",
+          "sha256": "5FC1A8BDF2DB37F5AC3C0186AECB1585E5DEFAB74CABFE0014F5C89389892004",
+          "contract": "stage1.quiet-job.v1",
+          "completed": null,
+          "result": null,
+          "verificationExitCode": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationdialog-20261029-124154-259423",
+      "reports": [
+        {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationdialog-20261029-124154-259423\\elevation-dialog-native.json",
+          "sha256": "F23B28AEF6F6EA5523F397B523EF7743B7E5ADDD33CE0681E01FAD94CE9D64FD",
+          "contract": "stage1.elevation-dialog-discover-native.v2",
+          "completed": true,
+          "result": null,
+          "verificationExitCode": null,
+          "error": null
+        },
+        {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationdialog-20261029-124154-259423\\elevation-dialog-progress.json",
+          "sha256": "68DABD3687494BB7B470F5804EDB6B593A10A6D63CC69FA73D25F030D4E9D769",
+          "contract": null,
+          "completed": null,
+          "result": null,
+          "verificationExitCode": null,
+          "error": null
+        },
+        {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationdialog-20261029-124154-259423\\native-open.json",
+          "sha256": "B56805D0C5AD17AF51B00E6E7DDBB218ED7C70572E188DD92A2ABB30CF4501EB",
+          "contract": "stage1.native-control-open.v1",
+          "completed": null,
+          "result": null,
+          "verificationExitCode": null,
+          "error": null
+        },
+        {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationdialog-20261029-124154-259423\\quiet-job-receipt.json",
+          "sha256": "8BE38F16909BEA11859046B7DB1510A888ADB40F623632667D8B4294AB91B6E0",
+          "contract": "stage1.quiet-job.v1",
+          "completed": null,
+          "result": null,
+          "verificationExitCode": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationroundtrip-20261029-122955-760278",
+      "reports": [
+        {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationroundtrip-20261029-122955-760278\\elevation-roundtrip-initial-core-native.json",
+          "sha256": "01414439F832D507BAD9BF998B3649BC8796CFE7D5FC31DDEF042F38FB19A5E5",
+          "contract": "stage1.elevation-roundtrip-core.v2",
+          "completed": true,
+          "result": null,
+          "verificationExitCode": null,
+          "error": null
+        },
+        {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationroundtrip-20261029-122955-760278\\native-open.json",
+          "sha256": "9D03598953CCAD8F410D2B7B2C4914695D5BBFFAB3E83FB417219DF0FB6B975A",
+          "contract": "stage1.native-control-open.v1",
+          "completed": null,
+          "result": null,
+          "verificationExitCode": null,
+          "error": null
+        },
+        {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationroundtrip-20261029-122955-760278\\quiet-job-receipt.json",
+          "sha256": "F0293DDC30C5229F95FF317D9B2BA637BD66C4E08D9FA774C53FA22E30005797",
+          "contract": "stage1.quiet-job.v1",
+          "completed": null,
+          "result": null,
+          "verificationExitCode": null,
+          "error": "native worker did not complete within limit; no CAD command cancelled"
+        }
+      ]
+    },
+    {
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationroundtrip-20261029-124514-705318",
+      "reports": [
+        {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationroundtrip-20261029-124514-705318\\elevation-roundtrip-initial-core-native.json",
+          "sha256": "038C860E302F9A248A180157D0DED2FAE8C600000F9B60D8355BFA0349F4C14A",
+          "contract": "stage1.elevation-roundtrip-core.v2",
+          "completed": true,
+          "result": null,
+          "verificationExitCode": null,
+          "error": null
+        },
+        {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationroundtrip-20261029-124514-705318\\native-open.json",
+          "sha256": "0A00825AE803E1B9A47CE5BA5334914ACADBB931F5B716C5AC1449F2EFBCCB2B",
+          "contract": "stage1.native-control-open.v1",
+          "completed": null,
+          "result": null,
+          "verificationExitCode": null,
+          "error": null
+        },
+        {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationroundtrip-20261029-124514-705318\\quiet-job-receipt.json",
+          "sha256": "2F9221D6EFDFE13F63D2589ED208438F3480CAF2BDB13B5ABA48BADB916809B7",
+          "contract": "stage1.quiet-job.v1",
+          "completed": null,
+          "result": null,
+          "verificationExitCode": null,
+          "error": "native worker did not complete within limit; no CAD command cancelled"
+        }
+      ]
+    }
+  ],
+  "staging": [
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-115121",
+      "deleted": [],
+      "status": "EXITED_STAGING_IDENTIFIED",
+      "processId": 9300,
+      "processAliveOrUnknown": false,
+      "monitorFinal": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-115121\\isolation-final.json",
+        "sha256": "A4ACEB0319AF95FF8C463749A23499EBF70677522D1B539626992C162C2FDF21",
+        "evidence": {
+          "contract": "stage1.isolated-host-final.v1",
+          "recorded": "2026-10-29T12:02:23.3768379+08:00",
+          "nonce": "873b1219acb049ff9a453af36e9a6093",
+          "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-115121",
+          "workerCreated": true,
+          "processId": 9300,
+          "workerExited": true,
+          "workerExitCode": 70,
+          "readyIdentityConfirmed": true,
+          "nativeQuitConfirmed": true,
+          "forcedTermination": true,
+          "timedOut": false,
+          "desktopName": "CodexS1_873b1219acb049ff9a453af36e9a6093",
+          "inputDesktopBefore": "Default",
+          "inputDesktopChanged": false,
+          "inputDesktopReadErrors": 0,
+          "monitorStartedBeforeWorker": true,
+          "monitorStarted": true,
+          "monitorStopped": true,
+          "monitorError": null,
+          "droppedEvents": 0,
+          "eventFileWritten": true,
+          "sampleCount": 1279,
+          "workerForegroundEvents": 0,
+          "workerUserDesktopShowEvents": 0,
+          "workerForegroundSamples": 0,
+          "relatedCadEvents": 6,
+          "relatedCadShowEvents": 4,
+          "relatedCadForegroundEvents": 1,
+          "relatedCadEventsNeedReview": true,
+          "desktopClosed": true,
+          "processHandlesClosed": true,
+          "switchDesktopCalled": false,
+          "userCadTouched": false,
+          "supervisorErrors": [],
+          "stillRunningOwnedWorker": false,
+          "closeOwnStartupTipsEnabled": true,
+          "startupTipActions": 1,
+          "startupTipPosts": 1,
+          "scope": "Observed supervisor/owned worker only; existing related CAD events retained for attribution review, not blamed automatically; drawing business correctness requires separate native evidence"
+        }
+      }
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-120223",
+      "deleted": [],
+      "status": "EXITED_STAGING_IDENTIFIED",
+      "processId": 21472,
+      "processAliveOrUnknown": false,
+      "monitorFinal": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-120223\\isolation-final.json",
+        "sha256": "8205D4AD322AB69BE93895D3771D6431D2EBE48000936888BCCF497959CBFF68",
+        "evidence": {
+          "contract": "stage1.isolated-host-final.v1",
+          "recorded": "2026-10-29T12:20:20.7328173+08:00",
+          "nonce": "e7bbd70285f14991aae9c33059102580",
+          "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-120223",
+          "workerCreated": true,
+          "processId": 21472,
+          "workerExited": true,
+          "workerExitCode": 70,
+          "readyIdentityConfirmed": true,
+          "nativeQuitConfirmed": true,
+          "forcedTermination": true,
+          "timedOut": false,
+          "desktopName": "CodexS1_e7bbd70285f14991aae9c33059102580",
+          "inputDesktopBefore": "Default",
+          "inputDesktopChanged": false,
+          "inputDesktopReadErrors": 0,
+          "monitorStartedBeforeWorker": true,
+          "monitorStarted": true,
+          "monitorStopped": true,
+          "monitorError": null,
+          "droppedEvents": 0,
+          "eventFileWritten": true,
+          "sampleCount": 2063,
+          "workerForegroundEvents": 0,
+          "workerUserDesktopShowEvents": 0,
+          "workerForegroundSamples": 0,
+          "relatedCadEvents": 5,
+          "relatedCadShowEvents": 0,
+          "relatedCadForegroundEvents": 3,
+          "relatedCadEventsNeedReview": true,
+          "desktopClosed": true,
+          "processHandlesClosed": true,
+          "switchDesktopCalled": false,
+          "userCadTouched": false,
+          "supervisorErrors": [],
+          "stillRunningOwnedWorker": false,
+          "closeOwnStartupTipsEnabled": true,
+          "startupTipActions": 1,
+          "startupTipPosts": 1,
+          "scope": "Observed supervisor/owned worker only; existing related CAD events retained for attribution review, not blamed automatically; drawing business correctness requires separate native evidence"
+        }
+      }
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-122821",
+      "deleted": [],
+      "status": "EXITED_STAGING_IDENTIFIED",
+      "processId": 35728,
+      "processAliveOrUnknown": false,
+      "monitorFinal": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-122821\\isolation-final.json",
+        "sha256": "77DD24478146F6D0617E880167071FAF0C5A55E82DD6C8056AA0F36BCEB6F6D6",
+        "evidence": {
+          "contract": "stage1.isolated-host-final.v1",
+          "recorded": "2026-10-29T12:38:40.5631996+08:00",
+          "nonce": "101edbdf5f024b68b3c91e8e73cdd9fe",
+          "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-122821",
+          "workerCreated": true,
+          "processId": 35728,
+          "workerExited": true,
+          "workerExitCode": 70,
+          "readyIdentityConfirmed": true,
+          "nativeQuitConfirmed": false,
+          "forcedTermination": true,
+          "timedOut": false,
+          "desktopName": "CodexS1_101edbdf5f024b68b3c91e8e73cdd9fe",
+          "inputDesktopBefore": "Default",
+          "inputDesktopChanged": false,
+          "inputDesktopReadErrors": 0,
+          "monitorStartedBeforeWorker": true,
+          "monitorStarted": true,
+          "monitorStopped": true,
+          "monitorError": null,
+          "droppedEvents": 0,
+          "eventFileWritten": true,
+          "sampleCount": 1186,
+          "workerForegroundEvents": 0,
+          "workerUserDesktopShowEvents": 0,
+          "workerForegroundSamples": 0,
+          "relatedCadEvents": 0,
+          "relatedCadShowEvents": 0,
+          "relatedCadForegroundEvents": 0,
+          "relatedCadEventsNeedReview": false,
+          "desktopClosed": true,
+          "processHandlesClosed": true,
+          "switchDesktopCalled": false,
+          "userCadTouched": false,
+          "supervisorErrors": [
+            "WindowSnapshot: 使用“0”个参数调用“Windows”时发生异常:“EnumDesktopWindows private desktop”"
+          ],
+          "stillRunningOwnedWorker": false,
+          "closeOwnStartupTipsEnabled": true,
+          "startupTipActions": 1,
+          "startupTipPosts": 1,
+          "scope": "Observed supervisor/owned worker only; existing related CAD events retained for attribution review, not blamed automatically; drawing business correctness requires separate native evidence"
+        }
+      }
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-124043",
+      "deleted": [],
+      "status": "EXITED_STAGING_IDENTIFIED",
+      "processId": 13832,
+      "processAliveOrUnknown": false,
+      "monitorFinal": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-124043\\isolation-final.json",
+        "sha256": "150E8F0B07F0D3F5D198889823D326949D43E551C464070D369D5B3498947FBB",
+        "evidence": {
+          "contract": "stage1.isolated-host-final.v1",
+          "recorded": "2026-10-29T12:44:59.1849902+08:00",
+          "nonce": "6b3713945a8b4d7483d18a1f2f5c6faf",
+          "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-124043",
+          "workerCreated": true,
+          "processId": 13832,
+          "workerExited": true,
+          "workerExitCode": 70,
+          "readyIdentityConfirmed": true,
+          "nativeQuitConfirmed": true,
+          "forcedTermination": true,
+          "timedOut": false,
+          "desktopName": "CodexS1_6b3713945a8b4d7483d18a1f2f5c6faf",
+          "inputDesktopBefore": "Default",
+          "inputDesktopChanged": false,
+          "inputDesktopReadErrors": 0,
+          "monitorStartedBeforeWorker": true,
+          "monitorStarted": true,
+          "monitorStopped": true,
+          "monitorError": null,
+          "droppedEvents": 0,
+          "eventFileWritten": true,
+          "sampleCount": 445,
+          "workerForegroundEvents": 0,
+          "workerUserDesktopShowEvents": 0,
+          "workerForegroundSamples": 0,
+          "relatedCadEvents": 0,
+          "relatedCadShowEvents": 0,
+          "relatedCadForegroundEvents": 0,
+          "relatedCadEventsNeedReview": false,
+          "desktopClosed": true,
+          "processHandlesClosed": true,
+          "switchDesktopCalled": false,
+          "userCadTouched": false,
+          "supervisorErrors": [],
+          "stillRunningOwnedWorker": false,
+          "closeOwnStartupTipsEnabled": true,
+          "startupTipActions": 1,
+          "startupTipPosts": 1,
+          "scope": "Observed supervisor/owned worker only; existing related CAD events retained for attribution review, not blamed automatically; drawing business correctness requires separate native evidence"
+        }
+      }
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-124459",
+      "deleted": [],
+      "status": "EXITED_STAGING_IDENTIFIED",
+      "processId": 21608,
+      "processAliveOrUnknown": false,
+      "monitorFinal": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-124459\\isolation-final.json",
+        "sha256": "EABB1A0025BC75E73C367D66F89FDBF8AE789CE4FAD7BD53C74EB7E7A236FB72",
+        "evidence": {
+          "contract": "stage1.isolated-host-final.v1",
+          "recorded": "2026-10-29T12:49:31.1901595+08:00",
+          "nonce": "897609d082e64363b8b9e5e1421e074b",
+          "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-124459",
+          "workerCreated": true,
+          "processId": 21608,
+          "workerExited": true,
+          "workerExitCode": 70,
+          "readyIdentityConfirmed": true,
+          "nativeQuitConfirmed": false,
+          "forcedTermination": true,
+          "timedOut": false,
+          "desktopName": "CodexS1_897609d082e64363b8b9e5e1421e074b",
+          "inputDesktopBefore": "Default",
+          "inputDesktopChanged": false,
+          "inputDesktopReadErrors": 0,
+          "monitorStartedBeforeWorker": true,
+          "monitorStarted": true,
+          "monitorStopped": true,
+          "monitorError": null,
+          "droppedEvents": 0,
+          "eventFileWritten": true,
+          "sampleCount": 520,
+          "workerForegroundEvents": 0,
+          "workerUserDesktopShowEvents": 0,
+          "workerForegroundSamples": 0,
+          "relatedCadEvents": 0,
+          "relatedCadShowEvents": 0,
+          "relatedCadForegroundEvents": 0,
+          "relatedCadEventsNeedReview": false,
+          "desktopClosed": true,
+          "processHandlesClosed": true,
+          "switchDesktopCalled": false,
+          "userCadTouched": false,
+          "supervisorErrors": [],
+          "stillRunningOwnedWorker": false,
+          "closeOwnStartupTipsEnabled": true,
+          "startupTipActions": 1,
+          "startupTipPosts": 1,
+          "scope": "Observed supervisor/owned worker only; existing related CAD events retained for attribution review, not blamed automatically; drawing business correctness requires separate native evidence"
+        }
+      }
+    }
+  ],
+  "phase2Started": false,
+  "cleanupRequested": false
+}

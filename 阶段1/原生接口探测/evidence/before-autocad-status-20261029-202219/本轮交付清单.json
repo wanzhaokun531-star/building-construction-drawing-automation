@@ -1,0 +1,59 @@
+{
+  "contract": "stage1.final-delivery-manifest.v1",
+  "recorded": "2026-10-29T15:56:11.809391+08:00",
+  "phase1FullAcceptance": false,
+  "phase2Started": false,
+  "frozenSchemeSHA256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+  "observedCurrentOriginalSHA256": "70554DC491164990145FB46E0DD3F54F7B2E69A9739675EC7FAAC8B80B73EF37",
+  "inputScope": "All current capability probes use unchanged frozen5BC. Current user working original7055 is observed only, with bytes/last-save separate; no architectural-change inference or overwrite.",
+  "artifacts": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\阶段1全需求验证结论.md",
+      "SHA256": "9F938751D224B79F4F5DAB14863545E3EE5D1B4677768C93C68F151EA2F354A1"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\全需求能力覆盖矩阵.md",
+      "SHA256": "EE6E75B9CD495638930B8731D40284A0BDB618DB6B833C963B31AFFFE493E5C6"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\全需求证据独立复核_20261029.md",
+      "SHA256": "2E1DB55FFE52439001D045BCAEEAB3A67BC710DE9123617470A1D0ECE1525DDE"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\全需求验证证据索引.json",
+      "SHA256": "3126DC411439A026CFACF91E13502DBE58BE6EBE34BD14BDA603AF77DF29E272"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\原生PDF纸幅验证.pdf",
+      "SHA256": "5FCEF0B4A8F57072553BE7CDD3E5FC30FB5CB007BBA55E66ABEA9CF3FA00AE26"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\全需求验证_只读调查后终核_20261029.json",
+      "SHA256": "D28BBBF3838789EE985B66D721560444F792D14931268163E29890E130DE092C"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\坡向剖切索引与QUIT_交付清单_20261029.json",
+      "SHA256": "047E6EB242AF6C9FB99759E37F64E095BBFEB3C23ADB4E48488D8500CB29B6D1"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\坡向剖切详图索引与正常退出验证报告_20261029.md",
+      "SHA256": "A5598600E39A7FC374C6874216DD59BB02B5B5E9B6E5C302522A6EA4EDB06E6E"
+    }
+  ],
+  "unitRegression": "Current symbol acceptance 10 tests passed; historical regression scopes retained in prior manifest",
+  "preservedFailures": "Family4, Safety2, SymbolText6 current failures plus historical axis-factory/v1 pruning/first-merge receipts retained; counts not a completion percentage",
+  "temporaryModules": "Current symbol-round10 owned hosts exited; exact nonce/hash-bound S1Quiet ARX/INI archived and removed; PID reuse checked without process control",
+  "priorManifest": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\evidence\\阶段1交付清单_符号补证更新前_20261029.json",
+    "SHA256": "9CE88615FC0A99205F71F6A307099D58D552512C8E355B545F826F4E2477AE57"
+  },
+  "latestRound": {
+    "report": "D:\\Codex\\建筑施工图自动化\\阶段1\\坡向剖切详图索引与正常退出验证报告_20261029.md",
+    "evidenceIndex": "D:\\Codex\\建筑施工图自动化\\阶段1\\全需求验证证据索引.json",
+    "business": 302,
+    "geometry": 80,
+    "preview": 92,
+    "hostAssertions": 49,
+    "phase2Started": false
+  }
+}

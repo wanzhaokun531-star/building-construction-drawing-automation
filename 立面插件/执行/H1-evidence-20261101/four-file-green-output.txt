@@ -1,0 +1,13 @@
+test_existing_negative_evidence_stays_negative (__main__.ClosureEvidenceTests.test_existing_negative_evidence_stays_negative) ... ok
+test_missing_exit_code_is_not_proof_of_normal_quit (__main__.ClosureEvidenceTests.test_missing_exit_code_is_not_proof_of_normal_quit) ... ok
+test_no_fallback_normal_control (__main__.ClosureEvidenceTests.test_no_fallback_normal_control) ... ok
+test_recorded_exit_70_without_stop_flag_is_not_normal (__main__.ClosureEvidenceTests.test_recorded_exit_70_without_stop_flag_is_not_normal) ... ok
+test_recorded_fallback_is_not_normal_quit (__main__.ClosureEvidenceTests.test_recorded_fallback_is_not_normal_quit) ... ok
+test_request_alone_does_not_invent_forced_termination (__main__.ClosureEvidenceTests.test_request_alone_does_not_invent_forced_termination) ... ok
+test_retirement_exit_code_and_stop_receipt_controls (__main__.ClosureEvidenceTests.test_retirement_exit_code_and_stop_receipt_controls) ... ok
+test_retirement_recorded_exit_70_and_stop_are_not_normal (__main__.ClosureEvidenceTests.test_retirement_recorded_exit_70_and_stop_are_not_normal) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.027s
+
+OK

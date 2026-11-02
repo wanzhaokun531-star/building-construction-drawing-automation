@@ -1,0 +1,2 @@
+assertions=55 passed=55 failed=0 result=PASS
+Scope: one H seed modern-grip right-inner+100/-100 with all8GP/4SP, SDK lifecycle, original213/peer protection and persistence. No full-generation claim.

@@ -1,0 +1,227 @@
+[
+  {
+    "before": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Applications\\TitleFrameTangent",
+      "name": "LOADER",
+      "value": "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\TitleFrameTangent021_8156DD76E2171AF8.arx",
+      "kind": 1
+    },
+    "after": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Applications\\TitleFrameTangent",
+      "name": "LOADER",
+      "value": "%UserProfile%\\AppData\\Roaming\\Autodesk\\ApplicationPlugins\\TitleFrameTangent.bundle.\\Contents\\Windows\\v0.2.1-native-8156DD76E2171AF8\\TitleFrameTangent.arx",
+      "kind": 2
+    }
+  },
+  {
+    "before": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Applications\\TitleFrameTangent",
+      "name": "DESCRIPTION",
+      "value": "输入 TFTK 生成单张图框和图签",
+      "kind": 1
+    },
+    "after": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Applications\\TitleFrameTangent",
+      "name": "DESCRIPTION",
+      "value": "输入 TFTK 一次框选批量生成图框和图签",
+      "kind": 1
+    }
+  },
+  {
+    "before": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Applications\\TitleFrameTangentActivator",
+      "name": "LOADER",
+      "value": "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\TFTKActivate021_C6AF4985B654D7F6.arx",
+      "kind": 1
+    },
+    "after": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Applications\\TitleFrameTangentActivator",
+      "name": "LOADER",
+      "value": "%UserProfile%\\AppData\\Roaming\\Autodesk\\ApplicationPlugins\\TitleFrameTangent.bundle\\Contents\\Windows\\v0.2.1-native-8156DD76E2171AF8\\TFTKActivate021.arx",
+      "kind": 2
+    }
+  },
+  {
+    "before": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\FixedProfile\\General",
+      "name": "PATH",
+      "value": "d:\\cad2020\\autocad 2020\\zh-cn;c:\\windows\\system32;c:\\windows;c:\\windows\\system32\\wbem;c:\\windows\\system32\\windowspowershell\\v1.0\\;c:\\program files\\nvidia corporation\\nvidia app\\nvdlisr;c:\\program files (x86)\\nvidia corporation\\physx\\common;%UserProfile%\\appdata\\local\\microsoft\\windowsapps;%UserProfile%\\appdata\\roaming\\autodesk\\autocad 2020\\r23.1\\chs\\support;d:\\cad2020\\autocad 2020\\support;d:\\cad2020\\autocad 2020\\support\\zh-cn;d:\\cad2020\\autocad 2020\\fonts;d:\\cad2020\\autocad 2020\\express;d:\\cad2020\\autocad 2020\\support\\color;d:\\cad2020\\autocad 2020;d:\\cad2020\\autocad 2020\\drv;c:\\program files (x86)\\autodesk\\applicationplugins\\autodesk appmanager 2020.bundle\\contents\\windows;C:\\Program Files (x86)\\Autodesk\\ApplicationPlugins\\Autodesk AppManager 2020.bundle\\Contents\\Windows\\2020;C:\\Program Files (x86)\\Autodesk\\ApplicationPlugins\\Autodesk FeaturedApps 2020.bundle\\Contents\\Windows\\2020\\Win64;%UserProfile%\\AppData\\Roaming\\Autodesk\\ApplicationPlugins\\TitleFrameTangent.bundle\\Contents\\Windows\\v0.1.2-native-97C32A7651461ED4;%UserProfile%\\AppData\\Roaming\\Autodesk\\ApplicationPlugins\\TitleFrameTangent.bundle\\Contents\\Windows\\v0.1.3-native-7F3032C789A678F8;%UserProfile%\\AppData\\Roaming\\Autodesk\\ApplicationPlugins\\TitleFrameTangent.bundle\\Contents\\Windows\\v0.2.0-native-B7B993CAE76CA633;",
+      "kind": 2
+    },
+    "after": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\FixedProfile\\General",
+      "name": "PATH",
+      "value": "d:\\cad2020\\autocad 2020\\zh-cn;c:\\windows\\system32;c:\\windows;c:\\windows\\system32\\wbem;c:\\windows\\system32\\windowspowershell\\v1.0\\;c:\\program files\\nvidia corporation\\nvidia app\\nvdlisr;c:\\program files (x86)\\nvidia corporation\\physx\\common;%UserProfile%\\appdata\\local\\microsoft\\windowsapps;%UserProfile%\\appdata\\roaming\\autodesk\\autocad 2020\\r23.1\\chs\\support;d:\\cad2020\\autocad 2020\\support;d:\\cad2020\\autocad 2020\\support\\zh-cn;d:\\cad2020\\autocad 2020\\fonts;d:\\cad2020\\autocad 2020\\express;d:\\cad2020\\autocad 2020\\support\\color;d:\\cad2020\\autocad 2020;d:\\cad2020\\autocad 2020\\drv;c:\\program files (x86)\\autodesk\\applicationplugins\\autodesk appmanager 2020.bundle\\contents\\windows;C:\\Program Files (x86)\\Autodesk\\ApplicationPlugins\\Autodesk AppManager 2020.bundle\\Contents\\Windows\\2020;C:\\Program Files (x86)\\Autodesk\\ApplicationPlugins\\Autodesk FeaturedApps 2020.bundle\\Contents\\Windows\\2020\\Win64;%UserProfile%\\AppData\\Roaming\\Autodesk\\ApplicationPlugins\\TitleFrameTangent.bundle\\Contents\\Windows\\v0.1.2-native-97C32A7651461ED4;%UserProfile%\\AppData\\Roaming\\Autodesk\\ApplicationPlugins\\TitleFrameTangent.bundle\\Contents\\Windows\\v0.1.3-native-7F3032C789A678F8;%UserProfile%\\AppData\\Roaming\\Autodesk\\ApplicationPlugins\\TitleFrameTangent.bundle\\Contents\\Windows\\v0.2.0-native-B7B993CAE76CA633;%UserProfile%\\AppData\\Roaming\\Autodesk\\ApplicationPlugins\\TitleFrameTangent.bundle\\Contents\\Windows\\v0.2.1-native-8156DD76E2171AF8;",
+      "kind": 2
+    }
+  },
+  {
+    "before": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Loaded\\C:/Users/PC/AppData/Roaming/Autodesk/ApplicationPlugins/TitleFrameTangent.bundle",
+      "name": "Version",
+      "value": "0.2.0",
+      "kind": 1
+    },
+    "after": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Loaded\\C:/Users/PC/AppData/Roaming/Autodesk/ApplicationPlugins/TitleFrameTangent.bundle",
+      "name": "Version",
+      "value": "0.2.1",
+      "kind": 1
+    }
+  },
+  {
+    "before": null,
+    "after": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Loaded\\C:/Users/PC/AppData/Roaming/Autodesk/ApplicationPlugins/TitleFrameTangent.bundle\\#SupportPaths",
+      "name": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\ApplicationPlugins\\TitleFrameTangent.bundle\\Contents\\Windows\\v0.2.1-native-8156DD76E2171AF8",
+      "value": "",
+      "kind": 1
+    }
+  },
+  {
+    "before": null,
+    "after": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Loaded\\C:/Users/PC/AppData/Roaming/Autodesk/ApplicationPlugins/TitleFrameTangent.bundle\\./Contents/Windows/v0.2.1-native-8156DD76E2171AF8/TFTKActivate021.arx",
+      "name": "Type",
+      "value": 1,
+      "kind": 4
+    }
+  },
+  {
+    "before": null,
+    "after": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Loaded\\C:/Users/PC/AppData/Roaming/Autodesk/ApplicationPlugins/TitleFrameTangent.bundle\\./Contents/Windows/v0.2.1-native-8156DD76E2171AF8/TFTKActivate021.arx",
+      "name": "Name",
+      "value": "TitleFrameTangentActivator",
+      "kind": 1
+    }
+  },
+  {
+    "before": null,
+    "after": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Loaded\\C:/Users/PC/AppData/Roaming/Autodesk/ApplicationPlugins/TitleFrameTangent.bundle\\./Contents/Windows/v0.2.1-native-8156DD76E2171AF8/TitleFrameTangent.arx",
+      "name": "Type",
+      "value": 1,
+      "kind": 4
+    }
+  },
+  {
+    "before": null,
+    "after": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Loaded\\C:/Users/PC/AppData/Roaming/Autodesk/ApplicationPlugins/TitleFrameTangent.bundle\\./Contents/Windows/v0.2.1-native-8156DD76E2171AF8/TitleFrameTangent.arx",
+      "name": "Name",
+      "value": "TitleFrameTangent",
+      "kind": 1
+    }
+  },
+  {
+    "before": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\MiniDump",
+      "name": "SessionStartCount",
+      "value": 365,
+      "kind": 4
+    },
+    "after": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\MiniDump",
+      "name": "SessionStartCount",
+      "value": 369,
+      "kind": 4
+    }
+  },
+  {
+    "before": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Profiles\\CodexS1Native_6f6df19579f3\\General",
+      "name": "ACAD",
+      "value": "%UserProfile%\\appdata\\roaming\\autodesk\\autocad 2020\\r23.1\\chs\\support;d:\\cad2020\\autocad 2020\\support;d:\\cad2020\\autocad 2020\\support\\zh-cn;d:\\cad2020\\autocad 2020\\fonts;d:\\cad2020\\autocad 2020\\express;d:\\cad2020\\autocad 2020\\support\\color;c:\\program files (x86)\\autodesk\\applicationplugins\\autodesk appmanager 2020.bundle\\contents\\windows;c:\\program files (x86)\\autodesk\\applicationplugins\\autodesk appmanager 2020.bundle\\contents\\windows\\2020;c:\\program files (x86)\\autodesk\\applicationplugins\\autodesk featuredapps 2020.bundle\\contents\\resources;c:\\program files (x86)\\autodesk\\applicationplugins\\autodesk featuredapps 2020.bundle\\contents\\windows\\2020\\win64;c:\\program files\\autodesk\\applicationplugins\\transketchplugin.bundle\\contents\\win64\\2020;c:\\tangent\\tarcht20v8\\sys23x64;%UserProfile%\\appdata\\roaming\\autodesk\\applicationplugins\\titleframetangent.bundle\\contents\\windows\\v0.1.3-native-7f3032c789a678f8;%UserProfile%\\appdata\\roaming\\autodesk\\applicationplugins\\titleframetangent.bundle\\contents\\windows\\v0.2.0-native-b7b993cae76ca633;c:\\sow\\智源·云设计\\fonts;",
+      "kind": 2
+    },
+    "after": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Profiles\\CodexS1Native_6f6df19579f3\\General",
+      "name": "ACAD",
+      "value": "%UserProfile%\\appdata\\roaming\\autodesk\\autocad 2020\\r23.1\\chs\\support;D:\\cad2020\\autocad 2020\\support;D:\\cad2020\\autocad 2020\\support\\zh-cn;D:\\cad2020\\autocad 2020\\fonts;D:\\cad2020\\autocad 2020\\express;D:\\cad2020\\autocad 2020\\support\\color;C:\\program files (x86)\\autodesk\\applicationplugins\\autodesk appmanager 2020.bundle\\contents\\windows;C:\\program files (x86)\\autodesk\\applicationplugins\\autodesk appmanager 2020.bundle\\contents\\windows\\2020;C:\\program files (x86)\\autodesk\\applicationplugins\\autodesk featuredapps 2020.bundle\\contents\\resources;C:\\program files (x86)\\autodesk\\applicationplugins\\autodesk featuredapps 2020.bundle\\contents\\windows\\2020\\win64;C:\\program files\\autodesk\\applicationplugins\\transketchplugin.bundle\\contents\\win64\\2020;C:\\tangent\\tarcht20v8\\sys23x64;%UserProfile%\\appdata\\roaming\\autodesk\\applicationplugins\\titleframetangent.bundle\\contents\\windows\\v0.1.3-native-7f3032c789a678f8;%UserProfile%\\appdata\\roaming\\autodesk\\applicationplugins\\titleframetangent.bundle\\contents\\windows\\v0.2.0-native-b7b993cae76ca633;%UserProfile%\\appdata\\roaming\\autodesk\\applicationplugins\\titleframetangent.bundle\\contents\\windows\\v0.2.1-native-8156dd76e2171af8;C:\\Program Files\\Autodesk\\ApplicationPlugins\\TranSketchPlugin.bundle\\Contents\\Win64\\2020;",
+      "kind": 2
+    }
+  },
+  {
+    "before": null,
+    "after": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Profiles\\CodexS1Native_6f6df19579f3\\Menus",
+      "name": "pop16",
+      "value": "TRANSKETCH POP1",
+      "kind": 1
+    }
+  },
+  {
+    "before": null,
+    "after": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Profiles\\CodexS1Native_6f6df19579f3\\Menus",
+      "name": "pop17",
+      "value": "TRANSKETCH总图 POP1",
+      "kind": 1
+    }
+  },
+  {
+    "before": null,
+    "after": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Profiles\\CodexS1Native_6f6df19579f3\\Variables",
+      "name": "APPAUTOLOAD",
+      "value": "0",
+      "kind": 1
+    }
+  },
+  {
+    "before": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Profiles\\TArch20V8\\Drawing Recovery",
+      "name": "LoggedFileCount",
+      "value": 312,
+      "kind": 4
+    },
+    "after": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Profiles\\TArch20V8\\Drawing Recovery",
+      "name": "LoggedFileCount",
+      "value": 315,
+      "kind": 4
+    }
+  },
+  {
+    "before": null,
+    "after": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Profiles\\TArch20V8\\Drawing Recovery",
+      "name": "LoggedFile313",
+      "value": "D:\\Codex\\建筑施工图图框、图签\\artifacts\\range022-capture-test-434acf8b54d54cb2a6a531ff155b8cec\\input.dwg",
+      "kind": 1
+    }
+  },
+  {
+    "before": null,
+    "after": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Profiles\\TArch20V8\\Drawing Recovery",
+      "name": "LoggedFile314",
+      "value": "D:\\Codex\\建筑施工图图框、图签\\artifacts\\range022-capture-test-f95e1fb3ac984b93be41eac460600a42\\input.dwg",
+      "kind": 1
+    }
+  },
+  {
+    "before": null,
+    "after": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Profiles\\TArch20V8\\Drawing Recovery",
+      "name": "LoggedFile315",
+      "value": "D:\\Codex\\建筑施工图图框、图签\\artifacts\\range022-capture-test-9105c6956fb24d03b198cefae75f5896\\input.dwg",
+      "kind": 1
+    }
+  },
+  {
+    "before": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Profiles\\TArch20V8\\General",
+      "name": "ACAD",
+      "value": "C:\\program files\\autodesk\\applicationplugins\\transketchplugin.bundle\\contents\\win64\\2020\\material\\pattern\\;%UserProfile%\\appdata\\roaming\\tangent\\tarch20v8\\sys;C:\\tangent\\tarcht20v8\\sys23x64;C:\\tangent\\tarcht20v8\\sys;%UserProfile%\\appdata\\roaming\\autodesk\\autocad 2020\\r23.1\\chs\\support;D:\\cad2020\\autocad 2020\\support;D:\\cad2020\\autocad 2020\\fonts;D:\\cad2020\\autocad 2020\\help;D:\\cad2020\\autocad 2020\\express;D:\\cad2020\\autocad 2020\\support\\zh-cn;C:\\tangent\\tarcht20v8\\dwb;C:\\program files (x86)\\autodesk\\applicationplugins\\autodesk appmanager 2020.bundle\\contents\\windows;C:\\program files (x86)\\autodesk\\applicationplugins\\autodesk appmanager 2020.bundle\\contents\\windows\\2020;C:\\program files (x86)\\autodesk\\applicationplugins\\autodesk featuredapps 2020.bundle\\contents\\resources;C:\\program files (x86)\\autodesk\\applicationplugins\\autodesk featuredapps 2020.bundle\\contents\\windows\\2020\\win64;C:\\program files\\autodesk\\applicationplugins\\transketchplugin.bundle\\contents\\win64\\2020;%UserProfile%\\appdata\\roaming\\autodesk\\applicationplugins\\titleframetangent.bundle\\contents\\windows\\v0.1.4-native-7a21dda5717ddb86;%UserProfile%\\appdata\\roaming\\autodesk\\applicationplugins\\titleframetangent.bundle\\contents\\windows\\v0.1.5-native-1a252950c6cf3924;%UserProfile%\\appdata\\roaming\\autodesk\\applicationplugins\\titleframetangent.bundle\\contents\\windows\\v0.2.0-native-b7b993cae76ca633;C:\\Program Files\\Autodesk\\ApplicationPlugins\\TranSketchPlugin.bundle\\Contents\\Win64\\2020;",
+      "kind": 2
+    },
+    "after": {
+      "key": "Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Profiles\\TArch20V8\\General",
+      "name": "ACAD",
+      "value": "c:\\program files\\autodesk\\applicationplugins\\transketchplugin.bundle\\contents\\win64\\2020\\material\\pattern\\;%UserProfile%\\appdata\\roaming\\tangent\\tarch20v8\\sys;c:\\tangent\\tarcht20v8\\sys23x64;c:\\tangent\\tarcht20v8\\sys;%UserProfile%\\appdata\\roaming\\autodesk\\autocad 2020\\r23.1\\chs\\support;d:\\cad2020\\autocad 2020\\support;d:\\cad2020\\autocad 2020\\fonts;d:\\cad2020\\autocad 2020\\help;d:\\cad2020\\autocad 2020\\express;d:\\cad2020\\autocad 2020\\support\\zh-cn;c:\\tangent\\tarcht20v8\\dwb;c:\\program files (x86)\\autodesk\\applicationplugins\\autodesk appmanager 2020.bundle\\contents\\windows;c:\\program files (x86)\\autodesk\\applicationplugins\\autodesk appmanager 2020.bundle\\contents\\windows\\2020;c:\\program files (x86)\\autodesk\\applicationplugins\\autodesk featuredapps 2020.bundle\\contents\\resources;c:\\program files (x86)\\autodesk\\applicationplugins\\autodesk featuredapps 2020.bundle\\contents\\windows\\2020\\win64;c:\\program files\\autodesk\\applicationplugins\\transketchplugin.bundle\\contents\\win64\\2020;%UserProfile%\\appdata\\roaming\\autodesk\\applicationplugins\\titleframetangent.bundle\\contents\\windows\\v0.1.4-native-7a21dda5717ddb86;%UserProfile%\\appdata\\roaming\\autodesk\\applicationplugins\\titleframetangent.bundle\\contents\\windows\\v0.1.5-native-1a252950c6cf3924;%UserProfile%\\appdata\\roaming\\autodesk\\applicationplugins\\titleframetangent.bundle\\contents\\windows\\v0.2.0-native-b7b993cae76ca633;%UserProfile%\\appdata\\roaming\\autodesk\\applicationplugins\\titleframetangent.bundle\\contents\\windows\\v0.2.1-native-8156dd76e2171af8;c:\\sow\\智源·云设计\\fonts;",
+      "kind": 2
+    }
+  }
+]

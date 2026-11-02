@@ -1,0 +1,83 @@
+{
+  "recorded": "2026-11-02T11:16:55.111939+08:00",
+  "version": "v141",
+  "pluginCodeChanged": false,
+  "sampleOnly": true,
+  "dimensionsCompleted": true,
+  "internalOpeningNumberCompleted": false,
+  "DWGs": [
+    {
+      "floor": 1,
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\连续尺寸与对象编号_20261102\\方案施工图_一层_连续尺寸确认样张_v7.dwg",
+      "SHA256": "2481BA2D32CC1789A5B54B0B2BF5B9D8B39315066B1ADF8144EE5E1A7AC0F755"
+    },
+    {
+      "floor": 2,
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\连续尺寸与对象编号_20261102\\方案施工图_二层_连续尺寸确认样张_v7.dwg",
+      "SHA256": "A92DA0B309AA309D56D833439917F1CB626C5DAC572B60CBD9F584937322C419"
+    }
+  ],
+  "qaSHA256": "8D65D535FE0184B892D5B595E0638EC56871265A62236A876D2CA4A1237EAF7F",
+  "closurePending": false,
+  "closures": [
+    {
+      "version": 137,
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\host-closure-v137.json",
+      "SHA256": "0247184736261093B8BE3715E0CC08A56FCD2C68D28CA0F62F5687D6577D2ADE",
+      "normalQUITPassed": false,
+      "productSDKUnloadObserved": true,
+      "ownSHOW": 0,
+      "ownForeground": 0,
+      "relatedCadEventsNeedReview": true
+    },
+    {
+      "version": 138,
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\host-closure-v138.json",
+      "SHA256": "42C4FD0EE4BEFC4A4C3F034B3F52B708824CFA27665CE44F428F292B75C6307D",
+      "normalQUITPassed": false,
+      "productSDKUnloadObserved": false,
+      "ownSHOW": 0,
+      "ownForeground": 0,
+      "relatedCadEventsNeedReview": true
+    },
+    {
+      "version": 139,
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\host-closure-v139.json",
+      "SHA256": "4D164B6661346C033435CE65ED7173ED49A8B41285A0CBF4C0838896F69C4D48",
+      "normalQUITPassed": false,
+      "productSDKUnloadObserved": true,
+      "ownSHOW": 0,
+      "ownForeground": 0,
+      "relatedCadEventsNeedReview": true
+    },
+    {
+      "version": 140,
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\host-closure-v140.json",
+      "SHA256": "19EB9A9FA00EDBDA845C10D4C25F13152CA6BCEFE60A1821203FA1F2031A7E2D",
+      "normalQUITPassed": false,
+      "productSDKUnloadObserved": true,
+      "ownSHOW": 0,
+      "ownForeground": 0,
+      "relatedCadEventsNeedReview": true
+    },
+    {
+      "version": 141,
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\host-closure-v141.json",
+      "SHA256": "5C1FD3BA21F5E5B8288A3B07A29B80B6DF4504B21BFAA18BEFA6171D1A463CD6",
+      "normalQUITPassed": false,
+      "productSDKUnloadObserved": true,
+      "ownSHOW": 0,
+      "ownForeground": 0,
+      "relatedCadEventsNeedReview": true
+    }
+  ],
+  "pluginBinarySHA256": "835B9E0F67B65C0F3A43F06F0C443BFB2029B1CBFACEB751C24938B894631FEA",
+  "nativeTCHCommandUsed": "TMergeDim only in v137",
+  "PDFDelivered": false,
+  "COMUsed": false,
+  "ComputerUseUsed": false,
+  "normalQUITPassed": false,
+  "stage2Complete": false,
+  "internalNumberNeedsAdditionalCommandAuthorization": true,
+  "requestPending": true
+}

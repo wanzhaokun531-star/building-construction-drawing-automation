@@ -1,0 +1,38 @@
+{
+  "contract": "stage1.final-delivery-manifest.v1",
+  "recorded": "2026-10-29T02:12:39.921538+08:00",
+  "phase1FullAcceptance": false,
+  "phase2Started": false,
+  "frozenSchemeSHA256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+  "observedCurrentOriginalSHA256": "92E01E8DD5BD4BA2B65CA48C6A3E8F6C38E3CB5F7EF3C3C36E8B692980B8BDD6",
+  "inputScope": "All generation capability trials use frozen5BC. Later92E original was copied by shared read and audited read-only; no claim of full private/nested semantic equality.",
+  "artifacts": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\阶段1全需求验证结论.md",
+      "SHA256": "74DDCB1C4405B08A7D088A1F1301910BF7C3AEF576D608714F14CB063A3566F5"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\全需求能力覆盖矩阵.md",
+      "SHA256": "C83BBA8E7065A8E52A2D292CE9B603E3CA7E5E2F15D21D3EC4791394FF76794D"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\全需求证据独立复核_20261029.md",
+      "SHA256": "2E1DB55FFE52439001D045BCAEEAB3A67BC710DE9123617470A1D0ECE1525DDE"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\全需求验证证据索引.json",
+      "SHA256": "533865BCACA5335E115D9A988C1DAF135589DEAD6A9B7814DD051180589A0DFC"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\原生PDF纸幅验证.pdf",
+      "SHA256": "5FCEF0B4A8F57072553BE7CDD3E5FC30FB5CB007BBA55E66ABEA9CF3FA00AE26"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\全需求验证_只读调查后终核_20261029.json",
+      "SHA256": "D28BBBF3838789EE985B66D721560444F792D14931268163E29890E130DE092C"
+    }
+  ],
+  "unitRegression": "18 unittest tests executed successfully; no additional CAD operation performed by them",
+  "preservedFailures": "Family4, Safety2, SymbolText6 current failures plus historical axis-factory/v1 pruning/first-merge receipts retained; counts not a completion percentage",
+  "temporaryModules": "All executed probes unloaded; trusted S1Native ARX/INI directory empty at final filesystem audit"
+}

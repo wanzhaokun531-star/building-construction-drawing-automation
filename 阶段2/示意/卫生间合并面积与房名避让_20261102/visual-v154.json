@@ -1,0 +1,20 @@
+{
+  "version": "v154",
+  "reviewed": true,
+  "bathroomNameAreaClearOfFixturesAndOpeningNumbers": true,
+  "scope": "Actual whole-floor native renders and both public-bathroom enlarged crops; not global collision acceptance",
+  "images": {
+    "bathroom-floor1-v154.png": "6CF7514FAE0B58B444A1870D1C7EDF0C7041A08DC508F8982048FEB26C03B45A",
+    "bathroom-floor2-v154.png": "C8B2CB6C66B57DBC7B164FF3827386C4B0214757BAAA50F80337CE6DEC90AD54",
+    "floor-1-v154.png": "FC67ED1D0CE45FBF15E4717D6F2F0A8B4B8EEC08F342C3AC7954F62A1A5851F4",
+    "floor-2-v154.png": "FC75E00317718D4DF13DB45C28B99118C9214E14C0A49640AA0D15F9A7DE4051"
+  },
+  "observations": [
+    "One 5.20m² label under each relocated public-WC name; no second public-WC area label",
+    "Name/area moved within the same bathroom to the left of the floor-drain/plant symbol and below sanitary fixtures",
+    "Door/window numbers retain identical positions and native opening fields; no name or area over DK0918",
+    "36 visible third-tier/internal whole TCH dimensions are on exact PUB_DIM layer, 3/Continuous/default; first two tiers unchanged",
+    "Legacy DK wall/cabinet contact and floor2 FMD stair-landing proximity remain explicitly pending from v10"
+  ],
+  "draftHistory": "v153 native geometry/fields passed but enlarged bathroom render exposed fixture proximity; not published. v154 uses shifted name/area pair and full entget layer record."
+}

@@ -1,0 +1,103 @@
+{
+  "contract": "bce.analysis-build.v1",
+  "label": "review-fix1-green-identity-hidden-constant",
+  "startedUtc": "2026-11-01T12:20:44.7258781Z",
+  "compiledSourcesDirectory": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src",
+  "sourceFiles": {
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\ElevationModel.h": "094EAB9687EB8A761E012CE5EF1DC09661B37BA3309D360E268B6A8C1C96454B",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\ElevationModel.cpp": "A7ECE83C56489793BBF1982F5EEDB7E1587AF360A91C985FF31BC367EDD29A90",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\RuleModel.h": "38B6FC7AFB44FDC5B8A75B89015A671BABE30083513BFD24D689BBCCD1852C5F",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\Recognition.h": "994C72FA6DB3BD5670F8FCE3E2B1E98897994168DF3781B1D2F230777413F09A",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\Recognition.cpp": "50ED72F123EA1FF1CBAC85DCC56BD43A1C1C69FE686180DA43AD11C8D38CF63F",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\SceneReader.h": "A13F48D79F1BB82895A431F25B18116AEC13D5D6F7F69F6CBD98CC32C55BAC2C",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\SceneReader.cpp": "26C65B52E32CA20477163A6A4BD4245F94775904396634E610BAE9B7C0504CEF",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\AnalysisReader.h": "D8AB3EDC592127193154AC440B9B49CF6E00A34E83B43E6BE3F6E61552ADC655",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\AnalysisReader.cpp": "471BD590A70377D69215921AAC839D028A35DB395BF744764868CDA9173148E9",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\NativeEvidence.h": "C6B083EE0346AA7CDB51090274CCCADCB2C6DE0AA92A196AD846E11C41C9EBB6",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\NativeEvidence.cpp": "1B3CA34A61CC2C2DB2C42A7FDFD01C029DE7BE82EAE6CE96D9DE1C3B363A8FE2",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\AnalysisDriver.cpp": "6833AF8C22AEF80854B91B68E6267931E4A726F807539FAA4D57620C09E655C2",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\ElevationAnalysisCases.vcxproj": "68C5ED4BD554E09EEA5FB7CA70C6387CF3DE03F3B519ECAF839DB9E12D1DE889",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\AnalysisFixtures.h": "521F61C513D99CCA51DEDD8EB5EF18A837EA319A8E47AF2EB176E71E7A898E4E",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\ExpectedMembership.h": "0CA546F4D486807EC8724FAD74911FB775D8C2CA222670DD2B677BAC3E2F4360",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\scheme-expected.tsv": "E5D1C9E7D74909A2D7D95DE75D42F1DD7B2A3000B1AE6C051ED84551529723C2",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\build_analysis.ps1": "A9DFBE0E7CE4968FA8D7B9F75319C6CF98902766E7A412A22FAB971970B1ED63"
+  },
+  "inputOrigins": [
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\ElevationModel.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\ElevationModel.h",
+      "sha256": "094EAB9687EB8A761E012CE5EF1DC09661B37BA3309D360E268B6A8C1C96454B"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\ElevationModel.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\ElevationModel.cpp",
+      "sha256": "A7ECE83C56489793BBF1982F5EEDB7E1587AF360A91C985FF31BC367EDD29A90"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\RuleModel.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\RuleModel.h",
+      "sha256": "38B6FC7AFB44FDC5B8A75B89015A671BABE30083513BFD24D689BBCCD1852C5F"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\Recognition.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\Recognition.h",
+      "sha256": "994C72FA6DB3BD5670F8FCE3E2B1E98897994168DF3781B1D2F230777413F09A"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\Recognition.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\Recognition.cpp",
+      "sha256": "50ED72F123EA1FF1CBAC85DCC56BD43A1C1C69FE686180DA43AD11C8D38CF63F"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\SceneReader.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\SceneReader.h",
+      "sha256": "A13F48D79F1BB82895A431F25B18116AEC13D5D6F7F69F6CBD98CC32C55BAC2C"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\SceneReader.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\SceneReader.cpp",
+      "sha256": "26C65B52E32CA20477163A6A4BD4245F94775904396634E610BAE9B7C0504CEF"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\AnalysisReader.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\AnalysisReader.h",
+      "sha256": "D8AB3EDC592127193154AC440B9B49CF6E00A34E83B43E6BE3F6E61552ADC655"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\AnalysisReader.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\AnalysisReader.cpp",
+      "sha256": "471BD590A70377D69215921AAC839D028A35DB395BF744764868CDA9173148E9"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\NativeEvidence.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\NativeEvidence.h",
+      "sha256": "C6B083EE0346AA7CDB51090274CCCADCB2C6DE0AA92A196AD846E11C41C9EBB6"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\NativeEvidence.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\NativeEvidence.cpp",
+      "sha256": "1B3CA34A61CC2C2DB2C42A7FDFD01C029DE7BE82EAE6CE96D9DE1C3B363A8FE2"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\analysis\\AnalysisDriver.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\AnalysisDriver.cpp",
+      "sha256": "6833AF8C22AEF80854B91B68E6267931E4A726F807539FAA4D57620C09E655C2"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\analysis\\ElevationAnalysisCases.vcxproj",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\ElevationAnalysisCases.vcxproj",
+      "sha256": "68C5ED4BD554E09EEA5FB7CA70C6387CF3DE03F3B519ECAF839DB9E12D1DE889"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\analysis\\AnalysisFixtures.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\AnalysisFixtures.h",
+      "sha256": "521F61C513D99CCA51DEDD8EB5EF18A837EA319A8E47AF2EB176E71E7A898E4E"
+    }
+  ],
+  "binary": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\out\\ElevationAnalysisCases.arx",
+  "binarySHA256": "7CCEBB1B4E80D7DBDBED168B0186A0109E38F28278447D8D52BE388C599279A5",
+  "log": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\build.log",
+  "exitCode": 0,
+  "toolchain": "AutoCAD2020 SDK23.1 / v141 14.16.27023 / x64 / C++17",
+  "finishedUtc": "2026-11-01T12:20:54.9756057Z"
+}

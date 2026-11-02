@@ -1,0 +1,61 @@
+{
+  "contract": "bcp.door-caption-dimension-sample-delivery.v1",
+  "recorded": "2026-11-01T17:47:17.707459+08:00",
+  "version": "v134",
+  "pluginCodeChanged": false,
+  "pluginBinarySHA256": "835B9E0F67B65C0F3A43F06F0C443BFB2029B1CBFACEB751C24938B894631FEA",
+  "DWGs": [
+    {
+      "floor": 1,
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门号沿洞口与尺寸避让_20261101\\方案施工图_一层_门编号与尺寸避让确认样张_v5.dwg",
+      "DWGSHA256": "8477F0CADA78F89D7FD90FA7E43AEA6A0D667C8F765BF8B0EE903206287F8C2A",
+      "doors": 10,
+      "dimensions": 27,
+      "textMoves": 6,
+      "baselineMoves": 0,
+      "modelRoots": 282
+    },
+    {
+      "floor": 2,
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门号沿洞口与尺寸避让_20261101\\方案施工图_二层_门编号与尺寸避让确认样张_v5.dwg",
+      "DWGSHA256": "8CF1ACED9E856777A64EA3859D32EFC7A6F6E3927689FAA9F4DA5D1B11BBAB5C",
+      "doors": 9,
+      "dimensions": 27,
+      "textMoves": 6,
+      "baselineMoves": 1,
+      "modelRoots": 269
+    }
+  ],
+  "wholeTCHDimensionChains": 54,
+  "sourcePlansUnchanged": true,
+  "areasUnchanged": true,
+  "COMUsed": false,
+  "ComputerUseUsed": false,
+  "TianzhengBusinessCommandsUsed": false,
+  "ordinaryAutoCADBatch": true,
+  "stage2Complete": false,
+  "normalQUITPassed": false,
+  "evidence": {
+    "阶段2\\evidence\\host-closure-v134.json": "3D6F5A55EDD64265FC812BD97732DE1E4B9019025D35E33FFDDF8A5854AF4E50",
+    "阶段2\\evidence\\native-host-binding-v134.json": "43E65CDD85046A77BB3F8B56C83990098D590888BF3BF41EFCDC306CFD5A528D"
+  },
+  "verificationFileSHA256": "1BDACAB241005753D2A7B002881FBA16222DCDAFF4EA2597AF9D40BF1D4AD13C",
+  "manifestSHA256": "B83AD75E078D0C8B42031439357EB4E0C0614C3F505009C8ADB107EA221CB392",
+  "visualImages": {
+    "floor1": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门号沿洞口与尺寸避让_20261101\\building-v134-floor-1.png",
+      "SHA256": "9890026288C8BC52B6DB02322063A3D439C9C4F14BF5B64D73A6BF55D5ACDA67"
+    },
+    "floor2": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门号沿洞口与尺寸避让_20261101\\building-v134-floor-2.png",
+      "SHA256": "976320EBE5B8C3068556E677A83E66DFB1ADCA0D074308EFA8179F2EE1C399A8"
+    }
+  },
+  "helpers": {
+    "prepare_door_clearance.py": "E841EE59B5F666AE5FE43A6C0DCD5330DBFAF738E147018B6D84C27D051AE370",
+    "render_door_clearance.py": "51E760165FE76122798A3518031A6ADE61CB75F41AD6E3AD0092004E599EE52A",
+    "solve_dimension_text_escape.py": "0220C7313BCDF75026B08DF8216442332D56009C8013C0BAB819B817C6217B95",
+    "verify_door_clearance.py": "24E82162FC4862A7AEA4DB8FCA6DE3B3D0D557EA704A3152DE59C017D4581770",
+    "verify_stretch_trial.py": "988C275A3E553A6A12524B86348D8E808EF845166D9D62639D2B8ABB386D5F78"
+  }
+}

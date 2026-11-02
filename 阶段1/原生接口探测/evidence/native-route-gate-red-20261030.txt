@@ -1,0 +1,23 @@
+.FF
+======================================================================
+FAIL: test_tch_command_or_panel_operations_rejected (test_native_route_gate.NativeRouteGate.test_tch_command_or_panel_operations_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Codex\建筑施工图自动化\阶段1\tests\test_native_route_gate.py", line 8, in test_tch_command_or_panel_operations_rejected
+    for name in ['NumberA','Singletons','ElevationRoundTrip','ElevationDialog','Slope','Section','MergeTwo']:self.assertFalse(module.native_only_mode_allowed(name),name)
+                                                                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false : NumberA
+
+======================================================================
+FAIL: test_unknown_name_rejected (test_native_route_gate.NativeRouteGate.test_unknown_name_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Codex\建筑施工图自动化\阶段1\tests\test_native_route_gate.py", line 9, in test_unknown_name_rejected
+    def test_unknown_name_rejected(self):self.assertFalse(module.native_only_mode_allowed('S1_UNVERIFIED'))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+FAILED (failures=2)

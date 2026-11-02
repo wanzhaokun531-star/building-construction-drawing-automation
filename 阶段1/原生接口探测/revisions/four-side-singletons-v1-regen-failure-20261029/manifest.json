@@ -1,0 +1,35 @@
+{
+  "purpose": "Preserve Singleton v1 public moveStretch+REGEN real failure; no native success inferred",
+  "files": [
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\src\\NativeFourSideAxisSingletonProbe.inc",
+      "file": "NativeFourSideAxisSingletonProbe.inc",
+      "SHA256": "D924649B35AAACCBC2A9C472337DB5607EAD90AC6C998E0CC07868A42183CE97"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_four_side_singletons_native.py",
+      "file": "verify_four_side_singletons_native.py",
+      "SHA256": "565C3CD7D8F4EA04900797326F043A861101B23AAD955B914B8958855EC12C60"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\test_four_side_singletons_contract.py",
+      "file": "test_four_side_singletons_contract.py",
+      "SHA256": "D325966A48942E09A7AB8B7EECB45B22AE39245C73A07023E6525B7AC80E897A"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-singletons-20261029-103322-756531\\four-side-singletons-native.json",
+      "file": "four-side-singletons-native.json",
+      "SHA256": "C4B3AD564B0AE15AE02D42D25E86BC5941FFDB8550BA8DDF914A0AB19D37D7C9"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-singletons-20261029-103322-756531\\verify-result.txt",
+      "file": "verify-result.txt",
+      "SHA256": "1FA1EB8050D8D9E62E8F6B1D452DE344E14F0CC91029139B712CEA0D69D8940E"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-singletons-20261029-103322-756531\\quiet-job-receipt.json",
+      "file": "quiet-job-receipt.json",
+      "SHA256": "95F1A4C4F5C2A699C0F48F4DA3AC6D6B20E3211FF0BCBBB5F1FA5BE89484CF79"
+    }
+  ]
+}

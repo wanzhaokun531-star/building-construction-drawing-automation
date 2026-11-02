@@ -1,0 +1,394 @@
+[
+  {
+    "source": "scheme",
+    "sourceHandle": "CD83",
+    "targetHandle": "6DD4",
+    "type": "TDbWall",
+    "sourceLayer": "WALL",
+    "targetLayer": "$0$WALL",
+    "beforeMin": [
+      29111.890259172244,
+      18441.263551952798,
+      0
+    ],
+    "beforeMax": [
+      32711.890259172244,
+      18641.263551952827,
+      3600
+    ],
+    "savedMin": [
+      129111.89025917224,
+      18441.263551952798,
+      0
+    ],
+    "savedMax": [
+      132711.89025917224,
+      18641.263551952827,
+      3600
+    ],
+    "beforeProperties": {
+      "Height": 3600,
+      "Scale": 100,
+      "TextStyle": "_TCH_ASD",
+      "Label": ""
+    },
+    "savedProperties": {
+      "Height": 3600,
+      "Scale": 100,
+      "TextStyle": "_TCH_ASD",
+      "Label": ""
+    },
+    "edits": [],
+    "translation": [
+      100000,
+      0,
+      0
+    ],
+    "association": "not validated"
+  },
+  {
+    "source": "scheme",
+    "sourceHandle": "CD84",
+    "targetHandle": "6DE9",
+    "type": "TDbOpening",
+    "sourceLayer": "WINDOW",
+    "targetLayer": "$0$WINDOW",
+    "beforeMin": [
+      29711.89025917306,
+      18441.263551952805,
+      0
+    ],
+    "beforeMax": [
+      32111.89025917306,
+      18641.26355195282,
+      0
+    ],
+    "savedMin": [
+      129661.89025917306,
+      18441.2635519528,
+      0
+    ],
+    "savedMax": [
+      132161.89025917306,
+      18641.263551952823,
+      0
+    ],
+    "beforeProperties": {
+      "Width": 2400,
+      "Height": 1500,
+      "Scale": 100,
+      "TextStyle": "_TCH_WINDOW",
+      "Label": "",
+      "GetKind": "普通窗"
+    },
+    "savedProperties": {
+      "Width": 2500,
+      "Height": 1500,
+      "Scale": 100,
+      "TextStyle": "$0$_TCH_WINDOW",
+      "Label": "",
+      "GetKind": "普通窗"
+    },
+    "edits": [
+      {
+        "sourceHandle": "CD84",
+        "targetHandle": "6DE9",
+        "property": "Width",
+        "expected": 2500,
+        "before": 2400,
+        "beforeStatus": 0,
+        "status": 0,
+        "immediate": 2500,
+        "immediateStatus": 0,
+        "actual": 2500,
+        "reopenGetStatus": 0
+      }
+    ],
+    "translation": [
+      100000,
+      0,
+      0
+    ],
+    "association": "not validated"
+  },
+  {
+    "source": "scheme",
+    "sourceHandle": "CD89",
+    "targetHandle": "6E35",
+    "type": "TDbOpening",
+    "sourceLayer": "WINDOW",
+    "targetLayer": "$0$WINDOW",
+    "beforeMin": [
+      22111.890259172244,
+      30720.430218619524,
+      0
+    ],
+    "beforeMax": [
+      24511.890259172244,
+      30841.263551952827,
+      0
+    ],
+    "savedMin": [
+      122111.89025917224,
+      30720.430218619524,
+      0
+    ],
+    "savedMax": [
+      124511.89025917224,
+      30841.263551952827,
+      0
+    ],
+    "beforeProperties": {
+      "Width": 2400,
+      "Height": 2400,
+      "Scale": 100,
+      "TextStyle": "_TCH_WINDOW",
+      "Label": "",
+      "GetKind": "普通门"
+    },
+    "savedProperties": {
+      "Width": 2400,
+      "Height": 2400,
+      "Scale": 100,
+      "TextStyle": "$0$_TCH_WINDOW",
+      "Label": "",
+      "GetKind": "普通门"
+    },
+    "edits": [],
+    "translation": [
+      100000,
+      0,
+      0
+    ],
+    "association": "not validated"
+  },
+  {
+    "source": "scheme",
+    "sourceHandle": "CDC0",
+    "targetHandle": "6EF4",
+    "type": "TDbText",
+    "sourceLayer": "PUB_TEXT",
+    "targetLayer": "$0$PUB_TEXT",
+    "beforeMin": [
+      18050.9641482117,
+      32333.451546991986,
+      0
+    ],
+    "beforeMax": [
+      18655.858662979634,
+      32684.92834024093,
+      0
+    ],
+    "savedMin": [
+      118050.9641482117,
+      32333.451546991986,
+      0
+    ],
+    "savedMax": [
+      119411.97680643955,
+      32684.92834024093,
+      0
+    ],
+    "beforeProperties": {
+      "Height": "3.5",
+      "Text": "庭院",
+      "Scale": 100,
+      "TextStyle": "黑体"
+    },
+    "savedProperties": {
+      "Height": "3.5",
+      "Text": "庭院 [S1]",
+      "Scale": 100,
+      "TextStyle": "$0$黑体"
+    },
+    "edits": [
+      {
+        "sourceHandle": "CDC0",
+        "targetHandle": "6EF4",
+        "property": "Text",
+        "expected": "庭院 [S1]",
+        "before": "庭院",
+        "beforeStatus": 0,
+        "status": 0,
+        "immediate": "庭院 [S1]",
+        "immediateStatus": 0,
+        "actual": "庭院 [S1]",
+        "reopenGetStatus": 0
+      }
+    ],
+    "translation": [
+      100000,
+      0,
+      0
+    ],
+    "association": "not validated"
+  },
+  {
+    "source": "reference",
+    "sourceHandle": "17DF",
+    "targetHandle": "CAF6",
+    "type": "AcDbBlockReference",
+    "sourceLayer": "A-立面看线",
+    "targetLayer": "$0$A-立面看线",
+    "beforeMin": [
+      59198.49884487782,
+      10374.911828735188,
+      0
+    ],
+    "beforeMax": [
+      63285.186151396716,
+      38591.500064082255,
+      3000
+    ],
+    "savedMin": [
+      59198.49884487782,
+      10374.911828735188,
+      0
+    ],
+    "savedMax": [
+      63285.186151396716,
+      38591.500064082255,
+      3000
+    ],
+    "beforeProperties": {},
+    "savedProperties": {},
+    "edits": [],
+    "translation": [
+      0,
+      0,
+      0
+    ],
+    "association": "not validated"
+  },
+  {
+    "source": "reference",
+    "sourceHandle": "199F",
+    "targetHandle": "DED7",
+    "type": "TDbAxisLabelSet",
+    "sourceLayer": "AXIS",
+    "targetLayer": "$0$AXIS",
+    "beforeMin": [
+      34681.381329980366,
+      12359.780327367856,
+      0
+    ],
+    "beforeMax": [
+      53481.38132998169,
+      36457.75046854773,
+      0
+    ],
+    "savedMin": [
+      34681.381329980366,
+      12359.780327367856,
+      0
+    ],
+    "savedMax": [
+      53481.38132998169,
+      36457.75046854773,
+      0
+    ],
+    "beforeProperties": {
+      "Scale": 100,
+      "TextStyle": "_TCH_AXIS"
+    },
+    "savedProperties": {
+      "Scale": 100,
+      "TextStyle": "$0$_TCH_AXIS"
+    },
+    "edits": [],
+    "translation": [
+      0,
+      0,
+      0
+    ],
+    "association": "not validated"
+  },
+  {
+    "source": "reference",
+    "sourceHandle": "19A0",
+    "targetHandle": "DEDF",
+    "type": "TDbDimension2",
+    "sourceLayer": "AXIS",
+    "targetLayer": "$0$AXIS",
+    "beforeMin": [
+      34811.38132997276,
+      13609.780327367873,
+      0
+    ],
+    "beforeMax": [
+      53351.381329986965,
+      16359.780327368338,
+      0
+    ],
+    "savedMin": [
+      34811.38132997276,
+      13609.780327367873,
+      0
+    ],
+    "savedMax": [
+      53351.381329986965,
+      16359.780327368338,
+      0
+    ],
+    "beforeProperties": {
+      "Scale": 100,
+      "DimStyle": "_TCH_ARCH"
+    },
+    "savedProperties": {
+      "Scale": 100,
+      "DimStyle": "$1$_TCH_ARCH"
+    },
+    "edits": [],
+    "translation": [
+      0,
+      0,
+      0
+    ],
+    "association": "not validated"
+  },
+  {
+    "source": "reference",
+    "sourceHandle": "19F3",
+    "targetHandle": "DF75",
+    "type": "TDbDrawingName",
+    "sourceLayer": "DIM_SYMB",
+    "targetLayer": "$1$DIM_SYMB",
+    "beforeMin": [
+      42130.609336203204,
+      11242.711870155692,
+      0
+    ],
+    "beforeMax": [
+      46067.74013789097,
+      12070.89752416413,
+      0
+    ],
+    "savedMin": [
+      42130.609336203204,
+      11242.711870155692,
+      0
+    ],
+    "savedMax": [
+      46067.74013789097,
+      12070.89752416413,
+      0
+    ],
+    "beforeProperties": {
+      "NameText": "一层平面图",
+      "Scale": 100,
+      "DimStyle": "传统"
+    },
+    "savedProperties": {
+      "NameText": "一层平面图",
+      "Scale": 100,
+      "DimStyle": "传统"
+    },
+    "edits": [],
+    "translation": [
+      0,
+      0,
+      0
+    ],
+    "association": "not validated"
+  }
+]

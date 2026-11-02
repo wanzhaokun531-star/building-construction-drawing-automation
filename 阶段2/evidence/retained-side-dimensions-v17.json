@@ -1,0 +1,43 @@
+{
+  "contract": "bcp.retained-side-dimension-verification.v1",
+  "sourceNativeRun": "阶段2\\evidence\\native-run-v17.json",
+  "savedNativeGeometryVerified": true,
+  "measuredEndpointsVerified": 48,
+  "dimensionCount": 24,
+  "chains": {
+    "top": [
+      3900,
+      2200,
+      4000,
+      3800,
+      3600
+    ],
+    "bottom": [
+      1100,
+      2800,
+      1400,
+      3600,
+      5000,
+      3600
+    ],
+    "left": [
+      4000,
+      1800,
+      1800.0,
+      3600.0,
+      3000.0,
+      1200.0,
+      2800
+    ],
+    "right": [
+      1900,
+      3700.0,
+      3600.0,
+      3000.0,
+      2000.0,
+      2000
+    ]
+  },
+  "axisCirclesVisible": 28,
+  "constructionDrawingComplete": false
+}

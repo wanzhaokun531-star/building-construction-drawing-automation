@@ -1,0 +1,35 @@
+{
+  "purpose": "Preserve v2 failed full fit and independent true merge-reflow failure; no native PASS inferred",
+  "files": [
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\src\\NativeFourSideAxisProbe.inc",
+      "file": "NativeFourSideAxisProbe.inc",
+      "SHA256": "4A05E8430F554CFCD549B398EEBBC97A6D99B75A6F5062E9CD153653BD78D29C"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_four_side_axis_native.py",
+      "file": "verify_four_side_axis_native.py",
+      "SHA256": "B0E4659193F7493202FE4D455F92EEAC9D9FFFF2522193AA398F94F9B30CC974"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-fourside-20261029-101538-343619\\four-side-axis-native.json",
+      "file": "full-four-side-axis-native.json",
+      "SHA256": "D50CE13549E5DA560BE39655E35D92F4772D2476B887B8508F74D4047E9AB89C"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-fourside-20261029-101538-343619\\verify-result.txt",
+      "file": "full-verify-result.txt",
+      "SHA256": "9066D4278A8E7E44BC171594A504503B63BBB1CCF406897FAE14092B12DDB5CF"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-mergetwo-20261029-101416-446156\\axis-merge-two-native.json",
+      "file": "merge-axis-merge-two-native.json",
+      "SHA256": "4101975BD586AC70758315E119F71DF2C6FA3F450DDC86C0E88B41F08203F5EB"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-mergetwo-20261029-101416-446156\\verify-result.txt",
+      "file": "merge-verify-result.txt",
+      "SHA256": "29DBB1C9357D036BE28879C0A38D91D5FB37D3C210F6A34D8ABBC04468EC3708"
+    }
+  ]
+}

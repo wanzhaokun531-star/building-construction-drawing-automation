@@ -1,0 +1,33 @@
+{
+  "contract": "stage1.pure-native-delivery.v1",
+  "recorded": "2026-10-30T10:05:50.658450+08:00",
+  "phase1FullAcceptance": false,
+  "phase2Started": false,
+  "artifacts": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\阶段1纯原生续测与阻断报告_20261030.md",
+      "SHA256": "DE181F372003B6572D663D41F941D5D0AFF952BB26AE3545AE7593C66DD8E1B2"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\纯原生阶段1_输入模块与退出终核_20261030.json",
+      "SHA256": "0AC9B77AE53FEFE744F7D059F7386D5C277174250DE8DEA3ABA358577889726F"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\纯原生全量读取与字体分项_20261030.json",
+      "SHA256": "D97B49A05DE61232E44FB2894206DC46980CD8BEF02F3F43FFA28150429FB72A"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\纯原生阶段1续测_执行账本_20261030.json",
+      "SHA256": "8FE40346996A0D802448D9DCDC83EC569872715E283591CF03D68B8A023C7804"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\evidence\\pure-native-final-offline-20261030.txt",
+      "SHA256": "3FA4A4F4857CC21FD0C3C9D3552A0B30E53704C0509AF3EE99DA4EFD1D0BC4BB"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\evidence\\pure-boundary-green-20261030.txt",
+      "SHA256": "CD49EB20A1EDB25430CB7ABAF20A79F59D7D48286945AA93B46F6D2078C1402F"
+    }
+  ],
+  "noSuccessfulNewBusinessDWG": true
+}

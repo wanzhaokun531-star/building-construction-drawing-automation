@@ -1,0 +1,17 @@
+{
+  "source": "C:\\Users\\PC\\.codex\\config.toml",
+  "sourceSHA256": "D9EA2A07072B4D0ED53FBAD5DDE1E5A55D0F235E7AEEC18CC66A0E901624B845",
+  "sourceModified": false,
+  "copiedSkills": [
+    "autocad2020-objectarx",
+    "cpp-coding-standards",
+    "cpp-testing",
+    "review-agent",
+    "construction-drawing-review"
+  ],
+  "removedFromExample": [
+    "session-specific native pipe",
+    "unrelated project trust entries"
+  ],
+  "credentialsCopied": false
+}

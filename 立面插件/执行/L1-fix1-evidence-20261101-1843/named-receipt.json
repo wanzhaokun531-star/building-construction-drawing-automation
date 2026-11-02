@@ -1,0 +1,73 @@
+{
+  "command": "ElevationCoreTests.exe --case <name>",
+  "sourceReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\f1-20261101-184224-119-l1-fix1-green-0ba0334a\\receipt.json",
+  "exeSHA256": "471309130C747993B4B530679C5FB6B146EAA834B34316229F4138C411C04F7D",
+  "cases": [
+    {
+      "case": "RowsDependOnAvailableArea",
+      "exitCode": 0,
+      "log": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\L1-fix1-evidence-20261101-1843\\RowsDependOnAvailableArea.log",
+      "sha256": "A8AB9647D7646638CB383C49BEED11321570B5D52677A4A42A6B9330B1741460"
+    },
+    {
+      "case": "NoFitDoesNotScaleArchitecture",
+      "exitCode": 0,
+      "log": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\L1-fix1-evidence-20261101-1843\\NoFitDoesNotScaleArchitecture.log",
+      "sha256": "688F03443A95D47107DF337C00542AF83B9ADE87C84275DE4769CD449457F832"
+    },
+    {
+      "case": "ProtectedSectionIsFixedObstacle",
+      "exitCode": 0,
+      "log": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\L1-fix1-evidence-20261101-1843\\ProtectedSectionIsFixedObstacle.log",
+      "sha256": "757EBB9F6A4CC074A1DD2C6C5B587819459E13C0B7E4229C0BB6E32F2871F7BF"
+    },
+    {
+      "case": "CollisionIncludesDimensionGlyphAndBaseline",
+      "exitCode": 0,
+      "log": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\L1-fix1-evidence-20261101-1843\\CollisionIncludesDimensionGlyphAndBaseline.log",
+      "sha256": "5AD335BE01DB0905029809C1F070846CF31ADFCA453F39221ABD33850453804B"
+    },
+    {
+      "case": "PaperSizeTracksSelectedScale",
+      "exitCode": 0,
+      "log": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\L1-fix1-evidence-20261101-1843\\PaperSizeTracksSelectedScale.log",
+      "sha256": "502D13B9EF51A19E7E7A5C4BCBB7F957EE3F096B86700802B864C153F1C39154"
+    },
+    {
+      "case": "IncompleteGlyphEvidenceBlocksLayout",
+      "exitCode": 0,
+      "log": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\L1-fix1-evidence-20261101-1843\\IncompleteGlyphEvidenceBlocksLayout.log",
+      "sha256": "F4CCBE4DC35119C5BCFB3E2197651BA8E4A169443B0FFC476D197FD18C773315"
+    },
+    {
+      "case": "MalformedOrOverflowingGeometryRejected",
+      "exitCode": 0,
+      "log": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\L1-fix1-evidence-20261101-1843\\MalformedOrOverflowingGeometryRejected.log",
+      "sha256": "1A87AD82CA2574EC0DDFF5916A98FCD8A00BD1A89F65B087E5AB93B607E883AA"
+    },
+    {
+      "case": "SearchLimitIsNotNoSpace",
+      "exitCode": 0,
+      "log": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\L1-fix1-evidence-20261101-1843\\SearchLimitIsNotNoSpace.log",
+      "sha256": "8E5F8F67ADC575E17135D04DC0A19D4FD5562C46CCC162426F241A2F5B525335"
+    },
+    {
+      "case": "DuplicateLayoutIdentityAndKeysRejected",
+      "exitCode": 0,
+      "log": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\L1-fix1-evidence-20261101-1843\\DuplicateLayoutIdentityAndKeysRejected.log",
+      "sha256": "82CC4379B8F3E6AFEDCE2A96A77C8602646BC3F458B230F1DBF651246C90C96A"
+    },
+    {
+      "case": "SingleTranslationRetainsAllVisiblePartsAndTargets",
+      "exitCode": 0,
+      "log": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\L1-fix1-evidence-20261101-1843\\SingleTranslationRetainsAllVisiblePartsAndTargets.log",
+      "sha256": "94D68CA3E9B7F84991F274D3B6590C393C55E3AA0FF656966BE4FB2C5F6BB4F4"
+    },
+    {
+      "case": "LayoutBacktrackingAndReorderAreDeterministic",
+      "exitCode": 0,
+      "log": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\L1-fix1-evidence-20261101-1843\\LayoutBacktrackingAndReorderAreDeterministic.log",
+      "sha256": "34ED051D28C2EBDB134D63E28A93F037416BD7517E852049A29B4EF9688D4F6D"
+    }
+  ]
+}

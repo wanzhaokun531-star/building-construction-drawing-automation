@@ -1,0 +1,21 @@
+{
+    "contract":  "stage1.dedicated-autocad-profile.v1",
+    "recorded":  "2026-10-29T19:00:36.9298761+08:00",
+    "authorization":  "User: 允许，仅修改专用测试配置",
+    "profile":  "CodexS1Native_6f6df19579f3",
+    "registryPath":  "HKCU:\\Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Profiles\\CodexS1Native_6f6df19579f3",
+    "sourceProfile":  "\u003c\u003c未命名配置\u003e\u003e",
+    "sourceProfileSHA256Before":  "E9788B2725F59D52D3D420BE3494358658053E216D93EF231A2C62961615B48B",
+    "sourceProfileSHA256After":  "E9788B2725F59D52D3D420BE3494358658053E216D93EF231A2C62961615B48B",
+    "defaultProfileBefore":  "TArch20V8",
+    "defaultProfileAfter":  "TArch20V8",
+    "componentPath":  "C:\\Tangent\\TArchT20V8\\SYS23x64\\tch_kernal.arx",
+    "componentSHA256":  "0A24CAEA41FA0248CE7AE17663A35D55DD95B678F53D8A98AFED6A2488BC4432",
+    "trustedPaths":  "C:\\Program Files\\Autodesk\\ApplicationPlugins\\TranSketchPlugin.bundle\\Contents\\Win64\\2020;C:\\Tangent\\TArchT20V8\\SYS23x64",
+    "SECURELOAD":  "1",
+    "supportPath":  "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support;D:\\CAD2020\\AutoCAD 2020\\support;D:\\CAD2020\\AutoCAD 2020\\support\\zh-CN;D:\\CAD2020\\AutoCAD 2020\\fonts;D:\\CAD2020\\AutoCAD 2020\\Express;D:\\CAD2020\\AutoCAD 2020\\support\\color;C:\\Program Files (x86)\\Autodesk\\ApplicationPlugins\\Autodesk AppManager 2020.bundle\\Contents\\Windows;C:\\Program Files (x86)\\Autodesk\\ApplicationPlugins\\Autodesk AppManager 2020.bundle\\Contents\\Windows\\2020;C:\\Program Files (x86)\\Autodesk\\ApplicationPlugins\\Autodesk FeaturedApps 2020.bundle\\Contents\\Resources;C:\\Program Files (x86)\\Autodesk\\ApplicationPlugins\\Autodesk FeaturedApps 2020.bundle\\Contents\\Windows\\2020\\Win64;C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\ApplicationPlugins\\TitleFrameTangent.bundle\\Contents\\Windows\\v0.1.2-native-97C32A7651461ED4;C:\\Program Files\\Autodesk\\ApplicationPlugins\\TranSketchPlugin.bundle\\Contents\\Win64\\2020;C:\\Tangent\\TArchT20V8\\SYS23x64;C:\\Tangent\\TArchT20V8\\SYS",
+    "COMUsed":  false,
+    "ComputerUseUsed":  false,
+    "TianzhengCommandsUsed":  false,
+    "scope":  "Only newly created task profile; original profile/default and global application registration unchanged. Native module loading/read/write still requires runtime evidence."
+}

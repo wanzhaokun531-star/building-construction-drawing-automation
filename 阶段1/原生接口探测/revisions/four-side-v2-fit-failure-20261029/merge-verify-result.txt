@@ -1,0 +1,32 @@
+FAIL: native precursor contract/no error
+FAIL: merge: no native merge error
+FAIL: merge: actual output equals complete stretch-point union
+FAIL: merge: actual complete six station grips retained per input station
+FAIL: merge: only two auxiliary points in one declared joint +/-R state
+FAIL: merge: auxiliary audit matches actual multiset remainder
+FAIL: merge: actual complete circle bounds equal input envelope
+FAIL: merge: actual merge completion classification
+FAIL: numbering: operation contract
+FAIL: numbering: native API
+FAIL: numbering: documented native command
+FAIL: numbering: zero transactions across command
+FAIL: numbering: WCS to UCS
+FAIL: numbering: real public grip selection point
+FAIL: numbering: same native Tianzheng collection
+FAIL: numbering: actual finite native grip arrays
+FAIL: numbering: actual finite native stretch arrays
+FAIL: numbering: actual finite native grip arrays
+FAIL: numbering: actual finite native stretch arrays
+FAIL: numbering: pick independently belongs to captured native grip
+FAIL: numbering: actual UCS point finite
+FAIL: numbering: supplied documented tokens
+FAIL: numbering: real observer lifecycle
+FAIL: numbering: observed start/end
+FAIL: numbering: actual command selected only the requested collection
+FAIL: numbering: native completion classification
+FAIL: numbering: semantic proof not fabricated
+FAIL: renumber real surviving merged collection1
+FAIL: actual numbered result persists
+assertions=81 passed=52 failed=29 result=FAIL
+structure=FAIL number_semantics=PENDING
+Scope: actual two native sets merged into one at scheme wall X, actual numbering command, retained original/other seed and persistence. PDF circles1/2 on both sides remain a separate gate.

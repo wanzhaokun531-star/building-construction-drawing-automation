@@ -1,0 +1,384 @@
+{
+  "contract": "bce.current-project-datum-audit.v1",
+  "schemeSHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1",
+  "sourceAudit": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-readonly-20261101-122344\\input-version-audit.json",
+  "sourceAuditSHA256": "8A9DE1E3742516A901DF61156E32DA6B6D6E6C1B2C86253D57BD0303CC1D7D8C",
+  "publicGetterCapture": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-stage1-20261101-163350-07abbb82\\capture\\reference-inspection.json",
+  "publicGetterCaptureSHA256": "FB46388E86AD5D09EFB9034A4E026A76DCB682185B99A729AD4D61A0BDDFC3C7",
+  "viewFixture": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\fixtures\\scheme-scene-manifest.json",
+  "viewFixtureSHA256": "126F528EDF5B962D5B57CC2CFA1929E739D3400047BDDCCC4FF2A107AC2CEAC1",
+  "userConfirmationBeforeAuditSHA256": "28E3C4CF46CE87C73BCA64A06F4DD6BD47198B3FA499400C3EC921A5686DFF8F",
+  "floorRuleConfirmedByUser": true,
+  "datumWorldCoordinatesVerified": true,
+  "views": [
+    {
+      "role": "front",
+      "titleHandle": "6AC",
+      "datumPoint": [
+        21181.944428666087,
+        23092.065940572997,
+        0
+      ],
+      "datumSourceHandle": "6AB",
+      "datumGetter": "AcDbAlignedDimension::xLine1Point",
+      "upperPoint": [
+        21181.944428666087,
+        26092.065940572997,
+        0
+      ],
+      "upperGetter": "AcDbAlignedDimension::xLine2Point",
+      "SDKMeasurement": 3000.0000000000036,
+      "measuredDifference": 3000.0,
+      "datumMeters": 0.0,
+      "heightDirection": [
+        0,
+        1
+      ],
+      "labelHandles": [
+        "6A9",
+        "6AA"
+      ],
+      "corroboratingHorizontalSourceEdges": [
+        {
+          "handle": "621",
+          "start": [
+            26001.94456079608,
+            23092.065940572997,
+            0
+          ],
+          "end": [
+            26601.944428666087,
+            23092.065940572997,
+            0
+          ]
+        },
+        {
+          "handle": "633",
+          "start": [
+            26601.94456079608,
+            23092.065940572997,
+            0
+          ],
+          "end": [
+            27101.944428666087,
+            23092.065940572997,
+            0
+          ]
+        },
+        {
+          "handle": "639",
+          "start": [
+            27101.944428666087,
+            23092.065940572997,
+            0
+          ],
+          "end": [
+            29501.944428666087,
+            23092.065940572997,
+            0
+          ]
+        },
+        {
+          "handle": "64E",
+          "start": [
+            29501.944428666087,
+            23092.065940572997,
+            0
+          ],
+          "end": [
+            30001.944428666087,
+            23092.065940572997,
+            0
+          ]
+        },
+        {
+          "handle": "655",
+          "start": [
+            30001.9445607863,
+            23092.065940572997,
+            0
+          ],
+          "end": [
+            30601.944428666087,
+            23092.065940572997,
+            0
+          ]
+        },
+        {
+          "handle": "65F",
+          "start": [
+            30601.9445607863,
+            23092.065940572997,
+            0
+          ],
+          "end": [
+            31101.944428666087,
+            23092.065940572997,
+            0
+          ]
+        },
+        {
+          "handle": "662",
+          "start": [
+            31101.944428666087,
+            23092.065940572997,
+            0
+          ],
+          "end": [
+            33501.94442866609,
+            23092.065940572997,
+            0
+          ]
+        },
+        {
+          "handle": "676",
+          "start": [
+            33501.94442866609,
+            23092.065940572997,
+            0
+          ],
+          "end": [
+            34001.94442866609,
+            23092.065940572997,
+            0
+          ]
+        },
+        {
+          "handle": "681",
+          "start": [
+            34001.944560756034,
+            23092.065940572997,
+            0
+          ],
+          "end": [
+            34601.94442866609,
+            23092.065940572997,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "role": "left",
+      "titleHandle": "737",
+      "datumPoint": [
+        44421.94442866609,
+        23092.065940572997,
+        0
+      ],
+      "datumSourceHandle": "736",
+      "datumGetter": "AcDbAlignedDimension::xLine1Point",
+      "upperPoint": [
+        44421.94442866609,
+        26092.065940572997,
+        0
+      ],
+      "upperGetter": "AcDbAlignedDimension::xLine2Point",
+      "SDKMeasurement": 3000.0000000000036,
+      "measuredDifference": 3000.0,
+      "datumMeters": 0.0,
+      "heightDirection": [
+        0,
+        1
+      ],
+      "labelHandles": [
+        "734",
+        "735"
+      ],
+      "corroboratingHorizontalSourceEdges": [
+        {
+          "handle": "6AD",
+          "start": [
+            45221.9447865063,
+            23092.065940572997,
+            0
+          ],
+          "end": [
+            45821.9447865063,
+            23092.065940572997,
+            0
+          ]
+        },
+        {
+          "handle": "6B1",
+          "start": [
+            44421.94442866609,
+            23092.065940572997,
+            0
+          ],
+          "end": [
+            45221.9447865063,
+            23092.065940572997,
+            0
+          ]
+        },
+        {
+          "handle": "6B9",
+          "start": [
+            45821.94478657615,
+            23092.065940572997,
+            0
+          ],
+          "end": [
+            46901.94442866609,
+            23092.065940572997,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "role": "back",
+      "titleHandle": "7BC",
+      "datumPoint": [
+        68241.94442866609,
+        23092.065940572997,
+        0
+      ],
+      "datumSourceHandle": "7BB",
+      "datumGetter": "AcDbAlignedDimension::xLine1Point",
+      "upperPoint": [
+        68241.94442866609,
+        26092.065940572997,
+        0
+      ],
+      "upperGetter": "AcDbAlignedDimension::xLine2Point",
+      "SDKMeasurement": 3000.0000000000036,
+      "measuredDifference": 3000.0,
+      "datumMeters": 0.0,
+      "heightDirection": [
+        0,
+        1
+      ],
+      "labelHandles": [
+        "7B9",
+        "7BA"
+      ],
+      "corroboratingHorizontalSourceEdges": [
+        {
+          "handle": "767",
+          "start": [
+            73581.94442866609,
+            23092.065940572997,
+            0
+          ],
+          "end": [
+            73691.54429475596,
+            23092.065940572997,
+            0
+          ]
+        },
+        {
+          "handle": "768",
+          "start": [
+            73691.54429475596,
+            23092.065940572997,
+            0
+          ],
+          "end": [
+            74481.94442866609,
+            23092.065940572997,
+            0
+          ]
+        },
+        {
+          "handle": "791",
+          "start": [
+            80241.94442866609,
+            23092.065940572997,
+            0
+          ],
+          "end": [
+            81032.34429650573,
+            23092.065940572997,
+            0
+          ]
+        },
+        {
+          "handle": "79E",
+          "start": [
+            81032.34429650573,
+            23092.065940572997,
+            0
+          ],
+          "end": [
+            81141.94442866609,
+            23092.065940572997,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "role": "right",
+      "titleHandle": "844",
+      "datumPoint": [
+        91481.94442866609,
+        23092.065940572997,
+        0
+      ],
+      "datumSourceHandle": "843",
+      "datumGetter": "AcDbAlignedDimension::xLine1Point",
+      "upperPoint": [
+        91481.94442866609,
+        26092.065940572997,
+        0
+      ],
+      "upperGetter": "AcDbAlignedDimension::xLine2Point",
+      "SDKMeasurement": 3000.0000000000036,
+      "measuredDifference": 3000.0,
+      "datumMeters": 0.0,
+      "heightDirection": [
+        0,
+        1
+      ],
+      "labelHandles": [
+        "841",
+        "842"
+      ],
+      "corroboratingHorizontalSourceEdges": [
+        {
+          "handle": "824",
+          "start": [
+            110301.94442866609,
+            23092.065940572997,
+            0
+          ],
+          "end": [
+            109501.94407082588,
+            23092.065940572997,
+            0
+          ]
+        },
+        {
+          "handle": "826",
+          "start": [
+            107821.94442866609,
+            23092.065940572997,
+            0
+          ],
+          "end": [
+            108901.94407075603,
+            23092.065940572997,
+            0
+          ]
+        },
+        {
+          "handle": "833",
+          "start": [
+            108901.94407075603,
+            23092.065940572997,
+            0
+          ],
+          "end": [
+            109501.94407075603,
+            23092.065940572997,
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "drawingWritten": false,
+  "scope": "This frozen project only: user-approved first-floor zero associated with SDK dimension extension points and actual horizontal source edges; not text ink bounds; no plan-axis, opening-role or material confirmation inferred"
+}

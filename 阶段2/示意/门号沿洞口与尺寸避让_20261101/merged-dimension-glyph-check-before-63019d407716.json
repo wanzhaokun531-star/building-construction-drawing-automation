@@ -1,0 +1,260 @@
+{
+  "contract": "bcp.merged-door-number-dimension-glyph-check.v1",
+  "sourcePlans": {
+    "door-caption-complete-and-dimension-plan.json": "51768907E71BEC884ECCDD4D7C771F2F4445C6BB3AB11B6B27FA8A95DA982C53",
+    "three-other-chains-text-grips.json": "DCDA834DE0A4515266A2D0A3505D7197A5E75400DD619D397D4C29B0B2D2512A",
+    "dimension-text-escape-candidates.json": "B54D222001EA065C9360F99EA3399F6C82F99EF59433F6F983E62E90F647E610"
+  },
+  "scope": "Offline merged glyph/baseline plan validation; no native drawing edited",
+  "floors": [
+    {
+      "floor": 1,
+      "baselineMoves": [],
+      "selectedTexts": [
+        {
+          "handle": "847E",
+          "segment": 1,
+          "textGripIndex": 7,
+          "point": [
+            37261.70152820693,
+            27875.21380195598,
+            0
+          ],
+          "bounds": [
+            37102.70152820693,
+            27529.21380195598,
+            37420.70152820693,
+            28221.21380195598
+          ],
+          "source": "three-other-chains"
+        },
+        {
+          "handle": "8485",
+          "segment": 0,
+          "textGripIndex": 5,
+          "point": [
+            37261.70152820693,
+            33625.213801956095,
+            0
+          ],
+          "bounds": [
+            37102.70152820693,
+            33279.213801956095,
+            37420.70152820693,
+            33971.213801956095
+          ],
+          "source": "three-other-chains"
+        },
+        {
+          "handle": "846C",
+          "segment": 1,
+          "textGripIndex": 7,
+          "point": [
+            39481.70152820693,
+            31535.213801995444,
+            0
+          ],
+          "bounds": [
+            39322.70152820693,
+            31189.213801995444,
+            39640.70152820693,
+            31881.213801995444
+          ],
+          "source": "six-chain-peer"
+        },
+        {
+          "handle": "848C",
+          "segment": 2,
+          "textGripIndex": 8,
+          "point": [
+            46231.70152820693,
+            31015.213801956677,
+            0
+          ],
+          "bounds": [
+            45885.70152820693,
+            30856.213801956677,
+            46577.70152820693,
+            31174.213801956677
+          ],
+          "source": "six-chain-peer"
+        }
+      ],
+      "changedGlyphs": [
+        [
+          "846C",
+          1
+        ],
+        [
+          "847E",
+          1
+        ],
+        [
+          "8485",
+          0
+        ],
+        [
+          "848C",
+          2
+        ]
+      ],
+      "glyphAndBaselineContacts": [],
+      "allPreferredDoorCaptionContactsCleared": true,
+      "crossPlanTextConflictsCleared": true
+    },
+    {
+      "floor": 2,
+      "baselineMoves": [
+        {
+          "handle": "8475",
+          "delta": [
+            0,
+            700,
+            0
+          ]
+        }
+      ],
+      "selectedTexts": [
+        {
+          "handle": "848E",
+          "segment": 0,
+          "textGripIndex": 5,
+          "point": [
+            83683.70152820693,
+            33625.213801956095,
+            0
+          ],
+          "bounds": [
+            83524.70152820693,
+            33279.213801956095,
+            83842.70152820693,
+            33971.213801956095
+          ],
+          "source": "three-other-chains"
+        },
+        {
+          "handle": "8475",
+          "segment": 2,
+          "textGripIndex": 8,
+          "point": [
+            88603.70152820226,
+            35015.21380195621,
+            0
+          ],
+          "bounds": [
+            88280.36819486893,
+            34856.21380195621,
+            88927.0348615356,
+            35174.21380195621
+          ],
+          "source": "six-chain-peer"
+        },
+        {
+          "handle": "8478",
+          "segment": 2,
+          "textGripIndex": 8,
+          "point": [
+            89903.70152818436,
+            31215.213801956095,
+            0
+          ],
+          "bounds": [
+            89580.36819485103,
+            31056.213801956095,
+            90227.0348615177,
+            31374.213801956095
+          ],
+          "source": "six-chain-peer"
+        },
+        {
+          "handle": "847B",
+          "segment": 2,
+          "textGripIndex": 8,
+          "point": [
+            92653.70152820693,
+            31215.213801956677,
+            0
+          ],
+          "bounds": [
+            92307.70152820693,
+            31056.213801956677,
+            92999.70152820693,
+            31374.213801956677
+          ],
+          "source": "six-chain-peer"
+        },
+        {
+          "handle": "8481",
+          "segment": 0,
+          "textGripIndex": 6,
+          "point": [
+            83700,
+            32285.213801723497,
+            0
+          ],
+          "bounds": [
+            83541.0,
+            31961.880468390165,
+            83859.0,
+            32608.547135056833
+          ],
+          "source": "six-chain-peer"
+        },
+        {
+          "handle": "8481",
+          "segment": 1,
+          "textGripIndex": 7,
+          "point": [
+            85903.70152820693,
+            32995.21380149078,
+            0
+          ],
+          "bounds": [
+            85744.70152820693,
+            32649.213801490783,
+            86062.70152820693,
+            33341.21380149078
+          ],
+          "source": "six-chain-peer"
+        }
+      ],
+      "changedGlyphs": [
+        [
+          "8475",
+          0
+        ],
+        [
+          "8475",
+          1
+        ],
+        [
+          "8475",
+          2
+        ],
+        [
+          "8478",
+          2
+        ],
+        [
+          "847B",
+          2
+        ],
+        [
+          "8481",
+          0
+        ],
+        [
+          "8481",
+          1
+        ],
+        [
+          "848E",
+          0
+        ]
+      ],
+      "glyphAndBaselineContacts": [],
+      "allPreferredDoorCaptionContactsCleared": true,
+      "crossPlanTextConflictsCleared": true
+    }
+  ]
+}

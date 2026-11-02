@@ -1,0 +1,2 @@
+pure_boundary_smoke.cpp
+compiler=1916 assertions=4 failed=3

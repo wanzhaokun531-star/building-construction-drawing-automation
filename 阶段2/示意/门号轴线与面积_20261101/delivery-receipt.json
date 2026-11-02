@@ -1,0 +1,33 @@
+{
+  "contract": "bcp.one-off-drawing-delivery.v1",
+  "pluginCodeChanged": false,
+  "pluginBinarySHA256": "835B9E0F67B65C0F3A43F06F0C443BFB2029B1CBFACEB751C24938B894631FEA",
+  "sourceHashesUnchanged": true,
+  "finalVersion": "v124",
+  "unitDisplay": "m2",
+  "floors": [
+    {
+      "floor": 1,
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门号轴线与面积_20261101\\方案施工图_一层_门号轴线面积确认样张_v3.dwg",
+      "DWGSHA256": "E461F39AAFCD92569878B68D842D818F221D39FA2D90F66727D47D7510570B77",
+      "totalM2": 189.7820000000056,
+      "modelRoots": 261,
+      "doorMoves": 3,
+      "newContinuousLeaders": 19
+    },
+    {
+      "floor": 2,
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门号轴线与面积_20261101\\方案施工图_二层_门号轴线面积确认样张_v3.dwg",
+      "DWGSHA256": "D2205AA572869B7098B5120037D9E1C2C50CA84166A8D920415B99425137CCB5",
+      "totalM2": 153.4856000000058,
+      "modelRoots": 249,
+      "doorMoves": 3,
+      "newContinuousLeaders": 19
+    }
+  ],
+  "nativeQA": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门号轴线与面积_20261101\\native-drawing-preview-qa.json",
+  "nativeQASHA256": "7760CE3C111AB0DF9596F87CA1AEC24BC01C9F5BCE40FD04354F59A87337CCDE",
+  "visualQA": "Final room crops viewed for both floors; local small-WC dimension proximity remains for user review",
+  "scope": "Reviewable DWG sample only, not a changed product; no COM/CUA/TCH business commands",
+  "normalQuitPassed": false
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApplicationPackage SchemaVersion="1.0" AppVersion="0.1.2" Name="建筑施工图助手" Description="当前定稿项目的建筑施工图基础标注" Author="建筑施工图自动化项目" ProductCode="{D056D791-9D81-4B73-A4CD-B0C47C72ED59}" UpgradeCode="{42F1898E-658D-498D-872B-58F395F804B1}">
+  <CompanyDetails Name="建筑施工图自动化项目" />
+  <Components>
+    <RuntimeRequirements OS="Win64" Platform="AutoCAD" SeriesMin="R23.1" SeriesMax="R23.1" />
+    <ComponentEntry AppName="BuildingPlanPlugin2020" AppType="Arx" AppDescription="建筑施工图助手" Version="0.1.2" ModuleName="./Contents/Win64/BuildingPlanPlugin2020.arx" LoadOnCommandInvocation="True" LoadOnAutoCADStartup="False">
+      <Commands GroupName="BCP_PRODUCT">
+        <Command Global="BCP_BUILD" Local="BCP_BUILD" />
+        <Command Global="BCP_CHECK" Local="BCP_CHECK" />
+        <Command Global="BCP_INFO" Local="BCP_INFO" />
+        <Command Global="BCP_ISSUES" Local="BCP_ISSUES" />
+      </Commands>
+    </ComponentEntry>
+  </Components>
+</ApplicationPackage>

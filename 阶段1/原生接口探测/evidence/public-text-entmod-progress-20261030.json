@@ -1,0 +1,17 @@
+{
+  "request": "解决天正文字替换",
+  "phase": 1,
+  "route": "AutoCAD SDK native public acdbEntGet/acdbEntMod only; no COM/CUA/TCH commands/panels",
+  "scopeRuling": "Only the existing unique public TDbText group1, independently equal to the actual visible old text, may be changed. No private DWG filer or binary fields. All unknown data returned unchanged. Tests on own shifted clone of frozen scheme only.",
+  "sourceSHA256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+  "status": "user now explicitly permits native text replacement; new authorized native handOverTo probe pending",
+  "build": "81C0B6B911FE22E55B81BE6FB1926B0AAE84B906D5D433975EC304DF05390206",
+  "historicalFailuresPreserved": true,
+  "entModSession": "isolated-autocad-20261030-103816",
+  "entModRun": "quiet-publictextpatchnative-20261030-103913-900619",
+  "entModExitCode": 3221226356,
+  "entModForcedTermination": false,
+  "dxfRuling": "SDK public DXF export/import only; no private DWG filer. Require unmodified native roundtrip before editing the public text field.",
+  "authorization": "允许文字改为 AutoCAD 原生文字",
+  "ruling": "Only independent text type requirement updated; compound TCH axes/dimensions/elevations/indices remain unchanged. Native visible leaf clone and public handOverTo preserve identity; native setter edits content. No private TCH content write claimed."
+}

@@ -1,0 +1,2 @@
+public_text_policy_smoke.cpp
+compiler=1916 assertions=6 failed=1

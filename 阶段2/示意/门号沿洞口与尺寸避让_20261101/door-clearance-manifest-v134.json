@@ -1,0 +1,6259 @@
+{
+  "contract": "bcp.door-caption-clearance-sample.v1",
+  "version": "v134",
+  "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-174122",
+  "nonce": "e5ee1c0a2d2348d495c33f0efe099999",
+  "pluginCodeChanged": false,
+  "pluginBinarySHA256": "835B9E0F67B65C0F3A43F06F0C443BFB2029B1CBFACEB751C24938B894631FEA",
+  "sourcePlans": {
+    "door-caption-complete-and-dimension-plan.json": "51768907E71BEC884ECCDD4D7C771F2F4445C6BB3AB11B6B27FA8A95DA982C53",
+    "three-other-chains-text-grips.json": "DCDA834DE0A4515266A2D0A3505D7197A5E75400DD619D397D4C29B0B2D2512A",
+    "dimension-text-escape-candidates.json": "D8C55B0B5DAE2277F921568C7F6691A7CE863F9B9179C8A65EB9A2221E1C8491"
+  },
+  "sourceFiles": {
+    "阶段2\\src\\AnalyseMain.cpp": "47F14CE44BF12B4BCB78A5D43148ACA4A1C20015CAD893F814E687DE02640CB6",
+    "阶段2\\src\\ApronGeometry.cpp": "00B43EE9A154C5ECCCB7DD48EA21826906BB691974729960629612D11B503F03",
+    "阶段2\\src\\ApronGeometry.h": "D9DCFA9E991D2B4FF4A31EDEAC19B59393041897C95E45A0D992BED7D80F0898",
+    "阶段2\\src\\BuildingPlan2020.vcxproj": "1E12D0AD767D3C12CCF2155405ECE825AD24F7D5163352619A472255BBB3B69C",
+    "阶段2\\src\\DoorCaptionLayout.h": "331A975DDBDF5BAA219008EF37807204F05CE10F3987990B47A8F17FE3EEDA72",
+    "阶段2\\src\\GroupEndpoints.cpp": "613FED53D58E3C90892D1B9D4F6136856E8D6375B836AEA8555A8C8D5A85F2CC",
+    "阶段2\\src\\NativeAllDimensionEditing.inc": "BFDBDB2F909B6D82AFAFAB9B9639AB3FABC9CF627FD772977E7D19356945BD50",
+    "阶段2\\src\\NativeAnnotationFactory.inc": "7B2CB61DC36BB54358EF73C6301DA9C876B93BE5338B61F425208A4B00FAEB20",
+    "阶段2\\src\\NativeApronGeometry.inc": "9AE148194E4DE3E529EAB5BD12B9E7606E4A7F7B3EAC93261AAF2EB9F02A9E8E",
+    "阶段2\\src\\NativeAxisReferenceStudy.inc": "A5F3D6EC1D5E70901E69423E9146F17F4C7B4F22F405B4038A4EBEC5C021FEF1",
+    "阶段2\\src\\NativeAxisSideLayout.inc": "693B2E789224D9950FE0B3905A06FD5C46F0D14777C46719E5C4963194255352",
+    "阶段2\\src\\NativeChainProbe.inc": "2BB3ADA9E687DE269542E8CB3281A490E9D26E8BD5273184ECD427B27FDBEB19",
+    "阶段2\\src\\NativeDimensionGapLayout.inc": "D9B57E7F496AF63E582386C4CB78E761D84E4B651357DDD0A4F64FCD32CD6B41",
+    "阶段2\\src\\NativeDirectOpeningDimensions.inc": "D67D7EA595C43C5CE8C9FF18EE5462CBEEEEFBD0C16E6FC95609CD157D8CD92E",
+    "阶段2\\src\\NativeDoorCaptionClearance.inc": "B3C94A27DDF4F11333B4477F3F938AA59A0DB70DD75A9E7D5ECC03F1700AF240",
+    "阶段2\\src\\NativeDoorCaptionFurniture.inc": "08964F59109EB18198000970F65C205A318E02174E0DB53A25C910CE40765FC3",
+    "阶段2\\src\\NativeFullAxisLines.inc": "24D063D75B623895C96D71AE391B89AC8FF8247E4DAF0C0DB0DE1E02574CFECF",
+    "阶段2\\src\\NativeGroupEndpoints.inc": "69B15442F07E403D2E27C3344025F1FFC60FFE355BFDEFE56891668C93D7E561",
+    "阶段2\\src\\NativeInteriorDoorCaptions.inc": "9E98570AF583BE7728A9304CDF9B643106812DB6DDD9A0EBFB3C93C79C0C3FAA",
+    "阶段2\\src\\NativeLayerStandardStudy.inc": "E2F394BD7E6D461CE79F68B5FCA67C01294417291578261E900145E982ADDF7E",
+    "阶段2\\src\\NativeOpeningAnnotations.inc": "8F49CCF382803E66E4B64E4C86CA03C7938154FAA9D2E95BDBA4D61ED53C8525",
+    "阶段2\\src\\NativePerimeterSpacingTrial.inc": "31763039B02E3811C69CE671689A9631C0A74FCF05805E0DE500F17E386A132F",
+    "阶段2\\src\\NativeUnifiedLayers.inc": "DEB7B7A8689C230656891B838BC1A632E35FCEE77D8958A771D548F26106EEF3",
+    "阶段2\\src\\NativeWholeDimensionChains.inc": "DE52196E4C848E13F7358518813B3C49891F89444D5E5A688395E8BFD27DBB6F",
+    "阶段2\\src\\PlanRules.cpp": "D80E0FECF73EAAB200AF5ED896DE80E7AEF5BE4F8875AD4B07C8DF48C6906D4E",
+    "阶段2\\src\\PlanRules.h": "CD71F135FFB4B90B05D3AB212323A16482BA65667BD0EB763A32FEE056D2DE91",
+    "阶段2\\src\\Stage2Arx.cpp": "991DE5B1812B124C637D6A5C0B34D7305FD700A6F1D40DDA18F8BEA7C76820AC",
+    "阶段2\\src\\UniqueRawParts.h": "8AA12E52DC0C0D0B6CBC06AFB2A91808268E88B930B4B61FC3DA874ED3B17536",
+    "阶段2\\src\\WallTopology.cpp": "5456A09C7DD059D8907A19CE9F19BB905054EE2D320B3DAEDC59BCA683FA19EA",
+    "插件\\src\\BuildingPlanPlugin2020.cpp": "74F8074DECC5AE61C69ED7B55337A4F67860AE95145E19CE41EF022AA8A239A5",
+    "插件\\src\\BuildingPlanPlugin2020.vcxproj": "D9A00EB218AEEB73A00F565B3C3B2B8012A65373BDF241F4283EFCACADE4D046",
+    "插件\\src\\NativeInputProperties.inc": "91C5DA20F49A674D4DEDE320CCD875AE2B4F30B211A0586553B5BF3601C6B5C9",
+    "插件\\src\\PluginPolicy.cpp": "6D1B63C26E7C76FE9BA54AB475BB4B8F3BF774C97908510BFF6467DC1DC692EB",
+    "插件\\src\\PluginPolicy.h": "90270C8559E70289212D951B20B5D54D674F80781E196F9EE33A574302E39C26",
+    "插件\\src\\ProductAudit.inc": "73F970AB7D38EAE2923E02D36E7574D1C59DA787A0C4623EEC3D9D480D483E43",
+    "插件\\src\\ProductDiagnostics.cpp": "691E5A6188242FFF2B5C66AEE15D44B037E7547744BB509A8CE1B3A578391FD5",
+    "插件\\src\\ProductDiagnostics.h": "FFFB5D4A8B90593E453B5AE4EDDF6D95C58678F965B6BB230BF0FB4115A5184C",
+    "插件\\src\\ProductDynamicInput.inc": "8CF109FD3D63BA1C9E9F25BE08D7FA9A68091FDD82F70E64D9F45C6614A3CA72",
+    "插件\\src\\ProductInput.inc": "C16E53C31BD96061B5D8EFEEA980050855AE41D175D0702793C43F22A7422375",
+    "插件\\src\\ProductRuntime.inc": "59CDF47B1D0DCDA2B9D220E7C7DCF0E5DC352BCDCA5AF72444E4D638431627B8",
+    "插件\\src\\ProjectInput.h": "C2C491EF1DF10F3738B5354073EA9E77F10AA475E0FD308D5B424C99102D5709",
+    "插件\\src\\PublicProperties.h": "CA0A4372B737240C13E32B23D883383AFCC239C2F5115280B101F0E2A9881B05"
+  },
+  "floors": [
+    {
+      "floor": 1,
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门号轴线与面积_20261101\\方案施工图_一层_面积符号确认样张_v4.dwg",
+      "sourceSHA256": "1484F1C4E2E721FD9671F275B47B1A1574A412342037E3F8CF15A0E89781D2B6",
+      "control": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-174122\\clearance-floor-1\\control.dwg",
+      "baseModelCount": 272,
+      "expectedModelCount": 282,
+      "log": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-174122\\clearance-floor-1\\drawing-edit.log",
+      "reopenedLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-174122\\clearance-floor-1\\drawing-reopened.log",
+      "doors": [
+        {
+          "handle": "84A6",
+          "opening": "7F36",
+          "text": "M2221",
+          "wall": "7F35",
+          "rotation": 0,
+          "verticalOpening": false,
+          "anchorA": [
+            45951.7015282074,
+            25645.213801956615,
+            0
+          ],
+          "anchorB": [
+            43751.7015282074,
+            25645.213801956463,
+            0
+          ],
+          "closedPlaneNormal": 25645.21380195654,
+          "openingMidAlong": 44851.7015282074,
+          "arcCount": 2,
+          "swingExtentPositive": 1072.1473779290573,
+          "swingExtentNegative": 0.0,
+          "swingSide": 1,
+          "currentPosition": [
+            44851.7015282074,
+            26957.713801956615,
+            0
+          ],
+          "currentBounds": [
+            44438.487242493116,
+            26807.713801956615,
+            45264.91581392169,
+            27107.713801956615
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-graphic-probe.json",
+          "kind": "multi-leaf-swing",
+          "status": "preferred-geometry-needs-nondimension-resolution",
+          "desiredSide": -1,
+          "wallFace": 25525.213801956095,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            44851.7015282074,
+            25255.213801956095,
+            0.0
+          ],
+          "desiredBounds": [
+            44438.487242493116,
+            25105.213801956095,
+            45264.91581392169,
+            25405.213801956095
+          ],
+          "delta": [
+            0.0,
+            -1702.5000000005202,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": []
+        },
+        {
+          "handle": "84A8",
+          "opening": "7F39",
+          "text": "M0927",
+          "wall": "7F38",
+          "rotation": 1.5707963267948966,
+          "verticalOpening": true,
+          "anchorA": [
+            38471.70152820693,
+            31085.213801995444,
+            0
+          ],
+          "anchorB": [
+            38471.70152820693,
+            31985.213801995444,
+            0
+          ],
+          "closedPlaneNormal": 38471.70152820693,
+          "openingMidAlong": 31535.213801995444,
+          "arcCount": 1,
+          "swingExtentPositive": 0.0,
+          "swingExtentNegative": 877.2114910328091,
+          "swingSide": -1,
+          "currentPosition": [
+            38141.70152820693,
+            30540.213801995444,
+            0
+          ],
+          "currentBounds": [
+            37991.70152820693,
+            30085.213801995444,
+            38291.70152820693,
+            30995.213801995444
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-dimensions-yield",
+          "desiredSide": 1,
+          "wallFace": 38591.70152820693,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            38861.70152820693,
+            31535.213801995444,
+            0.0
+          ],
+          "desiredBounds": [
+            38711.70152820693,
+            31080.213801995444,
+            39011.70152820693,
+            31990.213801995444
+          ],
+          "delta": [
+            720.0,
+            995.0,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": [
+            {
+              "handle": "846C",
+              "kind": "dimension-text",
+              "segment": 1,
+              "value": 899.9999999999964
+            }
+          ]
+        },
+        {
+          "handle": "84A9",
+          "opening": "7F3B",
+          "text": "M0927",
+          "wall": "7F3A",
+          "rotation": 1.5707963267948966,
+          "verticalOpening": true,
+          "anchorA": [
+            42851.70152820693,
+            32325.213801994978,
+            0
+          ],
+          "anchorB": [
+            42851.70152820693,
+            33225.21380199498,
+            0
+          ],
+          "closedPlaneNormal": 42851.70152820693,
+          "openingMidAlong": 32775.21380199498,
+          "arcCount": 1,
+          "swingExtentPositive": 877.2114910328091,
+          "swingExtentNegative": 0.0,
+          "swingSide": 1,
+          "currentPosition": [
+            44381.70152820693,
+            32780.21380199498,
+            0
+          ],
+          "currentBounds": [
+            44231.70152820693,
+            32325.213801994978,
+            44531.70152820693,
+            33235.21380199498
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-clear",
+          "desiredSide": -1,
+          "wallFace": 42731.70152820693,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            42461.70152820693,
+            32775.21380199498,
+            0.0
+          ],
+          "desiredBounds": [
+            42311.70152820693,
+            32320.213801994978,
+            42611.70152820693,
+            33230.21380199498
+          ],
+          "delta": [
+            -1920.0,
+            -5.0,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": []
+        },
+        {
+          "handle": "84AC",
+          "opening": "7F43",
+          "text": "M0927",
+          "wall": "8183",
+          "rotation": 0,
+          "verticalOpening": false,
+          "anchorA": [
+            47071.70152804465,
+            30205.213801956696,
+            0
+          ],
+          "anchorB": [
+            47971.70152804465,
+            30205.213801956776,
+            0
+          ],
+          "closedPlaneNormal": 30205.213801956736,
+          "openingMidAlong": 47521.70152804465,
+          "arcCount": 1,
+          "swingExtentPositive": 3.637978807091713e-11,
+          "swingExtentNegative": 877.2114910328419,
+          "swingSide": -1,
+          "currentPosition": [
+            47521.70152804465,
+            29087.713801956696,
+            0
+          ],
+          "currentBounds": [
+            47066.70152804465,
+            28937.713801956696,
+            47976.70152804465,
+            29237.713801956696
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-dimensions-yield",
+          "desiredSide": 1,
+          "wallFace": 30325.213801956794,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            47521.70152804465,
+            30595.213801956794,
+            0.0
+          ],
+          "desiredBounds": [
+            47066.70152804465,
+            30445.213801956794,
+            47976.70152804465,
+            30745.213801956794
+          ],
+          "delta": [
+            0.0,
+            1507.5000000000982,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": [
+            {
+              "handle": "848C",
+              "kind": "dimension-text",
+              "segment": 2,
+              "value": 220.00000016298873
+            }
+          ]
+        },
+        {
+          "handle": "84AE",
+          "opening": "7F45",
+          "text": "M0927",
+          "wall": "8187",
+          "rotation": 0,
+          "verticalOpening": false,
+          "anchorA": [
+            47071.701528036494,
+            32105.213801953625,
+            0
+          ],
+          "anchorB": [
+            47971.701528036494,
+            32105.213801965434,
+            0
+          ],
+          "closedPlaneNormal": 32105.21380195953,
+          "openingMidAlong": 47521.701528036494,
+          "arcCount": 1,
+          "swingExtentPositive": 877.2114910274904,
+          "swingExtentNegative": -5.900801625102758e-09,
+          "swingSide": 1,
+          "currentPosition": [
+            48571.701528036494,
+            32435.213801953625,
+            0
+          ],
+          "currentBounds": [
+            48116.701528036494,
+            32285.213801953625,
+            49026.701528036494,
+            32585.213801953625
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-clear",
+          "desiredSide": -1,
+          "wallFace": 31985.21380195074,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            47521.701528036494,
+            31715.21380195074,
+            0.0
+          ],
+          "desiredBounds": [
+            47066.701528036494,
+            31565.21380195074,
+            47976.701528036494,
+            31865.21380195074
+          ],
+          "delta": [
+            -1050.0,
+            -720.0000000028849,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": []
+        },
+        {
+          "handle": "84AF",
+          "opening": "7FE0",
+          "text": "M0927",
+          "wall": "7FDF",
+          "rotation": 0,
+          "verticalOpening": false,
+          "anchorA": [
+            32271.701528206933,
+            33105.21380195598,
+            0
+          ],
+          "anchorB": [
+            33171.70152820693,
+            33105.21380195598,
+            0
+          ],
+          "closedPlaneNormal": 33105.21380195598,
+          "openingMidAlong": 32721.701528206933,
+          "arcCount": 1,
+          "swingExtentPositive": 877.2114910328091,
+          "swingExtentNegative": 0.0,
+          "swingSide": 1,
+          "currentPosition": [
+            33771.70152820693,
+            33435.21380195598,
+            0
+          ],
+          "currentBounds": [
+            33316.70152820693,
+            33285.21380195598,
+            34226.70152820693,
+            33585.21380195598
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-needs-nondimension-resolution",
+          "desiredSide": -1,
+          "wallFace": 32985.21380195598,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            32721.701528206933,
+            32715.21380195598,
+            0.0
+          ],
+          "desiredBounds": [
+            32266.701528206933,
+            32565.21380195598,
+            33176.70152820693,
+            32865.21380195598
+          ],
+          "delta": [
+            -1050.0,
+            -720.0,
+            0.0
+          ],
+          "hardContacts": [
+            {
+              "kind": "furniture-block-root-bounds-conservative",
+              "handle": "7FFD",
+              "bounds": [
+                32649.200286315652,
+                29749.962425644677,
+                35651.65186441511,
+                32742.71242564469
+              ]
+            }
+          ],
+          "dimensionContacts": []
+        },
+        {
+          "handle": "84B0",
+          "opening": "7FE2",
+          "text": "M2227",
+          "wall": "7FE1",
+          "rotation": 0,
+          "verticalOpening": false,
+          "anchorA": [
+            33031.70152820693,
+            28945.21380195598,
+            0
+          ],
+          "anchorB": [
+            35231.70152820693,
+            28945.21380195598,
+            0
+          ],
+          "closedPlaneNormal": 28945.21380195598,
+          "openingMidAlong": 34131.70152820693,
+          "arcCount": 0,
+          "swingExtentPositive": 0,
+          "swingExtentNegative": 0,
+          "swingSide": null,
+          "currentPosition": [
+            34131.70152820693,
+            29275.21380195598,
+            0
+          ],
+          "currentBounds": [
+            33676.70152820693,
+            29125.21380195598,
+            34586.70152820693,
+            29425.21380195598
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-graphic-probe.json",
+          "kind": "no-source-arc",
+          "status": "opening-centered-side-preserved-no-arc",
+          "desiredPosition": [
+            34131.70152820693,
+            29335.21380195598,
+            0.0
+          ],
+          "desiredBounds": [
+            33676.70152820693,
+            29185.21380195598,
+            34586.70152820693,
+            29485.21380195598
+          ],
+          "delta": [
+            0.0,
+            60.0,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": [],
+          "desiredSide": 1,
+          "wallFace": 29065.21380195598,
+          "trialInkGapMm": 120,
+          "sideBasis": "preserve current text side; no swing inference"
+        },
+        {
+          "handle": "84B1",
+          "opening": "7FE5",
+          "text": "M0927",
+          "wall": "7FE4",
+          "rotation": 1.5707963267948966,
+          "verticalOpening": true,
+          "anchorA": [
+            36231.70152820693,
+            27825.21380195598,
+            0
+          ],
+          "anchorB": [
+            36231.70152820693,
+            28725.21380195598,
+            0
+          ],
+          "closedPlaneNormal": 36231.70152820693,
+          "openingMidAlong": 28275.21380195598,
+          "arcCount": 1,
+          "swingExtentPositive": 0.0,
+          "swingExtentNegative": 877.2114910328091,
+          "swingSide": -1,
+          "currentPosition": [
+            35901.70152820693,
+            27280.21380195598,
+            0
+          ],
+          "currentBounds": [
+            35751.70152820693,
+            26825.21380195598,
+            36051.70152820693,
+            27735.21380195598
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-dimensions-yield",
+          "desiredSide": 1,
+          "wallFace": 36351.70152820693,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            36621.70152820693,
+            28275.21380195598,
+            0.0
+          ],
+          "desiredBounds": [
+            36471.70152820693,
+            27820.21380195598,
+            36771.70152820693,
+            28730.21380195598
+          ],
+          "delta": [
+            720.0,
+            995.0,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": [
+            {
+              "handle": "847E",
+              "kind": "dimension-text",
+              "segment": 1,
+              "value": 900
+            }
+          ]
+        },
+        {
+          "handle": "84B2",
+          "opening": "7FFA",
+          "text": "M2227",
+          "wall": "826C",
+          "rotation": 1.5707963267948966,
+          "verticalOpening": true,
+          "anchorA": [
+            36231.70152820693,
+            29967.55057494616,
+            0
+          ],
+          "anchorB": [
+            36231.70152820693,
+            32167.55057494616,
+            0
+          ],
+          "closedPlaneNormal": 36231.70152820693,
+          "openingMidAlong": 31067.55057494616,
+          "arcCount": 0,
+          "swingExtentPositive": 0,
+          "swingExtentNegative": 0,
+          "swingSide": null,
+          "currentPosition": [
+            36561.70152820693,
+            29422.55057494616,
+            0
+          ],
+          "currentBounds": [
+            36411.70152820693,
+            28967.55057494616,
+            36711.70152820693,
+            29877.55057494616
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-graphic-probe.json",
+          "kind": "no-source-arc",
+          "status": "opening-centered-side-preserved-no-arc",
+          "desiredPosition": [
+            36621.70152820693,
+            31067.55057494616,
+            0.0
+          ],
+          "desiredBounds": [
+            36471.70152820693,
+            30612.55057494616,
+            36771.70152820693,
+            31522.55057494616
+          ],
+          "delta": [
+            60.0,
+            1645.0,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": [],
+          "desiredSide": 1,
+          "wallFace": 36351.70152820693,
+          "trialInkGapMm": 120,
+          "sideBasis": "preserve current text side; no swing inference"
+        },
+        {
+          "handle": "84B4",
+          "opening": "8107",
+          "text": "M0827",
+          "wall": "8106",
+          "rotation": 1.5707963267948966,
+          "verticalOpening": true,
+          "anchorA": [
+            36231.70152820693,
+            34025.213801956095,
+            0
+          ],
+          "anchorB": [
+            36231.70152820693,
+            33225.213801956095,
+            0
+          ],
+          "closedPlaneNormal": 36231.70152820693,
+          "openingMidAlong": 33625.213801956095,
+          "arcCount": 1,
+          "swingExtentPositive": 0.0,
+          "swingExtentNegative": 779.743547584716,
+          "swingSide": -1,
+          "currentPosition": [
+            35211.70152820693,
+            33725.213801956095,
+            0
+          ],
+          "currentBounds": [
+            35061.70152820693,
+            33270.213801956095,
+            35361.70152820693,
+            34180.213801956095
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-dimensions-yield",
+          "desiredSide": 1,
+          "wallFace": 36351.70152820693,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            36621.70152820693,
+            33625.213801956095,
+            0.0
+          ],
+          "desiredBounds": [
+            36471.70152820693,
+            33170.213801956095,
+            36771.70152820693,
+            34080.213801956095
+          ],
+          "delta": [
+            1410.0,
+            -100.0,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": [
+            {
+              "handle": "8485",
+              "kind": "dimension-text",
+              "segment": 0,
+              "value": 800
+            }
+          ]
+        }
+      ],
+      "annotationMoves": [
+        {
+          "handle": "7F46",
+          "type": "TDbText",
+          "delta": [
+            0,
+            -650,
+            0
+          ],
+          "reason": "Within porch platform, let preferred entrance door caption occupy near-opening position",
+          "newBounds": [
+            44525.041572136804,
+            24304.207472842172,
+            45216.34958901444,
+            24702.51970912909
+          ]
+        }
+      ],
+      "dimensionOps": [
+        {
+          "kind": "text",
+          "handle": "847E",
+          "gripIndex": 7,
+          "segment": 1,
+          "before": [
+            36761.70152820693,
+            28275.21380195598,
+            0
+          ],
+          "target": [
+            37261.70152820693,
+            27875.21380195598,
+            0
+          ],
+          "delta": [
+            500,
+            -400,
+            0
+          ],
+          "windows": [
+            {
+              "min": [
+                36731.70152820693,
+                28245.21380195598,
+                0
+              ],
+              "max": [
+                36791.70152820693,
+                28305.21380195598,
+                0
+              ]
+            },
+            {
+              "min": [
+                36600.70152820693,
+                28175.21380195598,
+                0
+              ],
+              "max": [
+                36922.70152820693,
+                28375.21380195598,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "text",
+          "handle": "8485",
+          "gripIndex": 5,
+          "segment": 0,
+          "before": [
+            36761.70152820693,
+            33625.213801956095,
+            0
+          ],
+          "target": [
+            37261.70152820693,
+            33625.213801956095,
+            0
+          ],
+          "delta": [
+            500,
+            0,
+            0
+          ],
+          "windows": [
+            {
+              "min": [
+                36731.70152820693,
+                33595.213801956095,
+                0
+              ],
+              "max": [
+                36791.70152820693,
+                33655.213801956095,
+                0
+              ]
+            },
+            {
+              "min": [
+                36600.70152820693,
+                33525.213801956095,
+                0
+              ],
+              "max": [
+                36922.70152820693,
+                33725.213801956095,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "text",
+          "handle": "846C",
+          "gripIndex": 7,
+          "segment": 1,
+          "before": [
+            39001.70152820693,
+            31535.213801995444,
+            0
+          ],
+          "target": [
+            39481.70152820693,
+            31535.213801995444,
+            0
+          ],
+          "delta": [
+            480.0,
+            0.0,
+            0
+          ],
+          "windows": [
+            {
+              "min": [
+                38971.70152820693,
+                31505.213801995444,
+                0
+              ],
+              "max": [
+                39031.70152820693,
+                31565.213801995444,
+                0
+              ]
+            },
+            {
+              "min": [
+                38840.70152820693,
+                31435.213801995444,
+                0
+              ],
+              "max": [
+                39162.70152820693,
+                31635.213801995444,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "text",
+          "handle": "848C",
+          "gripIndex": 8,
+          "segment": 2,
+          "before": [
+            48081.70152812614,
+            30765.213801956677,
+            0
+          ],
+          "target": [
+            46231.70152820693,
+            31015.213801956677,
+            0
+          ],
+          "delta": [
+            -1849.9999999192078,
+            250.0,
+            0
+          ],
+          "windows": [
+            {
+              "min": [
+                48051.70152812614,
+                30735.213801956677,
+                0
+              ],
+              "max": [
+                48111.70152812614,
+                30795.213801956677,
+                0
+              ]
+            },
+            {
+              "min": [
+                47981.70152812614,
+                30604.213801956677,
+                0
+              ],
+              "max": [
+                48181.70152812614,
+                30926.213801956677,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "text",
+          "handle": "846C",
+          "gripIndex": 6,
+          "segment": 0,
+          "before": [
+            39001.70152820693,
+            28425.21380197577,
+            0
+          ],
+          "target": [
+            39801.70152820693,
+            28725.21380197577,
+            0
+          ],
+          "delta": [
+            800,
+            300,
+            0
+          ],
+          "windows": [
+            {
+              "min": [
+                38971.70152820693,
+                28395.21380197577,
+                0
+              ],
+              "max": [
+                39031.70152820693,
+                28455.21380197577,
+                0
+              ]
+            },
+            {
+              "min": [
+                38840.70152820693,
+                28325.21380197577,
+                0
+              ],
+              "max": [
+                39162.70152820693,
+                28525.21380197577,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "text",
+          "handle": "847B",
+          "gripIndex": 7,
+          "segment": 1,
+          "before": [
+            34131.70152820693,
+            29955.21380195598,
+            0
+          ],
+          "target": [
+            31381.701528206933,
+            29655.21380195598,
+            0
+          ],
+          "delta": [
+            -2750,
+            -300,
+            0
+          ],
+          "windows": [
+            {
+              "min": [
+                34101.70152820693,
+                29925.21380195598,
+                0
+              ],
+              "max": [
+                34161.70152820693,
+                29985.21380195598,
+                0
+              ]
+            },
+            {
+              "min": [
+                34031.70152820693,
+                29794.21380195598,
+                0
+              ],
+              "max": [
+                34231.70152820693,
+                30116.21380195598,
+                0
+              ]
+            }
+          ]
+        }
+      ],
+      "expectedGrips": {
+        "8443": [
+          [
+            31911.701528206933,
+            22725.213801955048,
+            0
+          ],
+          [
+            51351.70152820788,
+            22725.213801955048,
+            0
+          ],
+          [
+            31911.701528206933,
+            25525.21380195598,
+            0
+          ],
+          [
+            32031.701528206933,
+            25525.21380195598,
+            0
+          ],
+          [
+            36231.701528206926,
+            25525.21380195598,
+            0
+          ],
+          [
+            38471.70152820693,
+            25525.21380195598,
+            0
+          ],
+          [
+            46851.70152820693,
+            25525.21380195598,
+            0
+          ],
+          [
+            51231.70152820693,
+            25525.21380195598,
+            0
+          ],
+          [
+            51351.70152820788,
+            25525.21380195598,
+            0
+          ],
+          [
+            31321.701528206933,
+            22965.213801955048,
+            0
+          ],
+          [
+            34131.70152820693,
+            22965.213801955048,
+            0
+          ],
+          [
+            37351.70152820693,
+            22965.213801955048,
+            0
+          ],
+          [
+            42661.70152820693,
+            22965.213801955048,
+            0
+          ],
+          [
+            49041.70152820693,
+            22965.213801955048,
+            0
+          ],
+          [
+            51941.7015282074,
+            22965.213801955048,
+            0
+          ],
+          [
+            31911.701528206933,
+            27525.21380195598,
+            0
+          ],
+          [
+            41631.701528207406,
+            27525.21380195598,
+            0
+          ],
+          [
+            51351.70152820788,
+            27525.21380195598,
+            0
+          ]
+        ],
+        "844C": [
+          [
+            31911.701528206933,
+            39025.213801957034,
+            0
+          ],
+          [
+            51351.70152820788,
+            39025.213801957034,
+            0
+          ],
+          [
+            31911.701528206933,
+            36225.213801957034,
+            0
+          ],
+          [
+            32031.701528206933,
+            36225.213801957034,
+            0
+          ],
+          [
+            34431.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            36231.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            38471.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            42851.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            46851.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            51231.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            51351.70152820788,
+            36225.213801957034,
+            0
+          ],
+          [
+            31321.701528206933,
+            39265.213801957034,
+            0
+          ],
+          [
+            33231.70152820693,
+            39265.213801957034,
+            0
+          ],
+          [
+            35331.70152820693,
+            39265.213801957034,
+            0
+          ],
+          [
+            37351.70152820693,
+            39265.213801957034,
+            0
+          ],
+          [
+            40661.70152820693,
+            39265.213801957034,
+            0
+          ],
+          [
+            44851.70152820693,
+            39265.213801957034,
+            0
+          ],
+          [
+            49041.70152820693,
+            39265.213801957034,
+            0
+          ],
+          [
+            51941.7015282074,
+            39265.213801957034,
+            0
+          ],
+          [
+            31911.701528206933,
+            34225.213801957034,
+            0
+          ],
+          [
+            41631.701528207406,
+            34225.213801957034,
+            0
+          ],
+          [
+            51351.70152820788,
+            34225.213801957034,
+            0
+          ]
+        ],
+        "8454": [
+          [
+            29111.701528206933,
+            25525.21380195598,
+            0
+          ],
+          [
+            29111.701528206933,
+            36225.213801957034,
+            0
+          ],
+          [
+            31911.701528206933,
+            25525.21380195598,
+            0
+          ],
+          [
+            31911.701528206933,
+            25645.21380195598,
+            0
+          ],
+          [
+            31911.701528206933,
+            28945.213801955982,
+            0
+          ],
+          [
+            31911.701528206933,
+            33105.21380195598,
+            0
+          ],
+          [
+            31911.701528206933,
+            36105.213801955986,
+            0
+          ],
+          [
+            31911.701528206933,
+            36225.213801957034,
+            0
+          ],
+          [
+            28871.701528206933,
+            24935.21380195598,
+            0
+          ],
+          [
+            28871.701528206933,
+            27295.21380195598,
+            0
+          ],
+          [
+            28871.701528206933,
+            31025.21380195598,
+            0
+          ],
+          [
+            28871.701528206933,
+            34605.21380195598,
+            0
+          ],
+          [
+            28871.701528206933,
+            36815.2138019565,
+            0
+          ],
+          [
+            33911.70152820693,
+            25525.21380195598,
+            0
+          ],
+          [
+            33911.70152820693,
+            30875.213801956506,
+            0
+          ],
+          [
+            33911.70152820693,
+            36225.213801957034,
+            0
+          ]
+        ],
+        "8459": [
+          [
+            54151.70152820879,
+            25525.21380195598,
+            0
+          ],
+          [
+            54151.70152820879,
+            36225.213801957034,
+            0
+          ],
+          [
+            51351.70152820787,
+            25525.21380195598,
+            0
+          ],
+          [
+            51351.70152820787,
+            25645.21380195598,
+            0
+          ],
+          [
+            51351.70152820787,
+            30205.21380195668,
+            0
+          ],
+          [
+            51351.70152820787,
+            36105.213801955986,
+            0
+          ],
+          [
+            51351.70152820787,
+            36225.213801957034,
+            0
+          ],
+          [
+            53911.70152820879,
+            24935.21380195598,
+            0
+          ],
+          [
+            53911.70152820879,
+            27925.213801956328,
+            0
+          ],
+          [
+            53911.70152820879,
+            33155.213801956335,
+            0
+          ],
+          [
+            53911.70152820879,
+            36815.2138019565,
+            0
+          ],
+          [
+            49351.70152820787,
+            25525.21380195598,
+            0
+          ],
+          [
+            49351.70152820787,
+            30875.213801956506,
+            0
+          ],
+          [
+            49351.70152820787,
+            36225.213801957034,
+            0
+          ]
+        ],
+        "845D": [
+          [
+            31911.701528206933,
+            21925.21380195598,
+            0
+          ],
+          [
+            51351.70152820788,
+            21925.21380195598,
+            0
+          ],
+          [
+            31911.701528206933,
+            25525.21380195598,
+            0
+          ],
+          [
+            51351.70152820788,
+            25525.21380195598,
+            0
+          ],
+          [
+            41631.701528207406,
+            22165.21380195598,
+            0
+          ],
+          [
+            31911.701528206933,
+            27525.21380195598,
+            0
+          ],
+          [
+            41631.701528207406,
+            27525.21380195598,
+            0
+          ],
+          [
+            51351.70152820788,
+            27525.21380195598,
+            0
+          ]
+        ],
+        "845E": [
+          [
+            31911.701528206933,
+            39825.213801957034,
+            0
+          ],
+          [
+            51351.70152820788,
+            39825.213801957034,
+            0
+          ],
+          [
+            31911.701528206933,
+            36225.213801957034,
+            0
+          ],
+          [
+            51351.70152820788,
+            36225.213801957034,
+            0
+          ],
+          [
+            41631.701528207406,
+            40065.213801957034,
+            0
+          ],
+          [
+            31911.701528206933,
+            34225.213801957034,
+            0
+          ],
+          [
+            41631.701528207406,
+            34225.213801957034,
+            0
+          ],
+          [
+            51351.70152820788,
+            34225.213801957034,
+            0
+          ]
+        ],
+        "845F": [
+          [
+            28311.701528206933,
+            25525.21380195598,
+            0
+          ],
+          [
+            28311.701528206933,
+            36225.21380195703,
+            0
+          ],
+          [
+            31911.701528206933,
+            25525.21380195598,
+            0
+          ],
+          [
+            31911.701528206933,
+            36225.21380195703,
+            0
+          ],
+          [
+            28071.701528206933,
+            30875.213801956503,
+            0
+          ],
+          [
+            33911.70152820693,
+            25525.21380195598,
+            0
+          ],
+          [
+            33911.70152820693,
+            30875.213801956503,
+            0
+          ],
+          [
+            33911.70152820693,
+            36225.21380195703,
+            0
+          ]
+        ],
+        "8460": [
+          [
+            54951.70152820787,
+            25525.21380195598,
+            0
+          ],
+          [
+            54951.70152820787,
+            36225.21380195703,
+            0
+          ],
+          [
+            51351.70152820787,
+            25525.21380195598,
+            0
+          ],
+          [
+            51351.70152820787,
+            36225.21380195703,
+            0
+          ],
+          [
+            54711.70152820787,
+            30875.213801956503,
+            0
+          ],
+          [
+            49351.70152820787,
+            25525.21380195598,
+            0
+          ],
+          [
+            49351.70152820787,
+            30875.213801956503,
+            0
+          ],
+          [
+            49351.70152820787,
+            36225.21380195703,
+            0
+          ]
+        ],
+        "8461": [
+          [
+            38471.70152820693,
+            38225.213801957034,
+            0
+          ],
+          [
+            51351.701528207865,
+            38225.213801957034,
+            0
+          ],
+          [
+            38471.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            39761.70152820623,
+            36225.213801957034,
+            0
+          ],
+          [
+            41561.70152820624,
+            36225.213801957034,
+            0
+          ],
+          [
+            42851.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            43909.70098656604,
+            36225.213801957034,
+            0
+          ],
+          [
+            45709.700986566015,
+            36225.213801957034,
+            0
+          ],
+          [
+            46851.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            48009.70098656604,
+            36225.213801957034,
+            0
+          ],
+          [
+            49809.70098656604,
+            36225.213801957034,
+            0
+          ],
+          [
+            51231.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            51351.701528207865,
+            36225.213801957034,
+            0
+          ],
+          [
+            39116.701528206584,
+            38465.213801957034,
+            0
+          ],
+          [
+            40661.701528206235,
+            38465.213801957034,
+            0
+          ],
+          [
+            42206.701528206584,
+            38465.213801957034,
+            0
+          ],
+          [
+            43380.701257386485,
+            38465.213801957034,
+            0
+          ],
+          [
+            44809.70098656602,
+            38465.213801957034,
+            0
+          ],
+          [
+            46280.70125738648,
+            38465.213801957034,
+            0
+          ],
+          [
+            47430.701257386485,
+            38465.213801957034,
+            0
+          ],
+          [
+            48909.70098656604,
+            38465.213801957034,
+            0
+          ],
+          [
+            50520.701257386485,
+            38465.213801957034,
+            0
+          ],
+          [
+            51941.7015282074,
+            38465.213801957034,
+            0
+          ],
+          [
+            38471.70152820693,
+            34225.213801957034,
+            0
+          ],
+          [
+            44911.7015282074,
+            34225.213801957034,
+            0
+          ],
+          [
+            51351.701528207865,
+            34225.213801957034,
+            0
+          ]
+        ],
+        "846B": [
+          [
+            38471.70152820693,
+            23525.21380195598,
+            0
+          ],
+          [
+            51351.701528207865,
+            23525.21380195598,
+            0
+          ],
+          [
+            38471.70152820693,
+            25525.21380195598,
+            0
+          ],
+          [
+            39701.701528207166,
+            25525.21380195598,
+            0
+          ],
+          [
+            42101.70152820716,
+            25525.21380195598,
+            0
+          ],
+          [
+            43751.70152820739,
+            25525.21380195598,
+            0
+          ],
+          [
+            45951.7015282074,
+            25525.21380195598,
+            0
+          ],
+          [
+            46851.70152820788,
+            25525.21380195598,
+            0
+          ],
+          [
+            47701.7015282074,
+            25525.21380195598,
+            0
+          ],
+          [
+            50101.7015282074,
+            25525.21380195598,
+            0
+          ],
+          [
+            51231.701528207865,
+            25525.21380195598,
+            0
+          ],
+          [
+            51351.701528207865,
+            25525.21380195598,
+            0
+          ],
+          [
+            39086.70152820705,
+            23765.21380195598,
+            0
+          ],
+          [
+            40901.701528207166,
+            23765.21380195598,
+            0
+          ],
+          [
+            42926.701528207275,
+            23765.21380195598,
+            0
+          ],
+          [
+            44851.7015282074,
+            23765.21380195598,
+            0
+          ],
+          [
+            46401.70152820764,
+            23765.21380195598,
+            0
+          ],
+          [
+            47276.70152820764,
+            23765.21380195598,
+            0
+          ],
+          [
+            48901.7015282074,
+            23765.21380195598,
+            0
+          ],
+          [
+            50666.70152820763,
+            23765.21380195598,
+            0
+          ],
+          [
+            51941.7015282074,
+            23765.21380195598,
+            0
+          ],
+          [
+            38471.70152820693,
+            27525.21380195598,
+            0
+          ],
+          [
+            44911.7015282074,
+            27525.21380195598,
+            0
+          ],
+          [
+            51351.701528207865,
+            27525.21380195598,
+            0
+          ]
+        ],
+        "846C": [
+          [
+            39241.70152820693,
+            25765.213801956095,
+            0
+          ],
+          [
+            39241.70152820693,
+            35985.213801956095,
+            0
+          ],
+          [
+            38471.70152820693,
+            25765.213801956095,
+            0
+          ],
+          [
+            38471.70152820693,
+            31085.213801995444,
+            0
+          ],
+          [
+            38471.70152820693,
+            31985.21380199544,
+            0
+          ],
+          [
+            38471.70152820693,
+            35985.213801956095,
+            0
+          ],
+          [
+            39801.70152820693,
+            28725.21380197577,
+            0
+          ],
+          [
+            39481.70152820693,
+            31535.213801995444,
+            0
+          ],
+          [
+            39001.70152820693,
+            33385.21380197577,
+            0
+          ],
+          [
+            36471.70152820693,
+            25765.213801956095,
+            0
+          ],
+          [
+            36471.70152820693,
+            30875.213801956095,
+            0
+          ],
+          [
+            36471.70152820693,
+            35985.213801956095,
+            0
+          ]
+        ],
+        "846F": [
+          [
+            44071.70152820693,
+            32225.213801956095,
+            0
+          ],
+          [
+            44071.70152820693,
+            35985.213801956095,
+            0
+          ],
+          [
+            42851.70152820693,
+            32225.213801956095,
+            0
+          ],
+          [
+            42851.70152820693,
+            32325.21380199499,
+            0
+          ],
+          [
+            42851.70152820693,
+            33225.21380199498,
+            0
+          ],
+          [
+            42851.70152820693,
+            35985.2138019561,
+            0
+          ],
+          [
+            43831.70152820693,
+            32275.21380197554,
+            0
+          ],
+          [
+            43831.70152820693,
+            32975.21380199498,
+            0
+          ],
+          [
+            43831.70152820693,
+            34605.21380197554,
+            0
+          ],
+          [
+            40851.70152820693,
+            32225.213801956095,
+            0
+          ],
+          [
+            40851.70152820693,
+            34105.213801956095,
+            0
+          ],
+          [
+            40851.70152820693,
+            35985.213801956095,
+            0
+          ]
+        ],
+        "8478": [
+          [
+            32151.701528206933,
+            34775.21380195598,
+            0
+          ],
+          [
+            34311.70152820693,
+            34775.21380195598,
+            0
+          ],
+          [
+            32151.701528206933,
+            33105.21380195598,
+            0
+          ],
+          [
+            32271.701528206933,
+            33105.21380195598,
+            0
+          ],
+          [
+            33171.70152820693,
+            33105.21380195598,
+            0
+          ],
+          [
+            34311.70152820693,
+            33105.21380195598,
+            0
+          ],
+          [
+            32211.701528206933,
+            35015.21380195598,
+            0
+          ],
+          [
+            32921.70152820693,
+            35015.21380195598,
+            0
+          ],
+          [
+            33741.70152820693,
+            35015.21380195598,
+            0
+          ],
+          [
+            32151.701528206933,
+            31105.21380195598,
+            0
+          ],
+          [
+            33231.70152820693,
+            31105.21380195598,
+            0
+          ],
+          [
+            34311.70152820693,
+            31105.21380195598,
+            0
+          ]
+        ],
+        "847B": [
+          [
+            32151.701528206933,
+            29715.21380195598,
+            0
+          ],
+          [
+            36111.70152820693,
+            29715.21380195598,
+            0
+          ],
+          [
+            32151.701528206933,
+            28945.21380195598,
+            0
+          ],
+          [
+            33031.70152820693,
+            28945.21380195598,
+            0
+          ],
+          [
+            35231.70152820693,
+            28945.21380195598,
+            0
+          ],
+          [
+            36111.70152820693,
+            28945.21380195598,
+            0
+          ],
+          [
+            32591.701528206933,
+            29955.21380195598,
+            0
+          ],
+          [
+            31381.701528206933,
+            29655.21380195598,
+            0
+          ],
+          [
+            35671.70152820693,
+            29955.21380195598,
+            0
+          ],
+          [
+            32151.701528206933,
+            26945.21380195598,
+            0
+          ],
+          [
+            34131.70152820693,
+            26945.21380195598,
+            0
+          ],
+          [
+            36111.70152820693,
+            26945.21380195598,
+            0
+          ]
+        ],
+        "847E": [
+          [
+            37001.70152820693,
+            25765.21380195598,
+            0
+          ],
+          [
+            37001.70152820693,
+            28825.21380195598,
+            0
+          ],
+          [
+            36231.70152820693,
+            25765.21380195598,
+            0
+          ],
+          [
+            36231.70152820693,
+            27825.21380195598,
+            0
+          ],
+          [
+            36231.70152820693,
+            28725.21380195598,
+            0
+          ],
+          [
+            36231.70152820693,
+            28825.21380195598,
+            0
+          ],
+          [
+            36761.70152820693,
+            26795.21380195598,
+            0
+          ],
+          [
+            37261.70152820693,
+            27875.21380195598,
+            0
+          ],
+          [
+            37211.70152820693,
+            28775.21380195598,
+            0
+          ],
+          [
+            34231.70152820693,
+            25765.21380195598,
+            0
+          ],
+          [
+            34231.70152820693,
+            27295.21380195598,
+            0
+          ],
+          [
+            34231.70152820693,
+            28825.21380195598,
+            0
+          ]
+        ],
+        "8485": [
+          [
+            37001.70152820693,
+            33225.213801956095,
+            0
+          ],
+          [
+            37001.70152820693,
+            35985.213801955986,
+            0
+          ],
+          [
+            36231.70152820693,
+            33225.213801956095,
+            0
+          ],
+          [
+            36231.70152820693,
+            34025.213801956095,
+            0
+          ],
+          [
+            36231.70152820693,
+            35985.213801955986,
+            0
+          ],
+          [
+            37261.70152820693,
+            33625.213801956095,
+            0
+          ],
+          [
+            36761.70152820693,
+            35005.21380195604,
+            0
+          ],
+          [
+            34231.70152820693,
+            33225.213801956095,
+            0
+          ],
+          [
+            34231.70152820693,
+            34605.21380195604,
+            0
+          ],
+          [
+            34231.70152820693,
+            35985.213801955986,
+            0
+          ]
+        ],
+        "848B": [
+          [
+            34431.70152820693,
+            38225.213801957034,
+            0
+          ],
+          [
+            36231.70152820693,
+            38225.213801957034,
+            0
+          ],
+          [
+            34431.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            34731.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            35931.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            36231.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            34581.70152820693,
+            38465.213801957034,
+            0
+          ],
+          [
+            35331.70152820693,
+            38465.213801957034,
+            0
+          ],
+          [
+            36081.70152820693,
+            38465.213801957034,
+            0
+          ],
+          [
+            34431.70152820693,
+            34225.213801957034,
+            0
+          ],
+          [
+            35331.70152820693,
+            34225.213801957034,
+            0
+          ],
+          [
+            36231.70152820693,
+            34225.213801957034,
+            0
+          ]
+        ],
+        "848C": [
+          [
+            46971.70152820693,
+            30975.213801956677,
+            0
+          ],
+          [
+            48191.70152820763,
+            30975.213801956677,
+            0
+          ],
+          [
+            46971.70152820693,
+            30205.213801956696,
+            0
+          ],
+          [
+            47071.70152804466,
+            30205.213801956696,
+            0
+          ],
+          [
+            47971.70152804464,
+            30205.213801956696,
+            0
+          ],
+          [
+            48191.70152820763,
+            30205.213801956696,
+            0
+          ],
+          [
+            47021.70152812579,
+            31215.213801956677,
+            0
+          ],
+          [
+            47721.70152804465,
+            31215.21380195668,
+            0
+          ],
+          [
+            46231.70152820693,
+            31015.213801956677,
+            0
+          ],
+          [
+            46971.70152820693,
+            28205.213801956696,
+            0
+          ],
+          [
+            47581.70152820728,
+            28205.213801956696,
+            0
+          ],
+          [
+            48191.70152820763,
+            28205.213801956696,
+            0
+          ]
+        ],
+        "848F": [
+          [
+            46971.701528198784,
+            32875.21380195074,
+            0
+          ],
+          [
+            48191.70152820809,
+            32875.21380195074,
+            0
+          ],
+          [
+            46971.701528198784,
+            32105.213801953625,
+            0
+          ],
+          [
+            47071.70152803649,
+            32105.213801953625,
+            0
+          ],
+          [
+            47971.7015280365,
+            32105.213801953625,
+            0
+          ],
+          [
+            48191.70152820808,
+            32105.213801953625,
+            0
+          ],
+          [
+            47021.701528117635,
+            33115.21380195074,
+            0
+          ],
+          [
+            47721.701528036494,
+            33115.21380195074,
+            0
+          ],
+          [
+            48081.7015281223,
+            33565.21380195074,
+            0
+          ],
+          [
+            46971.701528198784,
+            30105.213801953625,
+            0
+          ],
+          [
+            47581.70152820344,
+            30105.213801953625,
+            0
+          ],
+          [
+            48191.70152820809,
+            30105.213801953625,
+            0
+          ]
+        ],
+        "8494": [
+          [
+            53351.70152820787,
+            30205.213801957027,
+            0
+          ],
+          [
+            53351.70152820787,
+            32105.213802015467,
+            0
+          ],
+          [
+            51351.70152820787,
+            30205.213801957027,
+            0
+          ],
+          [
+            51351.70152820787,
+            30655.213801957027,
+            0
+          ],
+          [
+            51351.70152820787,
+            31855.213801957034,
+            0
+          ],
+          [
+            51351.70152820787,
+            32105.213802015467,
+            0
+          ],
+          [
+            53111.70152820787,
+            30430.213801957027,
+            0
+          ],
+          [
+            53111.70152820787,
+            31255.21380195703,
+            0
+          ],
+          [
+            53111.70152820787,
+            31980.21380198625,
+            0
+          ],
+          [
+            49351.70152820787,
+            30205.213801957027,
+            0
+          ],
+          [
+            49351.70152820787,
+            31155.213801986247,
+            0
+          ],
+          [
+            49351.70152820787,
+            32105.213802015467,
+            0
+          ]
+        ],
+        "8495": [
+          [
+            29911.701528206933,
+            28945.21380195598,
+            0
+          ],
+          [
+            29911.701528206933,
+            36225.213801957034,
+            0
+          ],
+          [
+            31911.701528206933,
+            28945.21380195598,
+            0
+          ],
+          [
+            31911.701528206933,
+            29925.21380195598,
+            0
+          ],
+          [
+            31911.701528206933,
+            32325.213801955997,
+            0
+          ],
+          [
+            31911.701528206933,
+            33105.21380195598,
+            0
+          ],
+          [
+            31911.701528206933,
+            34355.21380195598,
+            0
+          ],
+          [
+            31911.701528206933,
+            35555.21380195598,
+            0
+          ],
+          [
+            31911.701528206933,
+            36105.21380195597,
+            0
+          ],
+          [
+            31911.701528206933,
+            36225.213801957034,
+            0
+          ],
+          [
+            29671.701528206933,
+            29435.21380195598,
+            0
+          ],
+          [
+            29671.701528206933,
+            31125.213801955986,
+            0
+          ],
+          [
+            29671.701528206933,
+            32715.213801955986,
+            0
+          ],
+          [
+            29671.701528206933,
+            33730.21380195598,
+            0
+          ],
+          [
+            29671.701528206933,
+            34955.21380195598,
+            0
+          ],
+          [
+            29671.701528206933,
+            35830.21380195598,
+            0
+          ],
+          [
+            29671.701528206933,
+            36815.2138019565,
+            0
+          ],
+          [
+            33911.70152820693,
+            28945.21380195598,
+            0
+          ],
+          [
+            33911.70152820693,
+            32585.213801956506,
+            0
+          ],
+          [
+            33911.70152820693,
+            36225.213801957034,
+            0
+          ]
+        ],
+        "8498": [
+          [
+            37451.70152820693,
+            29065.21380195598,
+            0
+          ],
+          [
+            37451.70152820693,
+            32985.21380195598,
+            0
+          ],
+          [
+            36231.70152820693,
+            29065.21380195598,
+            0
+          ],
+          [
+            36231.70152820693,
+            29967.550574946166,
+            0
+          ],
+          [
+            36231.70152820693,
+            32167.55057494616,
+            0
+          ],
+          [
+            36231.70152820693,
+            32985.21380195598,
+            0
+          ],
+          [
+            37211.70152820693,
+            29516.382188451073,
+            0
+          ],
+          [
+            37211.70152820693,
+            31067.550574946163,
+            0
+          ],
+          [
+            37211.70152820693,
+            32576.38218845107,
+            0
+          ],
+          [
+            34231.70152820693,
+            29065.21380195598,
+            0
+          ],
+          [
+            34231.70152820693,
+            31025.21380195598,
+            0
+          ],
+          [
+            34231.70152820693,
+            32985.21380195598,
+            0
+          ]
+        ],
+        "849B": [
+          [
+            31911.701528206933,
+            23525.21380195598,
+            0
+          ],
+          [
+            36231.70152820693,
+            23525.21380195598,
+            0
+          ],
+          [
+            31911.701528206933,
+            25525.21380195598,
+            0
+          ],
+          [
+            32031.70152820691,
+            25525.21380195598,
+            0
+          ],
+          [
+            33081.70152820693,
+            25525.21380195598,
+            0
+          ],
+          [
+            35181.70152820694,
+            25525.21380195598,
+            0
+          ],
+          [
+            36231.70152820693,
+            25525.21380195598,
+            0
+          ],
+          [
+            31321.701528206933,
+            23765.21380195598,
+            0
+          ],
+          [
+            32556.701528206926,
+            23765.21380195598,
+            0
+          ],
+          [
+            34131.70152820693,
+            23765.21380195598,
+            0
+          ],
+          [
+            35706.70152820693,
+            23765.21380195598,
+            0
+          ],
+          [
+            31911.701528206933,
+            27525.21380195598,
+            0
+          ],
+          [
+            34071.70152820693,
+            27525.21380195598,
+            0
+          ],
+          [
+            36231.70152820693,
+            27525.21380195598,
+            0
+          ]
+        ],
+        "849D": [
+          [
+            31911.701528206933,
+            38225.213801957034,
+            0
+          ],
+          [
+            32031.70152820693,
+            38225.213801957034,
+            0
+          ],
+          [
+            31911.701528206933,
+            36225.213801957034,
+            0
+          ],
+          [
+            32031.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            31321.701528206933,
+            38465.213801957034,
+            0
+          ],
+          [
+            31911.701528206933,
+            34225.213801957034,
+            0
+          ],
+          [
+            31971.701528206933,
+            34225.213801957034,
+            0
+          ],
+          [
+            32031.70152820693,
+            34225.213801957034,
+            0
+          ]
+        ],
+        "849F": [
+          [
+            29911.701528206933,
+            25525.21380195598,
+            0
+          ],
+          [
+            29911.701528206933,
+            25645.213801955975,
+            0
+          ],
+          [
+            31911.701528206933,
+            25525.21380195598,
+            0
+          ],
+          [
+            31911.701528206933,
+            25645.213801955975,
+            0
+          ],
+          [
+            29671.701528206933,
+            24935.21380195598,
+            0
+          ],
+          [
+            33911.70152820693,
+            25525.21380195598,
+            0
+          ],
+          [
+            33911.70152820693,
+            25585.21380195598,
+            0
+          ],
+          [
+            33911.70152820693,
+            25645.213801955975,
+            0
+          ]
+        ],
+        "84A1": [
+          [
+            53351.70152820787,
+            25525.21380195598,
+            0
+          ],
+          [
+            53351.70152820787,
+            25645.213801955975,
+            0
+          ],
+          [
+            51351.70152820787,
+            25525.21380195598,
+            0
+          ],
+          [
+            51351.70152820787,
+            25645.213801955975,
+            0
+          ],
+          [
+            53111.70152820787,
+            24935.21380195598,
+            0
+          ],
+          [
+            49351.70152820787,
+            25525.21380195598,
+            0
+          ],
+          [
+            49351.70152820787,
+            25585.21380195598,
+            0
+          ],
+          [
+            49351.70152820787,
+            25645.213801955975,
+            0
+          ]
+        ],
+        "84A2": [
+          [
+            53351.70152820787,
+            36105.21380195598,
+            0
+          ],
+          [
+            53351.70152820787,
+            36225.213801957034,
+            0
+          ],
+          [
+            51351.70152820787,
+            36105.21380195598,
+            0
+          ],
+          [
+            51351.70152820787,
+            36225.213801957034,
+            0
+          ],
+          [
+            53111.70152820787,
+            36815.2138019565,
+            0
+          ],
+          [
+            49351.70152820787,
+            36105.21380195598,
+            0
+          ],
+          [
+            49351.70152820787,
+            36165.2138019565,
+            0
+          ],
+          [
+            49351.70152820787,
+            36225.213801957034,
+            0
+          ]
+        ]
+      },
+      "sourcePreview": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161104-floor1\\stage2-preview-native.json",
+      "captionWitness": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-caption-clearance.json",
+      "masks": [
+        {
+          "caption": "84A6",
+          "opening": "7F36",
+          "group": "BCP_DOOR_LABEL_F1_7F36",
+          "min": [
+            44378.487242493116,
+            25045.213801956095,
+            0
+          ],
+          "max": [
+            45324.91581392169,
+            25465.213801956095,
+            0
+          ],
+          "scaleX": 0.04868459729570611,
+          "scaleY": 0.42
+        },
+        {
+          "caption": "84A8",
+          "opening": "7F39",
+          "group": "BCP_DOOR_LABEL_F1_7F39",
+          "min": [
+            38651.70152820693,
+            31020.213801995444,
+            0
+          ],
+          "max": [
+            39071.70152820693,
+            32050.213801995444,
+            0
+          ],
+          "scaleX": 0.021604938271603896,
+          "scaleY": 1.03
+        },
+        {
+          "caption": "84A9",
+          "opening": "7F3B",
+          "group": "BCP_DOOR_LABEL_F1_7F3B",
+          "min": [
+            42251.70152820693,
+            32260.213801994978,
+            0
+          ],
+          "max": [
+            42671.70152820693,
+            33290.21380199498,
+            0
+          ],
+          "scaleX": 0.021604938271603896,
+          "scaleY": 1.03
+        },
+        {
+          "caption": "84AC",
+          "opening": "7F43",
+          "group": "BCP_DOOR_LABEL_F1_7F43",
+          "min": [
+            47006.70152804465,
+            30385.213801956794,
+            0
+          ],
+          "max": [
+            48036.70152804465,
+            30805.213801956794,
+            0
+          ],
+          "scaleX": 0.05298353909464765,
+          "scaleY": 0.42
+        },
+        {
+          "caption": "84AE",
+          "opening": "7F45",
+          "group": "BCP_DOOR_LABEL_F1_7F45",
+          "min": [
+            47006.701528036494,
+            31505.21380195074,
+            0
+          ],
+          "max": [
+            48036.701528036494,
+            31925.21380195074,
+            0
+          ],
+          "scaleX": 0.05298353909464765,
+          "scaleY": 0.42
+        },
+        {
+          "caption": "84AF",
+          "opening": "7FE0",
+          "group": "BCP_DOOR_LABEL_F1_7FE0",
+          "min": [
+            32206.701528206933,
+            32505.21380195598,
+            0
+          ],
+          "max": [
+            33236.70152820693,
+            32925.21380195598,
+            0
+          ],
+          "scaleX": 0.05298353909464765,
+          "scaleY": 0.42
+        },
+        {
+          "caption": "84B0",
+          "opening": "7FE2",
+          "group": "BCP_DOOR_LABEL_F1_7FE2",
+          "min": [
+            33616.70152820693,
+            29125.21380195598,
+            0
+          ],
+          "max": [
+            34646.70152820693,
+            29545.21380195598,
+            0
+          ],
+          "scaleX": 0.05298353909464765,
+          "scaleY": 0.42
+        },
+        {
+          "caption": "84B1",
+          "opening": "7FE5",
+          "group": "BCP_DOOR_LABEL_F1_7FE5",
+          "min": [
+            36411.70152820693,
+            27760.21380195598,
+            0
+          ],
+          "max": [
+            36831.70152820693,
+            28790.21380195598,
+            0
+          ],
+          "scaleX": 0.021604938271603896,
+          "scaleY": 1.03
+        },
+        {
+          "caption": "84B2",
+          "opening": "7FFA",
+          "group": "BCP_DOOR_LABEL_F1_7FFA",
+          "min": [
+            36411.70152820693,
+            30552.55057494616,
+            0
+          ],
+          "max": [
+            36831.70152820693,
+            31582.55057494616,
+            0
+          ],
+          "scaleX": 0.021604938271603896,
+          "scaleY": 1.03
+        },
+        {
+          "caption": "84B4",
+          "opening": "8107",
+          "group": "BCP_DOOR_LABEL_F1_8107",
+          "min": [
+            36411.70152820693,
+            33110.213801956095,
+            0
+          ],
+          "max": [
+            36831.70152820693,
+            34140.213801956095,
+            0
+          ],
+          "scaleX": 0.021604938271603896,
+          "scaleY": 1.03
+        }
+      ],
+      "maskTemplate": "BCP_DOOR_NUMBER_CLEARANCE_F1",
+      "templateSourceHandle": "84B9",
+      "visibleDimensionHandles": [
+        "8443",
+        "844C",
+        "8454",
+        "8459",
+        "845D",
+        "845E",
+        "845F",
+        "8460",
+        "8461",
+        "846B",
+        "846C",
+        "846F",
+        "8478",
+        "847B",
+        "847E",
+        "8485",
+        "848B",
+        "848C",
+        "848F",
+        "8494",
+        "8495",
+        "8498",
+        "849B",
+        "849D",
+        "849F",
+        "84A1",
+        "84A2"
+      ]
+    },
+    {
+      "floor": 2,
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门号轴线与面积_20261101\\方案施工图_二层_面积符号确认样张_v4.dwg",
+      "sourceSHA256": "868F77608B8A9CB8D96E15C699DBE3B54FBCBD77F9EB9E0842956C8DEAB8976B",
+      "control": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-174122\\clearance-floor-2\\control.dwg",
+      "baseModelCount": 260,
+      "expectedModelCount": 269,
+      "log": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-174122\\clearance-floor-2\\drawing-edit.log",
+      "reopenedLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-174122\\clearance-floor-2\\drawing-reopened.log",
+      "doors": [
+        {
+          "handle": "84A0",
+          "opening": "801A",
+          "text": "M2121",
+          "wall": "8019",
+          "rotation": 0,
+          "verticalOpening": false,
+          "anchorA": [
+            92323.70152820786,
+            25645.213801956623,
+            0
+          ],
+          "anchorB": [
+            90223.70152820786,
+            25645.2138019565,
+            0
+          ],
+          "closedPlaneNormal": 25645.21380195656,
+          "openingMidAlong": 91273.70152820786,
+          "arcCount": 0,
+          "swingExtentPositive": 0,
+          "swingExtentNegative": 0,
+          "swingSide": null,
+          "currentPosition": [
+            91273.70152820786,
+            25975.213801956623,
+            0
+          ],
+          "currentBounds": [
+            90879.05867106501,
+            25825.213801956623,
+            91668.34438535072,
+            26125.213801956623
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层_生成记录_9752_499508390\\过程\\caption\\door-graphic-probe.json",
+          "kind": "no-source-arc",
+          "status": "opening-centered-side-preserved-no-arc",
+          "desiredPosition": [
+            91273.70152820786,
+            26035.213801956677,
+            0.0
+          ],
+          "desiredBounds": [
+            90879.05867106501,
+            25885.213801956677,
+            91668.34438535072,
+            26185.213801956677
+          ],
+          "delta": [
+            0.0,
+            60.00000000005457,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": [],
+          "desiredSide": 1,
+          "wallFace": 25765.213801956677,
+          "trialInkGapMm": 120,
+          "sideBasis": "preserve current text side; no swing inference"
+        },
+        {
+          "handle": "84A4",
+          "opening": "8025",
+          "text": "M0927",
+          "wall": "818B",
+          "rotation": 0,
+          "verticalOpening": false,
+          "anchorA": [
+            93493.70152804488,
+            30205.213801956696,
+            0
+          ],
+          "anchorB": [
+            94393.70152804488,
+            30205.213801956776,
+            0
+          ],
+          "closedPlaneNormal": 30205.213801956736,
+          "openingMidAlong": 93943.70152804488,
+          "arcCount": 1,
+          "swingExtentPositive": 3.637978807091713e-11,
+          "swingExtentNegative": 877.2114910328419,
+          "swingSide": -1,
+          "currentPosition": [
+            93943.70152804488,
+            29087.713801956696,
+            0
+          ],
+          "currentBounds": [
+            93488.70152804488,
+            28937.713801956696,
+            94398.70152804488,
+            29237.713801956696
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层_生成记录_9752_499508390\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-dimensions-yield",
+          "desiredSide": 1,
+          "wallFace": 30325.213801956794,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            93943.70152804488,
+            30595.213801956794,
+            0.0
+          ],
+          "desiredBounds": [
+            93488.70152804488,
+            30445.213801956794,
+            94398.70152804488,
+            30745.213801956794
+          ],
+          "delta": [
+            0.0,
+            1507.5000000000982,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": [
+            {
+              "handle": "847B",
+              "kind": "dimension-text",
+              "segment": 2,
+              "value": 220.00000016298145
+            }
+          ]
+        },
+        {
+          "handle": "84A5",
+          "opening": "8078",
+          "text": "M0927",
+          "wall": "815F",
+          "rotation": 0,
+          "verticalOpening": false,
+          "anchorA": [
+            88153.70152816131,
+            30205.213801956354,
+            0
+          ],
+          "anchorB": [
+            89053.70152816131,
+            30205.213801956426,
+            0
+          ],
+          "closedPlaneNormal": 30205.21380195639,
+          "openingMidAlong": 88603.70152816131,
+          "arcCount": 1,
+          "swingExtentPositive": -3.637978807091713e-11,
+          "swingExtentNegative": 877.2114910327764,
+          "swingSide": -1,
+          "currentPosition": [
+            88603.70152816131,
+            29087.713801956423,
+            0
+          ],
+          "currentBounds": [
+            88148.70152816131,
+            28937.713801956423,
+            89058.70152816131,
+            29237.713801956423
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层_生成记录_9752_499508390\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-dimensions-yield",
+          "desiredSide": 1,
+          "wallFace": 30325.213801956445,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            88603.70152816131,
+            30595.213801956445,
+            0.0
+          ],
+          "desiredBounds": [
+            88148.70152816131,
+            30445.213801956445,
+            89058.70152816131,
+            30745.213801956445
+          ],
+          "delta": [
+            0.0,
+            1507.5000000000218,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": [
+            {
+              "handle": "8478",
+              "kind": "dimension-text",
+              "segment": 2,
+              "value": 100.00000004608592
+            }
+          ]
+        },
+        {
+          "handle": "84A7",
+          "opening": "8103",
+          "text": "M0927",
+          "wall": "81BF",
+          "rotation": 0,
+          "verticalOpening": false,
+          "anchorA": [
+            92153.70152836898,
+            32105.213801956612,
+            0
+          ],
+          "anchorB": [
+            93053.70152836898,
+            32105.213801956663,
+            0
+          ],
+          "closedPlaneNormal": 32105.213801956637,
+          "openingMidAlong": 92603.70152836898,
+          "arcCount": 1,
+          "swingExtentPositive": 877.2114910328273,
+          "swingExtentNegative": 2.1827872842550278e-11,
+          "swingSide": 1,
+          "currentPosition": [
+            91553.70152836898,
+            32435.213801956612,
+            0
+          ],
+          "currentBounds": [
+            91098.70152836898,
+            32285.213801956612,
+            92008.70152836898,
+            32585.213801956612
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层_生成记录_9752_499508390\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-clear",
+          "desiredSide": -1,
+          "wallFace": 31985.213801956445,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            92603.70152836898,
+            31715.213801956445,
+            0.0
+          ],
+          "desiredBounds": [
+            92148.70152836898,
+            31565.213801956445,
+            93058.70152836898,
+            31865.213801956445
+          ],
+          "delta": [
+            1050.0,
+            -720.0000000001673,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": []
+        },
+        {
+          "handle": "84A8",
+          "opening": "8147",
+          "text": "M1227",
+          "wall": "8146",
+          "rotation": 0,
+          "verticalOpening": false,
+          "anchorA": [
+            87793.70152820228,
+            32105.213801956364,
+            0
+          ],
+          "anchorB": [
+            88993.70152820228,
+            32105.21380195643,
+            0
+          ],
+          "closedPlaneNormal": 32105.213801956397,
+          "openingMidAlong": 88393.70152820228,
+          "arcCount": 2,
+          "swingExtentPositive": -1.983353286930651,
+          "swingExtentNegative": 902.5470010710451,
+          "swingSide": -1,
+          "currentPosition": [
+            88193.70152820228,
+            30662.666800885323,
+            0
+          ],
+          "currentBounds": [
+            87757.27295677371,
+            30512.666800885323,
+            88630.13009963086,
+            30812.666800885323
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层_生成记录_9752_499508390\\过程\\caption\\door-graphic-probe.json",
+          "kind": "multi-leaf-swing",
+          "status": "preferred-geometry-clear",
+          "desiredSide": 1,
+          "wallFace": 32225.213801956445,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            88393.70152820228,
+            32495.213801956445,
+            0.0
+          ],
+          "desiredBounds": [
+            87957.27295677371,
+            32345.213801956445,
+            88830.13009963086,
+            32645.213801956445
+          ],
+          "delta": [
+            200.0,
+            1832.5470010711215,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": []
+        },
+        {
+          "handle": "84AA",
+          "opening": "81C1",
+          "text": "M0927",
+          "wall": "81C0",
+          "rotation": 1.5707963267948966,
+          "verticalOpening": true,
+          "anchorA": [
+            84893.70152820693,
+            32345.213801490783,
+            0
+          ],
+          "anchorB": [
+            84893.70152820693,
+            33245.21380149078,
+            0
+          ],
+          "closedPlaneNormal": 84893.70152820693,
+          "openingMidAlong": 32795.21380149078,
+          "arcCount": 1,
+          "swingExtentPositive": 0.0,
+          "swingExtentNegative": 877.2114910328091,
+          "swingSide": -1,
+          "currentPosition": [
+            84563.70152820693,
+            31800.213801490783,
+            0
+          ],
+          "currentBounds": [
+            84413.70152820693,
+            31345.213801490783,
+            84713.70152820693,
+            32255.213801490783
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层_生成记录_9752_499508390\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-dimensions-yield",
+          "desiredSide": 1,
+          "wallFace": 85013.70152820693,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            85283.70152820693,
+            32795.21380149078,
+            0.0
+          ],
+          "desiredBounds": [
+            85133.70152820693,
+            32340.213801490783,
+            85433.70152820693,
+            33250.21380149078
+          ],
+          "delta": [
+            720.0,
+            995.0,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": [
+            {
+              "handle": "8475",
+              "kind": "baseline"
+            },
+            {
+              "handle": "8481",
+              "kind": "dimension-text",
+              "segment": 0,
+              "value": 119.99999953457154
+            },
+            {
+              "handle": "8481",
+              "kind": "dimension-text",
+              "segment": 1,
+              "value": 899.9999999999964
+            }
+          ]
+        },
+        {
+          "handle": "84AB",
+          "opening": "81EA",
+          "text": "M0927",
+          "wall": "81EB",
+          "rotation": 0,
+          "verticalOpening": false,
+          "anchorA": [
+            93493.7015280365,
+            32105.21380196096,
+            0
+          ],
+          "anchorB": [
+            94393.7015280365,
+            32105.213801972768,
+            0
+          ],
+          "closedPlaneNormal": 32105.213801966864,
+          "openingMidAlong": 93943.7015280365,
+          "arcCount": 1,
+          "swingExtentPositive": 877.2114910274904,
+          "swingExtentNegative": -5.900801625102758e-09,
+          "swingSide": 1,
+          "currentPosition": [
+            94993.7015280365,
+            32435.21380196096,
+            0
+          ],
+          "currentBounds": [
+            94538.7015280365,
+            32285.21380196096,
+            95448.7015280365,
+            32585.21380196096
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层_生成记录_9752_499508390\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-clear",
+          "desiredSide": -1,
+          "wallFace": 31985.213801958074,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            93943.7015280365,
+            31715.213801958074,
+            0.0
+          ],
+          "desiredBounds": [
+            93488.7015280365,
+            31565.213801958074,
+            94398.7015280365,
+            31865.213801958074
+          ],
+          "delta": [
+            -1050.0,
+            -720.0000000028849,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": []
+        },
+        {
+          "handle": "84AD",
+          "opening": "82B0",
+          "text": "M0927",
+          "wall": "82AF",
+          "rotation": 0,
+          "verticalOpening": false,
+          "anchorA": [
+            78693.70152820693,
+            33105.21380195598,
+            0
+          ],
+          "anchorB": [
+            79593.70152820693,
+            33105.21380195598,
+            0
+          ],
+          "closedPlaneNormal": 33105.21380195598,
+          "openingMidAlong": 79143.70152820693,
+          "arcCount": 1,
+          "swingExtentPositive": 877.2114910328091,
+          "swingExtentNegative": 0.0,
+          "swingSide": 1,
+          "currentPosition": [
+            80193.70152820693,
+            33435.21380195598,
+            0
+          ],
+          "currentBounds": [
+            79738.70152820693,
+            33285.21380195598,
+            80648.70152820693,
+            33585.21380195598
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层_生成记录_9752_499508390\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-clear",
+          "desiredSide": -1,
+          "wallFace": 32985.21380195598,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            79143.70152820693,
+            32715.21380195598,
+            0.0
+          ],
+          "desiredBounds": [
+            78688.70152820693,
+            32565.21380195598,
+            79598.70152820693,
+            32865.21380195598
+          ],
+          "delta": [
+            -1050.0,
+            -720.0,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": []
+        },
+        {
+          "handle": "84AE",
+          "opening": "82B2",
+          "text": "M0827",
+          "wall": "82B1",
+          "rotation": 1.5707963267948966,
+          "verticalOpening": true,
+          "anchorA": [
+            82653.70152820693,
+            34025.213801956095,
+            0
+          ],
+          "anchorB": [
+            82653.70152820693,
+            33225.213801956095,
+            0
+          ],
+          "closedPlaneNormal": 82653.70152820693,
+          "openingMidAlong": 33625.213801956095,
+          "arcCount": 1,
+          "swingExtentPositive": 0.0,
+          "swingExtentNegative": 779.743547584716,
+          "swingSide": -1,
+          "currentPosition": [
+            81633.70152820693,
+            33725.213801956095,
+            0
+          ],
+          "currentBounds": [
+            81483.70152820693,
+            33270.213801956095,
+            81783.70152820693,
+            34180.213801956095
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层_生成记录_9752_499508390\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-dimensions-yield",
+          "desiredSide": 1,
+          "wallFace": 82773.70152820693,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            83043.70152820693,
+            33625.213801956095,
+            0.0
+          ],
+          "desiredBounds": [
+            82893.70152820693,
+            33170.213801956095,
+            83193.70152820693,
+            34080.213801956095
+          ],
+          "delta": [
+            1410.0,
+            -100.0,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": [
+            {
+              "handle": "848E",
+              "kind": "dimension-text",
+              "segment": 0,
+              "value": 800
+            }
+          ]
+        }
+      ],
+      "annotationMoves": [],
+      "dimensionOps": [
+        {
+          "kind": "baseline",
+          "handle": "8475",
+          "gripIndex": 0,
+          "before": [
+            85013.70152820693,
+            32875.21380195621,
+            0
+          ],
+          "delta": [
+            0,
+            700,
+            0
+          ],
+          "windows": [
+            {
+              "min": [
+                84983.70152820693,
+                32845.21380195621,
+                0
+              ],
+              "max": [
+                85043.70152820693,
+                32905.21380195621,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "text",
+          "handle": "848E",
+          "gripIndex": 5,
+          "segment": 0,
+          "before": [
+            83183.70152820693,
+            33625.213801956095,
+            0
+          ],
+          "target": [
+            83683.70152820693,
+            33625.213801956095,
+            0
+          ],
+          "delta": [
+            500,
+            0,
+            0
+          ],
+          "windows": [
+            {
+              "min": [
+                83153.70152820693,
+                33595.213801956095,
+                0
+              ],
+              "max": [
+                83213.70152820693,
+                33655.213801956095,
+                0
+              ]
+            },
+            {
+              "min": [
+                83022.70152820693,
+                33525.213801956095,
+                0
+              ],
+              "max": [
+                83344.70152820693,
+                33725.213801956095,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "text",
+          "handle": "8475",
+          "gripIndex": 8,
+          "segment": 2,
+          "before": [
+            89073.70152820458,
+            33815.21380195621,
+            0
+          ],
+          "target": [
+            88603.70152820226,
+            35015.21380195621,
+            0
+          ],
+          "delta": [
+            -470.00000000231375,
+            1200.0,
+            0
+          ],
+          "windows": [
+            {
+              "min": [
+                89043.70152820458,
+                33785.21380195621,
+                0
+              ],
+              "max": [
+                89103.70152820458,
+                33845.21380195621,
+                0
+              ]
+            },
+            {
+              "min": [
+                88973.70152820458,
+                33654.21380195621,
+                0
+              ],
+              "max": [
+                89173.70152820458,
+                33976.21380195621,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "text",
+          "handle": "8478",
+          "gripIndex": 8,
+          "segment": 2,
+          "before": [
+            89103.70152818436,
+            30765.213801956095,
+            0
+          ],
+          "target": [
+            89903.70152818436,
+            31215.213801956095,
+            0
+          ],
+          "delta": [
+            800.0,
+            450.0,
+            0
+          ],
+          "windows": [
+            {
+              "min": [
+                89073.70152818436,
+                30735.213801956095,
+                0
+              ],
+              "max": [
+                89133.70152818436,
+                30795.213801956095,
+                0
+              ]
+            },
+            {
+              "min": [
+                89003.70152818436,
+                30604.213801956095,
+                0
+              ],
+              "max": [
+                89203.70152818436,
+                30926.213801956095,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "text",
+          "handle": "847B",
+          "gripIndex": 8,
+          "segment": 2,
+          "before": [
+            94503.70152812637,
+            30765.213801956677,
+            0
+          ],
+          "target": [
+            92653.70152820693,
+            31215.213801956677,
+            0
+          ],
+          "delta": [
+            -1849.9999999194406,
+            450.0,
+            0
+          ],
+          "windows": [
+            {
+              "min": [
+                94473.70152812637,
+                30735.213801956677,
+                0
+              ],
+              "max": [
+                94533.70152812637,
+                30795.213801956677,
+                0
+              ]
+            },
+            {
+              "min": [
+                94403.70152812637,
+                30604.213801956677,
+                0
+              ],
+              "max": [
+                94603.70152812637,
+                30926.213801956677,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "text",
+          "handle": "8481",
+          "gripIndex": 6,
+          "segment": 0,
+          "before": [
+            85423.70152820693,
+            32285.213801723497,
+            0
+          ],
+          "target": [
+            83700,
+            32285.213801723497,
+            0
+          ],
+          "delta": [
+            -1723.7015282069333,
+            0.0,
+            0
+          ],
+          "windows": [
+            {
+              "min": [
+                85393.70152820693,
+                32255.213801723497,
+                0
+              ],
+              "max": [
+                85453.70152820693,
+                32315.213801723497,
+                0
+              ]
+            },
+            {
+              "min": [
+                85262.70152820693,
+                32185.213801723497,
+                0
+              ],
+              "max": [
+                85584.70152820693,
+                32385.213801723497,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "text",
+          "handle": "8481",
+          "gripIndex": 7,
+          "segment": 1,
+          "before": [
+            85423.70152820693,
+            32995.21380149078,
+            0
+          ],
+          "target": [
+            85903.70152820693,
+            32995.21380149078,
+            0
+          ],
+          "delta": [
+            480.0,
+            0.0,
+            0
+          ],
+          "windows": [
+            {
+              "min": [
+                85393.70152820693,
+                32965.21380149078,
+                0
+              ],
+              "max": [
+                85453.70152820693,
+                33025.21380149078,
+                0
+              ]
+            },
+            {
+              "min": [
+                85262.70152820693,
+                32895.21380149078,
+                0
+              ],
+              "max": [
+                85584.70152820693,
+                33095.21380149078,
+                0
+              ]
+            }
+          ]
+        }
+      ],
+      "expectedGrips": {
+        "8442": [
+          [
+            78333.70152820693,
+            22725.213801955157,
+            0
+          ],
+          [
+            97773.70152820788,
+            22725.213801955157,
+            0
+          ],
+          [
+            78333.70152820693,
+            25525.213801956088,
+            0
+          ],
+          [
+            84893.70152820696,
+            25525.213801956088,
+            0
+          ],
+          [
+            89273.70152820693,
+            25525.213801956088,
+            0
+          ],
+          [
+            93273.70152820693,
+            25525.213801956088,
+            0
+          ],
+          [
+            97653.70152820695,
+            25525.213801956088,
+            0
+          ],
+          [
+            97773.70152820788,
+            25525.213801956088,
+            0
+          ],
+          [
+            81613.70152820695,
+            22965.213801955157,
+            0
+          ],
+          [
+            87083.70152820695,
+            22965.213801955157,
+            0
+          ],
+          [
+            91273.70152820693,
+            22965.213801955157,
+            0
+          ],
+          [
+            95463.70152820693,
+            22965.213801955157,
+            0
+          ],
+          [
+            98363.7015282074,
+            22965.213801955157,
+            0
+          ],
+          [
+            78333.70152820693,
+            27525.213801956088,
+            0
+          ],
+          [
+            88053.7015282074,
+            27525.213801956088,
+            0
+          ],
+          [
+            97773.70152820788,
+            27525.213801956088,
+            0
+          ]
+        ],
+        "844A": [
+          [
+            78333.70152820693,
+            39025.213801957034,
+            0
+          ],
+          [
+            97773.70152820788,
+            39025.213801957034,
+            0
+          ],
+          [
+            78333.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            78453.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            80853.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            82653.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            84893.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            89273.70152820695,
+            36225.213801957034,
+            0
+          ],
+          [
+            93273.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            97653.70152820695,
+            36225.213801957034,
+            0
+          ],
+          [
+            97773.70152820788,
+            36225.213801957034,
+            0
+          ],
+          [
+            77743.70152820693,
+            39265.213801957034,
+            0
+          ],
+          [
+            79653.70152820693,
+            39265.213801957034,
+            0
+          ],
+          [
+            81753.70152820693,
+            39265.213801957034,
+            0
+          ],
+          [
+            83773.70152820693,
+            39265.213801957034,
+            0
+          ],
+          [
+            87083.70152820693,
+            39265.213801957034,
+            0
+          ],
+          [
+            91273.70152820693,
+            39265.213801957034,
+            0
+          ],
+          [
+            95463.70152820693,
+            39265.213801957034,
+            0
+          ],
+          [
+            98363.7015282074,
+            39265.213801957034,
+            0
+          ],
+          [
+            78333.70152820693,
+            34225.213801957034,
+            0
+          ],
+          [
+            88053.7015282074,
+            34225.213801957034,
+            0
+          ],
+          [
+            97773.70152820788,
+            34225.213801957034,
+            0
+          ]
+        ],
+        "8452": [
+          [
+            75533.70152820693,
+            25525.213801956088,
+            0
+          ],
+          [
+            75533.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            78333.70152820693,
+            25525.213801956088,
+            0
+          ],
+          [
+            78333.70152820693,
+            25645.21380195632,
+            0
+          ],
+          [
+            78333.70152820693,
+            30205.213801956088,
+            0
+          ],
+          [
+            78333.70152820693,
+            32105.213801956215,
+            0
+          ],
+          [
+            78333.70152820693,
+            33105.21380195598,
+            0
+          ],
+          [
+            78333.70152820693,
+            36105.21380195598,
+            0
+          ],
+          [
+            78333.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            75293.70152820693,
+            24935.213801956208,
+            0
+          ],
+          [
+            75293.70152820693,
+            27925.213801956204,
+            0
+          ],
+          [
+            75293.70152820693,
+            31155.213801956153,
+            0
+          ],
+          [
+            75293.70152820693,
+            32605.213801956095,
+            0
+          ],
+          [
+            75293.70152820693,
+            34605.21380195598,
+            0
+          ],
+          [
+            75293.70152820693,
+            36815.2138019565,
+            0
+          ],
+          [
+            80333.70152820693,
+            25525.213801956088,
+            0
+          ],
+          [
+            80333.70152820693,
+            30875.21380195656,
+            0
+          ],
+          [
+            80333.70152820693,
+            36225.213801957034,
+            0
+          ]
+        ],
+        "8458": [
+          [
+            100573.70152820881,
+            25525.213801956088,
+            0
+          ],
+          [
+            100573.70152820881,
+            36225.213801957034,
+            0
+          ],
+          [
+            97773.70152820788,
+            25525.213801956088,
+            0
+          ],
+          [
+            97773.70152820788,
+            25645.21380195632,
+            0
+          ],
+          [
+            97773.70152820788,
+            30205.213801956088,
+            0
+          ],
+          [
+            97773.70152820788,
+            36105.21380195598,
+            0
+          ],
+          [
+            97773.70152820788,
+            36225.213801957034,
+            0
+          ],
+          [
+            100333.70152820881,
+            24935.213801956208,
+            0
+          ],
+          [
+            100333.70152820881,
+            27925.213801956204,
+            0
+          ],
+          [
+            100333.70152820881,
+            33155.21380195604,
+            0
+          ],
+          [
+            100333.70152820881,
+            36815.2138019565,
+            0
+          ],
+          [
+            95773.70152820788,
+            25525.213801956088,
+            0
+          ],
+          [
+            95773.70152820788,
+            30875.21380195656,
+            0
+          ],
+          [
+            95773.70152820788,
+            36225.213801957034,
+            0
+          ]
+        ],
+        "845C": [
+          [
+            78333.70152820693,
+            21925.213801956088,
+            0
+          ],
+          [
+            97773.70152820788,
+            21925.213801956088,
+            0
+          ],
+          [
+            78333.70152820693,
+            25525.213801956088,
+            0
+          ],
+          [
+            97773.70152820788,
+            25525.213801956088,
+            0
+          ],
+          [
+            88053.7015282074,
+            22165.213801956088,
+            0
+          ],
+          [
+            78333.70152820693,
+            27525.213801956088,
+            0
+          ],
+          [
+            88053.7015282074,
+            27525.213801956088,
+            0
+          ],
+          [
+            97773.70152820788,
+            27525.213801956088,
+            0
+          ]
+        ],
+        "845D": [
+          [
+            78333.70152820693,
+            39825.213801957034,
+            0
+          ],
+          [
+            97773.70152820788,
+            39825.213801957034,
+            0
+          ],
+          [
+            78333.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            97773.70152820788,
+            36225.213801957034,
+            0
+          ],
+          [
+            88053.7015282074,
+            40065.213801957034,
+            0
+          ],
+          [
+            78333.70152820693,
+            34225.213801957034,
+            0
+          ],
+          [
+            88053.7015282074,
+            34225.213801957034,
+            0
+          ],
+          [
+            97773.70152820788,
+            34225.213801957034,
+            0
+          ]
+        ],
+        "845E": [
+          [
+            74733.70152820693,
+            25525.213801956088,
+            0
+          ],
+          [
+            74733.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            78333.70152820693,
+            25525.213801956088,
+            0
+          ],
+          [
+            78333.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            74493.70152820693,
+            30875.21380195656,
+            0
+          ],
+          [
+            80333.70152820693,
+            25525.213801956088,
+            0
+          ],
+          [
+            80333.70152820693,
+            30875.21380195656,
+            0
+          ],
+          [
+            80333.70152820693,
+            36225.213801957034,
+            0
+          ]
+        ],
+        "845F": [
+          [
+            101373.70152820788,
+            25525.213801956088,
+            0
+          ],
+          [
+            101373.70152820788,
+            36225.213801957034,
+            0
+          ],
+          [
+            97773.70152820788,
+            25525.213801956088,
+            0
+          ],
+          [
+            97773.70152820788,
+            36225.213801957034,
+            0
+          ],
+          [
+            101133.70152820788,
+            30875.21380195656,
+            0
+          ],
+          [
+            95773.70152820788,
+            25525.213801956088,
+            0
+          ],
+          [
+            95773.70152820788,
+            30875.21380195656,
+            0
+          ],
+          [
+            95773.70152820788,
+            36225.213801957034,
+            0
+          ]
+        ],
+        "8460": [
+          [
+            84893.70152820693,
+            38225.213801957034,
+            0
+          ],
+          [
+            97773.70152820785,
+            38225.213801957034,
+            0
+          ],
+          [
+            84893.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            86183.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            87983.70152820692,
+            36225.213801957034,
+            0
+          ],
+          [
+            89273.70152820692,
+            36225.213801957034,
+            0
+          ],
+          [
+            90331.70098656604,
+            36225.213801957034,
+            0
+          ],
+          [
+            92131.70098656604,
+            36225.213801957034,
+            0
+          ],
+          [
+            93273.70152820688,
+            36225.213801957034,
+            0
+          ],
+          [
+            94431.70098656602,
+            36225.213801957034,
+            0
+          ],
+          [
+            96231.70098656601,
+            36225.213801957034,
+            0
+          ],
+          [
+            97653.70152820688,
+            36225.213801957034,
+            0
+          ],
+          [
+            97773.70152820785,
+            36225.213801957034,
+            0
+          ],
+          [
+            85538.70152820693,
+            38465.213801957034,
+            0
+          ],
+          [
+            87083.70152820693,
+            38465.213801957034,
+            0
+          ],
+          [
+            88628.70152820692,
+            38465.213801957034,
+            0
+          ],
+          [
+            89802.70125738648,
+            38465.213801957034,
+            0
+          ],
+          [
+            91231.70098656604,
+            38465.213801957034,
+            0
+          ],
+          [
+            92702.70125738645,
+            38465.213801957034,
+            0
+          ],
+          [
+            93852.70125738645,
+            38465.213801957034,
+            0
+          ],
+          [
+            95331.70098656602,
+            38465.213801957034,
+            0
+          ],
+          [
+            96942.70125738645,
+            38465.213801957034,
+            0
+          ],
+          [
+            98363.7015282074,
+            38465.213801957034,
+            0
+          ],
+          [
+            84893.70152820693,
+            34225.213801957034,
+            0
+          ],
+          [
+            91333.7015282074,
+            34225.213801957034,
+            0
+          ],
+          [
+            97773.70152820785,
+            34225.213801957034,
+            0
+          ]
+        ],
+        "846B": [
+          [
+            84893.70152820693,
+            23525.213801956088,
+            0
+          ],
+          [
+            97773.70152820788,
+            23525.213801956088,
+            0
+          ],
+          [
+            84893.70152820693,
+            25525.213801956088,
+            0
+          ],
+          [
+            85643.701528206,
+            25525.213801956088,
+            0
+          ],
+          [
+            88043.70152820597,
+            25525.213801956088,
+            0
+          ],
+          [
+            89273.70152820786,
+            25525.213801956088,
+            0
+          ],
+          [
+            90223.70152820784,
+            25525.213801956088,
+            0
+          ],
+          [
+            92323.70152820786,
+            25525.213801956088,
+            0
+          ],
+          [
+            93273.70152820786,
+            25525.213801956088,
+            0
+          ],
+          [
+            94123.70152820737,
+            25525.213801956088,
+            0
+          ],
+          [
+            96523.70152820737,
+            25525.213801956088,
+            0
+          ],
+          [
+            97653.70152820786,
+            25525.213801956088,
+            0
+          ],
+          [
+            97773.70152820788,
+            25525.213801956088,
+            0
+          ],
+          [
+            85268.70152820647,
+            23765.213801956088,
+            0
+          ],
+          [
+            86843.70152820599,
+            23765.213801956088,
+            0
+          ],
+          [
+            88658.70152820692,
+            23765.213801956088,
+            0
+          ],
+          [
+            89748.70152820785,
+            23765.213801956088,
+            0
+          ],
+          [
+            91273.70152820785,
+            23765.213801956088,
+            0
+          ],
+          [
+            92798.70152820786,
+            23765.213801956088,
+            0
+          ],
+          [
+            93698.70152820762,
+            23765.213801956088,
+            0
+          ],
+          [
+            95323.70152820737,
+            23765.213801956088,
+            0
+          ],
+          [
+            97088.70152820762,
+            23765.213801956088,
+            0
+          ],
+          [
+            98363.7015282074,
+            23765.213801956088,
+            0
+          ],
+          [
+            84893.70152820693,
+            27525.213801956088,
+            0
+          ],
+          [
+            91333.7015282074,
+            27525.213801956088,
+            0
+          ],
+          [
+            97773.70152820788,
+            27525.213801956088,
+            0
+          ]
+        ],
+        "8472": [
+          [
+            76333.70152820693,
+            30205.213801956095,
+            0
+          ],
+          [
+            76333.70152820693,
+            32105.213801956197,
+            0
+          ],
+          [
+            78333.70152820693,
+            30205.213801956095,
+            0
+          ],
+          [
+            78333.70152820693,
+            30505.2138020015,
+            0
+          ],
+          [
+            78333.70152820693,
+            31205.213802001494,
+            0
+          ],
+          [
+            78333.70152820693,
+            32105.213801956197,
+            0
+          ],
+          [
+            76093.70152820693,
+            30355.213801978796,
+            0
+          ],
+          [
+            76543.70152820693,
+            30855.213802001497,
+            0
+          ],
+          [
+            76093.70152820693,
+            31655.213801978847,
+            0
+          ],
+          [
+            80333.70152820693,
+            30205.213801956095,
+            0
+          ],
+          [
+            80333.70152820693,
+            31155.213801956146,
+            0
+          ],
+          [
+            80333.70152820693,
+            32105.213801956197,
+            0
+          ]
+        ],
+        "8475": [
+          [
+            85013.70152820693,
+            33575.21380195621,
+            0
+          ],
+          [
+            89153.70152820689,
+            33575.21380195621,
+            0
+          ],
+          [
+            85013.70152820693,
+            32105.213801956364,
+            0
+          ],
+          [
+            87793.70152820226,
+            32105.213801956364,
+            0
+          ],
+          [
+            88993.70152820226,
+            32105.213801956364,
+            0
+          ],
+          [
+            89153.70152820689,
+            32105.213801956364,
+            0
+          ],
+          [
+            86403.7015282046,
+            33815.21380195621,
+            0
+          ],
+          [
+            88393.70152820226,
+            33815.21380195621,
+            0
+          ],
+          [
+            88603.70152820226,
+            35015.21380195621,
+            0
+          ],
+          [
+            85013.70152820693,
+            30105.213801956364,
+            0
+          ],
+          [
+            87083.7015282069,
+            30105.213801956364,
+            0
+          ],
+          [
+            89153.70152820689,
+            30105.213801956364,
+            0
+          ]
+        ],
+        "8478": [
+          [
+            85013.7015282074,
+            30975.213801956095,
+            0
+          ],
+          [
+            89153.70152820741,
+            30975.213801956095,
+            0
+          ],
+          [
+            85013.7015282074,
+            30205.213801956354,
+            0
+          ],
+          [
+            88153.70152816131,
+            30205.213801956354,
+            0
+          ],
+          [
+            89053.70152816133,
+            30205.213801956354,
+            0
+          ],
+          [
+            89153.70152820741,
+            30205.213801956354,
+            0
+          ],
+          [
+            86783.70152818435,
+            31215.213801956095,
+            0
+          ],
+          [
+            88603.70152816133,
+            31215.213801956095,
+            0
+          ],
+          [
+            89903.70152818436,
+            31215.213801956095,
+            0
+          ],
+          [
+            85013.7015282074,
+            28205.213801956354,
+            0
+          ],
+          [
+            87083.7015282074,
+            28205.213801956354,
+            0
+          ],
+          [
+            89153.70152820741,
+            28205.213801956354,
+            0
+          ]
+        ],
+        "847B": [
+          [
+            93393.70152820693,
+            30975.213801956677,
+            0
+          ],
+          [
+            94613.70152820786,
+            30975.213801956677,
+            0
+          ],
+          [
+            93393.70152820693,
+            30205.213801956696,
+            0
+          ],
+          [
+            93493.70152804488,
+            30205.213801956696,
+            0
+          ],
+          [
+            94393.70152804488,
+            30205.213801956696,
+            0
+          ],
+          [
+            94613.70152820786,
+            30205.213801956696,
+            0
+          ],
+          [
+            93443.70152812591,
+            31215.213801956677,
+            0
+          ],
+          [
+            94143.70152804488,
+            31215.21380195668,
+            0
+          ],
+          [
+            92653.70152820693,
+            31215.213801956677,
+            0
+          ],
+          [
+            93393.70152820693,
+            28205.213801956696,
+            0
+          ],
+          [
+            94003.7015282074,
+            28205.213801956696,
+            0
+          ],
+          [
+            94613.70152820786,
+            28205.213801956696,
+            0
+          ]
+        ],
+        "847E": [
+          [
+            89393.70152820693,
+            32875.213801956445,
+            0
+          ],
+          [
+            93153.70152820689,
+            32875.213801956445,
+            0
+          ],
+          [
+            89393.70152820693,
+            32105.213801956612,
+            0
+          ],
+          [
+            92153.70152836895,
+            32105.213801956612,
+            0
+          ],
+          [
+            93053.70152836898,
+            32105.213801956612,
+            0
+          ],
+          [
+            93153.70152820688,
+            32105.213801956612,
+            0
+          ],
+          [
+            90773.70152828794,
+            33115.213801956445,
+            0
+          ],
+          [
+            92603.70152836897,
+            33115.213801956445,
+            0
+          ],
+          [
+            93103.70152828796,
+            33565.213801956445,
+            0
+          ],
+          [
+            89393.70152820693,
+            30105.213801956612,
+            0
+          ],
+          [
+            91273.7015282069,
+            30105.213801956612,
+            0
+          ],
+          [
+            93153.70152820689,
+            30105.213801956612,
+            0
+          ]
+        ],
+        "8481": [
+          [
+            85663.70152820693,
+            32225.21380195621,
+            0
+          ],
+          [
+            85663.70152820693,
+            35985.213801956095,
+            0
+          ],
+          [
+            84893.70152820693,
+            32225.21380195621,
+            0
+          ],
+          [
+            84893.70152820693,
+            32345.213801490783,
+            0
+          ],
+          [
+            84893.70152820693,
+            33245.21380149078,
+            0
+          ],
+          [
+            84893.70152820693,
+            35985.213801956095,
+            0
+          ],
+          [
+            83700,
+            32285.213801723497,
+            0
+          ],
+          [
+            85903.70152820693,
+            32995.21380149078,
+            0
+          ],
+          [
+            85423.70152820693,
+            34615.21380172344,
+            0
+          ],
+          [
+            82893.70152820693,
+            32225.21380195621,
+            0
+          ],
+          [
+            82893.70152820693,
+            34105.21380195615,
+            0
+          ],
+          [
+            82893.70152820693,
+            35985.213801956095,
+            0
+          ]
+        ],
+        "8484": [
+          [
+            93393.70152819855,
+            32875.21380195808,
+            0
+          ],
+          [
+            94613.70152820792,
+            32875.21380195808,
+            0
+          ],
+          [
+            93393.70152819855,
+            32105.21380196096,
+            0
+          ],
+          [
+            93493.7015280365,
+            32105.21380196096,
+            0
+          ],
+          [
+            94393.7015280365,
+            32105.21380196096,
+            0
+          ],
+          [
+            94613.70152820792,
+            32105.21380196096,
+            0
+          ],
+          [
+            93443.70152811753,
+            33115.21380195808,
+            0
+          ],
+          [
+            94143.7015280365,
+            33115.213801958074,
+            0
+          ],
+          [
+            94503.70152812218,
+            33565.213801958074,
+            0
+          ],
+          [
+            93393.70152819855,
+            30105.21380196096,
+            0
+          ],
+          [
+            94003.70152820324,
+            30105.21380196096,
+            0
+          ],
+          [
+            94613.70152820792,
+            30105.21380196096,
+            0
+          ]
+        ],
+        "8489": [
+          [
+            99773.70152820788,
+            30205.213801957027,
+            0
+          ],
+          [
+            99773.70152820788,
+            32105.213802015467,
+            0
+          ],
+          [
+            97773.70152820788,
+            30205.213801957027,
+            0
+          ],
+          [
+            97773.70152820788,
+            30525.213801959355,
+            0
+          ],
+          [
+            97773.70152820788,
+            31725.213801959355,
+            0
+          ],
+          [
+            97773.70152820788,
+            32105.213802015467,
+            0
+          ],
+          [
+            99533.70152820788,
+            30365.21380195819,
+            0
+          ],
+          [
+            99533.70152820788,
+            31125.213801959355,
+            0
+          ],
+          [
+            99533.70152820788,
+            31915.21380198741,
+            0
+          ],
+          [
+            95773.70152820788,
+            30205.213801957027,
+            0
+          ],
+          [
+            95773.70152820788,
+            31155.213801986247,
+            0
+          ],
+          [
+            95773.70152820788,
+            32105.213802015467,
+            0
+          ]
+        ],
+        "848A": [
+          [
+            78453.70152820693,
+            23525.213801956088,
+            0
+          ],
+          [
+            80853.70152820693,
+            23525.213801956088,
+            0
+          ],
+          [
+            78453.70152820693,
+            25525.213801956088,
+            0
+          ],
+          [
+            78693.70152820693,
+            25525.213801956088,
+            0
+          ],
+          [
+            79593.70152820693,
+            25525.213801956088,
+            0
+          ],
+          [
+            80853.70152820693,
+            25525.213801956088,
+            0
+          ],
+          [
+            78573.70152820693,
+            23765.213801956088,
+            0
+          ],
+          [
+            79143.70152820693,
+            23765.213801956088,
+            0
+          ],
+          [
+            80223.70152820693,
+            23765.213801956088,
+            0
+          ],
+          [
+            78453.70152820693,
+            27525.213801956088,
+            0
+          ],
+          [
+            79653.70152820693,
+            27525.213801956088,
+            0
+          ],
+          [
+            80853.70152820693,
+            27525.213801956088,
+            0
+          ]
+        ],
+        "848E": [
+          [
+            83423.70152820693,
+            33225.213801956095,
+            0
+          ],
+          [
+            83423.70152820693,
+            35985.213801955986,
+            0
+          ],
+          [
+            82653.70152820693,
+            33225.213801956095,
+            0
+          ],
+          [
+            82653.70152820693,
+            34025.213801956095,
+            0
+          ],
+          [
+            82653.70152820693,
+            35985.213801955986,
+            0
+          ],
+          [
+            83683.70152820693,
+            33625.213801956095,
+            0
+          ],
+          [
+            83183.70152820693,
+            35005.21380195604,
+            0
+          ],
+          [
+            80653.70152820693,
+            33225.213801956095,
+            0
+          ],
+          [
+            80653.70152820693,
+            34605.21380195604,
+            0
+          ],
+          [
+            80653.70152820693,
+            35985.213801955986,
+            0
+          ]
+        ],
+        "8491": [
+          [
+            76333.70152820693,
+            33105.21380195598,
+            0
+          ],
+          [
+            76333.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            78333.70152820693,
+            33105.21380195598,
+            0
+          ],
+          [
+            78333.70152820693,
+            34355.21380195598,
+            0
+          ],
+          [
+            78333.70152820693,
+            35555.21380195598,
+            0
+          ],
+          [
+            78333.70152820693,
+            36105.21380195597,
+            0
+          ],
+          [
+            78333.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            76093.70152820693,
+            33730.21380195598,
+            0
+          ],
+          [
+            76093.70152820693,
+            34955.21380195598,
+            0
+          ],
+          [
+            76093.70152820693,
+            35830.21380195598,
+            0
+          ],
+          [
+            76093.70152820693,
+            36815.2138019565,
+            0
+          ],
+          [
+            80333.70152820693,
+            33105.21380195598,
+            0
+          ],
+          [
+            80333.70152820693,
+            34665.2138019565,
+            0
+          ],
+          [
+            80333.70152820693,
+            36225.213801957034,
+            0
+          ]
+        ],
+        "8494": [
+          [
+            80853.70152820693,
+            38225.213801957034,
+            0
+          ],
+          [
+            82653.70152820693,
+            38225.213801957034,
+            0
+          ],
+          [
+            80853.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            81153.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            82353.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            82653.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            81003.70152820693,
+            38465.213801957034,
+            0
+          ],
+          [
+            81753.70152820693,
+            38465.213801957034,
+            0
+          ],
+          [
+            82503.70152820693,
+            38465.213801957034,
+            0
+          ],
+          [
+            80853.70152820693,
+            34225.213801957034,
+            0
+          ],
+          [
+            81753.70152820693,
+            34225.213801957034,
+            0
+          ],
+          [
+            82653.70152820693,
+            34225.213801957034,
+            0
+          ]
+        ],
+        "8495": [
+          [
+            78333.70152820693,
+            23525.213801956088,
+            0
+          ],
+          [
+            84893.70152820696,
+            23525.213801956088,
+            0
+          ],
+          [
+            78333.70152820693,
+            25525.213801956088,
+            0
+          ],
+          [
+            84893.70152820696,
+            25525.213801956088,
+            0
+          ],
+          [
+            81613.70152820695,
+            23765.213801956088,
+            0
+          ],
+          [
+            78333.70152820693,
+            27525.213801956088,
+            0
+          ],
+          [
+            81613.70152820695,
+            27525.213801956088,
+            0
+          ],
+          [
+            84893.70152820696,
+            27525.213801956088,
+            0
+          ]
+        ],
+        "8497": [
+          [
+            78333.70152820693,
+            38225.213801957034,
+            0
+          ],
+          [
+            78453.70152820693,
+            38225.213801957034,
+            0
+          ],
+          [
+            78333.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            78453.70152820693,
+            36225.213801957034,
+            0
+          ],
+          [
+            77743.70152820693,
+            38465.213801957034,
+            0
+          ],
+          [
+            78333.70152820693,
+            34225.213801957034,
+            0
+          ],
+          [
+            78393.70152820693,
+            34225.213801957034,
+            0
+          ],
+          [
+            78453.70152820693,
+            34225.213801957034,
+            0
+          ]
+        ],
+        "8499": [
+          [
+            76333.70152820693,
+            25525.213801956088,
+            0
+          ],
+          [
+            76333.70152820693,
+            25645.213801956324,
+            0
+          ],
+          [
+            78333.70152820693,
+            25525.213801956088,
+            0
+          ],
+          [
+            78333.70152820693,
+            25645.213801956324,
+            0
+          ],
+          [
+            76093.70152820693,
+            24935.213801956208,
+            0
+          ],
+          [
+            80333.70152820693,
+            25525.213801956088,
+            0
+          ],
+          [
+            80333.70152820693,
+            25585.213801956204,
+            0
+          ],
+          [
+            80333.70152820693,
+            25645.213801956324,
+            0
+          ]
+        ],
+        "849B": [
+          [
+            99773.70152820788,
+            25525.213801956088,
+            0
+          ],
+          [
+            99773.70152820788,
+            25645.213801956324,
+            0
+          ],
+          [
+            97773.70152820788,
+            25525.213801956088,
+            0
+          ],
+          [
+            97773.70152820788,
+            25645.213801956324,
+            0
+          ],
+          [
+            99533.70152820788,
+            24935.213801956208,
+            0
+          ],
+          [
+            95773.70152820788,
+            25525.213801956088,
+            0
+          ],
+          [
+            95773.70152820788,
+            25585.213801956204,
+            0
+          ],
+          [
+            95773.70152820788,
+            25645.213801956324,
+            0
+          ]
+        ],
+        "849C": [
+          [
+            99773.70152820788,
+            36105.21380195598,
+            0
+          ],
+          [
+            99773.70152820788,
+            36225.213801957034,
+            0
+          ],
+          [
+            97773.70152820788,
+            36105.21380195598,
+            0
+          ],
+          [
+            97773.70152820788,
+            36225.213801957034,
+            0
+          ],
+          [
+            99533.70152820788,
+            36815.2138019565,
+            0
+          ],
+          [
+            95773.70152820788,
+            36105.21380195598,
+            0
+          ],
+          [
+            95773.70152820788,
+            36165.2138019565,
+            0
+          ],
+          [
+            95773.70152820788,
+            36225.213801957034,
+            0
+          ]
+        ]
+      },
+      "sourcePreview": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161107-floor2\\stage2-preview-native.json",
+      "captionWitness": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层_生成记录_9752_499508390\\过程\\caption\\door-caption-clearance.json",
+      "masks": [
+        {
+          "caption": "84A0",
+          "opening": "801A",
+          "group": "BCP_DOOR_LABEL_F2_801A",
+          "min": [
+            90819.05867106501,
+            25825.213801956677,
+            0
+          ],
+          "max": [
+            91728.34438535072,
+            26245.213801956677,
+            0
+          ],
+          "scaleX": 0.04677395649617623,
+          "scaleY": 0.42
+        },
+        {
+          "caption": "84A4",
+          "opening": "8025",
+          "group": "BCP_DOOR_LABEL_F2_8025",
+          "min": [
+            93428.70152804488,
+            30385.213801956794,
+            0
+          ],
+          "max": [
+            94458.70152804488,
+            30805.213801956794,
+            0
+          ],
+          "scaleX": 0.052983539094647626,
+          "scaleY": 0.42
+        },
+        {
+          "caption": "84A5",
+          "opening": "8078",
+          "group": "BCP_DOOR_LABEL_F2_8078",
+          "min": [
+            88088.70152816131,
+            30385.213801956445,
+            0
+          ],
+          "max": [
+            89118.70152816131,
+            30805.213801956445,
+            0
+          ],
+          "scaleX": 0.052983539094647626,
+          "scaleY": 0.42
+        },
+        {
+          "caption": "84A7",
+          "opening": "8103",
+          "group": "BCP_DOOR_LABEL_F2_8103",
+          "min": [
+            92088.70152836898,
+            31505.213801956445,
+            0
+          ],
+          "max": [
+            93118.70152836898,
+            31925.213801956445,
+            0
+          ],
+          "scaleX": 0.052983539094647626,
+          "scaleY": 0.42
+        },
+        {
+          "caption": "84A8",
+          "opening": "8147",
+          "group": "BCP_DOOR_LABEL_F2_8147",
+          "min": [
+            87897.27295677371,
+            32285.213801956445,
+            0
+          ],
+          "max": [
+            88890.13009963086,
+            32705.213801956445,
+            0
+          ],
+          "scaleX": 0.05107289829511814,
+          "scaleY": 0.42
+        },
+        {
+          "caption": "84AA",
+          "opening": "81C1",
+          "group": "BCP_DOOR_LABEL_F2_81C1",
+          "min": [
+            85073.70152820693,
+            32280.213801490783,
+            0
+          ],
+          "max": [
+            85493.70152820693,
+            33310.21380149078,
+            0
+          ],
+          "scaleX": 0.021604938271603886,
+          "scaleY": 1.03
+        },
+        {
+          "caption": "84AB",
+          "opening": "81EA",
+          "group": "BCP_DOOR_LABEL_F2_81EA",
+          "min": [
+            93428.7015280365,
+            31505.213801958074,
+            0
+          ],
+          "max": [
+            94458.7015280365,
+            31925.213801958074,
+            0
+          ],
+          "scaleX": 0.052983539094647626,
+          "scaleY": 0.42
+        },
+        {
+          "caption": "84AD",
+          "opening": "82B0",
+          "group": "BCP_DOOR_LABEL_F2_82B0",
+          "min": [
+            78628.70152820693,
+            32505.21380195598,
+            0
+          ],
+          "max": [
+            79658.70152820693,
+            32925.21380195598,
+            0
+          ],
+          "scaleX": 0.052983539094647626,
+          "scaleY": 0.42
+        },
+        {
+          "caption": "84AE",
+          "opening": "82B2",
+          "group": "BCP_DOOR_LABEL_F2_82B2",
+          "min": [
+            82833.70152820693,
+            33110.213801956095,
+            0
+          ],
+          "max": [
+            83253.70152820693,
+            34140.213801956095,
+            0
+          ],
+          "scaleX": 0.021604938271603886,
+          "scaleY": 1.03
+        }
+      ],
+      "maskTemplate": "BCP_DOOR_NUMBER_CLEARANCE_F2",
+      "templateSourceHandle": "84B1",
+      "visibleDimensionHandles": [
+        "8442",
+        "844A",
+        "8452",
+        "8458",
+        "845C",
+        "845D",
+        "845E",
+        "845F",
+        "8460",
+        "846B",
+        "8472",
+        "8475",
+        "8478",
+        "847B",
+        "847E",
+        "8481",
+        "8484",
+        "8489",
+        "848A",
+        "848E",
+        "8491",
+        "8494",
+        "8495",
+        "8497",
+        "8499",
+        "849B",
+        "849C"
+      ]
+    }
+  ],
+  "scope": "Ordinary AutoCAD private-desktop drawing batch, native STRETCH/MOVE; no COM/CUA/TCH business command, no C++ edits",
+  "additionalDimensionPlan": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门号沿洞口与尺寸避让_20261101\\legacy-two-digits-final.json",
+    "SHA256": "68A44C209BDA67D21081380973E256E38B72991400CB58D751B95490A8491714",
+    "data": {
+      "scope": "Read-only v131 actual grips, SDK root obstacles plus native-PDF furniture black strokes and white fills. New candidate data only; no CAD action, plugin/source/frozen plans unchanged.",
+      "units": "model mm",
+      "sourcePreview": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-door-clearance-20261101-172401-floor1\\stage2-preview-native.json",
+      "sourcePDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-door-clearance-20261101-172401-floor1\\stage2-A2-1-100.pdf",
+      "furnitureStrokeSegments": 15924,
+      "furnitureWhiteFilledSubpaths": 309,
+      "moves": [
+        {
+          "floor": 1,
+          "handle": "846C",
+          "segment": 0,
+          "gripIndex": 6,
+          "value": 5320.000000039348,
+          "before": [
+            39001.70152820693,
+            28425.21380197577,
+            0
+          ],
+          "target": [
+            39801.70152820693,
+            28725.21380197577,
+            0
+          ],
+          "delta": [
+            800,
+            300,
+            0
+          ],
+          "fontBoundsAfter": [
+            39642.70152820693,
+            28265.880468642437,
+            39960.70152820693,
+            29184.547135309105
+          ],
+          "hardContacts": [],
+          "actualFurnitureContacts": [],
+          "illustrativeStraightLeaderTextContacts": [],
+          "distance": 854.4003745317531
+        },
+        {
+          "floor": 1,
+          "handle": "847B",
+          "segment": 1,
+          "gripIndex": 7,
+          "value": 2200,
+          "before": [
+            34131.70152820693,
+            29955.21380195598,
+            0
+          ],
+          "target": [
+            31381.701528206933,
+            29655.21380195598,
+            0
+          ],
+          "delta": [
+            -2750,
+            -300,
+            0
+          ],
+          "fontBoundsAfter": [
+            30922.368194873598,
+            29496.21380195598,
+            31841.03486154026,
+            29814.21380195598
+          ],
+          "hardContacts": [],
+          "actualFurnitureContacts": [],
+          "illustrativeStraightLeaderTextContacts": [],
+          "distance": 2766.315238724611
+        }
+      ],
+      "alternates": [
+        {
+          "handle": "846C",
+          "candidates": [
+            {
+              "floor": 1,
+              "handle": "846C",
+              "segment": 0,
+              "gripIndex": 6,
+              "value": 5320.000000039348,
+              "before": [
+                39001.70152820693,
+                28425.21380197577,
+                0
+              ],
+              "target": [
+                39801.70152820693,
+                28775.21380197577,
+                0
+              ],
+              "delta": [
+                800,
+                350,
+                0
+              ],
+              "fontBoundsAfter": [
+                39642.70152820693,
+                28315.880468642437,
+                39960.70152820693,
+                29234.547135309105
+              ],
+              "hardContacts": [],
+              "actualFurnitureContacts": [],
+              "illustrativeStraightLeaderTextContacts": [],
+              "distance": 873.212459828649
+            },
+            {
+              "floor": 1,
+              "handle": "846C",
+              "segment": 0,
+              "gripIndex": 6,
+              "value": 5320.000000039348,
+              "before": [
+                39001.70152820693,
+                28425.21380197577,
+                0
+              ],
+              "target": [
+                39801.70152820693,
+                28825.21380197577,
+                0
+              ],
+              "delta": [
+                800,
+                400,
+                0
+              ],
+              "fontBoundsAfter": [
+                39642.70152820693,
+                28365.880468642437,
+                39960.70152820693,
+                29284.547135309105
+              ],
+              "hardContacts": [],
+              "actualFurnitureContacts": [],
+              "illustrativeStraightLeaderTextContacts": [],
+              "distance": 894.4271909999159
+            },
+            {
+              "floor": 1,
+              "handle": "846C",
+              "segment": 0,
+              "gripIndex": 6,
+              "value": 5320.000000039348,
+              "before": [
+                39001.70152820693,
+                28425.21380197577,
+                0
+              ],
+              "target": [
+                39851.70152820693,
+                28725.21380197577,
+                0
+              ],
+              "delta": [
+                850,
+                300,
+                0
+              ],
+              "fontBoundsAfter": [
+                39692.70152820693,
+                28265.880468642437,
+                40010.70152820693,
+                29184.547135309105
+              ],
+              "hardContacts": [],
+              "actualFurnitureContacts": [],
+              "illustrativeStraightLeaderTextContacts": [],
+              "distance": 901.3878188659974
+            },
+            {
+              "floor": 1,
+              "handle": "846C",
+              "segment": 0,
+              "gripIndex": 6,
+              "value": 5320.000000039348,
+              "before": [
+                39001.70152820693,
+                28425.21380197577,
+                0
+              ],
+              "target": [
+                39801.70152820693,
+                28875.21380197577,
+                0
+              ],
+              "delta": [
+                800,
+                450,
+                0
+              ],
+              "fontBoundsAfter": [
+                39642.70152820693,
+                28415.880468642437,
+                39960.70152820693,
+                29334.547135309105
+              ],
+              "hardContacts": [],
+              "actualFurnitureContacts": [],
+              "illustrativeStraightLeaderTextContacts": [],
+              "distance": 917.8779875342909
+            },
+            {
+              "floor": 1,
+              "handle": "846C",
+              "segment": 0,
+              "gripIndex": 6,
+              "value": 5320.000000039348,
+              "before": [
+                39001.70152820693,
+                28425.21380197577,
+                0
+              ],
+              "target": [
+                39851.70152820693,
+                28775.21380197577,
+                0
+              ],
+              "delta": [
+                850,
+                350,
+                0
+              ],
+              "fontBoundsAfter": [
+                39692.70152820693,
+                28315.880468642437,
+                40010.70152820693,
+                29234.547135309105
+              ],
+              "hardContacts": [],
+              "actualFurnitureContacts": [],
+              "illustrativeStraightLeaderTextContacts": [],
+              "distance": 919.2388155425118
+            }
+          ]
+        },
+        {
+          "handle": "847B",
+          "candidates": [
+            {
+              "floor": 1,
+              "handle": "847B",
+              "segment": 1,
+              "gripIndex": 7,
+              "value": 2200,
+              "before": [
+                34131.70152820693,
+                29955.21380195598,
+                0
+              ],
+              "target": [
+                31381.701528206933,
+                29605.21380195598,
+                0
+              ],
+              "delta": [
+                -2750,
+                -350,
+                0
+              ],
+              "fontBoundsAfter": [
+                30922.368194873598,
+                29446.21380195598,
+                31841.03486154026,
+                29764.21380195598
+              ],
+              "hardContacts": [],
+              "actualFurnitureContacts": [],
+              "illustrativeStraightLeaderTextContacts": [],
+              "distance": 2772.183255125822
+            },
+            {
+              "floor": 1,
+              "handle": "847B",
+              "segment": 1,
+              "gripIndex": 7,
+              "value": 2200,
+              "before": [
+                34131.70152820693,
+                29955.21380195598,
+                0
+              ],
+              "target": [
+                31381.701528206933,
+                29555.21380195598,
+                0
+              ],
+              "delta": [
+                -2750,
+                -400,
+                0
+              ],
+              "fontBoundsAfter": [
+                30922.368194873598,
+                29396.21380195598,
+                31841.03486154026,
+                29714.21380195598
+              ],
+              "hardContacts": [],
+              "actualFurnitureContacts": [],
+              "illustrativeStraightLeaderTextContacts": [],
+              "distance": 2778.938646318051
+            },
+            {
+              "floor": 1,
+              "handle": "847B",
+              "segment": 1,
+              "gripIndex": 7,
+              "value": 2200,
+              "before": [
+                34131.70152820693,
+                29955.21380195598,
+                0
+              ],
+              "target": [
+                31381.701528206933,
+                29505.21380195598,
+                0
+              ],
+              "delta": [
+                -2750,
+                -450,
+                0
+              ],
+              "fontBoundsAfter": [
+                30922.368194873598,
+                29346.21380195598,
+                31841.03486154026,
+                29664.21380195598
+              ],
+              "hardContacts": [],
+              "actualFurnitureContacts": [],
+              "illustrativeStraightLeaderTextContacts": [],
+              "distance": 2786.574958618555
+            },
+            {
+              "floor": 1,
+              "handle": "847B",
+              "segment": 1,
+              "gripIndex": 7,
+              "value": 2200,
+              "before": [
+                34131.70152820693,
+                29955.21380195598,
+                0
+              ],
+              "target": [
+                31381.701528206933,
+                29455.21380195598,
+                0
+              ],
+              "delta": [
+                -2750,
+                -500,
+                0
+              ],
+              "fontBoundsAfter": [
+                30922.368194873598,
+                29296.21380195598,
+                31841.03486154026,
+                29614.21380195598
+              ],
+              "hardContacts": [],
+              "actualFurnitureContacts": [],
+              "illustrativeStraightLeaderTextContacts": [],
+              "distance": 2795.084971874737
+            },
+            {
+              "floor": 1,
+              "handle": "847B",
+              "segment": 1,
+              "gripIndex": 7,
+              "value": 2200,
+              "before": [
+                34131.70152820693,
+                29955.21380195598,
+                0
+              ],
+              "target": [
+                31381.701528206933,
+                29405.21380195598,
+                0
+              ],
+              "delta": [
+                -2750,
+                -550,
+                0
+              ],
+              "fontBoundsAfter": [
+                30922.368194873598,
+                29246.21380195598,
+                31841.03486154026,
+                29564.21380195598
+              ],
+              "hardContacts": [],
+              "actualFurnitureContacts": [],
+              "illustrativeStraightLeaderTextContacts": [],
+              "distance": 2804.460732476032
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "PDF paths rounded to internal grid about4.23mm; furniture clearance includes actual stroke halfwidth plus10mm. Cubic curves tessellated in24 parts.",
+        "TCH automatic leader shape after moving text is not predicted. Native rendering mandatory.",
+        "Trial40/60/80mm obstacle margins are existing sample choices, not user dimension standard."
+      ],
+      "frontDimensions": [
+        {
+          "floor": 1,
+          "handle": "847B",
+          "reason": "New 2200 font rectangle lies inside existing axis gap Wipeout 84BB. Bring only this dimension ahead, then new door clearance masks and captions above it; no axis draw order change."
+        }
+      ]
+    }
+  },
+  "bootSHA256": "FB5D289E08B11FC3260130D60DB604D88074387D57808DBEDCA199FA93103BAF"
+}

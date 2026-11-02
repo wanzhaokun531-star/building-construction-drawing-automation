@@ -1,0 +1,24 @@
+{
+  "contract": "bcp.perimeter-axes.red.v1",
+  "oldNativeRejected": [
+    {
+      "case": "--baseline-v22",
+      "rejected": true,
+      "reason": "RuntimeError: unsupported outward axis label: bottom 3"
+    },
+    {
+      "case": "--baseline-v23",
+      "rejected": true,
+      "reason": "RuntimeError: second row does not reach exterior faces: right"
+    }
+  ],
+  "newCoreTestsInitiallyFailed": "missing DimensionPointRole/exteriorDimensionStations API; compiler C2653/C3861",
+  "coreAfterImplementation": {
+    "checks": 78,
+    "failed": 0
+  },
+  "frozenFixtureAfterImplementation": {
+    "checks": 14,
+    "failed": 0
+  }
+}

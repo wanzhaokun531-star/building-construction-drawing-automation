@@ -1,0 +1,630 @@
+{
+  "contract": "bcp.bath-merge-and-dimension-layer-qa.v1",
+  "version": "v154",
+  "passed": true,
+  "pluginCodeChanged": false,
+  "floors": [
+    {
+      "floor": 1,
+      "control": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-154243\\bath-merge-floor-1\\control.dwg",
+      "SHA256": "3B8CC0BD633F8CB30C459F0720FD1F9C6AC10528B845F0CF74E7AE05A5A25A7D",
+      "previewJob": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-154408-519759-floor1",
+      "PDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-154408-519759-floor1\\stage2-A2-1-100.pdf",
+      "steps": [
+        {
+          "serial": "0b70c04870c24b2fa5a30556f2f85cc5",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-154243\\dispatch_0b70c04870c24b2fa5a30556f2f85cc5.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "9be092c1257e46e68cc9566febe5b48e",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-154243",
+            "processId": 33492,
+            "desktop": "CodexS1_9be092c1257e46e68cc9566febe5b48e",
+            "inputDesktop": "Default",
+            "serial": "0b70c04870c24b2fa5a30556f2f85cc5",
+            "command": "S1OPENPROBECONTROL",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-154408-519759-floor1",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-154408-519759-floor1\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "effcd8b112ee4286ba04c2b90be9a5db",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-154243\\dispatch_effcd8b112ee4286ba04c2b90be9a5db.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "9be092c1257e46e68cc9566febe5b48e",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-154243",
+            "processId": 33492,
+            "desktop": "CodexS1_9be092c1257e46e68cc9566febe5b48e",
+            "inputDesktop": "Default",
+            "serial": "effcd8b112ee4286ba04c2b90be9a5db",
+            "command": "S1PHASE2EXECUTE",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-154408-519759-floor1",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-154408-519759-floor1\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "b87987ac919a459a85c79cd80bc380de",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-154243\\dispatch_b87987ac919a459a85c79cd80bc380de.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "9be092c1257e46e68cc9566febe5b48e",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-154243",
+            "processId": 33492,
+            "desktop": "CodexS1_9be092c1257e46e68cc9566febe5b48e",
+            "inputDesktop": "Default",
+            "serial": "b87987ac919a459a85c79cd80bc380de",
+            "command": "S1PHASE2PREVIEW",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-154408-519759-floor1",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-154408-519759-floor1\\control.dwg",
+            "error": null
+          }
+        }
+      ],
+      "sdkRead": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门窗内部编号_20261102\\sdk-read-v154-floor1.json",
+      "mergedAreaM2": 5.197600000104484,
+      "display": "5.20m²",
+      "functionalRoomAreaGroups": 9,
+      "removedDuplicateAreaMembers": [
+        "8633",
+        "86B5"
+      ],
+      "retainedMembers": [
+        "8635",
+        "86B7"
+      ],
+      "movedName": "8242",
+      "areaBelowNameGap": 50,
+      "nativeOpeningsAllFieldsAndGripsUnchanged": true,
+      "noOpeningInAnyCADGroup": true,
+      "wholeTCHDimensions": 25,
+      "dimensionsToPUB_DIM": 17,
+      "otherDimensionsUnchanged": true,
+      "allOtherRootGeometryAndAreaTextUnchanged": true,
+      "modelRoots": 258,
+      "groups": {
+        "BCP_AREA_F1_R01": [
+          [
+            "8623",
+            "TEXT"
+          ],
+          [
+            "86A5",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R02": [
+          [
+            "8625",
+            "TEXT"
+          ],
+          [
+            "86A7",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R03": [
+          [
+            "8627",
+            "TEXT"
+          ],
+          [
+            "86A9",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R04": [
+          [
+            "8629",
+            "TEXT"
+          ],
+          [
+            "86AB",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R05": [
+          [
+            "862B",
+            "TEXT"
+          ],
+          [
+            "86AD",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R06": [
+          [
+            "862D",
+            "TEXT"
+          ],
+          [
+            "86AF",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R07": [
+          [
+            "862F",
+            "TEXT"
+          ],
+          [
+            "86B1",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R08": [
+          [
+            "8631",
+            "TEXT"
+          ],
+          [
+            "86B3",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R10": [
+          [
+            "8635",
+            "TEXT"
+          ],
+          [
+            "86B7",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_TOTAL": [
+          [
+            "8639",
+            "TEXT"
+          ],
+          [
+            "86B9",
+            "TEXT"
+          ]
+        ],
+        "BCP_GRID_H_A": [
+          [
+            "8431",
+            "LINE"
+          ],
+          [
+            "8432",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_H_B": [
+          [
+            "8434",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_H_C": [
+          [
+            "8436",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_H_D": [
+          [
+            "8438",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_H_E": [
+          [
+            "843A",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_H_F": [
+          [
+            "843C",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_H_G": [
+          [
+            "843E",
+            "LINE"
+          ],
+          [
+            "843F",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_1": [
+          [
+            "841B",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_2": [
+          [
+            "8420",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_3": [
+          [
+            "8422",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_4": [
+          [
+            "8424",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_5": [
+          [
+            "8426",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_6": [
+          [
+            "8428",
+            "LINE"
+          ],
+          [
+            "8429",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_7": [
+          [
+            "842B",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_8": [
+          [
+            "842D",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_9": [
+          [
+            "842F",
+            "LINE"
+          ]
+        ]
+      }
+    },
+    {
+      "floor": 2,
+      "control": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-154243\\bath-merge-floor-2\\control.dwg",
+      "SHA256": "DB1BA4F2175C276209CAF7054B2B46092245BD768DAAD18CCF5A1047C6AFC4B0",
+      "previewJob": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-154413-881658-floor2",
+      "PDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-154413-881658-floor2\\stage2-A2-1-100.pdf",
+      "steps": [
+        {
+          "serial": "8ad06d7831854176ad23e075ca917116",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-154243\\dispatch_8ad06d7831854176ad23e075ca917116.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "9be092c1257e46e68cc9566febe5b48e",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-154243",
+            "processId": 33492,
+            "desktop": "CodexS1_9be092c1257e46e68cc9566febe5b48e",
+            "inputDesktop": "Default",
+            "serial": "8ad06d7831854176ad23e075ca917116",
+            "command": "S1OPENPROBECONTROL",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-154413-881658-floor2",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-154413-881658-floor2\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "b3cc1ed356c44561b1ed594a93353d0a",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-154243\\dispatch_b3cc1ed356c44561b1ed594a93353d0a.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "9be092c1257e46e68cc9566febe5b48e",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-154243",
+            "processId": 33492,
+            "desktop": "CodexS1_9be092c1257e46e68cc9566febe5b48e",
+            "inputDesktop": "Default",
+            "serial": "b3cc1ed356c44561b1ed594a93353d0a",
+            "command": "S1PHASE2EXECUTE",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-154413-881658-floor2",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-154413-881658-floor2\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "2cfb5df6ca42444bbc889c46bbb485ed",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-154243\\dispatch_2cfb5df6ca42444bbc889c46bbb485ed.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "9be092c1257e46e68cc9566febe5b48e",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-154243",
+            "processId": 33492,
+            "desktop": "CodexS1_9be092c1257e46e68cc9566febe5b48e",
+            "inputDesktop": "Default",
+            "serial": "2cfb5df6ca42444bbc889c46bbb485ed",
+            "command": "S1PHASE2PREVIEW",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-154413-881658-floor2",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-154413-881658-floor2\\control.dwg",
+            "error": null
+          }
+        }
+      ],
+      "sdkRead": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门窗内部编号_20261102\\sdk-read-v154-floor2.json",
+      "mergedAreaM2": 5.19760000010526,
+      "display": "5.20m²",
+      "functionalRoomAreaGroups": 9,
+      "removedDuplicateAreaMembers": [
+        "8629",
+        "86AA"
+      ],
+      "retainedMembers": [
+        "862B",
+        "86AC"
+      ],
+      "movedName": "820F",
+      "areaBelowNameGap": 50,
+      "nativeOpeningsAllFieldsAndGripsUnchanged": true,
+      "noOpeningInAnyCADGroup": true,
+      "wholeTCHDimensions": 27,
+      "dimensionsToPUB_DIM": 19,
+      "otherDimensionsUnchanged": true,
+      "allOtherRootGeometryAndAreaTextUnchanged": true,
+      "modelRoots": 249,
+      "groups": {
+        "BCP_AREA_F2_R01": [
+          [
+            "8619",
+            "TEXT"
+          ],
+          [
+            "869A",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R02": [
+          [
+            "861B",
+            "TEXT"
+          ],
+          [
+            "869C",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R03": [
+          [
+            "861D",
+            "TEXT"
+          ],
+          [
+            "869E",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R04": [
+          [
+            "861F",
+            "TEXT"
+          ],
+          [
+            "86A0",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R05": [
+          [
+            "8621",
+            "TEXT"
+          ],
+          [
+            "86A2",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R06": [
+          [
+            "8623",
+            "TEXT"
+          ],
+          [
+            "86A4",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R07": [
+          [
+            "8625",
+            "TEXT"
+          ],
+          [
+            "86A6",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R08": [
+          [
+            "8627",
+            "TEXT"
+          ],
+          [
+            "86A8",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R10": [
+          [
+            "862B",
+            "TEXT"
+          ],
+          [
+            "86AC",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_TOTAL": [
+          [
+            "862E",
+            "TEXT"
+          ],
+          [
+            "86AE",
+            "TEXT"
+          ]
+        ],
+        "BCP_GRID_H_A": [
+          [
+            "8432",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_H_B": [
+          [
+            "8434",
+            "LINE"
+          ],
+          [
+            "8435",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_H_C": [
+          [
+            "8437",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_H_D": [
+          [
+            "8439",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_H_E": [
+          [
+            "843B",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_H_F": [
+          [
+            "843D",
+            "LINE"
+          ],
+          [
+            "843E",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_1": [
+          [
+            "841B",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_2": [
+          [
+            "8420",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_3": [
+          [
+            "8422",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_4": [
+          [
+            "8424",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_5": [
+          [
+            "8426",
+            "LINE"
+          ],
+          [
+            "8427",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_6": [
+          [
+            "8429",
+            "LINE"
+          ],
+          [
+            "842A",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_7": [
+          [
+            "842C",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_8": [
+          [
+            "842E",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_9": [
+          [
+            "8430",
+            "LINE"
+          ]
+        ]
+      }
+    }
+  ]
+}

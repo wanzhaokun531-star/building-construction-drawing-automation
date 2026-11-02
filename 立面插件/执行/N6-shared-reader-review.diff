@@ -1,0 +1,280 @@
+--- a/src/SceneReader.cpp
++++ b/src/SceneReader.cpp
+@@ -1,4 +1,5 @@
+ #include "SceneReader.h"
++#include "AnalysisReader.h"
+ #ifndef NOMINMAX
+ #define NOMINMAX
+ #endif
+@@ -174,42 +175,63 @@
+         auto* db=request.context.currentDatabase();
+         if(!db) return fail<SceneSnapshot>(diagnostic::staleDocument,"Document was destroyed, switched, or belongs to another context");
+         if(acDocManager->curDocument()->isReadOnly()) return fail<SceneSnapshot>("READ_ONLY_DOCUMENT","Current document is read-only");
+-        SceneSnapshot scene; scene.documentIdentity=request.context.documentIdentity(); scene.databaseIdentity=scene.documentIdentity+"/database";
+-        scene.revision=request.context.revision(); scene.units.insunits=static_cast<int>(db->insunits());
+-        scene.units.confirmedMmPerInputUnit=request.confirmedMmPerInputUnit;
+-        scene.resources=native_scene::readResources(*db);
+-        std::set<std::string> targets;
++        const auto revision=request.context.revision();
++        std::set<std::string> targets, roots;
+         for(const auto& key:request.targetHandles) targets.insert(native_scene::handle(native_scene::objectId(*db,key)));
+-        Read<AcDbBlockTable> table(db->blockTableId()); AcDbObjectId ms; check(table->getAt(ACDB_MODEL_SPACE,ms),"model space");
+-        Read<AcDbBlockTableRecord> space(ms); AcDbBlockTableRecordIterator* raw{}; check(space->newIterator(raw),"model iterator");
+-        std::unique_ptr<AcDbBlockTableRecordIterator> iterator(raw);
++        {
++            // This legacy write adapter still accepts only ordinary direct Line/Text
++            // roots. Only public type/Line endpoint getters run on source objects;
++            // all extents and font-dependent reads belong to the shared safe reader.
++            Read<AcDbBlockTable> table(db->blockTableId()); AcDbObjectId ms;
++            check(table->getAt(ACDB_MODEL_SPACE,ms),"model space");
++            Read<AcDbBlockTableRecord> space(ms); AcDbBlockTableRecordIterator* raw{};
++            check(space->newIterator(raw),"model iterator");
++            std::unique_ptr<AcDbBlockTableRecordIterator> iterator(raw);
++            for(;!iterator->done();iterator->step()) {
++                AcDbObjectId id; check(iterator->getEntityId(id),"entity id"); Read<AcDbEntity> e(id);
++                if(e->isA()==AcDbLine::desc()) {
++                    const auto* line=AcDbLine::cast(e.get());
++                    if(line->startPoint().z!=0.0 || line->endPoint().z!=0.0)
++                        return fail<SceneSnapshot>(diagnostic::unsupportedNativeWrite,"Only planar WCS Line snapshots are supported");
++                } else if(e->isA()!=AcDbText::desc())
++                    return fail<SceneSnapshot>(diagnostic::unsupportedNativeWrite,"Unsupported native entity prevents complete current-scene protection");
++                roots.insert(native_scene::handle(id));
++            }
++        }
++        for(const auto& target:targets) if(!roots.count(target))
++            return fail<SceneSnapshot>(diagnostic::outsideWriteScope,"Explicit target is not a current model-space root");
++        AnalysisReadOptions options; options.confirmedMmPerInputUnit=request.confirmedMmPerInputUnit;
++        auto analysis=readCurrentAnalysis(request.context,options);
++        // Result issues are native read failures. Recognition's missing title/plan
++        // issues are deliberately not write authorization prerequisites here.
++        if(!analysis.canCommit()) return {std::nullopt,std::move(analysis.issues)};
++        auto scene=std::move(analysis.value->scene);
++        if(scene.documentIdentity!=request.context.documentIdentity() ||
++            scene.databaseIdentity!=scene.documentIdentity+"/database" || scene.revision!=revision ||
++            db!=request.context.currentDatabase() || revision!=request.context.revision())
++            return fail<SceneSnapshot>(diagnostic::staleDocument,"Scene changed while reading");
++        // Recognition may classify a root by title proximity. Legacy write scope
++        // must instead derive every target exclusively from the caller's handles.
++        scene.targets.clear(); scene.preserved.clear();
+         std::set<std::string> found;
+-        for(;!iterator->done();iterator->step()) {
+-            AcDbObjectId id; check(iterator->getEntityId(id),"entity id"); Read<AcDbEntity> e(id);
+-            const auto h=native_scene::handle(id); const EntityKey key{scene.databaseIdentity,h,scene.revision};
+-            Primitive2 primitive; primitive.key=key; primitive.layer=native_scene::symbolName(e->layerId());
+-            Bounds2 bounds{};
+-            if(const auto* line=AcDbLine::cast(e.get())) {
+-                const auto a=line->startPoint(), b=line->endPoint();
+-                if(a.z!=0.0 || b.z!=0.0) return fail<SceneSnapshot>(diagnostic::unsupportedNativeWrite,"Only planar WCS Line snapshots are supported");
+-                primitive.kind=PrimitiveKind::line; primitive.start=Point2{a.x,a.y}; primitive.end=Point2{b.x,b.y}; primitive.topologyComplete=true;
+-                bounds={{(std::min)(a.x,b.x),(std::min)(a.y,b.y)},{(std::max)(a.x,b.x),(std::max)(a.y,b.y)}};
+-            } else if(const auto* text=AcDbText::cast(e.get())) {
+-                AcString content; check(text->textString(content),"text content"); const auto position=text->position();
+-                primitive.kind=PrimitiveKind::text; primitive.text=native_scene::utf8(content.kACharPtr());
+-                primitive.textPosition=Point2{position.x,position.y}; primitive.textHeight=text->height(); primitive.textRotation=text->rotation();
+-                primitive.textMirroredX=text->isMirroredInX()!=0; primitive.textMirroredY=text->isMirroredInY()!=0;
+-                AcDbExtents extents; check(text->getGeomExtents(extents),"text bounds");
+-                bounds={{extents.minPoint().x,extents.minPoint().y},{extents.maxPoint().x,extents.maxPoint().y}};
+-            } else return fail<SceneSnapshot>(diagnostic::unsupportedNativeWrite,"Unsupported native entity prevents complete current-scene protection");
+-            primitive.bounds=bounds; scene.primitives.push_back(std::move(primitive));
+-            SceneEntity entity{key,native_scene::symbolName(e->layerId()),bounds,""};
+-            if(targets.count(h)) { found.insert(h); scene.targets.push_back(std::move(entity)); }
++        for(const auto& primitive:scene.primitives) {
++            const auto& key=primitive.key;
++            if(key.databaseIdentity!=scene.databaseIdentity || key.revision!=scene.revision ||
++                !roots.count(key.handle) || !found.insert(key.handle).second ||
++                primitive.sourceRootHandle!=key.handle || primitive.instancePath!=key.handle ||
++                (primitive.kind!=PrimitiveKind::line && primitive.kind!=PrimitiveKind::text) ||
++                !primitive.topologyComplete || !primitive.bounds)
++                return fail<SceneSnapshot>(diagnostic::unsupportedNativeWrite,"Shared reader did not provide a complete direct ordinary Line/Text root");
++            const auto& b=*primitive.bounds;
++            if(!std::isfinite(b.minimum.x)||!std::isfinite(b.minimum.y)||!std::isfinite(b.maximum.x)||!std::isfinite(b.maximum.y)||
++                b.minimum.x>b.maximum.x||b.minimum.y>b.maximum.y)
++                return fail<SceneSnapshot>(diagnostic::unsupportedNativeWrite,"Shared reader returned unavailable or invalid bounds");
++            SceneEntity entity{key,primitive.layer,b,""};
++            if(targets.count(key.handle)) scene.targets.push_back(std::move(entity));
+             else scene.preserved.push_back(std::move(entity));
+         }
+-        if(found!=targets) return fail<SceneSnapshot>(diagnostic::outsideWriteScope,"Explicit target is not a current model-space root");
++        if(found!=roots) return fail<SceneSnapshot>(diagnostic::unsupportedNativeWrite,"Shared reader omitted a current model-space root");
+         for(auto& resource:scene.resources) resource.referencedByPreserved=!scene.preserved.empty();
+-        if(scene.revision!=request.context.revision()) return fail<SceneSnapshot>(diagnostic::staleDocument,"Scene changed while reading");
+         return {std::move(scene),{}};
+     } catch(const std::exception& ex) { return fail<SceneSnapshot>(diagnostic::unsupportedNativeWrite,ex.what()); }
+ }
+--- a/tests/native/inplace/NativeInPlaceDriver.cpp
++++ b/tests/native/inplace/NativeInPlaceDriver.cpp
+@@ -5,6 +5,8 @@
+ #include <functional>
+ #include <cmath>
+ #include <limits>
++#include <dbapserv.h>
++#include <dbidmap.h>
+ 
+ namespace {
+ using namespace bce;
+@@ -30,7 +32,7 @@
+     AcDbObjectId target, preserved, oldText, unsavedText;
+     std::unique_ptr<NativeSceneContext> context;
+     Phase phase{Phase::validated};
+-    std::vector<std::string> assertions, checkpoints, errors;
++    std::vector<std::string> assertions, checkpoints, errors, coldEvidence;
+     Audit baseline, after, rollbackAfter, cancelAfter, undoAfter;
+     std::vector<std::string> removedObjectEvidence;
+     std::vector<std::string> diskBefore, diskAfter;
+@@ -48,6 +50,7 @@
+         {"desktop", quote(c.config.desktop)}, {"moduleSHA256", quote(c.config.moduleSHA256)}, {"iniSHA256", quote(c.config.iniSHA256)},
+         {"sourceSHA256", object({{"scheme", quote(c.config.schemeSHA256)}, {"reference", quote(c.config.referenceSHA256)}})},
+         {"assertions", array(c.assertions)}, {"checkpoints", array(c.checkpoints)}, {"errors", array(c.errors)},
++        {"coldScopeEvidence", array(c.coldEvidence)},
+         {"baseline", c.baseline.json()}, {"after", c.after.json()}, {"undoAfter", c.undoAfter.json()},
+         {"rollbackAfter", c.rollbackAfter.json()}, {"cancelAfter", c.cancelAfter.json()}, {"removedObjectEvidence",array(c.removedObjectEvidence)},
+         {"dwgFilesBefore",array(c.diskBefore)},{"dwgFilesAfter",array(c.diskAfter)},
+@@ -120,7 +123,7 @@
+ void run() noexcept { boundary([] {
+     require(!active, "case already started"); auto c = std::make_unique<Case>();
+     c->config = load_config(moduleHandle); validate_identity(c->config);
+-    require(c->config.caseName == L"InPlaceBoundary", "UNSUPPORTED_CASE");
++    require(c->config.caseName == L"InPlaceBoundary" || c->config.caseName == L"InPlaceColdScope", "UNSUPPORTED_CASE");
+     c->document = acDocManager->curDocument(); require(c->document && c->document->database(), "no document");
+     const std::wstring filename = c->document->fileName();
+     require(filename == L"Drawing1.dwg" || filename == L"Drawing1", "fixture requires isolated initial Drawing1");
+@@ -128,7 +131,105 @@
+     c->report = create_new(c->config.output + L"\\inplace-case.json");
+     c->compatibilityReport = create_new(c->config.output + L"\\native-case.json");
+     active = std::move(c); active->diskBefore=dwgFiles(); write_report("failed"); checkpoint("validated-before-fixture");
+-    queue(L"BCE_IP_SETUP\n");
++    queue(active->config.caseName == L"InPlaceColdScope" ? L"BCE_IP_COLD_SCOPE\n" : L"BCE_IP_SETUP\n");
++}); }
++// Independent N6 integration probe. No source getGeomExtents, display update, or
++// readScene is called before the single cold writer preflight under observation.
++class ColdMonitor final : public AcDbDatabaseReactor {
++public:
++    explicit ColdMonitor(AcDbDatabase& db):db_(db) { ok(db_.addReactor(this),"cold monitor attach"); }
++    ~ColdMonitor() { db_.removeReactor(this); }
++    unsigned changes{},fontEvents{};
++    bool loggingFailed{};
++    std::string phase;
++    std::vector<std::string> events;
++    void record(const char* event,const AcDbObject* obj) noexcept {
++        ++changes;
++        try {
++            const std::wstring type=obj?obj->isA()->name():L"";
++            if(type.find(L"AcDbFontTable")==0) ++fontEvents;
++            events.push_back(object({{"event",q(event)},{"phase",quote(phase)},
++                {"type",quote(type)},{"handle",quote(obj?handle(obj->objectId()):std::string{})}}));
++        } catch(...) { loggingFailed=true; }
++    }
++    void objectModified(const AcDbDatabase*,const AcDbObject* p) override {record("modified",p);}
++    void objectOpenedForModify(const AcDbDatabase*,const AcDbObject* p) override {record("openedForModify",p);}
++    void objectAppended(const AcDbDatabase*,const AcDbObject* p) override {record("appended",p);}
++    void objectUnAppended(const AcDbDatabase*,const AcDbObject* p) override {record("unappended",p);}
++    void objectReAppended(const AcDbDatabase*,const AcDbObject* p) override {record("reappended",p);}
++    void objectErased(const AcDbDatabase*,const AcDbObject* p,Adesk::Boolean) override {record("erased",p);}
++    void headerSysVarChanged(const AcDbDatabase*,const ACHAR*,Adesk::Boolean success) override {if(success)record("header",nullptr);}
++private:AcDbDatabase& db_;
++};
++void coldScope() noexcept { boundary([] {
++    check_state(Phase::validated); auto& c=*active; auto& db=*c.document->database();
++    require(db.transactionManager()->numActiveTransactions()==0,"cold fixture requires no outer transaction");
++    ColdMonitor monitor(db); monitor.phase="install-cold-fixture";
++    auto* workingBefore=acdbHostApplicationServices()->workingDatabase();
++    {
++        AcDbDatabase fixture(true,true);
++        struct WorkingScope {
++            AcDbDatabase* previous;
++            explicit WorkingScope(AcDbDatabase& own):previous(acdbHostApplicationServices()->workingDatabase()) {
++                acdbHostApplicationServices()->setWorkingDatabase(&own);
++            }
++            ~WorkingScope() {acdbHostApplicationServices()->setWorkingDatabase(previous);}
++        } working(fixture);
++        AcDbObjectId styleId;
++        {
++            Opened<AcDbTextStyleTable> styles(fixture.textStyleTableId(),AcDb::kForWrite);
++            auto style=std::make_unique<AcDbTextStyleTableRecord>();
++            ok(style->setName(L"N6_ColdFontSource"),"cold style name");
++            ok(style->setFileName(L"simhei.ttf"),"cold font");
++            ok(styles->add(styleId,style.get()),"cold style append");
++            ok(style.release()->close(),"cold style close");
++        }
++        const auto textId=append(fixture,std::make_unique<AcDbText>(AcGePoint3d(10,20,0),L"未保存中文立面图",styleId,3.0));
++        const auto lineId=append(fixture,std::make_unique<AcDbLine>(AcGePoint3d(0,0,0),AcGePoint3d(1000,0,0)));
++        AcDbObjectIdArray ids; ids.append(textId); ids.append(lineId); AcDbIdMapping mapping;
++        ok(fixture.wblockCloneObjects(ids,modelSpace(db),mapping,AcDb::kDrcIgnore),"clone cold fixture into Main");
++        for(const auto& entry:{std::pair<AcDbObjectId,AcDbObjectId*>{lineId,&c.target},{textId,&c.unsavedText}}) {
++            AcDbIdPair pair; pair.setKey(entry.first);
++            require(mapping.compute(pair)&&pair.isCloned()&&!pair.value().isNull(),"cold fixture identity mapping");
++            *entry.second=pair.value();
++        }
++    }
++    const auto installationFonts=monitor.fontEvents;
++    expect("ColdFixtureInstalledWithoutFontTableWrites",installationFonts==0&&!monitor.loggingFailed&&
++        workingBefore==acdbHostApplicationServices()->workingDatabase(),
++        "installationFontEvents="+std::to_string(installationFonts),"zero Main FontTable events during fixture clone; exact workingDatabase restored");
++    require(installationFonts==0&&!monitor.loggingFailed,"cold fixture invalid: installation already warmed Main");
++    c.context=std::make_unique<NativeSceneContext>();
++    // Exact identity/target from the fixed fixture. Bounds of preserved Text are
++    // intentionally not guessed; beginWriteScope must safely read actual state.
++    SceneSnapshot snapshot; snapshot.documentIdentity=c.context->documentIdentity();
++    snapshot.databaseIdentity=snapshot.documentIdentity+"/database"; snapshot.revision=c.context->revision();
++    snapshot.units.confirmedMmPerInputUnit=1.0;
++    const EntityKey targetKey{snapshot.databaseIdentity,handle(c.target),snapshot.revision};
++    snapshot.targets.push_back({targetKey,"0",{{0,0},{1000,0}},""});
++    const LayoutPlan plan{"cold-scope",{{targetKey,{500,200}}},{}};
++    const auto beforeEvents=monitor.changes, beforeFonts=monitor.fontEvents;
++    const auto beforeRevision=c.context->revision();
++    monitor.phase="cold-baseline-public-properties"; c.baseline=capture();
++    require(monitor.changes==beforeEvents&&!monitor.loggingFailed,"baseline accessor warmed Main");
++    monitor.phase="beginWriteScope-cold-readScene";
++    InPlaceWriter writer(*c.context); const auto result=writer.beginWriteScope(plan,snapshot);
++    const auto afterEvents=monitor.changes, afterFonts=monitor.fontEvents;
++    const auto afterRevision=c.context->revision();
++    const auto txnCount=db.transactionManager()->numActiveTransactions();
++    monitor.phase="after-scope-public-properties"; c.after=capture();
++    const auto detail=object({{"issues",quote(issue_codes(result.issues))},
++        {"sourceEvents",std::to_string(afterEvents-beforeEvents)},{"fontEvents",std::to_string(afterFonts-beforeFonts)},
++        {"revisionBefore",std::to_string(beforeRevision)},{"revisionAfter",std::to_string(afterRevision)},
++        {"transactionsAfter",std::to_string(txnCount)},{"events",array(monitor.events)},
++        {"loggingFailed",monitor.loggingFailed?"true":"false"}});
++    c.coldEvidence.push_back(detail);
++    expect("ColdWriterScopeSucceeds",result.canCommit(),detail,"valid explicit ordinary Line scope succeeds with cold preserved Chinese Text");
++    expect("ColdWriterScopeDoesNotWriteSource",afterEvents==beforeEvents&&afterFonts==beforeFonts&&
++        afterRevision==beforeRevision&&!monitor.loggingFailed,detail,"zero source modification/open-for-write events and unchanged context revision");
++    expect("ColdWriterScopePreservesContentsAndGlobals",c.baseline.sameContents(c.after)&&txnCount==0&&
++        workingBefore==acdbHostApplicationServices()->workingDatabase(),c.after.json(),"all typed roots/resources/globals unchanged; no transaction opened; exact workingDatabase restored");
++    c.phase=Phase::checked; finish();
+ }); }
+ void setup() noexcept { boundary([] {
+     check_state(Phase::validated); auto& c = *active; auto& db = *c.document->database();
+@@ -364,7 +465,7 @@
+         if (message == AcRx::kInitAppMsg) {
+             acrxDynamicLinker->unlockApplication(id); acrxRegisterAppMDIAware(id);
+             for (const auto& command : {std::pair<const wchar_t*, AcRxFunctionPtr>{L"BCE_TEST_RUN",run},
+-                {L"BCE_IP_SETUP",setup}, {L"BCE_IP_APPLY",apply}, {L"BCE_IP_CANCEL",cancel},
++                {L"BCE_IP_COLD_SCOPE",coldScope}, {L"BCE_IP_SETUP",setup}, {L"BCE_IP_APPLY",apply}, {L"BCE_IP_CANCEL",cancel},
+                 {L"BCE_IP_CHECKS",checks}, {L"BCE_IP_SUCCESS",success}, {L"BCE_IP_VERIFY",verify}})
+                 if (acedRegCmds->addCommand(L"BCE_INPLACE_CASES", command.first, command.first, ACRX_CMD_MODAL, command.second) != Acad::eOk)
+                     return AcRx::kRetError;
+--- a/tests/native/inplace/ElevationInPlaceCases.vcxproj
++++ b/tests/native/inplace/ElevationInPlaceCases.vcxproj
+@@ -10,8 +10,8 @@
+     <ClCompile><WarningLevel>Level4</WarningLevel><TreatWarningAsError>true</TreatWarningAsError><SDLCheck>true</SDLCheck><ConformanceMode>true</ConformanceMode><LanguageStandard>stdcpp17</LanguageStandard><RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary><DisableSpecificWarnings>4828;%(DisableSpecificWarnings)</DisableSpecificWarnings><AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions><ExceptionHandling>Sync</ExceptionHandling><PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;UNICODE;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions><AdditionalIncludeDirectories>$(ObjectArxSdk)\inc;$(ObjectArxSdk)\inc-x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories></ClCompile>
+     <Link><SubSystem>Windows</SubSystem><ModuleDefinitionFile>$(ObjectArxSdk)\inc\AcRxDefault.def</ModuleDefinitionFile><AdditionalLibraryDirectories>$(ObjectArxSdk)\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories><AdditionalDependencies>rxapi.lib;acdb23.lib;acge23.lib;accore.lib;ac1st23.lib;Advapi32.lib;User32.lib;%(AdditionalDependencies)</AdditionalDependencies></Link>
+   </ItemDefinitionGroup>
+-  <ItemGroup><ClCompile Include="NativeInPlaceDriver.cpp" /><ClCompile Include="NativeEvidence.cpp" /><ClCompile Include="ElevationModel.cpp" /><ClCompile Include="SceneReader.cpp" /><ClCompile Include="PreparedBatch.cpp" /><ClCompile Include="InPlaceWriter.cpp" /></ItemGroup>
+-  <ItemGroup><ClInclude Include="NativeEvidence.h" /><ClInclude Include="NativeInPlaceAudit.h" /><ClInclude Include="ElevationModel.h" /><ClInclude Include="SceneReader.h" /><ClInclude Include="PreparedBatch.h" /><ClInclude Include="InPlaceWriter.h" /><ClInclude Include="WriteContracts.h" /></ItemGroup>
++  <ItemGroup><ClCompile Include="NativeInPlaceDriver.cpp" /><ClCompile Include="NativeEvidence.cpp" /><ClCompile Include="ElevationModel.cpp" /><ClCompile Include="SceneReader.cpp" /><ClCompile Include="AnalysisReader.cpp" /><ClCompile Include="Recognition.cpp" /><ClCompile Include="PreparedBatch.cpp" /><ClCompile Include="InPlaceWriter.cpp" /></ItemGroup>
++  <ItemGroup><ClInclude Include="NativeEvidence.h" /><ClInclude Include="NativeInPlaceAudit.h" /><ClInclude Include="ElevationModel.h" /><ClInclude Include="SceneReader.h" /><ClInclude Include="AnalysisReader.h" /><ClInclude Include="Recognition.h" /><ClInclude Include="RuleModel.h" /><ClInclude Include="PreparedBatch.h" /><ClInclude Include="InPlaceWriter.h" /><ClInclude Include="WriteContracts.h" /></ItemGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+ </Project>
+ 
+--- a/tools/build_inplace.ps1
++++ b/tools/build_inplace.ps1
+@@ -8,7 +8,7 @@
+ $receipt = [ordered]@{ contract='bce.inplace-build.v1'; label=$Label; startedUtc=[DateTime]::UtcNow.ToString('o'); compiledSourcesDirectory=$sourceRoot; sourceFiles=[ordered]@{}; inputOrigins=@(); binary=$null; binarySHA256=$null; log=(Join-Path $buildRoot 'build.log'); exitCode=1; toolchain='AutoCAD2020 SDK23.1 / v141 14.16.27023 / x64 / C++17' }
+ $exitResult = 1
+ try {
+-    $inputs = @('src/ElevationModel.h','src/ElevationModel.cpp','src/WriteContracts.h','src/SceneReader.h','src/SceneReader.cpp','src/PreparedBatch.h','src/PreparedBatch.cpp','src/InPlaceWriter.h','src/InPlaceWriter.cpp','tests/native/NativeEvidence.h','tests/native/NativeEvidence.cpp','tests/native/inplace/NativeInPlaceAudit.h','tests/native/inplace/NativeInPlaceDriver.cpp','tests/native/inplace/ElevationInPlaceCases.vcxproj')
++    $inputs = @('src/ElevationModel.h','src/ElevationModel.cpp','src/RuleModel.h','src/Recognition.h','src/Recognition.cpp','src/AnalysisReader.h','src/AnalysisReader.cpp','src/WriteContracts.h','src/SceneReader.h','src/SceneReader.cpp','src/PreparedBatch.h','src/PreparedBatch.cpp','src/InPlaceWriter.h','src/InPlaceWriter.cpp','tests/native/NativeEvidence.h','tests/native/NativeEvidence.cpp','tests/native/inplace/NativeInPlaceAudit.h','tests/native/inplace/NativeInPlaceDriver.cpp','tests/native/inplace/ElevationInPlaceCases.vcxproj')
+     foreach ($relative in $inputs) {
+         $source = Join-Path $projectRoot $relative
+         $destination = Join-Path $sourceRoot (Split-Path $relative -Leaf)

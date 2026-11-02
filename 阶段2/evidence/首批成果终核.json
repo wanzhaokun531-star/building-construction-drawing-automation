@@ -1,0 +1,51 @@
+{
+  "recorded": "2026-10-30T14:32:52.667721+08:00",
+  "phase": 2,
+  "currentBatchComplete": true,
+  "stage2Complete": false,
+  "phase1FullAcceptance": false,
+  "sourceSHA256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+  "cacheSHA256": "AA8048E8A06BBDFC2CBCFD15EA70F9C4CB2D29F11A2F5C2388AFA298582C72BE",
+  "ARXSHA256": "5A4DC6362ABF36BF2BEBB88B02F1BEE335802CF88D4CA8A9E812DFD6C0E61D81",
+  "sourceFiles": {
+    "AnalyseMain.cpp": "3D539F2B1C75F2CBE64BB35F32482AA18FB36DE2606845F8C53F7B43B3A2B426",
+    "BuildingPlan2020.vcxproj": "C41843ED9EA9E575FF127789D1269CDE58E7E4C4CE2F327604C09B01D56FF321",
+    "PlanRules.cpp": "2D61CBC9D2F9779D1E6A82A9DBE09588F2C21571E0211EEB49BFE37E386D5DE8",
+    "PlanRules.h": "DC9F72E04AD4CFF155077F492D0EA42595EFC15ACE37F5D534D4544D7B7644DB",
+    "Stage2Arx.cpp": "56E6A34B6AE43EA4A83BE159CB8749C42922895F8B3FCA07611DF4A642D77A9B"
+  },
+  "tests": {
+    "cppChecks": 26,
+    "nativeModelHandleTypes": 213,
+    "nativeWallOpeningGeometry": 93,
+    "axisCandidates": 22,
+    "issues": 94,
+    "cacheIdentityRejection": true
+  },
+  "evidence": {
+    "native-host-binding-v2.json": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\native-host-binding-v2.json",
+      "SHA256": "8B3AEC829E1D4658E68536599503D147B47C57B115B8797640CBD071389F235B"
+    },
+    "native-run-v2.json": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\native-run-v2.json",
+      "SHA256": "853B51D8E707F72094BEB3E7A9D2842B8FC06F87FC6884211EA7F2D25225D58C"
+    },
+    "native-cache-rejection-v2.json": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\native-cache-rejection-v2.json",
+      "SHA256": "7FD862DB5D8E5C6DE1C9564B0D9085D624825E7C37AD9D70FA3A54C6DA92B673"
+    },
+    "host-closure-v2.json": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\host-closure-v2.json",
+      "SHA256": "019D240F4563B52C7DC67DEB8FDA79C95ECE4B21EE0F5BC15F5231B1FD6C5770"
+    },
+    "final-review.json": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\final-review.json",
+      "SHA256": "406647CD985CDDE1C8DC13AE68B9ED322DD8F27ECC7A17969105BC31EAA11B4A"
+    },
+    "rules-final.log": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\rules-final.log",
+      "SHA256": "4746A883FCF2D3AD5937FC9AF21542D2521415B8D84F84531104F53E5364FFD2"
+    }
+  }
+}

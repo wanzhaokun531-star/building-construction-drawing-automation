@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>AcDbDatabase::saveAs (ACHAR*, bool, AcDb::AcDbDwgVersion, SecurityParams*) Method</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+<link rel="stylesheet" type="text/css" href="default_plus.css" media="screen, projection, tv " />
+<script language=javascript src="arxref.js"></script>
+<script language=javascript src="ac_common.js"></script>
+<script language=javascript src="ac.acad_ak.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="ObjectARX_Reference_Guide.html">ObjectARX Reference Guide</a> &gt; <a href="AcDb_Classes.html">AcDb Classes</a> &gt; <a href="AcDbDatabase.html">AcDbDatabase Class</a> &gt; <a href="!!MEMBERTYPE_Methods_AcDbDatabase.html">AcDbDatabase Methods</a> &gt; <a href="!!OVERLOADED_saveAs_AcDbDatabase.html">saveAs Method</a> &gt; <a href="AcDbDatabase__saveAs@ACHAR_@bool@AcDb__AcDbDwgVersion@SecurityParams_.html">saveAs(ACHAR*, bool, AcDb::AcDbDwgVersion, SecurityParams*) Method</a></div>
+<div class="Element92">
+<div class="Element5">
+AcDbDatabase::saveAs (ACHAR*, bool, AcDb::AcDbDwgVersion, SecurityParams*) Method</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<div class="Element58">
+<a name="432B2B"></a><div class="Element99">
+C++</div>
+<div class="Element101"><div class="Element100"><pre class="Element100">ACDBCORE2D_PORT Acad::ErrorStatus <strong><span style="color: #660000">saveAs</span></strong>(
+    <strong><span style="color: #871F78">const</span></strong> ACHAR* <strong><span style="color: #660000">fileName</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> <strong><span style="color: #871F78">bool</span></strong> <strong><span style="color: #660000">bBakAndRename</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> AcDb::AcDbDwgVersion <strong><span style="color: #660000">dwgVer</span></strong> = AcDb::kDHL_CURRENT, 
+    <strong><span style="color: #871F78">const</span></strong> SecurityParams* <strong><span style="color: #660000">pSecParams</span></strong> = 0
+);</pre></div></div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element252">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element240" valign="top" width="50%">
+<div class="Element241">
+Parameters&nbsp;</div></td><td class="Element244" valign="top" width="50%">
+<div class="Element245">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+fileName&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input file name or URL to write database out to&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+bBakAndRename&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input bool indicating whether or not to create a .bak file and change document name in AutoCAD. If the database does not have an associated drawing, then the argument is ignored.&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+dwgVer&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input dwg version to which to save the file&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+pSecParams&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input pointer to a <span class="Element146">SecurityParams</span> structure&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+<span class="Element146">Acad::eOk</span> if process completes successfully.</p></div>
+</div>
+<a name="4465736372697074696F6E"></a><div class="Element14">
+Description</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+Runs the save process on the database and writes the drawing information out to <span class="Element146">fileName</span>. The <span class="Element146">fileName</span> argument is taken as is. If no file extension is present, <i>.dwg </i>is not appended.&nbsp;</p>
+<p class="Element10">
+If the database executing the <span class="Element146">saveAs()</span> function is not the current database in the AutoCAD editor, then the thumbnail preview image is not saved to <span class="Element146">fileName</span>.&nbsp;</p>
+<p class="Element10">
+To specify security parameters, set <span class="Element146">pSecurity</span> to point to a <span class="Element146">SecurityParams</span> struct that conveys your preferences. If <span class="Element146">pSecurity</span> is non-NULL, its settings override any previous database security settings. If <span class="Element146">pSecurity</span> is NULL, any currently enforced security settings remain in effect. If no previous security-related settings were specified, and <span class="Element146">pSecurity</span> is NULL, no security-related operation is attempted. If the <span class="Element146">SecurityParams</span> struct passed as the <span class="Element146">pSecurity</span> argument is not properly initialized, the method fails. See <span class="Element146">SecurityParams</span> for more information on initializing this struct.&nbsp;</p>
+<p class="Element10">
+If <span class="Element146">bBakAndRename</span> is false, then no <i>.bak</i> file is created, a full save is always done, and if the <span class="Element146">AcDbDatabase</span> being saved is the main database for a document in AutoCAD, then the document's filename will NOT change to the saved name. The bBakAndRename argument has absolutely no impact when the drawing has no associated document.&nbsp;</p>
+<p class="Element10">
+Returns</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+DWG files can no longer be saved with passwords. The password will be ignored and returns an error if password information is passed in the pSecParams parameter.</p></div>
+</div>
+<a name="4E6F746573"></a><div class="Element14">
+Notes</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+The allowed values for dwgver are:&nbsp;</p>
+<p class="Element10">
+AcDB::kDHL_1014 // R14&nbsp;</p>
+<p class="Element10">
+AcDB::kDHL_1015 // 2000&nbsp;</p>
+<p class="Element10">
+AcDB::kDHL_1800 // 2004&nbsp;</p>
+<p class="Element10">
+AcDB::kDHL_1021 // 2007&nbsp;</p>
+<p class="Element10">
+AcDB::kDHL_1024 // 2010</p></div>
+</div>
+<a name="4C696E6B73"></a><div class="Element14">
+Links</div>
+<div class="Element11">
+<div class="Element10">
+<a href="AcDbDatabase.html">AcDbDatabase Class</a></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<table class=FooterTable width=100%><tr valign=top>
+<td>&nbsp;</td>
+<td align=right>&nbsp;<span class="CommentsLink" onclick="doComments();" title="Click here to send a comment about this topic.">Comments?</span>&nbsp;</td>
+</tr></table>
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

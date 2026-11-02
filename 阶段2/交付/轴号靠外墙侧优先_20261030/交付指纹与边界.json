@@ -1,0 +1,32 @@
+{
+  "contract": "bcp.outer-axis-priority-delivery.v1",
+  "nativeRun": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\native-run-v16.json",
+  "nativeRunSHA256": "5E37C899A11393172D3854B8C36AC9A4CD96200248AA5E903FE88393DE677D72",
+  "previewRun": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\native-preview-run-v16.json",
+  "previewRunSHA256": "69A1789C7C392EEF5345C9F586EB8E14FF09408774907C61F3ACA84DCB85384A",
+  "axes": 20,
+  "visibleEnds": 28,
+  "hiddenByNoSupport": 11,
+  "hiddenByOuterPriority": 1,
+  "clippedNativeAxes": 12,
+  "modelRootNativeAxes": 8,
+  "modelRootStructureUnchanged": false,
+  "directTchEditingValidated": false,
+  "stage2Complete": false,
+  "ACasePassed": true,
+  "BCasePassed": true,
+  "leftDKept": true,
+  "leftCHidden": true,
+  "DJogCancelled": true,
+  "files": {
+    "analysis.json": "81B7558F4944BCFC406BF1D0C4196BA9D1CD17C233DCCD800A41BBDA4404DC8B",
+    "native-annotations.json": "FAD22A29D644421D21C4556F1E414B241BC33CA499E6DDC638127B6CC35AD5D0",
+    "native-foundation.json": "67A0B403DE7A5A49537CFB329E158783A1E3030B6B1C16F671FF75E33CBEAFC5",
+    "外侧轴号优先_A3.pdf": "6D1269F7FF04305265F885BCC17EA54BD0C3A4362A307AFF49DF5B91604FF9A6",
+    "外侧轴号优先预览.png": "A80547904474A561D5CDE9B138AAB3C3929148D38EF3640A7DEA4134D1FADE1B",
+    "待确认清单.csv": "D65871C6DB8F788214950E3C09E59F982F26AEDE4DD6EE9F8764C1149B6F80A5",
+    "方案施工图_外侧轴号优先版.dwg": "42AAD45F95009FF16411A81F820A20E7CD1305A85C70CDECBC573E1AB37D1551",
+    "逐轴显隐对照.csv": "0ED42BCEDFFFEDE4552E9B204F3934A1912193F8FA9C99734EAAA1474096113E",
+    "阅读说明.md": "38AE7BB6DD064E252644D709EEB4CF74D58DBBE44C98B178C707B0F9818319EC"
+  }
+}

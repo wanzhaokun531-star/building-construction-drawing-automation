@@ -1,0 +1,665 @@
+{
+  "passed": true,
+  "gapMode": "break-unsupported-wall-gaps",
+  "unsupportedGapLength": 13600.0,
+  "supportRangesByAxis": [
+    {
+      "label": "1",
+      "vertical": true,
+      "ranges": [
+        [
+          15441.263551952798,
+          35841.26355195283
+        ]
+      ]
+    },
+    {
+      "label": "2",
+      "vertical": true,
+      "ranges": [
+        [
+          15441.263551952798,
+          24141.263551952827
+        ]
+      ]
+    },
+    {
+      "label": "3",
+      "vertical": true,
+      "ranges": [
+        [
+          20541.263551952827,
+          24141.263551952827
+        ],
+        [
+          27741.263551952827,
+          35841.26355195283
+        ]
+      ]
+    },
+    {
+      "label": "4",
+      "vertical": true,
+      "ranges": [
+        [
+          15441.263551952798,
+          22341.263551952827
+        ]
+      ]
+    },
+    {
+      "label": "5",
+      "vertical": true,
+      "ranges": [
+        [
+          30741.263551952827,
+          35841.26355195283
+        ]
+      ]
+    },
+    {
+      "label": "6",
+      "vertical": true,
+      "ranges": [
+        [
+          15441.263551952798,
+          20441.263551952827
+        ]
+      ]
+    },
+    {
+      "label": "7",
+      "vertical": true,
+      "ranges": [
+        [
+          30741.263551952827,
+          35841.26355195283
+        ]
+      ]
+    },
+    {
+      "label": "8",
+      "vertical": true,
+      "ranges": [
+        [
+          15441.263551952798,
+          35841.26355195283
+        ]
+      ]
+    },
+    {
+      "label": "9",
+      "vertical": true,
+      "ranges": [
+        [
+          15441.263551952798,
+          35841.26355195283
+        ]
+      ]
+    },
+    {
+      "label": "A",
+      "vertical": false,
+      "ranges": [
+        [
+          14111.89025917189,
+          20511.890259172244
+        ]
+      ]
+    },
+    {
+      "label": "B",
+      "vertical": false,
+      "ranges": [
+        [
+          24111.890259172244,
+          33811.89025917224
+        ]
+      ]
+    },
+    {
+      "label": "C",
+      "vertical": false,
+      "ranges": [
+        [
+          20511.890259172244,
+          24111.890259172244
+        ]
+      ]
+    },
+    {
+      "label": "D",
+      "vertical": false,
+      "ranges": [
+        [
+          14111.89025917189,
+          19111.890259172244
+        ]
+      ]
+    },
+    {
+      "label": "E",
+      "vertical": false,
+      "ranges": [
+        [
+          14111.89025917189,
+          20511.890259172244
+        ]
+      ]
+    },
+    {
+      "label": "F",
+      "vertical": false,
+      "ranges": [
+        [
+          14111.89025917189,
+          33811.89025917224
+        ]
+      ]
+    },
+    {
+      "label": "G",
+      "vertical": false,
+      "ranges": [
+        [
+          14111.89025917189,
+          19111.890259172244
+        ],
+        [
+          29111.890259172244,
+          33811.89025917224
+        ]
+      ]
+    },
+    {
+      "label": "H",
+      "vertical": false,
+      "ranges": [
+        [
+          19111.890259172244,
+          29111.890259172244
+        ]
+      ]
+    },
+    {
+      "label": "J",
+      "vertical": false,
+      "ranges": [
+        [
+          14111.89025917189,
+          19111.890259172244
+        ]
+      ]
+    },
+    {
+      "label": "K",
+      "vertical": false,
+      "ranges": [
+        [
+          29111.890259172244,
+          33811.89025917224
+        ]
+      ]
+    },
+    {
+      "label": "L",
+      "vertical": false,
+      "ranges": [
+        [
+          14111.89025917189,
+          33811.89025917224
+        ]
+      ]
+    }
+  ],
+  "spanMode": "associated-wall-ends",
+  "wallSupportScope": "confirmed exterior/major-boundary walls; unknown roles deferred",
+  "pendingAssociatedWalls": [
+    "CDAC",
+    "CDBA",
+    "CDBB",
+    "CDE9"
+  ],
+  "logicalAxes": 20,
+  "renderedNativeAxes": 18,
+  "visibleEnds": 24,
+  "nativeAxisStrokePieces": 22,
+  "logicalNativeGroups": 20,
+  "axisDimensions": 28,
+  "totalSampleDimensions": 4,
+  "savedMeasurementEndpoints": 242,
+  "openingDimensions": 89,
+  "formalCaptions": 27,
+  "pendingCaptions": 0,
+  "savedTextBoxConflicts": 0,
+  "axisClipChecks": 18,
+  "nativeCircles": 36,
+  "witnessStart": 1000,
+  "dimensionPositions": [
+    2000,
+    2800,
+    3600
+  ],
+  "modelRoots": 405,
+  "decisions": [
+    {
+      "label": "1",
+      "side": "bottom",
+      "shown": true,
+      "outerFace": 24041.263551952827,
+      "wallReach": 24141.263551952827,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "1",
+      "side": "top",
+      "shown": true,
+      "outerFace": 32041.263551952827,
+      "wallReach": 31941.263551952827,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "2",
+      "side": "bottom",
+      "shown": true,
+      "outerFace": 16441.263551952798,
+      "wallReach": 16541.263551952827,
+      "wallFaceGap": 100.0000000000291,
+      "supported": true
+    },
+    {
+      "label": "2",
+      "side": "top",
+      "shown": false,
+      "outerFace": 32041.263551952827,
+      "wallReach": 24141.263551952827,
+      "wallFaceGap": 7900.0,
+      "supported": false
+    },
+    {
+      "label": "3",
+      "side": "bottom",
+      "shown": false,
+      "outerFace": 16441.263551952816,
+      "wallReach": 20541.263551952827,
+      "wallFaceGap": 4100.000000000011,
+      "supported": false
+    },
+    {
+      "label": "3",
+      "side": "top",
+      "shown": true,
+      "outerFace": 32041.263551952827,
+      "wallReach": 31941.263551952827,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "4",
+      "side": "bottom",
+      "shown": true,
+      "outerFace": 16441.263551952827,
+      "wallReach": 16541.263551952827,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "4",
+      "side": "top",
+      "shown": false,
+      "outerFace": 30841.263551952827,
+      "wallReach": 22341.263551952827,
+      "wallFaceGap": 8500.0,
+      "supported": false
+    },
+    {
+      "label": "5",
+      "side": "bottom",
+      "shown": false,
+      "outerFace": 20341.263551952827,
+      "wallReach": 30741.263551952827,
+      "wallFaceGap": 10400.0,
+      "supported": false
+    },
+    {
+      "label": "5",
+      "side": "top",
+      "shown": true,
+      "outerFace": 34841.26355195283,
+      "wallReach": 34741.26355195283,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "6",
+      "side": "bottom",
+      "shown": true,
+      "outerFace": 18441.263551952798,
+      "wallReach": 18541.263551952827,
+      "wallFaceGap": 100.0000000000291,
+      "supported": true
+    },
+    {
+      "label": "6",
+      "side": "top",
+      "shown": false,
+      "outerFace": 34841.26355195283,
+      "wallReach": 20441.263551952827,
+      "wallFaceGap": 14400.0,
+      "supported": false
+    },
+    {
+      "label": "7",
+      "side": "bottom",
+      "shown": false,
+      "outerFace": 18441.2635519528,
+      "wallReach": 30741.263551952827,
+      "wallFaceGap": 12300.000000000025,
+      "supported": false
+    },
+    {
+      "label": "7",
+      "side": "top",
+      "shown": true,
+      "outerFace": 34841.26355195283,
+      "wallReach": 34741.26355195283,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "8",
+      "side": "bottom",
+      "shown": true,
+      "outerFace": 18441.263551952816,
+      "wallReach": 18541.263551952827,
+      "wallFaceGap": 100.00000000001091,
+      "supported": true
+    },
+    {
+      "label": "8",
+      "side": "top",
+      "shown": true,
+      "outerFace": 34841.26355195283,
+      "wallReach": 34741.26355195283,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "9",
+      "side": "bottom",
+      "shown": true,
+      "outerFace": 18441.263551952827,
+      "wallReach": 18541.263551952827,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "9",
+      "side": "top",
+      "shown": true,
+      "outerFace": 32841.26355195283,
+      "wallReach": 32741.263551952827,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "A",
+      "side": "left",
+      "shown": true,
+      "outerFace": 16211.890259172244,
+      "wallReach": 16311.890259172244,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "A",
+      "side": "right",
+      "shown": false,
+      "outerFace": 20611.890259172244,
+      "wallReach": 20511.890259172244,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "B",
+      "side": "left",
+      "shown": false,
+      "outerFace": 16211.890259172244,
+      "wallReach": 24111.890259172244,
+      "wallFaceGap": 7900.0,
+      "supported": false
+    },
+    {
+      "label": "B",
+      "side": "right",
+      "shown": true,
+      "outerFace": 32811.89025917224,
+      "wallReach": 32711.890259172244,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "D",
+      "side": "left",
+      "shown": true,
+      "outerFace": 16211.890259172244,
+      "wallReach": 16311.890259172244,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "D",
+      "side": "right",
+      "shown": false,
+      "outerFace": 32811.89025917224,
+      "wallReach": 19111.890259172244,
+      "wallFaceGap": 13700.0,
+      "supported": false
+    },
+    {
+      "label": "E",
+      "side": "left",
+      "shown": true,
+      "outerFace": 16211.890259172244,
+      "wallReach": 16311.890259172244,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "E",
+      "side": "right",
+      "shown": false,
+      "outerFace": 32811.89025917224,
+      "wallReach": 20511.890259172244,
+      "wallFaceGap": 12300.0,
+      "supported": false
+    },
+    {
+      "label": "F",
+      "side": "left",
+      "shown": true,
+      "outerFace": 15111.890259172244,
+      "wallReach": 15211.890259172244,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "F",
+      "side": "right",
+      "shown": true,
+      "outerFace": 32811.89025917224,
+      "wallReach": 32711.890259173873,
+      "wallFaceGap": 99.99999999837019,
+      "supported": true
+    },
+    {
+      "label": "G",
+      "side": "left",
+      "shown": true,
+      "outerFace": 15111.890259172082,
+      "wallReach": 15211.890259172244,
+      "wallFaceGap": 100.00000000016189,
+      "supported": true
+    },
+    {
+      "label": "G",
+      "side": "right",
+      "shown": true,
+      "outerFace": 32811.89025917224,
+      "wallReach": 32711.890259172244,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "J",
+      "side": "left",
+      "shown": true,
+      "outerFace": 15111.890259171894,
+      "wallReach": 15211.890259172244,
+      "wallFaceGap": 100.00000000034925,
+      "supported": true
+    },
+    {
+      "label": "J",
+      "side": "right",
+      "shown": false,
+      "outerFace": 32811.89025917224,
+      "wallReach": 19111.890259172244,
+      "wallFaceGap": 13700.0,
+      "supported": false
+    },
+    {
+      "label": "K",
+      "side": "left",
+      "shown": false,
+      "outerFace": 21211.890259172244,
+      "wallReach": 29111.890259172244,
+      "wallFaceGap": 7900.0,
+      "supported": false
+    },
+    {
+      "label": "K",
+      "side": "right",
+      "shown": true,
+      "outerFace": 32811.89025917224,
+      "wallReach": 32711.890259172244,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "L",
+      "side": "left",
+      "shown": true,
+      "outerFace": 21211.890259172244,
+      "wallReach": 21311.890259172244,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "L",
+      "side": "right",
+      "shown": true,
+      "outerFace": 29211.890259172244,
+      "wallReach": 29111.890259172244,
+      "wallFaceGap": 100.0,
+      "supported": true
+    }
+  ],
+  "chains": {
+    "right": [
+      2100.000000000029,
+      5599.999999999243,
+      3600.0000000007567,
+      5000,
+      2000,
+      100
+    ],
+    "bottom": [
+      100.00000000035288,
+      1100,
+      4200,
+      3600,
+      5000,
+      3600,
+      100
+    ],
+    "top": [
+      100.00000000035288,
+      3900,
+      2200,
+      4000,
+      3800,
+      3600,
+      100
+    ],
+    "left": [
+      100.0000000000291,
+      4000,
+      1800,
+      1799.9999999992433,
+      3600.0000000007567,
+      4200,
+      2800,
+      100
+    ]
+  },
+  "referenceAxisLineStyle": {
+    "linetype": "DOTE",
+    "layer": "A-DOTE",
+    "entityColour": 256,
+    "layerColour": 1,
+    "entityLineWeight": -1,
+    "layerLineWeight": -3,
+    "linetypeScale": 1,
+    "referenceGlobalScale": 1000,
+    "targetGlobalScale": 1000,
+    "patternLength": 2.42,
+    "dashes": [
+      2,
+      -0.2,
+      0.02,
+      -0.2
+    ]
+  },
+  "textClearanceModelMm": 80,
+  "totalAxisDisplayGapLength": 0.0,
+  "obstacleCount": 40,
+  "bottom3Hidden": true,
+  "top3Retained": true,
+  "allLogicalAxesRetained": true,
+  "constructionDrawingComplete": false,
+  "omittedBathroomDoors": [
+    "CDBF",
+    "CF65",
+    "CF69"
+  ],
+  "omittedBathroomWalls": [
+    "CD9D",
+    "CDBE",
+    "CF60",
+    "CF64",
+    "CF66",
+    "CF68"
+  ],
+  "thirdRowTerminalLegs": 8,
+  "continuousLocalChains": true,
+  "CNumbers": 13,
+  "anchoredCaptions": 27,
+  "directNativeThirdDimensions": 53,
+  "nativeWitnessMasks": 4,
+  "witnessDisplayStart": 1000,
+  "thirdNativeEditRestoreChecks": 53,
+  "contract": "bcp.anchored-direct-release.v1",
+  "gateScriptSHA256": "16ED217BA0F464719C7B2C84718D131915523394150B79DCCEA02ECF8A295904",
+  "nativeRun": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\native-run-v63.json",
+  "DWGSHA256": "4161B0EE6814578DEE55724E4AE503BBE718ABECF6AAC122B2052F0E0B81DBEA",
+  "PDFSHA256": "DBCE8091CB9701325D851045E9D46368A0DF21450FF28DD609FD9EDD2D0D494E",
+  "analysisSHA256": "D54B421A02253199F994CB0BB7B9745CF0010D1C3367784B3A1CDECC19607FE5",
+  "annotationsSHA256": "46B665B280798C468ED051570FF1110CFEE1E8E47B3F255C6DDD60340DECABA5",
+  "gateDependencies": {
+    "verify_unified_annotations.py": "92F8A86252433CC40D75266109668B7617D9940A4193DFE8052B8E48D6918359",
+    "verify_annotation_simplification.py": "2D438547B2F9F7F34F55B05618A8597B8CB3D477AC3AF5B21C56F9B884554CAA"
+  }
+}

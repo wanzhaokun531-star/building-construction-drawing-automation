@@ -1,0 +1,67 @@
+﻿{
+    "Contract":  "stage1.final-input-and-module-audit.v1",
+    "Recorded":  "2026-10-29T02:08:28.3952441+08:00",
+    "Baseline":  "新建轴号集合_输入复核_20261028-2118.json",
+    "Inputs":  [
+                   {
+                       "Id":  "S01",
+                       "Source":  "D:\\cad插件\\方案平面图.dwg",
+                       "Snapshot":  "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\方案平面图.dwg",
+                       "SourceSHA256":  "92E01E8DD5BD4BA2B65CA48C6A3E8F6C38E3CB5F7EF3C3C36E8B692980B8BDD6",
+                       "SnapshotSHA256":  "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+                       "SourceUnchanged":  false,
+                       "SnapshotUnchanged":  true
+                   },
+                   {
+                       "Id":  "S02",
+                       "Source":  "D:\\cad插件\\施工图平面参考图.dwg",
+                       "Snapshot":  "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\施工图平面参考图.dwg",
+                       "SourceSHA256":  "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27",
+                       "SnapshotSHA256":  "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27",
+                       "SourceUnchanged":  true,
+                       "SnapshotUnchanged":  true
+                   },
+                   {
+                       "Id":  "S03",
+                       "Source":  "D:\\Codex\\建筑施工图自动化\\图纸读取\\方案图对象属性.json",
+                       "Snapshot":  "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\方案图对象属性.json",
+                       "SourceSHA256":  "33B3953F3366F97F6CF11C5B5CCAA35C4F76A5FB98C4834E0758DC5C96160DFD",
+                       "SnapshotSHA256":  "33B3953F3366F97F6CF11C5B5CCAA35C4F76A5FB98C4834E0758DC5C96160DFD",
+                       "SourceUnchanged":  true,
+                       "SnapshotUnchanged":  true
+                   },
+                   {
+                       "Id":  "S04",
+                       "Source":  "D:\\Codex\\建筑施工图自动化\\图纸读取\\参考图对象属性.json",
+                       "Snapshot":  "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\参考图对象属性.json",
+                       "SourceSHA256":  "7B5FFA455F700BEA353166D68910110798423B5054179FCECDD9644BF610B39E",
+                       "SnapshotSHA256":  "7B5FFA455F700BEA353166D68910110798423B5054179FCECDD9644BF610B39E",
+                       "SourceUnchanged":  true,
+                       "SnapshotUnchanged":  true
+                   },
+                   {
+                       "Id":  "S05",
+                       "Source":  "D:\\Codex\\建筑施工图自动化\\docs\\superpowers\\specs\\2026-10-28-建筑施工图平面自动化需求基线.md",
+                       "Snapshot":  "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\2026-10-28-建筑施工图平面自动化需求基线.md",
+                       "SourceSHA256":  "5A8732C11344E18B9D5547AEDE9573E8C5FC638483411AECF7BD84B46A013517",
+                       "SnapshotSHA256":  "5A8732C11344E18B9D5547AEDE9573E8C5FC638483411AECF7BD84B46A013517",
+                       "SourceUnchanged":  true,
+                       "SnapshotUnchanged":  true
+                   },
+                   {
+                       "Id":  "S06",
+                       "Source":  "D:\\Codex\\建筑施工图自动化\\docs\\superpowers\\plans\\2026-10-28-建筑施工图平面自动化分阶段实施方案.md",
+                       "Snapshot":  "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\2026-10-28-建筑施工图平面自动化分阶段实施方案.md",
+                       "SourceSHA256":  "19871DAC839B57C05F7667CEAC266117EA6A7E6AE888FB3E8923B6671D5EFE74",
+                       "SnapshotSHA256":  "19871DAC839B57C05F7667CEAC266117EA6A7E6AE888FB3E8923B6671D5EFE74",
+                       "SourceUnchanged":  true,
+                       "SnapshotUnchanged":  true
+                   }
+               ],
+    "AllInputsUnchanged":  false,
+    "TemporaryModulesRemaining":  [
+
+                                  ],
+    "TemporaryModuleDirectoryEmpty":  true,
+    "ReadScope":  "Read shared files and directory only; no DWG write/save/document switch or module removal"
+}

@@ -1,0 +1,3 @@
+FAIL: dimension-point evidence missing
+assertions=1 passed=0 failed=1 result=FAIL
+Scope: dimension measurement-point structure and original preservation; rendered labels checked separately.

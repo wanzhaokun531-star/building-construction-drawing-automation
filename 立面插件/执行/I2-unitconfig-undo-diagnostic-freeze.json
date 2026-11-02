@@ -1,0 +1,46 @@
+{
+  "contract": "bce.unitconfig-undo-diagnostic-freeze.v1",
+  "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i2-20261101-223032-760-green-diagnostic-undo-state-factors-f961d67c\\receipt.json",
+  "receiptSHA256": "5C56334621A2FBCF79FF2264F31BC28B28AF600FD43BF3B09F4E050D4DE301D8",
+  "baselineReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i2-20261101-222304-757-green-unit-only-current-dwg-54e52bbb\\receipt.json",
+  "raw51NativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-222534-f613ece1\\case\\native-case.json",
+  "rawSHA256": "250FD60F4793C17618895821AB91D20FACEB5900479A58010E230BAA2DD99336",
+  "actualFailures": [
+    "OneActualUndoRemovesOnlyNewConfig",
+    "OneActualUndoRestoresOldUnitBytes",
+    "EscapeCancelPreservesArchive",
+    "IndependentReopenKeepsUnitWithoutAuthority",
+    "ReturnInvalidatesReportAndPreservesUnit",
+    "ReturnAnalysisUsesOriginalUnit"
+  ],
+  "productionSourceUnchanged": true,
+  "changes": [
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\unitconfig\\UnitConfigDriver.cpp",
+      "beforeCompiled": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i2-20261101-222304-757-green-unit-only-current-dwg-54e52bbb\\src\\UnitConfigDriver.cpp",
+      "beforeSHA256": "6DDC4AC15AC9B6DBF160D9A9E4D78C3F5C0B9BF36CECF75A4B579554B75C7702",
+      "afterCompiled": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i2-20261101-223032-760-green-diagnostic-undo-state-factors-f961d67c\\src\\UnitConfigDriver.cpp",
+      "afterSHA256": "5DA836BE1FCE037775CF67E21CCDF32E21C2D185606DBFBDF598A836504BD45E"
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\receipt.json",
+      "SHA256": "70AFC5BA63D9D8431F76A8D51194E5F0C7BC0DF0B36609A59FEEDE5C71B68488",
+      "verifiedOwnedSources": 7
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\g2-20261101-193143-056-fix1-undo-reopen-green-candidate-3d68c479\\receipt.json",
+      "SHA256": "D3562019037590BF58B44C390579120C35EAE8DC6709057F9C663B9A8C4E516B",
+      "verifiedOwnedSources": 4
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n2-20261101-202438-658-n6-shared-reader-green-84664abf\\receipt.json",
+      "SHA256": "518C2B461E08922C67F0BCE572DE7199221C98651B3FEB55FAA70563EE81562D",
+      "verifiedOwnedSources": 2
+    }
+  ],
+  "diagnosticNativeRun": "pending",
+  "productSHA256": "A381709038C3E37D66FAA4154D4C28C699327D91E48526FD8A9CF1630ED74041",
+  "driverSHA256": "C1458CE8DB233B509D413595FBFB9A468A60BDCD3277B708658D363CA2ED40B7"
+}

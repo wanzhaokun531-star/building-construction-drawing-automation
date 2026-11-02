@@ -1,0 +1,66 @@
+FAIL: native clone/readback/persistence core completion
+FAIL: all frozen original213 public snapshots preserved
+FAIL: one distinct native elevation clone
+FAIL: pure-X fixture placement, no Y/Z elevation substitute
+FAIL: original and clone retain actual proprietary elevation class
+FAIL: complete public grip positions exactly X+40000
+FAIL: complete public stretch positions exactly X+40000
+FAIL: native bounds exactly pure-X translated
+FAIL: source: generic public readback completed
+FAIL: source: actual native root unchanged by const explode
+FAIL: source: no unknown leaves or inferred values
+FAIL: source: every caller-owned transient released exactly once
+FAIL: source: actual native Text/MText payloads recorded
+FAIL: source: real public explode calls complete
+FAIL: initial: generic public readback completed
+FAIL: initial: actual native root unchanged by const explode
+FAIL: initial: no unknown leaves or inferred values
+FAIL: initial: every caller-owned transient released exactly once
+FAIL: initial: actual native Text/MText payloads recorded
+FAIL: initial: real public explode calls complete
+FAIL: initial native persistence stage completed
+FAIL: full save and independent fresh214 reader
+FAIL: original213 and native clone geometry persist
+FAIL: live snapshot: generic public readback completed
+FAIL: live snapshot: actual native root unchanged by const explode
+FAIL: live snapshot: no unknown leaves or inferred values
+FAIL: live snapshot: every caller-owned transient released exactly once
+FAIL: live snapshot: actual native Text/MText payloads recorded
+FAIL: live snapshot: real public explode calls complete
+FAIL: saved snapshot: generic public readback completed
+FAIL: saved snapshot: actual native root unchanged by const explode
+FAIL: saved snapshot: no unknown leaves or inferred values
+FAIL: saved snapshot: every caller-owned transient released exactly once
+FAIL: saved snapshot: actual native Text/MText payloads recorded
+FAIL: saved snapshot: real public explode calls complete
+FAIL: baseline original CE8F: generic public readback completed
+FAIL: baseline original CE8F: no unknown leaves or inferred values
+FAIL: baseline original CE8F: actual generic transient tree, without Axis/circle assumption
+FAIL: baseline original CE8F: real public explode calls complete
+FAIL: baseline original CE90: generic public readback completed
+FAIL: baseline original CE90: no unknown leaves or inferred values
+FAIL: baseline original CE90: actual generic transient tree, without Axis/circle assumption
+FAIL: baseline original CE90: real public explode calls complete
+FAIL: baseline original CE91: generic public readback completed
+FAIL: baseline original CE91: no unknown leaves or inferred values
+FAIL: baseline original CE91: actual generic transient tree, without Axis/circle assumption
+FAIL: baseline original CE91: real public explode calls complete
+FAIL: baseline original CE92: generic public readback completed
+FAIL: baseline original CE92: no unknown leaves or inferred values
+FAIL: baseline original CE92: actual generic transient tree, without Axis/circle assumption
+FAIL: baseline original CE92: real public explode calls complete
+FAIL: baseline original CE93: generic public readback completed
+FAIL: baseline original CE93: no unknown leaves or inferred values
+FAIL: baseline original CE93: actual generic transient tree, without Axis/circle assumption
+FAIL: baseline original CE93: real public explode calls complete
+FAIL: baseline original CFC4: generic public readback completed
+FAIL: baseline original CFC4: no unknown leaves or inferred values
+FAIL: baseline original CFC4: actual generic transient tree, without Axis/circle assumption
+FAIL: baseline original CFC4: real public explode calls complete
+FAIL: live: complete actual6 original elevation handle set
+FAIL: saved: complete actual6 original elevation handle set
+FAIL: all6 original elevation actual text/zero-sign formatting unchanged live and after fresh save
+FAIL: isolated initial snapshot file
+assertions=110 passed=47 failed=63 core=FAIL elevation_roundtrip=NOT_ATTEMPTED
+actualSavedText=[]
+numericReadiness=MISSING_UNIQUE_THREE_DECIMAL_FORMAT_BINDING

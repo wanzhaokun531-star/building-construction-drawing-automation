@@ -1,0 +1,12 @@
+{
+  "version": "v157",
+  "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-161841",
+  "nonce": "6dcfdf8d79e142d491e9c1ab823f77ee",
+  "control": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-161841\\axis-spike\\control.dwg",
+  "log": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-161841\\axis-spike\\drawing-edit.log",
+  "source": "D:\\修改.dwg",
+  "sourceSHA256": "1D73F911C4DBE944DDD5AD35FDE0C0AA4410F61AE2E46B48081C67571536A4DB",
+  "numbered": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-161841\\axis-spike\\axis-renumber-21.dwg",
+  "shifted": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-161841\\axis-spike\\axis-line-stretch-123.dwg",
+  "expectedModelCount": 241
+}

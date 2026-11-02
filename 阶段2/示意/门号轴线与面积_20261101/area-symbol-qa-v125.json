@@ -1,0 +1,715 @@
+{
+  "contract": "bcp.area-symbol-native-qa.v1",
+  "version": "v125",
+  "pluginCodeChanged": false,
+  "typography": {
+    "source": "TCH CFCF public explode",
+    "superscriptHeightFactor": 0.5,
+    "baselineRiseFactor": 0.6620111731843575,
+    "objects": "two AcDbText grouped per annotation; ordinary text allowed by user"
+  },
+  "floors": [
+    {
+      "floor": 1,
+      "rooms": 10,
+      "groupedLabels": 11,
+      "modelRoots": 272,
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门号轴线与面积_20261101\\方案施工图_一层_面积符号确认样张_v4.dwg",
+      "DWGSHA256": "1484F1C4E2E721FD9671F275B47B1A1574A412342037E3F8CF15A0E89781D2B6",
+      "previewJob": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161104-floor1",
+      "PDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161104-floor1\\stage2-A2-1-100.pdf",
+      "reopenedGroups": {
+        "F1-R01": [
+          {
+            "handle": "8623",
+            "text": "5.96m",
+            "height": 240.0,
+            "position": [
+              32983.98724249265,
+              35245.77246117386,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          },
+          {
+            "handle": "86A5",
+            "text": "2",
+            "height": 120.0,
+            "position": [
+              33667.41581392123,
+              35404.65514273811,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          }
+        ],
+        "F1-R02": [
+          {
+            "handle": "8625",
+            "text": "15.52m",
+            "height": 240.0,
+            "position": [
+              34844.55867106408,
+              29325.77246117386,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          },
+          {
+            "handle": "86A7",
+            "text": "2",
+            "height": 120.0,
+            "position": [
+              35646.8443853498,
+              29484.6551427381,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          }
+        ],
+        "F1-R03": [
+          {
+            "handle": "8627",
+            "text": "12.12m",
+            "height": 240.0,
+            "position": [
+              34089.89591450218,
+              26836.68777216925,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          },
+          {
+            "handle": "86A9",
+            "text": "2",
+            "height": 120.0,
+            "position": [
+              34862.46734307361,
+              26995.5704537335,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          }
+        ],
+        "F1-R04": [
+          {
+            "handle": "8629",
+            "text": "4.31m",
+            "height": 180.0,
+            "position": [
+              35067.05867106408,
+              35615.41899441341,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          },
+          {
+            "handle": "86AB",
+            "text": "2",
+            "height": 90.0,
+            "position": [
+              35557.3443853498,
+              35734.58100558659,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          }
+        ],
+        "F1-R05": [
+          {
+            "handle": "862B",
+            "text": "69.42m",
+            "height": 240.0,
+            "position": [
+              44414.45633188379,
+              28255.88621648807,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          },
+          {
+            "handle": "86AD",
+            "text": "2",
+            "height": 120.0,
+            "position": [
+              45246.45633188379,
+              28414.76889805232,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          }
+        ],
+        "F1-R06": [
+          {
+            "handle": "862D",
+            "text": "14.14m",
+            "height": 240.0,
+            "position": [
+              44879.41581392122,
+              32485.77246119337,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          },
+          {
+            "handle": "86AF",
+            "text": "2",
+            "height": 120.0,
+            "position": [
+              45651.98724249264,
+              32644.65514275762,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          }
+        ],
+        "F1-R07": [
+          {
+            "handle": "862F",
+            "text": "15.57m",
+            "height": 240.0,
+            "position": [
+              49344.55867106448,
+              32325.77246119337,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          },
+          {
+            "handle": "86B1",
+            "text": "2",
+            "height": 120.0,
+            "position": [
+              50146.8443853502,
+              32484.65514275762,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          }
+        ],
+        "F1-R08": [
+          {
+            "handle": "8631",
+            "text": "17.88m",
+            "height": 200.0,
+            "position": [
+              48740.22881827555,
+              25983.79888268156,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          },
+          {
+            "handle": "86B3",
+            "text": "2",
+            "height": 100.0,
+            "position": [
+              49408.80024684697,
+              26116.20111731844,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          }
+        ],
+        "F1-R09": [
+          {
+            "handle": "8633",
+            "text": "1.78m",
+            "height": 150.0,
+            "position": [
+              48609.46428571428,
+              30437.84916201118,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          },
+          {
+            "handle": "86B5",
+            "text": "2",
+            "height": 75.0,
+            "position": [
+              49018.03571428571,
+              30537.15083798883,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          }
+        ],
+        "F1-R10": [
+          {
+            "handle": "8635",
+            "text": "3.20m",
+            "height": 240.0,
+            "position": [
+              49823.98724249264,
+              30905.77246117473,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          },
+          {
+            "handle": "86B7",
+            "text": "2",
+            "height": 120.0,
+            "position": [
+              50507.41581392122,
+              31064.65514273898,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          }
+        ],
+        "F1-TOTAL": [
+          {
+            "handle": "8639",
+            "text": "本层总建筑面积：189.78m",
+            "height": 300.0,
+            "position": [
+              39252.53685493558,
+              19600.0,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          },
+          {
+            "handle": "86B9",
+            "text": "2",
+            "height": 150.0,
+            "position": [
+              41576.69651880112,
+              19798.6033519553,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          }
+        ]
+      },
+      "steps": [
+        {
+          "serial": "ad3e54557c7c43c588ec8c53eaaf4b99",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-160641\\dispatch_ad3e54557c7c43c588ec8c53eaaf4b99.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "a12f8df948a740f39a16b744818bca5c",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-160641",
+            "processId": 25300,
+            "desktop": "CodexS1_a12f8df948a740f39a16b744818bca5c",
+            "inputDesktop": "Default",
+            "serial": "ad3e54557c7c43c588ec8c53eaaf4b99",
+            "command": "S1OPENPROBECONTROL",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161104-floor1",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161104-floor1\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "3d6dcebf25b34ea4b0d8e93b140dd5fc",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-160641\\dispatch_3d6dcebf25b34ea4b0d8e93b140dd5fc.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "a12f8df948a740f39a16b744818bca5c",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-160641",
+            "processId": 25300,
+            "desktop": "CodexS1_a12f8df948a740f39a16b744818bca5c",
+            "inputDesktop": "Default",
+            "serial": "3d6dcebf25b34ea4b0d8e93b140dd5fc",
+            "command": "S1PHASE2EXECUTE",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161104-floor1",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161104-floor1\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "0c8d42603c3744328ddea00e5faa91eb",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-160641\\dispatch_0c8d42603c3744328ddea00e5faa91eb.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "a12f8df948a740f39a16b744818bca5c",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-160641",
+            "processId": 25300,
+            "desktop": "CodexS1_a12f8df948a740f39a16b744818bca5c",
+            "inputDesktop": "Default",
+            "serial": "0c8d42603c3744328ddea00e5faa91eb",
+            "command": "S1PHASE2PREVIEW",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161104-floor1",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161104-floor1\\control.dwg",
+            "error": null
+          }
+        }
+      ],
+      "sourcePreserved": true
+    },
+    {
+      "floor": 2,
+      "rooms": 10,
+      "groupedLabels": 11,
+      "modelRoots": 260,
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门号轴线与面积_20261101\\方案施工图_二层_面积符号确认样张_v4.dwg",
+      "DWGSHA256": "868F77608B8A9CB8D96E15C699DBE3B54FBCBD77F9EB9E0842956C8DEAB8976B",
+      "previewJob": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161107-floor2",
+      "PDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161107-floor2\\stage2-A2-1-100.pdf",
+      "reopenedGroups": {
+        "F2-R01": [
+          {
+            "handle": "8619",
+            "text": "5.96m",
+            "height": 240.0,
+            "position": [
+              79405.98724249264,
+              34605.77246117386,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          },
+          {
+            "handle": "869A",
+            "text": "2",
+            "height": 120.0,
+            "position": [
+              80089.41581392122,
+              34764.65514273811,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          }
+        ],
+        "F2-R02": [
+          {
+            "handle": "861B",
+            "text": "4.31m",
+            "height": 180.0,
+            "position": [
+              81489.05867106408,
+              35615.41899441341,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          },
+          {
+            "handle": "869C",
+            "text": "2",
+            "height": 90.0,
+            "position": [
+              81979.34438534979,
+              35734.58100558659,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          }
+        ],
+        "F2-R03": [
+          {
+            "handle": "861D",
+            "text": "15.57m",
+            "height": 240.0,
+            "position": [
+              86656.55867106433,
+              34465.7724611741,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          },
+          {
+            "handle": "869E",
+            "text": "2",
+            "height": 120.0,
+            "position": [
+              87458.84438535002,
+              34624.65514273834,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          }
+        ],
+        "F2-R04": [
+          {
+            "handle": "861F",
+            "text": "32.88m",
+            "height": 240.0,
+            "position": [
+              85931.70152820693,
+              30345.7724611744,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          },
+          {
+            "handle": "86A0",
+            "text": "2",
+            "height": 120.0,
+            "position": [
+              86763.70152820693,
+              30504.65514273864,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          }
+        ],
+        "F2-R05": [
+          {
+            "handle": "8621",
+            "text": "17.88m",
+            "height": 200.0,
+            "position": [
+              86424.22881829418,
+              25983.79888268156,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          },
+          {
+            "handle": "86A2",
+            "text": "2",
+            "height": 100.0,
+            "position": [
+              87092.8002468656,
+              26116.20111731844,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          }
+        ],
+        "F2-R06": [
+          {
+            "handle": "8623",
+            "text": "14.14m",
+            "height": 240.0,
+            "position": [
+              91141.4158139217,
+              35525.77246119101,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          },
+          {
+            "handle": "86A4",
+            "text": "2",
+            "height": 120.0,
+            "position": [
+              91913.98724249312,
+              35684.65514275525,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          }
+        ],
+        "F2-R07": [
+          {
+            "handle": "8625",
+            "text": "15.57m",
+            "height": 240.0,
+            "position": [
+              95766.55867106454,
+              32325.77246119101,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          },
+          {
+            "handle": "86A6",
+            "text": "2",
+            "height": 120.0,
+            "position": [
+              96568.84438535024,
+              32484.65514275525,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          }
+        ],
+        "F2-R08": [
+          {
+            "handle": "8627",
+            "text": "17.88m",
+            "height": 200.0,
+            "position": [
+              95162.22881827554,
+              25983.79888268156,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          },
+          {
+            "handle": "86A8",
+            "text": "2",
+            "height": 100.0,
+            "position": [
+              95830.80024684696,
+              26116.20111731844,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          }
+        ],
+        "F2-R09": [
+          {
+            "handle": "8629",
+            "text": "1.78m",
+            "height": 150.0,
+            "position": [
+              95031.46428571429,
+              30437.84916201118,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          },
+          {
+            "handle": "86AA",
+            "text": "2",
+            "height": 75.0,
+            "position": [
+              95440.03571428572,
+              30537.15083798883,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          }
+        ],
+        "F2-R10": [
+          {
+            "handle": "862B",
+            "text": "3.20m",
+            "height": 240.0,
+            "position": [
+              96265.98724249341,
+              31015.77246117619,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          },
+          {
+            "handle": "86AC",
+            "text": "2",
+            "height": 120.0,
+            "position": [
+              96949.415813922,
+              31174.65514274044,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          }
+        ],
+        "F2-TOTAL": [
+          {
+            "handle": "862E",
+            "text": "本层总建筑面积：153.49m",
+            "height": 300.0,
+            "position": [
+              85674.53685493558,
+              19600.0,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          },
+          {
+            "handle": "86AE",
+            "text": "2",
+            "height": 150.0,
+            "position": [
+              87998.69651880112,
+              19798.6033519553,
+              0
+            ],
+            "style": "_TCH_WINDOW"
+          }
+        ]
+      },
+      "steps": [
+        {
+          "serial": "0427a643793b42f7b5e3654dc5868c24",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-160641\\dispatch_0427a643793b42f7b5e3654dc5868c24.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "a12f8df948a740f39a16b744818bca5c",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-160641",
+            "processId": 25300,
+            "desktop": "CodexS1_a12f8df948a740f39a16b744818bca5c",
+            "inputDesktop": "Default",
+            "serial": "0427a643793b42f7b5e3654dc5868c24",
+            "command": "S1OPENPROBECONTROL",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161107-floor2",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161107-floor2\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "d38edc018d4c4f12a17cf325d770d78e",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-160641\\dispatch_d38edc018d4c4f12a17cf325d770d78e.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "a12f8df948a740f39a16b744818bca5c",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-160641",
+            "processId": 25300,
+            "desktop": "CodexS1_a12f8df948a740f39a16b744818bca5c",
+            "inputDesktop": "Default",
+            "serial": "d38edc018d4c4f12a17cf325d770d78e",
+            "command": "S1PHASE2EXECUTE",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161107-floor2",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161107-floor2\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "19ef2645a0e3429a91f34a0e6342b17b",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-160641\\dispatch_19ef2645a0e3429a91f34a0e6342b17b.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "a12f8df948a740f39a16b744818bca5c",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-160641",
+            "processId": 25300,
+            "desktop": "CodexS1_a12f8df948a740f39a16b744818bca5c",
+            "inputDesktop": "Default",
+            "serial": "19ef2645a0e3429a91f34a0e6342b17b",
+            "command": "S1PHASE2PREVIEW",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161107-floor2",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161107-floor2\\control.dwg",
+            "error": null
+          }
+        }
+      ],
+      "sourcePreserved": true
+    }
+  ]
+}

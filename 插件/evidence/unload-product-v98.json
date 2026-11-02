@@ -1,0 +1,42 @@
+{
+  "contract": "bcp.native-product-unload.v1",
+  "asCommand": true,
+  "lockedBefore": false,
+  "apiReturn": true,
+  "loadedAfter": false,
+  "unloaded": true,
+  "commandsRemoved": true,
+  "COMUsed": false,
+  "ComputerUseUsed": false,
+  "error": null,
+  "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-090434",
+  "nonce": "50ea6cde35a549bc9f58acc084b7a18f",
+  "processId": 39952,
+  "moduleSHA256": "A13736594EB546C57FC7D5F7051AB2E917AC1BE67E5557C6E22FCADA800EB1C6",
+  "job": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-unload-20261101-090928",
+  "reportSHA256": "E891EC8A4584863C5D3EAAA675C32C16F7BAC48144470D458BCF3FE6E1B22318",
+  "step": {
+    "serial": "6c172422b4e14a43a718136dc7046afc",
+    "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-090434\\dispatch_6c172422b4e14a43a718136dc7046afc.json",
+    "idleState": {
+      "contract": "stage1.quiet-worker-state.v1",
+      "nonce": "50ea6cde35a549bc9f58acc084b7a18f",
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-090434",
+      "processId": 39952,
+      "desktop": "CodexS1_50ea6cde35a549bc9f58acc084b7a18f",
+      "inputDesktop": "Default",
+      "serial": "6c172422b4e14a43a718136dc7046afc",
+      "command": "S1PHASE2EXECUTE",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-unload-20261101-090928",
+      "phase": "idle",
+      "commandStarted": true,
+      "commandEnded": true,
+      "commandFailed": false,
+      "cmdActive": 0,
+      "inputPending": 0,
+      "nativePending": false,
+      "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-product-20261101-090629\\control.dwg",
+      "error": null
+    }
+  }
+}

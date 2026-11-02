@@ -1,0 +1,100 @@
+{
+  "contract": "bcp.interior-door-lower-pending.v1",
+  "recorded": "2026-10-31T22:41:23.396777",
+  "rule": "门扇开启侧的下方空白处",
+  "status": "pending-native-verification",
+  "nativeValidated": false,
+  "newDWG": null,
+  "scope": {
+    "interiorDoorCaptions": 11,
+    "exteriorDoorCaptionsUnchanged": 3,
+    "noSwingArcSourceOpenings": [
+      "CD89",
+      "CDBD"
+    ]
+  },
+  "candidateARXSHA256": "8D4E4ACC94164F6E013573F67FFB6001AE53BF52DB32A9D1E61C2F352691DF2D",
+  "sourceArchive": "D:\\Codex\\建筑施工图自动化\\插件\\revisions\\door-opening-side-lower-pending-20261031",
+  "offlineTests": {
+    "cppPolicy": 19,
+    "pythonGeometryGate": 4,
+    "pythonDoorStroke": 8,
+    "nativeSourcePrimitiveWitnesses": 88
+  },
+  "nativeSpike": {
+    "version": "v93",
+    "purpose": "old placement plus read-only graphic probe, not new layout validation"
+  },
+  "failedAttempt": {
+    "version": "v94",
+    "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261031-222438",
+    "workerReady": {
+      "contract": "stage1.quiet-worker-ready.v1",
+      "nonce": "40bf0ee325a846278076ccebc8d50fb5",
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261031-222438",
+      "processId": 31264,
+      "desktop": "CodexS1_40bf0ee325a846278076ccebc8d50fb5",
+      "inputDesktop": "",
+      "timerStarted": false,
+      "comUsed": false,
+      "error": "worker must remain on its private non-input desktop"
+    },
+    "inputDesktopReadErrors": 443,
+    "outputAbsent": true,
+    "workerExited": true,
+    "workerUserDesktopShowEvents": 0,
+    "workerForegroundEvents": 0
+  },
+  "latestDesktopCheck": "OpenInputDesktop failed",
+  "publishedReleaseUnchangedDWGSHA256": "532E98D0CB143F4E17CA258EE58D6269BA6AFEC47E1A3FC53276C751C9112C05",
+  "sourceFiles": {
+    "BuildingPlanPlugin2020_未通过原生验收.arx": "8D4E4ACC94164F6E013573F67FFB6001AE53BF52DB32A9D1E61C2F352691DF2D",
+    "插件\\src\\BuildingPlanPlugin2020.cpp": "C1A51EC5B0FA3C0D4258E65BC9A5A014859A5480CD70290AEC45F4EB397DFAE1",
+    "插件\\src\\BuildingPlanPlugin2020.vcxproj": "31775F243D33628DEDA598B8BF03CC3AFE083641B47A1EBDD1DC896566ADD9CB",
+    "插件\\src\\PluginPolicy.cpp": "6D1B63C26E7C76FE9BA54AB475BB4B8F3BF774C97908510BFF6467DC1DC692EB",
+    "插件\\src\\PluginPolicy.h": "90270C8559E70289212D951B20B5D54D674F80781E196F9EE33A574302E39C26",
+    "插件\\src\\ProductAudit.inc": "75E47D5F4155FBDE7564F0262B73F466F09843A7C70293AF7A9E89D70B417937",
+    "插件\\src\\ProductRuntime.inc": "2B867E0D51998A855A7A06D46609C4BD2CA9EC92F03D9A005ECC1640662439A3",
+    "插件\\tests\\PolicyTests.cpp": "8D7C2663C10C69BE698620315D92504D2BA35B1401EB6F8DC9CD7B065EB0E1B2",
+    "插件\\tests\\test_door_lower.py": "C2D70CECAE99C4699F150E6962FDE97CDC83A43C79634E609B815FE832592E24",
+    "插件\\tests\\test_native_gate.py": "10ECB96BB1FE8D0365F5AA625CF20A511BF110F0E38E803DDFD2B7B730E8880E",
+    "插件\\tools\\run_native.py": "E5817B97C7708A4D1AB302033B3C950F749CC37F3A07D2B728B93D08C45F7E22",
+    "插件\\tools\\verify_native.py": "C0D26D51AFAD49E940E5D81082BC61AB0E69268A575D9EE4036562704F0CEF70",
+    "阶段2\\src\\AnalyseMain.cpp": "47F14CE44BF12B4BCB78A5D43148ACA4A1C20015CAD893F814E687DE02640CB6",
+    "阶段2\\src\\ApronGeometry.cpp": "00B43EE9A154C5ECCCB7DD48EA21826906BB691974729960629612D11B503F03",
+    "阶段2\\src\\ApronGeometry.h": "D9DCFA9E991D2B4FF4A31EDEAC19B59393041897C95E45A0D992BED7D80F0898",
+    "阶段2\\src\\BuildingPlan2020.vcxproj": "1E12D0AD767D3C12CCF2155405ECE825AD24F7D5163352619A472255BBB3B69C",
+    "阶段2\\src\\DoorCaptionLayout.h": "CD9A210A33A7AE4C280E14A2FA757B71E1BD36A12E3E5D6EB33B6E5979975550",
+    "阶段2\\src\\GroupEndpoints.cpp": "613FED53D58E3C90892D1B9D4F6136856E8D6375B836AEA8555A8C8D5A85F2CC",
+    "阶段2\\src\\NativeAllDimensionEditing.inc": "BFDBDB2F909B6D82AFAFAB9B9639AB3FABC9CF627FD772977E7D19356945BD50",
+    "阶段2\\src\\NativeAnnotationFactory.inc": "57B0687BE368100B51202EB59E040132A60FCF34B24168B062FB79703A06154F",
+    "阶段2\\src\\NativeApronGeometry.inc": "9AE148194E4DE3E529EAB5BD12B9E7606E4A7F7B3EAC93261AAF2EB9F02A9E8E",
+    "阶段2\\src\\NativeAxisReferenceStudy.inc": "A5F3D6EC1D5E70901E69423E9146F17F4C7B4F22F405B4038A4EBEC5C021FEF1",
+    "阶段2\\src\\NativeAxisSideLayout.inc": "693B2E789224D9950FE0B3905A06FD5C46F0D14777C46719E5C4963194255352",
+    "阶段2\\src\\NativeChainProbe.inc": "2BB3ADA9E687DE269542E8CB3281A490E9D26E8BD5273184ECD427B27FDBEB19",
+    "阶段2\\src\\NativeDimensionGapLayout.inc": "D9B57E7F496AF63E582386C4CB78E761D84E4B651357DDD0A4F64FCD32CD6B41",
+    "阶段2\\src\\NativeDirectOpeningDimensions.inc": "23ADF040B5FE6AB3D17FCE1CFBCDBF9CF2836C472EC9D12073163F4770AC6B96",
+    "阶段2\\src\\NativeDoorCaptionClearance.inc": "38AF4DD938980EFC3DAF1F6494C85BB0EFA5C5E2B1A0851F02AFC3832BE2D353",
+    "阶段2\\src\\NativeFullAxisLines.inc": "24D063D75B623895C96D71AE391B89AC8FF8247E4DAF0C0DB0DE1E02574CFECF",
+    "阶段2\\src\\NativeGroupEndpoints.inc": "69B15442F07E403D2E27C3344025F1FFC60FFE355BFDEFE56891668C93D7E561",
+    "阶段2\\src\\NativeInteriorDoorCaptions.inc": "1251EE53BF708E1708331826F4C233E43EDBD4C3BFA6CB3B233FD40F3550411E",
+    "阶段2\\src\\NativeLayerStandardStudy.inc": "E2F394BD7E6D461CE79F68B5FCA67C01294417291578261E900145E982ADDF7E",
+    "阶段2\\src\\NativeOpeningAnnotations.inc": "4CFBA660E244F701DC28E1929E1493412A87B758F5BEF0E07A51D8467E8863D0",
+    "阶段2\\src\\NativePerimeterSpacingTrial.inc": "B7F962E35DA728ACC971CB841C6AA04C7C11A00AE7AB7310979390AC6A8F863A",
+    "阶段2\\src\\NativeUnifiedLayers.inc": "DEB7B7A8689C230656891B838BC1A632E35FCEE77D8958A771D548F26106EEF3",
+    "阶段2\\src\\NativeWholeDimensionChains.inc": "FD00D77263B74F339F5EC4576EBAAABB6F3D6BC5C256966C58089BEE9131869B",
+    "阶段2\\src\\PlanRules.cpp": "46811C50DEFF14CFF768F90126C05B1A97575BD0D951273345D43AEE8859C50F",
+    "阶段2\\src\\PlanRules.h": "691BC530D35EF2C30F5544B074C92EFB59F42F89208AED398A1BA7B4588BDACE",
+    "阶段2\\src\\Stage2Arx.cpp": "9614D12982FA6B4E206B78E6443B98632F8CA2D88EDBF2607C384547751262BD",
+    "阶段2\\src\\UniqueRawParts.h": "8AA12E52DC0C0D0B6CBC06AFB2A91808268E88B930B4B61FC3DA874ED3B17536",
+    "阶段2\\src\\WallTopology.cpp": "9DBCFE04F9E4058FED5E695DDFC050A63CA392D9451C345519839DBDBE9F5B54"
+  },
+  "remaining": [
+    "fresh isolated session after normal input desktop is readable",
+    "native BCP_BUILD, handle zero-safe-candidate case without relaxing avoidance",
+    "reopen plus independent scope/stroke/wall/text/dimension checks",
+    "inspect actual lower blank and furniture clearance in all 11 positions",
+    "confirm two no-arc side fallbacks in pending list",
+    "fresh final review, unload, owned host cleanup, new release without overwriting 0.1"
+  ]
+}

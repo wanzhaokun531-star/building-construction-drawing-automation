@@ -1,0 +1,23 @@
+{
+  "reason": "v1 actual timeout before first defaults receipt; no main business report; native original defaults restoration unproven",
+  "sourceSession": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-122821",
+  "sourceRun": "quiet-elevationroundtrip-20261029-122955-760278",
+  "files": {
+    "NativeElevationUiBridge.inc": {
+      "sha256": "3DD43382A5F6F41E46EDA229AF5E5EB0FB39F206C6A932FC5945377CC9A1E8AC",
+      "bytes": 27029
+    },
+    "NativeElevationRoundTripUiProbe.inc": {
+      "sha256": "29EB7CA88D0ACA62E1F74057591041EA8BE9D88CC4AE629C2417925C39088F3E",
+      "bytes": 19753
+    },
+    "NativeElevationDialogProbe.inc": {
+      "sha256": "01DF79966CA1F65F37EB4B083C2C7C1E5CE8F69271EBB2A1B4B6DE3EDF6462DB",
+      "bytes": 25880
+    },
+    "NativeAccessProbe.arx": {
+      "sha256": "8785406B04E4E304D0FB02E4B1D4D0C9C2C5E264FEA570752AA308AA6B6EBCCE",
+      "bytes": 1869824
+    }
+  }
+}

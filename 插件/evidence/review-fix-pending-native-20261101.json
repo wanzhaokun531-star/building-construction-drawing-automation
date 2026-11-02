@@ -1,0 +1,23 @@
+{
+  "contract": "bcp.review-author-fix-pending.v1",
+  "reviewer": "input_adaptation_final_review",
+  "findings": 3,
+  "oneAuthorFixPass": true,
+  "secondFreshReview": false,
+  "publisherResourceAndHostMutationsPassed": true,
+  "captionGateRejectsOldV115": true,
+  "candidateARXSHA256": "835B9E0F67B65C0F3A43F06F0C443BFB2029B1CBFACEB751C24938B894631FEA",
+  "candidateNativeRunCompleted": false,
+  "lastNativeAttempt": "v116",
+  "nativeBlock": "Windows OpenInputDesktop failed before CreateProcess",
+  "prestartEvidence": "阶段2/evidence/prestart-failure-v116.json",
+  "needs": [
+    "new isolated session after input desktop restored",
+    "original extra-root regression",
+    "two-panel generation and actual caption collision QA",
+    "latest bundle/installer binding and tests",
+    "normal module unload and exact host/staging closure",
+    "final publication"
+  ],
+  "releasePerformed": false
+}

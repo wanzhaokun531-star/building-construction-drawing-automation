@@ -1,0 +1,78 @@
+{
+  "job": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-154055-514248-floor1",
+  "controlSHA256": "79C230353D6965DF05828EADBC3C13B59033F8165E7E946B6D526FC42931C1FB",
+  "steps": [
+    {
+      "serial": "b95fc423453b4e0a88273154228a0cd2",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-153425\\dispatch_b95fc423453b4e0a88273154228a0cd2.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "92c05991d0f246249223289f004f9abd",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-153425",
+        "processId": 30544,
+        "desktop": "CodexS1_92c05991d0f246249223289f004f9abd",
+        "inputDesktop": "Default",
+        "serial": "b95fc423453b4e0a88273154228a0cd2",
+        "command": "S1OPENPROBECONTROL",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-154055-514248-floor1",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-154055-514248-floor1\\control.dwg",
+        "error": null
+      }
+    },
+    {
+      "serial": "c66ff6a997bf4b96ab5e58bfe0a0377f",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-153425\\dispatch_c66ff6a997bf4b96ab5e58bfe0a0377f.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "92c05991d0f246249223289f004f9abd",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-153425",
+        "processId": 30544,
+        "desktop": "CodexS1_92c05991d0f246249223289f004f9abd",
+        "inputDesktop": "Default",
+        "serial": "c66ff6a997bf4b96ab5e58bfe0a0377f",
+        "command": "S1PHASE2EXECUTE",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-154055-514248-floor1",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-154055-514248-floor1\\control.dwg",
+        "error": null
+      }
+    },
+    {
+      "serial": "f10091aea77142858d0d10c24c5fb38b",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-153425\\dispatch_f10091aea77142858d0d10c24c5fb38b.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "92c05991d0f246249223289f004f9abd",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-153425",
+        "processId": 30544,
+        "desktop": "CodexS1_92c05991d0f246249223289f004f9abd",
+        "inputDesktop": "Default",
+        "serial": "f10091aea77142858d0d10c24c5fb38b",
+        "command": "S1PHASE2PREVIEW",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-154055-514248-floor1",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-154055-514248-floor1\\control.dwg",
+        "error": null
+      }
+    }
+  ]
+}

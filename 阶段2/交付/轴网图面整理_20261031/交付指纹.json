@@ -1,0 +1,80 @@
+{
+  "contract": "bcp.axis-presentation.delivery.v1",
+  "directory": "D:\\Codex\\建筑施工图自动化\\阶段2\\交付\\轴网图面整理_20261031",
+  "files": [
+    {
+      "name": "analysis.json",
+      "SHA256": "D68380996B93510D16E548834014C1C923D85A50F9817EFEF922B49A4035E4C3",
+      "bytes": 26405
+    },
+    {
+      "name": "native-annotations.json",
+      "SHA256": "B7BE7175105705824A30B9A8A0C4D3D59651BC280AED41AC6D7ED7005339FCE6",
+      "bytes": 39159
+    },
+    {
+      "name": "native-foundation.json",
+      "SHA256": "41E9FBDAE0DCD643F7D24FD889CA21BDBCAD419DF530A6DEAD0699D305B0746F",
+      "bytes": 760
+    },
+    {
+      "name": "全四侧尺寸与轴线出图检查.json",
+      "SHA256": "DD31C4240E97DB09CD07EDAA5B0178B730BA1307B9ECEE102C728E6DBAD87FE0",
+      "bytes": 9914
+    },
+    {
+      "name": "完整逻辑轴线.csv",
+      "SHA256": "A83B80AFA903E726E6054BAD112E9149C6732D7C487C755D77F65124DCC89913",
+      "bytes": 2845
+    },
+    {
+      "name": "待确认清单.csv",
+      "SHA256": "D65871C6DB8F788214950E3C09E59F982F26AEDE4DD6EE9F8764C1149B6F80A5",
+      "bytes": 2873
+    },
+    {
+      "name": "方案施工图_轴网图面整理.dwg",
+      "SHA256": "4D737D63FD6D5496D51444FC31D7C7750BBEF7D7B995F915A634D10C89E71B9D",
+      "bytes": 3261156
+    },
+    {
+      "name": "施工图预览.png",
+      "SHA256": "BDCA0C8DCF31A21699B0A41ACEC4FBE461B26D32B308AAA69594D7E12D2064EC",
+      "bytes": 169397
+    },
+    {
+      "name": "第二道尺寸及测点.csv",
+      "SHA256": "9ED49DEA5D42B99B465E6AD7DBDE8724826D0E1785E20678FD3EF637D2E631F0",
+      "bytes": 1760
+    },
+    {
+      "name": "轴线显示分段及逻辑组.csv",
+      "SHA256": "52B820ED3F95A0A98F785667BCF60CB122BA61290AAA3B88C2CED64A4A0B8DE3",
+      "bytes": 3683
+    },
+    {
+      "name": "轴网图面整理_A2.pdf",
+      "SHA256": "1E3829B2FF027BC57441BDE682A509DA1549DEF5CB4F32246A9372D1CDA79054",
+      "bytes": 129041
+    },
+    {
+      "name": "输入保护及宿主清理.json",
+      "SHA256": "3A5832FD4E71CD2F7F411CA70EBCBF28429916AB0F5BB73C614205C56F85C74A",
+      "bytes": 7667
+    },
+    {
+      "name": "阅读说明.txt",
+      "SHA256": "95CCE24237D261EFF94499B1BC78815FB4B09D66781391F68681F84A4844BA31",
+      "bytes": 833
+    },
+    {
+      "name": "验证报告.md",
+      "SHA256": "2E99563990E618ED5C654D95403600173E0D22E87249FA72A176359776791CB2",
+      "bytes": 3192
+    }
+  ],
+  "nativeRun": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\native-run-v31.json",
+  "gate": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\axis-presentation-release-v31-final.json",
+  "sourceCandidateARXSHA256": "FE7E70D22D401B1F7FB8875636FF041193D156F16A947C5C575D79374F6E4837",
+  "constructionDrawingComplete": false
+}

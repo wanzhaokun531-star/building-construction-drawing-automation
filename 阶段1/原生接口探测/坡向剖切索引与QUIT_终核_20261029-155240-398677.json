@@ -1,0 +1,374 @@
+{
+  "contract": "stage1.symbol-and-quit-closure.v1",
+  "recorded": "2026-10-29T15:52:40.403146+08:00",
+  "phase2Started": false,
+  "phase1FullAcceptance": false,
+  "COMUsed": false,
+  "ComputerUseUsed": false,
+  "binarySHA256": "987D633C3CBE660E3AEDF7B2D8DD2B11083F55D409BED182CC67BBD4E2384C1E",
+  "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-154336",
+  "inputs": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\方案平面图.dwg",
+      "SHA256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+      "previouslyRecordedSHA256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+      "unchanged": true,
+      "bytes": 3266205,
+      "lastWrite": "2026-10-28T15:28:17.348557+08:00",
+      "role": "unmodified frozen test input",
+      "scope": "File bytes only; no new architectural-change inference or overwrite"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\施工图平面参考图.dwg",
+      "SHA256": "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27",
+      "previouslyRecordedSHA256": "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27",
+      "unchanged": true,
+      "bytes": 378381,
+      "lastWrite": "2026-10-28T15:28:17.368514+08:00",
+      "role": "unmodified frozen test input",
+      "scope": "File bytes only; no new architectural-change inference or overwrite"
+    },
+    {
+      "path": "D:\\cad插件\\方案平面图.dwg",
+      "SHA256": "70554DC491164990145FB46E0DD3F54F7B2E69A9739675EC7FAAC8B80B73EF37",
+      "previouslyRecordedSHA256": "92E01E8DD5BD4BA2B65CA48C6A3E8F6C38E3CB5F7EF3C3C36E8B692980B8BDD6",
+      "unchanged": false,
+      "bytes": 3655782,
+      "lastWrite": "2026-10-29T14:19:08+08:00",
+      "role": "user working original; observed only, not test input",
+      "scope": "File bytes only; no new architectural-change inference or overwrite"
+    },
+    {
+      "path": "D:\\cad插件\\施工图平面参考图.dwg",
+      "SHA256": "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27",
+      "previouslyRecordedSHA256": "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27",
+      "unchanged": true,
+      "bytes": 378381,
+      "lastWrite": "2026-10-27T18:39:37+08:00",
+      "role": "user working original; observed only, not test input",
+      "scope": "File bytes only; no new architectural-change inference or overwrite"
+    }
+  ],
+  "cases": [
+    {
+      "kind": "slope",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-slope-20261029-154346-195615",
+      "report": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-slope-20261029-154346-195615\\symbol-business-native.json",
+        "SHA256": "033E1FA6E9AA065A613605BEA36E0508C299348C81EFA8FF0BE92480A1881556"
+      },
+      "drawing": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-slope-20261029-154346-195615\\symbol-generated.dwg",
+        "SHA256": "480774905382F74E5748F39F253B292FE6379A07C4F818AD8C09C5B1E706D45B"
+      },
+      "business": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-slope-20261029-154346-195615\\verify_symbol_business_native-closure-20261029-155240-398677.txt",
+        "SHA256": "2B51A9986FEC0CD8128432008A8322A783ACBBE7A322CFFE69BB154554034644",
+        "assertions": 73,
+        "passed": 73,
+        "failed": 0,
+        "result": "PASS_NATIVE_SYMBOL_TEXT_AND_PERSISTENCE"
+      },
+      "geometry": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-slope-20261029-154346-195615\\verify_symbol_geometry_native-closure-20261029-155240-398677.txt",
+        "SHA256": "C18CB47C557E031A6D6F431AAD0D3BDDC24F1351DF5B095C270BF848A22D8424",
+        "assertions": 15,
+        "passed": 15,
+        "failed": 0,
+        "result": "PASS_ACTUAL_PUBLIC_GEOMETRY_AND_WCS_INPUTS"
+      },
+      "preview": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-symbolpreview-20261029-154454-860589\\verify_symbol_preview_native-closure-20261029-155240-398677.txt",
+        "SHA256": "FAB0953B09C8C823140F22C78F875F19B3C45482CFED10BAB2872432B11033BE",
+        "assertions": 23,
+        "passed": 23,
+        "failed": 0,
+        "result": "PASS_NATIVE_SYMBOL_PREVIEW"
+      },
+      "pdf": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-symbolpreview-20261029-154454-860589\\symbol-preview.pdf",
+        "SHA256": "BC7400FA26BCA097F707DD001A0E03AE226CBFDCAC7080C518930882543801F7"
+      },
+      "render": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-symbolpreview-20261029-154454-860589\\symbol-preview.png",
+        "SHA256": "5A10B7FE7C1B2A2D28936D52244E7FBEF867C96ABF43DFCCD3AD9FC297C5BC03"
+      }
+    },
+    {
+      "kind": "section",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-section-20261029-154435-453099",
+      "report": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-section-20261029-154435-453099\\symbol-business-native.json",
+        "SHA256": "3924C7875E221D3CB4AD6FA60C91D90D8D319AB390A6426AE2ECC46D35C9354F"
+      },
+      "drawing": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-section-20261029-154435-453099\\symbol-generated.dwg",
+        "SHA256": "3F271D1DA5255FBEA1AD47CA42CB3ECCBF0C33C64EF3AE87D98E4250AE885FBC"
+      },
+      "business": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-section-20261029-154435-453099\\verify_symbol_business_native-closure-20261029-155240-398677.txt",
+        "SHA256": "6ABCD18ACDC981543AEDB21270652F769034DFDF71EE48E497614D614DBCEA0D",
+        "assertions": 75,
+        "passed": 75,
+        "failed": 0,
+        "result": "PASS_NATIVE_SYMBOL_TEXT_AND_PERSISTENCE"
+      },
+      "geometry": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-section-20261029-154435-453099\\verify_symbol_geometry_native-closure-20261029-155240-398677.txt",
+        "SHA256": "C18CB47C557E031A6D6F431AAD0D3BDDC24F1351DF5B095C270BF848A22D8424",
+        "assertions": 15,
+        "passed": 15,
+        "failed": 0,
+        "result": "PASS_ACTUAL_PUBLIC_GEOMETRY_AND_WCS_INPUTS"
+      },
+      "preview": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-symbolpreview-20261029-154500-028151\\verify_symbol_preview_native-closure-20261029-155240-398677.txt",
+        "SHA256": "6C550A6264984165584649D281A5AD69E5B7BFE52F0BAA7561FE596C357D0F86",
+        "assertions": 23,
+        "passed": 23,
+        "failed": 0,
+        "result": "PASS_NATIVE_SYMBOL_PREVIEW"
+      },
+      "pdf": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-symbolpreview-20261029-154500-028151\\symbol-preview.pdf",
+        "SHA256": "C28C7A6B84A76A5DFB7C9C9BA5CA6F05C6E6C4B87D1A308D961E697E560E4429"
+      },
+      "render": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-symbolpreview-20261029-154500-028151\\symbol-preview.png",
+        "SHA256": "A33E4DDA54EF9940754EB13006D5801B77442794461BC0987125E3FD14F1786D"
+      }
+    },
+    {
+      "kind": "pointer-index",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-pointerindex-20261029-154402-285592",
+      "report": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-pointerindex-20261029-154402-285592\\symbol-business-native.json",
+        "SHA256": "CE67105A78279DD5F75EA12ACD5F510B6D29FE3FEFF87D74075981E9C3C31F14"
+      },
+      "drawing": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-pointerindex-20261029-154402-285592\\symbol-generated.dwg",
+        "SHA256": "6DE45B7CA5C333A274052AA7E07372CFB1E64202B11F2D946515F377000A53FA"
+      },
+      "business": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-pointerindex-20261029-154402-285592\\verify_symbol_business_native-closure-20261029-155240-398677.txt",
+        "SHA256": "332D47144994990E584819FF0C4AFD20A4BEBEB40019B9F4065761C0BE68BCFE",
+        "assertions": 77,
+        "passed": 77,
+        "failed": 0,
+        "result": "PASS_NATIVE_SYMBOL_TEXT_AND_PERSISTENCE"
+      },
+      "geometry": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-pointerindex-20261029-154402-285592\\verify_symbol_geometry_native-closure-20261029-155240-398677.txt",
+        "SHA256": "E890A2105BA48909803F7556ED9DF547A9765B9256143BF26BBCECBB4D601F3F",
+        "assertions": 23,
+        "passed": 23,
+        "failed": 0,
+        "result": "PASS_ACTUAL_PUBLIC_GEOMETRY_AND_WCS_INPUTS"
+      },
+      "preview": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-symbolpreview-20261029-154456-582067\\verify_symbol_preview_native-closure-20261029-155240-398677.txt",
+        "SHA256": "C340D998F39D04F2A33F65A7ED08D0902CFFC2410A338472B1FA0FB382512700",
+        "assertions": 23,
+        "passed": 23,
+        "failed": 0,
+        "result": "PASS_NATIVE_SYMBOL_PREVIEW"
+      },
+      "pdf": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-symbolpreview-20261029-154456-582067\\symbol-preview.pdf",
+        "SHA256": "274DF7A2F1F660AF0155E37120D7EF9D40BE92A37C42BB480EDE604C86CE50A2"
+      },
+      "render": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-symbolpreview-20261029-154456-582067\\symbol-preview.png",
+        "SHA256": "6F9F1C3BF6D3211BEC436909AB30704398503AFD112EBA6B699AE0BC2623F4B5"
+      }
+    },
+    {
+      "kind": "section-index",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-sectionindex-20261029-154431-408405",
+      "report": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-sectionindex-20261029-154431-408405\\symbol-business-native.json",
+        "SHA256": "16A708BBFFF91BE05C949D8435D52F15A615C4F4AB8F834C1A8DBEF632DA3D0B"
+      },
+      "drawing": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-sectionindex-20261029-154431-408405\\symbol-generated.dwg",
+        "SHA256": "E5202CF7043E785304156919594B2D37EAFCB53EBF73E4360AA905EC549F4DBE"
+      },
+      "business": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-sectionindex-20261029-154431-408405\\verify_symbol_business_native-closure-20261029-155240-398677.txt",
+        "SHA256": "332D47144994990E584819FF0C4AFD20A4BEBEB40019B9F4065761C0BE68BCFE",
+        "assertions": 77,
+        "passed": 77,
+        "failed": 0,
+        "result": "PASS_NATIVE_SYMBOL_TEXT_AND_PERSISTENCE"
+      },
+      "geometry": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-sectionindex-20261029-154431-408405\\verify_symbol_geometry_native-closure-20261029-155240-398677.txt",
+        "SHA256": "A2ABA5C1BEE991B660F8AD894B818D90DCC34641AB22E0027C86B09BF34DCB3F",
+        "assertions": 27,
+        "passed": 27,
+        "failed": 0,
+        "result": "PASS_ACTUAL_PUBLIC_GEOMETRY_AND_WCS_INPUTS"
+      },
+      "preview": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-symbolpreview-20261029-154458-319779\\verify_symbol_preview_native-closure-20261029-155240-398677.txt",
+        "SHA256": "8D5CE60B12D3586DACF3036EC2E8A095E2AB1D3AA02F64C1F0ACE3C383E84531",
+        "assertions": 23,
+        "passed": 23,
+        "failed": 0,
+        "result": "PASS_NATIVE_SYMBOL_PREVIEW"
+      },
+      "pdf": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-symbolpreview-20261029-154458-319779\\symbol-preview.pdf",
+        "SHA256": "D24CF895BE0A6273874535FE5C6A3F7A182ABE1A39D7A54D296BB3BA6B910CE6"
+      },
+      "render": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-symbolpreview-20261029-154458-319779\\symbol-preview.png",
+        "SHA256": "4F62F3C602E6230203720D3BF8E632BBD3A5FE78A1C4DB000B8B0D66C71C1A93"
+      }
+    }
+  ],
+  "staging": [
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-134013",
+      "deleted": [
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_4457F9A1EC97_572f0684.arx",
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_4457F9A1EC97_572f0684.ini"
+      ],
+      "status": "EXACT_OWNED_STAGING_ARCHIVED_AND_REMOVED",
+      "processId": 14548,
+      "processAliveOrUnknown": false
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-135015",
+      "deleted": [],
+      "status": "PRESERVED",
+      "processId": 33368,
+      "processAliveOrUnknown": true,
+      "error": "Active or uncertain process; no cleanup"
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-140852",
+      "deleted": [
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_03DD7ABAC775_7062b9e3.arx",
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_03DD7ABAC775_7062b9e3.ini"
+      ],
+      "status": "EXACT_OWNED_STAGING_ARCHIVED_AND_REMOVED",
+      "processId": 20128,
+      "processAliveOrUnknown": false
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-142720",
+      "deleted": [
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_C0F626138528_47d0e299.arx",
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_C0F626138528_47d0e299.ini"
+      ],
+      "status": "EXACT_OWNED_STAGING_ARCHIVED_AND_REMOVED",
+      "processId": 32844,
+      "processAliveOrUnknown": false
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-143705",
+      "deleted": [
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_C965A31DD0D2_b3c1b604.arx",
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_C965A31DD0D2_b3c1b604.ini"
+      ],
+      "status": "EXACT_OWNED_STAGING_ARCHIVED_AND_REMOVED",
+      "processId": 5560,
+      "processAliveOrUnknown": false
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-144225",
+      "deleted": [
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_EFFADF077D59_30d33969.arx",
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_EFFADF077D59_30d33969.ini"
+      ],
+      "status": "EXACT_OWNED_STAGING_ARCHIVED_AND_REMOVED",
+      "processId": 18052,
+      "processAliveOrUnknown": false
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-150019",
+      "deleted": [
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_F0418B14C3FF_bb2ae7e2.arx",
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_F0418B14C3FF_bb2ae7e2.ini"
+      ],
+      "status": "EXACT_OWNED_STAGING_ARCHIVED_AND_REMOVED",
+      "processId": 20176,
+      "processAliveOrUnknown": false
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-151505",
+      "deleted": [
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_CFB2E407E36D_0ba3da22.arx",
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_CFB2E407E36D_0ba3da22.ini"
+      ],
+      "status": "EXACT_OWNED_STAGING_ARCHIVED_AND_REMOVED",
+      "processId": 28976,
+      "processAliveOrUnknown": false
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-153542",
+      "deleted": [],
+      "status": "PRESERVED",
+      "processId": 34376,
+      "processAliveOrUnknown": true,
+      "error": "Active or uncertain process; no cleanup"
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-154336",
+      "deleted": [
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_987D633C3CBE_4c101d33.arx",
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_987D633C3CBE_4c101d33.ini"
+      ],
+      "status": "EXACT_OWNED_STAGING_ARCHIVED_AND_REMOVED",
+      "processId": 9144,
+      "processAliveOrUnknown": false
+    }
+  ],
+  "normalQuit": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-154336\\normal-quit-verification.json",
+    "SHA256": "EE92DD7B0F223B02A69F741774DE0C84F90FD2EECF0ABC14DFB6F69163FD9075"
+  },
+  "hostFinal": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-154336\\isolation-final.json",
+    "SHA256": "DEF1B3FB687DCE0B5376F3CE5FF848DDE7470A6BBC19C3F5133ED568947A67ED"
+  },
+  "sourceBinding": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-154336\\worker-config.json",
+    "SHA256": "452DE639D44F8FCFFA44308315726AC4F0EC0604E6C486EA34CE53E4E726AC32"
+  },
+  "regressions": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\symbol-acceptance-regressions-20261029-155240-398677.txt",
+    "SHA256": "794623962E60EA28371DD453565009DC55E17B375971C698508DBDCB40003C6B"
+  },
+  "hostValidation": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-154336\\verify_isolated_host-closure-20261029-155240-398677.txt",
+    "SHA256": "3BBBE398CAB6CC1DDC7139E74E57E9817E75BE45C61342639A4C77D32065479B",
+    "assertions": 49,
+    "passed": 49,
+    "failed": 0,
+    "result": "PASS"
+  },
+  "validatorArchive": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\evidence\\symbol-closure-20261029-155240-398677\\test_symbol_acceptance_regressions.py",
+      "SHA256": "0F3BFEC4DE5EC967838667CF4B896670E8E7C4942A784855D14E40E34BCB83B7"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\evidence\\symbol-closure-20261029-155240-398677\\verify_isolated_host.py",
+      "SHA256": "2824EF88834BFBEBEBAA9CC27CB2BF101EDC59290C66D6734E47AB0DEEF27645"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\evidence\\symbol-closure-20261029-155240-398677\\verify_symbol_business_native.py",
+      "SHA256": "3B271A1D0A04924473FADB9A133748095D2DB9ACB177B26C9FDEB25A7F1BA72E"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\evidence\\symbol-closure-20261029-155240-398677\\verify_symbol_geometry_native.py",
+      "SHA256": "553045C04D2827003E81ED5F353ABB7BB810A40B14344E3290373BDF670B4EE4"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\evidence\\symbol-closure-20261029-155240-398677\\verify_symbol_preview_native.py",
+      "SHA256": "4423056E34B6DD2775FD2F9796BDCBC2C09C5C801708ADA192DBCC11EE84B6AD"
+    }
+  ]
+}

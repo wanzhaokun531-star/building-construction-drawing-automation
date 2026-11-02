@@ -1,0 +1,121 @@
+{
+  "contract": "bce.g2-fixround1.v1",
+  "reviewFindings": 3,
+  "files": [
+    {
+      "file": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\ProjectStoreCodec.cpp",
+      "baseline": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\g2-20261101-191456-099-sdk-view-members-final-873f6711\\src\\ProjectStoreCodec.cpp",
+      "baselineSHA256": "445795A3CD01977FE65178A3B807E443E9B3642CAA965A7976A520DEAB84E0AD",
+      "fixedSHA256": "2C9CB728BF14935122A19D788A38EDA9E2E12E6C21FDD4BF0DE0136ABF985B68"
+    },
+    {
+      "file": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\store\\StoreCodecTests.cpp",
+      "baseline": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\g2-20261101-191451-205-codec-view-members-green-c6c511a2\\src\\StoreCodecTests.cpp",
+      "baselineSHA256": "FAD6A44135194091866C621FC8FBB5B600B1E33A182CB42EFE72AF938CE0B7A0",
+      "fixedSHA256": "85DECD253ADF26B777E7C0C791E817560BD2F0372F984A1AEDF976CAF1FEE6C9"
+    },
+    {
+      "file": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\store\\StoreDriver.cpp",
+      "baseline": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\g2-20261101-191456-099-sdk-view-members-final-873f6711\\src\\StoreDriver.cpp",
+      "baselineSHA256": "3C1CA0A90693B3D4BE7AA22A608FF5B5EF2B18519C91DFF8015E59BBE419711A",
+      "fixedSHA256": "2629DA72A382E2FECC7E01E7CEE5B84AEADC3753DC5D0756ED594E0F190F28B7"
+    }
+  ],
+  "fixDiff": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\store\\G2-fixround1.diff",
+  "fixDiffSHA256": "5F728445D1ABB9FC277C5798F79C25BB9C356FEB0475009E02205BDF4557211E",
+  "receipts": {
+    "codecRed": {
+      "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\g2-20261101-193101-157-fix1-generation-id-red-checked-d05a3f2e\\receipt.json",
+      "sha256": "0592DA4261E56A055B9DB0587900D61095E3D5905FCF04624C4AA87D3C2A1396",
+      "binarySHA256": "0442E90609CC2CEF9CEE57E16A36279BCEADFA62C96EE466E8722C236C7001CA",
+      "buildExit": 0,
+      "testExit": 1
+    },
+    "codecGreen": {
+      "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\g2-20261101-193111-967-fix1-generation-id-green-bd949f8e\\receipt.json",
+      "sha256": "F2DCB7A7048E8EE4F2493A737FDD6F205EDC727BBDBA2A5B6BA753BCA2402259",
+      "binarySHA256": "4C17E3A48DCD27192F5E55332A043D59D84D0E84345D4A43A419047D2A234DE0",
+      "buildExit": 0,
+      "testExit": 0
+    },
+    "nativeCandidate": {
+      "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\g2-20261101-193143-056-fix1-undo-reopen-green-candidate-3d68c479\\receipt.json",
+      "sha256": "D3562019037590BF58B44C390579120C35EAE8DC6709057F9C663B9A8C4E516B",
+      "binarySHA256": "E0CFB6901D6319E3A3D39791E9DC448037E5FCDAA8B9E489F06F5D4245DB44A7",
+      "buildExit": 0,
+      "testExit": null
+    }
+  },
+  "nativeRedEvidence": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-192456-fcab2271\\case\\native-case.json",
+  "nativeGreenEvidence": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-193620-63158db0\\case\\native-case.json",
+  "nativeVerification": {
+    "nonce": "63158db09c924710a6bbdda721992376",
+    "pid": 32276,
+    "binarySHA256": "E0CFB6901D6319E3A3D39791E9DC448037E5FCDAA8B9E489F06F5D4245DB44A7",
+    "stepCount": 35,
+    "passed": 35,
+    "failed": 0,
+    "errors": [],
+    "assertionGroups": {
+      "ForeignNamedDictionaryNeverOverwritten": 2,
+      "FailureOrCancelRestoresExactStoreAndDrawing": 16,
+      "ProjectStoreRoundtrip": 1,
+      "NoForcedSaveForUnnamedDrawing": 1,
+      "OneUndoRestoresNewDictionary": 1,
+      "UnboundForeignOrDiscardedHistoryRejected": 4,
+      "UnknownSchemaIsNotOverwritten": 1,
+      "OuterTransactionRemainsCallerOwned": 1,
+      "StaleDocumentRejected": 1,
+      "CrossContextRejected": 1,
+      "ReplaceExistingArchive": 1,
+      "OneUndoRestoresReplacedArchive": 1,
+      "ReopenedArchiveUnbound": 1,
+      "ExplicitObservedRebind": 1,
+      "ChangedOutputRetainsHistory": 1,
+      "OtherNodEntryRetained": 1
+    },
+    "nativeReport": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-193620-63158db0\\case\\native-case.json",
+      "sha256": "540C3E05810568B5CC82F657DEEF9BC2DF8AA1B75A901CF155BB5663798FDA4A"
+    },
+    "closure": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-193620-63158db0\\native-result-closure.json",
+      "sha256": "A00B430B9E1002EE85CAA2F93CEC5691CDEBB316295AF4D792B50C16E8444A4F"
+    },
+    "retirement": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-193620-63158db0\\reader-retirement.json",
+      "sha256": "CE06DA586DDF7B654321490837FE3655C54C2D4D16A4FA0C5E34097008D8BC7A"
+    },
+    "supervisorFinal": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-193620-63158db0\\isolation-final.json",
+      "sha256": "A99C836F4AB604EE7A2B49FB62943BD17E8809F8739890925AE37BD3850E3B96"
+    },
+    "ready": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-193620-63158db0\\quiet-worker-ready.json",
+      "sha256": "C536D4DE0EE84EFA2E0AEFEBB962C46B799DC434C7D7052DF5880820A9D1C318"
+    },
+    "startupClose": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-193620-63158db0\\owned-known-startup-close.json",
+      "sha256": "BDD4FF90A526E51C53E0BEACA9A7BFE5CDB98CD32E0E03EE8B261921E93F6EF6"
+    },
+    "testOnlyDrawing": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-193620-63158db0\\case\\project-store-test-only.dwg",
+      "sha256": "28D8604A896607D3FC2B7C2FEEEECEE93C6CCBD820B175AED685FD1394792C61"
+    },
+    "undoEvidence": {
+      "newDictionaryAssertion": "OneUndoRestoresNewDictionary",
+      "replaceAssertion": "OneUndoRestoresReplacedArchive",
+      "eachPassedPredicate": {
+        "commandStarted": 1,
+        "commandEnded": 1,
+        "commandFailedOrCancelled": 0
+      },
+      "source": "frozen StoreDriver.cpp UndoWatch + verify; native report stores boolean assertion outcomes rather than separate raw event counts"
+    },
+    "scope": "SDK Line/Text fixture only; SideDB reopen of test-only DWG; no full production command or TCH ownership validation",
+    "normalQuit": false,
+    "forcedExitCode": 70,
+    "sourceFrozen": true,
+    "reviewStatus": "awaiting original reviewer scoped fixdiff check"
+  }
+}

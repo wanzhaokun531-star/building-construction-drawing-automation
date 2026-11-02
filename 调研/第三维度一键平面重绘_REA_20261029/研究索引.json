@@ -1,0 +1,136 @@
+{
+  "date": "2026-10-29",
+  "timezone": "Asia/Shanghai",
+  "task": "第三维度TranSketch一键平面重绘功能研究",
+  "scope": {
+    "tool": "REA",
+    "package_version": "6.8.0",
+    "mode": "read-only static shipped-artifact analysis",
+    "cad_commands_executed": false,
+    "dwg_written": false,
+    "target_assembly_executed": false,
+    "debugger_attached": false,
+    "license_or_quota_modified": false,
+    "stage2_started": false
+  },
+  "target": {
+    "installed_product": "TranSketch",
+    "registry_version": "2.607.24.198",
+    "path": "C:/Program Files/Autodesk/ApplicationPlugins/TranSketchPlugin.bundle/Contents/Win64/2020",
+    "runtime_file_identity_vs_memory": "not established"
+  },
+  "finding_ledger": [
+    {
+      "id": "F01",
+      "status": "observed-static",
+      "claim": "CUI平面重绘SZHTZ与平面深化SPMSH为不同入口",
+      "source": "TranSketch.cuix/MenuGroup.cui; verified read-only ZIP parse",
+      "evidence_ids": [
+        "ev_c059c76108de8693cab9fd26fa15ada2f01e0c0a244fee1b9a77251a639d4542"
+      ]
+    },
+    {
+      "id": "F02",
+      "status": "observed-declaration",
+      "claim": "当前面板匹配AecSelectViewModel；声明IsT3ToTangent、IsIntelligent、NeedInsulating、NeedRound、RoundNumber",
+      "evidence_ids": [
+        "ev_c5b1f3ff5790c86eddaf149a85a8e058569bbd8d196036d05030f1fbbccce8d2",
+        "ev_61031afe3c956001249c2ff34c3eb62e89a3ce1bc06054daed713a4432d9477b"
+      ]
+    },
+    {
+      "id": "F03",
+      "status": "observed-ui-text-and-declarations",
+      "claim": "存在图层/块名/墙厚识别配置与门窗/保温/高程技术规定选项；SZHTZ消费规则方式未证",
+      "evidence_ids": [
+        "ev_99b6f32d918e09d34061d1623a2e7238ff971b26f9520aa3be954a54bd21765b",
+        "ev_2cf737c717e2198bc5a35b21018adb046bed6fbe551c181d01e8ee908348fbff"
+      ],
+      "additional_sources": [
+        "TranSketchUI.dll afl/cadentconfig.baml",
+        "TranSketchUI.dll afl/uniformregulations.baml"
+      ]
+    },
+    {
+      "id": "F04",
+      "status": "observed-declaration",
+      "claim": "Service与DataConverter包含墙/门窗/轴号/尺寸创建及Tengen适配声明；真实调用和TCH输出类别未证",
+      "evidence_ids": [
+        "ev_04f91d00756d800bceac4159b538e1ec29428245e11db041b13858007830192a",
+        "ev_ba9d520d3d0bf2d18b00ba80e5b60a46a637f2f4acf660311b0b3547f596f2e0"
+      ]
+    },
+    {
+      "id": "F05",
+      "status": "observed-static-limitation",
+      "claim": "所查业务方法大量同一11字节异常占位CIL；真实算法/分支/传参未还原，不表示运行失败",
+      "evidence_ids": [
+        "ev_bd3811336eccd5112e39b4d301e4e5c49c9d334e8680aa90a9f2b950b137ee59",
+        "ev_e7235027c8feca2665dbc9ad21cc9c0cc2ce707a21557f3e18d71abb35ae9319",
+        "ev_fbbe9f454769af6ba9e6d952d2afbf57b1da12a85945d6f1189b4c1c22790c74"
+      ]
+    },
+    {
+      "id": "F06",
+      "status": "observed-declaration",
+      "claim": "存在GetComObject/ReadPropFromCom/WritePropToCom/CommandEx/SendStringToExecute引用，不能称产品纯ObjectARX原生",
+      "evidence_ids": [
+        "ev_34f6bd5892dea3c5b2ad6e2b0c0a823f098fb69159ca3baa3362476d8e400894"
+      ]
+    },
+    {
+      "id": "F07",
+      "status": "unresolved",
+      "claim": "取整/智能深化/强制尺寸是否改变本方案建筑几何，以及完整样式、TCH类别与保存重开结果均未验证"
+    },
+    {
+      "id": "F08",
+      "status": "unresolved",
+      "claim": "当前0次的精确权限/价格、上传数据范围与离线能力未查明"
+    },
+    {
+      "id": "F09",
+      "status": "analyst-inference",
+      "claim": "可借鉴识别配置—业务数据—类别创建器—天正适配器分层；不能替代当前项目原生能力与工程验收"
+    }
+  ],
+  "evidence_files": [
+    {
+      "path": "rea-main-evidence.json",
+      "records": 39,
+      "bytes": 82293590,
+      "sha256": "BB4D8B571510C51523C70271EA2EAF58860F3C7BC8CFAE06C6521C88782D8635"
+    },
+    {
+      "path": "rea-config-evidence.json",
+      "records": 9,
+      "bytes": 27706785,
+      "sha256": "5CBA7B0C3B1DF904D87AED0FC74D206F6D0978B601A8F25EEE8CECF447C4FB31"
+    },
+    {
+      "path": "rea-generation-evidence.json",
+      "records": 23,
+      "bytes": 24716219,
+      "sha256": "3BBEFCCC4654BD5E552DF3AE2D4DF36A1C64C0EF13B1FEFDDC8DE7AD3089C736"
+    }
+  ],
+  "report": "研究报告.txt",
+  "coverage_notes": [
+    "Directory digest commits metadata/read ranges, not all file contents.",
+    "Tokens are build-local and bound to artifact SHA256/MVID.",
+    "Initial service whole-member representation hit64MiB; selected types were then parsed.",
+    "Overlarge command methods page hit10MiB delivery budget; selected type page obtained.",
+    "Evidence unknowns-array count is ledger enrollment, not absence of scientific unknowns.",
+    "All UI labels are declarations, not tested behavior."
+  ],
+  "official_sources": [
+    {
+      "url": "https://zdn.zwsoft.cn/home/product/detail/id/293.html",
+      "role": "product-level only"
+    },
+    {
+      "url": "https://www.transbim.com/",
+      "role": "TranSketch/TD descriptions distinguished"
+    }
+  ]
+}

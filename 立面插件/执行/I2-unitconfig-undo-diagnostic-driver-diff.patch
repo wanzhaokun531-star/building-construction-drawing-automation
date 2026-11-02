@@ -1,0 +1,105 @@
+--- D:\Codex\建筑施工图自动化\立面插件\build\i2-20261101-222304-757-green-unit-only-current-dwg-54e52bbb\src\UnitConfigDriver.cpp
++++ D:\Codex\建筑施工图自动化\立面插件\build\i2-20261101-223032-760-green-diagnostic-undo-state-factors-f961d67c\src\UnitConfigDriver.cpp
+@@ -234,7 +234,8 @@
+  AcApDocument* original{};AcApDocument* second{};AcDbDatabase* secondDb{};
+  std::set<AcApDocument*> previousDocs;std::set<AcDbDatabase*> previousDbs;
+  std::wstring product;BceCopyAnalysisV1 copy{};bool loaded{},pass{true};int phase{};
+- std::string shape,settings,resourceState,nodState,oldBytes,persistentId,originSource;
++ std::string shape,settings,resourceState,nodState,oldBytes,persistentId,originSource,escapeBytes;
++ unsigned configCancelled{};
+  std::unique_ptr<ChangeWatch> watch;std::unique_ptr<UndoWatch> undo;
+  std::unique_ptr<bce::command_test::Transcript> transcript;
+  AcDbObjectId marker;
+@@ -265,7 +266,7 @@
+  CommandTrace(){acedEditor->addReactor(this);}~CommandTrace(){acedEditor->removeReactor(this);}
+  void commandWillStart(const ACHAR* name)override{trace("commandWillStart:"+bce::native::utf8(name));}
+  void commandEnded(const ACHAR* name)override{trace("commandEnded:"+bce::native::utf8(name));}
+- void commandCancelled(const ACHAR* name)override{trace("commandCancelled:"+bce::native::utf8(name));}
++ void commandCancelled(const ACHAR* name)override{if(state&&_wcsicmp(name,L"BCE_CONFIG")==0)++state->configCancelled;trace("commandCancelled:"+bce::native::utf8(name));}
+  void commandFailed(const ACHAR* name)override{trace("commandFailed:"+bce::native::utf8(name));}
+ };
+ std::unique_ptr<CommandTrace> commandTrace;
+@@ -332,6 +333,41 @@
+ template<class F>void boundary(F f)noexcept{try{f();}catch(const std::exception& e){try{if(state&&!terminal){trace(std::string("boundary-exception:")+e.what());state->pass=false;state->evidence->error(e.what());finish();}}catch(...){}}catch(...){try{if(state&&!terminal){trace("boundary-exception:unknown");state->pass=false;state->evidence->error("unknown unitconfig driver exception");finish();}}catch(...){}}}
+ std::string raw(){const auto r=bce::readProjectStoreBytes(db());bce::native::require(r.canCommit(),"read raw archive");return *r.value;}
+ bce::ProjectArchive archive(){const auto r=bce::readProjectStore(db());bce::native::require(r.readable(),"read archive");return *r.value;}
++std::uint64_t stateSequence{};
++void recordState(const std::string& label, AcDbDatabase& target, int sdkStatus=0) {
++ using namespace bce;using namespace bce::native;
++ auto& s=*state;
++ const auto bytes=readProjectStoreBytes(target);const auto a=readProjectStore(target);
++ std::string hex;
++ constexpr char digits[]="0123456789ABCDEF";
++ if(bytes.value)for(unsigned char c:*bytes.value){hex+=digits[c>>4];hex+=digits[c&15];}
++ std::string issues;for(const auto& i:a.issues)issues+=i.code+":"+i.message+";";
++ Fields fields{{"contract",quote(std::string("bce.unitconfig-state.v1"))},{"label",quote(label)},
++ {"phase",std::to_string(s.phase)},{"sdkStatus",std::to_string(sdkStatus)},
++ {"currentDocument",std::to_string(reinterpret_cast<std::uintptr_t>(acDocManager->curDocument()))},
++ {"targetDatabase",std::to_string(reinterpret_cast<std::uintptr_t>(&target))},
++ {"archiveReadable",a.readable()?"true":"false"},{"archiveBound",a.value&&a.value->bound?"true":"false"},
++ {"archiveCanCommit",a.canCommit()?"true":"false"},{"archiveIssues",quote(issues)},
++ {"archiveRawHex",quote(hex)},{"matchesExpectedOldBytes",bytes.value&&*bytes.value==s.oldBytes?"true":"false"},
++ {"matchesEscapeBeforeBytes",bytes.value&&*bytes.value==s.escapeBytes?"true":"false"},
++ {"expectedPersistentId",quote(s.persistentId)},{"configCancelled",std::to_string(s.configCancelled)},
++ {"undoStarted",s.undo?std::to_string(s.undo->started):"null"},
++ {"undoEnded",s.undo?std::to_string(s.undo->ended):"null"},
++ {"undoFailed",s.undo?std::to_string(s.undo->failed):"null"}};
++ if(a.value){const auto& p=a.value->project;std::ostringstream scale;scale.precision(17);if(p.config.units.confirmedMmPerInputUnit)scale<<*p.config.units.confirmedMmPerInputUnit;
++  fields.push_back({"actualUnit",quote(scale.str())});fields.push_back({"actualPersistentId",quote(p.persistentProjectId)});
++  fields.push_back({"unitSource",quote(p.config.unitConfirmationSource)});fields.push_back({"generationViews",std::to_string(p.generation.views.size())});}
++ if(acDocManager->curDocument()==s.original&&s.original->database()==&target){
++  const bool sameShape=shape(target)==s.shape;const bool sameGlobals=globals()==s.settings;const bool sameResources=resources(target)==s.resourceState;const bool sameNod=nod(target)==s.nodState;
++  auto q=query();fields.push_back({"abiQueryStatus",std::to_string(s.copy(&q,nullptr,0))});
++  fields.push_back({"sourceShapeSame",sameShape?"true":"false"});fields.push_back({"sourceGlobalsSame",sameGlobals?"true":"false"});fields.push_back({"sourceResourcesSame",sameResources?"true":"false"});fields.push_back({"sourceNodSameAsBeforeCreate",sameNod?"true":"false"});
++  fields.push_back({"sourceRootCount",std::to_string(roots(target).length())});
++  resbuf undo{};const int status=acedGetVar(L"UNDOCTL",&undo);fields.push_back({"undoCtlGetStatus",std::to_string(status)});fields.push_back({"undoCtl",status==RTNORM?std::to_string(undo.resval.rint):"null"});
++ }
++ const auto path=s.config.output+L"/unitconfig-state-"+std::to_wstring(++stateSequence)+L".json";
++ {auto f=create_new(path);write_flushed(f.get(),object(fields));}
++ s.evidence->capability(object({{"stateLabel",quote(label)},{"statePath",quote(path)},{"SHA256",quote(sha256(path))}}));
++}
+ void setBytes(const std::string& bytes){
+  using namespace bce::native;AcDbObjectId dictionary,record;
+  {Open<AcDbDictionary> n(db().namedObjectsDictionaryId());require(n.p->getAt(bce::projectStoreDictionary,dictionary)==Acad::eOk,"test store id");}
+@@ -391,12 +427,12 @@
+    s.persistentId=a.value->project.persistentProjectId;s.originSource=a.value->project.config.unitConfirmationSource;s.oldBytes=raw();
+    const auto stale=printedCommand(L"BCE_ISSUES",s.config.output+L"/issues-after-config",db());recordPrinted(*s.evidence,stale,"BCE_ISSUES after CONFIG");expect("ConfigInvalidatesOrdinaryIssuePages",stale.text.find("[1/")==std::string::npos&&stale.text.find("BCE_ANALYZE")!=std::string::npos,"actual output");
+    analyze();const auto body=report();s.evidence->capability(object({{"configuredAnalysis",quote(body)}}));expect("AnalyzeConsumesOnlyExplicitUnit",body.find("UNIT_REQUIRED")==std::string::npos&&body.find("unitMmPerInputUnit\t1\n")!=std::string::npos&&body.find("unitSource\tBCE_CONFIG")!=std::string::npos&&body.find("PLAN_REQUIRED")!=std::string::npos&&body.find("generationAuthorized\tfalse")!=std::string::npos,"unit provenance + missing plan + false authorization");expect("RecognizesFourElevationsTwoSectionsAndChinese",body.find("elevations\t4\n")!=std::string::npos&&body.find("sections\t2\n")!=std::string::npos&&body.find(u8"I2未保存中文内容")!=std::string::npos,"current memory, no save");
+-   s.undo=std::make_unique<UndoWatch>();s.phase=2;queue(L"_.U\nBCE_I2_STEP\n");return;
+- }
+- if(s.phase==2){const auto a=readProjectStore(db());expect("OneActualUndoRemovesOnlyNewConfig",s.undo&&s.undo->started==1&&s.undo->ended==1&&s.undo->failed==0&&!a.readable()&&nod(db())==s.nodState&&preserved(),"real U after config; 741 roots and prior Chinese edit retained");s.undo.reset();s.phase=3;queue(L"BCE_CONFIG\n1\nBCE_I2_STEP\n");return;}
++   s.undo=std::make_unique<UndoWatch>();recordState("before-first-U",db());s.phase=2;queue(L"_.U\nBCE_I2_STEP\n");return;
++ }
++ if(s.phase==2){recordState("after-first-U",db());const auto a=readProjectStore(db());expect("OneActualUndoRemovesOnlyNewConfig",s.undo&&s.undo->started==1&&s.undo->ended==1&&s.undo->failed==0&&!a.readable()&&nod(db())==s.nodState&&preserved(),"real U after config; 741 roots and prior Chinese edit retained");s.undo.reset();s.phase=3;queue(L"BCE_CONFIG\n1\nBCE_I2_STEP\n");return;}
+  if(s.phase==3){s.oldBytes=raw();s.persistentId=archive().project.persistentProjectId;s.originSource=archive().project.config.unitConfirmationSource;analyze();s.phase=4;queue(L"BCE_CONFIG\n2\nBCE_I2_STEP\n");return;}
+- if(s.phase==4){const auto a=archive();auto q=query();expect("UpdatePreservesProjectIdRefreshesConfirmation",a.project.persistentProjectId==s.persistentId&&a.project.config.units.confirmedMmPerInputUnit==std::optional<double>(2)&&a.project.config.unitConfirmationSource!=s.originSource&&s.copy(&q,nullptr,0)==1&&preserved(),"explicit input 2; no geometry authorization");s.undo=std::make_unique<UndoWatch>();s.phase=5;queue(L"_.U\nBCE_I2_STEP\n");return;}
+- if(s.phase==5){expect("OneActualUndoRestoresOldUnitBytes",s.undo&&s.undo->started==1&&s.undo->ended==1&&s.undo->failed==0&&raw()==s.oldBytes&&preserved(),"one U restores exact previous archive and prior unsaved edits");s.undo.reset();
++ if(s.phase==4){const auto a=archive();auto q=query();expect("UpdatePreservesProjectIdRefreshesConfirmation",a.project.persistentProjectId==s.persistentId&&a.project.config.units.confirmedMmPerInputUnit==std::optional<double>(2)&&a.project.config.unitConfirmationSource!=s.originSource&&s.copy(&q,nullptr,0)==1&&preserved(),"explicit input 2; no geometry authorization");s.undo=std::make_unique<UndoWatch>();recordState("before-update-U",db());s.phase=5;queue(L"_.U\nBCE_I2_STEP\n");return;}
++ if(s.phase==5){recordState("after-update-U",db());expect("OneActualUndoRestoresOldUnitBytes",s.undo&&s.undo->started==1&&s.undo->ended==1&&s.undo->failed==0&&raw()==s.oldBytes&&preserved(),"one U restores exact previous archive and prior unsaved edits");s.undo.reset();
+    for(double n:{0.0,-1.0}){ChangeWatch w(db());const auto old=raw();analyze();configInput(n);auto q=query();expect("InvalidNumericInputWritesNothing",raw()==old&&w.modified.empty()&&w.headers==0&&s.copy(&q,nullptr,0)==1,"input="+std::to_string(n));}
+    {ChangeWatch w(db());const auto old=raw();analyze();require(acedCommandS(RTSTR,L"BCE_CONFIG",RTSTR,L"",RTNONE)==RTNORM,"empty cancel input");auto q=query();expect("EmptyCancelWritesNothing",raw()==old&&w.modified.empty()&&w.headers==0&&s.copy(&q,nullptr,0)==1,"null response cancels without default");}
+    {
+@@ -411,10 +447,10 @@
+     const auto old=raw();ChangeWatch w(db());configInput(3);
+     expect("CallerUndoGroupRejectedWithoutWrite",raw()==old&&w.modified.empty()&&w.headers==0,"ordinary CONFIG refuses caller Undo boundary");
+    }
+-   s.phase=6;queue(L"BCE_CONFIG\n\x03" L"BCE_I2_STEP\n");return;
+- }
+- if(s.phase==6){expect("EscapeCancelPreservesArchive",raw()==s.oldBytes&&preserved(),"actual queued Esc");rejectFixtures();expect("HistoryTestsPreserveCurrentDrawing",preserved(),"test archive restored; geometry unchanged");
+-   AcDbDatabase* cloneRaw{};require(db().wblock(cloneRaw)==Acad::eOk&&cloneRaw,"test-only independent database clone");std::unique_ptr<AcDbDatabase> clone(cloneRaw);const auto path=s.config.output+L"/unit-config-copy.dwg";require(GetFileAttributesW(path.c_str())==INVALID_FILE_ATTRIBUTES,"new test path");require(clone->saveAs(path.c_str())==Acad::eOk,"test-only clone save");clone.reset();AcDbDatabase reopened(false,true);require(reopened.readDwgFile(path.c_str(),AcDbDatabase::kForReadAndReadShare,false)==Acad::eOk,"independent reopen");reopened.closeInput(true);const auto r=readProjectStore(reopened);expect("IndependentReopenKeepsUnitWithoutAuthority",r.readable()&&!r.canCommit()&&!r.value->bound&&r.value->project.persistentProjectId==s.persistentId&&r.value->project.config.units.confirmedMmPerInputUnit==std::optional<double>(1)&&r.value->project.generation.views.empty(),"copy only; current unsaved document never saved/closed/reopened");
++   s.escapeBytes=raw();recordState("before-Esc",db());s.phase=6;queue(L"BCE_CONFIG\n\x03" L"BCE_I2_STEP\n");return;
++ }
++ if(s.phase==6){recordState("after-Esc",db());expect("EscapeCancelPreservesArchive",raw()==s.oldBytes&&preserved(),"actual queued Esc");rejectFixtures();expect("HistoryTestsPreserveCurrentDrawing",preserved(),"test archive restored; geometry unchanged");
++   recordState("before-clone",db());AcDbDatabase* cloneRaw{};const auto cloneStatus=db().wblock(cloneRaw);require(cloneStatus==Acad::eOk&&cloneRaw,"test-only independent database clone status="+std::to_string(cloneStatus));std::unique_ptr<AcDbDatabase> clone(cloneRaw);recordState("clone-before-save",*clone,static_cast<int>(cloneStatus));const auto path=s.config.output+L"/unit-config-copy.dwg";require(GetFileAttributesW(path.c_str())==INVALID_FILE_ATTRIBUTES,"new test path");require(clone->saveAs(path.c_str())==Acad::eOk,"test-only clone save");clone.reset();AcDbDatabase reopened(false,true);const auto reopenStatus=reopened.readDwgFile(path.c_str(),AcDbDatabase::kForReadAndReadShare,false);require(reopenStatus==Acad::eOk,"independent reopen status="+std::to_string(reopenStatus));reopened.closeInput(true);recordState("reopened-copy",reopened,static_cast<int>(reopenStatus));recordState("current-after-reopen",db());const auto r=readProjectStore(reopened);expect("IndependentReopenKeepsUnitWithoutAuthority",r.readable()&&!r.canCommit()&&!r.value->bound&&r.value->project.persistentProjectId==s.persistentId&&r.value->project.config.units.confirmedMmPerInputUnit==std::optional<double>(1)&&r.value->project.generation.views.empty(),"copy only; current unsaved document never saved/closed/reopened");
+    analyze();queue(L"BCE_I2_NEW\n");return;
+  }
+  });}
+@@ -422,7 +458,7 @@
+ void second()noexcept{boundary([]{using namespace bce::native;auto& s=*state;require(acDocManager->curDocument()==s.second&&&db()==s.secondDb,"owned second doc");const auto stale=printedCommand(L"BCE_ISSUES",s.config.output+L"/issues-after-switch",db());recordPrinted(*s.evidence,stale,"BCE_ISSUES after switch");expect("SwitchInvalidatesOrdinaryIssuePages",stale.text.find("[1/")==std::string::npos&&stale.text.find("BCE_ANALYZE")!=std::string::npos,"ordinary output");configInput(1000);const auto a=archive();expect("IndependentProjectGetsOwnIdAndUnit",a.project.persistentProjectId!=s.persistentId&&a.project.config.units.confirmedMmPerInputUnit==std::optional<double>(1000),"second project explicit input 1000");analyze();const auto body=report();expect("SecondAnalysisDoesNotReuseFirstUnit",body.find("unitMmPerInputUnit\t1000\n")!=std::string::npos&&body.find("generationAuthorized\tfalse")!=std::string::npos,"actual second document report");
+  if(static_cast<int>(db().insunits())==4)expect("ActualInsunitsConflictIsDiagnosed",body.find("UNIT_CONFLICT")!=std::string::npos&&body.find("unitResolved\tfalse")!=std::string::npos,"actual template INSUNITS 4 vs explicit 1000; global remains unchanged");queue(L"BCE_I2_RETURN\n");});}
+ void returnDocument()noexcept{boundary([]{using namespace bce::native;auto& s=*state;require(acDocManager->isApplicationContext()&&acDocManager->curDocument()==s.second&&s.second->database()==s.secondDb,"second owned session context");require(acDocManager->setCurDocument(s.original,AcAp::kNone,true)==Acad::eOk,"return original");require(acDocManager->curDocument()==s.original,"original now current");queue(L"BCE_I2_FINISH\n");});}
+-void finalCheck()noexcept{boundary([]{using namespace bce::native;auto& s=*state;auto q=query();expect("ReturnInvalidatesReportAndPreservesUnit",s.copy(&q,nullptr,0)==1&&raw()==s.oldBytes&&preserved(),"switch back; no current file save/close");analyze();expect("ReturnAnalysisUsesOriginalUnit",report().find("unitMmPerInputUnit\t1\n")!=std::string::npos,"no cross-document scale cache");const auto infoResult=printedCommand(L"BCE_INFO",s.config.output+L"/info",db());recordPrinted(*s.evidence,infoResult,"BCE_INFO");expect("InfoDisclosesUnitOnlyScope",infoResult.text.find("BCE_CONFIG")!=std::string::npos&&logContainsUnicode(infoResult.text,L"仅配置"),"ordinary info output");require(acrxDynamicLinker->unloadModule(s.product.c_str(),true),"unload before conflict");s.loaded=false;
++void finalCheck()noexcept{boundary([]{using namespace bce::native;auto& s=*state;recordState("returned-original-before-analyze",db());auto q=query();expect("ReturnInvalidatesReportAndPreservesUnit",s.copy(&q,nullptr,0)==1&&raw()==s.oldBytes&&preserved(),"switch back; no current file save/close");analyze();s.evidence->capability(object({{"returnedAnalysis",quote(report())}}));expect("ReturnAnalysisUsesOriginalUnit",report().find("unitMmPerInputUnit\t1\n")!=std::string::npos,"no cross-document scale cache");const auto infoResult=printedCommand(L"BCE_INFO",s.config.output+L"/info",db());recordPrinted(*s.evidence,infoResult,"BCE_INFO");expect("InfoDisclosesUnitOnlyScope",infoResult.text.find("BCE_CONFIG")!=std::string::npos&&logContainsUnicode(infoResult.text,L"仅配置"),"ordinary info output");require(acrxDynamicLinker->unloadModule(s.product.c_str(),true),"unload before conflict");s.loaded=false;
+  require(acedRegCmds->addCommand(L"BCE_I2_FOREIGN",L"BCE_CONFIG",L"BCE_CONFIG",ACRX_CMD_MODAL,foreignCommand)==Acad::eOk,"register foreign config");const bool loaded=acrxDynamicLinker->loadModule(s.product.c_str(),false,true);auto* foreign=acedRegCmds->lookupGlobalCmd(L"BCE_CONFIG");expect("ForeignConfigConflictIsPreserved",!loaded&&foreign&&foreign->functionAddr()==foreignCommand&&!acedRegCmds->lookupGlobalCmd(L"BCE_ANALYZE")&&!acedRegCmds->lookupGlobalCmd(L"BCE_INFO")&&!acedRegCmds->lookupGlobalCmd(L"BCE_ISSUES"),"failed product load preserves foreign callback and registers no partial commands");if(loaded){s.loaded=true;require(acrxDynamicLinker->unloadModule(s.product.c_str(),true),"unexpected module unload");s.loaded=false;}require(acedRegCmds->removeCmd(L"BCE_I2_FOREIGN",L"BCE_CONFIG")==Acad::eOk,"remove own foreign fixture");s.loaded=acrxDynamicLinker->loadModule(s.product.c_str(),false,true);expect("ReloadAfterConflictRestoresFourCommands",s.loaded&&commandOwnedBy(L"BCE_CONFIG",GetModuleHandleW(s.product.c_str())),"ordinary SDK reload");finish();});}
+ } // namespace
+ BOOL APIENTRY DllMain(HMODULE module,DWORD reason,LPVOID){if(reason==DLL_PROCESS_ATTACH){moduleHandle=module;DisableThreadLibraryCalls(module);}return TRUE;}

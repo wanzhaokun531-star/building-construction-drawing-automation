@@ -1,0 +1,31 @@
+Microsoft (R) COFF/PE Dumper Version 14.16.27054.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+Dump of file D:\Codex\����ʩ��ͼ�Զ���\�׶�1\ԭ���ӿ�̽��\bin\NativeAccessProbe.arx
+
+File Type: DLL
+
+  Image has the following dependencies:
+
+    acdb23.dll
+    ac1st23.dll
+    accore.dll
+    KERNEL32.dll
+    MSVCP140.dll
+    AcPal.dll
+    VCRUNTIME140.dll
+    api-ms-win-crt-runtime-l1-1-0.dll
+    api-ms-win-crt-string-l1-1-0.dll
+    api-ms-win-crt-heap-l1-1-0.dll
+    api-ms-win-crt-stdio-l1-1-0.dll
+    api-ms-win-crt-math-l1-1-0.dll
+
+  Summary
+
+        1000 .data
+        1000 .pdata
+        A000 .rdata
+        1000 .reloc
+        1000 .rsrc
+       18000 .text

@@ -1,0 +1,40 @@
+{
+  "purpose": "Preserve failed v1 and exact source/evidence; this archive is not a passing run",
+  "files": [
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\src\\NativeFourSideAxisSeedProbe.inc",
+      "file": "NativeFourSideAxisSeedProbe.inc",
+      "SHA256": "19A62E48C3181672147B88A5A42694E09523E29E2EF6A11BE08FC477FB3D3CF8"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\src\\NativeFourSideAxisProbe.inc",
+      "file": "NativeFourSideAxisProbe.inc",
+      "SHA256": "EB3BBCBA5479DD374701EC5BE2FB6F87B421A32DA95E1B8B8FBD5791C6CCDA0B"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_four_axis_seed_native.py",
+      "file": "verify_four_axis_seed_native.py",
+      "SHA256": "3E69A7BA18D8F9B769D32FB85031C07A7D67059A392126FB0C5E3D70C57EA73A"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_four_side_axis_native.py",
+      "file": "verify_four_side_axis_native.py",
+      "SHA256": "77875F53DD42549195ACD2024AF4512175F2CAFF646C30F9F103B6BCA2D99C0B"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-seed-20261029-094645-181680\\four-axis-seed-native.json",
+      "file": "four-axis-seed-native.json",
+      "SHA256": "E02C78E68BC3EE59C03CC1315202257DBDE2EDA1C1FB733220A4872C74488167"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-seed-20261029-094645-181680\\quiet-job-receipt.json",
+      "file": "quiet-job-receipt.json",
+      "SHA256": "D22622CFCEBD9C6689181772BA19A26EC53A24672F415CA906F879DD21756DF0"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-seed-20261029-094645-181680\\verify-result.txt",
+      "file": "verify-result.txt",
+      "SHA256": "CEC65D3A31DCA76F32BF6207E894400FDE229F66CCD2719ACDD3940FDF934801"
+    }
+  ]
+}

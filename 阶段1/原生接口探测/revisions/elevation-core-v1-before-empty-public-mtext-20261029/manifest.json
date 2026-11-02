@@ -1,0 +1,35 @@
+{
+  "purpose": "Preserve actual v1 empty TDbMText public-representation failure; all private contents remain unknown",
+  "files": [
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\src\\NativeElevationRoundTripProbe.inc",
+      "file": "NativeElevationRoundTripProbe.inc",
+      "SHA256": "927603E22D0F34CC97A41E9C0C9310D998AFFC9093E217A6F30F602D334ABC04"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_elevation_roundtrip_native.py",
+      "file": "verify_elevation_roundtrip_native.py",
+      "SHA256": "983B50953723AEDBE6498E86CFFDEE98629E3B303F5A802FE90657CF8ABC2A3C"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\test_elevation_core_contract.py",
+      "file": "test_elevation_core_contract.py",
+      "SHA256": "6B978C309A84C99A121E5861052470590BABFE2B9FA6FDFFF88C4E9E637208F0"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationcore-20261029-115421-799232\\elevation-core-native.json",
+      "file": "elevation-core-native.json",
+      "SHA256": "171C10F5260DBC6B79A01CB0EB2EEA45EF06BDF99E2543DC17873315B446311C"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationcore-20261029-115421-799232\\verify-result.txt",
+      "file": "verify-result.txt",
+      "SHA256": "9C3157302A52AE38EA6E07195DEFB3F62F9C5762F9BD59AAAFFA95E6E402B14C"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationcore-20261029-115421-799232\\quiet-job-receipt.json",
+      "file": "quiet-job-receipt.json",
+      "SHA256": "41ECCECD08522B1FD2A532F5EA54A7203FA8CBCB19E0E76B2F748EE8BB4311DE"
+    }
+  ]
+}

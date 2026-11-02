@@ -1,0 +1,74 @@
+--- diagnostic/NativeMaterials.cpp
++++ origin-fix/NativeMaterials.cpp
+@@ -170,7 +170,12 @@
+                 need(positive(factor),"INVALID_MATERIAL_PATTERN_SCALE");const auto angle=std::atan2(region.expression.direction.y,region.expression.direction.x);
+                 const auto matrix=AcGeMatrix3d::translation({placement->targetAnchor.x,placement->targetAnchor.y,0})*AcGeMatrix3d::rotation(angle,AcGeVector3d::kZAxis)*AcGeMatrix3d::scaling(factor)*AcGeMatrix3d::translation({-seed->referenceAnchor.x,-seed->referenceAnchor.y,0});
+                 check(h->setAssociative(false),"detach clone association");check(h->removeAssocObjIds(),"remove clone boundary association");
++                // AutoCAD 2020 transforms embedded pattern definitions but leaves originPoint metadata unchanged.
++                // The explicit public setter updates that WCS metadata without reloading any external PAT.
++                const auto oldOrigin=h->originPoint();
++                const auto mappedOrigin=matrix*AcGePoint3d(oldOrigin.x,oldOrigin.y,0);
+                 check(h->transformBy(matrix),"map native pattern units scale and phase");
++                check(h->setOriginPoint({mappedOrigin.x,mappedOrigin.y}),"set mapped native pattern origin metadata");
+                 while(h->numLoops())check(h->removeLoopAt(h->numLoops()-1),"remove clone old loop");
+                 check(h->setHatchStyle(AcDbHatch::kNormal),"holes normal style");appendRing(*h,region.geometry.outer,true);for(const auto& hole:region.geometry.holes)appendRing(*h,hole,false);
+                 h->setLineGenerationEnabled(true);check(h->evaluateHatch(),"evaluate native material");double area{};check(h->getArea(area),"native material area");
+@@ -185,3 +190,4 @@
+ }
+ 
+ 
++
+--- diagnostic/MaterialDriver.cpp
++++ origin-fix/MaterialDriver.cpp
+@@ -32,13 +32,13 @@
+         auto result=prepareMaterials(plan,{seed},options);
+         expect("PrepareActualReferenceHatch",result.canCommit(),result.issues.empty()?"actual native material batch":result.issues.front().message);
+         if(result.canCommit()) {
+-            auto& batch=*result.value;diagnosePattern(batch,config,*evidence);expect("ImmutableBatchInitiallyIntact",batch.intact(),"actual Hatch loops, patterns, appearance/resources and permanent mutation guard");
++            auto& batch=*result.value;expect("ImmutableBatchInitiallyIntact",batch.intact(),"actual Hatch loops, patterns, appearance/resources and permanent mutation guard");
+             expect("TargetRootListIsOnlyHatch",batch.roots().length()==1&&modelRoots(batch.database()).length()==1,"no cloned old boundary or reference building root");
+             {
+                 Working work(batch.database());Open<AcDbHatch> h(batch.roots()[0]);double area{};ok(h->getArea(area),"SDK getArea");
+                 expect("NativeAreaAndExactTwoLoops",nearValue(area,58200000)&&loops(*h.p),"nativeArea="+number(area));
+-                int lines{};expect("EvaluatedPatternSegmentsExcludeWindow",voidLines(*h.p,lines),"native evaluated segments="+std::to_string(lines));
+-                expect("ReferencePatternPhysicalExpression",nearValue(h->patternScale(),sourceScale)&&nearValue(h->patternAngle(),sourceAngle)&&nearValue(spacing(*h.p),sourceSpacing)&&h->patternDouble()==sourceDouble&&h->numPatternDefinitions()==sourceDefinitions&&h->color().color()==sourceColor&&layer(*h.p).find(sourceLayer)!=std::wstring::npos&&linetype(*h.p).find(sourceLinetype)!=std::wstring::npos,"source pattern, angle, double, color, named layer/linetype dependency and spacing preserved");
++                int lines{};expect("EvaluatedPatternSegmentsExcludeWindow",voidLines(*h.p,lines),"native evaluated segments="+std::to_string(lines)+"; zero cached lines keeps natural host drawing QA pending, not proof that Hatch is unfilled");
++                expect("ReferencePatternPhysicalExpression",nearValue(h->patternScale(),sourceScale)&&nearValue(h->patternAngle(),sourceAngle)&&nearValue(spacing(*h.p),sourceSpacing)&&h->patternDouble()==sourceDouble&&h->numPatternDefinitions()==sourceDefinitions&&h->color().color()==sourceColor&&layer(*h.p).find(sourceLayer)!=std::wstring::npos&&linetype(*h.p).find(sourceLinetype)!=std::wstring::npos,"scale="+number(h->patternScale())+" angle="+number(h->patternAngle())+" spacing="+number(spacing(*h.p))+" sourceSpacing="+number(sourceSpacing)+" definitions="+std::to_string(h->numPatternDefinitions()));
+                 expect("ExplicitPatternPhaseMapping",nearValue(h->originPoint().x,12.25)&&nearValue(h->originPoint().y,37.5),"origin="+number(h->originPoint().x)+","+number(h->originPoint().y));
+             }
+             AcDbDatabase output(true,true);auto cloned=batch.cloneToEmpty(output);expect("OnlyPreparedHatchClonesToEmpty",cloned.canCommit()&&modelRoots(output).length()==1,"root-list cloning excludes old source geometry");
+@@ -46,13 +46,13 @@
+                 const auto savedId=cloned.value->front();const auto outputPath=config.output+L"/material-roundtrip.dwg";require(GetFileAttributesW(outputPath.c_str())==INVALID_FILE_ATTRIBUTES,"exclusive material DWG");
+                 {Working work(output);ok(output.saveAs(outputPath.c_str(),false,AcDb::kDHL_CURRENT),"save test-only material DWG");}
+                 AcDbDatabase reopened(false,true);ok(reopened.readDwgFile(outputPath.c_str(),AcDbDatabase::kForReadAndReadShare,false),"independent material reopen");reopened.closeInput(true);AcDbObjectId reopenedId;ok(reopened.getAcDbObjectId(reopenedId,false,savedId.handle()),"reopen hatch handle");
+-                {Working work(reopened);Open<AcDbHatch> h(reopenedId);double area{};ok(h->getArea(area),"reopened area");expect("IndependentDwgReopen",modelRoots(reopened).length()==1&&loops(*h.p)&&nearValue(area,58200000)&&nearValue(h->patternScale(),sourceScale)&&h->color().color()==sourceColor&&nearValue(h->originPoint().x,12.25)&&nearValue(h->originPoint().y,37.5),"new test DWG reopened: exact class, 2 loops, area, phase, pattern and detached associations");}
++                {Working work(reopened);Open<AcDbHatch> h(reopenedId);double area{};ok(h->getArea(area),"reopened area");expect("IndependentDwgReopen",modelRoots(reopened).length()==1&&loops(*h.p)&&nearValue(area,58200000)&&nearValue(h->patternScale(),sourceScale)&&h->color().color()==sourceColor&&nearValue(h->originPoint().x,12.25)&&nearValue(h->originPoint().y,37.5),"roots="+std::to_string(modelRoots(reopened).length())+" loops="+(loops(*h.p)?"true":"false")+" area="+number(area)+" scale="+number(h->patternScale())+" color="+std::to_string(h->color().color())+" origin="+number(h->originPoint().x)+","+number(h->originPoint().y));}
+             }
+             // A translated noninteger region must retain each actual input coordinate.
+             auto shiftedPlan=plan;for(auto& p:shiftedPlan.regions[0].geometry.outer.vertices){p.x+=100.125;p.y-=20.375;}for(auto& hole:shiftedPlan.regions[0].geometry.holes)for(auto& p:hole.vertices){p.x+=100.125;p.y-=20.375;}
+             auto shiftedOptions=options;shiftedOptions.placements[0].targetAnchor={112.375,17.125};auto shifted=prepareMaterials(shiftedPlan,{seed},shiftedOptions);
+-            bool shiftedOk=false;if(shifted.canCommit()){Open<AcDbHatch> h(shifted.value->roots()[0]);shiftedOk=loops(*h.p,100.125,-20.375)&&nearValue(h->originPoint().x,112.375)&&nearValue(h->originPoint().y,17.125);}
+-            expect("NonintegerCoordinatesAndTranslation",shiftedOk,shifted.issues.empty()?"input vertices unchanged; phase anchor explicitly translated":shifted.issues.front().message);
++            std::string shiftedDetail;bool shiftedOk=false;if(shifted.canCommit()){Open<AcDbHatch> h(shifted.value->roots()[0]);shiftedOk=loops(*h.p,100.125,-20.375)&&nearValue(h->originPoint().x,112.375)&&nearValue(h->originPoint().y,17.125);shiftedDetail="loops="+std::string(loops(*h.p,100.125,-20.375)?"true":"false")+" origin="+number(h->originPoint().x)+","+number(h->originPoint().y);}
++            expect("NonintegerCoordinatesAndTranslation",shiftedOk,shifted.issues.empty()?shiftedDetail:shifted.issues.front().message);
+             auto halfOptions=options;halfOptions.placements[0].targetPaperScale=50;auto half=prepareMaterials(plan,{seed},halfOptions);bool halfOk=false;
+             if(half.canCommit()){Open<AcDbHatch> h(half.value->roots()[0]);halfOk=loops(*h.p)&&nearValue(h->patternScale(),sourceScale*.5)&&nearValue(spacing(*h.p),sourceSpacing*.5);}
+             expect("PaperScale50ChangesPatternOnly",halfOk,half.issues.empty()?"1:100 to 1:50 halves physical pattern spacing; building loops unchanged":half.issues.front().message);
+@@ -72,9 +72,9 @@
+                 AcDbDatabase gradientRead(false,true);ok(gradientRead.readDwgFile(gradientPath.c_str(),AcDbDatabase::kForReadAndReadShare,false),"reopen gradient fixture provenance");gradientRead.closeInput(true);auto gradientSeed=seed;gradientSeed.database=&gradientRead;gradientSeed.referenceSha256=sha256(gradientPath);ACHAR handle[32]{};gradientId.handle().getIntoAsciiBuffer(handle);gradientSeed.handle=utf8(handle);auto gradientPlan=plan;gradientPlan.referenceSha256=gradientSeed.referenceSha256;Monitor gradientMonitor(gradientRead);
+                 auto gradientResult=prepareMaterials(gradientPlan,{gradientSeed},options);expect("GradientExplicitlyUnsupported",!gradientResult.canCommit()&&!gradientResult.value&&!gradientResult.issues.empty()&&gradientResult.issues.front().message.find("UNSUPPORTED_MATERIAL_NATIVE_TYPE")!=std::string::npos,gradientResult.issues.empty()?"missing gradient diagnostic":gradientResult.issues.front().message);expect("GradientSourceUntouched",gradientMonitor.changes==0,"unsupported expression read only");
+             }
+-            auto rotatedPlan=plan;rotatedPlan.regions[0].expression.direction={0,1};auto rotated=prepareMaterials(rotatedPlan,{seed},options);bool rotatedOk=false;
+-            if(rotated.canCommit()){Open<AcDbHatch> h(rotated.value->roots()[0]);rotatedOk=loops(*h.p)&&nearValue(std::sin(h->patternAngle()-sourceAngle),1)&&nearValue(spacing(*h.p),sourceSpacing)&&nearValue(h->originPoint().x,12.25)&&nearValue(h->originPoint().y,37.5);}
+-            expect("ExplicitDirectionRotatesPatternOnly",rotatedOk,rotated.issues.empty()?"90 degree pattern rotation retains target wall/window geometry":rotated.issues.front().message);            for(const auto mutation:{0,1,2,3}) {
++            auto rotatedPlan=plan;rotatedPlan.regions[0].expression.direction={0,1};auto rotated=prepareMaterials(rotatedPlan,{seed},options);std::string rotatedDetail;bool rotatedOk=false;
++            if(rotated.canCommit()){Open<AcDbHatch> h(rotated.value->roots()[0]);rotatedOk=loops(*h.p)&&nearValue(std::sin(h->patternAngle()-sourceAngle),1)&&nearValue(spacing(*h.p),sourceSpacing)&&nearValue(h->originPoint().x,12.25)&&nearValue(h->originPoint().y,37.5);rotatedDetail="loops="+std::string(loops(*h.p)?"true":"false")+" angle="+number(h->patternAngle())+" spacing="+number(spacing(*h.p))+" origin="+number(h->originPoint().x)+","+number(h->originPoint().y);}
++            expect("ExplicitDirectionRotatesPatternOnly",rotatedOk,rotated.issues.empty()?rotatedDetail:rotated.issues.front().message);            for(const auto mutation:{0,1,2,3}) {
+                 auto altered=prepareMaterials(plan,{seed},options);require(altered.canCommit(),"mutation fixture prepare");
+                 {Open<AcDbHatch> h(altered.value->roots()[0],AcDb::kForWrite);if(mutation==0)ok(h->setPatternScale(h->patternScale()*2),"mutate pattern");else if(mutation==1)ok(h->removeLoopAt(1),"mutate loop");else if(mutation==2)ok(h->setColorIndex(1),"mutate appearance");else{const auto id=h->layerId();h.p->close();h.p=nullptr;Open<AcDbLayerTableRecord> layerRecord(id,AcDb::kForWrite);layerRecord->setIsOff(true);}}
+                 AcDbDatabase rejectedTarget(true,true);auto copied=altered.value->cloneToEmpty(rejectedTarget);
+@@ -97,3 +97,4 @@
+ 
+ 
+ 
++

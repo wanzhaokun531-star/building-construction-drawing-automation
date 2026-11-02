@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>acedSetCurrentView</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+<link rel="stylesheet" type="text/css" href="default_plus.css" media="screen, projection, tv " />
+<script language=javascript src="arxref.js"></script>
+<script language=javascript src="ac_common.js"></script>
+<script language=javascript src="ac.acad_ak.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="ObjectARX_Reference_Guide.html">ObjectARX Reference Guide</a> &gt; <a href="Global_Functions.html">Global Functions</a> &gt; <a href="AcEd_Global_Functions.html">AcEd Global Functions</a> &gt; <a href="acedSetCurrentView@AcDbViewTableRecord__@AcDbViewport__.html">acedSetCurrentView Function</a></div>
+<div class="Element92">
+<div class="Element5">
+acedSetCurrentView</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<div class="Element58">
+<a name="432B2B"></a><div class="Element99">
+C++</div>
+<div class="Element101"><div class="Element100"><pre class="Element100">Acad::ErrorStatus <strong><span style="color: #660000">acedSetCurrentView</span></strong>(
+    AcDbViewTableRecord * <strong><span style="color: #660000">pVwRec</span></strong>, 
+    AcDbViewport * <strong><span style="color: #660000">pVP</span></strong>
+);</pre></div></div>
+<a name="46696C65"></a><div class="Element14">
+File</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+aced.h</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element252">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element240" valign="top" width="50%">
+<div class="Element241">
+Parameters&nbsp;</div></td><td class="Element244" valign="top" width="50%">
+<div class="Element245">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+pVwRec&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input pointer to ViewTableRecord to read data from&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+pVP&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input pointer to Viewport to set view within&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="4465736372697074696F6E"></a><div class="Element14">
+Description</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This function uses the information from the <span class="Element146">AcDbViewTableRecord</span> pointed to by <span class="Element146">pVwRec</span> to set the view in the <span class="Element146">AcDbViewport</span> pointed to by <span class="Element146">pVP</span> (if <span class="Element146">pVP != NULL</span>) or in the current viewport (if <span class="Element146">pVP == NULL</span>).&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><div class="Element15">
+Note</div>
+<p class="Element10">
+The <span class="Element146">ViewTableRecord</span> pointed to by <span class="Element146">pVwRec</span> should be opened for read, not for write.&nbsp;</p>
+<p class="Element10">
+If <span class="Element146">pVwRec</span> points to a <span class="Element146">ViewTableRecord</span> defining a non-paper space view, paper space is active, and <span class="Element146">pVP</span> is not <span class="Element146">NULL</span>, then the current viewport is changed to <span class="Element146">pVP</span>.&nbsp;</p>
+<p class="Element10">
+If the <span class="Element146">pVwRec</span><span class="Element146">ViewTableRecord</span> points to a paper space view, and paper space is not currently active, then an attempt is made to switch to paper space.&nbsp;</p>
+<p class="Element10">
+Trans-space view changes are not allowed.&nbsp;</p>
+<p class="Element10">
+This function cannot be used while an <span class="Element146">acedCommand</span> is active.&nbsp;</p>
+<p class="Element10">
+Returns <span class="Element146">Acad::eOk</span> on success.&nbsp;</p>
+<p class="Element10">
+Returns <span class="Element146">Acad::eCommandWasInProgress</span> if a trans-space view change is attempted or an <span class="Element146">acedCommand</span> is in progress and fastzoom is off.&nbsp;</p>
+<p class="Element10">
+Returns <span class="Element146">Acad::eNullObjectPointer</span> if <span class="Element146">pVwRec</span> is <span class="Element146">NULL</span>. Returns the same if <span class="Element146">pVP</span> is <span class="Element146">NULL</span>, <span class="Element146">pVwRec</span> points to a <span class="Element146">ViewTableRecord</span> that defines a non-paper space view, and paper space is active.&nbsp;</p>
+<p class="Element10">
+Returns <span class="Element146">Acad::eBadPaperspaceView</span> if the <span class="Element146">pVwRec</span> points to a paper space view, and paper space is not active.&nbsp;</p>
+<p class="Element10">
+Returns <span class="Element146">Acad::eNotInPaperspace</span> if an attempt is made to switch to paper space, but tilemode is 1.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<table class=FooterTable width=100%><tr valign=top>
+<td>&nbsp;</td>
+<td align=right>&nbsp;<span class="CommentsLink" onclick="doComments();" title="Click here to send a comment about this topic.">Comments?</span>&nbsp;</td>
+</tr></table>
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

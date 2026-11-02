@@ -1,0 +1,9 @@
+{
+  "contract": "bcp.perimeter-full-axes.native-failure.v1",
+  "candidateModuleSHA256": "9D24191447590EF9B0343B8728B8C0DBF8B243476EC4BF44F3319F1320D2DD18",
+  "binding": "阶段2\\evidence\\native-host-binding-v24.json",
+  "actualError": "failure: axis linetype public text",
+  "savedOutput": false,
+  "reason": "textAt is not applicable to plain dash/dot slot; candidate uses public shape/style checks in next build",
+  "closure": "阶段2\\evidence\\host-closure-v24.json"
+}

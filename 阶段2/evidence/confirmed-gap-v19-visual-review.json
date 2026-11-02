@@ -1,0 +1,12 @@
+{
+  "contract": "bcp.confirmed-gap.visual-review.v1",
+  "nativeRun": "native-run-v19.json",
+  "geometryChecksPassed": true,
+  "pdfAccepted": false,
+  "rejectedForDelivery": true,
+  "defects": [
+    "top and left dimension glyphs clipped by non-wall mask edges",
+    "legacy title fragment enters expanded plot window"
+  ],
+  "ruling": "expand non-wall mask edges; retain only confirmed wall-side 1000 clipping boundary; hide identified legacy title layer in output only"
+}

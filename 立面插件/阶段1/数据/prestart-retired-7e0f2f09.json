@@ -1,0 +1,33 @@
+{
+  "contract": "bce.stage1.prestart-retired.v1",
+  "nonce": "7e0f2f09243d4d13b02196c13a0b733d",
+  "CADStarted": false,
+  "reason": "Launcher config omitted earlyNativeAutoload, rejected before CreateProcess",
+  "files": [
+    {
+      "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexElevationStage1_7e0f2f09243d4d13b02196c13a0b733d\\S1Read_7e0f2f09.arx",
+      "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-stage1-20261101-162149-7e0f2f09\\prestart-staging-retired\\S1Read_7e0f2f09.arx",
+      "SHA256": "7DB32B15256AF44EE09223CFD105D947FAAD2CE0EEAC85348000103C3F237228",
+      "removed": true
+    },
+    {
+      "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexElevationStage1_7e0f2f09243d4d13b02196c13a0b733d\\S1Read_7e0f2f09.ini",
+      "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-stage1-20261101-162149-7e0f2f09\\prestart-staging-retired\\S1Read_7e0f2f09.ini",
+      "SHA256": "951D6449ACB1BFAC06C436526E1EA23B45B098B23DDE8C26A537098CE7A3F03F",
+      "removed": true
+    },
+    {
+      "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexElevationStage1_7e0f2f09243d4d13b02196c13a0b733d\\BCE1Read_7e0f2f09.arx",
+      "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-stage1-20261101-162149-7e0f2f09\\prestart-staging-retired\\BCE1Read_7e0f2f09.arx",
+      "SHA256": "57FCADC8E072631695484F35EED4B7933B37F866316CF6F4998B6BEB28AA3E02",
+      "removed": true
+    },
+    {
+      "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexElevationStage1_7e0f2f09243d4d13b02196c13a0b733d\\BCE1Read_7e0f2f09.ini",
+      "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-stage1-20261101-162149-7e0f2f09\\prestart-staging-retired\\BCE1Read_7e0f2f09.ini",
+      "SHA256": "20B184AFFB4098EC3E05C9B11A6560CACA613789D1A219317E534FB8ACD6836C",
+      "removed": true
+    }
+  ],
+  "stagingRemoved": true
+}

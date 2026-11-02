@@ -1,0 +1,302 @@
+--- 8fcbf595/ElevationViewportCases.vcxproj
++++ b293e40a/ElevationViewportCases.vcxproj
+@@ -10,6 +10,6 @@
+     <ClCompile><WarningLevel>Level4</WarningLevel><TreatWarningAsError>true</TreatWarningAsError><SDLCheck>true</SDLCheck><ConformanceMode>true</ConformanceMode><LanguageStandard>stdcpp17</LanguageStandard><RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary><DisableSpecificWarnings>4828;%(DisableSpecificWarnings)</DisableSpecificWarnings><AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions><ExceptionHandling>Sync</ExceptionHandling><PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;UNICODE;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions><AdditionalIncludeDirectories>$(ObjectArxSdk)\inc;$(ObjectArxSdk)\inc-x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories></ClCompile>
+     <Link><SubSystem>Windows</SubSystem><ModuleDefinitionFile>$(ObjectArxSdk)\inc\AcRxDefault.def</ModuleDefinitionFile><AdditionalLibraryDirectories>$(ObjectArxSdk)\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories><AdditionalDependencies>acad.lib;rxapi.lib;acdb23.lib;acge23.lib;accore.lib;ac1st23.lib;Advapi32.lib;User32.lib;%(AdditionalDependencies)</AdditionalDependencies></Link>
+   </ItemDefinitionGroup>
+-  <ItemGroup><ClCompile Include="ViewportProbe.cpp" /><ClCompile Include="ViewportCapture.cpp" /><ClCompile Include="NativeEvidence.cpp" /><ClCompile Include="ViewportTrace.cpp" /></ItemGroup>
++  <ItemGroup><ClCompile Include="ViewportProbe.cpp" /><ClCompile Include="ViewportCapture.cpp" /><ClCompile Include="NativeEvidence.cpp" /><ClCompile Include="ViewportTrace.cpp" /><ClCompile Include="OwnedControlFile.cpp" /></ItemGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+ </Project>
+--- 8fcbf595/OwnedControlFile.cpp
++++ b293e40a/OwnedControlFile.cpp
+@@ -0,0 +1,59 @@
++#include "OwnedControlFile.h"
++#include <wincrypt.h>
++#include <array>
++#include <iomanip>
++#include <sstream>
++namespace bce::viewport {
++using namespace bce::native;
++namespace {
++std::uint64_t join(DWORD high,DWORD low){return (static_cast<std::uint64_t>(high)<<32)|low;}
++FileIdentity identity(HANDLE handle){
++    BY_HANDLE_FILE_INFORMATION info{};
++    if(!GetFileInformationByHandle(handle,&info)){const auto e=GetLastError();require(false,"owned GetFileInformationByHandle failed error="+std::to_string(e));}
++    return {info.dwVolumeSerialNumber,join(info.nFileIndexHigh,info.nFileIndexLow),join(info.nFileSizeHigh,info.nFileSizeLow),join(info.ftCreationTime.dwHighDateTime,info.ftCreationTime.dwLowDateTime),join(info.ftLastWriteTime.dwHighDateTime,info.ftLastWriteTime.dwLowDateTime),join(info.ftLastAccessTime.dwHighDateTime,info.ftLastAccessTime.dwLowDateTime),info.dwFileAttributes};
++}
++std::string metadata(const FileIdentity& v){return object({{"volume",std::to_string(v.volume)},{"fileIndex",std::to_string(v.index)},{"bytes",std::to_string(v.bytes)},{"created",std::to_string(v.created)},{"lastWrite",std::to_string(v.lastWrite)},{"lastAccess",std::to_string(v.lastAccess)},{"attributes",std::to_string(v.attributes)}});}
++std::wstring finalPath(HANDLE file){
++    std::wstring path(32768,L'\0');const auto size=GetFinalPathNameByHandleW(file,&path[0],static_cast<DWORD>(path.size()),FILE_NAME_NORMALIZED|VOLUME_NAME_DOS);
++    if(!size){const auto e=GetLastError();require(false,"owned final path failed error="+std::to_string(e));}
++    require(size<path.size(),"owned final path truncated");path.resize(size);
++    if(path.compare(0,4,L"\\\\?\\")==0)path.erase(0,4);return path;
++}
++}
++OwnedFileRead readOwnedControl(const std::wstring& session,const std::string& expectedSHA,std::uint64_t expectedSize,const FileObserver& observe) {
++    const auto job=session+L"\\viewport-native-job";const auto path=job+L"\\control.dwg";
++    const auto attrs=GetFileAttributesW(job.c_str());
++    if(attrs==INVALID_FILE_ATTRIBUTES){const auto e=GetLastError();observe("ownedFile.directoryFailure",{{"path",quote(job)},{"error",std::to_string(e)}});require(false,"owned control directory unavailable error="+std::to_string(e));}
++    require((attrs&FILE_ATTRIBUTE_DIRECTORY)!=0&&(attrs&FILE_ATTRIBUTE_REPARSE_POINT)==0,"owned control parent is not plain directory");
++    // Diagnostic reproduction of the old sharing request; no read/write is attempted.
++    {File strict(CreateFileW(path.c_str(),GENERIC_READ,FILE_SHARE_READ,nullptr,OPEN_EXISTING,FILE_FLAG_OPEN_REPARSE_POINT,nullptr));
++     const auto error=strict.valid()?ERROR_SUCCESS:GetLastError();observe("ownedFile.strictOpenObservation",{{"path",quote(path)},{"success",strict.valid()?"true":"false"},{"error",std::to_string(error)},{"access",std::to_string(GENERIC_READ)},{"share",std::to_string(FILE_SHARE_READ)}});}
++    constexpr DWORD sharing=FILE_SHARE_READ|FILE_SHARE_WRITE;
++    File file(CreateFileW(path.c_str(),GENERIC_READ,sharing,nullptr,OPEN_EXISTING,FILE_FLAG_OPEN_REPARSE_POINT,nullptr));
++    const auto openError=file.valid()?ERROR_SUCCESS:GetLastError();
++    observe("ownedFile.open",{{"path",quote(path)},{"success",file.valid()?"true":"false"},{"error",std::to_string(openError)},{"access",std::to_string(GENERIC_READ)},{"share",std::to_string(sharing)}});
++    require(file.valid(),"owned control read-only open failed error="+std::to_string(openError)+" path="+utf8(path));
++    const auto actualPath=finalPath(file.get());require(_wcsicmp(path.c_str(),actualPath.c_str())==0,"owned control final path differs");
++    const auto before=identity(file.get());require((before.attributes&(FILE_ATTRIBUTE_REPARSE_POINT|FILE_ATTRIBUTE_DIRECTORY))==0,"owned control is not a plain file");
++    require(before.bytes==expectedSize&&expectedSize>0,"owned control size differs from prepared target");
++    observe("ownedFile.beforeRead",{{"path",quote(actualPath)},{"metadata",metadata(before)}});
++    HCRYPTPROV provider{};if(!CryptAcquireContextW(&provider,nullptr,nullptr,PROV_RSA_AES,CRYPT_VERIFYCONTEXT)){const auto e=GetLastError();require(false,"owned SHA provider failed error="+std::to_string(e));}
++    struct Provider {HCRYPTPROV value;~Provider(){CryptReleaseContext(value,0);}} providerScope{provider};
++    HCRYPTHASH hash{};if(!CryptCreateHash(provider,CALG_SHA_256,0,0,&hash)){const auto e=GetLastError();require(false,"owned SHA initialization failed error="+std::to_string(e));}
++    struct Hash {HCRYPTHASH value;~Hash(){CryptDestroyHash(value);}} hashScope{hash};
++    std::array<BYTE,65536> buffer{};std::uint64_t readBytes{};DWORD reads{};
++    for(;;){DWORD count{};if(!ReadFile(file.get(),buffer.data(),static_cast<DWORD>(buffer.size()),&count,nullptr)){
++        const auto e=GetLastError();observe("ownedFile.readFailure",{{"error",std::to_string(e)},{"readBytes",std::to_string(readBytes)},{"readCalls",std::to_string(reads)}});require(false,"owned control ReadFile failed error="+std::to_string(e));}
++        ++reads;if(count==0)break;readBytes+=count;require(readBytes<=expectedSize,"owned control grew during hash");
++        if(!CryptHashData(hash,buffer.data(),count,0)){const auto e=GetLastError();require(false,"owned SHA update failed error="+std::to_string(e));}}
++    std::array<BYTE,32> digest{};DWORD digestSize=static_cast<DWORD>(digest.size());
++    if(!CryptGetHashParam(hash,HP_HASHVAL,digest.data(),&digestSize,0)){const auto e=GetLastError();require(false,"owned SHA finalize failed error="+std::to_string(e));}
++    require(digestSize==digest.size(),"owned SHA size mismatch");std::ostringstream hex;for(auto b:digest)hex<<std::uppercase<<std::hex<<std::setw(2)<<std::setfill('0')<<static_cast<int>(b);
++    observe("ownedFile.beforeAfterSnapshot",{{"readBytes",std::to_string(readBytes)},{"readCalls",std::to_string(reads)}});
++    const auto after=identity(file.get());const auto sha=hex.str();const bool stable=before.sameStable(after)&&readBytes==before.bytes;
++    const auto evidence=object({{"path",quote(actualPath)},{"before",metadata(before)},{"after",metadata(after)},{"readBytes",std::to_string(readBytes)},{"readCalls",std::to_string(reads)},{"sha256",quote(sha)},{"stableIdentitySizeCreationWriteTime",stable?"true":"false"},{"accessTimeCompared","false"},{"matchesPreparedSHA",sha==expectedSHA?"true":"false"}});
++    observe("ownedFile.result",{{"observation",evidence}});
++    require(stable,"owned control identity/size/creation/write time changed while hashing");require(sha==expectedSHA,"owned control SHA mismatch");
++    return {sha,before,evidence};
++}
++}
+--- 8fcbf595/OwnedControlFile.h
++++ b293e40a/OwnedControlFile.h
+@@ -0,0 +1,17 @@
++#pragma once
++#include "NativeEvidence.h"
++#include <functional>
++#include <cstdint>
++namespace bce::viewport {
++struct FileIdentity {
++    std::uint64_t volume{},index{},bytes{},created{},lastWrite{},lastAccess{};
++    DWORD attributes{};
++    bool sameStable(const FileIdentity& rhs) const noexcept {
++        return volume==rhs.volume&&index==rhs.index&&bytes==rhs.bytes&&created==rhs.created&&lastWrite==rhs.lastWrite&&attributes==rhs.attributes;
++    }
++};
++struct OwnedFileRead {std::string sha;FileIdentity identity;std::string evidence;};
++using FileObserver=std::function<void(const std::string&,const bce::native::Fields&)>;
++OwnedFileRead readOwnedControl(const std::wstring& session,const std::string& expectedSHA,
++    std::uint64_t expectedSize,const FileObserver& observer);
++}
+--- 8fcbf595/OwnedControlFileTests.cpp
++++ b293e40a/OwnedControlFileTests.cpp
+@@ -0,0 +1,30 @@
++#include "OwnedControlFile.h"
++#include <iostream>
++using namespace bce::native;
++using namespace bce::viewport;
++int main(){
++    unsigned checks{},failed{};auto check=[&](bool ok,const char* name){++checks;if(!ok){++failed;std::cout<<"FAIL "<<name<<"\n";}};
++    try {
++        wchar_t cwd[32768]{};require(GetCurrentDirectoryW(32768,cwd)>0,"test cwd");
++        const auto session=std::wstring(cwd)+L"\\owned-test-"+std::to_wstring(GetCurrentProcessId());
++        require(CreateDirectoryW(session.c_str(),nullptr)!=FALSE,"create owned test directory");
++        const auto job=session+L"\\viewport-native-job";require(CreateDirectoryW(job.c_str(),nullptr)!=FALSE,"create job");
++        const auto path=job+L"\\control.dwg";
++        File writer(CreateFileW(path.c_str(),GENERIC_READ|GENERIC_WRITE,FILE_SHARE_READ,nullptr,CREATE_NEW,FILE_ATTRIBUTE_NORMAL,nullptr));require(writer.valid(),"writer fixture");write_flushed(writer.get(),"abc");
++        const std::string abc="BA7816BF8F01CFEA414140DE5DAE2223B00361A396177A9CB410FF61F20015AD";
++        bool strictFailed=false;try{sha256(path);}catch(const std::exception&){strictFailed=true;}check(strictFailed,"strict shared-source helper rejects existing writer (fixture only)");
++        std::vector<std::string> observed;
++        const FileObserver observer=[&](const std::string& name,const Fields&){observed.push_back(name);};
++        try{const auto value=readOwnedControl(session,abc,3,observer);check(value.sha==abc&&value.identity.bytes==3,"owned reader hashes file with existing writer");}
++        catch(const std::exception& e){std::cout<<"OBSERVED "<<e.what()<<"\n";check(false,"owned reader hashes file with existing writer");}
++        writer=File();
++        bool wrong=false;try{readOwnedControl(session,std::string(64,'0'),3,observer);}catch(const std::exception&){wrong=true;}check(wrong,"wrong prepared SHA rejected");
++        bool size=false;try{readOwnedControl(session,abc,4,observer);}catch(const std::exception&){size=true;}check(size,"wrong prepared size rejected");
++        bool changed=false;
++        try{readOwnedControl(session,abc,3,[&](const std::string& event,const Fields&){if(event=="ownedFile.beforeAfterSnapshot"){
++            File change(CreateFileW(path.c_str(),FILE_WRITE_ATTRIBUTES,FILE_SHARE_READ|FILE_SHARE_WRITE,nullptr,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,nullptr));require(change.valid(),"timestamp mutation handle");FILETIME time{100,200};require(SetFileTime(change.get(),nullptr,nullptr,&time)!=FALSE,"timestamp mutation");}});}
++        catch(const std::exception&){changed=true;}check(changed,"metadata mutation during hash rejected");
++        bool missing=false;try{readOwnedControl(session+L"-missing",abc,3,observer);}catch(const std::exception&){missing=true;}check(missing,"missing owned path rejected");
++    }catch(const std::exception& e){std::cout<<"SETUP_FAILURE "<<e.what()<<"\n";return 2;}
++    std::cout<<"OWNED_FILE_CHECKS="<<checks<<" FAILED="<<failed<<"\n";return failed?1:0;
++}
+--- 8fcbf595/OwnedControlPublicContracts.md
++++ b293e40a/OwnedControlPublicContracts.md
+@@ -0,0 +1,11 @@
++# N7 自有当前文档读取与延后捕获的公共合同
++
++仅适用于 `config.session/viewport-native-job/control.dwg`。scheme/reference 继续使用未改动的 NativeEvidence 严格 SHA 读取。
++
++Microsoft 的 [CreateFileW](https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew) 合同要求：新句柄的共享模式也必须兼容已有句柄的访问。`FILE_SHARE_WRITE` 允许已有写访问共存，并不为本次 `GENERIC_READ` 句柄授予写权限。新读取不请求写/删除权限，不共享删除；先记录旧严格试开的现场错误码，再用READ|WRITE共享只读句柄读取。旧9c4d日志未保存GetLastError，因此不能追认该次错误为32。
++
++[GetFileInformationByHandle](https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getfileinformationbyhandle) 提供的卷号和文件索引用于身份对比；读取前后及整个capture前后核对身份、大小、creation/lastWrite、attributes，SHA必须等于prepared目标，累计ReadFile字节数必须等于prepared大小。lastAccess也原样记录，但读取可能影响访问时间，因此不用于稳定性断言；这不建立对未知私有内存的证明。
++
++2020本机 `core_rxmfcapi.h:453–464` 与同名CHM条目公开注册/移除OnIdle回调；`AcApDocument::isQuiescent` 明确指没有活动command/LISP/ARX命令。N7的公开CommandStack reactor观察S1OPEN成功结束，然后只在idle且文档quiescent、inputPending=0、current=active、workingDB属于exact自有目标时排队一次固定捕获命令。文档becameCurrent事件只记录候选，不再立即排队。该改动不声称所有S1OPEN内部命令执行都违反SDK，只移除这次已观察到的未证明安全嵌套窗口。
++
++idle hook有配对移除；移除失败拒绝cleanup/模块卸载。没有MFC对象或UI调用；SDK头中未用到的CPoint坐标声明只用标准C++前向声明满足编译。
+--- 8fcbf595/ViewportCapture.cpp
++++ b293e40a/ViewportCapture.cpp
+@@ -1,9 +1,14 @@
+ #include "ViewportProbe.h"
+ #include "ViewportTrace.h"
++#include "OwnedControlFile.h"
+ #include <aced.h>
+ #include <adscodes.h>
+ #include <acedCmdNF.h>
+ #include <acdocman.h>
++#include <accmd.h>
++// core_rxmfcapi.h also declares unused CPoint coordinate overloads.
++class CPoint;
++#include <core_rxmfcapi.h>
+ #include <acutads.h>
+ #include <dbents.h>
+ #include <dbmtext.h>
+@@ -41,9 +46,13 @@
+     require(count==12&&count==expected.size(),"actual target root count mismatch");
+ }
+ struct Session;
+-struct QueueReactor final:AcApDocManagerReactor {
++void captureOnIdle();
++struct QueueReactor final:AcApDocManagerReactor,AcEdCommandStackReactor {
+     explicit QueueReactor(Session& owner):s(owner){}
+     void documentBecameCurrent(AcApDocument* doc) override;
++    void documentActivated(AcApDocument* doc) override;
++    void commandWillStart(AcEdCommand* command,AcEdCommandEventArgs*) override;
++    void commandEnded(AcEdCommand* command,AcEdCommandEventArgs* args) override;
+     Session& s;
+ };
+ struct Session {
+@@ -51,9 +60,9 @@
+     AcDbDatabase* ambient{};std::unique_ptr<Monitor> ambientMonitor;
+     std::unique_ptr<AcDbDatabase> source;std::unique_ptr<Monitor> sourceMonitor;
+     std::unique_ptr<Monitor> targetMonitor;AcDbDatabase* target{};
+-    std::string sourceFingerprint,targetSHA;std::vector<std::wstring> rootHandles;
++    std::string sourceFingerprint,targetSHA;std::uint64_t preparedTargetBytes{};std::vector<std::wstring> rootHandles;
+     std::vector<AcDbObjectId> roots;std::vector<std::string> classes;
+-    std::unique_ptr<QueueReactor> queue;bool queueAttached{},queued{},capturing{};
++    std::unique_ptr<QueueReactor> queue;bool queueAttached{},commandQueueAttached{},idleAttached{},targetBecameCurrent{},openCommandStarted{},openCommandEnded{},queued{},capturing{};
+     std::string callbackError;Result result;
+     std::array<std::array<std::vector<std::string>,12>,2> streams;
+     std::array<std::array<bool,12>,2> seenWorld{},seenViewport{};
+@@ -92,7 +101,7 @@
+         emit(g,"text",f);
+     }
+     void guarded(){require(callbackError.empty(),callbackError);ambientMonitor->check();sourceMonitor->check();if(targetMonitor)targetMonitor->check();}
+-    ~Session(){trace("session.destroy",{{"queued",queued?"true":"false"},{"capturing",capturing?"true":"false"}});if(queueAttached)acDocManager->removeReactor(queue.get());}
++    ~Session(){trace("session.destroy",{{"queued",queued?"true":"false"},{"capturing",capturing?"true":"false"}});if(commandQueueAttached)acedRegCmds->removeReactor(queue.get());if(queueAttached)acDocManager->removeReactor(queue.get());}
+ };
+ std::unique_ptr<Session> session;
+ void QueueReactor::documentBecameCurrent(AcApDocument* doc){
+@@ -101,11 +110,34 @@
+     try {const ACHAR* name{};if(doc->database()->getFilename(name)!=Acad::eOk||!name)return;
+         const auto expected=s.config.session+L"\\viewport-native-job\\control.dwg";
+         if(_wcsicmp(name,expected.c_str())!=0){trace("document.pathRejected",{{"path",quote(std::wstring(name))},{"expected",quote(expected)}});return;}
+-        s.queued=true;trace("document.captureQueue.before",{{"command",quote(std::wstring(L"BCE_VIEWPORT_CAPTURE\n"))}});
++        s.targetBecameCurrent=true;trace("document.captureDeferredUntilOpenEndedAndIdle");
++    }catch(const std::exception& e){s.callbackError=e.what();}catch(...){s.callbackError="document reactor failure";}
++}
++void QueueReactor::documentActivated(AcApDocument* doc){
++    try {trace("document.activated",{{"eventDocPath",quote(std::wstring(doc&&doc->fileName()?doc->fileName():L""))}});}catch(...){s.callbackError="document activation trace failure";}
++}
++void QueueReactor::commandWillStart(AcEdCommand* command,AcEdCommandEventArgs*){
++    if(command&&command->globalName()&&_wcsicmp(command->globalName(),L"S1OPENPROBECONTROL")==0){s.openCommandStarted=true;trace("captureGate.openCommandStarted");}
++}
++void QueueReactor::commandEnded(AcEdCommand* command,AcEdCommandEventArgs* args){
++    if(command&&command->globalName()&&_wcsicmp(command->globalName(),L"S1OPENPROBECONTROL")==0){
++        s.openCommandEnded=s.openCommandStarted&&args&&args->status()==kCmdStatusNone;
++        trace("captureGate.openCommandEnded",{{"successful",s.openCommandEnded?"true":"false"}});
++    }
++}
++void captureOnIdle(){
++    if(!session)return;auto& s=*session;
++    if(s.queued||s.capturing||!s.targetBecameCurrent||!s.openCommandEnded)return;
++    try {
++        auto* doc=curDoc();if(!doc||doc!=acDocManager->mdiActiveDocument()||!doc->isQuiescent()||acDocManager->inputPending(doc)!=0)return;
++        auto* db=doc->database();if(!db||db!=acdbHostApplicationServices()->workingDatabase()||db==s.ambient||db==s.source.get())return;
++        const ACHAR* name{};if(db->getFilename(name)!=Acad::eOk||!name)return;
++        const auto expected=s.config.session+L"\\viewport-native-job\\control.dwg";if(_wcsicmp(name,expected.c_str())!=0)return;
++        s.queued=true;trace("idle.captureQueue.before",{{"command",quote(std::wstring(L"BCE_VIEWPORT_CAPTURE\n"))},{"openCommandEnded","true"},{"documentQuiescent","true"},{"inputPending","0"}});
+         const auto status=acDocManager->sendStringToExecute(doc,L"BCE_VIEWPORT_CAPTURE\n",false,false,false);
+-        trace("document.captureQueue.after",{{"status",std::to_string(status)}});
+-        if(status!=Acad::eOk)s.callbackError="sendStringToExecute failed status="+std::to_string(status);
+-    }catch(const std::exception& e){s.callbackError=e.what();}catch(...){s.callbackError="document reactor failure";}
++        trace("idle.captureQueue.after",{{"status",std::to_string(status)}});
++        if(status!=Acad::eOk)s.callbackError="idle sendStringToExecute failed status="+std::to_string(status);
++    }catch(const std::exception& e){s.callbackError=e.what();}catch(...){s.callbackError="capture idle gate failure";}
+ }
+ #include "ViewportForward.h"
+ class Overrule final:public AcGiDrawableOverrule {
+@@ -176,10 +208,14 @@
+         }
+         verifyRoots(target,roots);
+         for(const auto id:roots){Open<AcDbEntity> e(id);require(e->database()==&target&&e->ownerId()==owner&&!AcDbProxyEntity::cast(&*e),"target root owner/type");const auto h=handle(id);s.rootHandles.emplace_back(h.begin(),h.end());s.classes.push_back(utf8(e->isA()->name()));}
+-        const auto filename=config.output+L"\\viewport-target.dwg";require(GetFileAttributesW(filename.c_str())==INVALID_FILE_ATTRIBUTES,"target file exists");ok(target.saveAs(filename.c_str()),"save own target");s.targetSHA=sha256(filename);targetEvents.check();
++        const auto filename=config.output+L"\\viewport-target.dwg";require(GetFileAttributesW(filename.c_str())==INVALID_FILE_ATTRIBUTES,"target file exists");ok(target.saveAs(filename.c_str()),"save own target");s.targetSHA=sha256(filename);
++        WIN32_FILE_ATTRIBUTE_DATA info{};if(!GetFileAttributesExW(filename.c_str(),GetFileExInfoStandard,&info)){const auto error=GetLastError();require(false,"prepared target metadata failed error="+std::to_string(error));}
++        s.preparedTargetBytes=(static_cast<std::uint64_t>(info.nFileSizeHigh)<<32)|info.nFileSizeLow;targetEvents.check();
+     }
+     require(acdbHostApplicationServices()->workingDatabase()==s.ambient,"prepare working database not restored");s.guarded();require(fingerprint(*s.source)==s.sourceFingerprint,"reference fingerprint changed");
+     s.queue=std::make_unique<QueueReactor>(s);acDocManager->addReactor(s.queue.get());s.queueAttached=true;
++    acedRegCmds->addReactor(s.queue.get());s.commandQueueAttached=true;
++    require(acedRegisterOnIdleWinMsg(captureOnIdle),"N7 idle hook registration failed");s.idleAttached=true;
+     std::vector<std::string> handles;for(const auto& h:s.rootHandles)handles.push_back(quote(h));
+     const auto ready=object({{"contract",q("bce.graphics-viewport-prepare.v1")},{"nonce",quote(config.nonce)},{"pid",std::to_string(GetCurrentProcessId())},{"targetPath",quote(config.output+L"\\viewport-target.dwg")},{"targetSHA256",quote(s.targetSHA)},{"modelRootCount",std::to_string(s.rootHandles.size())},{"rootHandles",array(handles)},{"sourceSHA",object({{"scheme",quote(config.schemeSHA256)},{"reference",quote(config.referenceSHA256)}})}});
+     {auto f=create_new(config.output+L"\\prepare-ready.tmp");write_flushed(f.get(),ready);}
+@@ -188,10 +224,12 @@
+ }
+ Result capture(const Config& config,Evidence& evidence){
+     trace("capture.implementation.enter",{{"existingSession",session?"true":"false"}});
+-    require(session&&session->queued&&!session->capturing,"N7 not prepared/queued or capture repeated");auto& s=*session;s.capturing=true;s.guarded();
++    require(session&&session->queued&&session->openCommandEnded&&!session->capturing,"N7 not prepared/queued/open-complete or capture repeated");auto& s=*session;s.capturing=true;s.guarded();
+     const auto control=config.session+L"\\viewport-native-job\\control.dwg";s.target=acdbHostApplicationServices()->workingDatabase();
+     require(s.target&&s.target!=s.ambient&&s.target!=s.source.get()&&curDoc()&&curDoc()->database()==s.target,"capture target/context invalid");
+-    const ACHAR* filename{};ok(s.target->getFilename(filename),"target filename");require(filename&&_wcsicmp(filename,control.c_str())==0&&sha256(control)==s.targetSHA,"capture target path/SHA mismatch");
++    const ACHAR* filename{};ok(s.target->getFilename(filename),"target filename");require(filename&&_wcsicmp(filename,control.c_str())==0,"capture target path mismatch");
++    const auto fileObserver=[](const std::string& event,const Fields& fields){trace(event.c_str(),fields);};
++    const auto beforeFile=readOwnedControl(config.session,s.targetSHA,s.preparedTargetBytes,fileObserver);
+     for(std::size_t i=0;i<s.rootHandles.size();++i){AcDbObjectId id;ok(s.target->getAcDbObjectId(id,false,AcDbHandle(s.rootHandles[i].c_str())),"reopened root");Open<AcDbEntity> e(id);require(utf8(e->isA()->name())==s.classes[i]&&e->ownerId()==acdbSymUtil()->blockModelSpaceId(s.target),"reopened root identity");s.roots.push_back(id);}
+     verifyRoots(*s.target,s.roots);
+     s.targetMonitor=std::make_unique<Monitor>(*s.target,"target-capture",[&s](const std::string& l){s.write(l);});s.targetMonitor->protect=false;
+@@ -216,8 +254,10 @@
+     require(fingerprint(*s.source)==s.sourceFingerprint,"reference public fingerprint changed");s.guarded();s.result.sourceProtected=true;s.result.ambientProtected=true;
+     for(std::size_t i=0;i<12;++i){auto& v=s.result.samples[i];v.stable=!s.streams[0][i].empty()&&s.streams[0][i]==s.streams[1][i];
+         s.result.records.push_back(object({{"sample",std::to_string(i)},{"handle",quote(s.rootHandles[i])},{"class",quote(s.classes[i])},{"worldCalls",std::to_string(v.worldCalls)},{"viewportCalls",std::to_string(v.viewportCalls)},{"forwarded",std::to_string(v.forwarded)},{"textCalls",std::to_string(v.textCalls)},{"stable",v.stable?"true":"false"},{"round0RequestCount",std::to_string(s.streams[0][i].size())},{"round1RequestCount",std::to_string(s.streams[1][i].size())},{"glyphComplete","false"}}));}
+-    s.result.records.push_back(object({{"targetEvents",array(s.targetMonitor->events)},{"sourceEvents",array(s.sourceMonitor->events)},{"ambientEvents",array(s.ambientMonitor->events)},{"referenceFingerprintUnchanged","true"},{"targetDiskSHA",quote(sha256(control))},{"savedTargetSHA",quote(s.targetSHA)}}));
++    const auto afterFile=readOwnedControl(config.session,s.targetSHA,s.preparedTargetBytes,fileObserver);
++    require(beforeFile.identity.sameStable(afterFile.identity),"owned control identity/size/timestamps changed across capture");
++    s.result.records.push_back(object({{"targetEvents",array(s.targetMonitor->events)},{"sourceEvents",array(s.sourceMonitor->events)},{"ambientEvents",array(s.ambientMonitor->events)},{"referenceFingerprintUnchanged","true"},{"targetDiskSHA",quote(afterFile.sha)},{"savedTargetSHA",quote(s.targetSHA)},{"ownedFileBefore",beforeFile.evidence},{"ownedFileAfter",afterFile.evidence}}));
+     return s.result;
+ }
+-bool cleanup() noexcept {if(!removeOverrule())return false;session.reset();return true;}
+-}
++bool cleanup() noexcept {if(!removeOverrule())return false;if(session&&session->idleAttached){if(!acedRemoveOnIdleWinMsg(captureOnIdle))return false;session->idleAttached=false;}session.reset();return true;}
++}
+--- 8fcbf595/build_graphics_viewport.ps1
++++ b293e40a/build_graphics_viewport.ps1
+@@ -8,7 +8,7 @@
+ $receipt = [ordered]@{ contract='bce.graphics-viewport-build.v1'; label=$Label; startedUtc=[DateTime]::UtcNow.ToString('o'); compiledSourcesDirectory=$sourceRoot; sourceFiles=[ordered]@{}; inputOrigins=@(); binary=$null; binarySHA256=$null; log=(Join-Path $buildRoot 'build.log'); exitCode=1; toolchain='AutoCAD2020 SDK23.1 / v141 14.16.27023 / x64 / C++17' }
+ $exitResult = 1
+ try {
+-    $inputs = @('tests/native/NativeEvidence.h','tests/native/NativeEvidence.cpp','tests/native/graphics-viewport/provenance.json','tests/native/graphics-viewport/prepare-ready.schema.json','tests/native/graphics-viewport/ViewportFixtures.h','tests/native/graphics-viewport/ViewportForward.h','tests/native/graphics-viewport/ViewportTrace.h','tests/native/graphics-viewport/ViewportTrace.cpp','tests/native/graphics-viewport/ViewportProbe.h','tests/native/graphics-viewport/ViewportProbe.cpp','tests/native/graphics-viewport/ViewportCapture.cpp','tests/native/graphics-viewport/GraphicsPolicy.h','tests/native/graphics-viewport/GraphicsControlPolicy.h','tests/native/graphics-viewport/ElevationViewportCases.vcxproj')
++    $inputs = @('tests/native/NativeEvidence.h','tests/native/NativeEvidence.cpp','tests/native/graphics-viewport/provenance.json','tests/native/graphics-viewport/prepare-ready.schema.json','tests/native/graphics-viewport/ViewportFixtures.h','tests/native/graphics-viewport/ViewportForward.h','tests/native/graphics-viewport/OwnedControlPublicContracts.md','tests/native/graphics-viewport/OwnedControlFile.h','tests/native/graphics-viewport/OwnedControlFile.cpp','tests/native/graphics-viewport/OwnedControlFileTests.cpp','tests/native/graphics-viewport/ViewportTrace.h','tests/native/graphics-viewport/ViewportTrace.cpp','tests/native/graphics-viewport/ViewportProbe.h','tests/native/graphics-viewport/ViewportProbe.cpp','tests/native/graphics-viewport/ViewportCapture.cpp','tests/native/graphics-viewport/GraphicsPolicy.h','tests/native/graphics-viewport/GraphicsControlPolicy.h','tests/native/graphics-viewport/ElevationViewportCases.vcxproj')
+     foreach ($relative in $inputs) {
+         $source = Join-Path $projectRoot $relative
+         $destination = Join-Path $sourceRoot (Split-Path $relative -Leaf)
+@@ -26,12 +26,13 @@
+     $vcvars = 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat'
+     $msbuild = 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe'
+     if (!(Test-Path -LiteralPath $vcvars) -or !(Test-Path -LiteralPath $msbuild)) { throw 'v141 build tools missing' }
+-    $command = '@echo off' + "`r`n" + 'call "' + $vcvars + '" -vcvars_ver=14.16' + "`r`n" + 'if errorlevel 1 exit /b %errorlevel%' + "`r`n" + '"' + $msbuild + '" ElevationViewportCases.vcxproj /t:Rebuild /p:Configuration=Release /p:Platform=x64 /p:VCToolsVersion=14.16.27023 /m:1 /nologo /verbosity:normal' + "`r`n" + 'exit /b %errorlevel%' + "`r`n"
++    $command = '@echo off' + "`r`n" + 'call "' + $vcvars + '" -vcvars_ver=14.16' + "`r`n" + 'if errorlevel 1 exit /b %errorlevel%' + "`r`n" + 'cl /nologo /EHsc /std:c++17 /utf-8 /W4 /WX /Fe:OwnedControlFileTests.exe OwnedControlFileTests.cpp OwnedControlFile.cpp NativeEvidence.cpp /link Advapi32.lib User32.lib' + "`r`n" + 'if errorlevel 1 exit /b %errorlevel%' + "`r`n" + 'OwnedControlFileTests.exe' + "`r`n" + 'if errorlevel 1 exit /b %errorlevel%' + "`r`n" + '"' + $msbuild + '" ElevationViewportCases.vcxproj /t:Rebuild /p:Configuration=Release /p:Platform=x64 /p:VCToolsVersion=14.16.27023 /m:1 /nologo /verbosity:normal' + "`r`n" + 'exit /b %errorlevel%' + "`r`n"
+     Set-Content -LiteralPath (Join-Path $buildRoot 'build-command.cmd') -Value $command -Encoding ascii
+     Push-Location $sourceRoot
+     try { & $env:ComSpec /d /c '..\build-command.cmd' > $receipt.log 2>&1; $exitResult = $LASTEXITCODE } finally { Pop-Location }
+     if ($exitResult -eq 0) {
+         $receipt.binary = Join-Path $buildRoot 'out/ElevationViewportCases.arx'
++        $receipt.ownedFileTestsSHA256 = (Get-FileHash -LiteralPath (Join-Path $sourceRoot 'OwnedControlFileTests.exe')).Hash
+         $receipt.binarySHA256 = (Get-FileHash -LiteralPath $receipt.binary -Algorithm SHA256).Hash
+         foreach ($entry in $receipt.inputOrigins) {
+             if ((Get-FileHash -LiteralPath $entry.origin).Hash -ne $entry.sha256) { throw ('Source changed during build: ' + $entry.origin) }

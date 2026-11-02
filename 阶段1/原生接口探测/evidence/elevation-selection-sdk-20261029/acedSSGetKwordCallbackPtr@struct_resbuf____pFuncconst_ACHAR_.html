@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>acedSSGetKwordCallbackPtr</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+<link rel="stylesheet" type="text/css" href="default_plus.css" media="screen, projection, tv " />
+<script language=javascript src="arxref.js"></script>
+<script language=javascript src="ac_common.js"></script>
+<script language=javascript src="ac.acad_ak.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="ObjectARX_Reference_Guide.html">ObjectARX Reference Guide</a> &gt; <a href="Global_Functions.html">Global Functions</a> &gt; <a href="AcEd_Global_Functions.html">AcEd Global Functions</a> &gt; <a href="acedSSGetKwordCallbackPtr@struct_resbuf____pFuncconst_ACHAR_.html">acedSSGetKwordCallbackPtr Function</a></div>
+<div class="Element92">
+<div class="Element5">
+acedSSGetKwordCallbackPtr</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<div class="Element58">
+<a name="432B2B"></a><div class="Element99">
+C++</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #871F78">int</span></strong> <strong><span style="color: #660000">acedSSGetKwordCallbackPtr</span></strong>(
+    <strong><span style="color: #871F78">struct</span></strong> resbuf* (**pFunc)(<strong><span style="color: #871F78">const</span></strong> ACHAR*)
+);</pre></div></div>
+<a name="46696C65"></a><div class="Element14">
+File</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+acedads.h</p></div>
+</div>
+<a name="4465736372697074696F6E"></a><div class="Element14">
+Description</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+Sets a pointer to the keyword callback function currently in use by AutoCAD.&nbsp;</p>
+<p class="Element10">
+The keyword callback function pointer within AutoCAD can only point to one callback function at a time. <span class="Element146">acedSSGetKwordCallbackPtr()</span> can be used to preserve another callback function pointer while AutoCAD's keyword callback function pointer is temporarily reset to another function. In this process:&nbsp;</p>
+<p class="Element10">
+
+<ol class="Element630">
+<li value="1" class="Element600">Use <span class="Element146">acedSSGetKwordCallbackPtr()</span> to get and store a pointer to the currentt callback function.</li>
+</ol>&nbsp;</p>
+<p class="Element10">
+
+<ol class="Element630">
+<li value="2" class="Element600">Use <span class="Element146">acedSSSetKwordCallbackPtr()</span> to set AutoCAD to another callback function.</li>
+</ol>&nbsp;</p>
+<p class="Element10">
+
+<ol class="Element630">
+<li value="3" class="Element600">When the other callback function is no longer needed, use <span class="Element146">acedSSSetKwordCallbackPtr()</span> with the original function pointer to restore AutoCAD's use of the original callback function.</li>
+</ol>&nbsp;</p>
+<p class="Element10">
+This function always returns <span class="Element146">RTNORM</span>.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<table class=FooterTable width=100%><tr valign=top>
+<td>&nbsp;</td>
+<td align=right>&nbsp;<span class="CommentsLink" onclick="doComments();" title="Click here to send a comment about this topic.">Comments?</span>&nbsp;</td>
+</tr></table>
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

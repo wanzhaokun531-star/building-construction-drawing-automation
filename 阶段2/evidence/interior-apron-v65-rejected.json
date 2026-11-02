@@ -1,0 +1,11 @@
+{
+  "version": "v65",
+  "nativeSaved": true,
+  "directNativeDimensions": 106,
+  "sharedJointEdits": 68,
+  "wholeChainMoves": 34,
+  "releasePassed": false,
+  "error": "2 actual text conflicts caused by tall900-wide apron note against bottom terminal100 labels; new gate actually rejected, not counters cleared",
+  "newGate": "verify_interior_apron.py",
+  "fix": "move note to grey courtyard empty area only; widen2600; SDK paragraph separator and saved content readback"
+}

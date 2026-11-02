@@ -1,0 +1,18 @@
+{
+  "contract": "bcp.door-caption-delivery.v1",
+  "recorded": "2026-10-31T19:21:46.511212+08:00",
+  "version": "v79",
+  "file": "D:\\Codex\\建筑施工图自动化\\阶段2\\交付\\门编号避让_20261031\\方案施工图_门编号避让.dwg",
+  "SHA256": "D547386AC92768B0895EC67D07CA4E8E2FE30F7480EE07038DC88356C3BB533D",
+  "verification": {
+    "doorNumbers": 14,
+    "doorGraphicsOverlaps": 0,
+    "protectedRoots": 308,
+    "wholeDimensionsUnchanged": true
+  },
+  "reviewSHA256": "366997B6F5AAEC0EC471A9CF11B5AD05A0B5DBE6FB04BB2794AD5E3BF2D2593E",
+  "closureSHA256": "7537A3594DAE3E459E46EE9481DD8DA93B839642E2ACF541132D946FBDDECFE9",
+  "publisherSHA256": "80EB4D2653122E0FD34D121F2D7969C43C911E7DDBBB3833090C1C8FDC9D80BD",
+  "constructionDrawingComplete": false,
+  "PDFDelivered": false
+}

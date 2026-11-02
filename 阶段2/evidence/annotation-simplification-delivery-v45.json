@@ -1,0 +1,16 @@
+{
+  "contract": "bcp.annotation-simplification.delivery.v1",
+  "directory": "D:\\Codex\\建筑施工图自动化\\阶段2\\交付\\门窗尺寸简化与连续标注_20261031",
+  "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\交付\\门窗尺寸简化与连续标注_20261031\\方案施工图_门窗尺寸简化与连续标注.dwg",
+  "DWGSHA256": "E3B828DF7D7886F748E3F2E8B7BC5BB8D1A812A5EBDC2753059D7FEE23B07FD9",
+  "ARXSHA256": "23B4707A032FABA30DDF920D52BD59A4947687C1AB090FF1F0621EBC05553055",
+  "gate": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\annotation-simplification-release-v45-final-reviewed.json",
+  "gateSHA256": "1969EFD0EC1B2955033B281925332ABF51783EDD15AC3FCADD1ABD236C5EAC0B",
+  "gateScriptSHA256": "487924D63B7C9D473C8465430B4ACCDCB3E378A17215D262DDC0E86CFC68D5BB",
+  "closureSHA256": "0A2FC89BFA170A995213815C6844DAF26BD064C2CA6687C8BEC1F43F123EE215",
+  "userDeliveryFiles": [
+    "方案施工图_门窗尺寸简化与连续标注.dwg"
+  ],
+  "PDFDelivered": false,
+  "constructionDrawingComplete": false
+}

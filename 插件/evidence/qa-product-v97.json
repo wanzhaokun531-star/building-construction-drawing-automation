@@ -1,0 +1,41 @@
+{
+  "contract": "bcp.product-independent-qa.v1",
+  "version": "v97",
+  "summary": {
+    "modelRoots": 308,
+    "wholeNativeChains": 24,
+    "measuredSegments": 106,
+    "sharedNodeEdits": 82,
+    "doorCaptions": 14,
+    "openingCaptions": 27,
+    "apronAdded": 0,
+    "interiorLowerApplied": 8,
+    "interiorPlacementReview": 3,
+    "reviewedWallOverlaps": 1,
+    "doorSideConfirmations": 2,
+    "nativeAxisCarriers": 18,
+    "logicalGroups": 20,
+    "axisLines": 22,
+    "visibleEnds": 24
+  },
+  "DWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-085104\\插件生成施工图.dwg",
+  "DWGSHA256": "7E425C3E1B9F3CF456218F5B87B1855FF9ED93399205DC517066FC1898F306FD",
+  "moduleSHA256": "69B9A738FB8D214C2B6AFE6A93FAC7C273E8A2AF661F2D2CBF27C1CDE8E7F842",
+  "integrationSHA256": "B8D36598F771D3214831AD0DE11A41085A16CF98F5085FD86082667B4F50235B",
+  "previewSHA256": "605D198724C3D9D60269A082B930F0D8A95AABAB0E26BD1441A92D42B080D22F",
+  "nativeReports": {
+    "生成校验.json": "1077DE4A2CF3E9703094E861BBF1F6ACFC46D15F880F785BB1A4CB3B33ECC008",
+    "过程\\caption\\door-caption-clearance.json": "12CDF0A09C51187A50AEF5C3D3D065C18433C28F37E4AD2EE48E7A1BAECA26ED",
+    "过程\\caption\\door-graphic-probe.json": "C506C2DCC3FAF8930774782C620E01DD2E8A28E7A3948C20C3BF1BC238A586B1",
+    "过程\\foundation\\analysis.json": "D54B421A02253199F994CB0BB7B9745CF0010D1C3367784B3A1CDECC19607FE5",
+    "过程\\foundation\\annotations.json": "FD9871BF842E0095BEF3317D6554A5BB89B840D2754B92DF492B831E303B2EAC",
+    "过程\\foundation\\endpoints.json": "14D3492985EF1A9F4E5B4A559B2F3390DC51D2039A93187C7C43213800F1056B",
+    "过程\\foundation\\mask-settings-after-layer.json": "28EC52F976C56C74C012B4A80DB67CF4B0A880D18DF709A278F274CA76D7F32A",
+    "过程\\foundation\\mask-settings-created.json": "28EC52F976C56C74C012B4A80DB67CF4B0A880D18DF709A278F274CA76D7F32A",
+    "过程\\foundation\\mask-settings-final.json": "BBC1C6255840A4AAD6BEA5A0D9108E77F149E7899C8E53556EF3EB58D9C8D8AF",
+    "过程\\foundation\\spatial-live.json": "6C3AED42BA1D4BE69C59BA0D6736379F13BFB29A03B264CED8EB52F68C37DD4D",
+    "过程\\foundation\\spatial-saved.json": "6C3AED42BA1D4BE69C59BA0D6736379F13BFB29A03B264CED8EB52F68C37DD4D",
+    "过程\\join\\whole-dimension-chains.json": "0BA16A4B79B8083A5E384E649799641AFFD8492A2F9DD32AED9641A0DC8BAFF0"
+  },
+  "error": null
+}

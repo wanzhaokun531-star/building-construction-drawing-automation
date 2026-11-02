@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>AcEdSSGetFilter::ssgetAddFilter</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+<link rel="stylesheet" type="text/css" href="default_plus.css" media="screen, projection, tv " />
+<script language=javascript src="arxref.js"></script>
+<script language=javascript src="ac_common.js"></script>
+<script language=javascript src="ac.acad_ak.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="ObjectARX_Reference_Guide.html">ObjectARX Reference Guide</a> &gt; <a href="AcEd_Classes_(WIN).html">AcEd Classes (WIN)</a> &gt; <a href="AcEdSSGetFilter.html">AcEdSSGetFilter Class</a> &gt; <a href="!!MEMBERTYPE_Methods_AcEdSSGetFilter.html">AcEdSSGetFilter Methods</a> &gt; <a href="AcEdSSGetFilter__ssgetAddFilter@int@AcEdSelectionSetService__@AcDbObjectIdArray_@AcDbObjectIdArray_.html">ssgetAddFilter Method</a></div>
+<div class="Element92">
+<div class="Element5">
+AcEdSSGetFilter::ssgetAddFilter</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<div class="Element58">
+<a name="432B2B"></a><div class="Element99">
+C++</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #871F78">virtual</span></strong> <strong><span style="color: #871F78">void</span></strong> <strong><span style="color: #660000">ssgetAddFilter</span></strong>(
+    <strong><span style="color: #871F78">int</span></strong> <strong><span style="color: #660000">ssgetFlags</span></strong>, 
+    AcEdSelectionSetService &amp; <strong><span style="color: #660000">service</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> AcDbObjectIdArray&amp; <strong><span style="color: #660000">selectionSet</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> AcDbObjectIdArray&amp; <strong><span style="color: #660000">subSelectionSet</span></strong>
+);</pre></div></div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element252">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element240" valign="top" width="50%">
+<div class="Element241">
+Parameters&nbsp;</div></td><td class="Element244" valign="top" width="50%">
+<div class="Element245">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+ssgetFlags&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+ Combination of one or more flag settings described by the AcEdSSGetFlags enumeration<br>&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+service&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Selection set service object created to add entities to the subselection set&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+selectionSet&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Array of the entities currently contained in the selection set&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+subSelectionSet&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Array of the selected entities that triggered this notification; the entities to be added to the selection set after this callback returns&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="4465736372697074696F6E"></a><div class="Element14">
+Description</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This callback provides notification of a subselection.&nbsp;</p>
+<p class="Element10">
+ A subselection occurs when entities are going to be added to a selection set that is being created. It is indicated in the AutoCAD interface by an &quot;xx found&quot; prompt in which <i>xx</i> is a number greater than or equal to 1. &nbsp;</p>
+<p class="Element10">
+ This notification is triggered by the following events:  * API calls to <span class="Element146">AcEdSSGetFilter::endSSGet()</span>&nbsp;</p>
+<p class="Element10">
+* API calls to the <span class="Element146">acedSSGetFirst()</span> global function&nbsp;</p>
+<p class="Element10">
+* Any modifications to the PICKFIRST set&nbsp;</p>
+<p class="Element10">
+* Built-in AutoCAD commands that prompt the user to select entities&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+ You can use the methods of the <span class="Element146">AcEdSelectionSetService</span> class to modify the contents of <span class="Element146">subSelectionSet</span> before the subselection is added to the selection set. &nbsp;</p>
+<p class="Element10">
+&nbsp;</p></div>
+</div>
+<a name="4C696E6B73"></a><div class="Element14">
+Links</div>
+<div class="Element11">
+<div class="Element10">
+<a href="AcEdSSGetFilter.html">AcEdSSGetFilter</a></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<table class=FooterTable width=100%><tr valign=top>
+<td>&nbsp;</td>
+<td align=right>&nbsp;<span class="CommentsLink" onclick="doComments();" title="Click here to send a comment about this topic.">Comments?</span>&nbsp;</td>
+</tr></table>
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

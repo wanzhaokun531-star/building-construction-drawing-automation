@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-28",
+  "native_run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\native-20261028-164904-411",
+  "source_binary_matches_receipt": true,
+  "type_counts_equal": true,
+  "type_counts": {
+    "AcDbBlockReference": 73,
+    "TDbWall": 101,
+    "TDbOpening": 51,
+    "TDbGroupOpening": 1,
+    "TDbText": 48,
+    "AcDbPolyline": 99,
+    "TDbDimension2": 32,
+    "TDbSymbElevation": 12,
+    "TDbRectCornerStair": 1,
+    "AcDbLine": 264,
+    "TDbDrawingName": 2,
+    "AcDbHatch": 2,
+    "AcDbText": 3,
+    "AcDbMText": 1,
+    "AcDbArc": 95,
+    "AcDbEllipse": 2,
+    "AcDbSpline": 2,
+    "AcDbCircle": 4,
+    "TDbAxisLabelSet": 2,
+    "TDbColumn": 4,
+    "TDbSymbMultiLeader": 3,
+    "TDbSymbArrow": 9,
+    "TDbSymbSection": 1,
+    "TDbSymbComposing": 7,
+    "TDbPipe": 4,
+    "TDbPipeFitting": 8
+  },
+  "files": {
+    "src\\Stage1Probe.cpp": "1F7014FE545F4C98AF0153B2C151AEEC339F59864981FB14506779685194663B",
+    "src\\Stage1Probe.vcxproj": "B6E67125CCD2B9CDF8673CAB065885756AA1B7D29E1E7AAED7A2FA65BB60280A",
+    "bin\\Stage1Probe.arx": "A7085D80F2EB498771E02E4E016E058F7B182206B5C3614B8EE5F76937CE467D",
+    "tests\\verify_native_read.py": "CF9E55C93688E0499D4B558639E6B0E5CCBF8C965B13E7654A881AE4F4961FA9",
+    "tests\\verify_roundtrip.py": "8E27EA7391A07C1E3F451CA98F64B93EC7AC46F375A2E18C67DAB27DA234BB1B",
+    "运行能力验证.ps1": "51D125546E52779778D2BF4C273786B94CCA4FEDCB3355A6E84E25AA2BD86A35",
+    "runs\\native-20261028-164904-411\\clone-cohort.dwg": "5B32F31133354419B4C55A61E7F4A0CD40A1880E53FE5C266C142D3E92EE3B2A",
+    "runs\\native-20261028-164904-411\\阶段1试出.pdf": "667E6359EB8BCFCB2BBEE7123A0884FDE74048F43DD83C1974A94C9D0A1B5399"
+  },
+  "runner_exit_regression": {
+    "failed_saved_run": 1,
+    "passed_saved_run": 0
+  }
+}

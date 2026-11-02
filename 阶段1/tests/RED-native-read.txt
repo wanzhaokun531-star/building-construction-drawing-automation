@@ -1,0 +1,6 @@
+RED test: missing native result must fail
+Command: python verify_native_read.py not-yet-generated-native-read.json
+FAIL: result file missing: D:\Codex\����ʩ��ͼ�Զ���\�׶�1\tests\not-yet-generated-native-read.json
+assertions=1 passed=0 failed=1 result=FAIL
+
+ExitCode=1

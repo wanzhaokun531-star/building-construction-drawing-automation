@@ -1,0 +1,323 @@
+--- a/src/PreparedBatch.cpp
++++ b/src/PreparedBatch.cpp
+@@ -3,6 +3,8 @@
+ #include <dbents.h>
+ #include <dbsymtb.h>
+ #include <cmath>
++#include <iomanip>
++#include <sstream>
+ #include <stdexcept>
+ namespace bce {
+ namespace {
+@@ -17,12 +19,27 @@
+     T* get() const noexcept { return value_; }
+ private:T* value_{};
+ };
++std::string lineExpression(const AcDbLine& line) {
++    // A mutable database() is an explicit native escape hatch, not authorization to silently
++    // reinterpret edited prepared entities. Capture the supported Line's complete expression.
++    AcDbObjectId plotStyle; const auto plotType=line.getPlotStyleNameId(plotStyle);
++    const auto start=line.startPoint(),end=line.endPoint(); const auto normal=line.normal();
++    std::ostringstream out; out<<std::setprecision(17)<<start.x<<','<<start.y<<','<<start.z<<';'<<end.x<<','<<end.y<<','<<end.z<<';'
++        <<normal.x<<','<<normal.y<<','<<normal.z<<';'<<line.thickness()<<';'<<line.color().color()<<';'
++        <<native_scene::handle(line.layerId())<<';'<<native_scene::handle(line.linetypeId())<<';'<<line.linetypeScale()<<';'
++        <<line.lineWeight()<<';'<<line.visibility()<<';'<<line.transparency().serializeOut()<<';'
++        <<native_scene::handle(line.materialId())<<';'<<plotType<<';'<<native_scene::handle(plotStyle)<<';'
++        <<native_scene::handle(line.visualStyleId())<<';'<<line.castShadows()<<';'<<line.receiveShadows()<<';'
++        <<native_scene::handle(line.extensionDictionary());
++    return out.str();
++}
+ }
+ struct PreparedBatch::Impl {
+     PreparedLine line;
+     std::unique_ptr<AcDbDatabase> database;
+     AcDbObjectId lineId,layerId,modelId;
+     ResourceDefinition originalLayer;
++    std::string originalLineExpression;
+ };
+ PreparedBatch::PreparedBatch(std::unique_ptr<Impl> impl) : impl_(std::move(impl)) {}
+ PreparedBatch::~PreparedBatch() = default;
+@@ -50,6 +67,7 @@
+             entity->setDatabaseDefaults(&db); check(entity->setLayer(impl->layerId),"prepared line layer");
+             check(space->appendAcDbEntity(impl->lineId,entity.get()),"prepared line append"); auto* owned=entity.release(); check(owned->close(),"prepared line close");
+         }
++        { Opened<AcDbLine> lineEntity(impl->lineId); impl->originalLineExpression=lineExpression(*lineEntity.get()); }
+         return {std::unique_ptr<PreparedBatch>(new PreparedBatch(std::move(impl))),{}};
+     } catch(const std::exception& ex) { return {std::nullopt,{{diagnostic::unsupportedNativeWrite,ex.what(),{},true}}}; }
+ }
+@@ -71,6 +89,7 @@
+         AcDbObjectId first; check(iterator->getEntityId(first),"prepared entity id"); iterator->step();
+         if(first!=impl_->lineId || !iterator->done()) return false;
+         Opened<AcDbLine> line(first);
++        if(lineExpression(*line.get())!=impl_->originalLineExpression) return false;
+         return line->startPoint()==AcGePoint3d(impl_->line.start.x,impl_->line.start.y,0.0) &&
+             line->endPoint()==AcGePoint3d(impl_->line.end.x,impl_->line.end.y,0.0) && line->layerId()==impl_->layerId &&
+             line->normal()==AcGeVector3d::kZAxis && line->thickness()==0.0 && line->colorIndex()==256 &&
+--- a/src/InPlaceWriter.cpp
++++ b/src/InPlaceWriter.cpp
+@@ -6,6 +6,7 @@
+ #include <dbents.h>
+ #include <dbsymtb.h>
+ #include <cmath>
++#include <limits>
+ #include <set>
+ #include <stdexcept>
+ namespace bce {
+@@ -60,6 +61,25 @@
+     resbuf value{};
+     if(acedGetVar(L"UNDOCTL",&value)!=RTNORM || value.restype!=RTSHORT) throw std::runtime_error("UNDOCTL unreadable");
+     return value.resval.rint;
++}
++bool finitePoint(const AcGePoint3d& point) noexcept {
++    return std::isfinite(point.x)&&std::isfinite(point.y)&&std::isfinite(point.z);
++}
++bool preservedSegment(const AcGePoint3d& originalStart,const AcGePoint3d& originalEnd,
++    const AcGePoint3d& movedStart,const AcGePoint3d& movedEnd) noexcept {
++    if(!finitePoint(originalStart)||!finitePoint(originalEnd)||!finitePoint(movedStart)||!finitePoint(movedEnd)) return false;
++    const auto before=originalEnd-originalStart,after=movedEnd-movedStart;
++    if(!std::isfinite(before.x)||!std::isfinite(before.y)||!std::isfinite(before.z)||
++        !std::isfinite(after.x)||!std::isfinite(after.y)||!std::isfinite(after.z)) return false;
++    const double scale=(std::max)({1.0,std::abs(before.x),std::abs(before.y),std::abs(before.z)});
++    const double tolerance=128.0*std::numeric_limits<double>::epsilon()*scale;
++    return std::abs(before.x-after.x)<=tolerance&&std::abs(before.y-after.y)<=tolerance&&std::abs(before.z-after.z)<=tolerance;
++}
++bool translationPreservesLine(const AcDbLine& line,const Point2& displacement) {
++    // Exercise the same SDK transform on an unowned ordinary Line before touching the drawing.
++    AcDbLine prediction(line.startPoint(),line.endPoint());
++    if(prediction.transformBy(AcGeMatrix3d::translation(AcGeVector3d(displacement.x,displacement.y,0.0)))!=Acad::eOk) return false;
++    return preservedSegment(line.startPoint(),line.endPoint(),prediction.startPoint(),prediction.endPoint());
+ }
+ std::string layerReadback(const AcDbLayerTableRecord& layer) {
+     const auto linetype=layer.linetypeObjectId();
+@@ -107,7 +127,10 @@
+             const auto id=native_scene::objectId(*database,movement.target.handle);
+             if(!seen.insert(native_scene::handle(id)).second) return fail<WriteScopePlan>(diagnostic::outsideWriteScope,"Duplicate target translations rejected");
+             Read<AcDbEntity> entity(id);
+-            if(!AcDbLine::cast(entity.get())) return fail<WriteScopePlan>(diagnostic::unsupportedNativeWrite,"Only ordinary Line translations are supported");
++            const auto* line=AcDbLine::cast(entity.get());
++            if(!line) return fail<WriteScopePlan>(diagnostic::unsupportedNativeWrite,"Only ordinary Line translations are supported");
++            if(!translationPreservesLine(*line,movement.displacement))
++                return fail<WriteScopePlan>("INVALID_TRANSLATION_GEOMETRY","SDK translation would overflow or change the original Line segment vector");
+             Read<AcDbLayerTableRecord> layer(entity->layerId());
+             if(layer->isLocked()) return fail<WriteScopePlan>("LOCKED_TARGET_LAYER","Target layer is locked");
+         }
+@@ -177,7 +200,10 @@
+             for(const auto& movement:plan.translations) {
+                 const auto id=native_scene::objectId(*database,movement.target.handle);
+                 auto* target=transaction.open<AcDbLine>(id,AcDb::kForWrite);
++                const auto originalStart=target->startPoint(),originalEnd=target->endPoint();
+                 check(target->transformBy(AcGeMatrix3d::translation(AcGeVector3d(movement.displacement.x,movement.displacement.y,0.0))),"translate explicit target");
++                if(!preservedSegment(originalStart,originalEnd,target->startPoint(),target->endPoint()))
++                    throw std::runtime_error("actual Line translation lost finite segment geometry");
+             }
+             notify(observer_,CommitStage::targetsTranslated);
+             transaction.commit(); receipt.committed=true;
+--- a/tests/native/inplace/NativeInPlaceAudit.h
++++ b/tests/native/inplace/NativeInPlaceAudit.h
+@@ -12,6 +12,7 @@
+ #include <iomanip>
+ #include <memory>
+ #include <sstream>
++#include "WriteContracts.h"
+ 
+ namespace bce::inplace_test {
+ using namespace bce::native;
+@@ -20,14 +21,21 @@
+ }
+ template<class T> class Opened final {
+ public:
+-    explicit Opened(AcDbObjectId id, AcDb::OpenMode mode = AcDb::kForRead) { ok(acdbOpenObject(value_, id, mode), "open"); }
+-    ~Opened() noexcept { if (value_) value_->close(); }
++    explicit Opened(AcDbObjectId id, AcDb::OpenMode mode = AcDb::kForRead) {
++        auto* manager=id.database()->transactionManager();
++        if(manager->numActiveTransactions()>0) {
++            AcDbObject* object{}; ok(manager->getObject(object,id,mode),"audit transaction getObject");
++            value_=T::cast(object); require(value_!=nullptr,"audit object type mismatch"); transactionOwned_=true;
++        } else ok(acdbOpenObject(value_, id, mode), "open");
++    }
++    ~Opened() noexcept { if (value_&&!transactionOwned_) value_->close(); }
+     Opened(const Opened&) = delete;
+     Opened& operator=(const Opened&) = delete;
+     T* operator->() const noexcept { return value_; }
+     T* get() const noexcept { return value_; }
+ private:
+     T* value_{};
++    bool transactionOwned_{false};
+ };
+ inline std::string number(double value) {
+     std::ostringstream out; out << std::setprecision(17) << value; return out.str();
+@@ -40,10 +48,15 @@
+ inline std::string vector(const AcGeVector3d& p) { return array({number(p.x), number(p.y), number(p.z)}); }
+ inline std::string name(const AcDbSymbolTableRecord& record) { AcString value; ok(record.getName(value), "symbol name"); return utf8(value.kACharPtr()); }
+ inline std::string entity(AcDbEntity& e) {
++    AcDbObjectId plotStyle; const auto plotType=e.getPlotStyleNameId(plotStyle);
+     Fields fields{{"handle", quote(handle(e.objectId()))}, {"class", quote(std::wstring(e.isA()->name()))},
+         {"layer", quote(handle(e.layerId()))}, {"linetype", quote(handle(e.linetypeId()))},
+         {"color", std::to_string(e.colorIndex())}, {"linetypeScale", number(e.linetypeScale())},
+-        {"lineWeight", std::to_string(e.lineWeight())}, {"visibility", std::to_string(e.visibility())}};
++        {"lineWeight", std::to_string(e.lineWeight())}, {"visibility", std::to_string(e.visibility())},
++        {"colorRaw",std::to_string(e.color().color())},{"transparency",std::to_string(e.transparency().serializeOut())},
++        {"material",quote(handle(e.materialId()))},{"plotStyleType",std::to_string(plotType)},{"plotStyle",quote(handle(plotStyle))},
++        {"visualStyle",quote(handle(e.visualStyleId()))},{"castShadows",e.castShadows()?"true":"false"},
++        {"receiveShadows",e.receiveShadows()?"true":"false"},{"extensionDictionary",quote(handle(e.extensionDictionary()))}};
+     if (auto* line = AcDbLine::cast(&e)) {
+         fields.insert(fields.end(), {{"start", point(line->startPoint())}, {"end", point(line->endPoint())},
+             {"normal", vector(line->normal())}, {"thickness", number(line->thickness())}});
+@@ -138,4 +151,59 @@
+     AcDbObjectId id; ok(space->appendAcDbEntity(id, e.get()), "append fixture");
+     auto* owned = e.release(); ok(owned->close(), "close appended fixture"); return id;
+ }
+-}
++inline bool recordHasHandle(const std::string& record,const std::string& h) {
++    const auto prefix="{\"handle\":"+quote(h)+","; return record.compare(0,prefix.size(),prefix)==0;
++}
++inline std::vector<std::string> withoutHandles(const std::vector<std::string>& records,const std::vector<std::string>& handles) {
++    std::vector<std::string> result;
++    for(const auto& record:records) {
++        if(std::none_of(handles.begin(),handles.end(),[&record](const std::string& h){return recordHasHandle(record,h);})) result.push_back(record);
++    }
++    return result;
++}
++inline AcDbObjectId auditObjectId(AcDbDatabase& db,const std::string& h) {
++    require(!h.empty()&&h.find_first_not_of("0123456789abcdefABCDEF")==std::string::npos,"receipt handle invalid");
++    const std::wstring wide(h.begin(),h.end()); AcDbObjectId id;
++    ok(db.getAcDbObjectId(id,false,AcDbHandle(wide.c_str())),"audit resolve receipt");
++    require(!id.isNull()&&!id.isErased(),"receipt object missing"); return id;
++}
++inline bool committedEvidenceMatches(const Audit& baseline,const Audit& after,AcDbDatabase& db,
++    AcDbObjectId targetId,AcDbObjectId preservedId,AcDbObjectId oldTextId,AcDbObjectId unsavedTextId,
++    const CommitReceipt& receipt) {
++    if(receipt.createdEntities.size()!=1||receipt.createdResourceHandles.size()!=1||!receipt.committed) return false;
++    const auto newLineId=auditObjectId(db,receipt.createdEntities.front().handle);
++    const auto newLayerId=auditObjectId(db,receipt.createdResourceHandles.front());
++    Opened<AcDbLine> created(newLineId); Opened<AcDbLayerTableRecord> layer(newLayerId);
++    Opened<AcDbLinetypeTable> linetypes(db.linetypeTableId()); AcDbObjectId byLayer,continuous;
++    ok(linetypes->getAt(L"ByLayer",byLayer),"audit ByLayer"); ok(linetypes->getAt(L"Continuous",continuous),"audit Continuous");
++    // Literal, hand-derived fixture expectations. No production geometry builder or layout math.
++    const bool newLineCorrect=created->startPoint()==AcGePoint3d(2000.0,0.0,0.0)&&created->endPoint()==AcGePoint3d(3000.0,0.0,0.0)&&
++        created->normal()==AcGeVector3d::kZAxis&&created->thickness()==0.0&&created->layerId()==newLayerId&&created->linetypeId()==byLayer&&
++        created->colorIndex()==256&&created->linetypeScale()==1.0&&created->lineWeight()==AcDb::kLnWtByLayer&&
++        created->visibility()==AcDb::kVisible&&created->transparency().isByLayer()&&created->materialId()==db.byLayerMaterial()&&
++        created->extensionDictionary().isNull();
++    const bool newLayerCorrect=name(*layer.get())=="N2NewLayer"&&layer->linetypeObjectId()==continuous&&layer->color().colorIndex()==3&&
++        layer->lineWeight()==AcDb::kLnWtByLwDefault&&!layer->isOff()&&!layer->isFrozen()&&!layer->isLocked()&&layer->isPlottable()&&
++        layer->transparency().serializeOut()==0;
++    Opened<AcDbLine> target(targetId),preserved(preservedId);
++    bool matches=target->startPoint()==AcGePoint3d(500.0,200.0,0.0)&&target->endPoint()==AcGePoint3d(1500.0,200.0,0.0)&&
++        preserved->startPoint()==AcGePoint3d(0.0,100.0,0.0)&&preserved->endPoint()==AcGePoint3d(1250.0,100.0,0.0);
++    for(const auto id:{oldTextId,unsavedTextId}) { Opened<AcDbEntity> e(id); const auto value=entity(*e.get());
++        matches=matches&&std::find(baseline.entities.begin(),baseline.entities.end(),value)!=baseline.entities.end(); }
++    const auto targetHandle=handle(targetId);
++    auto prior=std::find_if(baseline.entities.begin(),baseline.entities.end(),[&targetHandle](const std::string& r){return recordHasHandle(r,targetHandle);});
++    if(prior==baseline.entities.end()) return false;
++    auto expectedTarget=*prior;
++    const auto replaceLiteral=[&expectedTarget](const char* oldValue,const char* newValue) {
++        const auto position=expectedTarget.find(oldValue); if(position==std::string::npos) return false;
++        expectedTarget.replace(position,std::char_traits<char>::length(oldValue),newValue); return true;
++    };
++    if(!replaceLiteral("\"start\":[0,0,0]","\"start\":[500,200,0]")||
++        !replaceLiteral("\"end\":[1000,0,0]","\"end\":[1500,200,0]")||entity(*target.get())!=expectedTarget) return false;
++    const bool protectedEqual=withoutHandles(baseline.entities,{targetHandle})==
++        withoutHandles(after.entities,{targetHandle,receipt.createdEntities.front().handle});
++    const bool resourcesEqual=baseline.resourceRecords==withoutHandles(after.resourceRecords,receipt.createdResourceHandles);
++    return matches&&newLineCorrect&&newLayerCorrect&&protectedEqual&&resourcesEqual&&after.entities.size()==baseline.entities.size()+1&&
++        after.resourceRecords.size()==baseline.resourceRecords.size()+1&&baseline.filename==after.filename&&baseline.globalsJson==after.globalsJson;
++}
++}
+--- a/tests/native/inplace/NativeInPlaceDriver.cpp
++++ b/tests/native/inplace/NativeInPlaceDriver.cpp
+@@ -3,6 +3,8 @@
+ #include <rxregsvc.h>
+ #include <exception>
+ #include <functional>
++#include <cmath>
++#include <limits>
+ 
+ namespace {
+ using namespace bce;
+@@ -229,6 +231,36 @@
+ }); }
+ void checks() noexcept { boundary([] {
+     check_state(Phase::cancelComplete); auto& c=*active; auto& db=*c.document->database(); auto prepared=batch();
++    // Review P2 #1: mutate only independent prepared databases; no active-drawing entity is touched.
++    for(const bool invisible:{false,true}) {
++        auto altered=batch(); AcDbObjectId id;
++        { Opened<AcDbBlockTableRecord> space(modelSpace(*altered->database())); AcDbBlockTableRecordIterator* raw{};
++            ok(space->newIterator(raw),"prepared mutation iterator"); std::unique_ptr<AcDbBlockTableRecordIterator> it(raw);
++            require(!it->done(),"prepared Line missing"); ok(it->getEntityId(id),"prepared mutation id"); }
++        { Opened<AcDbLine> line(id,AcDb::kForWrite);
++            if(invisible) ok(line->setVisibility(AcDb::kInvisible),"prepared invisible mutation");
++            else ok(line->setLineWeight(AcDb::kLnWt050),"prepared lineweight mutation"); }
++        const bool accepted=altered->validateOrdinaryLine();
++        expect(invisible?"PreparedInvisibleLineRejected":"PreparedCustomLineweightRejected",!accepted,
++            "validateOrdinaryLine="+std::string(accepted?"true":"false"),"unsupported prepared Line expression change rejected");
++    }
++    // Root additional finding: characterize the SDK directly, then exercise the writer's scope guard.
++    {
++        AcDbLine precisionProbe(AcGePoint3d(0.0,0.0,0.0),AcGePoint3d(3.0,0.0,0.0));
++        const auto status=precisionProbe.transformBy(AcGeMatrix3d::translation(AcGeVector3d(1.0e16,0.0,0.0)));
++        const double length=precisionProbe.endPoint().distanceTo(precisionProbe.startPoint());
++        const auto detail="SDK status="+std::to_string(status)+"; translated length="+number(length)+"; original length=3";
++        expect("SdkLargeTranslationDistortionObserved",status==Acad::eOk&&length!=3.0,detail,"isolated SDK Line demonstrates actual finite-coordinate length distortion");
++        auto fixture=std::make_unique<AcDbLine>(AcGePoint3d(0.0,0.0,0.0),AcGePoint3d(3.0,0.0,0.0)); fixture->setDatabaseDefaults(&db);
++        const auto id=append(db,std::move(fixture));
++        const auto shortScene=readScene({*c.context,{handle(id)},1.0}); require(shortScene.canCommit(),"short Line scene read failed");
++        InPlaceWriter precisionWriter(*c.context);
++        const LayoutPlan largePlan{"precision",{{shortScene.value->targets.front().key,{1.0e16,0.0}}},{}};
++        const auto result=precisionWriter.beginWriteScope(largePlan,*shortScene.value);
++        expect("WriterRejectsPrecisionLosingTranslation",!result.canCommit()&&hasIssue(result.issues,"INVALID_TRANSLATION_GEOMETRY"),
++            detail+"; scope="+issue_codes(result.issues),"direct LayoutPlan cannot authorize SDK 3-to-4 distortion");
++        { Opened<AcDbLine> line(id,AcDb::kForWrite); ok(line->erase(),"erase owned precision-only fixture"); }
++    }
+     auto scene=currentScene(); auto plan=planFor(*prepared,scene); const auto before=capture();
+     auto shared=std::find_if(scene.resources.begin(),scene.resources.end(),[](const ResourceDefinition& r){return r.kind=="textstyle"&&r.name=="Shared";});
+     require(shared!=scene.resources.end(),"real Shared style missing"); auto conflict=*shared; conflict.name="sHaReD"; conflict.definitionSignature+="different width";
+@@ -264,12 +296,9 @@
+     check_state(Phase::checked); auto& c=*active; const auto scene=currentScene(); auto prepared=batch(); const auto plan=planFor(*prepared,scene);
+     InPlaceWriter writer(*c.context); const auto result=writer.applyToCurrentDocument(*prepared,plan,scene); c.after=capture();
+     c.committed=result.canCommit()&&result.value->committed; c.successReceipt=result.value;
+-    bool targetMoved=false,preservedSame=false;
++    bool successEvidence=false;
+     if(c.committed) {
+-        Opened<AcDbLine> target(c.target); targetMoved=target->startPoint()==AcGePoint3d(500.0,200.0,0.0)&&target->endPoint()==AcGePoint3d(1500.0,200.0,0.0);
+-        Opened<AcDbLine> preserved(c.preserved); preservedSame=preserved->startPoint()==AcGePoint3d(0.0,100.0,0.0)&&preserved->endPoint()==AcGePoint3d(1250.0,100.0,0.0);
+-        for(const auto id:{c.oldText,c.unsavedText}) { Opened<AcDbEntity> e(id); const auto value=entity(*e.get());
+-            preservedSame=preservedSame&&std::find(c.baseline.entities.begin(),c.baseline.entities.end(),value)!=c.baseline.entities.end(); }
++        successEvidence=committedEvidenceMatches(c.baseline,c.after,*c.document->database(),c.target,c.preserved,c.oldText,c.unsavedText,*result.value);
+     }
+     bool layerDependencyCorrect=false;
+     if(c.committed) {
+@@ -283,8 +312,31 @@
+     }
+     expect("CommittedLayerUsesTargetDatabaseLinetype",layerDependencyCorrect,
+         c.committed?c.after.json():issue_codes(result.issues),"new layer references this database's actual Continuous record and retains requested public definition");
+-    expect("SuccessfulCommitHasActualMutations",c.committed&&targetMoved&&preservedSame&&c.after.entities.size()==5&&
+-        c.after.resourceRecords.size()==c.baseline.resourceRecords.size()+1,issue_codes(result.issues),"one new Line/layer; only E translated; S and both old Text remain");
++    expect("SuccessfulCommitHasActualMutations",c.committed&&successEvidence,issue_codes(result.issues),"one new Line/layer; only E translated; S and both old Text remain");
++    if(c.committed) {
++        auto& db=*c.document->database(); auto* manager=db.transactionManager();
++        require(result.value->createdEntities.size()==1,"one receipt Line required for counterexamples");
++        const auto newId=bce::native_scene::objectId(db,result.value->createdEntities.front().handle);
++        for(const int fault:{0,1,2,3}) {
++            auto* txn=manager->startTransaction(); require(txn,"counterexample transaction");
++            bool accepted=false;
++            try {
++                AcDbObject* raw{};
++                if(fault<2) { ok(txn->getObject(raw,newId,AcDb::kForWrite),"counterexample new Line"); auto* line=AcDbLine::cast(raw); require(line,"counterexample typed Line");
++                    if(fault==0) ok(line->setEndPoint(AcGePoint3d(9999.0,0.0,0.0)),"wrong emitted endpoint");
++                    else ok(line->setLayer(L"0"),"wrong emitted layer"); }
++                else if(fault==2) { ok(txn->getObject(raw,c.preserved,AcDb::kForWrite),"counterexample preserved Line");
++                    auto* line=AcDbLine::cast(raw); require(line,"preserved typed Line"); ok(line->setLineWeight(AcDb::kLnWt050),"wrong preserved lineweight"); }
++                else { Opened<AcDbText> text(c.oldText); ok(txn->getObject(raw,text->textStyle(),AcDb::kForWrite),"counterexample old style");
++                    auto* style=AcDbTextStyleTableRecord::cast(raw); require(style,"typed style"); ok(style->setXScale(0.5),"wrong preserved style width"); }
++                const auto altered=capture(); accepted=committedEvidenceMatches(c.baseline,altered,db,c.target,c.preserved,c.oldText,c.unsavedText,*result.value);
++                ok(manager->abortTransaction(),"abort isolated audit counterexample");
++            } catch(...) { if(manager->numActiveTransactions()==1&&manager->topTransaction()==txn) manager->abortTransaction(); throw; }
++            const char* names[]={"AuditRejectsWrongNewLineEndpoint","AuditRejectsWrongNewLineLayer","AuditRejectsPreservedLineAttributeChange","AuditRejectsExistingStyleChange"};
++            expect(names[fault],!accepted,"success verifier accepted="+std::string(accepted?"true":"false"),"actual SDK counterexample must fail the same successful-commit gate");
++            require(c.after.sameContents(capture()),"audit counterexample transaction failed to restore committed scene");
++        }
++    }
+     expect("GlobalVariablesRemainUnchanged",c.committed&&c.baseline.globalsJson==c.after.globalsJson,c.after.globalsJson,"actual successful mutation leaves every captured global unchanged");
+     if(!c.committed) {
+         expect("UndoRestoresSelectedAndProtectedContent",false,"NOT_RUN: commit did not occur","real single U restores baseline");

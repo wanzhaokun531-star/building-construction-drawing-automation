@@ -1,0 +1,19 @@
+{
+  "contract": "bcp.spacing-trial-final-audit.v1",
+  "filesVerified": 12,
+  "sourceFilesVerified": 12,
+  "moduleSHA256": "9017815BDD2520544BD04365A925A8C3D62E0267E47A2E99C96EA84CDA05DB36",
+  "snapshotsUnchanged": 6,
+  "sharedRegistrations": [
+    2,
+    2
+  ],
+  "hostGone": true,
+  "stagingRemoved": true,
+  "nearCircleGap": 600,
+  "outerCircleOffset": 4000,
+  "trialInterpretation": true,
+  "fullThreeRowsComplete": false,
+  "normalQuitPassed": false,
+  "stage2Complete": false
+}

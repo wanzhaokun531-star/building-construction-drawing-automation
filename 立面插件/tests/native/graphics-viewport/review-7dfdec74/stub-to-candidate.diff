@@ -1,0 +1,690 @@
+--- stub/ElevationViewportCases.vcxproj
++++ candidate/ElevationViewportCases.vcxproj
+@@ -8,7 +8,7 @@
+   <PropertyGroup><OutDir>..\out\</OutDir><IntDir>..\obj\</IntDir><TargetName>ElevationViewportCases</TargetName><TargetExt>.arx</TargetExt><ObjectArxSdk Condition="'$(ObjectArxSdk)'==''">C:\Autodesk\ObjectARX_for_AutoCAD_2020_Win_64_bit</ObjectArxSdk></PropertyGroup>
+   <ItemDefinitionGroup>
+     <ClCompile><WarningLevel>Level4</WarningLevel><TreatWarningAsError>true</TreatWarningAsError><SDLCheck>true</SDLCheck><ConformanceMode>true</ConformanceMode><LanguageStandard>stdcpp17</LanguageStandard><RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary><DisableSpecificWarnings>4828;%(DisableSpecificWarnings)</DisableSpecificWarnings><AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions><ExceptionHandling>Sync</ExceptionHandling><PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;UNICODE;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions><AdditionalIncludeDirectories>$(ObjectArxSdk)\inc;$(ObjectArxSdk)\inc-x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories></ClCompile>
+-    <Link><SubSystem>Windows</SubSystem><ModuleDefinitionFile>$(ObjectArxSdk)\inc\AcRxDefault.def</ModuleDefinitionFile><AdditionalLibraryDirectories>$(ObjectArxSdk)\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories><AdditionalDependencies>rxapi.lib;acdb23.lib;acge23.lib;accore.lib;ac1st23.lib;Advapi32.lib;User32.lib;%(AdditionalDependencies)</AdditionalDependencies></Link>
++    <Link><SubSystem>Windows</SubSystem><ModuleDefinitionFile>$(ObjectArxSdk)\inc\AcRxDefault.def</ModuleDefinitionFile><AdditionalLibraryDirectories>$(ObjectArxSdk)\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories><AdditionalDependencies>acad.lib;rxapi.lib;acdb23.lib;acge23.lib;accore.lib;ac1st23.lib;Advapi32.lib;User32.lib;%(AdditionalDependencies)</AdditionalDependencies></Link>
+   </ItemDefinitionGroup>
+   <ItemGroup><ClCompile Include="ViewportProbe.cpp" /><ClCompile Include="ViewportCapture.cpp" /><ClCompile Include="NativeEvidence.cpp" /></ItemGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+--- stub/prepare-ready.schema.json
++++ candidate/prepare-ready.schema.json
+@@ -0,0 +1,16 @@
++{
++  "$schema": "https://json-schema.org/draft/2020-12/schema",
++  "type": "object",
++  "additionalProperties": false,
++  "required": ["contract", "nonce", "pid", "targetPath", "targetSHA256", "modelRootCount", "rootHandles", "sourceSHA"],
++  "properties": {
++    "contract": {"const": "bce.graphics-viewport-prepare.v1"},
++    "nonce": {"type": "string", "pattern": "^[0-9a-fA-F]{8,64}$"},
++    "pid": {"type": "integer", "minimum": 1},
++    "targetPath": {"type": "string", "description": "exact config.output + \\viewport-target.dwg"},
++    "targetSHA256": {"type": "string", "pattern": "^[0-9A-F]{64}$"},
++    "modelRootCount": {"const": 12},
++    "rootHandles": {"type": "array", "minItems": 12, "maxItems": 12, "items": {"type": "string", "pattern": "^[0-9A-F]+$"}, "description": "in order Line, Arc, numeric Text, Chinese Text, rotated mirrored Text, MText, nested block, ACB0, 10837, AC83, CAF3, 11B93 clones"},
++    "sourceSHA": {"type": "object", "additionalProperties": false, "required": ["scheme", "reference"], "properties": {"scheme": {"type": "string", "pattern": "^[0-9A-F]{64}$"}, "reference": {"type": "string", "pattern": "^[0-9A-F]{64}$"}}}
++  }
++}
+--- stub/provenance.json
++++ candidate/provenance.json
+@@ -0,0 +1,166 @@
++[
++  {
++    "source": "C:\\Autodesk\\ObjectARX_for_AutoCAD_2020_Win_64_bit\\inc\\drawable.h",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\drawable.h",
++    "sha256": "BE4D3F150A70EE40B7DB89EEB5093D52D668297E999643C6C581F7F94CBD9CAC"
++  },
++  {
++    "source": "C:\\Autodesk\\ObjectARX_for_AutoCAD_2020_Win_64_bit\\inc\\rxoverrule.h",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\rxoverrule.h",
++    "sha256": "533B97D4311D04B8DA1375616F36275D8926405F5BD4900ECE8D70CC31FA54DB"
++  },
++  {
++    "source": "C:\\Autodesk\\ObjectARX_for_AutoCAD_2020_Win_64_bit\\inc\\acgi.h",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\acgi.h",
++    "sha256": "BAFD7C2356A29783AFE4A503B08FEDDC34E80C69E7BE10B4D5AA66D4AA37D67A"
++  },
++  {
++    "source": "C:\\Autodesk\\ObjectARX_for_AutoCAD_2020_Win_64_bit\\inc\\acedCmdNF.h",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\acedCmdNF.h",
++    "sha256": "B1480D0B103ADA79CF894B3AD6365DB6CEEC1283EB287AA734ABCBEB14E26D44"
++  },
++  {
++    "source": "C:\\Autodesk\\ObjectARX_for_AutoCAD_2020_Win_64_bit\\inc\\dbapserv.h",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\dbapserv.h",
++    "sha256": "6DD11DFCBCD323EABA7580053D62194E12AC8332432A867E5F1534A619B8C731"
++  },
++  {
++    "source": "立面插件\\build\\n5-20261101-210247-345-reference-workingdb-scope-fix-1ce606c5\\src\\GraphicsPolicy.h",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\GraphicsPolicy.h",
++    "sha256": "9F4DD6AF7C950BDA3A5D78444EE4EDFA63381DCFFCA96A39B6BA92B0D4A9DB97",
++    "role": "frozen N5 acceptance policy; no collector code copied"
++  },
++  {
++    "source": "立面插件\\build\\n5-20261101-210247-345-reference-workingdb-scope-fix-1ce606c5\\src\\GraphicsControlPolicy.h",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\GraphicsControlPolicy.h",
++    "sha256": "4A6AA82F67E722D29934D30184538B46DA7BB727305E7DAC32D809F5DFD95B1E",
++    "role": "frozen N5 acceptance policy; no collector code copied"
++  },
++  {
++    "source": "立面插件\\build\\n5-20261101-210247-345-reference-workingdb-scope-fix-1ce606c5\\src\\GraphicsReadProbe.cpp",
++    "sha256": "EE503530811702B74B14A1AB37A1C3E879ADC9E96E065A5FB8546900884A97F1",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\ViewportFixtures.h",
++    "copySha256": "69B13CB727BFB2B7A07C956A847568783DDE38381C192AD5FB3B1E0EE341F2D6",
++    "role": "N7 adapted Open/Monitor/WorkingDatabase/fingerprint/control fixtures; original N5 unchanged"
++  },
++  {
++    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcApDocManagerReactor__documentBecameCurrent@AcApDocument_.html",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcApDocManagerReactor__documentBecameCurrent@AcApDocument_.html",
++    "sha256": "728555AA54209594DCE4074AC4E50F016AB6C882BC686981C30F9C9BB708D18F"
++  },
++  {
++    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcApDocManager__sendStringToExecute@AcApDocument_@ACHAR__@bool@bool@bool.html",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcApDocManager__sendStringToExecute@AcApDocument_@ACHAR__@bool@bool@bool.html",
++    "sha256": "0588F0F5082214DD2FBAA27BAEE39B29CED95C9718C18D24712F5E8F1CD2EA6C"
++  },
++  {
++    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcDbHostApplicationServices__setWorkingDatabase@AcDbDatabase_.html",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcDbHostApplicationServices__setWorkingDatabase@AcDbDatabase_.html",
++    "sha256": "B74B455A19625DFFECE524B03C22A1540297992F6CC23E7E7AF9B999BCEB3B89"
++  },
++  {
++    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!acedSetCurrentView@AcDbViewTableRecord__@AcDbViewport__.html",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\acedSetCurrentView@AcDbViewTableRecord__@AcDbViewport__.html",
++    "sha256": "88D11875D19D752063636822286E72D7074D2F4C43BCE0AC14A23C770CADCFE0"
++  },
++  {
++    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiCommonDraw__context.html",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiCommonDraw__context.html",
++    "sha256": "618FE327FCC327F91F4DFB7EEB821F24D3923CF991D86B55C5783F7C75EEF84A"
++  },
++  {
++    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiDrawableOverrule.html",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiDrawableOverrule.html",
++    "sha256": "658E0C60BF01B253C91FC5CC6A91884947BF8BF496232964CCAB58B7429AD45F"
++  },
++  {
++    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiDrawableOverrule__AcGiDrawableOverrule.html",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiDrawableOverrule__AcGiDrawableOverrule.html",
++    "sha256": "1889ADD59FCAD31EA74E2744C49E5818078D36C134521912A60D6243C55CE342"
++  },
++  {
++    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiDrawableOverrule__setAttributes@AcGiDrawable_@AcGiDrawableTraits__.html",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiDrawableOverrule__setAttributes@AcGiDrawable_@AcGiDrawableTraits__.html",
++    "sha256": "3C358D6364332F62033C911FB116ECC3C7194AD5F91EBD8275E700CF1C69425A"
++  },
++  {
++    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiDrawableOverrule__viewportDraw@AcGiDrawable_@AcGiViewportDraw__.html",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiDrawableOverrule__viewportDraw@AcGiDrawable_@AcGiViewportDraw__.html",
++    "sha256": "4767066723BF41AD367C629C4821B1270AA20AE336654A563847D5A80E3333DF"
++  },
++  {
++    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiDrawableOverrule__viewportDrawLogicalFlags@AcGiDrawable_@AcGiViewportDraw__.html",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiDrawableOverrule__viewportDrawLogicalFlags@AcGiDrawable_@AcGiViewportDraw__.html",
++    "sha256": "283A7FFC57CFC7E080140BCF9213D9DC37BC230800403C06D85CF274D707E59A"
++  },
++  {
++    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiDrawableOverrule__worldDraw@AcGiDrawable_@AcGiWorldDraw__.html",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiDrawableOverrule__worldDraw@AcGiDrawable_@AcGiWorldDraw__.html",
++    "sha256": "18745F4162AD495305CA616E403630E55C533B5762743C06D0D9762D94DA52D2"
++  },
++  {
++    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiViewportDraw__geometry.html",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiViewportDraw__geometry.html",
++    "sha256": "D24920E3A69F602D85E1EC3EA9B5E0ED171682B7B61C8DB9F31767DCFDA63DF6"
++  },
++  {
++    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiViewportDraw__isValidId@Adesk__ULongPtr@const.html",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiViewportDraw__isValidId@Adesk__ULongPtr@const.html",
++    "sha256": "373F5AF4047F4D04F7563C95512AB38F82D9CA145E26A0F6B0280A676C60304C"
++  },
++  {
++    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiViewportDraw__sequenceNumber.html",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiViewportDraw__sequenceNumber.html",
++    "sha256": "27CE0BCC4211FFD0287DE9A0FF2AAB051BE8E6F98470322933A2D993CCEBBCC5"
++  },
++  {
++    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiViewportDraw__viewport.html",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiViewportDraw__viewport.html",
++    "sha256": "CAA2A5C7636FBD3A71B7E7D38F34BBA35DD47054000459DFD464DEF2E0500C90"
++  },
++  {
++    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiViewportDraw__viewportObjectId.html",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiViewportDraw__viewportObjectId.html",
++    "sha256": "A4D0BBDDF84378C289C9EC29665BC0805FBC71534E78E23C4339C190ECD1CC9E"
++  },
++  {
++    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiWorldDraw__geometry.html",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiWorldDraw__geometry.html",
++    "sha256": "1A3BD12CC76C804583DB2FA4E24367284D1DEC483B2B7F35FAEB44D76A65BAAA"
++  },
++  {
++    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcRxOverrule__addOverrule@AcRxClass_@AcRxOverrule_@bool.html",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcRxOverrule__addOverrule@AcRxClass_@AcRxOverrule_@bool.html",
++    "sha256": "3CD9750B4DF22BD2245D4C2C0BA4F1F27E9605DB984362D8BA676E9D874A448A"
++  },
++  {
++    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcRxOverrule__hasOverrule@AcRxObject_@AcRxClass_.html",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcRxOverrule__hasOverrule@AcRxObject_@AcRxClass_.html",
++    "sha256": "B8E939342383EBC991C3ADC3BF7FEA44849993CFA5B4327DA1DF6F9767E72AFD"
++  },
++  {
++    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcRxOverrule__isApplicable@AcRxObject_@const.html",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcRxOverrule__isApplicable@AcRxObject_@const.html",
++    "sha256": "BBE94209595A36F1AE3161B9B9149D226D818E54165822ACE13886336F18FC21"
++  },
++  {
++    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcRxOverrule__isOverruling.html",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcRxOverrule__isOverruling.html",
++    "sha256": "5B23336EA97CA3A28BF139B2F2A928FAF33F85A9BDC56AD1D137CEC9D9EDE226"
++  },
++  {
++    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcRxOverrule__removeOverrule@AcRxClass_@AcRxOverrule_.html",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcRxOverrule__removeOverrule@AcRxClass_@AcRxOverrule_.html",
++    "sha256": "40FAA86A272BC363E409429ED34BB83353FA8AB1D7EEDDE6A5A6AEC0DAD7F3CD"
++  },
++  {
++    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcRxOverrule__setIsOverruling@bool.html",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcRxOverrule__setIsOverruling@bool.html",
++    "sha256": "91BA5A573F900DF5F860ACC5D5923713BD067FA5F8D55236E9736B36C75DF0D0"
++  },
++  {
++    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcRxOverrule__~AcRxOverrule.html",
++    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcRxOverrule__~AcRxOverrule.html",
++    "sha256": "11FB51A80BFB04917CDA23B996DE9E7406A3534D5302490B9EEA3C805B7EA659"
++  }
++]--- stub/ViewportCapture.cpp
++++ candidate/ViewportCapture.cpp
+@@ -1,5 +1,216 @@
+ #include "ViewportProbe.h"
++#include <aced.h>
++#include <adscodes.h>
++#include <acedCmdNF.h>
++#include <acdocman.h>
++#include <acutads.h>
++#include <dbents.h>
++#include <dbmtext.h>
++#include <dbsymtb.h>
++#include <dbsymutl.h>
++#include <dbidmap.h>
++#include <dbapserv.h>
++#include <dbproxy.h>
++#include <acgi.h>
++#include <drawable.h>
++#include <functional>
++#include <memory>
++#include <sstream>
++#include <iomanip>
++#include <cmath>
++#include <algorithm>
+ namespace bce::viewport {
+-Result capture(const bce::native::Config&,bce::native::Evidence&) { return {}; }
+-bool cleanup() noexcept { return true; }
+-}
++using namespace bce::native;
++using namespace bce::graphics;
++namespace {
++std::string number(double x){require(std::isfinite(x),"nonfinite host value");std::ostringstream s;s.imbue(std::locale::classic());s<<std::setprecision(17)<<x;return s.str();}
++std::string handle(AcDbObjectId id){if(id.isNull())return {};ACHAR value[32]{};id.handle().getIntoAsciiBuffer(value);return utf8(value);}
++std::string pt(const AcGePoint3d& p){return array({number(p.x),number(p.y),number(p.z)});}
++std::string vec(const AcGeVector3d& p){return array({number(p.x),number(p.y),number(p.z)});}
++Triple triple(const AcGePoint3d& p){return {p.x,p.y,p.z};}
++Triple triple(const AcGeVector3d& p){return {p.x,p.y,p.z};}
++std::string mat(const AcGeMatrix3d& m){std::vector<std::string> a;for(int r=0;r<4;++r)for(int c=0;c<4;++c)a.push_back(number(m(r,c)));return array(a);}
++std::string q(const char* p){return quote(std::string(p));}
++std::wstring ws(const ACHAR* p){return p?p:L"";}
++#include "ViewportFixtures.h"
++void verifyRoots(AcDbDatabase& db,const std::vector<AcDbObjectId>& expected){
++    Open<AcDbBlockTableRecord> ms(acdbSymUtil()->blockModelSpaceId(&db));AcDbBlockTableRecordIterator* raw{};ok(ms->newIterator(raw),"target root iterator");
++    std::unique_ptr<AcDbBlockTableRecordIterator> it(raw);std::size_t count{};
++    for(;!it->done();it->step()){AcDbObjectId id;ok(it->getEntityId(id),"target root id");require(std::find(expected.begin(),expected.end(),id)!=expected.end(),"unexpected target model root");++count;}
++    require(count==12&&count==expected.size(),"actual target root count mismatch");
++}
++struct Session;
++struct QueueReactor final:AcApDocManagerReactor {
++    explicit QueueReactor(Session& owner):s(owner){}
++    void documentBecameCurrent(AcApDocument* doc) override;
++    Session& s;
++};
++struct Session {
++    Config config;Evidence& evidence;File log;
++    AcDbDatabase* ambient{};std::unique_ptr<Monitor> ambientMonitor;
++    std::unique_ptr<AcDbDatabase> source;std::unique_ptr<Monitor> sourceMonitor;
++    std::unique_ptr<Monitor> targetMonitor;AcDbDatabase* target{};
++    std::string sourceFingerprint,targetSHA;std::vector<std::wstring> rootHandles;
++    std::vector<AcDbObjectId> roots;std::vector<std::string> classes;
++    std::unique_ptr<QueueReactor> queue;bool queueAttached{},queued{},capturing{};
++    std::string callbackError;Result result;
++    std::array<std::array<std::vector<std::string>,12>,2> streams;
++    std::array<std::array<bool,12>,2> seenWorld{},seenViewport{};
++    int round{-1},index{-1};bool recording{};std::vector<std::string> path;
++    std::vector<const AcGiDrawable*> authorizedTransient;
++    std::size_t logBytes{},eventCount{};
++    explicit Session(const Config& c,Evidence& e):config(c),evidence(e),log(create_new(c.output+L"\\viewport-callbacks.jsonl")){}
++    void write(const std::string& line){require(++eventCount<=250000&&logBytes+line.size()<128*1024*1024,"N7 callback budget");logBytes+=line.size();write_flushed(log.get(),line+"\n");}
++    void emit(AcGiGeometry& g,const char* kind,Fields fields={}){
++        if(index<0||round<0||!recording)return;
++        AcGeMatrix3d matrix;g.getModelToWorldTransform(matrix);
++        fields.push_back({"kind",q(kind)});fields.push_back({"path",array(path)});fields.push_back({"modelToWorld",mat(matrix)});
++        auto line=object(fields);streams[static_cast<std::size_t>(round)][static_cast<std::size_t>(index)].push_back(line);
++        write(object({{"sample",std::to_string(index)},{"round",std::to_string(round)},{"request",line}}));
++        ++result.samples[static_cast<std::size_t>(index)].observation.coverage.callbacks;
++    }
++    ControlObservation* observation(){return index>=0&&round==0&&recording?&result.samples[static_cast<std::size_t>(index)].observation:nullptr;}
++    void points(AcGiGeometry& g,const char* kind,Adesk::UInt32 count,const AcGePoint3d* points){
++        require(count<=100000&&(points||count==0),"invalid geometry points");std::vector<std::string> a;AcGeMatrix3d m;g.getModelToWorldTransform(m);
++        PrimitiveObservation p;p.kind=kind;for(Adesk::UInt32 i=0;i<count;++i){a.push_back(pt(points[i]));p.points.push_back(triple(m*points[i]));}
++        if(auto* o=observation())o->primitives.push_back(std::move(p));emit(g,kind,{{"points",array(a)}});
++    }
++    void text(AcGiGeometry& g,const AcGePoint3d& p,const AcGeVector3d& n,const AcGeVector3d& d,const ACHAR* msg,int len,bool raw,const AcGiTextStyle* style,double h,double width,double oblique){
++        require(msg&&len>=-1&&len<=65536,"text pointer/length invalid");const auto count=len<0?wcsnlen_s(msg,65537):static_cast<std::size_t>(len);require(count<=65536,"text over budget");
++        std::wstring textValue(msg,count);std::vector<std::string> units;for(auto v:textValue)units.push_back(std::to_string(static_cast<unsigned short>(v)));
++        AcGeMatrix3d m;g.getModelToWorldTransform(m);
++        Fields f={{"text",quote(textValue)},{"utf16",array(units)},{"rawLength",std::to_string(len)},{"copiedCodeUnits",std::to_string(count)},{"raw",raw?"true":"false"},{"position",pt(p)},{"worldPosition",pt(m*p)},{"normal",vec(n)},{"direction",vec(d)},{"height",number(h)},{"width",number(width)},{"oblique",number(oblique)},{"styleKnown",style?"true":"false"}};
++        TextObservation t;t.text=textValue;t.position=triple(m*p);t.height=h;t.width=width;t.oblique=oblique;t.styleComplete=style!=nullptr;
++        if(style){t.font=ws(style->fileName());t.bigfont=ws(style->bigFontFileName());t.tracking=style->trackingPercent();
++            f.push_back({"font",quote(t.font)});f.push_back({"bigFont",quote(t.bigfont)});f.push_back({"styleName",quote(ws(style->styleName()))});f.push_back({"tracking",number(t.tracking)});
++            f.push_back({"backward",style->isBackward()?"true":"false"});f.push_back({"upsideDown",style->isUpsideDown()?"true":"false"});
++            f.push_back({"vertical",style->isVertical()?"true":"false"});f.push_back({"underline",style->isUnderlined()?"true":"false"});f.push_back({"overline",style->isOverlined()?"true":"false"});f.push_back({"strike",style->isStrikethrough()?"true":"false"});
++            if(n.length()>1e-12&&d.length()>1e-12){t.xAxis=triple(m*(d.normal()*h*width*(style->isBackward()?-1:1)));t.yAxis=triple(m*(n.normal().crossProduct(d.normal())*h*(style->isUpsideDown()?-1:1)));t.basisValid=true;}}
++        if(auto* o=observation())o->texts.push_back(t);
++        if(index>=0&&round==0&&recording)++result.samples[static_cast<std::size_t>(index)].textCalls;
++        emit(g,"text",f);
++    }
++    void guarded(){require(callbackError.empty(),callbackError);ambientMonitor->check();sourceMonitor->check();if(targetMonitor)targetMonitor->check();}
++    ~Session(){if(queueAttached)acDocManager->removeReactor(queue.get());}
++};
++std::unique_ptr<Session> session;
++void QueueReactor::documentBecameCurrent(AcApDocument* doc){
++    if(s.queued||s.capturing||!doc||!doc->database())return;
++    try {const ACHAR* name{};if(doc->database()->getFilename(name)!=Acad::eOk||!name)return;
++        const auto expected=s.config.session+L"\\viewport-native-job\\control.dwg";
++        if(_wcsicmp(name,expected.c_str())!=0)return;
++        s.queued=true;const auto status=acDocManager->sendStringToExecute(doc,L"BCE_VIEWPORT_CAPTURE\n",false,false,false);
++        if(status!=Acad::eOk)s.callbackError="sendStringToExecute failed status="+std::to_string(status);
++    }catch(const std::exception& e){s.callbackError=e.what();}catch(...){s.callbackError="document reactor failure";}
++}
++#include "ViewportForward.h"
++class Overrule final:public AcGiDrawableOverrule {
++public:
++    explicit Overrule(Session& state):s(state){}
++    bool isApplicable(const AcRxObject* value) const override {
++        if(!s.capturing)return false;const auto* entity=AcDbEntity::cast(value);
++        if(entity&&entity->database())return entity->database()==s.target;
++        const auto* drawable=AcGiDrawable::cast(value);
++        return drawable&&std::find(s.authorizedTransient.begin(),s.authorizedTransient.end(),drawable)!=s.authorizedTransient.end();
++    }
++    struct Scope {
++        Session& s;int index;bool recording;std::size_t depth;
++        Scope(Session& state,AcGiDrawable* d,bool viewport):s(state),index(s.index),recording(s.recording),depth(s.path.size()){
++            const auto* e=AcDbEntity::cast(d);const bool resident=e&&e->database();
++            require(resident?e->database()==s.target:std::find(s.authorizedTransient.begin(),s.authorizedTransient.end(),d)!=s.authorizedTransient.end(),"non-target overrule");
++            const auto found=resident?std::find(s.roots.begin(),s.roots.end(),e->objectId()):s.roots.end();
++            if(found!=s.roots.end()) {s.index=static_cast<int>(found-s.roots.begin());auto& seen=viewport?s.seenViewport:s.seenWorld;
++                s.recording=s.round>=0&&!seen[static_cast<std::size_t>(s.round)][static_cast<std::size_t>(s.index)];
++                if(s.round>=0)seen[static_cast<std::size_t>(s.round)][static_cast<std::size_t>(s.index)]=true;}
++            s.path.push_back(resident?quote(handle(e->objectId())):quote(std::string("transient:")+utf8(d->isA()->name())));
++            if(auto* o=s.observation()){++o->coverage.drawRequests;++o->coverage.drawsEntered;}
++        }
++        ~Scope(){s.index=index;s.recording=recording;s.path.resize(depth);}
++    };
++    void context(AcGiCommonDraw& d,bool viewport,AcGiViewportDraw* vd=nullptr){
++        if(s.index<0||s.round<0)return;auto& sample=s.result.samples[static_cast<std::size_t>(s.index)];
++        if(viewport)++sample.viewportCalls;else ++sample.worldCalls;
++        auto* c=d.context();const bool valid=c&&c->database()==s.target;
++        sample.hostContext=sample.contextCalls?sample.hostContext&&valid:valid;++sample.contextCalls;
++        Fields fields={{"kind",q("hostDrawContext")},{"sample",std::to_string(s.index)},{"round",std::to_string(s.round)},{"viewportDraw",viewport?"true":"false"},{"contextAddress",std::to_string(reinterpret_cast<std::uintptr_t>(c))},{"contextDatabaseMatchesTarget",valid?"true":"false"},{"regenType",std::to_string(d.regenType())},{"dragging",d.isDragging()?"true":"false"},{"secondaryCall",d.secondaryCall()?"true":"false"},{"annotationScale","null"}};
++        if(vd){auto& v=vd->viewport();AcGePoint3d camera,target;AcGeVector3d up;AcGeMatrix3d eye;AcGePoint2d low,high,pixel;
++            v.getCameraLocation(camera);v.getCameraTarget(target);v.getCameraUpVector(up);v.getWorldToEyeTransform(eye);v.getViewportDcCorners(low,high);v.getNumPixelsInUnitSquare(target,pixel);
++            fields.push_back({"camera",pt(camera)});fields.push_back({"target",pt(target)});fields.push_back({"up",vec(up)});fields.push_back({"worldToEye",mat(eye)});fields.push_back({"dcCorners",array({number(low.x),number(low.y),number(high.x),number(high.y)})});fields.push_back({"pixelsPerUnit",array({number(pixel.x),number(pixel.y)})});
++            fields.push_back({"viewportId",std::to_string(v.viewportId())});fields.push_back({"viewportObject",quote(handle(vd->viewportObjectId()))});fields.push_back({"sequence",std::to_string(vd->sequenceNumber())});fields.push_back({"perspective",v.isPerspective()?"true":"false"});fields.push_back({"linetypeScaleMultiplier",number(v.linetypeScaleMultiplier())});sample.hostViewport=true;sample.finiteViewport=true;
++        }s.write(object(fields));
++    }
++    Adesk::Boolean worldDraw(AcGiDrawable* d,AcGiWorldDraw* wd) override {
++        try {require(wd,"null host WorldDraw");Scope scope(s,d,false);context(*wd,false);WorldDraw wrapper(*wd,s);const auto result=AcGiDrawableOverrule::worldDraw(d,&wrapper);if(s.index>=0&&s.round>=0)++s.result.samples[static_cast<std::size_t>(s.index)].forwarded;return result;}
++        catch(const std::exception& e){s.callbackError=e.what();return Adesk::kTrue;}catch(...){s.callbackError="worldDraw exception";return Adesk::kTrue;}
++    }
++    void viewportDraw(AcGiDrawable* d,AcGiViewportDraw* vd) override {
++        try {require(vd,"null host ViewportDraw");Scope scope(s,d,true);context(*vd,true,vd);ViewportDraw wrapper(*vd,s);AcGiDrawableOverrule::viewportDraw(d,&wrapper);if(s.index>=0&&s.round>=0)++s.result.samples[static_cast<std::size_t>(s.index)].forwarded;}
++        catch(const std::exception& e){s.callbackError=e.what();}catch(...){s.callbackError="viewportDraw exception";}
++    }
++private:Session& s;
++};
++std::unique_ptr<Overrule> overrule;bool overruleAdded{},oldOverruling{};
++bool removeOverrule() noexcept {
++    if(overruleAdded){if(AcRxOverrule::removeOverrule(AcGiDrawable::desc(),overrule.get())!=Acad::eOk)return false;overruleAdded=false;AcRxOverrule::setIsOverruling(oldOverruling);}
++    overrule.reset();return true;
++}
++}
++void prepare(const Config& config,Evidence& evidence){
++    require(!session&&!overrule,"N7 already prepared");session=std::make_unique<Session>(config,evidence);auto& s=*session;
++    s.ambient=acdbHostApplicationServices()->workingDatabase();require(s.ambient,"ambient missing");
++    const auto sink=[&s](const std::string& line){s.write(line);};s.ambientMonitor=std::make_unique<Monitor>(*s.ambient,"ambient",sink);
++    s.ambientMonitor->begin("reference-read");s.source=std::make_unique<AcDbDatabase>(false,true);
++    {WorkingDatabase scope(*s.source);ok(s.source->readDwgFile(config.reference.c_str(),AcDbDatabase::kForReadAndAllShare,false,L""),"reference read");ok(s.source->closeInput(true),"reference closeInput");}
++    s.sourceMonitor=std::make_unique<Monitor>(*s.source,"reference",sink);s.sourceFingerprint=fingerprint(*s.source);s.guarded();
++    evidence.checkpoint("prepare-owned-target");
++    {AcDbDatabase target(true,true);WorkingDatabase scope(target);Monitor targetEvents(target,"target-setup",sink);targetEvents.protect=false;
++        auto roots=controls(target);const auto owner=acdbSymUtil()->blockModelSpaceId(&target);
++        for(const wchar_t* sourceHandle:{L"ACB0",L"10837",L"AC83",L"CAF3",L"11B93"}){
++            AcDbObjectId sourceId;ok(s.source->getAcDbObjectId(sourceId,false,AcDbHandle(sourceHandle)),"source handle");AcDbObjectIdArray ids;ids.append(sourceId);AcDbIdMapping map;
++            ok(s.source->wblockCloneObjects(ids,owner,map,AcDb::kDrcMangleName),"clone own target");AcDbIdPair pair;pair.setKey(sourceId);require(map.compute(pair)&&pair.isCloned(),"clone root mapping");roots.push_back(pair.value());s.guarded();
++        }
++        verifyRoots(target,roots);
++        for(const auto id:roots){Open<AcDbEntity> e(id);require(e->database()==&target&&e->ownerId()==owner&&!AcDbProxyEntity::cast(&*e),"target root owner/type");const auto h=handle(id);s.rootHandles.emplace_back(h.begin(),h.end());s.classes.push_back(utf8(e->isA()->name()));}
++        const auto filename=config.output+L"\\viewport-target.dwg";require(GetFileAttributesW(filename.c_str())==INVALID_FILE_ATTRIBUTES,"target file exists");ok(target.saveAs(filename.c_str()),"save own target");s.targetSHA=sha256(filename);targetEvents.check();
++    }
++    require(acdbHostApplicationServices()->workingDatabase()==s.ambient,"prepare working database not restored");s.guarded();require(fingerprint(*s.source)==s.sourceFingerprint,"reference fingerprint changed");
++    s.queue=std::make_unique<QueueReactor>(s);acDocManager->addReactor(s.queue.get());s.queueAttached=true;
++    std::vector<std::string> handles;for(const auto& h:s.rootHandles)handles.push_back(quote(h));
++    const auto ready=object({{"contract",q("bce.graphics-viewport-prepare.v1")},{"nonce",quote(config.nonce)},{"pid",std::to_string(GetCurrentProcessId())},{"targetPath",quote(config.output+L"\\viewport-target.dwg")},{"targetSHA256",quote(s.targetSHA)},{"modelRootCount",std::to_string(s.rootHandles.size())},{"rootHandles",array(handles)},{"sourceSHA",object({{"scheme",quote(config.schemeSHA256)},{"reference",quote(config.referenceSHA256)}})}});
++    {auto f=create_new(config.output+L"\\prepare-ready.tmp");write_flushed(f.get(),ready);}
++    require(MoveFileExW((config.output+L"\\prepare-ready.tmp").c_str(),(config.output+L"\\prepare-ready.json").c_str(),MOVEFILE_WRITE_THROUGH)!=FALSE,"atomic prepare ready publish failed");
++}
++Result capture(const Config& config,Evidence& evidence){
++    require(session&&session->queued&&!session->capturing,"N7 not prepared/queued or capture repeated");auto& s=*session;s.capturing=true;s.guarded();
++    const auto control=config.session+L"\\viewport-native-job\\control.dwg";s.target=acdbHostApplicationServices()->workingDatabase();
++    require(s.target&&s.target!=s.ambient&&s.target!=s.source.get()&&curDoc()&&curDoc()->database()==s.target,"capture target/context invalid");
++    const ACHAR* filename{};ok(s.target->getFilename(filename),"target filename");require(filename&&_wcsicmp(filename,control.c_str())==0&&sha256(control)==s.targetSHA,"capture target path/SHA mismatch");
++    for(std::size_t i=0;i<s.rootHandles.size();++i){AcDbObjectId id;ok(s.target->getAcDbObjectId(id,false,AcDbHandle(s.rootHandles[i].c_str())),"reopened root");Open<AcDbEntity> e(id);require(utf8(e->isA()->name())==s.classes[i]&&e->ownerId()==acdbSymUtil()->blockModelSpaceId(s.target),"reopened root identity");s.roots.push_back(id);}
++    verifyRoots(*s.target,s.roots);
++    s.targetMonitor=std::make_unique<Monitor>(*s.target,"target-capture",[&s](const std::string& l){s.write(l);});s.targetMonitor->protect=false;
++    s.result.prepared=true;
++    // Exercise actual registration failure cleanup before requesting any drawing.
++    oldOverruling=AcRxOverrule::isOverruling();
++    {
++        overrule=std::make_unique<Overrule>(s);
++        ok(AcRxOverrule::addOverrule(AcGiDrawable::desc(),overrule.get()),"failure-fixture add overrule");overruleAdded=true;AcRxOverrule::setIsOverruling(true);
++        struct FailureScope {~FailureScope(){removeOverrule();}};
++        try {FailureScope guard;throw std::runtime_error("N7 intentional scope exit");}catch(const std::runtime_error&){}
++        s.result.failureCleanup=!overruleAdded&&!overrule&&AcRxOverrule::isOverruling()==oldOverruling;
++        require(s.result.failureCleanup,"injected registration scope cleanup failed");
++    }
++    oldOverruling=AcRxOverrule::isOverruling();overrule=std::make_unique<Overrule>(s);ok(AcRxOverrule::addOverrule(AcGiDrawable::desc(),overrule.get()),"add N7 overrule");overruleAdded=true;AcRxOverrule::setIsOverruling(true);
++    struct Remove {~Remove(){removeOverrule();}} remove;
++    {AcDbObjectId sourceId;ok(s.source->getAcDbObjectId(sourceId,false,AcDbHandle(L"ACB0")),"source negative-filter fixture");Open<AcDbEntity> e(sourceId);Open<AcDbEntity> own(s.roots.front());s.result.targetOnly=!overrule->isApplicable(&*e)&&overrule->isApplicable(&*own);}
++    evidence.checkpoint("natural-host-regeneration");
++    for(int round=0;round<2;++round){s.round=round;require(acedCommandS(RTSTR,L"_.REGEN",RTNONE)==RTNORM,"native REGEN failed");s.round=-1;s.guarded();}
++    s.result.naturalRegen=true;require(removeOverrule(),"remove N7 overrule failed");s.result.registrationRemoved=!overruleAdded;s.result.globalOverruleRestored=AcRxOverrule::isOverruling()==oldOverruling;
++    s.result.workingDbRestored=acdbHostApplicationServices()->workingDatabase()==s.target;
++    require(fingerprint(*s.source)==s.sourceFingerprint,"reference public fingerprint changed");s.guarded();s.result.sourceProtected=true;s.result.ambientProtected=true;
++    for(std::size_t i=0;i<12;++i){auto& v=s.result.samples[i];v.stable=!s.streams[0][i].empty()&&s.streams[0][i]==s.streams[1][i];
++        s.result.records.push_back(object({{"sample",std::to_string(i)},{"handle",quote(s.rootHandles[i])},{"class",quote(s.classes[i])},{"worldCalls",std::to_string(v.worldCalls)},{"viewportCalls",std::to_string(v.viewportCalls)},{"forwarded",std::to_string(v.forwarded)},{"textCalls",std::to_string(v.textCalls)},{"stable",v.stable?"true":"false"},{"round0RequestCount",std::to_string(s.streams[0][i].size())},{"round1RequestCount",std::to_string(s.streams[1][i].size())},{"glyphComplete","false"}}));}
++    s.result.records.push_back(object({{"targetEvents",array(s.targetMonitor->events)},{"sourceEvents",array(s.sourceMonitor->events)},{"ambientEvents",array(s.ambientMonitor->events)},{"referenceFingerprintUnchanged","true"},{"targetDiskSHA",quote(sha256(control))},{"savedTargetSHA",quote(s.targetSHA)}}));
++    return s.result;
++}
++bool cleanup() noexcept {if(!removeOverrule())return false;session.reset();return true;}
++}
+--- stub/ViewportFixtures.h
++++ candidate/ViewportFixtures.h
+@@ -0,0 +1,77 @@
++#pragma once
++// Scoped N7 copy of N5 fixture/guard utilities; provenance.json binds original.
++void ok(Acad::ErrorStatus status,const char* operation){require(status==Acad::eOk,std::string(operation)+" status="+std::to_string(status));}
++template<class T>class Open final {
++public:
++    explicit Open(AcDbObjectId id,AcDb::OpenMode mode=AcDb::kForRead){ok(acdbOpenObject(p_,id,mode),"open");}
++    ~Open(){if(p_)p_->close();}
++    T* operator->() const{return p_;} T& operator*() const{return *p_;}
++    Open(const Open&)=delete;Open& operator=(const Open&)=delete;
++private:T* p_{};
++};
++struct Monitor final:AcDbDatabaseReactor {
++    AcDbDatabase& db;bool alive{true};bool protect{true};std::vector<std::string> events;bool loggingFailed{};std::string role,phase{"monitor-attached"};
++    std::function<void(const std::string&)> log;
++    explicit Monitor(AcDbDatabase& d,const char* dbRole,std::function<void(const std::string&)> sink):db(d),role(dbRole),log(std::move(sink)){ok(db.addReactor(this),"attach source monitor");}
++    ~Monitor(){if(alive)db.removeReactor(this);}
++    void goodbye(const AcDbDatabase*) override {alive=false;}
++    void begin(const std::string& operation){check();phase=operation;log(bce::native::object({{"kind",quote(std::string("protectedDbPhaseBegin"))},{"dbRole",quote(role)},{"phase",quote(phase)},{"workingDatabaseIsMonitored",acdbHostApplicationServices()->workingDatabase()==&db?"true":"false"}}));}
++    void record(const AcDbDatabase* eventDb,const char* kind,const AcDbObject* object) noexcept {try{events.push_back(bce::native::object({{"kind",quote(std::string("protectedDbEvent"))},{"dbRole",quote(role)},{"event",quote(std::string(kind))},{"phase",quote(phase)},
++        {"eventDatabaseMatchesMonitor",eventDb==&db?"true":"false"},{"eventObjectOwnedByMonitor",object&&object->database()==&db?"true":"false"},
++        {"workingDatabaseIsMonitored",acdbHostApplicationServices()->workingDatabase()==&db?"true":"false"},
++        {"handle",quote(object?handle(object->objectId()):std::string{})},{"class",quote(object?std::wstring(object->isA()->name()):std::wstring{})}}));log(events.back());}catch(...){loggingFailed=true;}}
++    void objectModified(const AcDbDatabase* d,const AcDbObject* p) override{record(d,"modified",p);}
++    void objectOpenedForModify(const AcDbDatabase* d,const AcDbObject* p) override{record(d,"openedForModify",p);}
++    void objectAppended(const AcDbDatabase* d,const AcDbObject* p) override{record(d,"appended",p);}
++    void objectErased(const AcDbDatabase* d,const AcDbObject* p,Adesk::Boolean) override{record(d,"erased",p);}
++    void headerSysVarChanged(const AcDbDatabase* d,const ACHAR*,Adesk::Boolean success) override{if(success)record(d,"header",nullptr);}
++    void check() const {
++        log(bce::native::object({{"kind",quote(std::string("protectedDbGuard"))},{"dbRole",quote(role)},{"phase",quote(phase)},{"eventCount",std::to_string(events.size())},{"loggingFailed",loggingFailed?"true":"false"}}));
++        require(alive&&(!protect||events.empty())&&!loggingFailed,"protected database changed: role="+role+" phase="+phase+" events="+std::to_string(events.size())+" loggingFailed="+(loggingFailed?"true":"false")+(events.empty()?"":" first="+events.front()));
++    }
++};
++class WorkingDatabase final {
++public:
++    explicit WorkingDatabase(AcDbDatabase& target):old_(acdbHostApplicationServices()->workingDatabase()) {acdbHostApplicationServices()->setWorkingDatabase(&target);}
++    ~WorkingDatabase() noexcept {acdbHostApplicationServices()->setWorkingDatabase(old_);}
++    WorkingDatabase(const WorkingDatabase&)=delete;WorkingDatabase& operator=(const WorkingDatabase&)=delete;
++private:AcDbDatabase* old_;
++};
++// Only public identity/render traits: intentionally no source extents, explode, draw or font loads.
++std::string fingerprint(AcDbDatabase& db){
++    Open<AcDbBlockTableRecord> ms(acdbSymUtil()->blockModelSpaceId(&db));AcDbBlockTableRecordIterator* raw{};
++    ok(ms->newIterator(raw),"source iterator");std::unique_ptr<AcDbBlockTableRecordIterator> it(raw);std::vector<std::string> roots;
++    for(;!it->done();it->step()){AcDbObjectId id;ok(it->getEntityId(id),"source id");Open<AcDbEntity> e(id);
++        roots.push_back(object({{"handle",quote(handle(id))},{"class",quote(std::wstring(e->isA()->name()))},
++          {"owner",quote(handle(e->ownerId()))},{"layer",quote(handle(e->layerId()))},
++          {"color",std::to_string(e->colorIndex())},{"linetype",quote(handle(e->linetypeId()))},
++          {"visible",std::to_string(e->visibility())}}));}
++    return array(roots);
++}
++AcDbObjectId append(AcDbObjectId owner,std::unique_ptr<AcDbEntity> entity){
++    Open<AcDbBlockTableRecord> ms(owner,AcDb::kForWrite);AcDbObjectId id;ok(ms->appendAcDbEntity(id,entity.get()),"append control");entity.release()->close();return id;
++}
++AcDbObjectId newBlock(AcDbDatabase& db,const wchar_t* name){
++    Open<AcDbBlockTable> table(db.blockTableId(),AcDb::kForWrite);auto block=std::make_unique<AcDbBlockTableRecord>();
++    ok(block->setName(name),"control block name");AcDbObjectId id;ok(table->add(id,block.get()),"control block");block.release()->close();return id;
++}
++std::vector<AcDbObjectId> controls(AcDbDatabase& db){
++    const auto ms=acdbSymUtil()->blockModelSpaceId(&db);std::vector<AcDbObjectId> ids;
++    AcDbObjectId styleId;
++    {Open<AcDbTextStyleTable> table(db.textStyleTableId(),AcDb::kForWrite);auto style=std::make_unique<AcDbTextStyleTableRecord>();
++     ok(style->setName(L"N7_SIMPLEX_GBCBIG"),"style name");ok(style->setFileName(L"simplex.shx"),"font");ok(style->setBigFontFileName(L"gbcbig.shx"),"bigfont");
++     ok(table->add(styleId,style.get()),"style append");style.release()->close();}
++    ids.push_back(append(ms,std::make_unique<AcDbLine>(AcGePoint3d(1,2,0),AcGePoint3d(4,6,0))));
++    ids.push_back(append(ms,std::make_unique<AcDbArc>(AcGePoint3d(10,10,0),5,0,1.5707963267948966)));
++    auto numeric=std::make_unique<AcDbText>(AcGePoint3d(0,0,0),L"123.45",styleId,3);
++    ok(numeric->setWidthFactor(0.75),"numeric control width");ids.push_back(append(ms,std::move(numeric)));
++    ids.push_back(append(ms,std::make_unique<AcDbText>(AcGePoint3d(0,5,0),L"中文立面",styleId,3)));
++    auto rotated=std::make_unique<AcDbText>(AcGePoint3d(10,5,0),L"270",styleId,3);
++    ok(rotated->setRotation(1.5707963267948966),"rotation");ok(rotated->mirrorInX(true),"mirror");ids.push_back(append(ms,std::move(rotated)));
++    auto mtext=std::make_unique<AcDbMText>();ok(mtext->setTextStyle(styleId),"mtext style");ok(mtext->setTextHeight(3),"mtext height");
++    mtext->setContents(L"AB\\P{\\H0.5x;2}\\S7/9;");ids.push_back(append(ms,std::move(mtext)));
++    auto inner=newBlock(db,L"N7_INNER"),outer=newBlock(db,L"N7_OUTER");
++    append(inner,std::make_unique<AcDbText>(AcGePoint3d(1,2,0),L"nested",styleId,2));
++    auto ref=std::make_unique<AcDbBlockReference>(AcGePoint3d(10,20,0),inner);ok(ref->setRotation(0.5),"block rotation");ok(ref->setScaleFactors(AcGeScale3d(2,1,1)),"nonuniform scale");append(outer,std::move(ref));
++    ids.push_back(append(ms,std::make_unique<AcDbBlockReference>(AcGePoint3d(30,40,0),outer)));return ids;
++}
+--- stub/ViewportForward.h
++++ candidate/ViewportForward.h
+@@ -0,0 +1,91 @@
++#pragma once
++// Every public geometry call preserves the host call and return value.
++// Logging is observation only; unrecorded geometry remains explicitly partial.
++template<class Base> class GeometryForward:public Base {
++public:
++    GeometryForward(Base& host,Session& state):g(host),s(state){}
++    void getModelToWorldTransform(AcGeMatrix3d& m) const override {g.getModelToWorldTransform(m);}
++    void getWorldToModelTransform(AcGeMatrix3d& m) const override {g.getWorldToModelTransform(m);}
++    Adesk::Boolean pushModelTransform(const AcGeVector3d& n) override {s.emit(g,"pushNormal",{{"normal",vec(n)}});return g.pushModelTransform(n);}
++    Adesk::Boolean pushModelTransform(const AcGeMatrix3d& m) override {s.emit(g,"pushModelTransform",{{"matrix",mat(m)}});return g.pushModelTransform(m);}
++    Adesk::Boolean popModelTransform() override {s.emit(g,"popModelTransform");return g.popModelTransform();}
++    AcGeMatrix3d pushPositionTransform(AcGiPositionTransformBehavior b,const AcGePoint3d& p) override {s.emit(g,"pushPosition3d",{{"behavior",std::to_string(b)},{"offset",pt(p)}});return g.pushPositionTransform(b,p);}
++    AcGeMatrix3d pushPositionTransform(AcGiPositionTransformBehavior b,const AcGePoint2d& p) override {s.emit(g,"pushPosition2d");return g.pushPositionTransform(b,p);}
++    AcGeMatrix3d pushScaleTransform(AcGiScaleTransformBehavior b,const AcGePoint3d& p) override {s.emit(g,"pushScale3d");return g.pushScaleTransform(b,p);}
++    AcGeMatrix3d pushScaleTransform(AcGiScaleTransformBehavior b,const AcGePoint2d& p) override {s.emit(g,"pushScale2d");return g.pushScaleTransform(b,p);}
++    AcGeMatrix3d pushOrientationTransform(AcGiOrientationTransformBehavior b) override {s.emit(g,"pushOrientation");return g.pushOrientationTransform(b);}
++    Adesk::Boolean polyline(Adesk::UInt32 count,const AcGePoint3d* p,const AcGeVector3d* n,Adesk::LongPtr marker) const override {s.points(g,"polyline",count,p);return g.polyline(count,p,n,marker);}
++    Adesk::Boolean polyline(const AcGiPolyline& p) const override {s.points(g,"AcGiPolyline",p.points(),p.vertexList());return g.polyline(p);}
++    Adesk::Boolean circularArc(const AcGePoint3d& c,double r,const AcGeVector3d& n,const AcGeVector3d& v,double sweep,AcGiArcType type) const override {
++        AcGeMatrix3d m;g.getModelToWorldTransform(m);PrimitiveObservation p;p.kind="circularArc";p.center=triple(m*c);p.normal=triple(m*n);p.startVector=triple(m*v);p.radius=r;p.sweep=sweep;if(auto* o=s.observation())o->primitives.push_back(p);
++        s.emit(g,"circularArc",{{"center",pt(c)},{"radius",number(r)},{"normal",vec(n)},{"startVector",vec(v)},{"sweep",number(sweep)},{"arcType",std::to_string(type)}});return g.circularArc(c,r,n,v,sweep,type);}
++    Adesk::Boolean text(const AcGePoint3d& p,const AcGeVector3d& n,const AcGeVector3d& d,double h,double w,double o,const ACHAR* msg) const override {s.text(g,p,n,d,msg,-1,false,nullptr,h,w,o);return g.text(p,n,d,h,w,o,msg);}
++    Adesk::Boolean text(const AcGePoint3d& p,const AcGeVector3d& n,const AcGeVector3d& d,const ACHAR* msg,Adesk::Int32 len,Adesk::Boolean raw,const AcGiTextStyle& style) const override {s.text(g,p,n,d,msg,len,raw,&style,style.textSize(),style.xScale(),style.obliquingAngle());return g.text(p,n,d,msg,len,raw,style);}
++#define N7_FWD(name,args,call) Adesk::Boolean name args const override {s.emit(g,#name);return g.name call;}
++    N7_FWD(circle,(const AcGePoint3d& p,double r,const AcGeVector3d& n),(p,r,n))
++    N7_FWD(circle,(const AcGePoint3d& a,const AcGePoint3d& b,const AcGePoint3d& c),(a,b,c))
++    N7_FWD(circularArc,(const AcGePoint3d& a,const AcGePoint3d& b,const AcGePoint3d& c,AcGiArcType t),(a,b,c,t))
++    N7_FWD(polyPolyline,(Adesk::UInt32 n,const AcGiPolyline* p),(n,p))
++    N7_FWD(polygon,(Adesk::UInt32 n,const AcGePoint3d* p),(n,p))
++    N7_FWD(polyPolygon,(Adesk::UInt32 n,const Adesk::UInt32* a,const AcGePoint3d* b,const Adesk::UInt32* c,const AcGePoint3d* d,const AcCmEntityColor* e,const AcGiLineType* f,const AcCmEntityColor* h,const AcCmTransparency* i),(n,a,b,c,d,e,f,h,i))
++    N7_FWD(mesh,(Adesk::UInt32 a,Adesk::UInt32 b,const AcGePoint3d* c,const AcGiEdgeData* d,const AcGiFaceData* e,const AcGiVertexData* f,bool h),(a,b,c,d,e,f,h))
++    N7_FWD(shell,(Adesk::UInt32 a,const AcGePoint3d* b,Adesk::UInt32 c,const Adesk::Int32* d,const AcGiEdgeData* e,const AcGiFaceData* f,const AcGiVertexData* h,const resbuf* i,bool j),(a,b,c,d,e,f,h,i,j))
++    N7_FWD(xline,(const AcGePoint3d& a,const AcGePoint3d& b),(a,b))
++    N7_FWD(ray,(const AcGePoint3d& a,const AcGePoint3d& b),(a,b))
++    N7_FWD(pline,(const AcDbPolyline& a,Adesk::UInt32 b,Adesk::UInt32 c),(a,b,c))
++    N7_FWD(image,(const AcGiImageBGRA32& a,const AcGePoint3d& b,const AcGeVector3d& c,const AcGeVector3d& d,AcGiGeometry::TransparencyMode t),(a,b,c,d,t))
++    N7_FWD(rowOfDots,(int a,const AcGePoint3d& b,const AcGeVector3d& c),(a,b,c))
++    N7_FWD(ellipticalArc,(const AcGePoint3d& a,const AcGeVector3d& b,double c,double d,double e,double f,double h,AcGiArcType t),(a,b,c,d,e,f,h,t))
++    N7_FWD(polypoint,(Adesk::UInt32 a,const AcGePoint3d* b,const AcGeVector3d* c,const Adesk::LongPtr* d),(a,b,c,d))
++    N7_FWD(ownerDraw,(AcGiGdiDrawObject* a,const AcGePoint3d& b,const AcGeVector3d& c,const AcGeVector3d& d),(a,b,c,d))
++    N7_FWD(edge,(const AcArray<AcGeCurve2d*>& e),(e))
++#undef N7_FWD
++    Adesk::Boolean draw(AcGiDrawable* d) const override {
++        require(d,"null child drawable");const auto* entity=AcDbEntity::cast(d);
++        require(!entity||!entity->database()||entity->database()==s.target,"child draw references protected external database");
++        s.emit(g,"draw",{{"class",quote(std::wstring(d->isA()->name()))},{"persistent",d->isPersistent()?"true":"false"}});
++        s.authorizedTransient.push_back(d);struct Pop {Session& state;~Pop(){state.authorizedTransient.pop_back();}} pop{s};
++        return g.draw(d);
++    }
++    Adesk::Boolean worldLine(const AcGePoint3d p[2]) override {s.points(g,"worldLine",2,p);return g.worldLine(p);}
++    Adesk::Boolean pushClipBoundary(AcGiClipBoundary* c) override {require(c,"null clip");std::vector<std::string> p;require(c->m_aptPoints.length()<100000,"clip budget");for(int i=0;i<c->m_aptPoints.length();++i)p.push_back(array({number(c->m_aptPoints[i].x),number(c->m_aptPoints[i].y)}));s.emit(g,"pushClip",{{"points",array(p)},{"toClipSpace",mat(c->m_xToClipSpace)},{"inverseBlock",mat(c->m_xInverseBlockRefXForm)},{"clipAppliedToCollectedPrimitives","false"}});return g.pushClipBoundary(c);}
++    void popClipBoundary() override {s.emit(g,"popClip");g.popClipBoundary();}
++protected: Base& g;Session& s;
++};
++class WorldGeometry final:public GeometryForward<AcGiWorldGeometry> {
++public: using GeometryForward::GeometryForward;
++    void setExtents(AcGePoint3d* p) const override {s.emit(g,"setExtentsNotGlyph");g.setExtents(p);}
++    void startAttributesSegment() override {s.emit(g,"startAttributesSegment");g.startAttributesSegment();}
++};
++class ViewportGeometry final:public GeometryForward<AcGiViewportGeometry> {
++public:using GeometryForward::GeometryForward;
++#define N7_VIEW(name) Adesk::Boolean name(Adesk::UInt32 n,const AcGePoint3d* p) const override {s.points(g,#name,n,p);return g.name(n,p);}
++    N7_VIEW(polylineEye) N7_VIEW(polygonEye) N7_VIEW(polylineDc) N7_VIEW(polygonDc)
++#undef N7_VIEW
++    Adesk::Boolean rasterImageDc(const AcGePoint3d& a,const AcGeVector3d& b,const AcGeVector3d& c,const AcGeMatrix2d& d,AcDbObjectId e,AcGiImageOrg f,Adesk::UInt32 h,Adesk::UInt32 i,Adesk::Int16 j,Adesk::Boolean k,ImageSource l,const AcGeVector3d& m,AcGiImageOrg n,const AcGeMatrix2d& o,Adesk::UInt32 p,Adesk::UInt32 r) const override {s.emit(g,"rasterImageDc");return g.rasterImageDc(a,b,c,d,e,f,h,i,j,k,l,m,n,o,p,r);}
++    Adesk::Boolean ownerDrawDc(Adesk::Int32 a,Adesk::Int32 b,Adesk::Int32 c,Adesk::Int32 d,Adesk::Int32 e,const OwnerDraw* f) const override {s.emit(g,"ownerDrawDc");return g.ownerDrawDc(a,b,c,d,e,f);}
++    Adesk::Boolean ownerDraw3d(AcGePoint3d& a,AcGePoint3d& b,OwnerDraw3d* c) const override {s.emit(g,"ownerDraw3d");return g.ownerDraw3d(a,b,c);}
++};
++template<class Base,class Geo>class DrawForward:public Base {
++public:
++    DrawForward(Base& d,Session& s):host(d),geometry_(d.geometry(),s){}
++    AcGiRegenType regenType() const override{return host.regenType();}
++    Adesk::Boolean regenAbort() const override{return host.regenAbort();}
++    AcGiSubEntityTraits& subEntityTraits() const override{return host.subEntityTraits();}
++    AcGiGeometry* rawGeometry() const override{return &geometry_;}
++    Adesk::Boolean isDragging() const override{return host.isDragging();}
++    double deviation(AcGiDeviationType t,const AcGePoint3d& p) const override{return host.deviation(t,p);}
++    Adesk::UInt32 numberOfIsolines() const override{return host.numberOfIsolines();}
++    AcGiContext* context() override{return host.context();}
++    bool secondaryCall() const override{return host.secondaryCall();}
++    Geo& geometry() const override{return geometry_;}
++protected:Base& host;mutable Geo geometry_;
++};
++using WorldDraw=DrawForward<AcGiWorldDraw,WorldGeometry>;
++class ViewportDraw final:public DrawForward<AcGiViewportDraw,ViewportGeometry> {
++public:using DrawForward::DrawForward;
++    AcGiViewport& viewport() const override{return host.viewport();}
++    Adesk::UInt32 sequenceNumber() const override{return host.sequenceNumber();}
++    Adesk::Boolean isValidId(Adesk::ULongPtr id) const override{return host.isValidId(id);}
++    AcDbObjectId viewportObjectId() const override{return host.viewportObjectId();}
++};
+--- stub/ViewportProbe.cpp
++++ candidate/ViewportProbe.cpp
+@@ -6,12 +6,27 @@
+ namespace {
+ using namespace bce::native;
+ HMODULE module{};
++Config pendingConfig;
++std::unique_ptr<Evidence> pendingEvidence;
++void failPending(const std::string& reason) noexcept {
++    bce::viewport::cleanup();
++    if(pendingEvidence){try{pendingEvidence->error(reason);pendingEvidence->finish(pendingConfig,"failed");}catch(...){}}
++    pendingEvidence.reset();
++}
++void prepareRun() noexcept {
++    try {
++        require(!pendingEvidence,"N7 prepare already active");
++        pendingConfig=load_config(module);pendingEvidence=std::make_unique<Evidence>(pendingConfig);
++        pendingEvidence->checkpoint("validate-N7-identity");validate_identity(pendingConfig);
++        require(pendingConfig.caseName==L"PublicGraphicsViewport","unsupported N7 case");
++        bce::viewport::prepare(pendingConfig,*pendingEvidence);
++    } catch(const std::exception& ex){failPending(ex.what());}catch(...){failPending("unknown prepare failure");}
++}
+ void run() noexcept {
+-    Config config;std::unique_ptr<Evidence> evidence;
++    if(!pendingEvidence)return;
++    auto& config=pendingConfig;auto& evidence=pendingEvidence;
+     try {
+-        config=load_config(module);evidence=std::make_unique<Evidence>(config);
+-        evidence->checkpoint("validate-N7-identity");validate_identity(config);
+-        require(config.caseName==L"PublicGraphicsViewport","unsupported N7 case");
++        validate_identity(config);
+         const auto result=bce::viewport::capture(config,*evidence);
+         unsigned failed{};
+         auto check=[&](bool value,const std::string& name){evidence->step(name,value?"passed":"failed",value?"observed":"required observation missing");if(!value){++failed;evidence->error(name);}};
+@@ -24,22 +39,23 @@
+             const auto& sample=result.samples[i];const auto prefix="sample-"+std::to_string(i)+"-";
+             check(sample.worldCalls+sample.viewportCalls>0,prefix+"actual-host-draw");
+             check(sample.hostContext&&sample.contextCalls>0,prefix+"real-host-context");
+-            check(sample.forwarded==sample.worldCalls+sample.viewportCalls,prefix+"original-draw-forwarded");
++            check(sample.worldCalls+sample.viewportCalls>0&&sample.forwarded==sample.worldCalls+sample.viewportCalls,prefix+"original-draw-forwarded");
+             check(sample.stable,prefix+"two-regens-stable");
+             if(i<7){const auto value=bce::graphics::validateControl(i,sample.observation);check(value.valuesMatch,prefix+"fixed-control-values");}
+             else check(sample.viewportCalls>0&&sample.hostViewport&&sample.finiteViewport,prefix+"real-finite-viewport");
+         }
+         check(sha256(config.reference)==config.referenceSHA256&&sha256(config.scheme)==config.schemeSHA256,"source-disk-sha-unchanged");
+-        auto report=create_new(config.output+L"\\graphics-viewport.json");
+-        write_flushed(report.get(),object({{"contract",quote(std::string("bce.graphics-viewport.v1"))},{"status",quote(std::string(failed?"failed":"partial"))},{"failedAssertions",std::to_string(failed)},{"glyphComplete","false"},{"capabilityUpgradeAllowed","false"},{"records",array(result.records)}}));
++        {auto report=create_new(config.output+L"\\graphics-viewport.json");
++        write_flushed(report.get(),object({{"contract",quote(std::string("bce.graphics-viewport.v1"))},{"status",quote(std::string(failed?"failed":"partial"))},{"failedAssertions",std::to_string(failed)},{"glyphComplete","false"},{"capabilityUpgradeAllowed","false"},{"records",array(result.records)}}));}
+         evidence->capability(object({{"actualGlyphCoverage","false"},{"mtextLayoutVerified","false"},{"clipAppliedToCollectedPrimitives","false"},{"trueTypeBackendVerified","false"}}));
+         evidence->finish(config,failed?"failed":"partial");
+-    } catch(const std::exception& ex){if(evidence){try{evidence->error(ex.what());evidence->finish(config,"failed");}catch(...){}}}
+-    catch(...){if(evidence){try{evidence->error("unknown N7 failure");evidence->finish(config,"failed");}catch(...){}}}
++        require(bce::viewport::cleanup(),"N7 cleanup failed");evidence.reset();
++    } catch(const std::exception& ex){failPending(ex.what());}
++    catch(...){failPending("unknown N7 failure");}
+ }
+ }
+ extern "C" BOOL WINAPI DllMain(HINSTANCE instance,DWORD reason,LPVOID){if(reason==DLL_PROCESS_ATTACH){module=instance;DisableThreadLibraryCalls(instance);}return TRUE;}
+ extern "C" AcRx::AppRetCode acrxEntryPoint(AcRx::AppMsgCode message,void* id){
+-    if(message==AcRx::kInitAppMsg){acrxDynamicLinker->unlockApplication(id);acrxRegisterAppMDIAware(id);return acedRegCmds->addCommand(L"BCE_VIEWPORT_CASES",L"BCE_TEST_RUN",L"BCE_TEST_RUN",ACRX_CMD_MODAL,run)==Acad::eOk?AcRx::kRetOK:AcRx::kRetError;}
+-    if(message==AcRx::kUnloadAppMsg){if(!bce::viewport::cleanup())return AcRx::kRetError;return acedRegCmds->removeGroup(L"BCE_VIEWPORT_CASES")==Acad::eOk?AcRx::kRetOK:AcRx::kRetError;}return AcRx::kRetOK;
++    if(message==AcRx::kInitAppMsg){acrxDynamicLinker->unlockApplication(id);acrxRegisterAppMDIAware(id);if(acedRegCmds->addCommand(L"BCE_VIEWPORT_CASES",L"BCE_TEST_RUN",L"BCE_TEST_RUN",ACRX_CMD_MODAL,prepareRun)!=Acad::eOk)return AcRx::kRetError;return acedRegCmds->addCommand(L"BCE_VIEWPORT_CASES",L"BCE_VIEWPORT_CAPTURE",L"BCE_VIEWPORT_CAPTURE",ACRX_CMD_MODAL,run)==Acad::eOk?AcRx::kRetOK:AcRx::kRetError;}
++    if(message==AcRx::kUnloadAppMsg){if(pendingEvidence)failPending("unload before capture completion");if(!bce::viewport::cleanup())return AcRx::kRetError;return acedRegCmds->removeGroup(L"BCE_VIEWPORT_CASES")==Acad::eOk?AcRx::kRetOK:AcRx::kRetError;}return AcRx::kRetOK;
+ }
+--- stub/ViewportProbe.h
++++ candidate/ViewportProbe.h
+@@ -15,5 +15,6 @@
+     std::vector<std::string> records;
+ };
+ Result capture(const bce::native::Config&, bce::native::Evidence&);
++void prepare(const bce::native::Config&, bce::native::Evidence&);
+ bool cleanup() noexcept;
+ }
+--- stub/build_graphics_viewport.ps1
++++ candidate/build_graphics_viewport.ps1
+@@ -8,7 +8,7 @@
+ $receipt = [ordered]@{ contract='bce.graphics-viewport-build.v1'; label=$Label; startedUtc=[DateTime]::UtcNow.ToString('o'); compiledSourcesDirectory=$sourceRoot; sourceFiles=[ordered]@{}; inputOrigins=@(); binary=$null; binarySHA256=$null; log=(Join-Path $buildRoot 'build.log'); exitCode=1; toolchain='AutoCAD2020 SDK23.1 / v141 14.16.27023 / x64 / C++17' }
+ $exitResult = 1
+ try {
+-    $inputs = @('tests/native/NativeEvidence.h','tests/native/NativeEvidence.cpp','tests/native/graphics-viewport/ViewportProbe.h','tests/native/graphics-viewport/ViewportProbe.cpp','tests/native/graphics-viewport/ViewportCapture.cpp','tests/native/graphics-viewport/GraphicsPolicy.h','tests/native/graphics-viewport/GraphicsControlPolicy.h','tests/native/graphics-viewport/ElevationViewportCases.vcxproj')
++    $inputs = @('tests/native/NativeEvidence.h','tests/native/NativeEvidence.cpp','tests/native/graphics-viewport/provenance.json','tests/native/graphics-viewport/prepare-ready.schema.json','tests/native/graphics-viewport/ViewportFixtures.h','tests/native/graphics-viewport/ViewportForward.h','tests/native/graphics-viewport/ViewportProbe.h','tests/native/graphics-viewport/ViewportProbe.cpp','tests/native/graphics-viewport/ViewportCapture.cpp','tests/native/graphics-viewport/GraphicsPolicy.h','tests/native/graphics-viewport/GraphicsControlPolicy.h','tests/native/graphics-viewport/ElevationViewportCases.vcxproj')
+     foreach ($relative in $inputs) {
+         $source = Join-Path $projectRoot $relative
+         $destination = Join-Path $sourceRoot (Split-Path $relative -Leaf)
+@@ -16,6 +16,10 @@
+         $digest = (Get-FileHash -LiteralPath $destination -Algorithm SHA256).Hash
+         $receipt.sourceFiles[$destination] = $digest
+         $receipt.inputOrigins += [ordered]@{ origin=$source; compiledCopy=$destination; sha256=$digest }
++    }
++    $receipt.officialContracts = @()
++    foreach ($doc in Get-ChildItem -LiteralPath (Join-Path $projectRoot 'tests/native/graphics-viewport/sdk-public-contracts') -File) {
++        $receipt.officialContracts += [ordered]@{ path=$doc.FullName; sha256=(Get-FileHash -LiteralPath $doc.FullName).Hash }
+     }
+     Copy-Item -LiteralPath $PSCommandPath -Destination (Join-Path $buildRoot 'build_graphics_viewport.ps1')
+     $receipt.sourceFiles[(Join-Path $buildRoot 'build_graphics_viewport.ps1')] = (Get-FileHash -LiteralPath (Join-Path $buildRoot 'build_graphics_viewport.ps1') -Algorithm SHA256).Hash

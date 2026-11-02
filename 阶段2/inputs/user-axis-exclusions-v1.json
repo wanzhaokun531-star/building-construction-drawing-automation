@@ -1,0 +1,20 @@
+{
+  "contract": "bcp.user-axis-decisions.v1",
+  "sourceSHA256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+  "path": "D:\\Codex\\建筑施工图自动化\\阶段2\\inputs\\user-axis-exclusions-v1.tsv",
+  "SHA256": "FC9BDE50EBAE61B94F8BB53B03B81CD1BB21B4D8AD8671CBBE9B1BBD22B27718",
+  "decisions": [
+    {
+      "marker": "Q1",
+      "handle": "CD9A",
+      "separateAxis": false
+    },
+    {
+      "marker": "Q6",
+      "handle": "CFB9",
+      "separateAxis": false
+    }
+  ],
+  "authorization": "2026-10-30 user explicitly confirmed both belong to local short wall/door pier/courtyard construction categories that do not get separate axes",
+  "subtypeNotInferred": true
+}

@@ -1,0 +1,102 @@
+﻿{
+    "Version":  "23.1s (LMS Tech)",
+    "Documents":  [
+                      {
+                          "Name":  "FY50-ALXS-2026-004 株洲市荷塘区仙庚岭陈府_t20V8.dwg",
+                          "FullName":  "D:\\资料\\FY50-ALXS-2026-004 株洲市荷塘区仙庚岭陈府_t20V8.dwg",
+                          "ReadOnly":  true,
+                          "INSUNITS":  0,
+                          "MEASUREMENT":  0,
+                          "LUNITS":  2,
+                          "DIMSCALE":  100
+                      },
+                      {
+                          "Name":  "施工图平面参考图.dwg",
+                          "FullName":  "D:\\cad插件\\施工图平面参考图.dwg",
+                          "ReadOnly":  false,
+                          "INSUNITS":  0,
+                          "MEASUREMENT":  0,
+                          "LUNITS":  2,
+                          "DIMSCALE":  100
+                      },
+                      {
+                          "Name":  "FY50-ALXS-2026-002株洲芦淞区袁总.dwg",
+                          "FullName":  "D:\\资料\\FY50-ALXS-2026-002株洲芦淞区袁总.dwg",
+                          "ReadOnly":  true,
+                          "INSUNITS":  0,
+                          "MEASUREMENT":  0,
+                          "LUNITS":  2,
+                          "DIMSCALE":  100
+                      },
+                      {
+                          "Name":  "资料.dwg",
+                          "FullName":  "D:\\资料.dwg",
+                          "ReadOnly":  false,
+                          "INSUNITS":  0,
+                          "MEASUREMENT":  0,
+                          "LUNITS":  2,
+                          "DIMSCALE":  100
+                      },
+                      {
+                          "Name":  "host-control.dwg",
+                          "FullName":  "D:\\Codex\\建筑施工图图框、图签\\phase0\\runs\\native-20261028-082436-664\\host-control.dwg",
+                          "ReadOnly":  false,
+                          "INSUNITS":  0,
+                          "MEASUREMENT":  0,
+                          "LUNITS":  2,
+                          "DIMSCALE":  100
+                      }
+                  ],
+    "KnownSamples":  [
+                         {
+                             "Source":  "方案",
+                             "Handle":  "CD84",
+                             "ObjectName":  "TDbOpening",
+                             "Width":  2400,
+                             "Height":  1500,
+                             "StartPoint":  null,
+                             "EndPoint":  null,
+                             "WallWidth":  null,
+                             "Scale":  100,
+                             "Text":  null,
+                             "Measurement":  null,
+                             "Length":  null,
+                             "BoundsMin":  [
+                                               29711.890259173058,
+                                               18441.263551952805,
+                                               0
+                                           ],
+                             "BoundsMax":  [
+                                               32111.890259173058,
+                                               18641.263551952819,
+                                               0
+                                           ]
+                         },
+                         {
+                             "Source":  "参考",
+                             "Handle":  "19A0",
+                             "ObjectName":  "TDbDimension2",
+                             "Width":  null,
+                             "Height":  null,
+                             "StartPoint":  null,
+                             "EndPoint":  null,
+                             "WallWidth":  null,
+                             "Scale":  100,
+                             "Text":  null,
+                             "Measurement":  null,
+                             "Length":  null,
+                             "BoundsMin":  [
+                                               34811.381329972763,
+                                               13609.780327367873,
+                                               0
+                                           ],
+                             "BoundsMax":  [
+                                               53351.381329986965,
+                                               16359.780327368338,
+                                               0
+                                           ]
+                         }
+                     ],
+    "Quiescent":  true,
+    "ReadOnlyQuery":  true
+}

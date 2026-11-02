@@ -1,0 +1,64 @@
+{
+  "contract": "bcp.legacy-generated-publishers-retired.v2",
+  "activePublisher": "publish_perimeter_axes.py",
+  "gatedBeforeCopy": true,
+  "entries": [
+    {
+      "name": "publish_axis_sides.py",
+      "beforeSHA256": "183F3BEFC71B66ED164A0D5BCEFF40CF028F1A431F5C871C0DF59A9C97A33C34",
+      "afterSHA256": "EF922E4B129A4F538BD4219BF0CEF88D4E2536B2B10A005386B165497D5270D0",
+      "archive": "阶段2\\revisions\\retired-publishers-before-perimeter-v25\\publish_axis_sides.py",
+      "executionRejected": true,
+      "importRejected": true
+    },
+    {
+      "name": "publish_confirmed_gap.py",
+      "beforeSHA256": "64F6E8031E142A628F53DB74EE97B66B4A363EF8E8F9AC8BE4B64DF7B5CE15BF",
+      "afterSHA256": "EF922E4B129A4F538BD4219BF0CEF88D4E2536B2B10A005386B165497D5270D0",
+      "archive": "阶段2\\revisions\\retired-publishers-before-perimeter-v25\\publish_confirmed_gap.py",
+      "executionRejected": true,
+      "importRejected": true
+    },
+    {
+      "name": "publish_grid_intermediate.py",
+      "beforeSHA256": "ABED2992492B5A57FE2980F83BBA930C660381C6F4AA434CF8CFE44C8F785DBA",
+      "afterSHA256": "EF922E4B129A4F538BD4219BF0CEF88D4E2536B2B10A005386B165497D5270D0",
+      "archive": "阶段2\\revisions\\retired-publishers-before-perimeter-v25\\publish_grid_intermediate.py",
+      "executionRejected": true,
+      "importRejected": true
+    },
+    {
+      "name": "publish_outer_priority.py",
+      "beforeSHA256": "31BD5B1F3518BC5889D373A40BF5967977AE3D0B242B023A0F610FF6DC1B05C9",
+      "afterSHA256": "EF922E4B129A4F538BD4219BF0CEF88D4E2536B2B10A005386B165497D5270D0",
+      "archive": "阶段2\\revisions\\retired-publishers-before-perimeter-v25\\publish_outer_priority.py",
+      "executionRejected": true,
+      "importRejected": true
+    },
+    {
+      "name": "publish_side_dimensions.py",
+      "beforeSHA256": "F75F857FF6844AC2B74A0040A008325995F48149EDF5F947577A29D4B85D789D",
+      "afterSHA256": "EF922E4B129A4F538BD4219BF0CEF88D4E2536B2B10A005386B165497D5270D0",
+      "archive": "阶段2\\revisions\\retired-publishers-before-perimeter-v25\\publish_side_dimensions.py",
+      "executionRejected": true,
+      "importRejected": true
+    },
+    {
+      "name": "publish_spacing_trial.py",
+      "beforeSHA256": "0B4698CAEF49A22BCC864CCA5691F311934FE6572F677B8E95F607C41514851D",
+      "afterSHA256": "EF922E4B129A4F538BD4219BF0CEF88D4E2536B2B10A005386B165497D5270D0",
+      "archive": "阶段2\\revisions\\retired-publishers-before-perimeter-v25\\publish_spacing_trial.py",
+      "executionRejected": true,
+      "importRejected": true
+    },
+    {
+      "name": "publish_axis_facade_fix.py",
+      "beforeSHA256": "96212D1ED72536B77342B6F77BF1283F07263FA70F8B8DB3C4A3DEADF8880F9B",
+      "afterSHA256": "EF922E4B129A4F538BD4219BF0CEF88D4E2536B2B10A005386B165497D5270D0",
+      "archive": "阶段2\\revisions\\retired-publishers-before-perimeter-v25\\publish_axis_facade_fix.py",
+      "executionRejected": true,
+      "importRejected": true
+    }
+  ],
+  "analysisOnlyPublisherUnchanged": true
+}

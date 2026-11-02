@@ -1,0 +1,28 @@
+{
+  "contract": "bcp.readonly-entry-failure-diagnosis.v1",
+  "recorded": "2026-11-01T10:19:43.762421",
+  "userRequested": "先查找原因",
+  "pluginCodeChanged": false,
+  "installedFilesChanged": false,
+  "CADInputSent": false,
+  "reportedText": "慳敶琠敨映湩污穩摥椠灮瑵搠慲楷杮映物瑳",
+  "decodedASCII": "save the finalized input drawing first",
+  "failedGuard": "doc && doc->isNamedDrawing() && doc->fileName() && fs::is_regular_file(doc->fileName())",
+  "guardFile": "插件/src/ProductRuntime.inc",
+  "guardLine": 98,
+  "subcondition": "unknown until failing document state/path is supplied",
+  "phase": "before DBMOD check, output selection, productStart or drawing generation",
+  "errorRendering": {
+    "format": "acutPrintf wide format %hs with std::string::c_str()",
+    "evidence": "Reported Unicode UTF16-LE bytes exactly reproduce the ASCII error; mismatched output character handling"
+  },
+  "loadedModule": {
+    "path": "C:/Users/PC/AppData/Roaming/Autodesk/ApplicationPlugins/BuildingPlan2020.bundle/Contents/Win64/BuildingPlanPlugin2020.arx",
+    "SHA256": "A13736594EB546C57FC7D5F7051AB2E917AC1BE67E5557C6E22FCADA800EB1C6",
+    "matchesReleasedV98": true
+  },
+  "SDKVerified": "ObjectARX2020 acdocman.h:183 declares bool isNamedDrawing()",
+  "validationGap": "prepare_native.py sets validationMode=1; productBuild takes productStart(testInput,testOutput) directly and skips production document preflight/file picker",
+  "currentWindowObservation": "Different read-only DWG title currently visible; do not infer it was the failing input",
+  "pending": "Asked user for exact DWG full path and extracted vs archive opening state; no answer yet"
+}

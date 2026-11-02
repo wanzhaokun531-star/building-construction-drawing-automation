@@ -1,0 +1,20 @@
+--- D:\Codex\建筑施工图自动化\立面插件\build\i2-20261101-215812-006-stub-red-current-context-trace-1c672f76\src\UnitConfigDriver.cpp
++++ D:\Codex\建筑施工图自动化\立面插件\build\i2-20261101-221338-563-stub-red-raw-log-metadata-only-fa7b68b5\src\UnitConfigDriver.cpp
+@@ -292,9 +292,16 @@
+ std::string report(){auto q=query();if(state->copy(&q,nullptr,0)!=2)return {};std::vector<char> v(static_cast<std::size_t>(q.requiredBytes));bce::native::require(state->copy(&q,v.data(),v.size())==0,"read-only report copy");return v.data();}
+ void analyze(){bce::native::require(acedCommandS(RTSTR,L"BCE_ANALYZE",RTNONE)==RTNORM,"ordinary analyze");}
+ void configInput(double scale){bce::native::require(acedCommandS(RTSTR,L"BCE_CONFIG",RTREAL,scale,RTNONE)==RTNORM,"ordinary configure numeric input");}
++// BEGIN RAW_TRANSCRIPT_METADATA: raw AutoCAD bytes never enter JSON strings.
++std::string rawTranscriptEvidence(const std::wstring& path) {
++ using namespace bce::native;
++ return object({{"ordinaryTranscript",quote(path)}, {"SHA256",quote(sha256(path))},
++   {"encoding",quote(std::string("raw AutoCAD log bytes; not decoded; retained at path"))}});
++}
++// END RAW_TRANSCRIPT_METADATA
+ void finish(){
+  using namespace bce::native;if(terminal){trace("duplicate-finish-ignored");return;}auto& s=*state;trace("finish-begin");s.watch.reset();s.undo.reset();
+- if(s.transcript){const auto body=s.transcript->stop();s.evidence->capability(object({{"ordinaryTranscript",quote(s.transcript->file())},{"SHA256",quote(sha256(s.transcript->file()))},{"output",quote(body)}}));s.transcript.reset();}
++ if(s.transcript){s.transcript->stop();s.evidence->capability(rawTranscriptEvidence(s.transcript->file()));s.transcript.reset();}
+  if(s.loaded){const bool unloaded=acrxDynamicLinker->unloadModule(s.product.c_str(),true);s.loaded=!unloaded;expect("FourCommandsUnloadOwnedOnly",unloaded&&!acedRegCmds->lookupGlobalCmd(L"BCE_CONFIG")&&!acedRegCmds->lookupGlobalCmd(L"BCE_ANALYZE")&&!acedRegCmds->lookupGlobalCmd(L"BCE_INFO")&&!acedRegCmds->lookupGlobalCmd(L"BCE_ISSUES"),"SDK unload four command callbacks");}
+  expect("FrozenSourcesUnchanged",sha256(s.config.scheme)==s.config.schemeSHA256&&sha256(s.config.reference)==s.config.referenceSHA256,"source/reference hash readback; supervisor checks six sources");
+  s.evidence->finish(s.config,s.pass?"passed":"failed");

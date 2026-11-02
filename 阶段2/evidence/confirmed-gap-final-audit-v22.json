@@ -1,0 +1,68 @@
+{
+  "contract": "bcp.confirmed-gap-final-audit.v1",
+  "deliveryManifestFilesVerified": 11,
+  "businessSourceFilesVerified": 13,
+  "businessARXSHA256": "7E1D1065761F5678B2446EF0B93B77F8FED9F9A303B9B7CF5152911A386E401E",
+  "diagnosticARXSHA256": "F90C8F5B4B066F03B7CE192402EEF2870E1DED46B67BBA3FF9FB3A67D8101F39",
+  "validators": {
+    "verify_autorun.py": "7F745A762033FE03D50F476EDCF0F59C8148EBCDB8D261D3B16814C26F1F1520",
+    "run_preview.py": "23CBEBDB40621EB7A01195BEFFF43945FD2AED5EB5CAB403F9FE76FA534D520D",
+    "verify_confirmed_gap.py": "30EECE8EC81D48DF86AFADFEB8FA58663CD863672EB9FFC8EAC4B29AC5FC44EE",
+    "publish_confirmed_gap.py": "A5B1C4BF99EB9ADB2905F8DB3694F2990BC6D02EFE83AEC5A09250C8EB3CFAB7",
+    "close_host.py": "6421507E972E2D1B8812C15CF9E33F88DFD62485A405FD692C08849247DFECBE"
+  },
+  "witnessStart": 1000,
+  "dimensionPositions": [
+    2000,
+    2800,
+    3600
+  ],
+  "nativeTchAxes": 20,
+  "nativeTchDimensions": 28,
+  "axisContainers": 20,
+  "dimensionContainers": 28,
+  "modelRoots": 265,
+  "snapshotsUnchanged": 6,
+  "sharedRegistrations": [
+    2,
+    2
+  ],
+  "closures": [
+    {
+      "suffix": "-v19",
+      "ownHostGone": true,
+      "stagingRemoved": true,
+      "ownWindowShow": 0,
+      "ownForeground": 0,
+      "exitCode": 70
+    },
+    {
+      "suffix": "-v20",
+      "ownHostGone": true,
+      "stagingRemoved": true,
+      "ownWindowShow": 0,
+      "ownForeground": 0,
+      "exitCode": 70
+    },
+    {
+      "suffix": "-v21",
+      "ownHostGone": true,
+      "stagingRemoved": true,
+      "ownWindowShow": 0,
+      "ownForeground": 0,
+      "exitCode": 70
+    },
+    {
+      "suffix": "-v22",
+      "ownHostGone": true,
+      "stagingRemoved": true,
+      "ownWindowShow": 0,
+      "ownForeground": 0,
+      "exitCode": 70
+    }
+  ],
+  "threeRowsComplete": false,
+  "directTchEditingValidated": false,
+  "normalQuitPassed": false,
+  "stage2Complete": false
+}

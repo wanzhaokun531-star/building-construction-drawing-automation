@@ -1,0 +1,88 @@
+{
+  "contract": "bcp.product-opened-preview.v1",
+  "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-085104",
+  "nonce": "602c295ce3904597b49f35e4b288ce8e",
+  "processId": 620,
+  "job": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-product-20261101-085243",
+  "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-085104\\插件生成施工图.dwg",
+  "sourceSHA256": "7E425C3E1B9F3CF456218F5B87B1855FF9ED93399205DC517066FC1898F306FD",
+  "steps": [
+    {
+      "serial": "4bfc9fb5c1474d37b4f200b11830b095",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-085104\\dispatch_4bfc9fb5c1474d37b4f200b11830b095.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "602c295ce3904597b49f35e4b288ce8e",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-085104",
+        "processId": 620,
+        "desktop": "CodexS1_602c295ce3904597b49f35e4b288ce8e",
+        "inputDesktop": "Default",
+        "serial": "4bfc9fb5c1474d37b4f200b11830b095",
+        "command": "S1OPENPROBECONTROL",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-product-20261101-085243",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-product-20261101-085243\\control.dwg",
+        "error": null
+      }
+    },
+    {
+      "serial": "c8721b7e10aa4abaa9d6399313402808",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-085104\\dispatch_c8721b7e10aa4abaa9d6399313402808.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "602c295ce3904597b49f35e4b288ce8e",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-085104",
+        "processId": 620,
+        "desktop": "CodexS1_602c295ce3904597b49f35e4b288ce8e",
+        "inputDesktop": "Default",
+        "serial": "c8721b7e10aa4abaa9d6399313402808",
+        "command": "S1PHASE2EXECUTE",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-product-20261101-085243",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-product-20261101-085243\\control.dwg",
+        "error": null
+      }
+    },
+    {
+      "serial": "5884a89a819941589b95e4a4dce1fae5",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-085104\\dispatch_5884a89a819941589b95e4a4dce1fae5.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "602c295ce3904597b49f35e4b288ce8e",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-085104",
+        "processId": 620,
+        "desktop": "CodexS1_602c295ce3904597b49f35e4b288ce8e",
+        "inputDesktop": "Default",
+        "serial": "5884a89a819941589b95e4a4dce1fae5",
+        "command": "S1PHASE2PREVIEW",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-product-20261101-085243",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-product-20261101-085243\\control.dwg",
+        "error": null
+      }
+    }
+  ],
+  "error": null,
+  "PDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-product-20261101-085243\\stage2-A2-1-100.pdf",
+  "PDFSHA256": "777B9D34F94293AA95D1BF0115134F8AB9631168C6DCB7AB0EA5D20D0A4EC858",
+  "nativeReportSHA256": "CF0FAA8AF17616122C5A4A70B241723DBE390FE7AF5B696069B117B0047F56E2",
+  "controlSHA256": "7E425C3E1B9F3CF456218F5B87B1855FF9ED93399205DC517066FC1898F306FD"
+}

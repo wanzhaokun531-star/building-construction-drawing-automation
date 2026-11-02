@@ -1,0 +1,18 @@
+{
+  "contract": "bcp.perimeter-full-axes.final-audit.v1",
+  "recorded": "2026-10-30T22:15:05.471867+08:00",
+  "passed": true,
+  "deliveryFilesVerified": 14,
+  "secondRowCSVRows": 21,
+  "logicalAxisCSVRows": 20,
+  "candidateARXSHA256": "ADF7D214FA030A49596BC0581BF7C4E9EC6CE25853DD028385EE796724075B15",
+  "DWGSHA256": "EFA3334FA5EC67579BD35223164808DC5CBC933481B30D25DDA654EB67A6F9E6",
+  "PDFSHA256": "0655CBAA1850240C9A444ABF3FE0CEA7112441FCD5D097080705DFBA64E39530",
+  "sourceFilesVerified": 14,
+  "legacyPublicationRoutesBlocked": 7,
+  "sessionsStoppedAndStagingCleaned": 2,
+  "snapshotsUnchanged": 6,
+  "sharedCPRegistrationsRemain2": true,
+  "independentReview": "No findings",
+  "constructionDrawingComplete": false
+}

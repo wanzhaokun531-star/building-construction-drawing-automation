@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>acedSSGetFirst</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+<link rel="stylesheet" type="text/css" href="default_plus.css" media="screen, projection, tv " />
+<script language=javascript src="arxref.js"></script>
+<script language=javascript src="ac_common.js"></script>
+<script language=javascript src="ac.acad_ak.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="ObjectARX_Reference_Guide.html">ObjectARX Reference Guide</a> &gt; <a href="Global_Functions.html">Global Functions</a> &gt; <a href="AcEd_Global_Functions.html">AcEd Global Functions</a> &gt; <a href="acedSSGetFirst@struct_resbuf__@struct_resbuf__.html">acedSSGetFirst Function</a></div>
+<div class="Element92">
+<div class="Element5">
+acedSSGetFirst</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<div class="Element58">
+<a name="432B2B"></a><div class="Element99">
+C++</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #871F78">int</span></strong> <strong><span style="color: #660000">acedSSGetFirst</span></strong>(
+    <strong><span style="color: #871F78">struct</span></strong> resbuf** <strong><span style="color: #660000">gset</span></strong>, 
+    <strong><span style="color: #871F78">struct</span></strong> resbuf** <strong><span style="color: #660000">pset</span></strong>
+);</pre></div></div>
+<a name="46696C65"></a><div class="Element14">
+File</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+acedads.h</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element252">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element240" valign="top" width="50%">
+<div class="Element241">
+Parameters&nbsp;</div></td><td class="Element244" valign="top" width="50%">
+<div class="Element245">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+gset&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Ignored; always returns null; clients can reduce internal memory usage, and avoid a balancing call to the acedSSFree() function, by passing a null pointer through this parameter&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+pset&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Points to a result buffer containing a selection set that consists of all the objects selected (while AutoCAD is at the command prompt), or null if no objects are selected&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="4465736372697074696F6E"></a><div class="Element14">
+Description</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+Determines which objects are selected and gripped.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><div class="Element15">
+Note</div>
+<p class="Element10">
+The <span class="Element146">addCommand()</span> optional flags <span class="Element146">ACRX_CMD_USEPICKSET</span> and <span class="Element146">ACRX_CMD_REDRAW</span><i>must</i> be used in order for <span class="Element146">acedSSGetFirst()</span> to work.&nbsp;</p>
+<p class="Element10">
+<strong>Note </strong>Only entities from the current drawing's model space and paper space, not nongraphical objects or entities in other block definitions, can be analyzed by this function.&nbsp;</p>
+<p class="Element10">
+<span class="Element146">acedSSGetFirst()</span> returns <span class="Element146">RTNORM</span> or <span class="Element146">RTREJ</span>.&nbsp;</p>
+<p class="Element10">
+<strong>Warning </strong>To avoid a memory leak in the program, be sure that the contents of <span class="Element146">gset</span> and <span class="Element146">pset</span> do not point to resbufs before calling <span class="Element146">acedSSGetFirst()</span>.&nbsp;</p>
+<p class="Element10">
+Call <span class="Element146">acedSSFree()</span> to deallocate memory allocated for the returned selection sets. Call <span class="Element146">acutRelRb()</span> to deallocate memory allocated for the resbufs. You must release the allocated selection set after you are finished with processing the selection. If you fail to do this the selection set will be kept on the stack until AutoCAD terminates. Since AutoCAD can only hold 128 application-based selection sets per session, the unreleased selection sets can result in failed object selections through ObjectARX.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<table class=FooterTable width=100%><tr valign=top>
+<td>&nbsp;</td>
+<td align=right>&nbsp;<span class="CommentsLink" onclick="doComments();" title="Click here to send a comment about this topic.">Comments?</span>&nbsp;</td>
+</tr></table>
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

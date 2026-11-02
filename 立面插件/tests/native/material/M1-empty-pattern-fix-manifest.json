@@ -1,0 +1,23 @@
+{
+  "baseline": "\u7acb\u9762\u63d2\u4ef6\\build\\m1-20261101-213127-738-diagnostic-size-position-acceptance-red-b8b64ec3",
+  "candidate": "\u7acb\u9762\u63d2\u4ef6\\build\\m1-20261101-213801-020-reject-empty-pattern-explicit-partial-e7508e99",
+  "files": [
+    {
+      "name": "NativeMaterials.cpp",
+      "before": "31AEF9D88439E19B20334899F05A7008C8F6729553F145B27D91CCE101EC3E8E",
+      "after": "4DFE186B7A76828D31DB900AFD089F38E73ED73209AF55D428E8FA9F166C4469"
+    },
+    {
+      "name": "MaterialDriver.cpp",
+      "before": "725C701433E1A38D8962657B7669F67AAFCA9968F7C6527F6658DA8612B24599",
+      "after": "3FFAC5FCBD7A571DD172AD5D63C79B2EF7073FD0896AF187AF1460913D1286E4"
+    },
+    {
+      "name": "MaterialFixtures.h",
+      "before": "27849A85716DD0D93E2E649FAEFF6C829406D990BDCEDEBB93248905730FC64E",
+      "after": "F1D19C859D47960261F5F5BB5514FF06BE1CC4566A1DB2CFF80ED448885F563F"
+    }
+  ],
+  "wholeWallCapability": "BLOCKED_CAPABILITY",
+  "nativeStatus": "awaiting-controller"
+}

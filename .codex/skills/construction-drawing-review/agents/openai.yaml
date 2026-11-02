@@ -1,0 +1,4 @@
+interface:
+  display_name: "建筑结构施工图校审"
+  short_description: "可选仅错漏碰缺、结构计算复核或综合校审，交付证据合并PDF与覆盖台账"
+  default_prompt: "使用 $construction-drawing-review 校审本项目建筑结构图；范围未明确时先让我选择仅错漏碰缺、结构计算复核或综合校审，输出带证据的合并PDF和覆盖台账。"

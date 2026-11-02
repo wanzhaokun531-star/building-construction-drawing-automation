@@ -1,0 +1,19 @@
+Title:           模型
+Creator:         AutoCAD 2020 - 简体中文 (Simplified Chinese) 2020 (23.1s (LMS Tech))
+Producer:        pdfplot15.hdi 15.01.047.000
+CreationDate:    Sat Oct 31 00:16:11 2026 �й���׼ʱ��
+ModDate:         Sat Oct 31 00:16:11 2026 �й���׼ʱ��
+Custom Metadata: no
+Metadata Stream: no
+Tagged:          no
+UserProperties:  no
+Suspects:        no
+Form:            none
+JavaScript:      no
+Pages:           1
+Encrypted:       no
+Page size:       1191 x 842 pts (A3)
+Page rot:        0
+File size:       0 bytes
+Optimized:       no
+PDF version:     1.7

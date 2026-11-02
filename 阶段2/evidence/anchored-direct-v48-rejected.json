@@ -1,0 +1,6 @@
+{
+  "candidate": "v48",
+  "nativeError": "failure: public direct witness control unresolved: rootIsAcDbDimension=0 originalExo=300 scale=1 grip6delta=-700 exo=300 endpoints=1 grip6delta=700 exo=300 endpoints=1",
+  "DWGProduced": false,
+  "observations": "root is not AcDbDimension; grip6 +/-700 keeps endpoints but does not change dimexo300"
+}

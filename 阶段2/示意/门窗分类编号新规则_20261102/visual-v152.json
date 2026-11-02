@@ -1,0 +1,27 @@
+{
+  "version": "v152",
+  "reviewed": true,
+  "scope": "Actual full native floor PNGs plus door, DK and note crops; not whole drawing collision acceptance",
+  "images": {
+    "dk-floor1-v152.png": "E6B8D854DB29AFFDCF1DA104F277CE8997BF2507D302A0BEABC326A5D228390C",
+    "dk-floor2-v152.png": "B6A721B0C804DF3D46D2683FB155E39AD5C7EAA2CD5A00A9860D44B1F271647F",
+    "floor-1-v152.png": "17048CB1D20DBFC170BD5CD0002AAA3C3F6D498E6E3EB08EA653D9D173A19D60",
+    "floor-2-v152.png": "F60C69AB1ED6718B289F7B0700174DF05D430CCD42D4CF57E527F1A922355D28",
+    "note-floor1-v152.png": "6422C9996038F422DA184DC2BE2962ADA373B5C8D4BD4602EB04995F7E10B32D",
+    "note-floor2-v152.png": "31167ED208DBC9BBF87D97572B06969591ADC581CFF6CA411C20C29349ACAE99",
+    "stair-entry-floor1-v152.png": "7C506B969679EF10BBD1498B7A2B553494C70B021C500862EA8278B574484042",
+    "stair-entry-floor2-v152.png": "A2A90B39EA00044925B0E96AB342FF128DECC3BA237DA19E66F8A287556BA6AB"
+  },
+  "observations": [
+    "40 stored native numbers and exact category suffixes verified by saved-DWG SDK LIST",
+    "Both full plans, LC/LM/FMD labels and native notes viewed",
+    "Two DK0918 labels remain at original side and original positions by explicit user direction, pending layout; nearby room-area/cabinet conflict remains",
+    "FMD stair-entry labels moved only within default side; floor2 long code still approaches/crosses the stair landing graphic at its upper end, retained for sample review; not a zero-collision claim",
+    "Legacy waterbar text/fixtures and dense annotations retain earlier review limits"
+  ],
+  "pendingPositions": [
+    "F1:81E4/DK0918",
+    "F2:81EC/DK0918",
+    "F2:81C1/FMD0927 stair landing proximity"
+  ]
+}

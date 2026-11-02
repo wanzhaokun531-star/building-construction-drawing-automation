@@ -1,0 +1,6 @@
+{
+  "candidate": "v50",
+  "nativeError": "failure: open native layout object for write",
+  "DWGProduced": false,
+  "scope": "raster module registered, subsequent object write-open rejected; precise diagnostics added"
+}

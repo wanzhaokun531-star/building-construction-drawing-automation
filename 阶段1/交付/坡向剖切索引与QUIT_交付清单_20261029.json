@@ -1,0 +1,206 @@
+{
+  "contract": "stage1.symbol-quit-delivery.v1",
+  "recorded": "2026-10-29T15:56:11.682769+08:00",
+  "closure": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\坡向剖切索引与QUIT_终核_20261029-155349-934871.json",
+    "SHA256": "469DBE6E41505C1A70CB8031F14146224D5E6D480461B91C95706DF4B0B3A32E"
+  },
+  "phase2Started": false,
+  "phase1FullAcceptance": false,
+  "artifacts": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\方案图副本_坡向原生能力验证_20261029.dwg",
+      "SHA256": "480774905382F74E5748F39F253B292FE6379A07C4F818AD8C09C5B1E706D45B"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\坡向原生能力诊断_20261029.pdf",
+      "SHA256": "BC7400FA26BCA097F707DD001A0E03AE226CBFDCAC7080C518930882543801F7"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\方案图副本_剖切原生能力验证_20261029.dwg",
+      "SHA256": "3F271D1DA5255FBEA1AD47CA42CB3ECCBF0C33C64EF3AE87D98E4250AE885FBC"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\剖切原生能力诊断_20261029.pdf",
+      "SHA256": "C28C7A6B84A76A5DFB7C9C9BA5CA6F05C6E6C4B87D1A308D961E697E560E4429"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\方案图副本_指向索引原生能力验证_20261029.dwg",
+      "SHA256": "6DE45B7CA5C333A274052AA7E07372CFB1E64202B11F2D946515F377000A53FA"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\指向索引原生能力诊断_20261029.pdf",
+      "SHA256": "274DF7A2F1F660AF0155E37120D7EF9D40BE92A37C42BB480EDE604C86CE50A2"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\方案图副本_剖切索引原生能力验证_20261029.dwg",
+      "SHA256": "E5202CF7043E785304156919594B2D37EAFCB53EBF73E4360AA905EC549F4DBE"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\剖切索引原生能力诊断_20261029.pdf",
+      "SHA256": "D24CF895BE0A6273874535FE5C6A3F7A182ABE1A39D7A54D296BB3BA6B910CE6"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\坡向剖切详图索引与正常退出验证报告_20261029.md",
+      "SHA256": "A5598600E39A7FC374C6874216DD59BB02B5B5E9B6E5C302522A6EA4EDB06E6E"
+    }
+  ],
+  "cases": [
+    {
+      "kind": "slope",
+      "drawing": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\方案图副本_坡向原生能力验证_20261029.dwg",
+        "SHA256": "480774905382F74E5748F39F253B292FE6379A07C4F818AD8C09C5B1E706D45B"
+      },
+      "diagnosticPDF": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\坡向原生能力诊断_20261029.pdf",
+        "SHA256": "BC7400FA26BCA097F707DD001A0E03AE226CBFDCAC7080C518930882543801F7"
+      },
+      "native": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-slope-20261029-154346-195615\\symbol-business-native.json",
+        "SHA256": "033E1FA6E9AA065A613605BEA36E0508C299348C81EFA8FF0BE92480A1881556"
+      },
+      "business": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-slope-20261029-154346-195615\\verify_symbol_business_native-closure-20261029-155349-934871.txt",
+        "SHA256": "2B51A9986FEC0CD8128432008A8322A783ACBBE7A322CFFE69BB154554034644",
+        "assertions": 73,
+        "passed": 73,
+        "failed": 0,
+        "result": "PASS_NATIVE_SYMBOL_TEXT_AND_PERSISTENCE"
+      },
+      "geometry": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-slope-20261029-154346-195615\\verify_symbol_geometry_native-closure-20261029-155349-934871.txt",
+        "SHA256": "C18CB47C557E031A6D6F431AAD0D3BDDC24F1351DF5B095C270BF848A22D8424",
+        "assertions": 15,
+        "passed": 15,
+        "failed": 0,
+        "result": "PASS_ACTUAL_PUBLIC_GEOMETRY_AND_WCS_INPUTS"
+      },
+      "preview": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-symbolpreview-20261029-154454-860589\\verify_symbol_preview_native-closure-20261029-155349-934871.txt",
+        "SHA256": "FAB0953B09C8C823140F22C78F875F19B3C45482CFED10BAB2872432B11033BE",
+        "assertions": 23,
+        "passed": 23,
+        "failed": 0,
+        "result": "PASS_NATIVE_SYMBOL_PREVIEW"
+      }
+    },
+    {
+      "kind": "section",
+      "drawing": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\方案图副本_剖切原生能力验证_20261029.dwg",
+        "SHA256": "3F271D1DA5255FBEA1AD47CA42CB3ECCBF0C33C64EF3AE87D98E4250AE885FBC"
+      },
+      "diagnosticPDF": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\剖切原生能力诊断_20261029.pdf",
+        "SHA256": "C28C7A6B84A76A5DFB7C9C9BA5CA6F05C6E6C4B87D1A308D961E697E560E4429"
+      },
+      "native": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-section-20261029-154435-453099\\symbol-business-native.json",
+        "SHA256": "3924C7875E221D3CB4AD6FA60C91D90D8D319AB390A6426AE2ECC46D35C9354F"
+      },
+      "business": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-section-20261029-154435-453099\\verify_symbol_business_native-closure-20261029-155349-934871.txt",
+        "SHA256": "6ABCD18ACDC981543AEDB21270652F769034DFDF71EE48E497614D614DBCEA0D",
+        "assertions": 75,
+        "passed": 75,
+        "failed": 0,
+        "result": "PASS_NATIVE_SYMBOL_TEXT_AND_PERSISTENCE"
+      },
+      "geometry": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-section-20261029-154435-453099\\verify_symbol_geometry_native-closure-20261029-155349-934871.txt",
+        "SHA256": "C18CB47C557E031A6D6F431AAD0D3BDDC24F1351DF5B095C270BF848A22D8424",
+        "assertions": 15,
+        "passed": 15,
+        "failed": 0,
+        "result": "PASS_ACTUAL_PUBLIC_GEOMETRY_AND_WCS_INPUTS"
+      },
+      "preview": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-symbolpreview-20261029-154500-028151\\verify_symbol_preview_native-closure-20261029-155349-934871.txt",
+        "SHA256": "6C550A6264984165584649D281A5AD69E5B7BFE52F0BAA7561FE596C357D0F86",
+        "assertions": 23,
+        "passed": 23,
+        "failed": 0,
+        "result": "PASS_NATIVE_SYMBOL_PREVIEW"
+      }
+    },
+    {
+      "kind": "pointer-index",
+      "drawing": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\方案图副本_指向索引原生能力验证_20261029.dwg",
+        "SHA256": "6DE45B7CA5C333A274052AA7E07372CFB1E64202B11F2D946515F377000A53FA"
+      },
+      "diagnosticPDF": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\指向索引原生能力诊断_20261029.pdf",
+        "SHA256": "274DF7A2F1F660AF0155E37120D7EF9D40BE92A37C42BB480EDE604C86CE50A2"
+      },
+      "native": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-pointerindex-20261029-154402-285592\\symbol-business-native.json",
+        "SHA256": "CE67105A78279DD5F75EA12ACD5F510B6D29FE3FEFF87D74075981E9C3C31F14"
+      },
+      "business": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-pointerindex-20261029-154402-285592\\verify_symbol_business_native-closure-20261029-155349-934871.txt",
+        "SHA256": "332D47144994990E584819FF0C4AFD20A4BEBEB40019B9F4065761C0BE68BCFE",
+        "assertions": 77,
+        "passed": 77,
+        "failed": 0,
+        "result": "PASS_NATIVE_SYMBOL_TEXT_AND_PERSISTENCE"
+      },
+      "geometry": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-pointerindex-20261029-154402-285592\\verify_symbol_geometry_native-closure-20261029-155349-934871.txt",
+        "SHA256": "E890A2105BA48909803F7556ED9DF547A9765B9256143BF26BBCECBB4D601F3F",
+        "assertions": 23,
+        "passed": 23,
+        "failed": 0,
+        "result": "PASS_ACTUAL_PUBLIC_GEOMETRY_AND_WCS_INPUTS"
+      },
+      "preview": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-symbolpreview-20261029-154456-582067\\verify_symbol_preview_native-closure-20261029-155349-934871.txt",
+        "SHA256": "C340D998F39D04F2A33F65A7ED08D0902CFFC2410A338472B1FA0FB382512700",
+        "assertions": 23,
+        "passed": 23,
+        "failed": 0,
+        "result": "PASS_NATIVE_SYMBOL_PREVIEW"
+      }
+    },
+    {
+      "kind": "section-index",
+      "drawing": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\方案图副本_剖切索引原生能力验证_20261029.dwg",
+        "SHA256": "E5202CF7043E785304156919594B2D37EAFCB53EBF73E4360AA905EC549F4DBE"
+      },
+      "diagnosticPDF": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\剖切索引原生能力诊断_20261029.pdf",
+        "SHA256": "D24CF895BE0A6273874535FE5C6A3F7A182ABE1A39D7A54D296BB3BA6B910CE6"
+      },
+      "native": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-sectionindex-20261029-154431-408405\\symbol-business-native.json",
+        "SHA256": "16A708BBFFF91BE05C949D8435D52F15A615C4F4AB8F834C1A8DBEF632DA3D0B"
+      },
+      "business": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-sectionindex-20261029-154431-408405\\verify_symbol_business_native-closure-20261029-155349-934871.txt",
+        "SHA256": "332D47144994990E584819FF0C4AFD20A4BEBEB40019B9F4065761C0BE68BCFE",
+        "assertions": 77,
+        "passed": 77,
+        "failed": 0,
+        "result": "PASS_NATIVE_SYMBOL_TEXT_AND_PERSISTENCE"
+      },
+      "geometry": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-sectionindex-20261029-154431-408405\\verify_symbol_geometry_native-closure-20261029-155349-934871.txt",
+        "SHA256": "A2ABA5C1BEE991B660F8AD894B818D90DCC34641AB22E0027C86B09BF34DCB3F",
+        "assertions": 27,
+        "passed": 27,
+        "failed": 0,
+        "result": "PASS_ACTUAL_PUBLIC_GEOMETRY_AND_WCS_INPUTS"
+      },
+      "preview": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-symbolpreview-20261029-154458-319779\\verify_symbol_preview_native-closure-20261029-155349-934871.txt",
+        "SHA256": "8D5CE60B12D3586DACF3036EC2E8A095E2AB1D3AA02F64C1F0ACE3C383E84531",
+        "assertions": 23,
+        "passed": 23,
+        "failed": 0,
+        "result": "PASS_NATIVE_SYMBOL_PREVIEW"
+      }
+    }
+  ]
+}

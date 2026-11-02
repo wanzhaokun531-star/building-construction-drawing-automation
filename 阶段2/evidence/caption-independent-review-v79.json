@@ -1,0 +1,52 @@
+{
+  "contract": "bcp.door-caption-independent-review.v1",
+  "recorded": "2026-10-31T19:21:46.417873+08:00",
+  "agent": "/root/door_caption_final_review",
+  "model": "gpt-6-astra",
+  "initialVerdict": "2 P2 findings; no demonstrated native layout/lifetime defect in v78",
+  "findings": [
+    {
+      "priority": "P2",
+      "title": "Bind source to native output and actual preview copy",
+      "status": "fixed",
+      "tests": [
+        "test_old_v74_cannot_use_new_report",
+        "test_native_output_hash_is_required",
+        "test_preview_source_must_be_same_dwg",
+        "test_preview_control_hash_is_required"
+      ]
+    },
+    {
+      "priority": "P2",
+      "title": "Independently check dimension glyphs and baseline",
+      "status": "fixed",
+      "tests": [
+        "test_door_number_on_dimension_text_rejected"
+      ],
+      "redEvidence": "D225 +475 actual preview/reported position mutation passed old gate, failed test observed before fix"
+    }
+  ],
+  "passed": true,
+  "postFixScope": "One fix pass by parent; native readonly font audit added and v79 rebuilt/retested; layout algorithm unchanged; all322 actual preview records and raster bytes identical to reviewer-inspected v78; 7 clearance +5 output binding +10 host gate tests passed. No second independent review claimed.",
+  "DWGSHA256": "D547386AC92768B0895EC67D07CA4E8E2FE30F7480EE07038DC88356C3BB533D",
+  "ARXSHA256": "09057C1336F817AF532F1D4A8D9807067AEC436F43786756A5834BAB414908AA",
+  "reviewedFiles": {
+    "../阶段1/原生接口探测/IsolatedCadHostNative.cs": "C63DB6CF6D95282C7C2612D3F92EF1526CC09ED95BE408DC158C16C4D554728D",
+    "../阶段1/原生接口探测/src/NativeStage2Bridge.inc": "5E084C18A16C7CFFC0B365C067DAE94266F00B13F99FDB352F3E2F7907126B2A",
+    "../阶段1/原生接口探测/启动隔离桌面宿主.ps1": "FB348F54AF4E8B34E74A2F08797D41496CA3D6C30A1B5D324117E90D748EA7FE",
+    "close_host.py": "B60270CDA915958BA62D616387766020F1D43D4A91554ECB5F2B9524811AD211",
+    "collect_caption_run.py": "D92ED6BD1C315DDF04BA92388D0FFC63850534DD808A3DA87FD52A7F1663521B",
+    "prepare_caption_host.py": "1B95E6022F1984C627259B6BE55D41D8DF15620EB2DC323424A9C4ADB6864DB5",
+    "preview_caption_clearance.py": "4661EA26988608114478A68752C9ED2E46FAD3FFEEAEBE1FC20A0F429DBDDCBE",
+    "publish_caption_clearance.py": "80EB4D2653122E0FD34D121F2D7969C43C911E7DDBBB3833090C1C8FDC9D80BD",
+    "publish_whole_chains.py": "33DF51522A1781CA981715ED201CB8BC3BF4CCD2B0BC77A5098E65C57A93F35D",
+    "release_host_checks.py": "0012780283B9E18A2DC59909127D2118FA9CEB4CDFB8F9242D10E86D14C80036",
+    "src/NativeDoorCaptionClearance.inc": "547FECDBD1692EDDD9F1735BB9AD8C27656FF994D057DF3B27921345C6E8A8CB",
+    "src/Stage2Arx.cpp": "D98A90049C9B9E6027C8F1A7B7DABB0121837A1B27A51E3083CC266B26E3119C",
+    "test_caption_clearance.py": "34BC094CDFB4F81335390C3B961C4793E3E2B09147B2371C9777392F95214ED3",
+    "test_caption_output_binding.py": "ED6537B6962283B12A5C2B405FE663EFA28266EE0F02CCE113FF522A98EAA067",
+    "test_whole_chain_publisher.py": "590664AC2053AF2A79E7C25D9192C02F6A9408E8A79E76756305E55D62A26C42",
+    "verify_door_caption_clearance.py": "6403CCB6303C624C46D023738D8262A7C575AAF55A7A5622CFCFE398CC1D5E84"
+  },
+  "normalQuitClaimed": false
+}

@@ -1,0 +1,17 @@
+{
+  "contract": "bcp.whole-chain-delivery.v1",
+  "recorded": "2026-10-31T18:29:22.247504+08:00",
+  "version": "v74",
+  "file": "D:\\Codex\\建筑施工图自动化\\阶段2\\交付\\整体连续天正尺寸_20261031\\方案施工图_整体连续天正尺寸.dwg",
+  "SHA256": "4CAEC8BAABCAA0CCFB04594A3A01796FE68BBA5CE85ED8A389699AD9A7C8D6DF",
+  "verification": {
+    "chains": 24,
+    "segments": 106,
+    "mergedOperations": 82,
+    "protectedRoots": 298,
+    "savedReopened": true
+  },
+  "reviewSHA256": "F8A937D9D00D3E4EE6613E39C868A17C3BA3C5A8563C72E766D437B6D857811D",
+  "closureSHA256": "393FC38091854420F9C41E1A1476150A32B40DFF57B2C05BDBAC492972FD4899",
+  "publisherSHA256": "2FF1222E3F3686A3EE5C859503F15B47DD4368A35BA71F83FA1F24E6C3590624"
+}

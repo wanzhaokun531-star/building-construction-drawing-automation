@@ -1,0 +1,179 @@
+{
+  "contract": "bcp.stage2.host-closure.v1",
+  "recorded": "2026-10-30T18:05:14.005091+08:00",
+  "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-175458",
+  "process": {
+    "ownProcessAlive": false,
+    "currentProcessSignaled": true
+  },
+  "finalPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-175458\\isolation-final.json",
+  "final": {
+    "contract": "stage1.isolated-host-final.v1",
+    "recorded": "2026-10-30T18:03:52.1589367+08:00",
+    "nonce": "2937dd06da664e61abc358ad54e38039",
+    "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-175458",
+    "workerCreated": true,
+    "processId": 35356,
+    "workerExited": true,
+    "workerExitCode": 70,
+    "readyIdentityConfirmed": true,
+    "nativeQuitConfirmed": false,
+    "forcedTermination": true,
+    "timedOut": false,
+    "desktopName": "CodexS1_2937dd06da664e61abc358ad54e38039",
+    "inputDesktopBefore": "Default",
+    "inputDesktopChanged": false,
+    "inputDesktopReadErrors": 0,
+    "monitorStartedBeforeWorker": true,
+    "monitorStarted": true,
+    "monitorStopped": true,
+    "monitorError": null,
+    "droppedEvents": 0,
+    "eventFileWritten": true,
+    "sampleCount": 1026,
+    "workerForegroundEvents": 0,
+    "workerUserDesktopShowEvents": 0,
+    "workerForegroundSamples": 0,
+    "relatedCadEvents": 352,
+    "relatedCadShowEvents": 40,
+    "relatedCadForegroundEvents": 10,
+    "relatedCadEventsNeedReview": true,
+    "desktopClosed": true,
+    "processHandlesClosed": true,
+    "switchDesktopCalled": false,
+    "userCadTouched": false,
+    "supervisorErrors": [],
+    "stillRunningOwnedWorker": false,
+    "closeOwnStartupTipsEnabled": true,
+    "startupTipActions": 1,
+    "startupTipPosts": 1,
+    "scope": "Observed supervisor/owned worker only; existing related CAD events retained for attribution review, not blamed automatically; drawing business correctness requires separate native evidence"
+  },
+  "files": [
+    {
+      "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexStage1Probe_2937dd06da664e61abc358ad54e38039\\S1Acad_2937dd06.arx",
+      "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-175458\\staging-final-archive\\S1Acad_2937dd06.arx",
+      "SHA256": "339DD390FF7656DC00B900712129F9AB36BA771007356478838B7DD86DFD2421",
+      "removed": true
+    },
+    {
+      "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexStage1Probe_2937dd06da664e61abc358ad54e38039\\S1Acad_2937dd06.ini",
+      "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-175458\\staging-final-archive\\S1Acad_2937dd06.ini",
+      "SHA256": "ED93814AC1883E8A71BEDC3DFE5394A927AF88FD61B0C9C40BEB70A074CC140F",
+      "removed": true
+    },
+    {
+      "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexStage1Probe_2937dd06da664e61abc358ad54e38039\\BCP2_2937dd06.arx",
+      "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-175458\\staging-final-archive\\BCP2_2937dd06.arx",
+      "SHA256": "0A2A56A4DCC20087E5FE280664EAA0D2C7C7D94A84C06CB65998855D11323F13",
+      "removed": true
+    },
+    {
+      "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexStage1Probe_2937dd06da664e61abc358ad54e38039\\BCP2_2937dd06.ini",
+      "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-175458\\staging-final-archive\\BCP2_2937dd06.ini",
+      "SHA256": "17DFB91A8007DE1E3402EA6FA22E43F25EE5E1BE3BD92AD2DAE9356F21CCA187",
+      "removed": true
+    }
+  ],
+  "stagingRemoved": true,
+  "inputs": [
+    {
+      "id": "S01",
+      "snapshot": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\方案平面图.dwg",
+        "SHA256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E"
+      },
+      "snapshotUnchanged": true,
+      "source": {
+        "path": "D:\\cad插件\\方案平面图.dwg",
+        "SHA256": "D92251DF0797EB9338FF9A1E94121FB24D81D72B597E8931413B7974712BE54F"
+      },
+      "sourceEqualsPriorObservation": true
+    },
+    {
+      "id": "S02",
+      "snapshot": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\施工图平面参考图.dwg",
+        "SHA256": "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27"
+      },
+      "snapshotUnchanged": true,
+      "source": {
+        "path": "D:\\cad插件\\施工图平面参考图.dwg",
+        "SHA256": "245CB01E3955ABB6CB9581436E0313C93B5A771C1983E318B0E2A61DD9C6E273"
+      },
+      "sourceEqualsPriorObservation": true
+    },
+    {
+      "id": "S03",
+      "snapshot": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\方案图对象属性.json",
+        "SHA256": "33B3953F3366F97F6CF11C5B5CCAA35C4F76A5FB98C4834E0758DC5C96160DFD"
+      },
+      "snapshotUnchanged": true,
+      "source": {
+        "path": "D:\\Codex\\建筑施工图自动化\\图纸读取\\方案图对象属性.json",
+        "SHA256": "33B3953F3366F97F6CF11C5B5CCAA35C4F76A5FB98C4834E0758DC5C96160DFD"
+      },
+      "sourceEqualsPriorObservation": true
+    },
+    {
+      "id": "S04",
+      "snapshot": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\参考图对象属性.json",
+        "SHA256": "7B5FFA455F700BEA353166D68910110798423B5054179FCECDD9644BF610B39E"
+      },
+      "snapshotUnchanged": true,
+      "source": {
+        "path": "D:\\Codex\\建筑施工图自动化\\图纸读取\\参考图对象属性.json",
+        "SHA256": "7B5FFA455F700BEA353166D68910110798423B5054179FCECDD9644BF610B39E"
+      },
+      "sourceEqualsPriorObservation": true
+    },
+    {
+      "id": "S05",
+      "snapshot": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\2026-10-28-建筑施工图平面自动化需求基线.md",
+        "SHA256": "5A8732C11344E18B9D5547AEDE9573E8C5FC638483411AECF7BD84B46A013517"
+      },
+      "snapshotUnchanged": true,
+      "source": {
+        "path": "D:\\Codex\\建筑施工图自动化\\docs\\superpowers\\specs\\2026-10-28-建筑施工图平面自动化需求基线.md",
+        "SHA256": "BA0B258EFE9ECDC737616EF71D9F3D60389D2E07310930E6D14D9175CF7CA493"
+      },
+      "sourceEqualsPriorObservation": false
+    },
+    {
+      "id": "S06",
+      "snapshot": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\2026-10-28-建筑施工图平面自动化分阶段实施方案.md",
+        "SHA256": "19871DAC839B57C05F7667CEAC266117EA6A7E6AE888FB3E8923B6671D5EFE74"
+      },
+      "snapshotUnchanged": true,
+      "source": {
+        "path": "D:\\Codex\\建筑施工图自动化\\docs\\superpowers\\plans\\2026-10-28-建筑施工图平面自动化分阶段实施方案.md",
+        "SHA256": "71389353420AF15B65D4BC3EB8C5212E5AF78C2935F2932E01399222E9F40CCE"
+      },
+      "sourceEqualsPriorObservation": false
+    }
+  ],
+  "sharedRegistrations": [
+    {
+      "name": "CP_ARX",
+      "LOADCTRLS": 2,
+      "registryType": 4,
+      "action": "read only"
+    },
+    {
+      "name": "CP_NET",
+      "LOADCTRLS": 2,
+      "registryType": 4,
+      "action": "read only"
+    }
+  ],
+  "phase2Started": true,
+  "stage2Complete": false,
+  "normalQuitPassed": false,
+  "exitAttempted": false,
+  "exitObservationSeconds": null,
+  "scope": "Exact own stop retained; absent exit attempt is not a normal-QUIT test; previous failures remain"
+}

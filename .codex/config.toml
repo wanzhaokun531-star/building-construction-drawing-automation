@@ -1,0 +1,7 @@
+# 项目配置：保留本机模型和推理偏好；本机路径见 backups 中的示例。
+model = "gpt-6.1-sol"
+model_reasoning_effort = "ultra"
+service_tier = "default"
+
+[windows]
+sandbox = "elevated"

@@ -1,0 +1,147 @@
+{
+  "contract": "bce.startup-message-diagnostic.v1",
+  "recordedUtc": "2026-11-01T11:47:12.476499+00:00",
+  "readResultFileUtc": "2026-11-01T11:46:26.336368+00:00",
+  "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-193620-63158db0",
+  "nonce": "63158db09c924710a6bbdda721992376",
+  "processId": 32276,
+  "initialThreadId": 17568,
+  "creationFileTime": "134380067080529029",
+  "expectedImage": "D:/CAD2020/AutoCAD 2020/acad.exe",
+  "expectedDesktop": "CodexS1_63158db09c924710a6bbdda721992376",
+  "facts": {
+    "freshProcessImageAndCreationTimeMatched": true,
+    "runningBeforeAndAfterRead": true,
+    "privateDesktopFreshEnumerated": true,
+    "expectedInitialThreadFoundOnPrivateDesktop": true,
+    "dialogHandle": 10362410,
+    "ownerHandle": 6561388,
+    "ownerPidMatched": true,
+    "title": "AutoCAD 消息",
+    "body": "获取自动更新出错：网络连接失败",
+    "bodyControlHwnd": 9969190,
+    "bodyControlClass": "Static",
+    "allReadWindowsPid": 32276,
+    "allReadWindowsThread": 17568,
+    "buttonTextReadOnly": "确定",
+    "buttonClicked": false,
+    "businessNativeReportPresent": false
+  },
+  "interpretation": {
+    "confirmedMessageMeaning": "A startup message reports an automatic-update retrieval error due to a network connection failure.",
+    "updateComponentIdentity": "unknown; message alone does not identify the originating module/service",
+    "networkRootCause": "unknown; no network access or configuration diagnosis was performed",
+    "licensingFailure": "not established; message does not say license or authorization failure",
+    "businessExecution": "not established; this read is a startup diagnostic, not a business test result"
+  },
+  "method": {
+    "API": [
+      "OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION|SYNCHRONIZE)",
+      "WaitForSingleObject(process,0)",
+      "QueryFullProcessImageNameW",
+      "GetProcessTimes",
+      "OpenDesktopW(DESKTOP_READOBJECTS|DESKTOP_ENUMERATE)",
+      "GetUserObjectInformationW(UOI_NAME)",
+      "EnumDesktopWindows",
+      "GetWindowThreadProcessId",
+      "GetClassNameW",
+      "GetWindow(GW_OWNER)",
+      "SetThreadDesktop(diagnostic-only std::thread, private desktop)",
+      "EnumChildWindows",
+      "IsChild",
+      "GetWindowTextW",
+      "GetWindowRect",
+      "GetDlgCtrlID",
+      "SetThreadDesktop(diagnostic-only std::thread, original desktop)"
+    ],
+    "explicitWindowMessagesSent": 0,
+    "inputInjected": false,
+    "buttonActivated": false,
+    "switchDesktopCalled": false,
+    "UIA_COM_CUA_OCRUsed": false,
+    "targetStopped": false,
+    "newCadStarted": false,
+    "settingsChanged": false,
+    "productLauncherOrBridgeModified": false,
+    "note": "SetThreadDesktop changes only the dedicated diagnostic thread association. It does not call SwitchDesktop or make the private desktop visible.",
+    "noExplicitWindowOrMessageQueueCreationAPI": true
+  },
+  "artifacts": {
+    "source": "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\diagnostics\\ReadOwnedStartupDialog.cpp",
+    "sourceSHA256": "F428984DD306DF8ACFC1EF2A42F413C6842D0D7C96EF3A8C6E7CAD4AA85FDE8D",
+    "compiledSourceMatches": true,
+    "binary": "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\diagnostics\\read-owned-startup-dialog-63158db0\\ReadOwnedStartupDialog.exe",
+    "binarySHA256": "734A1BBA1A14425A01B0CC9C50E1EDB2F5ED12E030AC0CC0F1185754BD313EA6",
+    "rawReadResult": "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\diagnostics\\read-owned-startup-dialog-63158db0\\read-result.json",
+    "rawReadSHA256": "2146DA0E731C382616A5358612F9EF3B9E1911467D9388AF99AE0AB987312A61",
+    "buildLog": "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\diagnostics\\read-owned-startup-dialog-63158db0\\build.log",
+    "buildExitCode": 0,
+    "readerExitCode": 0,
+    "buildNote": "Initial compile did not find Chinese absolute source path due to cmd codepage; copied source unchanged into the diagnostic build directory and compiled with relative ASCII filename. Initial attempt did not run any diagnostic or CAD operation."
+  },
+  "rawRead": {
+    "contract": "owned-startup-dialog-readonly.v1",
+    "status": "read",
+    "pid": 32276,
+    "creationFileTime": "134380067080529029",
+    "desktop": "CodexS1_63158db09c924710a6bbdda721992376",
+    "processIdentityBeforeAndAfter": true,
+    "dialogFreshlyEnumerated": true,
+    "explicitMessagesSent": 0,
+    "desktopSwitched": false,
+    "windows": [
+      {
+        "hwnd": 10362410,
+        "pid": 32276,
+        "thread": 17568,
+        "class": "#32770",
+        "getWindowText": "AutoCAD 消息",
+        "copiedChars": 10,
+        "lastError": 0,
+        "controlId": 0,
+        "rect": [
+          1137,
+          604,
+          1419,
+          798
+        ]
+      },
+      {
+        "hwnd": 9182760,
+        "pid": 32276,
+        "thread": 17568,
+        "class": "Button",
+        "getWindowText": "确定",
+        "copiedChars": 2,
+        "lastError": 0,
+        "controlId": 2,
+        "rect": [
+          1289,
+          738,
+          1389,
+          773
+        ]
+      },
+      {
+        "hwnd": 9969190,
+        "pid": 32276,
+        "thread": 17568,
+        "class": "Static",
+        "getWindowText": "获取自动更新出错：网络连接失败",
+        "copiedChars": 15,
+        "lastError": 0,
+        "controlId": 65535,
+        "rect": [
+          1159,
+          670,
+          1371,
+          693
+        ]
+      }
+    ]
+  },
+  "reference": {
+    "GetWindowTextW": "https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowtextw",
+    "limitation": "Microsoft notes that GetWindowText may not retrieve a custom control in another process. Here the concrete Static control returned its text with copiedChars=15 and lastError=0; no WM_GETTEXT fallback was used."
+  }
+}

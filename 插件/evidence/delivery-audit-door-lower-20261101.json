@@ -1,0 +1,31 @@
+{
+  "contract": "bcp.product-release-delivery-audit.v1",
+  "date": "2026-11-01",
+  "releaseVersion": "0.1.1",
+  "archiveSHA256": "B2E1CFE21E222F7938A0213D90E8E3564C34C80334D6D8AA910A8C74849D9A76",
+  "filesVerified": 56,
+  "zipVerified": true,
+  "PDFDelivered": false,
+  "oldReleaseUnchanged": true,
+  "testModeAbsent": true,
+  "summary": {
+    "modelRoots": 308,
+    "wholeNativeChains": 24,
+    "measuredSegments": 106,
+    "sharedNodeEdits": 82,
+    "doorCaptions": 14,
+    "openingCaptions": 27,
+    "apronAdded": 0,
+    "interiorLowerApplied": 6,
+    "interiorPlacementReview": 5,
+    "reviewedWallOverlaps": 1,
+    "doorSideConfirmations": 2,
+    "reviewedFurnitureOverlaps": 4,
+    "nativeAxisCarriers": 18,
+    "logicalGroups": 20,
+    "axisLines": 22,
+    "visibleEnds": 24
+  },
+  "moduleSHA256": "A13736594EB546C57FC7D5F7051AB2E917AC1BE67E5557C6E22FCADA800EB1C6",
+  "DWGSHA256": "DE5293DEB586923012F66C504AA115A13757D2231EE04F16538CE3DCC7F73A9C"
+}

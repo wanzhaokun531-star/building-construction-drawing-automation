@@ -1,0 +1,30 @@
+{
+  "contract": "bce.project-confirmation.v1",
+  "recorded": "2026-11-01T17:07:56.735797+08:00",
+  "schemePath": "D:/方案立面.dwg",
+  "schemeSHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1",
+  "units": {
+    "insunits": 0,
+    "confirmedMmPerInputUnit": 1.0,
+    "source": "User explicitly confirmed model 1 unit = 1 mm"
+  },
+  "zeroLevel": {
+    "rule": "first-floor actual datum associated with source label",
+    "sourceLabel": "一层平面图 +0 mm",
+    "elevationMetres": 0.0,
+    "confirmedByUser": true,
+    "worldDatumCoordinateVerified": true,
+    "evidence": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\current-project-datum-audit.json",
+    "evidenceSHA256": "041E35BF1AFA48DD636B294734539B5C79C5C964999D5B8A1238710CC02EDCFE",
+    "scope": "four source elevations; first-floor baseline only"
+  },
+  "plan": {
+    "path": null,
+    "status": "User currently has no matching plan; supply later; do not substitute other project"
+  },
+  "scope": {
+    "selectedRole": "elevations",
+    "sectionsExcluded": true,
+    "output": "current scheme document, preserve others, user saves normally"
+  }
+}

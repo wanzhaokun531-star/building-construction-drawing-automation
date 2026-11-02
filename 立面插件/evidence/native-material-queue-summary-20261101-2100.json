@@ -1,0 +1,358 @@
+{
+  "contract": "bce.native-material-queue-summary.v1",
+  "recorded": "2026-11-01T20:59:41.828209+08:00",
+  "scope": "Only authorized RED then GREEN NativeMaterialPreparation; no source changes or further experiments; exit70 StopOwnedWorker is not normal QUIT.",
+  "runs": [
+    {
+      "label": "RED",
+      "binding": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-110f4c40.json",
+      "bindingSHA256": "D49E64AF0CD52E7E96939E19FF2F6E0C9DBCEE31C2144E63F0BA413FD2B963AF",
+      "nonce": "110f4c40e7b04aa7ac1fc769add769e4",
+      "processId": 24788,
+      "initialThreadId": 29676,
+      "creationFileTime": "134380114266680801",
+      "creationUtc": "2026-11-01T12:57:06.6680801Z",
+      "candidateSHA256": "D376E081B8539871AF5166DFEE5E88E4082F32E5DC07D816080A672B7B620857",
+      "buildReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-204728-683-red-stub-80d8f1dd\\receipt.json",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-205701-110f4c40\\case\\native-case.json",
+      "nativeReportSHA256": "D8CF1FE7855FA2081C5B9CC02A857C24671A80E1C17DAD927A67CF22E0BB5733",
+      "status": "failed",
+      "stepCounts": {
+        "passed": 0,
+        "failed": 1,
+        "partial": 0
+      },
+      "steps": [
+        {
+          "name": "PrepareActualReferenceHatch",
+          "status": "failed",
+          "detailsFirst500": "NOT_IMPLEMENTED",
+          "actualFirst500": ""
+        }
+      ],
+      "errors": [],
+      "closure": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-205701-110f4c40\\native-result-closure.json",
+      "closureSHA256": "ED80ED8DD2CA6AF88762382FFBBF6588378B263B3D9ED8CB16107FC2E949AA3F",
+      "retirement": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-205701-110f4c40\\reader-retirement.json",
+      "retirementSHA256": "F94C35E268745D7851157BA6E9C2ABB09A16B3DA05D7B1D46A53F90ED02182E9",
+      "removedCount": 4,
+      "sixInputHashes": [
+        {
+          "role": "scheme",
+          "kind": "source",
+          "path": "D:\\方案立面.dwg",
+          "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+        },
+        {
+          "role": "scheme",
+          "kind": "snapshot",
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\立面需求只读-fdb4cb22\\方案立面.dwg",
+          "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+        },
+        {
+          "role": "scheme",
+          "kind": "inspectionCopy",
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-205701-110f4c40\\scheme-input.dwg",
+          "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+        },
+        {
+          "role": "reference",
+          "kind": "source",
+          "path": "D:\\建筑施工图立面图.dwg",
+          "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+        },
+        {
+          "role": "reference",
+          "kind": "snapshot",
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\立面需求只读-fdb4cb22\\建筑施工图立面图.dwg",
+          "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+        },
+        {
+          "role": "reference",
+          "kind": "inspectionCopy",
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-205701-110f4c40\\reference-input.dwg",
+          "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+        }
+      ],
+      "explicitStopHelperExitCode": 0,
+      "normalQuit": false,
+      "workerExitCode": 70,
+      "forcedTermination": true,
+      "workerUserDesktopShowEvents": 0,
+      "workerForegroundEvents": 0,
+      "inputDesktopReadErrors": 0,
+      "monitorError": null,
+      "droppedEvents": 0
+    },
+    {
+      "label": "GREEN",
+      "binding": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-64ce129c.json",
+      "bindingSHA256": "E5B610EF62F4F2F73CCEF12CAF878D564F92A2B0BD61117726D7F480C916FE94",
+      "nonce": "64ce129ce3e343cca7a642509a3d4197",
+      "processId": 35988,
+      "initialThreadId": 1336,
+      "creationFileTime": "134380115049138789",
+      "creationUtc": "2026-11-01T12:58:24.9138789Z",
+      "candidateSHA256": "ED557EDE8500BE8487653C2FDFBC2759FC6D0BC26D8140CD8D76B484257EC242",
+      "buildReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-205402-216-green-ready-0c10f7b4\\receipt.json",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-205817-64ce129c\\case\\native-case.json",
+      "nativeReportSHA256": "CF21E1BDDDAA98D6234133C54EC967BF3D012959D163368608480D201D75126A",
+      "status": "failed",
+      "stepCounts": {
+        "passed": 27,
+        "failed": 5,
+        "partial": 0
+      },
+      "steps": [
+        {
+          "name": "PrepareActualReferenceHatch",
+          "status": "passed",
+          "detailsFirst500": "actual native material batch",
+          "actualFirst500": ""
+        },
+        {
+          "name": "ImmutableBatchInitiallyIntact",
+          "status": "passed",
+          "detailsFirst500": "actual Hatch loops, patterns, appearance/resources and permanent mutation guard",
+          "actualFirst500": ""
+        },
+        {
+          "name": "TargetRootListIsOnlyHatch",
+          "status": "passed",
+          "detailsFirst500": "no cloned old boundary or reference building root",
+          "actualFirst500": ""
+        },
+        {
+          "name": "NativeAreaAndExactTwoLoops",
+          "status": "passed",
+          "detailsFirst500": "nativeArea=58200000",
+          "actualFirst500": ""
+        },
+        {
+          "name": "EvaluatedPatternSegmentsExcludeWindow",
+          "status": "failed",
+          "detailsFirst500": "native evaluated segments=0",
+          "actualFirst500": ""
+        },
+        {
+          "name": "ReferencePatternPhysicalExpression",
+          "status": "passed",
+          "detailsFirst500": "source pattern, angle, double, color, named layer/linetype dependency and spacing preserved",
+          "actualFirst500": ""
+        },
+        {
+          "name": "ExplicitPatternPhaseMapping",
+          "status": "failed",
+          "detailsFirst500": "origin=0,0",
+          "actualFirst500": ""
+        },
+        {
+          "name": "OnlyPreparedHatchClonesToEmpty",
+          "status": "passed",
+          "detailsFirst500": "root-list cloning excludes old source geometry",
+          "actualFirst500": ""
+        },
+        {
+          "name": "IndependentDwgReopen",
+          "status": "failed",
+          "detailsFirst500": "new test DWG reopened: exact class, 2 loops, area, phase, pattern and detached associations",
+          "actualFirst500": ""
+        },
+        {
+          "name": "NonintegerCoordinatesAndTranslation",
+          "status": "failed",
+          "detailsFirst500": "input vertices unchanged; phase anchor explicitly translated",
+          "actualFirst500": ""
+        },
+        {
+          "name": "PaperScale50ChangesPatternOnly",
+          "status": "passed",
+          "detailsFirst500": "1:100 to 1:50 halves physical pattern spacing; building loops unchanged",
+          "actualFirst500": ""
+        },
+        {
+          "name": "NonMmUnitsPreservePhysicalSpacing",
+          "status": "passed",
+          "detailsFirst500": "target vertices 10 x 6 metres, native area58.2, paper50 physical spacing",
+          "actualFirst500": ""
+        },
+        {
+          "name": "LineDrawingExplicitlyUnsupported",
+          "status": "passed",
+          "detailsFirst500": "fixture-front/wall: UNSUPPORTED_MATERIAL_EXPRESSION",
+          "actualFirst500": ""
+        },
+        {
+          "name": "GlassBlockExplicitlyUnsupported",
+          "status": "passed",
+          "detailsFirst500": "fixture-front/wall: UNSUPPORTED_MATERIAL_EXPRESSION",
+          "actualFirst500": ""
+        },
+        {
+          "name": "MissingSourceUnitFactRejected",
+          "status": "passed",
+          "detailsFirst500": "fixture-front/wall: REFERENCE_MATERIAL_FACTS_REQUIRED",
+          "actualFirst500": ""
+        },
+        {
+          "name": "WrongReferenceShaRejected",
+          "status": "passed",
+          "detailsFirst500": "fixture-front/wall: REFERENCE_SHA_MISMATCH",
+          "actualFirst500": ""
+        },
+        {
+          "name": "OpenRegionRejected",
+          "status": "passed",
+          "detailsFirst500": "fixture-front/wall: INVALID_MATERIAL_TOPOLOGY",
+          "actualFirst500": ""
+        },
+        {
+          "name": "SelfIntersectingRegionRejected",
+          "status": "passed",
+          "detailsFirst500": "fixture-front/wall: INVALID_MATERIAL_TOPOLOGY",
+          "actualFirst500": ""
+        },
+        {
+          "name": "InvalidHoleRejected",
+          "status": "passed",
+          "detailsFirst500": "fixture-front/wall: INVALID_MATERIAL_TOPOLOGY",
+          "actualFirst500": ""
+        },
+        {
+          "name": "ZeroPatternScaleRejected",
+          "status": "passed",
+          "detailsFirst500": "fixture-front/wall: MATERIAL_PROTOTYPE_REQUIRED",
+          "actualFirst500": ""
+        },
+        {
+          "name": "WrongPrototypeNativeTypeRejected",
+          "status": "passed",
+          "detailsFirst500": "fixture-front/wall: open:93",
+          "actualFirst500": ""
+        },
+        {
+          "name": "GradientExplicitlyUnsupported",
+          "status": "passed",
+          "detailsFirst500": "fixture-front/wall: REFERENCE_FILE_REQUIRED",
+          "actualFirst500": ""
+        },
+        {
+          "name": "GradientSourceUntouched",
+          "status": "passed",
+          "detailsFirst500": "unsupported expression read only",
+          "actualFirst500": ""
+        },
+        {
+          "name": "ExplicitDirectionRotatesPatternOnly",
+          "status": "failed",
+          "detailsFirst500": "90 degree pattern rotation retains target wall/window geometry",
+          "actualFirst500": ""
+        },
+        {
+          "name": "ModifiedPreparationRejected0",
+          "status": "passed",
+          "detailsFirst500": "loop/pattern/entity/layer mutation invalidates immutable native batch before copying",
+          "actualFirst500": ""
+        },
+        {
+          "name": "ModifiedPreparationRejected1",
+          "status": "passed",
+          "detailsFirst500": "loop/pattern/entity/layer mutation invalidates immutable native batch before copying",
+          "actualFirst500": ""
+        },
+        {
+          "name": "ModifiedPreparationRejected2",
+          "status": "passed",
+          "detailsFirst500": "loop/pattern/entity/layer mutation invalidates immutable native batch before copying",
+          "actualFirst500": ""
+        },
+        {
+          "name": "ModifiedPreparationRejected3",
+          "status": "passed",
+          "detailsFirst500": "loop/pattern/entity/layer mutation invalidates immutable native batch before copying",
+          "actualFirst500": ""
+        },
+        {
+          "name": "OriginalBatchStillIntact",
+          "status": "passed",
+          "detailsFirst500": "read and clone leave immutable original prepared expression unchanged",
+          "actualFirst500": ""
+        },
+        {
+          "name": "CurrentUnsavedChineseUnchanged",
+          "status": "passed",
+          "detailsFirst500": "current-memory Chinese fixture remains without saving current document",
+          "actualFirst500": ""
+        },
+        {
+          "name": "SourceAndAmbientZeroMutation",
+          "status": "passed",
+          "detailsFirst500": "source events=0 ambient events=0",
+          "actualFirst500": ""
+        },
+        {
+          "name": "GlobalsAndWorkingDatabaseRestored",
+          "status": "passed",
+          "detailsFirst500": "system variables, working DB pointer and current document restored after success/rejection",
+          "actualFirst500": ""
+        }
+      ],
+      "errors": [],
+      "closure": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-205817-64ce129c\\native-result-closure.json",
+      "closureSHA256": "4E1DBF57A049EDDEEF3ECA73501544AEF57352061DD54E65C251FAE3817C6FC1",
+      "retirement": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-205817-64ce129c\\reader-retirement.json",
+      "retirementSHA256": "092371A2DAAC6D7E236B1CF2DE995354B81B0C053FC16F79C244642A3EDEDB0E",
+      "removedCount": 4,
+      "sixInputHashes": [
+        {
+          "role": "scheme",
+          "kind": "source",
+          "path": "D:\\方案立面.dwg",
+          "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+        },
+        {
+          "role": "scheme",
+          "kind": "snapshot",
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\立面需求只读-fdb4cb22\\方案立面.dwg",
+          "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+        },
+        {
+          "role": "scheme",
+          "kind": "inspectionCopy",
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-205817-64ce129c\\scheme-input.dwg",
+          "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+        },
+        {
+          "role": "reference",
+          "kind": "source",
+          "path": "D:\\建筑施工图立面图.dwg",
+          "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+        },
+        {
+          "role": "reference",
+          "kind": "snapshot",
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\立面需求只读-fdb4cb22\\建筑施工图立面图.dwg",
+          "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+        },
+        {
+          "role": "reference",
+          "kind": "inspectionCopy",
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-205817-64ce129c\\reference-input.dwg",
+          "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+        }
+      ],
+      "explicitStopHelperExitCode": 0,
+      "normalQuit": false,
+      "workerExitCode": 70,
+      "forcedTermination": true,
+      "workerUserDesktopShowEvents": 0,
+      "workerForegroundEvents": 0,
+      "inputDesktopReadErrors": 0,
+      "monitorError": null,
+      "droppedEvents": 0
+    }
+  ],
+  "totalStagedFilesRetired": 8,
+  "allOwnedWorkersExited": true,
+  "allInputHashesPreserved": true
+}

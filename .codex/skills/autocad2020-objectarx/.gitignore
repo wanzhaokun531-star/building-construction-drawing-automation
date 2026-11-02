@@ -1,0 +1,8 @@
+# Local agent instructions, Codex settings and conversation attachments.
+.codex/
+.agents/
+.codex-plugin/
+AGENTS.md
+AGENTS.override.md
+codex-clipboard-*
+**/agents/openai.yaml

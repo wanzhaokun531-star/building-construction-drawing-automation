@@ -1,0 +1,52 @@
+{
+  "contract": "bce.i1-review.v1",
+  "status": "awaiting-native-green",
+  "ownedFiles": {
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\AnalysisCommands.h": "B60F9EDA3AE4E1C285E859577ADC346AE3FD13F1A6E76021158CE87DA3E7EC94",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\AnalysisCommands.cpp": "30839FB41B31EFE4EBED0222FB91DC6C616D98B28B4783CF1C2F714336183EDE",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\AnalysisCommandAbi.h": "6C36DEF164CF1D0A505F43236B5FB9507D0AD9A5C1A9BB4F728855814CA89197",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\ElevationArx.cpp": "BCFF1F37E4559C548DB266815FC54F9CEBAD0694C77927BF02D5A361738BF4AA",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\BuildingElevation2020.vcxproj": "C1082D563A51FF0F48ABEAB7F67D8FB38F3F30EA61E7D8D47EF86D76ACFD852B",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\command\\CommandDriver.cpp": "B52657B64849681778B68EA242F30BB7C17C86F104E5869F3668D29D82F61514",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\command\\ElevationCommandCases.vcxproj": "227708EDEC831BF3F0AC239DB5D428F0626889CCD06DA342C905D372B641C42C",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\build_commands.ps1": "C39CDE3A6A3874E3B8BD4D38496F2F13C2C3E6A98855379414C3F370FB5D9EE4",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\command_case_host.py": "2B785A32E297AB4C63371B7308E52B8CDC50C7F8AD1A4B6CE0EDB7E9C077B691",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\retire_command_staging.py": "45649A10E3AD42180BD6C501D62D77B5B1B99C2655A5B76B050B32AFA830C7C8",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\watch_command_case.py": "EEA26E6283C1E82E2D7F2E73DA0E3BDC4D6B493A35EC077CB50149161BD5574A"
+  },
+  "diff": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\command\\I1-review.diff",
+  "diffSHA256": "E214838E1700A295F9983049C106003D3CD35284BFA2E415F9022C0BDC0D9B58",
+  "greenReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i1-20261101-203305-773-current-memory-green-n4-n6-store-bound-3baf1146\\receipt.json",
+  "greenReceiptSHA256": "759D9CDA6B9D29B78E24EF365642BE442230BA5E799991043260AA8B252DF477",
+  "productSHA256": "98CA57FB051D9298332C069E3637A0B7F33731A364FC06A93C522DCFF892CC69",
+  "driverSHA256": "FFB5D5D3C2BB1F42B49EDBF0A6A74B703AC80A87C007CA2436FC04C51B4B9FA5",
+  "dependencies": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\receipt.json",
+      "SHA256": "70AFC5BA63D9D8431F76A8D51194E5F0C7BC0DF0B36609A59FEEDE5C71B68488",
+      "verifiedOwnedSources": 7
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\g2-20261101-193143-056-fix1-undo-reopen-green-candidate-3d68c479\\receipt.json",
+      "SHA256": "D3562019037590BF58B44C390579120C35EAE8DC6709057F9C663B9A8C4E516B",
+      "verifiedOwnedSources": 4
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n2-20261101-202438-658-n6-shared-reader-green-84664abf\\receipt.json",
+      "SHA256": "518C2B461E08922C67F0BCE572DE7199221C98651B3FEB55FAA70563EE81562D",
+      "verifiedOwnedSources": 2
+    }
+  ],
+  "redEvidence": {
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-202048-4f026a18\\case\\native-case.json": "0BCFF7AEFEF1E588A4DFDBFAD8E46A1C47FD74E5989B055D6BA8E19F0042A63C",
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-202048-4f026a18\\reader-retirement.json": "4A3337180FCAAC4C1200D29A8D4FE4F1D83B483C5B1F81F566FC0CDAB4C12106",
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-202048-4f026a18\\isolation-final.json": "7186D40698EFDAB9DA409E936B099EADE6878C8CC1E3C4E078BA8033D7C8EEF4",
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-202048-4f026a18\\native-result-closure.json": "A0CE687418B94021A90EC35310C6C57A225C134CFEC45E55FFF8B109E2B2DCFA"
+  },
+  "limits": [
+    "No CAD launched by implementation agent",
+    "I1 GREEN ordinary command and real document lifecycle await root native execution",
+    "N4 fix1 and N6 shared-reader native verification pending at build time",
+    "No installation/publication"
+  ]
+}

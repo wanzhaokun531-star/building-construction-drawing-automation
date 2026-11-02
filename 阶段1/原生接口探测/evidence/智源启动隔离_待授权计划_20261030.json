@@ -1,0 +1,37 @@
+{
+  "contract": "stage1.startup-registration-lease-plan.v1",
+  "approval": "DENIED by user; never applied",
+  "scope": "Only two HKCU application LOADCTRLS DWORDs,2→0 during one owned host startup,restore2 immediately when ready or on failure; existing CAD untouched, new CAD launched during this short interval may skip these two startup addins",
+  "rows": [
+    {
+      "application": "CP_ARX",
+      "valueName": "LOADCTRLS",
+      "before": 2,
+      "during": 0,
+      "restore": 2,
+      "loader": "C:\\SOW\\智源·云设计\\ARX_64\\23.1\\CPCore.arx",
+      "kind": 4,
+      "loaderSHA256": "178673A957E1F96552206E172E2C77B22E4FABA1A6BE01EA45C6BDE940BB35C0"
+    },
+    {
+      "application": "CP_NET",
+      "valueName": "LOADCTRLS",
+      "before": 2,
+      "during": 0,
+      "restore": 2,
+      "loader": "C:\\SOW\\智源·云设计\\NET40\\CP.CAD.dll",
+      "kind": 4,
+      "loaderSHA256": "AE3C22FEC9971FC6FA71D7829D120859E20DC0F49E176D1B3801F1A758BA6A30"
+    }
+  ],
+  "kept": [
+    "LOADER paths",
+    "all other application registrations",
+    "SECURELOAD1",
+    "user CAD processes",
+    "business and licensing data"
+  ],
+  "implementation": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\startup_registration_lease.py",
+  "implementationSHA256": "ADC92EAC5D3FAB070C80019C21FE01D5DE344D62737D4A23EA3039F339FEE061",
+  "decisionRecorded": "2026-10-30T12:49:04.748624+08:00"
+}

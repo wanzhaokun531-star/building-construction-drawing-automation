@@ -1,0 +1,6 @@
+{
+  "candidate": "v49",
+  "nativeError": "failure: native wipeout image definition",
+  "DWGProduced": false,
+  "scope": "Wipeout image definition preflight; no source drawing changed"
+}

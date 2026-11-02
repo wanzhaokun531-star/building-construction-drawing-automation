@@ -1,0 +1,33 @@
+test_bigfont_failure_is_not_exact_font_pass (__main__.PureNativeAcceptance.test_bigfont_failure_is_not_exact_font_pass) ... ok
+test_changed_original_is_rejected (__main__.PureNativeAcceptance.test_changed_original_is_rejected) ... ok
+test_complete_actual_entity_set_is_accepted (__main__.PureNativeAcceptance.test_complete_actual_entity_set_is_accepted) ... FAIL
+test_duplicate_native_sample_is_rejected (__main__.PureNativeAcceptance.test_duplicate_native_sample_is_rejected) ... ok
+test_exact_loaded_fonts_are_accepted (__main__.PureNativeAcceptance.test_exact_loaded_fonts_are_accepted) ... FAIL
+test_loaded_font_filename_change_is_not_exact (__main__.PureNativeAcceptance.test_loaded_font_filename_change_is_not_exact) ... ok
+test_missing_native_sample_is_rejected (__main__.PureNativeAcceptance.test_missing_native_sample_is_rejected) ... ok
+test_substitution_is_not_exact_font_pass (__main__.PureNativeAcceptance.test_substitution_is_not_exact_font_pass) ... ok
+test_unresolved_font_file_is_not_exact (__main__.PureNativeAcceptance.test_unresolved_font_file_is_not_exact) ... ok
+test_wrong_native_sample_type_is_rejected (__main__.PureNativeAcceptance.test_wrong_native_sample_type_is_rejected) ... ok
+
+======================================================================
+FAIL: test_complete_actual_entity_set_is_accepted (__main__.PureNativeAcceptance.test_complete_actual_entity_set_is_accepted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Codex\建筑施工图自动化\阶段1\tests\test_pure_native_continuation.py", line 17, in test_complete_actual_entity_set_is_accepted
+    def test_complete_actual_entity_set_is_accepted(self):self.assertTrue(complete_native_catalog(self.catalog()))
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_exact_loaded_fonts_are_accepted (__main__.PureNativeAcceptance.test_exact_loaded_fonts_are_accepted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Codex\建筑施工图自动化\阶段1\tests\test_pure_native_continuation.py", line 8, in test_exact_loaded_fonts_are_accepted
+    def test_exact_loaded_fonts_are_accepted(self):self.assertTrue(exact_font_loaded(self.font()))
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.000s
+
+FAILED (failures=2)

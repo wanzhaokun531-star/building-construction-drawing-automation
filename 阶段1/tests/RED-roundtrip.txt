@@ -1,0 +1,6 @@
+RED test: missing roundtrip result must fail
+Command: python verify_roundtrip.py not-yet-generated-roundtrip
+FAIL: roundtrip result file missing: D:\Codex\建筑施工图自动化\阶段1\tests\not-yet-generated-roundtrip\roundtrip.json
+assertions=1 passed=0 failed=1 result=FAIL
+
+ExitCode=1

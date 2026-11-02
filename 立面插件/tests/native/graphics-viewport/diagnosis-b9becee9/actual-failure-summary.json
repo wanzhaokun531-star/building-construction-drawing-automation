@@ -1,0 +1,17 @@
+{
+  "status": "failed",
+  "errors": [
+    "N7 prepare already active"
+  ],
+  "steps": [],
+  "checkpointCount": 2,
+  "eventKinds": {
+    "protectedDbGuard": 16,
+    "protectedDbPhaseBegin": 1,
+    "protectedDbEvent": 5408
+  },
+  "hostDrawObserved": false,
+  "sourceOfSecondPrepareCall": "not established from existing log",
+  "bootTestRunOccurrences": 1,
+  "diagnosticPurpose": "observe editor and command-stack events, actual handler addresses, prepare/capture entry counters, document events and queue return; preserve duplicate fail-fast"
+}

@@ -1,0 +1,600 @@
+--- /dev/null
++++ L1-final/src/Layout.h
+@@ -0,0 +1,89 @@
++#ifndef BCE_LAYOUT_H
++#define BCE_LAYOUT_H
++#include "WriteContracts.h"
++#include <cstddef>
++
++namespace bce {
++enum class OccupancyKind { architecture, textGlyph, symbol, dimensionGlyph, dimensionBaseline, materialTable };
++enum class OccupancyEvidence { unverified, nativeVerified, syntheticVerified };
++struct OccupancyPart { std::string identity; OccupancyKind kind{OccupancyKind::architecture}; };
++struct VisibleOccupancy {
++    OccupancyPart part;
++    Bounds2 bounds;
++    OccupancyEvidence evidence{OccupancyEvidence::unverified};
++    std::string source;
++    // Glyph-bearing parts must match the context, including the resolved font.
++    std::string fontSignature;
++    std::string glyphSignature;
++};
++struct LayoutContext {
++    double scaleDenominator{0};
++    double mmPerInputUnit{0};
++    std::string geometrySignature;
++    std::string fontSignature;
++    std::string glyphSignature;
++};
++struct ViewEnvelope {
++    std::string viewIdentity;
++    std::vector<EntityKey> targets;
++    // Reader/preparer declares the full visible-part inventory independently.
++    std::vector<OccupancyPart> requiredParts;
++    std::vector<VisibleOccupancy> occupancies;
++    bool complete{false};
++    std::string source;
++    LayoutContext context;
++};
++struct ViewExpectation { std::string viewIdentity; LayoutContext context; };
++struct FixedEnvelope {
++    std::string identity;
++    std::vector<EntityKey> targets;
++    std::vector<VisibleOccupancy> occupancies;
++    std::vector<OccupancyPart> requiredParts;
++    bool complete{false};
++    std::string source;
++    LayoutContext context;
++};
++struct LayoutRequest {
++    std::string databaseIdentity;
++    std::uint64_t revision{0};
++    Bounds2 available;
++    double clearance{0}; // Input drawing units, independently confirmed by caller.
++    std::vector<ViewExpectation> expectedViews;
++    std::vector<FixedEnvelope> fixed;
++    bool allowReorder{false}; // false preserves input order; true explores permutations.
++    std::size_t searchBudget{10000};
++};
++struct PlacedView {
++    std::string viewIdentity;
++    Point2 displacement; // The sole rigid translation for all parts and targets.
++    LayoutPlan plan;
++    Bounds2 occupiedBounds;
++    std::vector<VisibleOccupancy> occupancies;
++    LayoutContext context;
++    std::string source;
++    std::vector<OccupancyPart> requiredParts;
++    bool complete{false};
++};
++struct LayoutArrangement {
++    std::vector<PlacedView> views; // Returned in input order, even with reorder search.
++    Bounds2 occupiedBounds;
++    std::vector<FixedEnvelope> fixed; // Read-only evidence, never in translations.
++    bool nativeReady{false};
++    std::size_t searchedCandidates{0};
++    // Complete search only within positive-edge-anchor layouts: lower-left anchors
++    // are area.minimum or the right/top edge + clearance of fixed/earlier views.
++    std::string layoutFamily{"positive_edge_anchors_v1"};
++    Bounds2 available;
++    double clearance{0};
++    bool allowReorder{false};
++};
++struct CollisionPair { std::string first; std::string second; };
++struct OccupancyCollision { std::string first; std::string second; };
++[[nodiscard]] Result<std::vector<OccupancyCollision>> checkInternalCollisions(
++    const ViewEnvelope&, const std::vector<CollisionPair>&, double clearance);
++// Synthetic envelopes may yield a value, but LAYOUT_SYNTHETIC_ONLY blocks canCommit().
++// Supports <=16 views, <=256 fixed envelopes, <=10000 parts, budget <=1000000.
++[[nodiscard]] Result<LayoutArrangement> arrange(const std::vector<ViewEnvelope>&, const LayoutRequest&);
++[[nodiscard]] Result<double> paperSizeInInput(double paperMm, double scaleDenominator, double mmPerInputUnit);
++}
++#endif
+--- /dev/null
++++ L1-final/src/Layout.cpp
+@@ -0,0 +1,247 @@
++#include "Layout.h"
++#include <algorithm>
++#include <cmath>
++#include <limits>
++#include <map>
++#include <utility>
++
++namespace bce {
++namespace {
++template<class T> Result<T> failure(const std::string& code, const std::string& view = {}) {
++    return {std::nullopt, {{code,u8"排版输入、占位证据或搜索结果不满足约定，请按诊断核对。",{"",view,std::nullopt},true}}};
++}
++bool named(const std::string& s) { return !s.empty() && s.find('\0') == std::string::npos; }
++bool finite(double v) { return std::isfinite(v); }
++bool positive(double v) { return finite(v) && v > 0; }
++bool validBounds(const Bounds2& b) {
++    return finite(b.minimum.x) && finite(b.minimum.y) && finite(b.maximum.x) && finite(b.maximum.y) &&
++        b.minimum.x <= b.maximum.x && b.minimum.y <= b.maximum.y &&
++        finite(b.maximum.x-b.minimum.x) && finite(b.maximum.y-b.minimum.y);
++}
++bool validKind(OccupancyKind k) {
++    return k == OccupancyKind::architecture || k == OccupancyKind::textGlyph || k == OccupancyKind::symbol ||
++        k == OccupancyKind::dimensionGlyph || k == OccupancyKind::dimensionBaseline || k == OccupancyKind::materialTable;
++}
++bool glyphBearing(OccupancyKind k) {
++    return k == OccupancyKind::textGlyph || k == OccupancyKind::dimensionGlyph ||
++        k == OccupancyKind::symbol || k == OccupancyKind::materialTable;
++}
++bool validContext(const LayoutContext& c) {
++    return positive(c.scaleDenominator) && positive(c.mmPerInputUnit) && named(c.geometrySignature) &&
++        named(c.fontSignature) && named(c.glyphSignature);
++}
++bool sameContext(const LayoutContext& a, const LayoutContext& b) {
++    return a.scaleDenominator == b.scaleDenominator && a.mmPerInputUnit == b.mmPerInputUnit &&
++        a.geometrySignature == b.geometrySignature && a.fontSignature == b.fontSignature && a.glyphSignature == b.glyphSignature;
++}
++Bounds2 merged(const std::vector<VisibleOccupancy>& items) {
++    auto b = items.front().bounds;
++    for (const auto& item : items) {
++        b.minimum.x = std::min(b.minimum.x,item.bounds.minimum.x); b.minimum.y = std::min(b.minimum.y,item.bounds.minimum.y);
++        b.maximum.x = std::max(b.maximum.x,item.bounds.maximum.x); b.maximum.y = std::max(b.maximum.y,item.bounds.maximum.y);
++    }
++    return b;
++}
++std::string validateParts(const std::vector<OccupancyPart>& required, const std::vector<VisibleOccupancy>& items,
++    bool complete, const std::string& source, const LayoutContext& context, bool& nativeReady) {
++    if (!complete || !named(source) || required.empty() || required.size() != items.size()) { return "LAYOUT_OCCUPANCY_INCOMPLETE"; }
++    if (!validContext(context)) { return "INVALID_LAYOUT_GEOMETRY"; }
++    std::map<std::string,OccupancyKind> inventory;
++    for (const auto& part : required) {
++        if (!named(part.identity) || !validKind(part.kind) || !inventory.emplace(part.identity,part.kind).second) { return "LAYOUT_OCCUPANCY_INCOMPLETE"; }
++    }
++    for (const auto& item : items) {
++        const auto found = inventory.find(item.part.identity);
++        if (found == inventory.end() || found->second != item.part.kind || !named(item.source) ||
++            (item.evidence != OccupancyEvidence::nativeVerified && item.evidence != OccupancyEvidence::syntheticVerified)) { return "LAYOUT_OCCUPANCY_INCOMPLETE"; }
++        inventory.erase(found);
++        if (!validBounds(item.bounds)) { return "INVALID_LAYOUT_GEOMETRY"; }
++        if (glyphBearing(item.part.kind) && (item.fontSignature != context.fontSignature || item.glyphSignature != context.glyphSignature)) { return "LAYOUT_GLYPH_MISMATCH"; }
++        if (item.evidence == OccupancyEvidence::syntheticVerified) { nativeReady = false; }
++    }
++    if (!inventory.empty()) { return "LAYOUT_OCCUPANCY_INCOMPLETE"; }
++    return validBounds(merged(items)) ? "" : "INVALID_LAYOUT_GEOMETRY";
++}
++bool collectKeys(const std::vector<EntityKey>& keys, const LayoutRequest& request, std::vector<EntityKey>& seen) {
++    if (keys.empty()) { return false; }
++    for (const auto& key : keys) {
++        if (!named(key.databaseIdentity) || key.databaseIdentity != request.databaseIdentity || key.revision != request.revision || !(key == key) ||
++            std::find(seen.begin(),seen.end(),key) != seen.end()) { return false; }
++        seen.push_back(key);
++    }
++    return true;
++}
++bool inside(const Bounds2& b, const Bounds2& area) {
++    return b.minimum.x >= area.minimum.x && b.minimum.y >= area.minimum.y &&
++        b.maximum.x <= area.maximum.x && b.maximum.y <= area.maximum.y;
++}
++// Layout accepts exactly the requested gap; internal collision checks count a
++// touching glyph/baseline as collision, even at zero requested clearance.
++bool axisSeparated(double end, double start, double gap, bool touchingCollides) {
++    if (end > start) { return false; }
++    // Compare actual distance, not end+gap: that addition may round a small
++    // positive gap away at large coordinates. Avoid overflow for far-apart
++    // endpoints of opposite signs before subtracting them.
++    if (end < 0 && start > std::numeric_limits<double>::max()+end) { return true; }
++    const double distance = start-end;
++    return touchingCollides ? distance > gap : distance >= gap;
++}
++bool separated(const Bounds2& a, const Bounds2& b, double gap, bool touchingCollides = false) {
++    return axisSeparated(a.maximum.x,b.minimum.x,gap,touchingCollides) ||
++        axisSeparated(b.maximum.x,a.minimum.x,gap,touchingCollides) ||
++        axisSeparated(a.maximum.y,b.minimum.y,gap,touchingCollides) ||
++        axisSeparated(b.maximum.y,a.minimum.y,gap,touchingCollides);
++}
++bool gapFinite(const Bounds2& b, double gap) { return finite(b.maximum.x+gap) && finite(b.maximum.y+gap); }
++void uniqueSorted(std::vector<double>& values) {
++    std::sort(values.begin(),values.end()); values.erase(std::unique(values.begin(),values.end()),values.end());
++}
++struct Search {
++    const std::vector<ViewEnvelope>& views;
++    const LayoutRequest& request;
++    const std::vector<Bounds2>& originals;
++    std::vector<Bounds2> occupied;
++    std::vector<std::optional<PlacedView>> placed;
++    std::size_t count{0};
++    bool limited{false};
++    bool invalid{false};
++
++    bool place(std::size_t depth) {
++        if (depth == views.size()) { return true; }
++        std::vector<double> xs{request.available.minimum.x}, ys{request.available.minimum.y};
++        for (const auto& b : occupied) { xs.push_back(b.maximum.x+request.clearance); ys.push_back(b.maximum.y+request.clearance); }
++        uniqueSorted(xs); uniqueSorted(ys);
++        for (std::size_t i = 0; i < views.size(); ++i) {
++            if (placed[i] || (!request.allowReorder && i != depth)) { continue; }
++            const auto& original = originals[i];
++            const double width = original.maximum.x-original.minimum.x, height = original.maximum.y-original.minimum.y;
++            for (const double y : ys) { for (const double x : xs) {
++                if (count == request.searchBudget) { limited = true; return false; }
++                ++count;
++                if (x < request.available.minimum.x || y < request.available.minimum.y || x > request.available.maximum.x || y > request.available.maximum.y ||
++                    width > request.available.maximum.x-x || height > request.available.maximum.y-y) { continue; }
++                const Bounds2 destination{{x,y},{x+width,y+height}};
++                if (!validBounds(destination) || !gapFinite(destination,request.clearance)) { invalid = true; return false; }
++                if (!inside(destination,request.available) || std::any_of(occupied.begin(),occupied.end(),[&](const Bounds2& b) {
++                    return !separated(destination,b,request.clearance);
++                })) { continue; }
++                PlacedView p; p.viewIdentity = views[i].viewIdentity;
++                p.displacement = {x-original.minimum.x,y-original.minimum.y}; p.plan.viewIdentity = p.viewIdentity;
++                p.context = views[i].context; p.source = views[i].source; p.occupancies = views[i].occupancies;
++                p.requiredParts = views[i].requiredParts; p.complete = views[i].complete;
++                if (!finite(p.displacement.x) || !finite(p.displacement.y)) { invalid = true; return false; }
++                for (auto& item : p.occupancies) {
++                    const auto old = item.bounds;
++                    item.bounds = {{old.minimum.x+p.displacement.x,old.minimum.y+p.displacement.y},
++                        {old.maximum.x+p.displacement.x,old.maximum.y+p.displacement.y}};
++                    if (!validBounds(item.bounds) || !inside(item.bounds,request.available) ||
++                        (old.minimum.x < old.maximum.x && item.bounds.minimum.x == item.bounds.maximum.x) ||
++                        (old.minimum.y < old.maximum.y && item.bounds.minimum.y == item.bounds.maximum.y)) { invalid = true; return false; }
++                }
++                p.occupiedBounds = merged(p.occupancies);
++                // Re-read the actual translated parts; never rely on a rounded,
++                // ideal candidate box when checking final clearance.
++                if (std::any_of(occupied.begin(),occupied.end(),[&](const Bounds2& b) {return !separated(p.occupiedBounds,b,request.clearance);})) { continue; }
++                for (const auto& key : views[i].targets) { p.plan.translations.push_back({key,p.displacement}); }
++                placed[i] = std::move(p); occupied.push_back(placed[i]->occupiedBounds);
++                if (place(depth+1)) { return true; }
++                occupied.pop_back(); placed[i].reset();
++                if (limited || invalid) { return false; }
++            }}
++        }
++        return false;
++    }
++};
++}
++
++Result<double> paperSizeInInput(double paperMm, double scaleDenominator, double mmPerInputUnit) {
++    if (!positive(paperMm) || !positive(scaleDenominator) || !positive(mmPerInputUnit)) { return failure<double>("INVALID_LAYOUT_GEOMETRY"); }
++    const double modelMm = paperMm*scaleDenominator;
++    const double result = modelMm/mmPerInputUnit;
++    if (!positive(modelMm) || !positive(result)) { return failure<double>("INVALID_LAYOUT_GEOMETRY"); }
++    return {result,{}};
++}
++
++Result<std::vector<OccupancyCollision>> checkInternalCollisions(const ViewEnvelope& view,
++    const std::vector<CollisionPair>& pairs, double clearance) {
++    if (!finite(clearance) || clearance < 0) { return failure<std::vector<OccupancyCollision>>("INVALID_LAYOUT_GEOMETRY",view.viewIdentity); }
++    std::map<std::string,Bounds2> parts;
++    for (const auto& part : view.occupancies) {
++        if (!named(part.part.identity) || !validBounds(part.bounds) || !gapFinite(part.bounds,clearance) || !parts.emplace(part.part.identity,part.bounds).second) {
++            return failure<std::vector<OccupancyCollision>>("INVALID_LAYOUT_GEOMETRY",view.viewIdentity);
++        }
++    }
++    Result<std::vector<OccupancyCollision>> result; result.value.emplace();
++    for (const auto& pair : pairs) {
++        const auto a = parts.find(pair.first), b = parts.find(pair.second);
++        if (a == parts.end() || b == parts.end() || a == b) { return failure<std::vector<OccupancyCollision>>("INVALID_LAYOUT_PAIR",view.viewIdentity); }
++        if (!separated(a->second,b->second,clearance,true)) { result.value->push_back({pair.first,pair.second}); }
++    }
++    if (!result.value->empty()) { result.issues.push_back({"LAYOUT_INTERNAL_COLLISION",u8"指定标注避让对象相交或净距不足。",{"",view.viewIdentity,std::nullopt},true}); }
++    return result;
++}
++
++Result<LayoutArrangement> arrange(const std::vector<ViewEnvelope>& views, const LayoutRequest& request) {
++    if (views.empty() || views.size() > 16 || request.fixed.size() > 256 || request.searchBudget == 0 || request.searchBudget > 1000000) {
++        return failure<LayoutArrangement>("LAYOUT_UNSUPPORTED_RANGE");
++    }
++    if (!named(request.databaseIdentity) || request.expectedViews.size() != views.size()) { return failure<LayoutArrangement>("INVALID_LAYOUT_IDENTITY"); }
++    if (!validBounds(request.available) || !positive(request.available.maximum.x-request.available.minimum.x) ||
++        !positive(request.available.maximum.y-request.available.minimum.y) || !finite(request.clearance) || request.clearance < 0 || !gapFinite(request.available,request.clearance)) {
++        return failure<LayoutArrangement>("INVALID_LAYOUT_GEOMETRY");
++    }
++    std::map<std::string,LayoutContext> expected;
++    for (const auto& item : request.expectedViews) {
++        if (!named(item.viewIdentity) || !expected.emplace(item.viewIdentity,item.context).second) { return failure<LayoutArrangement>("INVALID_LAYOUT_IDENTITY"); }
++        if (!validContext(item.context)) { return failure<LayoutArrangement>("INVALID_LAYOUT_GEOMETRY",item.viewIdentity); }
++    }
++    std::size_t parts = 0, keys = 0;
++    for (const auto& v : views) { parts += v.occupancies.size(); keys += v.targets.size(); }
++    for (const auto& f : request.fixed) { parts += f.occupancies.size(); keys += f.targets.size(); }
++    if (parts > 10000 || keys > 10000) { return failure<LayoutArrangement>("LAYOUT_UNSUPPORTED_RANGE"); }
++    bool nativeReady = true;
++    std::vector<EntityKey> seen;
++    std::vector<Bounds2> originals, fixed;
++    for (const auto& v : views) {
++        const auto found = expected.find(v.viewIdentity);
++        if (found == expected.end() || !collectKeys(v.targets,request,seen)) { return failure<LayoutArrangement>("INVALID_LAYOUT_IDENTITY",v.viewIdentity); }
++        const auto code = validateParts(v.requiredParts,v.occupancies,v.complete,v.source,v.context,nativeReady);
++        if (!code.empty()) { return failure<LayoutArrangement>(code,v.viewIdentity); }
++        if (!sameContext(found->second,v.context)) { return failure<LayoutArrangement>("LAYOUT_CONTEXT_MISMATCH",v.viewIdentity); }
++        expected.erase(found);
++        const auto b = merged(v.occupancies);
++        if (!positive(b.maximum.x-b.minimum.x) || !positive(b.maximum.y-b.minimum.y) ||
++            !finite(request.available.minimum.x-b.minimum.x) || !finite(request.available.minimum.y-b.minimum.y) ||
++            !finite(request.available.maximum.x-b.maximum.x) || !finite(request.available.maximum.y-b.maximum.y)) { return failure<LayoutArrangement>("INVALID_LAYOUT_GEOMETRY",v.viewIdentity); }
++        originals.push_back(b);
++    }
++    std::map<std::string,bool> fixedIds;
++    for (const auto& f : request.fixed) {
++        if (!named(f.identity) || !fixedIds.emplace(f.identity,true).second || !collectKeys(f.targets,request,seen)) { return failure<LayoutArrangement>("INVALID_LAYOUT_IDENTITY",f.identity); }
++        const auto code = validateParts(f.requiredParts,f.occupancies,f.complete,f.source,f.context,nativeReady);
++        if (!code.empty()) { return failure<LayoutArrangement>(code,f.identity); }
++        const auto b = merged(f.occupancies);
++        if (!gapFinite(b,request.clearance)) { return failure<LayoutArrangement>("INVALID_LAYOUT_GEOMETRY",f.identity); }
++        fixed.push_back(b);
++    }
++    // A view wider/taller than the region is a direct impossibility proof.
++    for (const auto& b : originals) {
++        if (b.maximum.x-b.minimum.x > request.available.maximum.x-request.available.minimum.x ||
++            b.maximum.y-b.minimum.y > request.available.maximum.y-request.available.minimum.y) { return failure<LayoutArrangement>(diagnostic::noLayoutSpace); }
++    }
++    Search search{views,request,originals,fixed,std::vector<std::optional<PlacedView>>(views.size())};
++    if (!search.place(0)) {
++        if (search.invalid || search.limited) { return failure<LayoutArrangement>(search.invalid ? "INVALID_LAYOUT_GEOMETRY" : "LAYOUT_SEARCH_LIMIT"); }
++        return {std::nullopt,{{diagnostic::noLayoutSpace,u8"已完整搜索 positive_edge_anchors_v1 合法布局族仍无解；此结论不代表所有连续平移布局数学无解。",{},true}}};
++    }
++    LayoutArrangement arrangement; arrangement.nativeReady = nativeReady; arrangement.fixed = request.fixed; arrangement.searchedCandidates = search.count;
++    arrangement.available = request.available; arrangement.clearance = request.clearance; arrangement.allowReorder = request.allowReorder;
++    for (auto& p : search.placed) { arrangement.views.push_back(std::move(*p)); }
++    std::vector<VisibleOccupancy> all;
++    for (const auto& p : arrangement.views) { all.insert(all.end(),p.occupancies.begin(),p.occupancies.end()); }
++    arrangement.occupiedBounds = merged(all);
++    Result<LayoutArrangement> result{std::move(arrangement),{}};
++    if (!nativeReady) { result.issues.push_back({"LAYOUT_SYNTHETIC_ONLY",u8"仅合成核准占位夹具，未证明实际天正字形，不可提交原生写入。",{},true}); }
++    return result;
++}
++}
+--- /dev/null
++++ L1-final/tests/LayoutTests.cpp
+@@ -0,0 +1,139 @@
++#include "TestSupport.h"
++#include "../src/Layout.h"
++#include <cmath>
++#include <limits>
++
++namespace bce::test {
++namespace {
++LayoutContext context() { return {100,1,"geometry-v1","resolved-font-v1","glyphs-v1"}; }
++VisibleOccupancy part(const char* id, OccupancyKind kind, Bounds2 b) {
++    return {{id,kind},b,OccupancyEvidence::syntheticVerified,"synthetic_verified", "resolved-font-v1","glyphs-v1"};
++}
++ViewEnvelope view(const char* id="east",const char* handle="A1",double w=200,double h=100) {
++    ViewEnvelope v;v.viewIdentity=id;v.targets={{"layout-db",handle,4}};
++    v.occupancies={part("body",OccupancyKind::architecture,{{0,0},{w,h}})};
++    v.requiredParts={{"body",OccupancyKind::architecture}};v.complete=true;v.source="synthetic_verified";v.context=context();return v;
++}
++LayoutRequest request(const std::vector<ViewEnvelope>& views, double w=420,double h=220) {
++    LayoutRequest r;r.databaseIdentity="layout-db";r.revision=4;r.available={{0,0},{w,h}};r.clearance=20;
++    for(const auto& v:views) {r.expectedViews.push_back({v.viewIdentity,v.context});}return r;
++}
++void syntheticResult(const Result<LayoutArrangement>& r) {
++    require(r.value.has_value(),"verified synthetic occupancy should produce a pure arrangement");
++    require(!r.canCommit()&&!r.value->nativeReady&&hasCode(r,"LAYOUT_SYNTHETIC_ONLY"),"synthetic fixture never authorizes native commit");
++}
++void rejects(const std::vector<ViewEnvelope>& v,const LayoutRequest& r,const char* code) {
++    const auto result=arrange(v,r);require(!result.value&&!result.canCommit()&&hasCode(result,code),"invalid layout must fail with explicit diagnostic");
++}
++void addPart(ViewEnvelope& v,VisibleOccupancy p) {v.requiredParts.push_back(p.part);v.occupancies.push_back(p);}
++}
++void rowsDependOnAvailableArea() {
++    const std::vector<ViewEnvelope> v{view(),view("west","A2")};
++    const auto wide=arrange(v,request(v));syntheticResult(wide);
++    require(wide.value->views[0].displacement.x==0&&wide.value->views[1].displacement.x==220&&wide.value->views[1].displacement.y==0,"420 wide uses one row");
++    const auto narrow=arrange(v,request(v,250,220));syntheticResult(narrow);
++    require(narrow.value->views[1].displacement.x==0&&narrow.value->views[1].displacement.y==120,"250 wide uses two rows");
++}
++void noFitDoesNotScaleArchitecture() {
++    const std::vector<ViewEnvelope> v{view(),view("west","A2")};
++    rejects(v,request(v,199,220),"NO_LAYOUT_SPACE");rejects(v,request(v,250,219),"NO_LAYOUT_SPACE");
++    require(v[0].occupancies[0].bounds.maximum.x==200&&v[1].occupancies[0].bounds.maximum.y==100,"failure never mutates source geometry");
++}
++void protectedSectionIsFixedObstacle() {
++    const std::vector<ViewEnvelope> v{view()};auto r=request(v,420,100);
++    FixedEnvelope f;f.identity="section";f.targets={{"layout-db","B1",4}};f.context=context();f.complete=true;f.source="synthetic_verified";
++    f.occupancies={part("section-body",OccupancyKind::architecture,{{0,0},{200,100}})};f.requiredParts={f.occupancies[0].part};r.fixed={f};
++    const auto result=arrange(v,r);syntheticResult(result);
++    require(result.value->views[0].displacement.x==220,"selected elevation avoids section");
++    require(result.value->fixed[0].occupancies[0].bounds.minimum.x==0&&r.fixed[0].occupancies[0].bounds.maximum.x==200,"fixed section preserved");
++    require(result.value->views[0].plan.translations.size()==1&&result.value->views[0].plan.translations[0].target.handle=="A1","section excluded from translations");
++    // A positive gap smaller than the ULP at a large coordinate must never
++    // round away and authorize touching geometry.
++    const std::vector<ViewEnvelope> large{view("east","A1",16384,100)};
++    r=request(large);r.available={{1e20,0},{1e20+65536,100}};r.clearance=1;
++    f.occupancies[0].bounds={{1e20,0},{1e20+16384,100}};r.fixed={f};
++    require(!arrange(large,r).value,"positive clearance must not round down to touching at large coordinates");
++}
++void collisionIncludesDimensionGlyphAndBaseline() {
++    auto v=view();v.occupancies[0].bounds={{0,0},{10,10}};
++    addPart(v,part("dimension-glyph",OccupancyKind::dimensionGlyph,{{100,100},{120,110}}));
++    addPart(v,part("dimension-baseline",OccupancyKind::dimensionBaseline,{{100,90},{150,90}}));
++    addPart(v,part("note",OccupancyKind::textGlyph,{{105,89},{115,105}}));
++    auto r=checkInternalCollisions(v,{{"note","dimension-glyph"},{"note","dimension-baseline"}},0);
++    require(!r.canCommit()&&r.value&&r.value->size()==2&&hasCode(r,"LAYOUT_INTERNAL_COLLISION"),"glyph and zero-height baseline outside root bounds both collide");
++    r=checkInternalCollisions(v,{},0);require(r.canCommit()&&r.value->empty(),"unrequested architecture intersections are not errors");
++    r=checkInternalCollisions(v,{{"body","missing"}},0);require(hasCode(r,"INVALID_LAYOUT_PAIR"),"unknown collision pair never silently ignored");
++}
++void paperSizeTracksSelectedScale() {
++    const auto a=paperSizeInInput(3.5,100,1),b=paperSizeInInput(3.5,50,1),m=paperSizeInInput(3.5,100,1000);
++    require(a.canCommit()&&*a.value==350&&b.canCommit()&&*b.value==175&&m.canCommit()&&*m.value==0.35,"paper mm tracks scale and input units");
++    require(!paperSizeInInput(3.5,-100,1).canCommit()&&!paperSizeInInput(3.5,100,0).canCommit(),"invalid conversion factors blocked");
++    require(!paperSizeInInput(1e308,1e308,1).canCommit(),"overflowing paper conversion blocked");
++}
++void incompleteGlyphEvidenceBlocksLayout() {
++    auto v=view();addPart(v,part("note",OccupancyKind::textGlyph,{{10,10},{20,20}}));auto r=request({v});
++    v.complete=false;rejects({v},r,"LAYOUT_OCCUPANCY_INCOMPLETE");v.complete=true;
++    v.occupancies.pop_back();rejects({v},r,"LAYOUT_OCCUPANCY_INCOMPLETE");
++    v=view();v.source="";rejects({v},request({v}),"LAYOUT_OCCUPANCY_INCOMPLETE");
++    v=view();v.occupancies[0].evidence=OccupancyEvidence::unverified;rejects({v},request({v}),"LAYOUT_OCCUPANCY_INCOMPLETE");
++    v=view();addPart(v,part("note",OccupancyKind::textGlyph,{{10,10},{20,20}}));v.occupancies[1].fontSignature="substitute";rejects({v},request({v}),"LAYOUT_GLYPH_MISMATCH");
++    v=view();r=request({v});r.expectedViews[0].context.scaleDenominator=50;rejects({v},r,"LAYOUT_CONTEXT_MISMATCH");
++    r=request({v});r.expectedViews[0].context.glyphSignature="glyphs-v2";rejects({v},r,"LAYOUT_CONTEXT_MISMATCH");
++    r=request({v});r.expectedViews[0].context.fontSignature="font-v2";rejects({v},r,"LAYOUT_CONTEXT_MISMATCH");
++    r=request({v});r.expectedViews[0].context.geometrySignature="geometry-v2";rejects({v},r,"LAYOUT_CONTEXT_MISMATCH");
++    r=request({v});r.expectedViews[0].context.mmPerInputUnit=1000;rejects({v},r,"LAYOUT_CONTEXT_MISMATCH");
++    v=view();addPart(v,part("dim",OccupancyKind::dimensionGlyph,{{0,110},{100,120}}));v.occupancies[1].glyphSignature="old-glyph";rejects({v},request({v}),"LAYOUT_GLYPH_MISMATCH");
++}
++void malformedOrOverflowingGeometryRejected() {
++    auto v=view();auto r=request({v});r.clearance=-1;rejects({v},r,"INVALID_LAYOUT_GEOMETRY");
++    r=request({v});r.available.maximum.x=std::numeric_limits<double>::infinity();rejects({v},r,"INVALID_LAYOUT_GEOMETRY");
++    v.occupancies[0].bounds.minimum.x=201;rejects({v},request({v}),"INVALID_LAYOUT_GEOMETRY");
++    v=view();v.occupancies[0].bounds={{-1e308,0},{1e308,100}};rejects({v},request({v}),"INVALID_LAYOUT_GEOMETRY");
++    v=view();r=request({v});r.available={{-1e308,0},{1e308,220}};rejects({v},r,"INVALID_LAYOUT_GEOMETRY");
++    v=view();v.context.scaleDenominator=std::numeric_limits<double>::quiet_NaN();rejects({v},request({v}),"INVALID_LAYOUT_GEOMETRY");
++    v=view();v.occupancies[0].bounds={{-1e308,0},{-1e308,100}};r=request({v});r.available={{1e308,0},{1e308,220}};rejects({v},r,"INVALID_LAYOUT_GEOMETRY");
++}
++void searchLimitIsNotNoSpace() {
++    const std::vector<ViewEnvelope> v{view(),view("west","A2")};auto r=request(v);r.searchBudget=1;
++    const auto result=arrange(v,r);require(!result.value&&hasCode(result,"LAYOUT_SEARCH_LIMIT")&&!hasCode(result,"NO_LAYOUT_SPACE"),"budget exhaustion never claims no mathematical space");
++    r.searchBudget=10000;syntheticResult(arrange(v,r));
++}
++void duplicateLayoutIdentityAndKeysRejected() {
++    auto a=view(),b=view("west","A2");auto r=request({a,b});b.viewIdentity="east";rejects({a,b},r,"INVALID_LAYOUT_IDENTITY");
++    b=view("west","000a1");rejects({a,b},request({a,b}),"INVALID_LAYOUT_IDENTITY");
++    b=view("west","A2");b.targets[0].revision=5;rejects({a,b},request({a,b}),"INVALID_LAYOUT_IDENTITY");
++    b.targets[0].revision=4;b.targets[0].databaseIdentity="other-db";rejects({a,b},request({a,b}),"INVALID_LAYOUT_IDENTITY");
++    a.targets[0].handle="0xA1";rejects({a},request({a}),"INVALID_LAYOUT_IDENTITY");
++    a=view();a.targets.push_back({"layout-db","000a1",4});rejects({a},request({a}),"INVALID_LAYOUT_IDENTITY");
++    a=view();r=request({a});r.searchBudget=0;rejects({a},r,"LAYOUT_UNSUPPORTED_RANGE");
++    r=request({a});r.searchBudget=1000001;rejects({a},r,"LAYOUT_UNSUPPORTED_RANGE");
++}
++void singleTranslationRetainsAllVisiblePartsAndTargets() {
++    auto v=view();v.targets.push_back({"layout-db","A2",4});
++    addPart(v,part("text",OccupancyKind::textGlyph,{{-50,-30},{10,0}}));addPart(v,part("symbol",OccupancyKind::symbol,{{210,30},{220,40}}));
++    addPart(v,part("dim",OccupancyKind::dimensionGlyph,{{30,120},{40,130}}));addPart(v,part("base",OccupancyKind::dimensionBaseline,{{0,140},{200,140}}));
++    addPart(v,part("table",OccupancyKind::materialTable,{{300,0},{350,100}}));
++    auto r=request({v},500,300);r.available.minimum={1000,2000};r.available.maximum={1500,2300};
++    const auto result=arrange({v},r);syntheticResult(result);const auto& p=result.value->views[0];
++    require(p.displacement.x==1050&&p.displacement.y==2030&&p.occupancies.size()==6&&p.plan.translations.size()==2,"entire visible union determines translation");
++    for(std::size_t i=0;i<v.occupancies.size();++i) {require(p.occupancies[i].bounds.minimum.x==v.occupancies[i].bounds.minimum.x+1050&&p.occupancies[i].bounds.maximum.y==v.occupancies[i].bounds.maximum.y+2030,"all occupancy coordinates translated exactly once");}
++    for(std::size_t i=0;i<v.targets.size();++i) {require(p.plan.translations[i].target==v.targets[i]&&p.plan.translations[i].displacement.x==1050&&p.plan.translations[i].displacement.y==2030,"source keys retain one common displacement");}
++    require(p.context.fontSignature=="resolved-font-v1"&&p.source=="synthetic_verified"&&result.value->occupiedBounds.maximum.x==1400,"source evidence and true merged occupancy retained");
++    require(p.complete&&p.requiredParts.size()==6&&p.requiredParts[4].kind==OccupancyKind::dimensionBaseline,"complete original inventory remains independently auditable");
++    require(result.value->available.minimum.x==1000&&result.value->clearance==20&&!result.value->allowReorder,"layout family constraints remain auditable");
++}
++void layoutBacktrackingAndReorderAreDeterministic() {
++    // First-fit puts the second 2x2 at (3,0), blocking the 6x8. Backtracking
++    // moves only its placement to (0,3), permitting the 6x8 at (3,0).
++    auto a=view("small-a","A1",2,2),b=view("small-b","A2",2,2),c=view("large","A3",6,8);
++    auto r=request({a,b,c},10,10);r.clearance=1;
++    const auto backtracked=arrange({a,b,c},r);syntheticResult(backtracked);
++    require(backtracked.value->views[1].displacement.x==0&&backtracked.value->views[1].displacement.y==3&&backtracked.value->views[2].displacement.x==3,"backtracking escapes first-fit dead end");
++    b=view("tall","A2",2,8);c=view("wide","A3",6,2);r=request({a,b,c},10,10);r.clearance=1;
++    rejects({a,b,c},r,"NO_LAYOUT_SPACE"); // Exhaustive for the fixed-order anchor family only.
++    r.allowReorder=true;
++    const auto first=arrange({a,b,c},r);syntheticResult(first);const auto second=arrange({a,b,c},r);syntheticResult(second);
++    require(first.value->views[1].displacement.x==7&&first.value->views[2].displacement.y==3,"reorder search escapes fixed-order anchor dead end");
++    require(second.value->views[1].displacement.x==7&&first.value->searchedCandidates==second.value->searchedCandidates,"identical requests produce deterministic result");
++}
++}
+--- baseline/tests/CoreTests.cpp
++++ L1-final/tests/CoreTests.cpp
+@@ -1,13 +1,24 @@
+ #include "TestSupport.h"
+ #include <array>
+ #include <iostream>
+ #include <string>
+ namespace bce::test {
++void rowsDependOnAvailableArea();
++void noFitDoesNotScaleArchitecture();
++void protectedSectionIsFixedObstacle();
++void collisionIncludesDimensionGlyphAndBaseline();
++void paperSizeTracksSelectedScale();
++void incompleteGlyphEvidenceBlocksLayout();
++void malformedOrOverflowingGeometryRejected();
++void searchLimitIsNotNoSpace();
++void duplicateLayoutIdentityAndKeysRejected();
++void singleTranslationRetainsAllVisiblePartsAndTargets();
++void layoutBacktrackingAndReorderAreDeterministic();
+ void individuallyConfirmedFloorsFormOneChain();
+ void annotationPlanRetainsConfirmationAndUnitEvidence();
+ void materialDuplicateTopologyIgnoresRedundantVertices();
+ void emptyMaterialFamilyIsNotAnExplicitSelection();
+ void materialPlanRetainsFamilyAndUnitEvidence();
+ 
+ void projectLevelsDoNotUseReferenceNumbers();
+ void openingDimensionsUseActualEdges();
+@@ -38,17 +49,28 @@
+ void overflowingGapDoesNotRecurse();
+ void hugeLevelDirectionKeepsFiniteCandidate();
+ void overflowingAxisSpacingIsRejected();
+ void mirroredTextPreservesBothBasisDirections();
+ }
+ 
+ namespace {
+ struct TestCase { const char* name; void (*run)(); };
+-const std::array<TestCase, 49> cases{{
++const std::array<TestCase, 60> cases{{
++    {"RowsDependOnAvailableArea", bce::test::rowsDependOnAvailableArea},
++    {"NoFitDoesNotScaleArchitecture", bce::test::noFitDoesNotScaleArchitecture},
++    {"ProtectedSectionIsFixedObstacle", bce::test::protectedSectionIsFixedObstacle},
++    {"CollisionIncludesDimensionGlyphAndBaseline", bce::test::collisionIncludesDimensionGlyphAndBaseline},
++    {"PaperSizeTracksSelectedScale", bce::test::paperSizeTracksSelectedScale},
++    {"IncompleteGlyphEvidenceBlocksLayout", bce::test::incompleteGlyphEvidenceBlocksLayout},
++    {"MalformedOrOverflowingGeometryRejected", bce::test::malformedOrOverflowingGeometryRejected},
++    {"SearchLimitIsNotNoSpace", bce::test::searchLimitIsNotNoSpace},
++    {"DuplicateLayoutIdentityAndKeysRejected", bce::test::duplicateLayoutIdentityAndKeysRejected},
++    {"SingleTranslationRetainsAllVisiblePartsAndTargets", bce::test::singleTranslationRetainsAllVisiblePartsAndTargets},
++    {"LayoutBacktrackingAndReorderAreDeterministic", bce::test::layoutBacktrackingAndReorderAreDeterministic},
+     {"IndividuallyConfirmedFloorsFormOneChain", bce::test::individuallyConfirmedFloorsFormOneChain},
+     {"AnnotationPlanRetainsConfirmationAndUnitEvidence", bce::test::annotationPlanRetainsConfirmationAndUnitEvidence},
+     {"MaterialDuplicateTopologyIgnoresRedundantVertices", bce::test::materialDuplicateTopologyIgnoresRedundantVertices},
+     {"EmptyMaterialFamilyIsNotAnExplicitSelection", bce::test::emptyMaterialFamilyIsNotAnExplicitSelection},
+     {"MaterialPlanRetainsFamilyAndUnitEvidence", bce::test::materialPlanRetainsFamilyAndUnitEvidence},
+     {"ProjectLevelsDoNotUseReferenceNumbers", bce::test::projectLevelsDoNotUseReferenceNumbers},
+     {"OpeningDimensionsUseActualEdges", bce::test::openingDimensionsUseActualEdges},
+     {"TranslationDoesNotChangeMeasurements", bce::test::translationDoesNotChangeMeasurements},
+@@ -106,8 +128,9 @@
+         ++executed;
+         try { test.run(); std::cout << "PASS " << test.name << '\n'; }
+         catch (const std::exception& error) { ++failures; std::cerr << "FAIL " << test.name << ": " << error.what() << '\n'; }
+     }
+     if (executed == 0) { std::cerr << "unknown case: " << argv[2] << '\n'; return 2; }
+     std::cout << "Executed " << executed << ", failed " << failures << '\n';
+     return failures == 0 ? 0 : 1;
+ }
++
+--- baseline/tests/ElevationCoreTests.vcxproj
++++ L1-final/tests/ElevationCoreTests.vcxproj
+@@ -2,13 +2,14 @@
+ <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+   <ItemGroup Label="ProjectConfigurations"><ProjectConfiguration Include="Release|x64"><Configuration>Release</Configuration><Platform>x64</Platform></ProjectConfiguration></ItemGroup>
+   <PropertyGroup Label="Globals"><ProjectGuid>{D31086B1-9E22-4FB5-A394-AC717EA35221}</ProjectGuid><RootNamespace>ElevationCoreTests</RootNamespace><WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion></PropertyGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+   <PropertyGroup Label="Configuration"><ConfigurationType>Application</ConfigurationType><UseDebugLibraries>false</UseDebugLibraries><PlatformToolset>v141</PlatformToolset><CharacterSet>Unicode</CharacterSet></PropertyGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+   <PropertyGroup><OutDir>..\..\out\</OutDir><IntDir>..\..\obj\</IntDir><TargetName>ElevationCoreTests</TargetName></PropertyGroup>
+   <ItemDefinitionGroup><ClCompile><WarningLevel>Level4</WarningLevel><TreatWarningAsError>true</TreatWarningAsError><SDLCheck>true</SDLCheck><ConformanceMode>true</ConformanceMode><LanguageStandard>stdcpp17</LanguageStandard><RuntimeLibrary>MultiThreaded</RuntimeLibrary><AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions><ExceptionHandling>Sync</ExceptionHandling></ClCompile><Link><SubSystem>Console</SubSystem></Link></ItemDefinitionGroup>
+-  <ItemGroup><ClCompile Include="..\src\ElevationModel.cpp" /><ClCompile Include="..\src\Recognition.cpp" /><ClCompile Include="..\src\AnnotationRules.cpp" /><ClCompile Include="..\src\MaterialRules.cpp" /><ClCompile Include="AnnotationRulesTests.cpp" /><ClCompile Include="MaterialRulesTests.cpp" /><ClCompile Include="RecognitionTests.cpp" /><ClCompile Include="CoreTests.cpp" /><ClCompile Include="ReferenceTests.cpp" /><ClCompile Include="ScopeTests.cpp" /></ItemGroup>
++  <ItemGroup><ClCompile Include="..\src\ElevationModel.cpp" /><ClCompile Include="..\src\Recognition.cpp" /><ClCompile Include="..\src\AnnotationRules.cpp" /><ClCompile Include="..\src\MaterialRules.cpp" /><ClCompile Include="AnnotationRulesTests.cpp" /><ClCompile Include="MaterialRulesTests.cpp" /><ClCompile Include="RecognitionTests.cpp" /><ClCompile Include="CoreTests.cpp" /><ClCompile Include="LayoutTests.cpp" /><ClCompile Include="..\src\Layout.cpp" /><ClCompile Include="ReferenceTests.cpp" /><ClCompile Include="ScopeTests.cpp" /></ItemGroup>
+   <ItemGroup><ClInclude Include="..\src\ElevationModel.h" /><ClInclude Include="TestSupport.h" /></ItemGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+ </Project>
+ 
++
+--- baseline/tools/build.ps1
++++ L1-final/tools/build.ps1
+@@ -6,17 +6,17 @@
+ $projectRoot = Split-Path $PSScriptRoot -Parent
+ $safeLabel = $Label -replace '[^A-Za-z0-9_-]', '_'
+ $buildName = 'f1-' + (Get-Date -Format 'yyyyMMdd-HHmmss-fff') + '-' + $safeLabel + '-' + [Guid]::NewGuid().ToString('N').Substring(0,8)
+ $buildRoot = Join-Path (Join-Path $projectRoot 'build') $buildName
+ $null = New-Item -ItemType Directory -Path $buildRoot
+ $receipt = [ordered]@{ target=$Target; label=$Label; startedUtc=[DateTime]::UtcNow.ToString('o'); buildRoot=$buildRoot; inputs=@(); commands=@(); outputs=@(); buildExitCode=$null; testExitCode=$null; unknownCaseExitCode=$null; exitCode=1 }
+ $finalExit = 1
+ try {
+-    $inputs = @('src/ElevationModel.h','src/ElevationModel.cpp','src/Recognition.h','src/Recognition.cpp','src/RuleModel.h','src/AnnotationRules.h','src/AnnotationRules.cpp','src/MaterialRules.h','src/MaterialRules.cpp','tests/AnnotationRulesTests.cpp','tests/MaterialRulesTests.cpp','tests/CoreTests.cpp','tests/RecognitionTests.cpp','tests/ReferenceTests.cpp','tests/ScopeTests.cpp','tests/TestSupport.h','tests/ElevationCoreTests.vcxproj','tools/build.ps1','tests/fixtures/scheme-scene.tsv','tests/fixtures/scheme-expected.tsv','tests/fixtures/scheme-scene-manifest.json')
++    $inputs = @('src/ElevationModel.h','src/ElevationModel.cpp','src/Recognition.h','src/Recognition.cpp','src/RuleModel.h','src/AnnotationRules.h','src/AnnotationRules.cpp','src/MaterialRules.h','src/MaterialRules.cpp','tests/AnnotationRulesTests.cpp','tests/MaterialRulesTests.cpp','src/WriteContracts.h','src/Layout.h','src/Layout.cpp','tests/LayoutTests.cpp','tests/CoreTests.cpp','tests/RecognitionTests.cpp','tests/ReferenceTests.cpp','tests/ScopeTests.cpp','tests/TestSupport.h','tests/ElevationCoreTests.vcxproj','tools/build.ps1','tests/fixtures/scheme-scene.tsv','tests/fixtures/scheme-expected.tsv','tests/fixtures/scheme-scene-manifest.json')
+     foreach ($relative in $inputs) {
+         $source = Join-Path $projectRoot $relative
+         $destination = Join-Path (Join-Path $buildRoot 'input') $relative
+         $null = New-Item -ItemType Directory -Force -Path (Split-Path $destination -Parent)
+         Copy-Item -LiteralPath $source -Destination $destination
+         $receipt.inputs += [ordered]@{ path=$relative; sha256=(Get-FileHash -LiteralPath $destination -Algorithm SHA256).Hash }
+     }
+     $fixtureManifest = Get-Content -Raw -LiteralPath (Join-Path $buildRoot 'input/tests/fixtures/scheme-scene-manifest.json') | ConvertFrom-Json
+@@ -68,8 +68,9 @@
+     }
+     $receipt.exitCode = $finalExit
+     $receipt.finishedUtc = [DateTime]::UtcNow.ToString('o')
+     $receipt | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath (Join-Path $buildRoot 'receipt.json') -Encoding UTF8
+     Write-Output ('RECEIPT=' + (Join-Path $buildRoot 'receipt.json'))
+     Write-Output ('EXIT_CODE=' + $finalExit)
+ }
+ exit $finalExit
++

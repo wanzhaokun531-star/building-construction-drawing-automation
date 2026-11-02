@@ -1,0 +1,354 @@
+{
+  "contract": "bcp.three-dimension-text-grip-plan.v1",
+  "sourceCombinedPlan": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门号沿洞口与尺寸避让_20261101\\dimension-plan-text-grip-aware.json",
+  "sampleClearances": {
+    "textMm": 60,
+    "wallMm": 40
+  },
+  "plans": [
+    {
+      "floor": 1,
+      "handle": "847E",
+      "segment": 1,
+      "value": 900,
+      "textGripIndex": 7,
+      "selectionPoint": [
+        36761.70152820693,
+        28275.21380195598,
+        0
+      ],
+      "delta": [
+        500,
+        -400,
+        0
+      ],
+      "desiredTextPoint": [
+        37261.70152820693,
+        27875.21380195598,
+        0
+      ],
+      "baselineBefore": [
+        [
+          37001.70152820693,
+          25765.21380195598,
+          0
+        ],
+        [
+          37001.70152820693,
+          28825.21380195598,
+          0
+        ]
+      ],
+      "baselineAfter": [
+        [
+          37001.70152820693,
+          25765.21380195598,
+          0
+        ],
+        [
+          37001.70152820693,
+          28825.21380195598,
+          0
+        ]
+      ],
+      "measurementNodesBefore": [
+        [
+          36231.70152820693,
+          25765.21380195598,
+          0
+        ],
+        [
+          36231.70152820693,
+          27825.21380195598,
+          0
+        ],
+        [
+          36231.70152820693,
+          28725.21380195598,
+          0
+        ],
+        [
+          36231.70152820693,
+          28825.21380195598,
+          0
+        ]
+      ],
+      "measurementNodesAfter": [
+        [
+          36231.70152820693,
+          25765.21380195598,
+          0
+        ],
+        [
+          36231.70152820693,
+          27825.21380195598,
+          0
+        ],
+        [
+          36231.70152820693,
+          28725.21380195598,
+          0
+        ],
+        [
+          36231.70152820693,
+          28825.21380195598,
+          0
+        ]
+      ],
+      "valuesBefore": [
+        2060,
+        900,
+        100
+      ],
+      "valuesAfter": [
+        2060,
+        900,
+        100
+      ],
+      "fontBoundsBefore": [
+        36602.70152820693,
+        27929.21380195598,
+        36920.70152820693,
+        28621.21380195598
+      ],
+      "fontBoundsAfter": [
+        37102.70152820693,
+        27529.21380195598,
+        37420.70152820693,
+        28221.21380195598
+      ],
+      "selectorHalfSizeMm": 20,
+      "selectorUniqueAmongActualGrips": true,
+      "contacts": [],
+      "baselineContacts": [],
+      "remainingFurnitureRootBoundsContacts": [],
+      "newFurnitureRootBoundsContacts": [],
+      "sourcePreview": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161104-floor1\\stage2-preview-native.json",
+      "captionWitness": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-caption-clearance.json",
+      "scope": "Only text point, no baseline or measurement grip movement"
+    },
+    {
+      "floor": 1,
+      "handle": "8485",
+      "segment": 0,
+      "value": 800,
+      "textGripIndex": 5,
+      "selectionPoint": [
+        36761.70152820693,
+        33625.213801956095,
+        0
+      ],
+      "delta": [
+        500,
+        0,
+        0
+      ],
+      "desiredTextPoint": [
+        37261.70152820693,
+        33625.213801956095,
+        0
+      ],
+      "baselineBefore": [
+        [
+          37001.70152820693,
+          33225.213801956095,
+          0
+        ],
+        [
+          37001.70152820693,
+          35985.213801955986,
+          0
+        ]
+      ],
+      "baselineAfter": [
+        [
+          37001.70152820693,
+          33225.213801956095,
+          0
+        ],
+        [
+          37001.70152820693,
+          35985.213801955986,
+          0
+        ]
+      ],
+      "measurementNodesBefore": [
+        [
+          36231.70152820693,
+          33225.213801956095,
+          0
+        ],
+        [
+          36231.70152820693,
+          34025.213801956095,
+          0
+        ],
+        [
+          36231.70152820693,
+          35985.213801955986,
+          0
+        ]
+      ],
+      "measurementNodesAfter": [
+        [
+          36231.70152820693,
+          33225.213801956095,
+          0
+        ],
+        [
+          36231.70152820693,
+          34025.213801956095,
+          0
+        ],
+        [
+          36231.70152820693,
+          35985.213801955986,
+          0
+        ]
+      ],
+      "valuesBefore": [
+        800,
+        1959.9999999998909
+      ],
+      "valuesAfter": [
+        800,
+        1959.9999999998909
+      ],
+      "fontBoundsBefore": [
+        36602.70152820693,
+        33279.213801956095,
+        36920.70152820693,
+        33971.213801956095
+      ],
+      "fontBoundsAfter": [
+        37102.70152820693,
+        33279.213801956095,
+        37420.70152820693,
+        33971.213801956095
+      ],
+      "selectorHalfSizeMm": 20,
+      "selectorUniqueAmongActualGrips": true,
+      "contacts": [],
+      "baselineContacts": [],
+      "remainingFurnitureRootBoundsContacts": [],
+      "newFurnitureRootBoundsContacts": [],
+      "sourcePreview": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161104-floor1\\stage2-preview-native.json",
+      "captionWitness": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-caption-clearance.json",
+      "scope": "Only text point, no baseline or measurement grip movement"
+    },
+    {
+      "floor": 2,
+      "handle": "848E",
+      "segment": 0,
+      "value": 800,
+      "textGripIndex": 5,
+      "selectionPoint": [
+        83183.70152820693,
+        33625.213801956095,
+        0
+      ],
+      "delta": [
+        500,
+        0,
+        0
+      ],
+      "desiredTextPoint": [
+        83683.70152820693,
+        33625.213801956095,
+        0
+      ],
+      "baselineBefore": [
+        [
+          83423.70152820693,
+          33225.213801956095,
+          0
+        ],
+        [
+          83423.70152820693,
+          35985.213801955986,
+          0
+        ]
+      ],
+      "baselineAfter": [
+        [
+          83423.70152820693,
+          33225.213801956095,
+          0
+        ],
+        [
+          83423.70152820693,
+          35985.213801955986,
+          0
+        ]
+      ],
+      "measurementNodesBefore": [
+        [
+          82653.70152820693,
+          33225.213801956095,
+          0
+        ],
+        [
+          82653.70152820693,
+          34025.213801956095,
+          0
+        ],
+        [
+          82653.70152820693,
+          35985.213801955986,
+          0
+        ]
+      ],
+      "measurementNodesAfter": [
+        [
+          82653.70152820693,
+          33225.213801956095,
+          0
+        ],
+        [
+          82653.70152820693,
+          34025.213801956095,
+          0
+        ],
+        [
+          82653.70152820693,
+          35985.213801955986,
+          0
+        ]
+      ],
+      "valuesBefore": [
+        800,
+        1959.9999999998909
+      ],
+      "valuesAfter": [
+        800,
+        1959.9999999998909
+      ],
+      "fontBoundsBefore": [
+        83024.70152820693,
+        33279.213801956095,
+        83342.70152820693,
+        33971.213801956095
+      ],
+      "fontBoundsAfter": [
+        83524.70152820693,
+        33279.213801956095,
+        83842.70152820693,
+        33971.213801956095
+      ],
+      "selectorHalfSizeMm": 20,
+      "selectorUniqueAmongActualGrips": true,
+      "contacts": [],
+      "baselineContacts": [],
+      "remainingFurnitureRootBoundsContacts": [],
+      "newFurnitureRootBoundsContacts": [],
+      "sourcePreview": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161107-floor2\\stage2-preview-native.json",
+      "captionWitness": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层_生成记录_9752_499508390\\过程\\caption\\door-caption-clearance.json",
+      "scope": "Only text point, no baseline or measurement grip movement"
+    }
+  ],
+  "limitations": [
+    "Numeric text STRETCH must be natively verified, including TCH leader routing.",
+    "Other six chains are delegated to independent recon and not treated as solved here.",
+    "No CAD executed or plugin code modified."
+  ]
+}

@@ -1,0 +1,601 @@
+{
+  "contract": "bcp.direct-native-axis-sample-qa.v1",
+  "version": "v158",
+  "passed": true,
+  "source": "D:\\修改.dwg",
+  "sourceSHA256": "1D73F911C4DBE944DDD5AD35FDE0C0AA4410F61AE2E46B48081C67571536A4DB",
+  "control": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-162629\\direct-axis-sample\\control.dwg",
+  "SHA256": "96C2FE5228306F2C06381E7BF216D7D9A90E8158656F3D3603844BF2CBB9504E",
+  "roots": 242,
+  "removedAxisContainers": 12,
+  "dissolvedAxisGroups": 15,
+  "nativeAxisLabelSets": 12,
+  "visibleAxisCircles": 21,
+  "axes": [
+    {
+      "name": "BCP_AXIS_V_1",
+      "handle": "8894",
+      "type": "TDbAxisLabelSet",
+      "side": "both",
+      "label": "1",
+      "nativeGripCount": 8,
+      "visibleCentres": [
+        [
+          78453.7015282064,
+          20925.213801956088,
+          0
+        ],
+        [
+          78453.70152820695,
+          40825.213801957034,
+          0
+        ]
+      ]
+    },
+    {
+      "name": "BCP_AXIS_V_2",
+      "handle": "8895",
+      "type": "TDbAxisLabelSet",
+      "side": "positive",
+      "label": "2",
+      "nativeGripCount": 4,
+      "visibleCentres": [
+        [
+          80853.70152820695,
+          40825.213801957034,
+          0
+        ]
+      ]
+    },
+    {
+      "name": "BCP_AXIS_V_3",
+      "handle": "8896",
+      "type": "TDbAxisLabelSet",
+      "side": "positive",
+      "label": "3",
+      "nativeGripCount": 4,
+      "visibleCentres": [
+        [
+          82653.70152820695,
+          40825.213801957034,
+          0
+        ]
+      ]
+    },
+    {
+      "name": "BCP_AXIS_V_4",
+      "handle": "8897",
+      "type": "TDbAxisLabelSet",
+      "side": "both",
+      "label": "4",
+      "nativeGripCount": 8,
+      "visibleCentres": [
+        [
+          84893.7015282064,
+          20925.213801956088,
+          0
+        ],
+        [
+          84893.70152820695,
+          40825.213801957034,
+          0
+        ]
+      ]
+    },
+    {
+      "name": "BCP_AXIS_V_5",
+      "handle": "8898",
+      "type": "TDbAxisLabelSet",
+      "side": "both",
+      "label": "5",
+      "nativeGripCount": 8,
+      "visibleCentres": [
+        [
+          89273.7015282064,
+          20925.213801956088,
+          0
+        ],
+        [
+          89273.70152820695,
+          40825.213801957034,
+          0
+        ]
+      ]
+    },
+    {
+      "name": "BCP_AXIS_V_6",
+      "handle": "8899",
+      "type": "TDbAxisLabelSet",
+      "side": "both",
+      "label": "6",
+      "nativeGripCount": 8,
+      "visibleCentres": [
+        [
+          93273.7015282064,
+          20925.213801956088,
+          0
+        ],
+        [
+          93273.70152820695,
+          40825.213801957034,
+          0
+        ]
+      ]
+    },
+    {
+      "name": "BCP_AXIS_V_9",
+      "handle": "889A",
+      "type": "TDbAxisLabelSet",
+      "side": "both",
+      "label": "9",
+      "nativeGripCount": 8,
+      "visibleCentres": [
+        [
+          97653.7015282064,
+          20925.213801956088,
+          0
+        ],
+        [
+          97653.70152820695,
+          40825.213801957034,
+          0
+        ]
+      ]
+    },
+    {
+      "name": "BCP_AXIS_H_A",
+      "handle": "889B",
+      "type": "TDbAxisLabelSet",
+      "side": "both",
+      "label": "A",
+      "nativeGripCount": 8,
+      "visibleCentres": [
+        [
+          73733.70152820693,
+          25645.213801956328,
+          0
+        ],
+        [
+          102373.70152820788,
+          25645.213801956328,
+          0
+        ]
+      ]
+    },
+    {
+      "name": "BCP_AXIS_H_B",
+      "handle": "889C",
+      "type": "TDbAxisLabelSet",
+      "side": "both",
+      "label": "B",
+      "nativeGripCount": 8,
+      "visibleCentres": [
+        [
+          73733.70152820693,
+          30205.213801956095,
+          0
+        ],
+        [
+          102373.70152820788,
+          30205.213801956095,
+          0
+        ]
+      ]
+    },
+    {
+      "name": "BCP_AXIS_H_C",
+      "handle": "889D",
+      "type": "TDbAxisLabelSet",
+      "side": "both",
+      "label": "C",
+      "nativeGripCount": 8,
+      "visibleCentres": [
+        [
+          73733.70152820693,
+          32105.21380195621,
+          0
+        ],
+        [
+          102373.70152820788,
+          32105.21380195621,
+          0
+        ]
+      ]
+    },
+    {
+      "name": "BCP_AXIS_H_E",
+      "handle": "889E",
+      "type": "TDbAxisLabelSet",
+      "side": "negative",
+      "label": "E",
+      "nativeGripCount": 4,
+      "visibleCentres": [
+        [
+          73733.70152820693,
+          33105.21380195598,
+          0
+        ]
+      ]
+    },
+    {
+      "name": "BCP_AXIS_H_F",
+      "handle": "889F",
+      "type": "TDbAxisLabelSet",
+      "side": "both",
+      "label": "F",
+      "nativeGripCount": 8,
+      "visibleCentres": [
+        [
+          73733.70152820693,
+          36105.21380195598,
+          0
+        ],
+        [
+          102373.70152820788,
+          36105.21380195598,
+          0
+        ]
+      ]
+    }
+  ],
+  "newAxis1Connector": "88A0",
+  "standaloneAxisLinesRestoredAfterStretch": true,
+  "lineStretchMm": 123,
+  "allOriginalSourceRootsExceptTitleAndRemovedContainersIdentical": true,
+  "allLayersStylesAndExistingEntityCommonPropertiesPreserved": true,
+  "allSourceDimensionGeometryAndOpeningNumberFieldsPreserved": true,
+  "wholeVisibleDimensions": 19,
+  "openingCount": 20,
+  "groups": {
+    "BCP_AREA_F2_R01": [
+      [
+        "8619",
+        "TEXT"
+      ],
+      [
+        "869A",
+        "TEXT"
+      ]
+    ],
+    "BCP_AREA_F2_R02": [
+      [
+        "861B",
+        "TEXT"
+      ],
+      [
+        "869C",
+        "TEXT"
+      ]
+    ],
+    "BCP_AREA_F2_R03": [
+      [
+        "861D",
+        "TEXT"
+      ],
+      [
+        "869E",
+        "TEXT"
+      ]
+    ],
+    "BCP_AREA_F2_R04": [
+      [
+        "861F",
+        "TEXT"
+      ],
+      [
+        "86A0",
+        "TEXT"
+      ]
+    ],
+    "BCP_AREA_F2_R05": [
+      [
+        "8621",
+        "TEXT"
+      ],
+      [
+        "86A2",
+        "TEXT"
+      ]
+    ],
+    "BCP_AREA_F2_R06": [
+      [
+        "8623",
+        "TEXT"
+      ],
+      [
+        "86A4",
+        "TEXT"
+      ]
+    ],
+    "BCP_AREA_F2_R07": [
+      [
+        "8625",
+        "TEXT"
+      ],
+      [
+        "86A6",
+        "TEXT"
+      ]
+    ],
+    "BCP_AREA_F2_R08": [
+      [
+        "8627",
+        "TEXT"
+      ],
+      [
+        "86A8",
+        "TEXT"
+      ]
+    ],
+    "BCP_AREA_F2_R10": [
+      [
+        "862B",
+        "TEXT"
+      ],
+      [
+        "86AC",
+        "TEXT"
+      ]
+    ],
+    "BCP_AREA_F2_TOTAL": [
+      [
+        "862E",
+        "TEXT"
+      ],
+      [
+        "86AE",
+        "TEXT"
+      ]
+    ]
+  },
+  "renumberTrialsRequireVisualSemanticReview": [
+    "21 at both ends of axis1, then1",
+    "P at both ends of axisA, thenA"
+  ],
+  "captures": {
+    "final": {
+      "version": "v158",
+      "tag": "final",
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-162629\\direct-axis-sample\\control.dwg",
+      "SHA256": "96C2FE5228306F2C06381E7BF216D7D9A90E8158656F3D3603844BF2CBB9504E",
+      "job": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-163114-418871-final",
+      "PDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-163114-418871-final\\stage2-A2-1-100.pdf",
+      "steps": [
+        {
+          "serial": "39e1441e249a46b2b11a0e38afde5afe",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-162629\\dispatch_39e1441e249a46b2b11a0e38afde5afe.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "3f2e701acaaa470095f23b2e1fcf992e",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-162629",
+            "processId": 44516,
+            "desktop": "CodexS1_3f2e701acaaa470095f23b2e1fcf992e",
+            "inputDesktop": "Default",
+            "serial": "39e1441e249a46b2b11a0e38afde5afe",
+            "command": "S1OPENPROBECONTROL",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-163114-418871-final",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-163114-418871-final\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "d446237d7fa146e39ac1ad76c11725fe",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-162629\\dispatch_d446237d7fa146e39ac1ad76c11725fe.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "3f2e701acaaa470095f23b2e1fcf992e",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-162629",
+            "processId": 44516,
+            "desktop": "CodexS1_3f2e701acaaa470095f23b2e1fcf992e",
+            "inputDesktop": "Default",
+            "serial": "d446237d7fa146e39ac1ad76c11725fe",
+            "command": "S1PHASE2PREVIEW",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-163114-418871-final",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-163114-418871-final\\control.dwg",
+            "error": null
+          }
+        }
+      ],
+      "readOnly": true,
+      "rootCount": 242
+    },
+    "number21": {
+      "version": "v158",
+      "tag": "number21",
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-162629\\direct-axis-sample\\axis-number-21-test.dwg",
+      "SHA256": "FE3A87B89D8C3D9FA3D59DBE4BB5D290AD6C12FA50A04010A3F037EB918249E0",
+      "job": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-163115-951884-number21",
+      "PDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-163115-951884-number21\\stage2-A2-1-100.pdf",
+      "steps": [
+        {
+          "serial": "adce801d1cc14043b07c3b4fa46d6040",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-162629\\dispatch_adce801d1cc14043b07c3b4fa46d6040.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "3f2e701acaaa470095f23b2e1fcf992e",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-162629",
+            "processId": 44516,
+            "desktop": "CodexS1_3f2e701acaaa470095f23b2e1fcf992e",
+            "inputDesktop": "Default",
+            "serial": "adce801d1cc14043b07c3b4fa46d6040",
+            "command": "S1OPENPROBECONTROL",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-163115-951884-number21",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-163115-951884-number21\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "3396bc05bb2f451e8b66fcc2c9f5cb8b",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-162629\\dispatch_3396bc05bb2f451e8b66fcc2c9f5cb8b.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "3f2e701acaaa470095f23b2e1fcf992e",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-162629",
+            "processId": 44516,
+            "desktop": "CodexS1_3f2e701acaaa470095f23b2e1fcf992e",
+            "inputDesktop": "Default",
+            "serial": "3396bc05bb2f451e8b66fcc2c9f5cb8b",
+            "command": "S1PHASE2PREVIEW",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-163115-951884-number21",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-163115-951884-number21\\control.dwg",
+            "error": null
+          }
+        }
+      ],
+      "readOnly": true,
+      "rootCount": 242
+    },
+    "letterP": {
+      "version": "v158",
+      "tag": "letterP",
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-162629\\direct-axis-sample\\axis-letter-P-test.dwg",
+      "SHA256": "80EAC0581536B40616958903C1B2871EF0D5C7D9DC65EFC1AE6779FAE396C0D4",
+      "job": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-163117-331010-letterP",
+      "PDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-163117-331010-letterP\\stage2-A2-1-100.pdf",
+      "steps": [
+        {
+          "serial": "dca4b8590fcb4f32a25a7e9ed66f43e5",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-162629\\dispatch_dca4b8590fcb4f32a25a7e9ed66f43e5.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "3f2e701acaaa470095f23b2e1fcf992e",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-162629",
+            "processId": 44516,
+            "desktop": "CodexS1_3f2e701acaaa470095f23b2e1fcf992e",
+            "inputDesktop": "Default",
+            "serial": "dca4b8590fcb4f32a25a7e9ed66f43e5",
+            "command": "S1OPENPROBECONTROL",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-163117-331010-letterP",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-163117-331010-letterP\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "15b6228bc8d14954809abf361707474b",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-162629\\dispatch_15b6228bc8d14954809abf361707474b.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "3f2e701acaaa470095f23b2e1fcf992e",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-162629",
+            "processId": 44516,
+            "desktop": "CodexS1_3f2e701acaaa470095f23b2e1fcf992e",
+            "inputDesktop": "Default",
+            "serial": "15b6228bc8d14954809abf361707474b",
+            "command": "S1PHASE2PREVIEW",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-163117-331010-letterP",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-163117-331010-letterP\\control.dwg",
+            "error": null
+          }
+        }
+      ],
+      "readOnly": true,
+      "rootCount": 242
+    },
+    "line123": {
+      "version": "v158",
+      "tag": "line123",
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-162629\\direct-axis-sample\\axis-line-stretch-123-test.dwg",
+      "SHA256": "24282079236C326C4D4C4D57BB5D4359FD166A516DE013A4A043A9494D91822F",
+      "job": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-163118-704857-line123",
+      "PDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-163118-704857-line123\\stage2-A2-1-100.pdf",
+      "steps": [
+        {
+          "serial": "1c775dcf827749e0a36ab4d07b423ea1",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-162629\\dispatch_1c775dcf827749e0a36ab4d07b423ea1.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "3f2e701acaaa470095f23b2e1fcf992e",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-162629",
+            "processId": 44516,
+            "desktop": "CodexS1_3f2e701acaaa470095f23b2e1fcf992e",
+            "inputDesktop": "Default",
+            "serial": "1c775dcf827749e0a36ab4d07b423ea1",
+            "command": "S1OPENPROBECONTROL",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-163118-704857-line123",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-163118-704857-line123\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "1639ae3f1ad340b1965b5b158796a224",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-162629\\dispatch_1639ae3f1ad340b1965b5b158796a224.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "3f2e701acaaa470095f23b2e1fcf992e",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-162629",
+            "processId": 44516,
+            "desktop": "CodexS1_3f2e701acaaa470095f23b2e1fcf992e",
+            "inputDesktop": "Default",
+            "serial": "1639ae3f1ad340b1965b5b158796a224",
+            "command": "S1PHASE2PREVIEW",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-163118-704857-line123",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-163118-704857-line123\\control.dwg",
+            "error": null
+          }
+        }
+      ],
+      "readOnly": true,
+      "rootCount": 242
+    }
+  },
+  "sdkRead": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门窗内部编号_20261102\\sdk-read-v158-final.json",
+  "pluginCodeChanged": false,
+  "pluginBinarySHA256": "835B9E0F67B65C0F3A43F06F0C443BFB2029B1CBFACEB751C24938B894631FEA",
+  "scope": "Independent direct TCH singleton axis objects; no claim that all parallel axes were merged into one reindexing collection or every Tianzheng axis command was tested."
+}

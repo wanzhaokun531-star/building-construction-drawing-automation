@@ -1,0 +1,85 @@
+{
+  "frozenBuild": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\f1-20261101-183921-540-g1-final-green-618ba70f",
+  "executableSHA256": "1E72DEE1948EAD1B6E0141706C7A618B71E581217BE81AF820B772BBC82C241A",
+  "cases": [
+    {
+      "name": "MissingConfigDoesNotWriteDrawing",
+      "exitCode": 0,
+      "log": "case-MissingConfigDoesNotWriteDrawing.log",
+      "sha256": "373DF259FA9294526209C1D64A1AA5D203372BFA8DC2749B7489605612D5B848"
+    },
+    {
+      "name": "DocumentSwitchRejectsStaleCommit",
+      "exitCode": 0,
+      "log": "case-DocumentSwitchRejectsStaleCommit.log",
+      "sha256": "A0258E85AAC331588ACD26F59DE6019C7CD002F98A632945D2012FD604F7D7C7"
+    },
+    {
+      "name": "RepeatedBuildDoesNotDuplicate",
+      "exitCode": 0,
+      "log": "case-RepeatedBuildDoesNotDuplicate.log",
+      "sha256": "7570EA1FEF7F501D9D6FC036E845FBF7B98BF4606FF6F6CEDDAE832B244E0CB3"
+    },
+    {
+      "name": "ManualChangesAreNotSilentlyReplaced",
+      "exitCode": 0,
+      "log": "case-ManualChangesAreNotSilentlyReplaced.log",
+      "sha256": "C1F66AA2F18559BC96F5BA74185119D1D0A4C729482E608C2AD54F5A990FCCE3"
+    },
+    {
+      "name": "UncommittedEvidenceCannotRegister",
+      "exitCode": 0,
+      "log": "case-UncommittedEvidenceCannotRegister.log",
+      "sha256": "31F9276B0CFC728E408E58B39B5C7B493069A4BC8A3054BB2BCB934409C2D829"
+    },
+    {
+      "name": "ChangedViewInvalidatesOnlyItsState",
+      "exitCode": 0,
+      "log": "case-ChangedViewInvalidatesOnlyItsState.log",
+      "sha256": "8BA3B1E70239C96A2B5F93CFB7A480AB9B60E7FE2CAB60338CED7E49D6A76F4B"
+    },
+    {
+      "name": "SameLayerDoesNotConferOwnership",
+      "exitCode": 0,
+      "log": "case-SameLayerDoesNotConferOwnership.log",
+      "sha256": "B84484C3892B3EE4567372580B6B23E91D5218F0F059C0ED3877C3C0D4A17C35"
+    },
+    {
+      "name": "ForeignOrMissingOutputCannotRegister",
+      "exitCode": 0,
+      "log": "case-ForeignOrMissingOutputCannotRegister.log",
+      "sha256": "3351EF4118BD78A89C844B67F681C3EF12C055690E58ACAA01A05526E6722A24"
+    },
+    {
+      "name": "StaleReadinessAndChangedConfigCannotAuthorize",
+      "exitCode": 0,
+      "log": "case-StaleReadinessAndChangedConfigCannotAuthorize.log",
+      "sha256": "BDDA30D87A89970DABA8C357F17A02E3303FF8A93ED2382027BA4C3CB0DE5908"
+    },
+    {
+      "name": "RegistrationRequiresExactTargetAndPreservedInventory",
+      "exitCode": 0,
+      "log": "case-RegistrationRequiresExactTargetAndPreservedInventory.log",
+      "sha256": "3137AE4C82ECA760692C0BEE0EB97FF9FDB5BAC24065B47095B0C855FFCF61E1"
+    },
+    {
+      "name": "ManualChangeTakesPriorityOverSourceInvalidation",
+      "exitCode": 0,
+      "log": "case-ManualChangeTakesPriorityOverSourceInvalidation.log",
+      "sha256": "49B425C1CF0616311A499D0722190BE5C7BB3D3C9075DA107C6210187B1A094D"
+    },
+    {
+      "name": "UnrelatedRevisionKeepsHistoricalOwnershipButStalesPreparation",
+      "exitCode": 0,
+      "log": "case-UnrelatedRevisionKeepsHistoricalOwnershipButStalesPreparation.log",
+      "sha256": "FA55757618FA3DE21007BFF5501E61695F153E592E567A83EA0E76FB494412FB"
+    },
+    {
+      "name": "MalformedOwnershipCannotAuthorizeAnotherWrite",
+      "exitCode": 0,
+      "log": "case-MalformedOwnershipCannotAuthorizeAnotherWrite.log",
+      "sha256": "6FFBE095B1CF9DA4337ACC46498A2393714E037DC8035707AB19BA5DEFC51CFD"
+    }
+  ],
+  "exitCode": 0
+}

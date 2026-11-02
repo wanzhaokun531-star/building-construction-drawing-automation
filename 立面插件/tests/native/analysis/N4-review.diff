@@ -1,0 +1,1628 @@
+--- before/src/AnalysisReader.h
++++ after/src/AnalysisReader.h
+@@ -1,6 +1,7 @@
+ #pragma once
++#include "Recognition.h"
+ #include "SceneReader.h"
+-#include "Recognition.h"
++#include <functional>
+ #include <map>
+ namespace bce {
+ struct NativeGeometryRecord {
+@@ -9,6 +10,7 @@
+     std::string instancePath;
+     std::string nativeType;
+     std::string canonicalGeometry;
++    Primitive2 worldGeometry; // Read-only leaf geometry; key is an actual CAD handle.
+     bool effectiveVisible{true};
+     bool complete{false};
+ };
+@@ -16,7 +18,7 @@
+     SceneSnapshot scene;
+     AnalysisResult recognition;
+     std::vector<NativeGeometryRecord> geometry;
+-    std::map<std::string,std::size_t> rootTypeCounts;
++    std::map<std::string, std::size_t> rootTypeCounts;
+     std::vector<Issue> readIssues;
+ };
+ struct AnalysisReadOptions {
+@@ -24,10 +26,12 @@
+     std::string sourceSha256;
+     PlanSnapshot plan;
+     ProjectConfig project;
++    // Optional diagnostic observer, called synchronously; no SDK pointer escapes.
++    std::function<void(const char *, const EntityKey &)> diagnosticObserver;
+ };
+ // Current unsaved memory. Context identity and revision are checked before and after.
+-Result<NativeAnalysis> readCurrentAnalysis(NativeSceneContext&, const AnalysisReadOptions&);
++Result<NativeAnalysis> readCurrentAnalysis(NativeSceneContext &, const AnalysisReadOptions &);
+ // Explicit external database read: never claims current-document identity.
+-Result<NativeAnalysis> readDatabaseAnalysis(AcDbDatabase&, const std::string& databaseIdentity,
+-    std::uint64_t revision, const AnalysisReadOptions&);
+-}
++Result<NativeAnalysis> readDatabaseAnalysis(AcDbDatabase &, const std::string &databaseIdentity,
++                                            std::uint64_t revision, const AnalysisReadOptions &);
++} // namespace bce
+--- before/src/AnalysisReader.cpp
++++ after/src/AnalysisReader.cpp
+@@ -1,9 +1,681 @@
+ #include "AnalysisReader.h"
++#include <cmath>
++#include <dbHatch.h>
++#include <dbapserv.h>
++#include <dbdim.h>
++#include <dbents.h>
++#include <dbidmap.h>
++#include <dbmtext.h>
++#include <dbpl.h>
++#include <dbsymtb.h>
++#include <dbsymutl.h>
++#include <gearc2d.h>
++#include <geell2d.h>
++#include <gekvec.h>
++#include <gelnsg2d.h>
++#include <genurb2d.h>
++#include <iomanip>
++#include <limits>
++#include <locale>
++#include <set>
++#include <sstream>
++#include <stdexcept>
+ namespace bce {
+-Result<NativeAnalysis> readCurrentAnalysis(NativeSceneContext&,const AnalysisReadOptions&) {
+-    return {std::nullopt,{{"ANALYSIS_NOT_IMPLEMENTED","当前内存读取尚未实现。",{},true}}};
+-}
+-Result<NativeAnalysis> readDatabaseAnalysis(AcDbDatabase&,const std::string&,std::uint64_t,const AnalysisReadOptions&) {
+-    return {std::nullopt,{{"ANALYSIS_NOT_IMPLEMENTED","明确数据库读取尚未实现。",{},true}}};
+-}
+-}
++namespace {
++void check(Acad::ErrorStatus s, const char *op) {
++    if (s != Acad::eOk)
++        throw std::runtime_error(std::string(op) + ":" + std::to_string(s));
++}
++template <class T> class Read final {
++  public:
++    explicit Read(AcDbObjectId id) { check(acdbOpenObject(p_, id, AcDb::kForRead), "open read"); }
++    ~Read() {
++        if (p_)
++            p_->close();
++    }
++    Read(const Read &) = delete;
++    Read &operator=(const Read &) = delete;
++    T *get() const { return p_; }
++    T *operator->() const { return p_; }
++
++  private:
++    T *p_{};
++};
++class WorkingDatabaseScope final {
++  public:
++    explicit WorkingDatabaseScope(AcDbDatabase &database)
++        : services_(acdbHostApplicationServices()), previous_(services_->workingDatabase()) {
++        services_->setWorkingDatabase(&database);
++    }
++    ~WorkingDatabaseScope() noexcept { services_->setWorkingDatabase(previous_); }
++    WorkingDatabaseScope(const WorkingDatabaseScope &) = delete;
++    WorkingDatabaseScope &operator=(const WorkingDatabaseScope &) = delete;
++
++  private:
++    AcDbHostApplicationServices *services_;
++    AcDbDatabase *previous_;
++};
++struct Canonical {
++    std::ostringstream out;
++    Canonical() {
++        out.imbue(std::locale::classic());
++        out << std::hexfloat;
++    }
++    void add(double n) {
++        if (!std::isfinite(n))
++            throw std::runtime_error("nonfinite geometry");
++        out << n << ';';
++    }
++    void add(const std::string &s) { out << s.size() << ':' << s; }
++    void add(AcGePoint3d p) {
++        add(p.x);
++        add(p.y);
++        add(p.z);
++    }
++    void add(AcGeVector3d v) {
++        add(v.x);
++        add(v.y);
++        add(v.z);
++    }
++    void add(AcGePoint2d p) {
++        add(p.x);
++        add(p.y);
++    }
++    void add(AcGeVector2d v) {
++        add(v.x);
++        add(v.y);
++    }
++};
++Point2 xy(AcGePoint3d p) { return {p.x, p.y}; }
++bool planar(AcGePoint3d p) {
++    return std::isfinite(p.x) && std::isfinite(p.y) && std::isfinite(p.z) && std::abs(p.z) < 1e-9;
++}
++bool normal(AcGeVector3d n) {
++    return std::abs(n.x) < 1e-9 && std::abs(n.y) < 1e-9 && std::abs(std::abs(n.z) - 1.0) < 1e-9;
++}
++bool layerVisible(AcDbObjectId layer) {
++    Read<AcDbLayerTableRecord> p(layer);
++    return !p->isOff() && !p->isFrozen();
++}
++std::optional<Bounds2> bounds(const AcDbEntity &e, const AcGeMatrix3d *parentTransform = nullptr) {
++    AcDbExtents b;
++    const auto s = e.getGeomExtents(b);
++    if (s == Acad::eNullExtents)
++        return {};
++    check(s, "bounds");
++    if (parentTransform)
++        b.transformBy(*parentTransform);
++    const auto a = b.minPoint(), z = b.maxPoint();
++    if (!std::isfinite(a.x) || !std::isfinite(a.y) || !std::isfinite(z.x) || !std::isfinite(z.y))
++        throw std::runtime_error("nonfinite bounds");
++    return Bounds2{xy(a), xy(z)};
++}
++void curve(Canonical &out, const AcGeCurve2d *c, int type) {
++    if (!c)
++        throw std::runtime_error("null hatch curve");
++    out.add(type);
++    if (type == AcDbHatch::kLine) {
++        const auto *p = static_cast<const AcGeLineSeg2d *>(c);
++        out.add(p->startPoint());
++        out.add(p->endPoint());
++    } else if (type == AcDbHatch::kCirArc) {
++        const auto *p = static_cast<const AcGeCircArc2d *>(c);
++        out.add(p->center());
++        out.add(p->radius());
++        out.add(p->startAng());
++        out.add(p->endAng());
++        out.add(p->isClockWise());
++    } else if (type == AcDbHatch::kEllArc) {
++        const auto *p = static_cast<const AcGeEllipArc2d *>(c);
++        out.add(p->center());
++        out.add(p->majorAxis());
++        out.add(p->minorAxis());
++        out.add(p->majorRadius());
++        out.add(p->minorRadius());
++        out.add(p->startAng());
++        out.add(p->endAng());
++        out.add(p->isClockWise());
++    } else if (type == AcDbHatch::kSpline) {
++        const auto *p = static_cast<const AcGeNurbCurve2d *>(c);
++        int degree{};
++        Adesk::Boolean rational{}, periodic{};
++        AcGeKnotVector knots;
++        AcGePoint2dArray points;
++        AcGeDoubleArray weights;
++        p->getDefinitionData(degree, rational, periodic, knots, points, weights);
++        out.add(degree);
++        out.add(rational);
++        out.add(periodic);
++        out.add(knots.length());
++        for (int i = 0; i < knots.length(); ++i)
++            out.add(knots[i]);
++        out.add(points.length());
++        for (int i = 0; i < points.length(); ++i)
++            out.add(points[i]);
++        out.add(weights.length());
++        for (int i = 0; i < weights.length(); ++i)
++            out.add(weights[i]);
++    } else
++        throw std::runtime_error("unsupported hatch curve type");
++}
++bool geometry(AcDbEntity &e, Primitive2 &p, Canonical &out,
++              const std::function<void(const char *)> &observe) {
++    observe("common-getters");
++    out.add(native_scene::utf8(e.isA()->name()));
++    out.add(e.visibility());
++    out.add(e.color().color());
++    out.add(e.linetypeScale());
++    out.add(e.lineWeight());
++    observe("getGeomExtents");
++    p.bounds = bounds(e);
++    observe("type-specific-getters");
++    const auto nativeType = e.isA();
++    if (nativeType != AcDbLine::desc() && nativeType != AcDbText::desc() &&
++        nativeType != AcDbAttribute::desc() && nativeType != AcDbAttributeDefinition::desc() &&
++        nativeType != AcDbMText::desc() && nativeType != AcDbAlignedDimension::desc() &&
++        nativeType != AcDbPolyline::desc() && nativeType != AcDbArc::desc() &&
++        nativeType != AcDbCircle::desc() && nativeType != AcDbHatch::desc())
++        return false;
++    if (auto *line = AcDbLine::cast(&e)) {
++        p.kind = PrimitiveKind::line;
++        const auto a = line->startPoint(), b = line->endPoint();
++        p.start = xy(a);
++        p.end = xy(b);
++        out.add(a);
++        out.add(b);
++        out.add(line->normal());
++        out.add(line->thickness());
++        return planar(a) && planar(b) && line->thickness() == 0;
++    }
++    if (auto *text = AcDbText::cast(&e)) {
++        p.kind = PrimitiveKind::text;
++        AcString s;
++        check(text->textString(s), "text");
++        p.text = native_scene::utf8(s.kACharPtr());
++        p.textPosition = xy(text->position());
++        p.textHeight = text->height();
++        AcGeVector3d textDirection(std::cos(text->rotation()), std::sin(text->rotation()), 0);
++        textDirection.transformBy(AcGeMatrix3d::planeToWorld(text->normal()));
++        p.textRotation = std::atan2(textDirection.y, textDirection.x);
++        p.textMirroredX = text->isMirroredInX() != 0;
++        p.textMirroredY = (text->isMirroredInY() != 0) != (text->normal().z < 0);
++        out.add(*p.text);
++        out.add(text->position());
++        out.add(text->alignmentPoint());
++        out.add(text->normal());
++        out.add(text->height());
++        out.add(text->rotation());
++        out.add(text->widthFactor());
++        out.add(text->oblique());
++        out.add(text->thickness());
++        out.add(text->horizontalMode());
++        out.add(text->verticalMode());
++        out.add(text->isMirroredInX());
++        out.add(text->isMirroredInY());
++        out.add(native_scene::symbolName(text->textStyle()));
++        return planar(text->position()) && normal(text->normal()) && text->thickness() == 0;
++    }
++    if (auto *text = AcDbMText::cast(&e)) {
++        p.kind = PrimitiveKind::text;
++        AcString raw, plain;
++        check(text->contents(raw), "mtext contents");
++        check(text->text(plain), "mtext plain");
++        p.text = native_scene::utf8(plain.kACharPtr());
++        p.textPosition = xy(text->location());
++        p.textHeight = text->textHeight();
++        p.textRotation = text->rotation();
++        out.add(native_scene::utf8(raw.kACharPtr()));
++        out.add(text->location());
++        out.add(text->normal());
++        out.add(text->direction());
++        out.add(text->textHeight());
++        out.add(text->width());
++        out.add(text->attachment());
++        out.add(native_scene::symbolName(text->textStyle()));
++        return false;
++    }
++    if (auto *dim = AcDbAlignedDimension::cast(&e)) {
++        p.kind = PrimitiveKind::dimension;
++        const auto a = dim->xLine1Point(), b = dim->xLine2Point();
++        p.start = xy(a);
++        p.end = xy(b);
++        p.textPosition = xy(dim->textPosition());
++        double value{};
++        // Only the mapped, database-resident sandbox dimension may evaluate its
++        // measurement. A nonresident transformed dimension must not borrow the
++        // ambient working database; its world measurement stays explicitly unread.
++        const bool measured = dim->database() != nullptr;
++        if (measured) {
++            observe("dimension-sandbox-measurement");
++            check(dim->measurement(value), "dimension measurement");
++            p.dimensionMeasurement = value;
++        }
++        observe("dimension-remaining-getters");
++        AcString s;
++        check(dim->dimensionText(s), "dimension override");
++        p.text = native_scene::utf8(s.kACharPtr());
++        out.add(a);
++        out.add(b);
++        out.add(dim->dimLinePoint());
++        out.add(dim->textPosition());
++        out.add(dim->normal());
++        out.add(dim->elevation());
++        if (measured)
++            out.add(value);
++        else
++            out.add(std::string("nonresident-world-measurement-unavailable"));
++        out.add(*p.text);
++        out.add(native_scene::symbolName(dim->dimensionStyle()));
++        return measured && planar(a) && planar(b) && planar(dim->dimLinePoint()) && normal(dim->normal());
++    }
++    if (auto *poly = AcDbPolyline::cast(&e)) {
++        p.kind = PrimitiveKind::polyline;
++        out.add(poly->numVerts());
++        out.add(poly->isClosed());
++        out.add(poly->normal());
++        out.add(poly->elevation());
++        out.add(poly->thickness());
++        out.add(poly->hasPlinegen());
++        bool ok = normal(poly->normal()) && poly->elevation() == 0 && poly->thickness() == 0;
++        for (unsigned i = 0; i < poly->numVerts(); ++i) {
++            AcGePoint3d point;
++            double bulge{}, sw{}, ew{};
++            check(poly->getPointAt(i, point), "poly vertex");
++            check(poly->getBulgeAt(i, bulge), "poly bulge");
++            check(poly->getWidthsAt(i, sw, ew), "poly widths");
++            out.add(point);
++            out.add(bulge);
++            out.add(sw);
++            out.add(ew);
++            ok = ok && planar(point);
++            if (i == 0)
++                p.start = xy(point);
++            if (i + 1 == poly->numVerts())
++                p.end = xy(point);
++        }
++        return ok;
++    }
++    if (auto *arc = AcDbArc::cast(&e)) {
++        p.kind = PrimitiveKind::arc;
++        const auto c = arc->center();
++        AcGePoint3d a, b;
++        check(arc->getStartPoint(a), "arc start");
++        check(arc->getEndPoint(b), "arc end");
++        p.start = xy(a);
++        p.end = xy(b);
++        double sweep = arc->endAngle() - arc->startAngle();
++        if (sweep < 0)
++            sweep += 2 * 3.14159265358979323846;
++        if (arc->normal().z < 0)
++            sweep = -sweep;
++        p.arc = Arc2{xy(c), arc->radius(), std::atan2(a.y - c.y, a.x - c.x), sweep};
++        out.add(c);
++        out.add(arc->normal());
++        out.add(arc->radius());
++        out.add(arc->startAngle());
++        out.add(arc->endAngle());
++        out.add(arc->thickness());
++        return planar(c) && normal(arc->normal()) && arc->thickness() == 0;
++    }
++    if (auto *circle = AcDbCircle::cast(&e)) {
++        p.kind = PrimitiveKind::arc;
++        p.arc = Arc2{xy(circle->center()), circle->radius(), 0,
++                     circle->normal().z < 0 ? -2 * 3.14159265358979323846 : 2 * 3.14159265358979323846};
++        out.add(circle->center());
++        out.add(circle->normal());
++        out.add(circle->radius());
++        out.add(circle->thickness());
++        return planar(circle->center()) && normal(circle->normal()) && circle->thickness() == 0;
++    }
++    if (auto *hatch = AcDbHatch::cast(&e)) {
++        out.add(hatch->normal());
++        out.add(hatch->elevation());
++        out.add(hatch->originPoint());
++        out.add(hatch->backgroundColor().color());
++        out.add(hatch->isGradient());
++        out.add(native_scene::utf8(hatch->patternName()));
++        out.add(hatch->patternType());
++        out.add(hatch->patternAngle());
++        out.add(hatch->patternScale());
++        out.add(hatch->patternSpace());
++        out.add(hatch->patternDouble());
++        out.add(hatch->hatchStyle());
++        out.add(hatch->numPatternDefinitions());
++        for (int i = 0; i < hatch->numPatternDefinitions(); ++i) {
++            double a{}, x{}, y{}, dx{}, dy{};
++            AcGeDoubleArray d;
++            check(hatch->getPatternDefinitionAt(i, a, x, y, dx, dy, d), "hatch pattern");
++            out.add(a);
++            out.add(x);
++            out.add(y);
++            out.add(dx);
++            out.add(dy);
++            out.add(d.length());
++            for (int j = 0; j < d.length(); ++j)
++                out.add(d[j]);
++        }
++        out.add(hatch->numLoops());
++        for (int i = 0; i < hatch->numLoops(); ++i) {
++            Adesk::Int32 type = hatch->loopTypeAt(i);
++            out.add(type);
++            if (type & AcDbHatch::kPolyline) {
++                AcGePoint2dArray v;
++                AcGeDoubleArray b;
++                check(hatch->getLoopAt(i, type, v, b), "hatch poly loop");
++                out.add(v.length());
++                for (int j = 0; j < v.length(); ++j)
++                    out.add(v[j]);
++                out.add(b.length());
++                for (int j = 0; j < b.length(); ++j)
++                    out.add(b[j]);
++            } else {
++                AcGeVoidPointerArray edges;
++                AcGeIntArray types;
++                check(hatch->getLoopAt(i, type, edges, types), "hatch edge loop");
++                if (edges.length() != types.length())
++                    throw std::runtime_error("hatch edge mismatch");
++                out.add(edges.length());
++                for (int j = 0; j < edges.length(); ++j)
++                    curve(out, static_cast<const AcGeCurve2d *>(edges[j]), types[j]);
++            }
++        }
++        return !hatch->isGradient() && normal(hatch->normal()) && hatch->elevation() == 0;
++    }
++    return false;
++}
++struct Reader {
++    NativeAnalysis output;
++    AcDbDatabase &db;
++    std::set<std::string> protectedRoots;
++    std::unique_ptr<AcDbDatabase> sandbox;
++    std::map<std::string, std::string> sourceHandles;
++    std::function<void(const char *, const EntityKey &)> observer;
++    explicit Reader(AcDbDatabase &database) : db(database) {}
++    std::string sourceHandle(AcDbObjectId id) const {
++        const auto found = sourceHandles.find(native_scene::handle(id));
++        if (found == sourceHandles.end())
++            throw std::runtime_error("cloned object missing original identity mapping");
++        return found->second;
++    }
++    EntityKey key(AcDbObjectId id) const {
++        return {output.scene.databaseIdentity, sourceHandle(id), output.scene.revision};
++    }
++    void issue(const EntityKey &root, const std::string &path, const std::string &message) {
++        protectedRoots.insert(root.handle);
++        output.readIssues.push_back({"NATIVE_READ_INCOMPLETE",
++                                     message + " [" + path + "]",
++                                     {output.scene.documentIdentity, {}, root},
++                                     true});
++    }
++    std::string walk(AcDbObjectId id, const EntityKey &root, const std::string &path,
++                     const AcGeMatrix3d &matrix, AcDbObjectId inheritedLayer, bool ancestorVisible,
++                     std::set<std::string> blocks, Primitive2 *rootPrimitive) {
++        Read<AcDbEntity> e(id);
++        Canonical all;
++        NativeGeometryRecord record;
++        record.root = root;
++        record.leaf = key(id);
++        record.instancePath = path;
++        record.nativeType = native_scene::utf8(e->isA()->name());
++        auto layer = e->layerId();
++        if (native_scene::symbolName(layer) == "0" && !inheritedLayer.isNull())
++            layer = inheritedLayer;
++        record.effectiveVisible = ancestorVisible && e->visibility() == AcDb::kVisible && layerVisible(layer);
++        if (auto *attr = AcDbAttribute::cast(e.get()))
++            record.effectiveVisible = record.effectiveVisible && !attr->isInvisible();
++        Primitive2 p;
++        p.key = key(id);
++        p.layer = native_scene::symbolName(layer);
++        p.sourceRootHandle = root.handle;
++        p.instancePath = path;
++        p.effectiveVisible = record.effectiveVisible;
++        all.add(path);
++        all.add(p.layer);
++        all.add(record.effectiveVisible);
++        for (int r = 0; r < 4; ++r)
++            for (int c = 0; c < 4; ++c)
++                all.add(matrix(r, c));
++        try {
++            if (auto *block = AcDbBlockReference::cast(e.get())) {
++                if (e->isA() != AcDbBlockReference::desc())
++                    throw std::runtime_error("unsupported derived block/array instance");
++                const auto definition = sourceHandle(block->blockTableRecord());
++                all.add(definition);
++                const auto next = matrix * block->blockTransform();
++                for (int r = 0; r < 4; ++r)
++                    for (int c = 0; c < 4; ++c)
++                        all.add(next(r, c));
++                if (blocks.size() > 64 || !blocks.insert(definition).second)
++                    throw std::runtime_error("cyclic/deep block");
++                Read<AcDbBlockTableRecord> b(block->blockTableRecord());
++                AcDbBlockTableRecordIterator *raw{};
++                check(b->newIterator(raw), "block iterator");
++                std::unique_ptr<AcDbBlockTableRecordIterator> it(raw);
++                for (; !it->done(); it->step()) {
++                    AcDbObjectId child;
++                    check(it->getEntityId(child), "block child");
++                    Read<AcDbEntity> ce(child);
++                    if (auto *def = AcDbAttributeDefinition::cast(ce.get())) {
++                        if (!def->isConstant())
++                            continue;
++                    }
++                    all.add(walk(child, root, path + "/" + sourceHandle(child), next, layer,
++                                 record.effectiveVisible, blocks, nullptr));
++                }
++                std::unique_ptr<AcDbObjectIterator> attrs(block->attributeIterator());
++                for (; attrs && !attrs->done(); attrs->step()) {
++                    const auto child = attrs->objectId();
++                    all.add(walk(child, root, path + "/attrib:" + sourceHandle(child), matrix, layer,
++                                 record.effectiveVisible, blocks, nullptr));
++                }
++                p.bounds = bounds(*block, &matrix);
++                issue(root, path, "嵌套块实例另存；块内标题未接入视图识别，根实体禁止自动移动。");
++            } else {
++                const auto trace = [&](const char *stage) {
++                    if (observer)
++                        observer(stage, key(id));
++                };
++                Canonical local;
++                Primitive2 raw;
++                const bool localComplete = geometry(*e.get(), raw, local, trace);
++                all.add(local.out.str());
++                if (path == root.handle) {
++                    p = raw;
++                    p.key = key(id);
++                    p.layer = native_scene::symbolName(layer);
++                    p.sourceRootHandle = root.handle;
++                    p.instancePath = path;
++                    p.effectiveVisible = record.effectiveVisible;
++                    record.complete = localComplete;
++                } else {
++                    trace("getTransformedCopy");
++                    AcDbEntity *transformedCopy{};
++                    const auto transformStatus = e->getTransformedCopy(matrix, transformedCopy);
++                    std::unique_ptr<AcDbEntity> copy(transformedCopy);
++                    check(transformStatus, "WCS transformed copy");
++                    if (!copy)
++                        throw std::runtime_error("null transformed copy");
++                    Canonical world;
++                    const bool worldComplete = geometry(*copy, p, world, trace);
++                    record.complete = localComplete && worldComplete;
++                    all.add(world.out.str());
++                    if (raw.kind == PrimitiveKind::arc || raw.kind == PrimitiveKind::line ||
++                        raw.kind == PrimitiveKind::text) {
++                        const Affine2 affine{matrix(0, 0),
++                                             matrix(0, 1),
++                                             matrix(1, 0),
++                                             matrix(1, 1),
++                                             matrix(0, 3),
++                                             matrix(1, 3),
++                                             std::abs(matrix(2, 0)) < 1e-12 &&
++                                                 std::abs(matrix(2, 1)) < 1e-12 &&
++                                                 std::abs(matrix(2, 3)) < 1e-12};
++                        const auto oriented = bce::transformed(raw, affine);
++                        if (!oriented.value)
++                            throw std::runtime_error("unsupported oriented WCS transform");
++                        p = *oriented.value;
++                    }
++                }
++                if (!record.complete)
++                    issue(root, path, "类型、平面或完整显示数据未支持，保留原对象。");
++            }
++        } catch (const std::exception &failure) {
++            record.complete = false;
++            issue(root, path, failure.what());
++            all.add(std::string("incomplete:") + failure.what());
++            if (rootPrimitive && !p.bounds) {
++                try {
++                    p.bounds = bounds(*e.get());
++                } catch (...) {
++                }
++            }
++        }
++        if (!record.effectiveVisible)
++            issue(root, path, "有效可见性为隐藏；保持归属证据并禁止自动写入。");
++        p.key = key(id);
++        p.layer = native_scene::symbolName(layer);
++        p.sourceRootHandle = root.handle;
++        p.instancePath = path;
++        p.effectiveVisible = record.effectiveVisible;
++        p.topologyComplete = record.complete;
++        p.nativeGeometrySignature = all.out.str();
++        record.canonicalGeometry = p.nativeGeometrySignature;
++        record.worldGeometry = p;
++        output.geometry.push_back(record);
++        if (rootPrimitive)
++            *rootPrimitive = std::move(p);
++        return record.canonicalGeometry;
++    }
++    NativeAnalysis run(const std::string &identity, std::uint64_t revision,
++                       const AnalysisReadOptions &options) {
++        auto &scene = output.scene;
++        scene.databaseIdentity = identity;
++        scene.documentIdentity = identity;
++        scene.revision = revision;
++        scene.sourceSha256 = options.sourceSha256;
++        scene.units.insunits = static_cast<int>(db.insunits());
++        scene.units.confirmedMmPerInputUnit = options.confirmedMmPerInputUnit;
++        observer = options.diagnosticObserver;
++        if (observer)
++            observer("readResources", {});
++        scene.resources = native_scene::readResources(db);
++        AcDbObjectIdArray originalRoots;
++        {
++            Read<AcDbBlockTableRecord> model(acdbSymUtil()->blockModelSpaceId(&db));
++            AcDbBlockTableRecordIterator *raw{};
++            check(model->newIterator(raw), "model iterator");
++            std::unique_ptr<AcDbBlockTableRecordIterator> it(raw);
++            for (; !it->done(); it->step()) {
++                AcDbObjectId id;
++                check(it->getEntityId(id), "model id");
++                originalRoots.append(id);
++                Read<AcDbEntity> e(id);
++                ++output.rootTypeCounts[native_scene::utf8(e->isA()->name())];
++            }
++        }
++        // Text extents can populate the source's AcDbFontTable even through a const
++        // getter. Clone the current in-memory graph and all referenced resources once;
++        // every geometry/font operation below is confined to this owned database.
++        sandbox = std::make_unique<AcDbDatabase>(true, true);
++        WorkingDatabaseScope working(*sandbox);
++        if (observer)
++            observer("sandbox-working-database-bound", {});
++        AcDbIdMapping mapping;
++        if (observer)
++            observer("clone-memory-graph", {});
++        const auto cloneStatus =
++            originalRoots.isEmpty()
++                ? Acad::eOk
++                : db.wblockCloneObjects(originalRoots, acdbSymUtil()->blockModelSpaceId(sandbox.get()),
++                                        mapping, AcDb::kDrcReplace);
++        if (cloneStatus == Acad::eOk) {
++            AcDbIdMappingIter mapped(mapping);
++            for (; !mapped.done(); mapped.next()) {
++                AcDbIdPair pair;
++                if (mapped.getMap(pair) && !pair.value().isNull())
++                    sourceHandles.emplace(native_scene::handle(pair.value()),
++                                          native_scene::handle(pair.key()));
++            }
++            for (int i = 0; i < originalRoots.length(); ++i) {
++                AcDbIdPair pair;
++                pair.setKey(originalRoots[i]);
++                if (!mapping.compute(pair) || pair.value().isNull())
++                    throw std::runtime_error("model root missing cloned identity");
++                Primitive2 p;
++                const auto root = key(pair.value());
++                walk(pair.value(), root, root.handle, AcGeMatrix3d::kIdentity, AcDbObjectId::kNull, true, {},
++                     &p);
++                scene.primitives.push_back(std::move(p));
++            }
++        } else {
++            // A proxy or custom object can prohibit cloning. Preserve every actual
++            // root and fail closed, without calling its geometry getters on the source.
++            for (int i = 0; i < originalRoots.length(); ++i) {
++                Read<AcDbEntity> e(originalRoots[i]);
++                Primitive2 p;
++                p.key = {identity, native_scene::handle(originalRoots[i]), revision};
++                p.layer = native_scene::symbolName(e->layerId());
++                p.sourceRootHandle = p.key.handle;
++                p.instancePath = p.key.handle;
++                issue(p.key, p.instancePath,
++                      "独立内存图克隆失败，全部源根保留；status=" + std::to_string(cloneStatus));
++                scene.primitives.push_back(std::move(p));
++            }
++        }
++        output.recognition = analyse(scene, options.plan, options.project);
++        std::set<std::string> preserved;
++        for (const auto &k : output.recognition.preserved)
++            preserved.insert(k.handle);
++        preserved.insert(protectedRoots.begin(), protectedRoots.end());
++        const double unavailable = std::numeric_limits<double>::quiet_NaN();
++        for (const auto &p : scene.primitives) {
++            std::string view;
++            for (const auto &v : output.recognition.views)
++                if (std::find(v.members.begin(), v.members.end(), p.key) != v.members.end()) {
++                    view = v.identity;
++                    break;
++                }
++            // SceneEntity predates optional bounds. Nonfinite is an explicit unavailable
++            // sentinel; it can never masquerade as a zero-sized obstacle at the origin.
++            SceneEntity entity{
++                p.key, p.layer,
++                p.bounds.value_or(Bounds2{{unavailable, unavailable}, {unavailable, unavailable}}), view};
++            if (preserved.count(p.key.handle))
++                scene.preserved.push_back(entity);
++            else
++                scene.targets.push_back(entity);
++        }
++        for (const auto &p : scene.primitives)
++            if (protectedRoots.count(p.key.handle) &&
++                std::find(output.recognition.preserved.begin(), output.recognition.preserved.end(), p.key) ==
++                    output.recognition.preserved.end())
++                output.recognition.preserved.push_back(p.key);
++        output.recognition.issues.insert(output.recognition.issues.end(), output.readIssues.begin(),
++                                         output.readIssues.end());
++        return std::move(output);
++    }
++};
++} // namespace
++Result<NativeAnalysis> readDatabaseAnalysis(AcDbDatabase &db, const std::string &identity,
++                                            std::uint64_t revision, const AnalysisReadOptions &options) {
++    if (identity.empty() || revision == 0)
++        return {std::nullopt, {{"INVALID_DATABASE_IDENTITY", "数据库读取须提供显式身份和版本。", {}, true}}};
++    try {
++        auto value = Reader(db).run(identity, revision, options);
++        auto issues = value.readIssues;
++        return {std::move(value), std::move(issues)};
++    } catch (const std::exception &e) {
++        return {std::nullopt, {{"NATIVE_READ_FAILED", e.what(), {identity, {}, {}}, true}}};
++    }
++}
++Result<NativeAnalysis> readCurrentAnalysis(NativeSceneContext &context, const AnalysisReadOptions &options) {
++    auto *db = context.currentDatabase();
++    if (!db)
++        return {std::nullopt, {{diagnostic::staleDocument, "当前文档上下文失效。", {}, true}}};
++    const auto revision = context.revision();
++    auto result = readDatabaseAnalysis(*db, context.documentIdentity(), revision, options);
++    if (db != context.currentDatabase() || revision != context.revision())
++        return {std::nullopt, {{diagnostic::staleDocument, "读取过程中当前文档内容变化。", {}, true}}};
++    return result;
++}
++} // namespace bce
+--- before/tests/native/analysis/AnalysisDriver.cpp
++++ after/tests/native/analysis/AnalysisDriver.cpp
+@@ -1,76 +1,286 @@
++#include "AnalysisFixtures.h"
++#include "AnalysisReader.h"
++#include "ExpectedMembership.h"
+ #include "NativeEvidence.h"
+-#include "AnalysisReader.h"
++#include <acdocman.h>
+ #include <aced.h>
+-#include <acdocman.h>
+ #include <acutads.h>
+-#include <rxregsvc.h>
++#include <acutmem.h>
++#include <adscodes.h>
++#include <dbapserv.h>
+ #include <dbents.h>
++#include <dbidmap.h>
+ #include <dbsymtb.h>
+ #include <dbsymutl.h>
++#include <exception>
+ #include <memory>
+-#include <exception>
++#include <rxregsvc.h>
+ #include <set>
+ namespace {
+ HMODULE moduleHandle{};
++std::string globals() {
++    bce::native::Fields fields;
++    for (const auto *name : {L"INSUNITS", L"LTSCALE", L"CELTSCALE", L"DIMSTYLE", L"TEXTSTYLE", L"FRAME",
++                             L"WIPEOUTFRAME", L"IMAGEFRAME", L"XCLIPFRAME", L"FONTALT", L"MIRRTEXT"}) {
++        resbuf value{};
++        bce::native::require(acedGetVar(name, &value) == RTNORM, "global read");
++        std::string encoded;
++        if (value.restype == RTSHORT)
++            encoded = std::to_string(value.resval.rint);
++        else if (value.restype == RTLONG)
++            encoded = std::to_string(value.resval.rlong);
++        else if (value.restype == RTREAL)
++            encoded = bce::analysis_test::number(value.resval.rreal);
++        else if (value.restype == RTSTR) {
++            encoded = bce::native::quote(std::wstring(value.resval.rstring));
++            acutDelString(value.resval.rstring);
++        } else
++            throw std::runtime_error("unsupported global type");
++        fields.push_back({bce::native::utf8(name), encoded});
++    }
++    return bce::native::object(fields);
++}
+ void run_case() noexcept {
+     bce::native::Config config;
+     std::unique_ptr<bce::native::Evidence> evidence;
+     try {
+-        using namespace bce; using namespace bce::native;
+-        config=load_config(moduleHandle); evidence=std::make_unique<Evidence>(config);
++        using namespace bce;
++        using namespace bce::native;
++        config = load_config(moduleHandle);
++        evidence = std::make_unique<Evidence>(config);
+         validate_identity(config);
+-        require(config.caseName==L"NativeAnalysisAndRecognition","unsupported case");
+-        bool passed=true;
+-        auto expect=[&](const std::string& name,bool ok,const std::string& detail) {
+-            evidence->step(name,ok?"passed":"failed",detail); passed=passed&&ok;
++        require(config.caseName == L"NativeAnalysisAndRecognition", "unsupported case");
++        bool passed = true;
++        auto expect = [&](const std::string &name, bool ok, const std::string &detail) {
++            evidence->step(name, ok ? "passed" : "failed", detail);
++            passed = passed && ok;
+         };
+-        AnalysisReadOptions options; options.confirmedMmPerInputUnit=1.0; options.sourceSha256=config.schemeSHA256;
++        AnalysisReadOptions options;
++        options.confirmedMmPerInputUnit = 1.0;
++        options.sourceSha256 = config.schemeSHA256;
++        require(acDocManager->curDocument() != nullptr, "no current fixture document");
++        auto *ambientDb = acDocManager->curDocument()->database();
++        analysis_test::Monitor ambientMonitor(*ambientDb);
++        const auto globalsBefore = globals();
++        const auto *workingBefore = acdbHostApplicationServices()->workingDatabase();
+         evidence->checkpoint("before-read-only-scheme-database");
+-        AcDbDatabase source(false,true);
+-        require(source.readDwgFile(config.scheme.c_str(),AcDbDatabase::kForReadAndReadShare,false)==Acad::eOk,"read scheme failed");
++        AcDbDatabase source(false, true);
++        require(source.readDwgFile(config.scheme.c_str(), AcDbDatabase::kForReadAndReadShare, false) ==
++                    Acad::eOk,
++                "read scheme failed");
+         source.closeInput(true);
+-        const auto result=readDatabaseAnalysis(source,"side-database:"+config.schemeSHA256,1,options);
+-        std::size_t elevations=0,sections=0,members=0,preserved=0;
+-        if(result.value) {
+-            for(const auto& view:result.value->recognition.views) {
+-                elevations+=view.kind==ViewKind::elevation; sections+=view.kind==ViewKind::section; members+=view.members.size();
+-            }
+-            preserved=result.value->recognition.preserved.size();
+-        }
+-        expect("ActualSchemeFeedsRecognition",result.value&&elevations==4&&sections==2&&members==741&&preserved==174,
+-            "elevations="+std::to_string(elevations)+" sections="+std::to_string(sections)+" members="+std::to_string(members)+" preserved="+std::to_string(preserved));
++        analysis_test::Monitor sourceMonitor(source);
++        sourceMonitor.phase = "before-resources";
++        const auto beforeResources = native_scene::readResources(source);
++        options.diagnosticObserver = [&](const char *stage, const EntityKey &key) {
++            sourceMonitor.phase = stage;
++            sourceMonitor.readingHandle = key.handle;
++            ambientMonitor.phase = stage;
++            ambientMonitor.readingHandle = key.handle;
++        };
++        const auto result = readDatabaseAnalysis(source, "side-database:" + config.schemeSHA256, 1, options);
++        std::size_t elevations = 0, sections = 0, members = 0, preserved = 0;
++        if (result.value) {
++            for (const auto &view : result.value->recognition.views) {
++                elevations += view.kind == ViewKind::elevation;
++                sections += view.kind == ViewKind::section;
++                members += view.members.size();
++            }
++            preserved = result.value->recognition.preserved.size();
++        }
++        expect("ActualSchemeFeedsRecognition",
++               result.value && elevations == 4 && sections == 2 && members == 741 && preserved == 174,
++               "elevations=" + std::to_string(elevations) + " sections=" + std::to_string(sections) +
++                   " members=" + std::to_string(members) + " preserved=" + std::to_string(preserved));
++        std::map<std::string, std::string> actual;
++        bool noDuplicate = true, noAxes = true, missingPlan = true;
++        if (result.value) {
++            for (const auto &view : result.value->recognition.views) {
++                for (const auto &member : view.members)
++                    noDuplicate = actual.emplace(member.handle, view.titleKey.handle).second && noDuplicate;
++                noAxes = noAxes && !view.projectedAxes;
++                missingPlan = missingPlan &&
++                              std::any_of(view.unconfirmed.begin(), view.unconfirmed.end(),
++                                          [](const Issue &i) { return i.code == diagnostic::planRequired; });
++            }
++            evidence->capability(analysis_test::details(*result.value));
++        } else
++            for (const auto &i : result.issues)
++                evidence->step("ReadDiagnostic", "failed", i.message);
++        expect("Exact741RootMembership", result.value && noDuplicate && actual == expectedMembership(),
++               "independent frozen expected TSV embedded only in test module; every actual root mapped once");
++        expect("AbsentPlanRemainsExplicit", result.value && noAxes && missingPlan,
++               "PLAN_REQUIRED in every view; no invented axes");
++        const auto afterResources = native_scene::readResources(source);
++        bool resourcesEqual = beforeResources.size() == afterResources.size();
++        for (std::size_t i = 0; resourcesEqual && i < beforeResources.size(); ++i)
++            resourcesEqual = beforeResources[i].kind == afterResources[i].kind &&
++                             beforeResources[i].name == afterResources[i].name &&
++                             beforeResources[i].definitionSignature == afterResources[i].definitionSignature;
++        expect("SourceDatabaseAndResourcesUnchanged",
++               sourceMonitor.changes == 0 && ambientMonitor.changes == 0 && resourcesEqual,
++               "source events=" + std::to_string(sourceMonitor.changes) +
++                   " ambient current events=" + std::to_string(ambientMonitor.changes));
++        evidence->capability(object({{"diagnostic", quote(std::string("source-modification-events"))},
++                                     {"events", array(sourceMonitor.events)},
++                                     {"loggingFailed", sourceMonitor.loggingFailed ? "true" : "false"}}));
++        options.diagnosticObserver = {};
++        const auto *documentBeforeFailure = acDocManager->curDocument();
++        const auto ambientBeforeFailure = ambientMonitor.changes;
++        const auto sourceBeforeFailure = sourceMonitor.changes;
++        bool injected = false;
++        options.diagnosticObserver = [&](const char *stage, const EntityKey &) {
++            if (std::string(stage) == "sandbox-working-database-bound") {
++                injected = true;
++                throw std::runtime_error("injected observer failure after owned working DB switch");
++            }
++        };
++        const auto injectedResult = readDatabaseAnalysis(source, "exception-source", 1, options);
++        expect("WorkingDatabaseRestoredAfterException",
++               injected && !injectedResult.value &&
++                   workingBefore == acdbHostApplicationServices()->workingDatabase() &&
++                   documentBeforeFailure == acDocManager->curDocument() &&
++                   ambientBeforeFailure == ambientMonitor.changes &&
++                   sourceBeforeFailure == sourceMonitor.changes,
++               "exception after owned workingDatabase switch restores exact pointer/document with zero "
++               "source or ambient events");
++        options.diagnosticObserver = {};
+         evidence->checkpoint("before-current-unsaved-read");
+         NativeSceneContext context;
+-        auto* db=context.currentDatabase(); require(db!=nullptr,"current database unavailable");
+-        AcDbBlockTableRecord* model{}; require(acdbOpenObject(model,acdbSymUtil()->blockModelSpaceId(db),AcDb::kForWrite)==Acad::eOk,"model open");
+-        auto text=std::make_unique<AcDbText>(AcGePoint3d(10,20,0),L"未保存中文立面图",AcDbObjectId::kNull,3.0);
+-        AcDbObjectId id; const auto add=model->appendAcDbEntity(id,text.get()); model->close(); require(add==Acad::eOk,"append fixture"); text.release()->close();
+-        const auto revision=context.revision();
++        auto *db = context.currentDatabase();
++        require(db != nullptr, "current database unavailable");
++        // Construct away from Main: Text construction/close can already load fonts.
++        // Import raw geometry/style, then prove Main's font cache stayed untouched.
++        const auto fontEventsBeforeFixture = ambientMonitor.fontEvents;
++        ambientMonitor.phase = "install-cold-current-fixture";
++        ambientMonitor.readingHandle.clear();
++        AcDbObjectId id;
++        {
++            AcDbDatabase fixtureDb(true, true);
++            struct FixtureWorkingScope {
++                AcDbDatabase *previous;
++                explicit FixtureWorkingScope(AcDbDatabase &own)
++                    : previous(acdbHostApplicationServices()->workingDatabase()) {
++                    acdbHostApplicationServices()->setWorkingDatabase(&own);
++                }
++                ~FixtureWorkingScope() { acdbHostApplicationServices()->setWorkingDatabase(previous); }
++            } fixtureWorking(fixtureDb);
++            AcDbObjectId coldStyle;
++            {
++                analysis_test::Open<AcDbTextStyleTable> styles(fixtureDb.textStyleTableId(), AcDb::kForWrite);
++                auto style = std::make_unique<AcDbTextStyleTableRecord>();
++                analysis_test::ok(style->setName(L"N4_ColdFontSource"), "cold style name");
++                analysis_test::ok(style->setFileName(L"simhei.ttf"), "cold font");
++                analysis_test::ok(styles->add(coldStyle, style.get()), "cold style append");
++                style.release()->close();
++            }
++            const auto temporaryText = analysis_test::append(
++                acdbSymUtil()->blockModelSpaceId(&fixtureDb),
++                std::make_unique<AcDbText>(AcGePoint3d(10, 20, 0), L"未保存中文立面图", coldStyle, 3.0));
++            AcDbObjectIdArray ids;
++            ids.append(temporaryText);
++            AcDbIdMapping mapping;
++            analysis_test::ok(fixtureDb.wblockCloneObjects(ids, acdbSymUtil()->blockModelSpaceId(db), mapping,
++                                                           AcDb::kDrcIgnore),
++                              "cold current fixture import");
++            AcDbIdPair pair;
++            pair.setKey(temporaryText);
++            require(mapping.compute(pair) && pair.isCloned() && !pair.value().isNull(),
++                    "cold fixture identity mapping");
++            id = pair.value();
++        }
++        expect("CurrentFixtureFontCacheStillCold", ambientMonitor.fontEvents == fontEventsBeforeFixture,
++               "current source font-table events during fixture installation=" +
++                   std::to_string(ambientMonitor.fontEvents - fontEventsBeforeFixture));
++        const auto revision = context.revision();
++        const auto beforeCurrentEvents = ambientMonitor.changes;
++        const auto currentResourcesBefore = native_scene::readResources(*db);
++        ambientMonitor.phase = "cold-current-memory-read";
+         options.sourceSha256.clear();
+-        const auto current=readCurrentAnalysis(context,options);
+-        const auto handle=native_scene::handle(id);
+-        bool found=false;
+-        if(current.value) for(const auto& p:current.value->scene.primitives) if(p.key.handle==handle&&p.text&&*p.text==u8"未保存中文立面图") found=true;
+-        expect("CurrentMemoryIncludesUnsavedChinese",found&&current.value->scene.documentIdentity==context.documentIdentity()&&context.revision()==revision,"actual current-memory text and unchanged revision");
+-        require(sha256(config.scheme)==config.schemeSHA256,"source changed");
+-        require(sha256(config.reference)==config.referenceSHA256,"reference changed");
+-        evidence->checkpoint("analysis-verification-complete"); evidence->finish(config,passed?"passed":"failed");
+-        acutPrintf(passed?L"\nBCE_NATIVE_CASE_PASSED\n":L"\nBCE_NATIVE_CASE_FAILED\n");
+-    } catch(const std::exception& failure) {
+-        try { if(evidence) { evidence->error(failure.what()); evidence->finish(config,"failed"); } } catch(...) {}
+-    } catch(...) { try { if(evidence) { evidence->error("unknown exception"); evidence->finish(config,"failed"); } } catch(...) {} }
+-}
+-}
+-BOOL APIENTRY DllMain(HMODULE instance,DWORD reason,LPVOID) {
+-    if(reason==DLL_PROCESS_ATTACH) { moduleHandle=instance; DisableThreadLibraryCalls(instance); } return TRUE;
+-}
+-extern "C" __declspec(dllexport) AcRx::AppRetCode acrxEntryPoint(AcRx::AppMsgCode message,void* id) {
++        const auto current = readCurrentAnalysis(context, options);
++        const auto handle = native_scene::handle(id);
++        bool found = false;
++        if (current.value)
++            for (const auto &p : current.value->scene.primitives)
++                if (p.key.handle == handle && p.text && *p.text == u8"未保存中文立面图")
++                    found = true;
++        expect("CurrentMemoryIncludesUnsavedChinese",
++               found && current.value->scene.documentIdentity == context.documentIdentity() &&
++                   context.revision() == revision,
++               "actual current-memory text and unchanged revision");
++        if (current.value)
++            evidence->capability(analysis_test::details(*current.value));
++        const auto currentResourcesAfter = native_scene::readResources(*db);
++        bool currentResourcesSame = currentResourcesBefore.size() == currentResourcesAfter.size();
++        for (std::size_t i = 0; currentResourcesSame && i < currentResourcesBefore.size(); ++i)
++            currentResourcesSame =
++                currentResourcesBefore[i].kind == currentResourcesAfter[i].kind &&
++                currentResourcesBefore[i].name == currentResourcesAfter[i].name &&
++                currentResourcesBefore[i].definitionSignature == currentResourcesAfter[i].definitionSignature;
++        expect("ColdCurrentFontReadDoesNotModifySource",
++               current.value && ambientMonitor.changes == beforeCurrentEvents &&
++                   context.revision() == revision && currentResourcesSame,
++               "unwarmed simhei.ttf text/style source; native events, resources and revision unchanged");
++        analysis_test::synthetic(expect, *evidence);
++        expect("ScratchReadsDoNotModifyAmbientDocument",
++               ambientMonitor.changes == beforeCurrentEvents && context.revision() == revision,
++               "all synthetic database reads keep actual current document unchanged");
++        const auto globalsAfter = globals();
++        expect("GlobalSettingsAndWorkingDatabaseUnchanged",
++               globalsBefore == globalsAfter &&
++                   workingBefore == acdbHostApplicationServices()->workingDatabase(),
++               "11 actual native system variables and workingDatabase identity unchanged");
++        evidence->capability(object({{"globalsBefore", globalsBefore}, {"globalsAfter", globalsAfter}}));
++        evidence->capability(object({{"diagnostic", quote(std::string("ambient-current-events"))},
++                                     {"beforeReads", std::to_string(beforeCurrentEvents)},
++                                     {"afterReads", std::to_string(ambientMonitor.changes)},
++                                     {"events", array(ambientMonitor.events)}}));
++        require(sha256(config.scheme) == config.schemeSHA256, "source changed");
++        require(sha256(config.reference) == config.referenceSHA256, "reference changed");
++        evidence->checkpoint("analysis-verification-complete");
++        evidence->finish(config, passed ? "passed" : "failed");
++        acutPrintf(passed ? L"\nBCE_NATIVE_CASE_PASSED\n" : L"\nBCE_NATIVE_CASE_FAILED\n");
++    } catch (const std::exception &failure) {
++        try {
++            if (evidence) {
++                evidence->error(failure.what());
++                evidence->finish(config, "failed");
++            }
++        } catch (...) {
++        }
++    } catch (...) {
++        try {
++            if (evidence) {
++                evidence->error("unknown exception");
++                evidence->finish(config, "failed");
++            }
++        } catch (...) {
++        }
++    }
++}
++} // namespace
++BOOL APIENTRY DllMain(HMODULE instance, DWORD reason, LPVOID) {
++    if (reason == DLL_PROCESS_ATTACH) {
++        moduleHandle = instance;
++        DisableThreadLibraryCalls(instance);
++    }
++    return TRUE;
++}
++extern "C" __declspec(dllexport) AcRx::AppRetCode acrxEntryPoint(AcRx::AppMsgCode message, void *id) {
+     try {
+-        if(message==AcRx::kInitAppMsg) { acrxDynamicLinker->unlockApplication(id); acrxRegisterAppMDIAware(id);
+-            return acedRegCmds->addCommand(L"BCE_ANALYSIS_CASES",L"BCE_TEST_RUN",L"BCE_TEST_RUN",ACRX_CMD_MODAL,run_case)==Acad::eOk?AcRx::kRetOK:AcRx::kRetError; }
+-        if(message==AcRx::kUnloadAppMsg) return acedRegCmds->removeGroup(L"BCE_ANALYSIS_CASES")==Acad::eOk?AcRx::kRetOK:AcRx::kRetError;
++        if (message == AcRx::kInitAppMsg) {
++            acrxDynamicLinker->unlockApplication(id);
++            acrxRegisterAppMDIAware(id);
++            return acedRegCmds->addCommand(L"BCE_ANALYSIS_CASES", L"BCE_TEST_RUN", L"BCE_TEST_RUN",
++                                           ACRX_CMD_MODAL, run_case) == Acad::eOk
++                       ? AcRx::kRetOK
++                       : AcRx::kRetError;
++        }
++        if (message == AcRx::kUnloadAppMsg)
++            return acedRegCmds->removeGroup(L"BCE_ANALYSIS_CASES") == Acad::eOk ? AcRx::kRetOK
++                                                                                : AcRx::kRetError;
+         return AcRx::kRetOK;
+-    } catch(...) { return AcRx::kRetError; }
+-}
+-
+-
++    } catch (...) {
++        return AcRx::kRetError;
++    }
++}
+--- before/tests/native/analysis/AnalysisFixtures.h
++++ after/tests/native/analysis/AnalysisFixtures.h
+@@ -0,0 +1,379 @@
++#pragma once
++#include "AnalysisReader.h"
++#include "NativeEvidence.h"
++#include <cmath>
++#include <dbHatch.h>
++#include <dbapserv.h>
++#include <dbdim.h>
++#include <dbents.h>
++#include <dbmtext.h>
++#include <dbpl.h>
++#include <dbsymtb.h>
++#include <dbsymutl.h>
++#include <functional>
++#include <iomanip>
++#include <set>
++#include <sstream>
++namespace bce::analysis_test {
++using Expect = std::function<void(const std::string &, bool, const std::string &)>;
++inline void ok(Acad::ErrorStatus s, const char *message) { native::require(s == Acad::eOk, message); }
++template <class T> class Open final {
++  public:
++    Open(const Open &) = delete;
++    Open &operator=(const Open &) = delete;
++    Open(AcDbObjectId id, AcDb::OpenMode mode = AcDb::kForRead) {
++        ok(acdbOpenObject(p, id, mode), "fixture open");
++    }
++    ~Open() {
++        if (p)
++            p->close();
++    }
++    T *operator->() const { return p; }
++    T *p{};
++};
++inline AcDbObjectId append(AcDbObjectId space, std::unique_ptr<AcDbEntity> entity) {
++    Open<AcDbBlockTableRecord> model(space, AcDb::kForWrite);
++    AcDbObjectId id;
++    ok(model->appendAcDbEntity(id, entity.get()), "fixture append");
++    entity.release()->close();
++    return id;
++}
++inline AcDbObjectId block(AcDbDatabase &db, const wchar_t *name) {
++    Open<AcDbBlockTable> table(db.blockTableId(), AcDb::kForWrite);
++    auto b = std::make_unique<AcDbBlockTableRecord>();
++    ok(b->setName(name), "block name");
++    AcDbObjectId id;
++    ok(table->add(id, b.get()), "block add");
++    b.release()->close();
++    return id;
++}
++inline AcDbObjectId layer(AcDbDatabase &db, const wchar_t *name, bool off, bool frozen) {
++    Open<AcDbLayerTable> table(db.layerTableId(), AcDb::kForWrite);
++    auto p = std::make_unique<AcDbLayerTableRecord>();
++    ok(p->setName(name), "layer name");
++    p->setIsOff(off);
++    ok(p->setIsFrozen(frozen), "layer frozen");
++    AcDbObjectId id;
++    ok(table->add(id, p.get()), "layer add");
++    p.release()->close();
++    return id;
++}
++inline bool nearValue(double a, double b) { return std::abs(a - b) < 1e-8; }
++inline bool point(const std::optional<Point2> &p, double x, double y) {
++    return p && nearValue(p->x, x) && nearValue(p->y, y);
++}
++inline const NativeGeometryRecord *leaf(const NativeAnalysis &a, AcDbObjectId root, AcDbObjectId child) {
++    const auto r = native_scene::handle(root), c = native_scene::handle(child);
++    for (const auto &record : a.geometry)
++        if (record.root.handle == r && record.leaf.handle == c)
++            return &record;
++    return nullptr;
++}
++inline bool protectedRoot(const NativeAnalysis &a, AcDbObjectId id) {
++    const auto h = native_scene::handle(id);
++    return std::any_of(a.scene.preserved.begin(), a.scene.preserved.end(),
++                       [&](const SceneEntity &e) { return e.key.handle == h; }) &&
++           std::none_of(a.scene.targets.begin(), a.scene.targets.end(),
++                        [&](const SceneEntity &e) { return e.key.handle == h; });
++}
++inline std::string number(double value) {
++    native::require(std::isfinite(value), "nonfinite evidence number");
++    std::ostringstream out;
++    out.imbue(std::locale::classic());
++    out << std::setprecision(17) << value;
++    return out.str();
++}
++inline std::string pointJson(const std::optional<Point2> &p) {
++    return p ? native::array({number(p->x), number(p->y)}) : "null";
++}
++inline std::string worldJson(const Primitive2 &p) {
++    using namespace native;
++    std::string arc = "null";
++    if (p.arc)
++        arc = object({{"center", pointJson(p.arc->center)},
++                      {"radius", number(p.arc->radius)},
++                      {"start", number(p.arc->startAngle)},
++                      {"sweep", number(p.arc->sweepAngle)}});
++    return object({{"start", pointJson(p.start)},
++                   {"end", pointJson(p.end)},
++                   {"textPosition", pointJson(p.textPosition)},
++                   {"arc", arc},
++                   {"textRotation", p.textRotation ? number(*p.textRotation) : "null"},
++                   {"mirroredX", p.textMirroredX ? "true" : "false"},
++                   {"mirroredY", p.textMirroredY ? "true" : "false"}});
++}
++struct Monitor final : AcDbDatabaseReactor {
++    explicit Monitor(AcDbDatabase &d) : db(d) { ok(db.addReactor(this), "monitor attach"); }
++    ~Monitor() { db.removeReactor(this); }
++    void record(const char *event, const AcDbObject *p) noexcept {
++        ++changes;
++        try {
++            if (p && std::wstring(p->isA()->name()).find(L"AcDbFontTable") == 0)
++                ++fontEvents;
++            events.push_back(native::object(
++                {{"event", native::quote(std::string(event))},
++                 {"phase", native::quote(phase)},
++                 {"readingHandle", native::quote(readingHandle)},
++                 {"handle", native::quote(p ? native_scene::handle(p->objectId()) : std::string{})},
++                 {"type", native::quote(p ? native_scene::utf8(p->isA()->name()) : std::string{})}}));
++        } catch (...) {
++            loggingFailed = true;
++        }
++    }
++    void objectModified(const AcDbDatabase *, const AcDbObject *p) override { record("modified", p); }
++    void objectOpenedForModify(const AcDbDatabase *, const AcDbObject *p) override {
++        record("openedForModify", p);
++    }
++    void objectAppended(const AcDbDatabase *, const AcDbObject *p) override { record("appended", p); }
++    void objectErased(const AcDbDatabase *, const AcDbObject *p, Adesk::Boolean) override {
++        record("erased", p);
++    }
++    void headerSysVarChanged(const AcDbDatabase *, const ACHAR *, Adesk::Boolean success) override {
++        if (success)
++            record("header", nullptr);
++    }
++    AcDbDatabase &db;
++    unsigned changes{};
++    unsigned fontEvents{};
++    std::string phase, readingHandle;
++    std::vector<std::string> events;
++    bool loggingFailed{};
++};
++inline std::string details(const NativeAnalysis &a) {
++    using namespace native;
++    std::vector<std::string> views, records, issues, preserved;
++    Fields types;
++    for (const auto &type : a.rootTypeCounts)
++        types.push_back({type.first, std::to_string(type.second)});
++    for (const auto &v : a.recognition.views) {
++        std::vector<std::string> members, unconfirmed;
++        for (const auto &k : v.members)
++            members.push_back(quote(k.handle));
++        for (const auto &i : v.unconfirmed)
++            unconfirmed.push_back(object({{"code", quote(i.code)}, {"message", quote(i.message)}}));
++        views.push_back(object({{"id", quote(v.identity)},
++                                {"kind", quote(std::string(v.kind == ViewKind::elevation ? "elevation"
++                                                           : v.kind == ViewKind::section ? "section"
++                                                                                         : "ambiguous"))},
++                                {"members", array(members)},
++                                {"unconfirmed", array(unconfirmed)}}));
++    }
++    for (const auto &r : a.geometry)
++        records.push_back(object({{"root", quote(r.root.handle)},
++                                  {"leaf", quote(r.leaf.handle)},
++                                  {"path", quote(r.instancePath)},
++                                  {"type", quote(r.nativeType)},
++                                  {"visible", r.effectiveVisible ? "true" : "false"},
++                                  {"complete", r.complete ? "true" : "false"},
++                                  {"canonicalGeometry", quote(r.canonicalGeometry)},
++                                  {"world", worldJson(r.worldGeometry)}}));
++    for (const auto &i : a.readIssues)
++        issues.push_back(
++            object({{"code", quote(i.code)},
++                    {"message", quote(i.message)},
++                    {"handle", quote(i.source.entity ? i.source.entity->handle : std::string{})}}));
++    for (const auto &e : a.scene.preserved)
++        preserved.push_back(quote(e.key.handle));
++    return object({{"databaseIdentity", quote(a.scene.databaseIdentity)},
++                   {"sourceSha256", quote(a.scene.sourceSha256)},
++                   {"types", object(types)},
++                   {"views", array(views)},
++                   {"preservedRoots", array(preserved)},
++                   {"geometry", array(records)},
++                   {"readIssues", array(issues)}});
++}
++inline void synthetic(const Expect &expect, native::Evidence &evidence) {
++    AcDbDatabase db(true, true);
++    // Fixture setters can themselves ask the ambient font engine for metrics.
++    // Keep fixture construction in its own DB. Each production read must then
++    // isolate again: the synthetic source reactor below still requires zero writes.
++    struct FixtureDatabaseScope {
++        AcDbDatabase *prior;
++        explicit FixtureDatabaseScope(AcDbDatabase &own)
++            : prior(acdbHostApplicationServices()->workingDatabase()) {
++            acdbHostApplicationServices()->setWorkingDatabase(&own);
++        }
++        ~FixtureDatabaseScope() { acdbHostApplicationServices()->setWorkingDatabase(prior); }
++    } fixtureScope(db);
++    const auto model = acdbSymUtil()->blockModelSpaceId(&db);
++    AnalysisReadOptions options;
++    options.confirmedMmPerInputUnit = 1.0;
++    auto title = std::make_unique<AcDbText>(AcGePoint3d(0, -4, 0), L"合成立面图", AcDbObjectId::kNull, 1);
++    append(model, std::move(title));
++    auto poly = std::make_unique<AcDbPolyline>();
++    ok(poly->addVertexAt(0, {0, 0}), "poly0");
++    ok(poly->addVertexAt(1, {4, 3}), "poly1");
++    ok(poly->addVertexAt(2, {10, 0}), "poly2");
++    ok(poly->addVertexAt(3, {10, 10}), "poly3");
++    ok(poly->addVertexAt(4, {0, 10}), "poly4");
++    poly->setClosed(true);
++    const auto polyId = append(model, std::move(poly));
++    const auto first = readDatabaseAnalysis(db, "synthetic-curves", 1, options);
++    native::require(first.value.has_value(), "synthetic first read failed");
++    {
++        Open<AcDbPolyline> p(polyId, AcDb::kForWrite);
++        ok(p->setPointAt(1, {5, 3}), "internal vertex edit");
++    }
++    const auto changed = readDatabaseAnalysis(db, "synthetic-curves", 2, options);
++    native::require(changed.value.has_value(), "synthetic changed read failed");
++    const auto *before = leaf(*first.value, polyId, polyId);
++    const auto *after = leaf(*changed.value, polyId, polyId);
++    bool signature =
++        before && after && before->complete && after->complete && before->worldGeometry.bounds &&
++        after->worldGeometry.bounds &&
++        nearValue(before->worldGeometry.bounds->minimum.x, after->worldGeometry.bounds->minimum.x) &&
++        nearValue(before->worldGeometry.bounds->maximum.x, after->worldGeometry.bounds->maximum.x) &&
++        before->canonicalGeometry != after->canonicalGeometry && first.value->recognition.views.size() == 1 &&
++        changed.value->recognition.views.size() == 1 &&
++        first.value->recognition.views[0].geometrySignature !=
++            changed.value->recognition.views[0].geometrySignature;
++    expect("SameBoundsInteriorVertexInvalidatesView", signature,
++           "actual SDK polyline interior vertex changed, outer bounds unchanged");
++    {
++        Open<AcDbPolyline> p(polyId, AcDb::kForWrite);
++        ok(p->setBulgeAt(0, 0.1), "bulge edit");
++    }
++    const auto bulged = readDatabaseAnalysis(db, "synthetic-curves", 3, options);
++    native::require(bulged.value.has_value(), "bulge read");
++    expect("PolylineBulgeInvalidatesView",
++           bulged.value->recognition.views.size() == 1 &&
++               changed.value->recognition.views[0].geometrySignature !=
++                   bulged.value->recognition.views[0].geometrySignature,
++           "full bulge retained in signature");
++    const auto inner = block(db, L"N4_inner"), outer = block(db, L"N4_outer");
++    const auto lineId = append(inner, std::make_unique<AcDbLine>(AcGePoint3d(1, 2, 0), AcGePoint3d(3, 4, 0)));
++    const auto arcId =
++        append(inner, std::make_unique<AcDbArc>(AcGePoint3d(0, 0, 0), 2, 0, 1.57079632679489661923));
++    const auto textId =
++        append(inner, std::make_unique<AcDbText>(AcGePoint3d(1, 2, 0), L"镜像", AcDbObjectId::kNull, 1));
++    auto nested = std::make_unique<AcDbBlockReference>(AcGePoint3d(10, 20, 0), inner);
++    ok(nested->setRotation(1.57079632679489661923), "inner rotate");
++    ok(nested->setScaleFactors(AcGeScale3d(2, 2, 2)), "inner scale");
++    const auto nestedId = append(outer, std::move(nested));
++    auto root = std::make_unique<AcDbBlockReference>(AcGePoint3d(100, 0, 0), outer);
++    ok(root->setScaleFactors(AcGeScale3d(-1, 1, 1)), "outer mirror");
++    const auto rootId = append(model, std::move(root));
++    auto root2 = std::make_unique<AcDbBlockReference>(AcGePoint3d(200, 0, 0), outer);
++    ok(root2->setVisibility(AcDb::kInvisible), "hide root");
++    const auto root2Id = append(model, std::move(root2));
++    const auto unknown = append(model, std::make_unique<AcDbPoint>(AcGePoint3d(30, 30, 0)));
++    const auto tilted = append(model, std::make_unique<AcDbLine>(AcGePoint3d(1, 1, 1), AcGePoint3d(2, 2, 1)));
++    auto mt = std::make_unique<AcDbMText>();
++    ok(mt->setLocation({20, 20, 0}), "mtext location");
++    mt->setContents(L"{\\C1;中文}\\P第二行");
++    const auto mtext = append(model, std::move(mt));
++    const auto circle =
++        append(model, std::make_unique<AcDbCircle>(AcGePoint3d(20, 0, 0), AcGeVector3d::kZAxis, 2));
++    const auto offLayer = layer(db, L"N4_off", true, false),
++               frozenLayer = layer(db, L"N4_frozen", false, true);
++    auto root3 = std::make_unique<AcDbBlockReference>(AcGePoint3d(300, 0, 0), outer);
++    ok(root3->setLayer(offLayer), "parent layer");
++    const auto root3Id = append(model, std::move(root3));
++    auto frozenLine = std::make_unique<AcDbLine>(AcGePoint3d(0, 0, 0), AcGePoint3d(1, 0, 0));
++    ok(frozenLine->setLayer(frozenLayer), "frozen child layer");
++    const auto frozenId = append(inner, std::move(frozenLine));
++    auto hatch = std::make_unique<AcDbHatch>();
++    ok(hatch->setPattern(AcDbHatch::kPreDefined, L"SOLID"), "solid hatch");
++    AcGePoint2dArray hv;
++    AcGeDoubleArray hb;
++    for (const auto &p : {AcGePoint2d(40, 0), AcGePoint2d(50, 0), AcGePoint2d(50, 10), AcGePoint2d(40, 10)}) {
++        hv.append(p);
++        hb.append(0);
++    }
++    ok(hatch->appendLoop(AcDbHatch::kExternal | AcDbHatch::kPolyline, hv, hb), "hatch exterior");
++    hv.setLogicalLength(0);
++    hb.setLogicalLength(0);
++    for (const auto &p : {AcGePoint2d(43, 3), AcGePoint2d(43, 7), AcGePoint2d(47, 7), AcGePoint2d(47, 3)}) {
++        hv.append(p);
++        hb.append(0);
++    }
++    ok(hatch->appendLoop(AcDbHatch::kPolyline, hv, hb), "hatch hole");
++    const auto hatchId = append(model, std::move(hatch));
++    auto dimension = std::make_unique<AcDbAlignedDimension>();
++    ok(dimension->setXLine1Point({400, 0, 0}), "dimension first point");
++    ok(dimension->setXLine2Point({400, 3000, 0}), "dimension second point");
++    ok(dimension->setDimLinePoint({410, 0, 0}), "dimension baseline");
++    ok(dimension->setDimensionText(L"自定义<>"), "dimension override");
++    const auto dimensionId = append(model, std::move(dimension));
++    Monitor syntheticMonitor(db);
++    const auto nestedResult = readDatabaseAnalysis(db, "synthetic-curves", 4, options);
++    native::require(nestedResult.value.has_value(), "nested read");
++    const auto &a = *nestedResult.value;
++    expect("SyntheticReadDoesNotModifyDatabase", syntheticMonitor.changes == 0,
++           "cold dimensions, blocks, curves, hatch, unknown and formatted text produce zero source write "
++           "events");
++    expect("IncompleteReadCannotAuthorizeCommit", !nestedResult.canCommit() && !nestedResult.issues.empty(),
++           "partial value remains inspectable; blocking read diagnostics reach Result::canCommit");
++    const auto *line = leaf(a, rootId, lineId);
++    const auto *arc = leaf(a, rootId, arcId);
++    const auto *text = leaf(a, rootId, textId);
++    const auto *second = leaf(a, root2Id, lineId);
++    const auto *nestedRecord = leaf(a, rootId, nestedId);
++    const bool worldBlockBounds = nestedRecord && nestedRecord->worldGeometry.bounds &&
++                                  nestedRecord->worldGeometry.bounds->minimum.x <= 94 &&
++                                  nestedRecord->worldGeometry.bounds->maximum.x >= 98 &&
++                                  nestedRecord->worldGeometry.bounds->minimum.y <= 22 &&
++                                  nestedRecord->worldGeometry.bounds->maximum.y >= 26 &&
++                                  nestedRecord->worldGeometry.bounds->minimum.x > 80;
++    expect("NestedMirrorRotationWcs",
++           worldBlockBounds && line && line->complete && point(line->worldGeometry.start, 94, 22) &&
++               point(line->worldGeometry.end, 98, 26) && arc && arc->complete && arc->worldGeometry.arc &&
++               nearValue(arc->worldGeometry.arc->center.x, 90) &&
++               nearValue(arc->worldGeometry.arc->center.y, 20) &&
++               nearValue(arc->worldGeometry.arc->radius, 4) &&
++               nearValue(arc->worldGeometry.arc->sweepAngle, -1.57079632679489661923),
++           "manual two-level WCS line endpoints 94,22 / 98,26; arc 90,20 R4 clockwise");
++    expect("NestedInstanceIdentityAndVisibility",
++           line && second && line->leaf.handle == second->leaf.handle &&
++               line->instancePath != second->instancePath && line->effectiveVisible &&
++               !second->effectiveVisible && protectedRoot(a, rootId) && protectedRoot(a, root2Id),
++           "shared definition handle distinct instance paths; hidden ancestor preserved");
++    const auto *inherited = leaf(a, root3Id, lineId);
++    const auto *frozen = leaf(a, rootId, frozenId);
++    expect("LayerZeroInheritanceOffAndFrozen",
++           inherited && !inherited->effectiveVisible && inherited->worldGeometry.layer == "N4_off" &&
++               frozen && !frozen->effectiveVisible && frozen->worldGeometry.layer == "N4_frozen" &&
++               protectedRoot(a, root3Id),
++           "layer0 inherits off parent; named frozen child remains hidden under visible parent");
++    bool handed = false;
++    if (text && text->worldGeometry.textRotation) {
++        const auto &p = text->worldGeometry;
++        const double det = (p.textMirroredX ? -1.0 : 1.0) * (p.textMirroredY ? -1.0 : 1.0);
++        handed = det < 0 && point(p.textPosition, 94, 22);
++    }
++    expect("NestedTextChirality", handed,
++           "mirrored text retains negative basis determinant and actual WCS insertion");
++    const auto *cr = leaf(a, circle, circle);
++    const auto *mr = leaf(a, mtext, mtext);
++    expect("UnsupportedAndNonplanarPreserved",
++           protectedRoot(a, unknown) && protectedRoot(a, tilted) && protectedRoot(a, mtext) && mr &&
++               mr->worldGeometry.text && mr->worldGeometry.text->find(u8"中文") != std::string::npos && cr &&
++               cr->complete,
++           "unknown point, z=1 line and formatted mtext preserve; circle full geometry");
++    const auto *h = leaf(a, hatchId, hatchId);
++    expect("HatchOuterAndInnerLoopsRead", h && h->complete && !h->canonicalGeometry.empty(),
++           "two actual public polyline loops (outer and hole), pattern, normal and origin retained");
++    const auto *d = leaf(a, dimensionId, dimensionId);
++    expect("DimensionDefinitionMeasurementAndOverride",
++           d && d->complete && point(d->worldGeometry.start, 400, 0) &&
++               point(d->worldGeometry.end, 400, 3000) && d->worldGeometry.dimensionMeasurement &&
++               nearValue(*d->worldGeometry.dimensionMeasurement, 3000) && d->worldGeometry.text &&
++               *d->worldGeometry.text == u8"自定义<>",
++           "actual SDK definition points, measurement and override remain independent");
++    {
++        Open<AcDbHatch> edit(hatchId, AcDb::kForWrite);
++        ok(edit->removeLoopAt(1), "remove hole");
++        hv[0] = AcGePoint2d(44, 3);
++        ok(edit->appendLoop(AcDbHatch::kPolyline, hv, hb), "modified hole");
++    }
++    const auto changesBeforeHoleRead = syntheticMonitor.changes;
++    const auto holeChanged = readDatabaseAnalysis(db, "synthetic-curves", 5, options);
++    native::require(holeChanged.value.has_value(), "changed hatch read");
++    const auto *hc = leaf(*holeChanged.value, hatchId, hatchId);
++    expect("HatchInnerLoopAffectsSignature",
++           h && hc && h->complete && hc->complete && h->canonicalGeometry != hc->canonicalGeometry &&
++               syntheticMonitor.changes == changesBeforeHoleRead,
++           "inner hole changed behind identical outer envelope");
++    evidence.capability(details(a));
++}
++} // namespace bce::analysis_test
+--- before/tests/native/analysis/ElevationAnalysisCases.vcxproj
++++ after/tests/native/analysis/ElevationAnalysisCases.vcxproj
+@@ -11,12 +11,6 @@
+     <Link><SubSystem>Windows</SubSystem><ModuleDefinitionFile>$(ObjectArxSdk)\inc\AcRxDefault.def</ModuleDefinitionFile><AdditionalLibraryDirectories>$(ObjectArxSdk)\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories><AdditionalDependencies>rxapi.lib;acdb23.lib;acge23.lib;accore.lib;ac1st23.lib;Advapi32.lib;User32.lib;%(AdditionalDependencies)</AdditionalDependencies></Link>
+   </ItemDefinitionGroup>
+   <ItemGroup><ClCompile Include="AnalysisDriver.cpp" /><ClCompile Include="NativeEvidence.cpp" /><ClCompile Include="AnalysisReader.cpp" /><ClCompile Include="SceneReader.cpp" /><ClCompile Include="ElevationModel.cpp" /><ClCompile Include="Recognition.cpp" /></ItemGroup>
+-  <ItemGroup><ClInclude Include="NativeEvidence.h" /><ClInclude Include="LevelProbe.h" /><ClInclude Include="N1ReadPolicy.h" /><ClInclude Include="N1ProbePolicy.h" /></ItemGroup>
++  <ItemGroup><ClInclude Include="NativeEvidence.h" /><ClInclude Include="AnalysisReader.h" /><ClInclude Include="AnalysisFixtures.h" /><ClInclude Include="ExpectedMembership.h" /></ItemGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+ </Project>
+-
+-
+-
+-
+-
+-
+--- before/tools/build_analysis.ps1
++++ after/tools/build_analysis.ps1
+@@ -17,6 +17,24 @@
+         $receipt.sourceFiles[$destination] = $digest
+         $receipt.inputOrigins += [ordered]@{ origin=$source; compiledCopy=$destination; sha256=$digest }
+     }
++    $fixtureSource = Join-Path $projectRoot 'tests/native/analysis/AnalysisFixtures.h'
++    $fixtureCopy = Join-Path $sourceRoot 'AnalysisFixtures.h'
++    Copy-Item -LiteralPath $fixtureSource -Destination $fixtureCopy
++    $fixtureDigest = (Get-FileHash -LiteralPath $fixtureCopy).Hash
++    $receipt.sourceFiles[$fixtureCopy] = $fixtureDigest
++    $receipt.inputOrigins += [ordered]@{ origin=$fixtureSource; compiledCopy=$fixtureCopy; sha256=$fixtureDigest }
++    $expected = Join-Path $projectRoot 'tests/fixtures/scheme-expected.tsv'
++    $expectedCopy = Join-Path $buildRoot 'scheme-expected.tsv'
++    Copy-Item -LiteralPath $expected -Destination $expectedCopy
++    if ((Get-FileHash -LiteralPath $expectedCopy).Hash -ne 'E5D1C9E7D74909A2D7D95DE75D42F1DD7B2A3000B1AE6C051ED84551529723C2') { throw 'Expected fixture SHA mismatch' }
++    $rows = Import-Csv -LiteralPath $expectedCopy -Delimiter "`t"
++    $header = '#pragma once' + "`n" + '#include <map>' + "`n" + '#include <string>' + "`n" + 'inline std::map<std::string,std::string> expectedMembership() { return {' + "`n"
++    foreach ($row in $rows) { $header += '{"' + $row.handle + '","' + $row.titleHandle + '"},' + "`n" }
++    $header += '}; }'
++    $headerPath = Join-Path $sourceRoot 'ExpectedMembership.h'
++    Set-Content -LiteralPath $headerPath -Value $header -Encoding utf8
++    $receipt.sourceFiles[$headerPath] = (Get-FileHash -LiteralPath $headerPath).Hash
++    $receipt.sourceFiles[$expectedCopy] = (Get-FileHash -LiteralPath $expectedCopy).Hash
+     Copy-Item -LiteralPath $PSCommandPath -Destination (Join-Path $buildRoot 'build_analysis.ps1')
+     $receipt.sourceFiles[(Join-Path $buildRoot 'build_analysis.ps1')] = (Get-FileHash -LiteralPath (Join-Path $buildRoot 'build_analysis.ps1') -Algorithm SHA256).Hash
+     $vcvars = 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat'
+--- before/src/ElevationModel.h
++++ after/src/ElevationModel.h
+@@ -102,6 +102,11 @@
+     // Local text bases are R(rotation) * diag(mirrorX ? -1 : 1, mirrorY ? -1 : 1).
+     bool textMirroredX{false};
+     bool textMirroredY{false};
++    // Optional SDK-read provenance. Empty defaults preserve historical fixtures.
++    std::string sourceRootHandle;
++    std::string instancePath;
++    std::string nativeGeometrySignature;
++    bool effectiveVisible{true};
+ };
+ // Explicit association from a reader/user, never inferred from a nearby text alone.
+ struct LevelAssociation {
+--- before/src/Recognition.cpp
++++ after/src/Recognition.cpp
+@@ -70,7 +70,7 @@
+     return start == std::string::npos ? "0" : handle.substr(start);
+ }
+ std::optional<ViewKind> titleKind(const Primitive2& p) {
+-    if (p.kind != PrimitiveKind::text || !p.text) { return std::nullopt; }
++    if (!p.effectiveVisible || p.kind != PrimitiveKind::text || !p.text) { return std::nullopt; }
+     const bool elevation = p.text->find("立面") != std::string::npos || p.text->find("elevation") != std::string::npos;
+     const bool section = p.text->find("剖面") != std::string::npos || p.text->find("section") != std::string::npos;
+     if (!elevation && !section) { return std::nullopt; }
+@@ -113,6 +113,10 @@
+         out << (p.text ? "t" : "-"); if (p.text) { appendString(out,*p.text); }
+         if (p.arc) { out << 'a' << p.arc->center.x << ',' << p.arc->center.y << ',' << p.arc->radius << ',' << p.arc->startAngle << ',' << p.arc->sweepAngle << ';'; }
+         else { out << '-'; }
++        if(!p.nativeGeometrySignature.empty() || !p.sourceRootHandle.empty() || !p.instancePath.empty() || !p.effectiveVisible) {
++            out << "native;"; appendString(out,p.sourceRootHandle); appendString(out,p.instancePath);
++            appendString(out,p.nativeGeometrySignature); out << p.effectiveVisible << ';';
++        }
+     }
+     return out.str();
+ }
+@@ -207,7 +211,7 @@
+     std::vector<std::size_t> lines;
+     for(std::size_t i=0;i<scene.primitives.size();++i) {
+         const auto& p=scene.primitives[i];
+-        if(p.kind==PrimitiveKind::line && p.topologyComplete && p.start && p.end && finite(*p.start) && finite(*p.end) && !samePoint(*p.start,*p.end)) { lines.push_back(i); }
++        if(p.effectiveVisible && p.kind==PrimitiveKind::line && p.topologyComplete && p.start && p.end && finite(*p.start) && finite(*p.end) && !samePoint(*p.start,*p.end)) { lines.push_back(i); }
+     }
+     std::vector<bool> visited(lines.size(),false);
+     for(std::size_t root=0;root<lines.size();++root) {
+@@ -245,7 +249,7 @@
+ bool contains(const View& view,const EntityKey& key) { return std::find(view.members.begin(),view.members.end(),key)!=view.members.end(); }
+ void levels(const SceneSnapshot& scene,View& view,AnalysisResult& result) {
+     for(const auto& p:scene.primitives) {
+-        if(!contains(view,p.key)) { continue; }
++        if(!p.effectiveVisible || !contains(view,p.key)) { continue; }
+         if(!isLevelLabel(p)) { continue; }
+         const auto declared=levelMm(p);
+         Feature level; level.kind="level"; level.sources={p.key}; level.declaredMm=declared;
+--- before/tests/CoreTests.cpp
++++ after/tests/CoreTests.cpp
+@@ -63,11 +63,15 @@
+ void hugeLevelDirectionKeepsFiniteCandidate();
+ void overflowingAxisSpacingIsRejected();
+ void mirroredTextPreservesBothBasisDirections();
++void nativeDetailedGeometryInvalidatesOnlyAffectedView();
++void hiddenTitleDoesNotAnchorView();
++void hiddenEdgeDoesNotCloseRectangle();
++void hiddenLevelDoesNotAssociate();
+ }
+ 
+ namespace {
+ struct TestCase { const char* name; void (*run)(); };
+-const std::array<TestCase, 73> cases{{
++const std::array<TestCase, 77> cases{{
+     {"MissingConfigDoesNotWriteDrawing", bce::test::missingConfigDoesNotWriteDrawing},
+     {"DocumentSwitchRejectsStaleCommit", bce::test::documentSwitchRejectsStaleCommit},
+     {"RepeatedBuildDoesNotDuplicate", bce::test::repeatedBuildDoesNotDuplicate},
+@@ -140,6 +144,10 @@
+     {"HugeLevelDirectionKeepsFiniteCandidate", bce::test::hugeLevelDirectionKeepsFiniteCandidate},
+     {"OverflowingAxisSpacingIsRejected", bce::test::overflowingAxisSpacingIsRejected},
+     {"MirroredTextPreservesBothBasisDirections", bce::test::mirroredTextPreservesBothBasisDirections},
++    {"NativeDetailedGeometryInvalidatesOnlyAffectedView", bce::test::nativeDetailedGeometryInvalidatesOnlyAffectedView},
++    {"HiddenTitleDoesNotAnchorView", bce::test::hiddenTitleDoesNotAnchorView},
++    {"HiddenEdgeDoesNotCloseRectangle", bce::test::hiddenEdgeDoesNotCloseRectangle},
++    {"HiddenLevelDoesNotAssociate", bce::test::hiddenLevelDoesNotAssociate},
+     {"OverflowingGapDoesNotRecurse", bce::test::overflowingGapDoesNotRecurse}
+ }};
+ }
+--- before/tests/RecognitionTests.cpp
++++ after/tests/RecognitionTests.cpp
+@@ -363,6 +363,38 @@
+     p.axes={{key("1"),"1",{-1e308,0}},{key("2"),"2",{1e308,0}}};
+     const auto result=projectAxes(p,{1,0});
+     require(!result.canCommit() && !result.value && hasCode(result,diagnostic::ambiguousFeature),"infinite spacing must not be accepted from finite stations");
++}
++void nativeDetailedGeometryInvalidatesOnlyAffectedView() {
++    auto scene=emptyScene();group(scene,"A1","A2","A3",0,0);group(scene,"B1","B2","B3",1000,0);
++    const auto before=analyse(scene,{},{});require(before.views.size()==2,"native signature fixture");
++    scene.primitives[1].nativeGeometrySignature="poly:0,0;4,3;10,0;bulge=0.1;width=2";
++    scene.primitives[1].sourceRootHandle="A2";scene.primitives[1].instancePath="A2";
++    const auto changed=analyse(scene,{},{});require(changed.views.size()==2,"native signature grouping");
++    require(before.views[0].geometrySignature!=changed.views[0].geometrySignature,"complete interior geometry signature ignored");
++    require(before.views[1].geometrySignature==changed.views[1].geometrySignature,"unaffected view signature changed");
++    scene.primitives[1].nativeGeometrySignature.clear();scene.primitives[1].sourceRootHandle.clear();scene.primitives[1].instancePath.clear();
++    const auto defaults=analyse(scene,{},{});require(defaults.views[0].geometrySignature==before.views[0].geometrySignature,"empty defaults changed historical signature");
++    scene.primitives[1].effectiveVisible=false;require(analyse(scene,{},{}).views[0].geometrySignature!=before.views[0].geometrySignature,"visibility change ignored");
++}
++void hiddenTitleDoesNotAnchorView() {
++    auto scene=emptyScene();group(scene,"A1","A2","A3",0,0);scene.primitives[0].effectiveVisible=false;
++    const auto result=analyse(scene,{},{});
++    require(result.views.empty(),"hidden title must not anchor a visible elevation");
++    require(result.preserved.size()==3&&result.unassigned.size()==3,"hidden title and remaining roots must remain locatable");
++}
++void hiddenEdgeDoesNotCloseRectangle() {
++    auto scene=emptyScene();scene.primitives={line("1",{0,0},{10,0}),line("2",{10,0},{10,20}),line("3",{10,20},{0,20}),line("4",{0,20},{0,0})};
++    scene.primitives[0].effectiveVisible=false;
++    const auto result=analyse(scene,{},{});
++    require(std::none_of(result.model.features.begin(),result.model.features.end(),[](const Feature& f){return f.kind=="rectangle";}),"hidden edge must not close a visible rectangle");
++    require(result.preserved.size()==4,"hidden rectangle edge lost");
++}
++void hiddenLevelDoesNotAssociate() {
++    auto scene=emptyScene();group(scene,"A1","A2","A3",0,0);scene.primitives.push_back(title("A4",{5,5},"二层 +3900 mm"));scene.primitives.back().effectiveVisible=false;
++    scene.levelAssociations.push_back({key("A2"),key("A3"),key("A4"),{0,0},{0,3000},{0,1},1});
++    const auto result=analyse(scene,{},{});
++    require(result.views.size()==1&&result.views[0].members.size()==4,"hidden level source must keep membership evidence");
++    require(result.views[0].levelCandidates.empty()&&!issueCode(result,diagnostic::levelConflict),"hidden level must not form an association or conflict");
+ }
+ void mirroredTextPreservesBothBasisDirections() {
+     auto text=title("A1",{3,4},"正立面"); text.textHeight=2;

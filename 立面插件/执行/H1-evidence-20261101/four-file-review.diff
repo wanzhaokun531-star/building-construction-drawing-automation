@@ -1,0 +1,54 @@
+--- 立面插件\tools\watch_native_case.py.before
++++ 立面插件\tools\watch_native_case.py
+@@ -88,7 +88,12 @@
+     final = host.read(session / 'isolation-final.json')
+     assert final['nonce'] == binding['nonce'] and final['processId'] == report['pid']
+     assert final['workerExited'] and final['desktopClosed'] and final['processHandlesClosed']
+-    observed.update(normalQuit=final['nativeQuitConfirmed'] and not final['forcedTermination'],
++    # A QUIT marker cannot establish normal exit after an explicit stop request.
++    # Keep forcedTermination below as the raw supervisor observation.
++    observed.update(normalQuit=(final['nativeQuitConfirmed'] and not final['forcedTermination']
++                                and not stop_needed and final.get('workerExitCode') == 0),
++                    explicitStopRequested=stop_needed,
++                    normalQuitUnprovenDueToExplicitStop=stop_needed,
+                     forcedTermination=final['forcedTermination'], timedOut=final['timedOut'],
+                     supervisorFinalSHA256=host.sha(session / 'isolation-final.json'))
+     host.retire(binding_path)
+--- 立面插件\tools\watch_command_case.py.before
++++ 立面插件\tools\watch_command_case.py
+@@ -92,7 +92,12 @@
+     final = host.read(session / 'isolation-final.json')
+     assert final['nonce'] == binding['nonce'] and final['processId'] == report['pid']
+     assert final['workerExited'] and final['desktopClosed'] and final['processHandlesClosed']
+-    observed.update(normalQuit=final['nativeQuitConfirmed'] and not final['forcedTermination'],
++    # A QUIT marker cannot establish normal exit after an explicit stop request.
++    # Keep forcedTermination below as the raw supervisor observation.
++    observed.update(normalQuit=(final['nativeQuitConfirmed'] and not final['forcedTermination']
++                                and not stop_needed and final.get('workerExitCode') == 0),
++                    explicitStopRequested=stop_needed,
++                    normalQuitUnprovenDueToExplicitStop=stop_needed,
+                     forcedTermination=final['forcedTermination'], timedOut=final['timedOut'],
+                     supervisorFinalSHA256=host.sha(session / 'isolation-final.json'))
+     host.retire(binding_path)
+--- 立面插件\阶段1\工具\retire_reader_staging.py.before
++++ 立面插件\阶段1\工具\retire_reader_staging.py
+@@ -56,7 +56,7 @@
+         expected_sha = next(i['SHA256'] for i in binding['inputs'] if i['role'] == 'reference')
+         assert sha(p) == expected_sha
+         controls.append(dict(path=str(p), SHA256=sha(p)))
+-    report = dict(contract='bce.stage1.reader-retirement.v1', recorded=datetime.datetime.now().astimezone().isoformat(), binding=str(binding_path), bindingSHA256=sha(binding_path), session=str(session), nonce=binding['nonce'], processId=final['processId'], supervisorFinal=str(final_path), supervisorFinalSHA256=sha(final_path), normalQuit=final['nativeQuitConfirmed'] and not final['forcedTermination'], forcedTermination=final['forcedTermination'], removedFiles=retired, stagingRemoved=not staging.exists(), coreInputChecks=inputs, previewControlChecks=controls, inputDesktopReadErrors=final['inputDesktopReadErrors'], ownedUserShows=final['workerUserDesktopShowEvents'], ownedForeground=final['workerForegroundEvents'], monitorError=final['monitorError'], relatedCadEventsNeedReview=final['relatedCadEventsNeedReview'], relatedCadShowEvents=final['relatedCadShowEvents'], relatedCadForegroundEvents=final['relatedCadForegroundEvents'], scope='Only own nonce staging removed after attested worker exit; originals, snapshots and controls retained unchanged; forced exit is not normal QUIT')
++    report = dict(contract='bce.stage1.reader-retirement.v1', recorded=datetime.datetime.now().astimezone().isoformat(), binding=str(binding_path), bindingSHA256=sha(binding_path), session=str(session), nonce=binding['nonce'], processId=final['processId'], supervisorFinal=str(final_path), supervisorFinalSHA256=sha(final_path), normalQuit=(final['nativeQuitConfirmed'] and not final['forcedTermination'] and final.get('workerExitCode') == 0 and not any(session.glob('isolation-stop-*.json'))), explicitStopEvidencePresent=any(session.glob('isolation-stop-*.json')), forcedTermination=final['forcedTermination'], removedFiles=retired, stagingRemoved=not staging.exists(), coreInputChecks=inputs, previewControlChecks=controls, inputDesktopReadErrors=final['inputDesktopReadErrors'], ownedUserShows=final['workerUserDesktopShowEvents'], ownedForeground=final['workerForegroundEvents'], monitorError=final['monitorError'], relatedCadEventsNeedReview=final['relatedCadEventsNeedReview'], relatedCadShowEvents=final['relatedCadShowEvents'], relatedCadForegroundEvents=final['relatedCadForegroundEvents'], scope='Only own nonce staging removed after attested worker exit; originals, snapshots and controls retained unchanged; forced exit is not normal QUIT')
+     target = session / 'reader-retirement.json'
+     with target.open('x', encoding='utf-8') as out:
+         json.dump(report, out, ensure_ascii=False, indent=2)
+--- 立面插件\tools\retire_command_staging.py.before
++++ 立面插件\tools\retire_command_staging.py
+@@ -58,7 +58,7 @@
+         expected_sha = next(i['SHA256'] for i in binding['inputs'] if i['role'] == 'reference')
+         assert sha(p) == expected_sha
+         controls.append(dict(path=str(p), SHA256=sha(p)))
+-    report = dict(contract='bce.command-retirement.v1', recorded=datetime.datetime.now().astimezone().isoformat(), binding=str(binding_path), bindingSHA256=sha(binding_path), session=str(session), nonce=binding['nonce'], processId=final['processId'], supervisorFinal=str(final_path), supervisorFinalSHA256=sha(final_path), normalQuit=final['nativeQuitConfirmed'] and not final['forcedTermination'], forcedTermination=final['forcedTermination'], removedFiles=retired, stagingRemoved=not staging.exists(), coreInputChecks=inputs, previewControlChecks=controls, inputDesktopReadErrors=final['inputDesktopReadErrors'], ownedUserShows=final['workerUserDesktopShowEvents'], ownedForeground=final['workerForegroundEvents'], monitorError=final['monitorError'], relatedCadEventsNeedReview=final['relatedCadEventsNeedReview'], relatedCadShowEvents=final['relatedCadShowEvents'], relatedCadForegroundEvents=final['relatedCadForegroundEvents'], scope='Only own nonce staging removed after attested worker exit; originals, snapshots and controls retained unchanged; forced exit is not normal QUIT')
++    report = dict(contract='bce.command-retirement.v1', recorded=datetime.datetime.now().astimezone().isoformat(), binding=str(binding_path), bindingSHA256=sha(binding_path), session=str(session), nonce=binding['nonce'], processId=final['processId'], supervisorFinal=str(final_path), supervisorFinalSHA256=sha(final_path), normalQuit=(final['nativeQuitConfirmed'] and not final['forcedTermination'] and final.get('workerExitCode') == 0 and not any(session.glob('isolation-stop-*.json'))), explicitStopEvidencePresent=any(session.glob('isolation-stop-*.json')), forcedTermination=final['forcedTermination'], removedFiles=retired, stagingRemoved=not staging.exists(), coreInputChecks=inputs, previewControlChecks=controls, inputDesktopReadErrors=final['inputDesktopReadErrors'], ownedUserShows=final['workerUserDesktopShowEvents'], ownedForeground=final['workerForegroundEvents'], monitorError=final['monitorError'], relatedCadEventsNeedReview=final['relatedCadEventsNeedReview'], relatedCadShowEvents=final['relatedCadShowEvents'], relatedCadForegroundEvents=final['relatedCadForegroundEvents'], scope='Only own nonce staging removed after attested worker exit; originals, snapshots and controls retained unchanged; forced exit is not normal QUIT')
+     target = session / 'reader-retirement.json'
+     with target.open('x', encoding='utf-8') as out:
+         json.dump(report, out, ensure_ascii=False, indent=2)

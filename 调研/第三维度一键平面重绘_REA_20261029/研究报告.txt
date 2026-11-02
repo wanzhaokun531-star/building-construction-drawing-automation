@@ -1,0 +1,121 @@
+第三维度 TranSketch「一键平面重绘」只读研究
+日期：2026-10-29（Asia/Shanghai）
+方法：用户指定的 REA 6.8.0；安装目录、PE/CLI 元数据、磁盘 CIL、CUI 与配置资源分析。结合此前成功读取的面板文字，不执行重绘。
+
+结论
+
+它具有“T3转天正”和“单线生平面”两类输入模式，并提供普通/智能深化、外保温和取整控制。现有证据支持：这是具有构件识别配置、技术规定和天正适配层的重建工具候选。尚不能证明其在本方案中能保持定稿建筑几何、输出全部对应天正对象或满足完整施工图标准。
+
+当前面板与“平面深化”是不同入口。不能将产品的所有深化、立剖面、详图或 TransBIM-TD 云平台宣传并入本功能。
+
+1. 目标与版本（已确认）
+
+注册表安装产品：TranSketch，DisplayVersion=2.607.24.198。
+目标目录：C:\Program Files\Autodesk\ApplicationPlugins\TranSketchPlugin.bundle\Contents\Win64\2020。
+REA server/package 实际版本均为6.8.0，alignment=aligned；不是只读取技能后声称已经使用REA。
+REA将所查UI与ViewModel归类为.NET Framework、x86_64、CIL。安装文件分析不等于已证明运行内存中的每个程序集与磁盘逐字节一致。
+
+核心文件SHA256：
+TranSketchUI.dll：020f31939d377c6c46254a4d1294a173fc1c7b825e70324f89a6ddc1251c6aaf
+TranSketch.ViewModel.dll：c2bea2dc7e9cde837f5e8f2bc2b0930a31c042363f84a81a9431a6bfcd5d5b03
+TranSketchCommand.dll：1e6d07468e7f35c41d0a3255a19f7460de14ca8af6cba7f675b5a3045733f185
+TranSketchService.dll：ee52a71346695668dc2ceb46eea336628ec158eccfe39b53a3e42eb66ac67a54
+DataConverter.dll：14736df5fd90c9d4a519a6adb573f1a605cbade2ef1ebee9e9fa27bd0112373a
+
+2. 当前功能入口和可见控制（已确认；没有点击执行）
+
+TranSketch.cuix / MenuGroup.cui：
+平面重绘：MenuMacro MMU_201_FFB61，命令 ^C^C_SZHTZ。
+平面深化：MenuMacro MMU_231_D26B4，命令 ^C^C_SPMSH。
+Command程序集也存在SZHTZ方法0x060000b9和SPMSH方法0x060000e5。
+
+当前面板文字：T3转天正、单线生平面、插入单线样例、普通模式、智能深化、按统一技术规定绘制外保温、结果取整到、绘图图层配置、识别配置、统一技术规定、产品教程、选择重绘图纸。
+读取当时显示“剩余累计次数：0”。没有取得收费规则、账号权限或实际运行失败的合同；不能仅凭0断言所有模式均不可用或产品永久收费。
+
+与当前面板相匹配的数据模型是TranSketch.ViewModel.AecSelectViewModel（TypeDef 0x0200000b），不是早期探索中的FlatConversionModel。
+声明属性包括IsT3ToTangent、IsIntelligent、NeedInsulating、NeedRound、RoundNumber；方法包括ReloadSettings、SaveSettings、InsertSingleLineExample、SetTZ、Do。
+Service枚举声明T3_TO_TANGENT、SINGLE_LINE_TO_FAMILY、SIMPLE和INTELLIGENT。这里只确认分支声明，不确认分支实际行为。
+
+安装包中有example\单线样例文件.dwg，SHA256=2BB77F6F60E5C10AE2CB5F7CD1C96D733D38F326B97BCE170DF5A9B3095ED41C；本轮没有将该样例插入任何CAD图纸，也没有验证其具体图层/线型合同。
+
+3. 识别依据与技术规定（声明/界面资源已确认，执行合同待证）
+
+CADEntConfig声明allLayer、allBlockName、filter、OtherPara等集合与字段；对应BAML文本包括墙图层、门块名、矮墙及门窗图层、墙体厚度、家具图层/家具块名。
+TSAnalyseCADLine声明墙/门/窗/栏杆图层、墙厚上下限、取整参数以及天正门窗模板路径。ASDAnalyseCADLine声明墙、窗、门、栏杆、房间集合。
+这些是“可配置识别”的证据；不能据此断言只靠图层，不使用其他几何或AI，也不能推定具体识别准确率。
+
+统一技术规定BAML包含默认厚度、外保温位置/厚度、门强制宽高/门槛/门垛/居中、窗台高/窗垛/窗样式/窗下墙/窗套、女儿墙、楼地面相对标高与厚度等选项。
+只确认配置项存在；没有读取到其当前有效值，也没有证明SZHTZ每次实际消费其中哪些规则。
+
+用户配置LayerConfigSettings.json为0字节。TranSketch标准.lay为CP936图层标准，含DOTE、AXIS、WALL、WINDOW映射；图层标准不等于识别算法。RoomAllConfig/RoomAllRule等为不透明编码文本，未解码。
+
+对定稿方案最相关的未知是：取整究竟作用于计算中间值、重建构件几何还是仅标注；智能深化是否会修改已有门窗、墙线或尺寸。当前不能默认这些选项保持建筑几何。
+
+4. 对象生成和天正适配（仅声明，未获真实生成成果）
+
+Service类别声明：
+- DSWDAecProcessingUtil.CreateWalls：0x06001414/0x06001415。
+- DSWDObjCreateor.CreateWalls/CreateWindows/CreateDoors：0x060016d6/0x060016d9/0x060016df，签名含Transaction与类别数据，返回ObjectId集合。
+- TengenAxisLableSetHelper.CreateMulAxis/CreateSingleAxis：0x06000f3b至0x06000f3d。
+- TengenDimmpHelper.InsertTzDimmp：0x06000f46。
+
+DataConverter适配声明：
+- TengenWallOperator.CreateStraightWall：0x06000514。
+- TengenDoorOperator.CreateTZDoor、TengenWindowOperator.CreateTZWindow：0x06000259/0x06000559。
+- TengenAxisLableSetOperator.CreateMulAxisCmd：0x060000b0。
+- TengenDimmpOperator.CreateTDimmp：0x060001a4。
+- TengenContinueDimOperator2.InsertToCurrentSpaceByCommand：0x06000136。
+
+这些名称和签名支持“业务数据—类别创建器—天正适配器”的职责划分推断。没有恢复出它们之间的真实调用链，更没有证明输出的AcRx类名、业务属性、几何、关联、显示和保存重开。
+
+DataConverter元数据还引用DBObjectAdaptation.GetComObject、ReflectionTool.ReadPropFromCom/WritePropToCom、DocumentAdaptation.CommandEx与Document.SendStringToExecute。说明COM/反射/命令桥是有证据的候选边界；不能将该产品称为纯ObjectARX原生实现，也不能断言SZHTZ必然执行了每个引用。
+
+5. 静态分析能到哪里（明确限制）
+
+当前AecSelectViewModel所选32方法的磁盘CIL全部为相同11字节ldstr/newobj/throw占位体，字符串为Runtime exception。
+对象生成分支Service所选160方法中156个为相同占位体，另3个User32外部声明，1个仅ret。DataConverter所选292方法也均为同一11字节占位体。
+因此真实算法、条件、容差、调用次序与参数传递尚未还原。发布包采用方法体保护是合理推断，具体保护机制未识别。占位体不是实际运行会失败的证据，也不能当作原始C#源码。
+
+Service第一次全成员解析达到64MiB表示预算，仅取得类型清单；随后按明确类型定向解析，保留原始部分覆盖记录。另一次过大的方法页达到10MiB传输预算，结果留存在REA，再改为定向类型读取。没有将这两次工具限额解释为目标不支持。
+未注入、附加调试器、加载目标程序集、修改授权、绕过计次或触发目标程序的网络请求；公开网站检索单独进行。本轮没有运行功能来获得DWG/PDF效果证据。
+
+6. 仍待证实的问题
+
+- SZHTZ真实入口到识别、规则和生成的调用路径。
+- T3与单线的准确图元/图层/块名输入合同、容差和错误清单。
+- 普通与智能模式各自新增/删除/修改哪些对象。
+- 是否保持本方案原建筑几何、门窗开启形式和实际尺寸。
+- 每类输出是否为要求的对应天正专有对象，以及保存重开后是否保持。
+- 标注、轴网、索引等是否属于本次重绘输出，还是其他独立模块的工作。
+- 图层/文字/字体/尺寸样式与指定参考图的完整一致性。
+- 数据是否上传、上传范围、离线可用性、当前0次的精确权限与价格规则。
+
+7. 对当前项目的含义
+
+值得借鉴的是识别配置、规则参数、类别创建器和天正适配器的分层。它没有给我们的“ObjectARX C++公开接口＋天正命令桥”路线新增通过证据。
+本项目建筑方案已定稿且保留原天正对象；不能为了使用重绘而自动重新开门窗、并墙、延墙或把尺寸取整。任何后续效果核对只能使用冻结5BC方案的新工作副本，按真实对象类型、建筑几何、公开业务字段及保存重开独立比较。参考图仍只提供制图标准，不替代方案尺寸。
+本次是软件调研，不进入阶段2，不修改既有阶段1验收结论。
+
+8. 证据索引
+
+rea-main-evidence.json：39条记录，包含REA安装目录清单、UI/命令/ViewModel/输入侧元数据与分页结果。
+rea-config-evidence.json：配置分支9条REA记录；CUI、BAML文字与本机配置的文件格式读取结果由本报告单列，不冒充可执行调用链。
+rea-generation-evidence.json：对象生成分支23条REA记录。
+研究索引.json：关键结论、证据ID和范围说明。
+
+主证据：
+当前面板模型父：ev_c5b1f3ff5790c86eddaf149a85a8e058569bbd8d196036d05030f1fbbccce8d2
+当前模型方法页：ev_bd3811336eccd5112e39b4d301e4e5c49c9d334e8680aa90a9f2b950b137ee59
+命令核心方法页：ev_c059c76108de8693cab9fd26fa15ada2f01e0c0a244fee1b9a77251a639d4542
+识别侧定向父：ev_2cf737c717e2198bc5a35b21018adb046bed6fbe551c181d01e8ee908348fbff
+配置选集父：ev_99b6f32d918e09d34061d1623a2e7238ff971b26f9520aa3be954a54bd21765b
+生成Service定向父：ev_04f91d00756d800bceac4159b538e1ec29428245e11db041b13858007830192a
+DataConverter定向父：ev_ba9d520d3d0bf2d18b00ba80e5b60a46a637f2f4acf660311b0b3547f596f2e0
+DataConverter引用页：ev_34f6bd5892dea3c5b2ad6e2b0c0a823f098fb69159ca3baa3362476d8e400894
+
+公开资料补充（只用于限制外推）：
+中望官方产品页：https://zdn.zwsoft.cn/home/product/detail/id/293.html
+第三维度官网：https://www.transbim.com/
+官方产品门户：https://ts-portal.transbim.com/home
+官方教程账号入口示例：https://www.bilibili.com/video/BV1LQb3zEEoW/
+本轮未取得重绘章节的详细官方参数合同；“免费下载”不等于重绘不限次免费，TD的SaaS介绍不等于本模块上传DWG。

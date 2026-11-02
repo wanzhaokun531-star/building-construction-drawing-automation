@@ -1,0 +1,166 @@
+[
+  {
+    "source": "C:\\Autodesk\\ObjectARX_for_AutoCAD_2020_Win_64_bit\\inc\\drawable.h",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\drawable.h",
+    "sha256": "BE4D3F150A70EE40B7DB89EEB5093D52D668297E999643C6C581F7F94CBD9CAC"
+  },
+  {
+    "source": "C:\\Autodesk\\ObjectARX_for_AutoCAD_2020_Win_64_bit\\inc\\rxoverrule.h",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\rxoverrule.h",
+    "sha256": "533B97D4311D04B8DA1375616F36275D8926405F5BD4900ECE8D70CC31FA54DB"
+  },
+  {
+    "source": "C:\\Autodesk\\ObjectARX_for_AutoCAD_2020_Win_64_bit\\inc\\acgi.h",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\acgi.h",
+    "sha256": "BAFD7C2356A29783AFE4A503B08FEDDC34E80C69E7BE10B4D5AA66D4AA37D67A"
+  },
+  {
+    "source": "C:\\Autodesk\\ObjectARX_for_AutoCAD_2020_Win_64_bit\\inc\\acedCmdNF.h",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\acedCmdNF.h",
+    "sha256": "B1480D0B103ADA79CF894B3AD6365DB6CEEC1283EB287AA734ABCBEB14E26D44"
+  },
+  {
+    "source": "C:\\Autodesk\\ObjectARX_for_AutoCAD_2020_Win_64_bit\\inc\\dbapserv.h",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\dbapserv.h",
+    "sha256": "6DD11DFCBCD323EABA7580053D62194E12AC8332432A867E5F1534A619B8C731"
+  },
+  {
+    "source": "立面插件\\build\\n5-20261101-210247-345-reference-workingdb-scope-fix-1ce606c5\\src\\GraphicsPolicy.h",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\GraphicsPolicy.h",
+    "sha256": "9F4DD6AF7C950BDA3A5D78444EE4EDFA63381DCFFCA96A39B6BA92B0D4A9DB97",
+    "role": "frozen N5 acceptance policy; no collector code copied"
+  },
+  {
+    "source": "立面插件\\build\\n5-20261101-210247-345-reference-workingdb-scope-fix-1ce606c5\\src\\GraphicsControlPolicy.h",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\GraphicsControlPolicy.h",
+    "sha256": "4A6AA82F67E722D29934D30184538B46DA7BB727305E7DAC32D809F5DFD95B1E",
+    "role": "frozen N5 acceptance policy; no collector code copied"
+  },
+  {
+    "source": "立面插件\\build\\n5-20261101-210247-345-reference-workingdb-scope-fix-1ce606c5\\src\\GraphicsReadProbe.cpp",
+    "sha256": "EE503530811702B74B14A1AB37A1C3E879ADC9E96E065A5FB8546900884A97F1",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\ViewportFixtures.h",
+    "copySha256": "69B13CB727BFB2B7A07C956A847568783DDE38381C192AD5FB3B1E0EE341F2D6",
+    "role": "N7 adapted Open/Monitor/WorkingDatabase/fingerprint/control fixtures; original N5 unchanged"
+  },
+  {
+    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcApDocManagerReactor__documentBecameCurrent@AcApDocument_.html",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcApDocManagerReactor__documentBecameCurrent@AcApDocument_.html",
+    "sha256": "728555AA54209594DCE4074AC4E50F016AB6C882BC686981C30F9C9BB708D18F"
+  },
+  {
+    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcApDocManager__sendStringToExecute@AcApDocument_@ACHAR__@bool@bool@bool.html",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcApDocManager__sendStringToExecute@AcApDocument_@ACHAR__@bool@bool@bool.html",
+    "sha256": "0588F0F5082214DD2FBAA27BAEE39B29CED95C9718C18D24712F5E8F1CD2EA6C"
+  },
+  {
+    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcDbHostApplicationServices__setWorkingDatabase@AcDbDatabase_.html",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcDbHostApplicationServices__setWorkingDatabase@AcDbDatabase_.html",
+    "sha256": "B74B455A19625DFFECE524B03C22A1540297992F6CC23E7E7AF9B999BCEB3B89"
+  },
+  {
+    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!acedSetCurrentView@AcDbViewTableRecord__@AcDbViewport__.html",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\acedSetCurrentView@AcDbViewTableRecord__@AcDbViewport__.html",
+    "sha256": "88D11875D19D752063636822286E72D7074D2F4C43BCE0AC14A23C770CADCFE0"
+  },
+  {
+    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiCommonDraw__context.html",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiCommonDraw__context.html",
+    "sha256": "618FE327FCC327F91F4DFB7EEB821F24D3923CF991D86B55C5783F7C75EEF84A"
+  },
+  {
+    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiDrawableOverrule.html",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiDrawableOverrule.html",
+    "sha256": "658E0C60BF01B253C91FC5CC6A91884947BF8BF496232964CCAB58B7429AD45F"
+  },
+  {
+    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiDrawableOverrule__AcGiDrawableOverrule.html",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiDrawableOverrule__AcGiDrawableOverrule.html",
+    "sha256": "1889ADD59FCAD31EA74E2744C49E5818078D36C134521912A60D6243C55CE342"
+  },
+  {
+    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiDrawableOverrule__setAttributes@AcGiDrawable_@AcGiDrawableTraits__.html",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiDrawableOverrule__setAttributes@AcGiDrawable_@AcGiDrawableTraits__.html",
+    "sha256": "3C358D6364332F62033C911FB116ECC3C7194AD5F91EBD8275E700CF1C69425A"
+  },
+  {
+    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiDrawableOverrule__viewportDraw@AcGiDrawable_@AcGiViewportDraw__.html",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiDrawableOverrule__viewportDraw@AcGiDrawable_@AcGiViewportDraw__.html",
+    "sha256": "4767066723BF41AD367C629C4821B1270AA20AE336654A563847D5A80E3333DF"
+  },
+  {
+    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiDrawableOverrule__viewportDrawLogicalFlags@AcGiDrawable_@AcGiViewportDraw__.html",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiDrawableOverrule__viewportDrawLogicalFlags@AcGiDrawable_@AcGiViewportDraw__.html",
+    "sha256": "283A7FFC57CFC7E080140BCF9213D9DC37BC230800403C06D85CF274D707E59A"
+  },
+  {
+    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiDrawableOverrule__worldDraw@AcGiDrawable_@AcGiWorldDraw__.html",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiDrawableOverrule__worldDraw@AcGiDrawable_@AcGiWorldDraw__.html",
+    "sha256": "18745F4162AD495305CA616E403630E55C533B5762743C06D0D9762D94DA52D2"
+  },
+  {
+    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiViewportDraw__geometry.html",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiViewportDraw__geometry.html",
+    "sha256": "D24920E3A69F602D85E1EC3EA9B5E0ED171682B7B61C8DB9F31767DCFDA63DF6"
+  },
+  {
+    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiViewportDraw__isValidId@Adesk__ULongPtr@const.html",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiViewportDraw__isValidId@Adesk__ULongPtr@const.html",
+    "sha256": "373F5AF4047F4D04F7563C95512AB38F82D9CA145E26A0F6B0280A676C60304C"
+  },
+  {
+    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiViewportDraw__sequenceNumber.html",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiViewportDraw__sequenceNumber.html",
+    "sha256": "27CE0BCC4211FFD0287DE9A0FF2AAB051BE8E6F98470322933A2D993CCEBBCC5"
+  },
+  {
+    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiViewportDraw__viewport.html",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiViewportDraw__viewport.html",
+    "sha256": "CAA2A5C7636FBD3A71B7E7D38F34BBA35DD47054000459DFD464DEF2E0500C90"
+  },
+  {
+    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiViewportDraw__viewportObjectId.html",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiViewportDraw__viewportObjectId.html",
+    "sha256": "A4D0BBDDF84378C289C9EC29665BC0805FBC71534E78E23C4339C190ECD1CC9E"
+  },
+  {
+    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcGiWorldDraw__geometry.html",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiWorldDraw__geometry.html",
+    "sha256": "1A3BD12CC76C804583DB2FA4E24367284D1DEC483B2B7F35FAEB44D76A65BAAA"
+  },
+  {
+    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcRxOverrule__addOverrule@AcRxClass_@AcRxOverrule_@bool.html",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcRxOverrule__addOverrule@AcRxClass_@AcRxOverrule_@bool.html",
+    "sha256": "3CD9750B4DF22BD2245D4C2C0BA4F1F27E9605DB984362D8BA676E9D874A448A"
+  },
+  {
+    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcRxOverrule__hasOverrule@AcRxObject_@AcRxClass_.html",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcRxOverrule__hasOverrule@AcRxObject_@AcRxClass_.html",
+    "sha256": "B8E939342383EBC991C3ADC3BF7FEA44849993CFA5B4327DA1DF6F9767E72AFD"
+  },
+  {
+    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcRxOverrule__isApplicable@AcRxObject_@const.html",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcRxOverrule__isApplicable@AcRxObject_@const.html",
+    "sha256": "BBE94209595A36F1AE3161B9B9149D226D818E54165822ACE13886336F18FC21"
+  },
+  {
+    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcRxOverrule__isOverruling.html",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcRxOverrule__isOverruling.html",
+    "sha256": "5B23336EA97CA3A28BF139B2F2A928FAF33F85A9BDC56AD1D137CEC9D9EDE226"
+  },
+  {
+    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcRxOverrule__removeOverrule@AcRxClass_@AcRxOverrule_.html",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcRxOverrule__removeOverrule@AcRxClass_@AcRxOverrule_.html",
+    "sha256": "40FAA86A272BC363E409429ED34BB83353FA8AB1D7EEDDE6A5A6AEC0DAD7F3CD"
+  },
+  {
+    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcRxOverrule__setIsOverruling@bool.html",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcRxOverrule__setIsOverruling@bool.html",
+    "sha256": "91BA5A573F900DF5F860ACC5D5923713BD067FA5F8D55236E9736B36C75DF0D0"
+  },
+  {
+    "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm!AcRxOverrule__~AcRxOverrule.html",
+    "copy": "立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcRxOverrule__~AcRxOverrule.html",
+    "sha256": "11FB51A80BFB04917CDA23B996DE9E7406A3534D5302490B9EEA3C805B7EA659"
+  }
+]

@@ -1,0 +1,7 @@
+{
+  "failure": "no actual annotation clearance applied",
+  "cause": "All saved support intervals/pieces passed; new unsupported gap removal also removes previously intersecting text location. No support-text intersection remains in this frozen drawing, so positive removed text length is not required.",
+  "change": "Allow zero calculated text clearance while retaining per-piece independent text subtraction and exact curve checks",
+  "drawingChanged": false,
+  "generatorChanged": false
+}

@@ -1,0 +1,112 @@
+--- D:\Codex\建筑施工图自动化\立面插件\build\i2-20261101-214231-009-stub-red-complete-driver-08a164e7\src\UnitConfigDriver.cpp
++++ D:\Codex\建筑施工图自动化\立面插件\build\i2-20261101-215812-006-stub-red-current-context-trace-1c672f76\src\UnitConfigDriver.cpp
+@@ -239,12 +239,50 @@
+  AcDbObjectId marker;
+ };
+ std::unique_ptr<State> state;
++std::uint64_t traceSequence{};
++bool terminal{};
++std::string pendingCommands, lastReaderStage, lastReaderHandle;
++void trace(const std::string& event) noexcept {
++ try {
++  if(!state)return;
++  using namespace bce::native;
++  auto* doc=acDocManager->curDocument();
++  const auto body=object({{"contract",quote(std::string("bce.unitconfig-trace.v1"))},
++    {"sequence",std::to_string(++traceSequence)},{"tick",std::to_string(GetTickCount64())},
++    {"thread",std::to_string(GetCurrentThreadId())},{"event",quote(event)},
++    {"phase",std::to_string(state->phase)},{"terminal",terminal?"true":"false"},
++    {"currentDocument",std::to_string(reinterpret_cast<std::uintptr_t>(doc))},
++    {"currentDatabase",std::to_string(reinterpret_cast<std::uintptr_t>(doc?doc->database():nullptr))},
++    {"originalDocument",std::to_string(reinterpret_cast<std::uintptr_t>(state->original))},
++    {"pendingCommands",quote(pendingCommands)}, {"lastReaderStage",quote(lastReaderStage)},
++    {"sourceHandle",quote(lastReaderHandle)}});
++  auto f=create_new(state->config.output+L"/unitconfig-trace-"+std::to_wstring(traceSequence)+L".json");
++  write_flushed(f.get(),body);
++ }catch(...){}
++}
++struct CommandTrace final:AcEditorReactor {
++ CommandTrace(){acedEditor->addReactor(this);}~CommandTrace(){acedEditor->removeReactor(this);}
++ void commandWillStart(const ACHAR* name)override{trace("commandWillStart:"+bce::native::utf8(name));}
++ void commandEnded(const ACHAR* name)override{trace("commandEnded:"+bce::native::utf8(name));}
++ void commandCancelled(const ACHAR* name)override{trace("commandCancelled:"+bce::native::utf8(name));}
++ void commandFailed(const ACHAR* name)override{trace("commandFailed:"+bce::native::utf8(name));}
++};
++std::unique_ptr<CommandTrace> commandTrace;
+ BceAnalysisReportV1 query(){BceAnalysisReportV1 q{};q.size=sizeof(q);q.version=1;return q;}
+ void expect(const char* name,bool pass,const std::string& detail){state->evidence->step(name,pass?"passed":"failed",detail);state->pass &= pass;}
+-void queue(const std::wstring& text){bce::native::require(acDocManager->sendStringToExecute(acDocManager->curDocument(),text.c_str(),false,false,false)==Acad::eOk,"queue ordinary command");}
++void queue(const std::wstring& text){pendingCommands=bce::native::utf8(text);trace("queue");bce::native::require(acDocManager->sendStringToExecute(acDocManager->curDocument(),text.c_str(),false,false,false)==Acad::eOk,"queue ordinary command");}
+ AcDbDatabase& db(){auto* d=acDocManager->curDocument();bce::native::require(d&&d->database(),"current db");return *d->database();}
+ std::string shape(AcDbDatabase& d){
+- const auto a=bce::readDatabaseAnalysis(d,"I2-test-shape",0,{});bce::native::require(a.value.has_value(),"shape read");
++ bce::NativeSceneContext context;
++ bce::native::require(context.currentDatabase()==&d,"shape must read actual current memory");
++ bce::AnalysisReadOptions options;
++ options.diagnosticObserver=[](const char* stage,const bce::EntityKey& key){lastReaderStage=stage;lastReaderHandle=key.handle;};
++ lastReaderStage="preflight";lastReaderHandle.clear();trace("shape-readCurrentAnalysis-begin revision="+std::to_string(context.revision()));
++ const auto a=bce::readCurrentAnalysis(context,options);
++ std::string diagnostics;
++ for(const auto& issue:a.issues)diagnostics+=issue.code+":"+issue.message+" handle="+(issue.source.entity?issue.source.entity->handle:"")+";";
++ trace("shape-readCurrentAnalysis-end "+diagnostics);
++ bce::native::require(a.value.has_value(),"shape read: "+diagnostics);
+  std::ostringstream out;out.precision(17);
+  for(const auto& g:a.value->geometry)out<<g.root.handle<<':'<<g.leaf.handle<<':'<<g.instancePath<<':'<<g.canonicalGeometry<<':'<<g.effectiveVisible<<'\n';
+  for(const auto& p:a.value->scene.primitives)out<<p.key.handle<<':'<<(p.text?*p.text:"")<<':'<<p.nativeGeometrySignature<<'\n';
+@@ -255,13 +293,14 @@
+ void analyze(){bce::native::require(acedCommandS(RTSTR,L"BCE_ANALYZE",RTNONE)==RTNORM,"ordinary analyze");}
+ void configInput(double scale){bce::native::require(acedCommandS(RTSTR,L"BCE_CONFIG",RTREAL,scale,RTNONE)==RTNORM,"ordinary configure numeric input");}
+ void finish(){
+- using namespace bce::native;auto& s=*state;s.watch.reset();s.undo.reset();
++ using namespace bce::native;if(terminal){trace("duplicate-finish-ignored");return;}auto& s=*state;trace("finish-begin");s.watch.reset();s.undo.reset();
+  if(s.transcript){const auto body=s.transcript->stop();s.evidence->capability(object({{"ordinaryTranscript",quote(s.transcript->file())},{"SHA256",quote(sha256(s.transcript->file()))},{"output",quote(body)}}));s.transcript.reset();}
+  if(s.loaded){const bool unloaded=acrxDynamicLinker->unloadModule(s.product.c_str(),true);s.loaded=!unloaded;expect("FourCommandsUnloadOwnedOnly",unloaded&&!acedRegCmds->lookupGlobalCmd(L"BCE_CONFIG")&&!acedRegCmds->lookupGlobalCmd(L"BCE_ANALYZE")&&!acedRegCmds->lookupGlobalCmd(L"BCE_INFO")&&!acedRegCmds->lookupGlobalCmd(L"BCE_ISSUES"),"SDK unload four command callbacks");}
+  expect("FrozenSourcesUnchanged",sha256(s.config.scheme)==s.config.schemeSHA256&&sha256(s.config.reference)==s.config.referenceSHA256,"source/reference hash readback; supervisor checks six sources");
+  s.evidence->finish(s.config,s.pass?"passed":"failed");
+-}
+-template<class F>void boundary(F f)noexcept{try{f();}catch(const std::exception& e){try{if(state){state->pass=false;state->evidence->error(e.what());finish();}}catch(...){}}catch(...){try{if(state){state->pass=false;state->evidence->error("unknown unitconfig driver exception");finish();}}catch(...){}}}
++ s.evidence.reset();terminal=true;pendingCommands.clear();trace("finish-report-closed");
++}
++template<class F>void boundary(F f)noexcept{try{f();}catch(const std::exception& e){try{if(state&&!terminal){trace(std::string("boundary-exception:")+e.what());state->pass=false;state->evidence->error(e.what());finish();}}catch(...){}}catch(...){try{if(state&&!terminal){trace("boundary-exception:unknown");state->pass=false;state->evidence->error("unknown unitconfig driver exception");finish();}}catch(...){}}}
+ std::string raw(){const auto r=bce::readProjectStoreBytes(db());bce::native::require(r.canCommit(),"read raw archive");return *r.value;}
+ bce::ProjectArchive archive(){const auto r=bce::readProjectStore(db());bce::native::require(r.readable(),"read archive");return *r.value;}
+ void setBytes(const std::string& bytes){
+@@ -291,20 +330,27 @@
+    setBytes(good);
+  }
+ }
+-void run()noexcept{boundary([]{
+- using namespace bce::native;require(!state,"already active");auto s=std::make_unique<State>();s->config=load_config(moduleHandle);validate_identity(s->config);require(s->config.caseName==L"PublicUnitConfigLifecycle","case mismatch");s->evidence=std::make_unique<Evidence>(s->config);s->original=acDocManager->curDocument();state=std::move(s);auto& t=*state;
++void run()noexcept{if(state){trace("BCE_TEST_RUN-duplicate-entry-rejected");return;}boundary([]{
++ using namespace bce::native;require(!state,"already active");auto s=std::make_unique<State>();s->config=load_config(moduleHandle);validate_identity(s->config);require(s->config.caseName==L"PublicUnitConfigLifecycle","case mismatch");s->evidence=std::make_unique<Evidence>(s->config);s->original=acDocManager->curDocument();state=std::move(s);auto& t=*state;commandTrace=std::make_unique<CommandTrace>();trace("BCE_TEST_RUN-initial-entry");t.evidence->checkpoint("driver-identity-validated");
+  resbuf titled{};require(acedGetVar(L"DWGTITLED",&titled)==RTNORM&&titled.resval.rint==0&&roots(db()).length()==0,"fresh unnamed current document required");
+  t.product=t.config.modulePath.substr(0,t.config.modulePath.find_last_of(L"\\/")+1)+L"BuildingElevation2020.arx";require(sha256(t.product)==BCE_PRODUCT_SHA256,"frozen product hash");t.evidence->capability(object({{"formalModulePath",quote(t.product)},{"formalModuleSHA256",quote(std::string(BCE_PRODUCT_SHA256))}}));
+  for(auto n:{L"BCE_CONFIG",L"BCE_ANALYZE",L"BCE_INFO",L"BCE_ISSUES"})require(!acedRegCmds->lookupGlobalCmd(n),"preexisting public command");t.loaded=acrxDynamicLinker->loadModule(t.product.c_str(),false,true);require(t.loaded,"product load");
+  auto m=GetModuleHandleW(t.product.c_str());bool owned=true;for(auto n:{L"BCE_CONFIG",L"BCE_ANALYZE",L"BCE_INFO",L"BCE_ISSUES"})owned &= commandOwnedBy(n,m);expect("FourPublicCallbacksOwnedByProduct",owned&&!acedRegCmds->lookupGlobalCmd(L"BCE_BUILD"),moduleState(t.product));t.copy=reinterpret_cast<BceCopyAnalysisV1>(GetProcAddress(m,"BceCopyLastAnalysisV1"));require(t.copy!=nullptr,"read-only ABI");
+  AcDbDatabase source(false,true);require(source.readDwgFile(t.config.scheme.c_str(),AcDbDatabase::kForReadAndReadShare,false)==Acad::eOk,"source read");source.closeInput(true);auto ids=roots(source);require(ids.length()==741,"real fixture roots");AcDbIdMapping map;require(source.wblockCloneObjects(ids,acdbSymUtil()->blockModelSpaceId(&db()),map,AcDb::kDrcIgnore)==Acad::eOk,"clone 741 roots into unsaved memory");
+  {Open<AcDbBlockTableRecord> model(acdbSymUtil()->blockModelSpaceId(&db()),AcDb::kForWrite);auto text=std::make_unique<AcDbText>(AcGePoint3d(-500000,-500000,0),L"I2未保存中文内容",db().textstyle(),3);require(model.p->appendAcDbEntity(t.marker,text.get())==Acad::eOk,"append unsaved Chinese");text.release()->close();}
++ {
++  unsigned callbacks{};bce::AnalysisReadOptions invalidOptions;
++  invalidOptions.diagnosticObserver=[&](const char*,const bce::EntityKey&){++callbacks;};
++  const auto rejected=bce::readDatabaseAnalysis(db(),"I2-revision-zero-negative-control",0,invalidOptions);
++  expect("ZeroRevisionRejectedBeforeReaderGetters",!rejected.value&&rejected.issues.size()==1&&rejected.issues[0].code=="INVALID_DATABASE_IDENTITY"&&callbacks==0,"reproduces prior caller failure before Reader.run or any geometry getter");
++  trace("zero-revision-negative-control-complete");
++ }
+  t.shape=shape(db());t.settings=globals();t.resourceState=resources(db());t.nodState=nod(db());
+  t.transcript=std::make_unique<bce::command_test::Transcript>(t.config.output+L"/ordinary-unitconfig-output");
+  analyze();expect("InitialAnalyzeRequiresUnits",report().find("UNIT_REQUIRED")!=std::string::npos,"no config assumption");
+  t.watch=std::make_unique<ChangeWatch>(db());t.phase=1;queue(L"BCE_CONFIG\n1\nBCE_I2_STEP\n");
+  });}
+-void step()noexcept{boundary([]{
++void step()noexcept{trace("BCE_I2_STEP-entry");pendingCommands.clear();if(terminal)return;boundary([]{
+  using namespace bce;using namespace bce::native;auto& s=*state;require(acDocManager->curDocument()==s.original,"original current");
+  if(s.phase==1){
+    const auto a=readProjectStore(db());auto q=query();const bool saved=a.readable()&&a.value->project.config.units.confirmedMmPerInputUnit==std::optional<double>(1)&&!a.value->project.config.unitConfirmationSource.empty();
+@@ -337,5 +383,5 @@
+ BOOL APIENTRY DllMain(HMODULE module,DWORD reason,LPVOID){if(reason==DLL_PROCESS_ATTACH){moduleHandle=module;DisableThreadLibraryCalls(module);}return TRUE;}
+ extern "C" __declspec(dllexport) AcRx::AppRetCode acrxEntryPoint(AcRx::AppMsgCode message,void* id)noexcept{
+  try{if(message==AcRx::kInitAppMsg){acrxDynamicLinker->unlockApplication(id);acrxRegisterAppMDIAware(id);struct Entry{const wchar_t* name;Adesk::Int32 flags;AcRxFunctionPtr callback;};const Entry entries[]={{L"BCE_TEST_RUN",ACRX_CMD_MODAL,run},{L"BCE_I2_STEP",ACRX_CMD_MODAL,step},{L"BCE_I2_NEW",ACRX_CMD_SESSION,newDocument},{L"BCE_I2_SECOND",ACRX_CMD_MODAL,second},{L"BCE_I2_RETURN",ACRX_CMD_SESSION,returnDocument},{L"BCE_I2_FINISH",ACRX_CMD_MODAL,finalCheck}};for(const auto& e:entries)if(acedRegCmds->lookupGlobalCmd(e.name))return AcRx::kRetError;for(const auto& e:entries)if(acedRegCmds->addCommand(L"BCE_I2_CASES",e.name,e.name,e.flags,e.callback)!=Acad::eOk){acedRegCmds->removeGroup(L"BCE_I2_CASES");return AcRx::kRetError;}}
+- else if(message==AcRx::kUnloadAppMsg){if(state&&state->loaded)return AcRx::kRetError;state.reset();return acedRegCmds->removeGroup(L"BCE_I2_CASES")==Acad::eOk?AcRx::kRetOK:AcRx::kRetError;}return AcRx::kRetOK;}catch(...){return AcRx::kRetError;}
+-}
++ else if(message==AcRx::kUnloadAppMsg){if(state&&state->loaded)return AcRx::kRetError;commandTrace.reset();state.reset();return acedRegCmds->removeGroup(L"BCE_I2_CASES")==Acad::eOk?AcRx::kRetOK:AcRx::kRetError;}return AcRx::kRetOK;}catch(...){return AcRx::kRetError;}
++}

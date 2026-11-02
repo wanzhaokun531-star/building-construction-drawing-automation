@@ -1,0 +1,91 @@
+{
+  "contract": "bcp.native-installer-qa.v2",
+  "passed": true,
+  "tests": 6,
+  "EXESHA256": "D1339B36CF41408EBB27CAD657CB4B0DCC1A7D9AF3C8E0D22C6D3147B1C249DE",
+  "sourceSHA256": "BC91213619B63645AAE409357B33F73100B8A132C37BB45679FD2E62D3F2BF5C",
+  "testLogSHA256": "55EBC1DD7204F86B6B0D170E3DC018C19E449B70A9F66AFC01F042C50C08DFAC",
+  "payload": [
+    {
+      "id": 101,
+      "relative": "Contents\\Win64\\BuildingPlanPlugin2020.arx",
+      "SHA256": "9F32986BA3D71C58D8328A3D4C09DF6F6B6BA53BDC75A6F839AAAD82A7462F8F"
+    },
+    {
+      "id": 102,
+      "relative": "Contents\\Win64\\BuildingPlanPlugin2020.ini",
+      "SHA256": "71B05D13D49D49CF0FF5E4829C31BEAB8FADF76A493097CF960F56468720F3CF"
+    },
+    {
+      "id": 103,
+      "relative": "Contents\\Win64\\resources\\axes.dwg",
+      "SHA256": "77C1DB9B4632E45A52CF4C9D848D0B0888C8283AF46F7AACCB2946BFF094D686"
+    },
+    {
+      "id": 104,
+      "relative": "Contents\\Win64\\resources\\axes.tsv",
+      "SHA256": "ADACC8526A118A31A815CBAA8A9F5CD8107A00F638790A3109898D33B720E9A1"
+    },
+    {
+      "id": 105,
+      "relative": "Contents\\Win64\\resources\\axis-exclusions.tsv",
+      "SHA256": "FC9BDE50EBAE61B94F8BB53B03B81CD1BB21B4D8AD8671CBBE9B1BBD22B27718"
+    },
+    {
+      "id": 106,
+      "relative": "Contents\\Win64\\resources\\confirmed-input.tsv",
+      "SHA256": "CB315843A5E47E822C6CC01B05F65354D4D0DCB1ED812B2ED98E6DCADDE74A6A"
+    },
+    {
+      "id": 107,
+      "relative": "Contents\\Win64\\resources\\interior.tsv",
+      "SHA256": "C47DD0BFF2FAA014CFA9643B5120623CF8664F1B39F0BE08BFEBB197C117A850"
+    },
+    {
+      "id": 108,
+      "relative": "Contents\\Win64\\resources\\layers.dwg",
+      "SHA256": "3E540EC82C5A4CBA7AECA84352EB1C98456A0838DEDACD29323696C138DFB8BB"
+    },
+    {
+      "id": 109,
+      "relative": "Contents\\Win64\\resources\\prefixes.tsv",
+      "SHA256": "00302EA1A41E56BF719FD2BF099ACF694F461C21F58418E1C62150B328D15B45"
+    },
+    {
+      "id": 110,
+      "relative": "Contents\\Win64\\resources\\profile.ini",
+      "SHA256": "B89C5B5CA047B183981494BE4DFE6DFE706A93C3BCFEB3D7FB2CB35E3D7CA050"
+    },
+    {
+      "id": 111,
+      "relative": "Contents\\Win64\\resources\\reference.dwg",
+      "SHA256": "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27"
+    },
+    {
+      "id": 112,
+      "relative": "Contents\\Win64\\resources\\resources.tsv",
+      "SHA256": "512E19DA51AE5DADD6F106D50A6D8A6B0F9FA6720C8BABCDB86D14AD2F74743B"
+    },
+    {
+      "id": 113,
+      "relative": "Contents\\Win64\\resources\\scheme.tsv",
+      "SHA256": "920941D9A76976209BAEC54FDF69959459CBC4C7A2F56CC07F658534A7CC6BA0"
+    },
+    {
+      "id": 114,
+      "relative": "PackageContents.xml",
+      "SHA256": "8E1D365810A7A2226A20714D592C1D28EACF32917F2A8919B6F7DA5105416145"
+    },
+    {
+      "id": 115,
+      "relative": "SHA256.json",
+      "SHA256": "CB073DD2DE483B7CF988A24DC1C000A8A5BB3FB2DD14119035BB3CEACD8EF703"
+    },
+    {
+      "id": 116,
+      "relative": "使用说明.md",
+      "SHA256": "4B8AFAF664F81FB15EC1265FCD165A632D97551572B2760EE7DE4E461317BEFB"
+    }
+  ],
+  "scope": "Native install core in marked workspace temporary directories; real AppData and GUI/user CAD install not performed"
+}

@@ -1,0 +1,17 @@
+{
+  "reviewed": true,
+  "recorded": "2026-11-02T17:14:32.531600+08:00",
+  "number21AndLetterPTrialsConfirmed": true,
+  "finalNumbersRestoredAndSidesCorrect": true,
+  "horizontalLeadsOutsideBuilding": true,
+  "titleClearOfAxisCircles": true,
+  "images": {
+    "核图_v164_final.png": "49F3F55D9ACF4C91A4E2E742AC945561C8759525A969DA0D5886C2B441064A53",
+    "核图_v164_letterP.png": "17B4221700417A5291DD4B11758C32EFB57C809088A93771C0B5FB8EC588B038",
+    "核图_v164_number21.png": "D6192CCBE7CCAF6FEF691835443C2F9B824A82C9E7462C4749052D3BCA6D6F4E",
+    "核字_v164_letterP.png": "2CBF94A3AF83C081A049A45DC1DCE690232562B647FC9BECCA8A7C6944F0DCDA",
+    "核字_v164_letterP_right.png": "6DE87F93C6823D8704F728505CB57FA3AAD7BF61F1F529AD582899C88455D7B7",
+    "核字_v164_number21.png": "B5C8729A9B50EEC92CD69D29C90CD21B5B201DF2150B02A1B6C6AA9F75183713"
+  },
+  "observed": "Final1/A restored,2/3 top only,C/E left only,20 visible circles; lower1 connected through dimensions; title below circle row. Both21 andP intermediate native command trials visually confirmed. Existing user interiors retained; not whole-drawing collision acceptance."
+}

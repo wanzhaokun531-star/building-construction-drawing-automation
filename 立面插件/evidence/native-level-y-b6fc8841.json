@@ -1,0 +1,157 @@
+{
+  "contract": "bce.native-level-y-observations.v1",
+  "report": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-183442-b6fc8841\\case\\level-case.json",
+  "reportSHA256": "E5727B593C9A8F3F879B3373011E3965672D2A4F457C53D895C17B2A257D515C",
+  "status": "partial",
+  "moduleSHA256": "83899657FC16B071764EB4C06C87887552B80CA50B4E1323F4AD35706468CCA8",
+  "nonce": "b6fc8841d01b4dae9fda664be2062169",
+  "processId": 11380,
+  "sourceActualClass": "TDbSymbElevation",
+  "experiments": [
+    {
+      "experiment": "control",
+      "gripIndex": null,
+      "operationStatus": 0,
+      "numericBefore": "2.800",
+      "numericAfter": "2.800",
+      "numericReopened": "2.800",
+      "numericDelta": 0,
+      "infrastructureStatus": "passed",
+      "savedFile": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-183442-b6fc8841\\case\\level-control.dwg",
+        "sha256": "8F33A602F6CFB6F5BA731C41CED21DE94F343221D9D2EB57D2131101FC0C0525",
+        "savedTargetHandle": "79",
+        "reopenedTargetHandle": "79",
+        "rootCount": 1
+      }
+    },
+    {
+      "experiment": "transform-y123",
+      "gripIndex": null,
+      "operationStatus": 0,
+      "numericBefore": "2.800",
+      "numericAfter": "2.800",
+      "numericReopened": "2.800",
+      "numericDelta": 0,
+      "infrastructureStatus": "passed",
+      "savedFile": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-183442-b6fc8841\\case\\level-transform-y123.dwg",
+        "sha256": "7954FF2E2CC0F90B2A33183494244B6785428AA912493EEDFD3042C8E61FA8BD",
+        "savedTargetHandle": "79",
+        "reopenedTargetHandle": "79",
+        "rootCount": 1
+      }
+    },
+    {
+      "experiment": "grip-0-y123",
+      "gripIndex": 0,
+      "operationStatus": 0,
+      "numericBefore": "2.800",
+      "numericAfter": "2.800",
+      "numericReopened": "2.800",
+      "numericDelta": 0,
+      "infrastructureStatus": "passed",
+      "savedFile": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-183442-b6fc8841\\case\\level-grip-0-y123.dwg",
+        "sha256": "3A914E58A672A30834FE0495E2CD60AF5691267426530197DA2305A920146FFE",
+        "savedTargetHandle": "79",
+        "reopenedTargetHandle": "79",
+        "rootCount": 1
+      }
+    },
+    {
+      "experiment": "grip-1-y123",
+      "gripIndex": 1,
+      "operationStatus": 0,
+      "numericBefore": "2.800",
+      "numericAfter": "2.800",
+      "numericReopened": "2.800",
+      "numericDelta": 0,
+      "infrastructureStatus": "passed",
+      "savedFile": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-183442-b6fc8841\\case\\level-grip-1-y123.dwg",
+        "sha256": "E999A723192C290FB2BDD27DCC36E47AFFEDC59A48D3AC714DD16AFAA23BFDC5",
+        "savedTargetHandle": "79",
+        "reopenedTargetHandle": "79",
+        "rootCount": 1
+      }
+    },
+    {
+      "experiment": "grip-2-y123",
+      "gripIndex": 2,
+      "operationStatus": 0,
+      "numericBefore": "2.800",
+      "numericAfter": "2.800",
+      "numericReopened": "2.800",
+      "numericDelta": 0,
+      "infrastructureStatus": "passed",
+      "savedFile": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-183442-b6fc8841\\case\\level-grip-2-y123.dwg",
+        "sha256": "13972B5A2AE16F6DC1C1349A5B11A868D71B02DE15A62FFB42029FE403043930",
+        "savedTargetHandle": "79",
+        "reopenedTargetHandle": "79",
+        "rootCount": 1
+      }
+    },
+    {
+      "experiment": "grip-3-y123",
+      "gripIndex": 3,
+      "operationStatus": 0,
+      "numericBefore": "2.800",
+      "numericAfter": "2.800",
+      "numericReopened": "2.800",
+      "numericDelta": 0,
+      "infrastructureStatus": "passed",
+      "savedFile": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-183442-b6fc8841\\case\\level-grip-3-y123.dwg",
+        "sha256": "A4824585ECBB50F0F7A1F277D7524D9CFEC15BA06D16A312973F7DC98A75E526",
+        "savedTargetHandle": "79",
+        "reopenedTargetHandle": "79",
+        "rootCount": 1
+      }
+    },
+    {
+      "experiment": "grip-4-y123",
+      "gripIndex": 4,
+      "operationStatus": 0,
+      "numericBefore": "2.800",
+      "numericAfter": "2.800",
+      "numericReopened": "2.800",
+      "numericDelta": 0,
+      "infrastructureStatus": "passed",
+      "savedFile": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-183442-b6fc8841\\case\\level-grip-4-y123.dwg",
+        "sha256": "71BCE2B1630CA8684E80440211DE80304A2A74BDB3F822E6FCAFB0DA8601E366",
+        "savedTargetHandle": "79",
+        "reopenedTargetHandle": "79",
+        "rootCount": 1
+      }
+    }
+  ],
+  "closure": {
+    "contract": "bce.native-result-and-closure.v1",
+    "recorded": "2026-11-01T18:37:50.597937+08:00",
+    "binding": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-b6fc8841.json",
+    "bindingSHA256": "3F3D39A03832ABB7EE50BB0F7715EFF96954F48C0553942A402693F56488C018",
+    "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-183442-b6fc8841\\case\\native-case.json",
+    "nativeReportSHA256": "53B7E14057E99A1AC0E83CCCA81EA93F1ECE03A0C56E6410EBEE3BBDED0D8137",
+    "nativeStatus": "partial",
+    "nonce": "b6fc8841d01b4dae9fda664be2062169",
+    "processId": 11380,
+    "binarySHA256": "83899657FC16B071764EB4C06C87887552B80CA50B4E1323F4AD35706468CCA8",
+    "sourceSHAsUnchanged": true,
+    "businessPassInferred": false,
+    "scope": "Result identity and closure only; caller must evaluate behavior assertions separately",
+    "explicitStopHelperExitCode": 0,
+    "normalQuit": false,
+    "forcedTermination": true,
+    "timedOut": false,
+    "supervisorFinalSHA256": "267D6D785D3E0560CCC2F89DAC10F995416B29D31627AC762CC23E5C6477615A",
+    "retirement": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-183442-b6fc8841\\reader-retirement.json",
+    "retirementSHA256": "23221D354DDABF6559B0FF5A4A065DAEAD940AEEFB2096C94BAF719DF1A430C1",
+    "watcherSHA256": "82BD9C7C1720E0C424E9A23CE51F4F6195158071F147629A617826FD9B635403"
+  },
+  "fixedPositionSetElevationProven": false,
+  "businessSetterImplemented": false,
+  "scope": "Seven fresh-clone operations in current unknown dynamic mode kept actual AcDbText 2.800; public operation and roundtrip observations only, not proof of all modes or an arbitrary value setter"
+}

@@ -1,0 +1,23 @@
+F.F..
+======================================================================
+FAIL: test_exact_two_values_restored (test_startup_registration_lease.StartupRegistrationLease.test_exact_two_values_restored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Codex\建筑施工图自动化\阶段1\tests\test_startup_registration_lease.py", line 15, in test_exact_two_values_restored
+    b=Fake();lease=StartupLease(b);lease.plan();lease.apply();self.assertTrue(all(x['value']==0 for x in b.rows.values()));lease.restore();self.assertTrue(all(x['value']==2 for x in b.rows.values()))
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_partial_apply_failure_restores_first (test_startup_registration_lease.StartupRegistrationLease.test_partial_apply_failure_restores_first)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Codex\建筑施工图自动化\阶段1\tests\test_startup_registration_lease.py", line 18, in test_partial_apply_failure_restores_first
+    with self.assertRaises(RuntimeError):lease.apply()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.001s
+
+FAILED (failures=2)

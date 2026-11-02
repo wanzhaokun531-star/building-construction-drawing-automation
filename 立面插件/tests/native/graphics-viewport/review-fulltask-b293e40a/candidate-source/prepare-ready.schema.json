@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract", "nonce", "pid", "targetPath", "targetSHA256", "modelRootCount", "rootHandles", "sourceSHA"],
+  "properties": {
+    "contract": {"const": "bce.graphics-viewport-prepare.v1"},
+    "nonce": {"type": "string", "pattern": "^[0-9a-fA-F]{8,64}$"},
+    "pid": {"type": "integer", "minimum": 1},
+    "targetPath": {"type": "string", "description": "exact config.output + \\viewport-target.dwg"},
+    "targetSHA256": {"type": "string", "pattern": "^[0-9A-F]{64}$"},
+    "modelRootCount": {"const": 12},
+    "rootHandles": {"type": "array", "minItems": 12, "maxItems": 12, "items": {"type": "string", "pattern": "^[0-9A-F]+$"}, "description": "in order Line, Arc, numeric Text, Chinese Text, rotated mirrored Text, MText, nested block, ACB0, 10837, AC83, CAF3, 11B93 clones"},
+    "sourceSHA": {"type": "object", "additionalProperties": false, "required": ["scheme", "reference"], "properties": {"scheme": {"type": "string", "pattern": "^[0-9A-F]{64}$"}, "reference": {"type": "string", "pattern": "^[0-9A-F]{64}$"}}}
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "contract": "bcp.final-merge-semantic-recompute.v1",
+  "recorded": "2026-11-01T17:07:18.877383+08:00",
+  "sourceHashesBefore": {
+    "door-caption-complete-and-dimension-plan.json": "51768907E71BEC884ECCDD4D7C771F2F4445C6BB3AB11B6B27FA8A95DA982C53",
+    "three-other-chains-text-grips.json": "DCDA834DE0A4515266A2D0A3505D7197A5E75400DD619D397D4C29B0B2D2512A",
+    "dimension-text-escape-candidates.json": "D8C55B0B5DAE2277F921568C7F6691A7CE863F9B9179C8A65EB9A2221E1C8491"
+  },
+  "sourceHashesAfter": {
+    "door-caption-complete-and-dimension-plan.json": "51768907E71BEC884ECCDD4D7C771F2F4445C6BB3AB11B6B27FA8A95DA982C53",
+    "three-other-chains-text-grips.json": "DCDA834DE0A4515266A2D0A3505D7197A5E75400DD619D397D4C29B0B2D2512A",
+    "dimension-text-escape-candidates.json": "D8C55B0B5DAE2277F921568C7F6691A7CE863F9B9179C8A65EB9A2221E1C8491"
+  },
+  "oldMergedSHA256": "63019D4077164A8CB99C0A2DB1D9C8E46699B2AD38C399AB3A9C5F316BE4F53C",
+  "newMergedSHA256": "5C34A74EB45A4679A2768E171F4484FA8FB1FE77CBED0C7FB59C9793495217D9",
+  "allSelectedTargetsAndIndicesUnchanged": true,
+  "allOriginalGripsAndBaselinesVerified": true,
+  "checks": [
+    {
+      "floor": 1,
+      "handle": "847E",
+      "segment": 1,
+      "textGripIndex": 7,
+      "originalGripVerified": true,
+      "measurementNodesVerifiedUnchanged": true,
+      "targetVerified": true
+    },
+    {
+      "floor": 1,
+      "handle": "8485",
+      "segment": 0,
+      "textGripIndex": 5,
+      "originalGripVerified": true,
+      "measurementNodesVerifiedUnchanged": true,
+      "targetVerified": true
+    },
+    {
+      "floor": 1,
+      "handle": "846C",
+      "segment": 1,
+      "textGripIndex": 7,
+      "originalGripVerified": true,
+      "baselinePrerequisiteVerified": true,
+      "manualText": false,
+      "targetVerified": true
+    },
+    {
+      "floor": 1,
+      "handle": "848C",
+      "segment": 2,
+      "textGripIndex": 8,
+      "originalGripVerified": true,
+      "baselinePrerequisiteVerified": true,
+      "manualText": false,
+      "targetVerified": true
+    },
+    {
+      "floor": 2,
+      "handle": "848E",
+      "segment": 0,
+      "textGripIndex": 5,
+      "originalGripVerified": true,
+      "measurementNodesVerifiedUnchanged": true,
+      "targetVerified": true
+    },
+    {
+      "floor": 2,
+      "handle": "8475",
+      "segment": 2,
+      "textGripIndex": 8,
+      "originalGripVerified": true,
+      "baselinePrerequisiteVerified": true,
+      "manualText": false,
+      "targetVerified": true
+    },
+    {
+      "floor": 2,
+      "handle": "8478",
+      "segment": 2,
+      "textGripIndex": 8,
+      "originalGripVerified": true,
+      "baselinePrerequisiteVerified": true,
+      "manualText": false,
+      "targetVerified": true
+    },
+    {
+      "floor": 2,
+      "handle": "847B",
+      "segment": 2,
+      "textGripIndex": 8,
+      "originalGripVerified": true,
+      "baselinePrerequisiteVerified": true,
+      "manualText": false,
+      "targetVerified": true
+    },
+    {
+      "floor": 2,
+      "handle": "8481",
+      "segment": 0,
+      "textGripIndex": 6,
+      "originalGripVerified": true,
+      "baselinePrerequisiteVerified": true,
+      "manualText": false,
+      "targetVerified": true
+    },
+    {
+      "floor": 2,
+      "handle": "8481",
+      "segment": 1,
+      "textGripIndex": 7,
+      "originalGripVerified": true,
+      "baselinePrerequisiteVerified": true,
+      "manualText": true,
+      "targetVerified": true
+    }
+  ],
+  "scope": "True recomputation of every selected font box from actual v125 positions plus selected moves; no source plan file modified, no CAD action"
+}

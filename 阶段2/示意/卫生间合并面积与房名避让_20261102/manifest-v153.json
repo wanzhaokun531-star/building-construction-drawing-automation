@@ -1,0 +1,740 @@
+{
+  "contract": "bcp.bath-functional-area-merge.v1",
+  "version": "v153",
+  "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-153425",
+  "nonce": "92c05991d0f246249223289f004f9abd",
+  "pluginCodeChanged": false,
+  "pluginBinarySHA256": "835B9E0F67B65C0F3A43F06F0C443BFB2029B1CBFACEB751C24938B894631FEA",
+  "sourceFiles": {
+    "阶段2\\src\\AnalyseMain.cpp": "47F14CE44BF12B4BCB78A5D43148ACA4A1C20015CAD893F814E687DE02640CB6",
+    "阶段2\\src\\ApronGeometry.cpp": "00B43EE9A154C5ECCCB7DD48EA21826906BB691974729960629612D11B503F03",
+    "阶段2\\src\\ApronGeometry.h": "D9DCFA9E991D2B4FF4A31EDEAC19B59393041897C95E45A0D992BED7D80F0898",
+    "阶段2\\src\\BuildingPlan2020.vcxproj": "1E12D0AD767D3C12CCF2155405ECE825AD24F7D5163352619A472255BBB3B69C",
+    "阶段2\\src\\DoorCaptionLayout.h": "331A975DDBDF5BAA219008EF37807204F05CE10F3987990B47A8F17FE3EEDA72",
+    "阶段2\\src\\GroupEndpoints.cpp": "613FED53D58E3C90892D1B9D4F6136856E8D6375B836AEA8555A8C8D5A85F2CC",
+    "阶段2\\src\\NativeAllDimensionEditing.inc": "BFDBDB2F909B6D82AFAFAB9B9639AB3FABC9CF627FD772977E7D19356945BD50",
+    "阶段2\\src\\NativeAnnotationFactory.inc": "7B2CB61DC36BB54358EF73C6301DA9C876B93BE5338B61F425208A4B00FAEB20",
+    "阶段2\\src\\NativeApronGeometry.inc": "9AE148194E4DE3E529EAB5BD12B9E7606E4A7F7B3EAC93261AAF2EB9F02A9E8E",
+    "阶段2\\src\\NativeAxisReferenceStudy.inc": "A5F3D6EC1D5E70901E69423E9146F17F4C7B4F22F405B4038A4EBEC5C021FEF1",
+    "阶段2\\src\\NativeAxisSideLayout.inc": "693B2E789224D9950FE0B3905A06FD5C46F0D14777C46719E5C4963194255352",
+    "阶段2\\src\\NativeChainProbe.inc": "2BB3ADA9E687DE269542E8CB3281A490E9D26E8BD5273184ECD427B27FDBEB19",
+    "阶段2\\src\\NativeDimensionGapLayout.inc": "D9B57E7F496AF63E582386C4CB78E761D84E4B651357DDD0A4F64FCD32CD6B41",
+    "阶段2\\src\\NativeDirectOpeningDimensions.inc": "D67D7EA595C43C5CE8C9FF18EE5462CBEEEEFBD0C16E6FC95609CD157D8CD92E",
+    "阶段2\\src\\NativeDoorCaptionClearance.inc": "B3C94A27DDF4F11333B4477F3F938AA59A0DB70DD75A9E7D5ECC03F1700AF240",
+    "阶段2\\src\\NativeDoorCaptionFurniture.inc": "08964F59109EB18198000970F65C205A318E02174E0DB53A25C910CE40765FC3",
+    "阶段2\\src\\NativeFullAxisLines.inc": "24D063D75B623895C96D71AE391B89AC8FF8247E4DAF0C0DB0DE1E02574CFECF",
+    "阶段2\\src\\NativeGroupEndpoints.inc": "69B15442F07E403D2E27C3344025F1FFC60FFE355BFDEFE56891668C93D7E561",
+    "阶段2\\src\\NativeInteriorDoorCaptions.inc": "9E98570AF583BE7728A9304CDF9B643106812DB6DDD9A0EBFB3C93C79C0C3FAA",
+    "阶段2\\src\\NativeLayerStandardStudy.inc": "E2F394BD7E6D461CE79F68B5FCA67C01294417291578261E900145E982ADDF7E",
+    "阶段2\\src\\NativeOpeningAnnotations.inc": "8F49CCF382803E66E4B64E4C86CA03C7938154FAA9D2E95BDBA4D61ED53C8525",
+    "阶段2\\src\\NativePerimeterSpacingTrial.inc": "31763039B02E3811C69CE671689A9631C0A74FCF05805E0DE500F17E386A132F",
+    "阶段2\\src\\NativeUnifiedLayers.inc": "DEB7B7A8689C230656891B838BC1A632E35FCEE77D8958A771D548F26106EEF3",
+    "阶段2\\src\\NativeWholeDimensionChains.inc": "DE52196E4C848E13F7358518813B3C49891F89444D5E5A688395E8BFD27DBB6F",
+    "阶段2\\src\\PlanRules.cpp": "D80E0FECF73EAAB200AF5ED896DE80E7AEF5BE4F8875AD4B07C8DF48C6906D4E",
+    "阶段2\\src\\PlanRules.h": "CD71F135FFB4B90B05D3AB212323A16482BA65667BD0EB763A32FEE056D2DE91",
+    "阶段2\\src\\Stage2Arx.cpp": "991DE5B1812B124C637D6A5C0B34D7305FD700A6F1D40DDA18F8BEA7C76820AC",
+    "阶段2\\src\\UniqueRawParts.h": "8AA12E52DC0C0D0B6CBC06AFB2A91808268E88B930B4B61FC3DA874ED3B17536",
+    "阶段2\\src\\WallTopology.cpp": "5456A09C7DD059D8907A19CE9F19BB905054EE2D320B3DAEDC59BCA683FA19EA",
+    "插件\\src\\BuildingPlanPlugin2020.cpp": "74F8074DECC5AE61C69ED7B55337A4F67860AE95145E19CE41EF022AA8A239A5",
+    "插件\\src\\BuildingPlanPlugin2020.vcxproj": "D9A00EB218AEEB73A00F565B3C3B2B8012A65373BDF241F4283EFCACADE4D046",
+    "插件\\src\\NativeInputProperties.inc": "91C5DA20F49A674D4DEDE320CCD875AE2B4F30B211A0586553B5BF3601C6B5C9",
+    "插件\\src\\PluginPolicy.cpp": "6D1B63C26E7C76FE9BA54AB475BB4B8F3BF774C97908510BFF6467DC1DC692EB",
+    "插件\\src\\PluginPolicy.h": "90270C8559E70289212D951B20B5D54D674F80781E196F9EE33A574302E39C26",
+    "插件\\src\\ProductAudit.inc": "73F970AB7D38EAE2923E02D36E7574D1C59DA787A0C4623EEC3D9D480D483E43",
+    "插件\\src\\ProductDiagnostics.cpp": "691E5A6188242FFF2B5C66AEE15D44B037E7547744BB509A8CE1B3A578391FD5",
+    "插件\\src\\ProductDiagnostics.h": "FFFB5D4A8B90593E453B5AE4EDDF6D95C58678F965B6BB230BF0FB4115A5184C",
+    "插件\\src\\ProductDynamicInput.inc": "8CF109FD3D63BA1C9E9F25BE08D7FA9A68091FDD82F70E64D9F45C6614A3CA72",
+    "插件\\src\\ProductInput.inc": "C16E53C31BD96061B5D8EFEEA980050855AE41D175D0702793C43F22A7422375",
+    "插件\\src\\ProductRuntime.inc": "59CDF47B1D0DCDA2B9D220E7C7DCF0E5DC352BCDCA5AF72444E4D638431627B8",
+    "插件\\src\\ProjectInput.h": "C2C491EF1DF10F3738B5354073EA9E77F10AA475E0FD308D5B424C99102D5709",
+    "插件\\src\\PublicProperties.h": "CA0A4372B737240C13E32B23D883383AFCC239C2F5115280B101F0E2A9881B05"
+  },
+  "referenceLayerEvidence": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\参考图对象属性.json",
+  "referenceLayerEvidenceSHA256": "7B5FFA455F700BEA353166D68910110798423B5054179FCECDD9644BF610B39E",
+  "referenceLayers": [
+    {
+      "Name": "PUB_DIM",
+      "Color": 3,
+      "Linetype": "Continuous",
+      "Lineweight": -3,
+      "Plottable": true,
+      "LayerOn": true,
+      "Freeze": false,
+      "Lock": false,
+      "PlotStyleName": "Color_3",
+      "Description": "尺寸标注"
+    },
+    {
+      "Name": "A-PUB_DIM",
+      "Color": 105,
+      "Linetype": "Continuous",
+      "Lineweight": -3,
+      "Plottable": true,
+      "LayerOn": true,
+      "Freeze": false,
+      "Lock": false,
+      "PlotStyleName": "Color_105",
+      "Description": "尺寸标注"
+    }
+  ],
+  "chosenLayer": {
+    "Name": "PUB_DIM",
+    "Color": 3,
+    "Linetype": "Continuous",
+    "Lineweight": -3,
+    "Plottable": true,
+    "LayerOn": true,
+    "Freeze": false,
+    "Lock": false,
+    "PlotStyleName": "Color_3",
+    "Description": "尺寸标注"
+  },
+  "userLayerChoice": "PUB_DIM without A- prefix",
+  "floors": [
+    {
+      "floor": 1,
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门窗分类编号新规则_20261102\\方案施工图_一层_门窗分类编号确认样张_v10.dwg",
+      "sourceSHA256": "B74F91E174B1778C513FA98BF2537E50595B25DF3BCD0A94BA7A86A482721147",
+      "sourcePreview": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-152411-973332-floor1\\stage2-preview-native.json",
+      "sourceAudit": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-152411-973332-floor1\\product-axis-document-audit.json",
+      "sourcePublicRead": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门窗内部编号_20261102\\sdk-read-v152-floor1.json",
+      "control": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-153425\\bath-merge-floor-1\\control.dwg",
+      "log": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-153425\\bath-merge-floor-1\\drawing-edit.log",
+      "groupsLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-153425\\bath-merge-floor-1\\reopened-groups.log",
+      "metadataLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-153425\\bath-merge-floor-1\\reopened-area-text.log",
+      "expectedModelCount": 258,
+      "removed": [
+        "8633",
+        "86B5"
+      ],
+      "removedGroup": "BCP_AREA_F1_R09",
+      "retainedGroup": "BCP_AREA_F1_R10",
+      "retainedAreaMembers": [
+        "8635",
+        "86B7"
+      ],
+      "bodyHandle": "8635",
+      "nameHandle": "8242",
+      "nameText": "公卫",
+      "newText": "5.20m",
+      "moves": {
+        "8242": [
+          1502.8459915637868,
+          -57.214129128067725,
+          0
+        ],
+        "8635": [
+          5.748006515204906e-10,
+          -309.441340782123,
+          0
+        ],
+        "86B7": [
+          5.748006515204906e-10,
+          -309.441340782123,
+          0
+        ]
+      },
+      "dimensionHandles": [
+        "8461",
+        "846B",
+        "846C",
+        "846F",
+        "8478",
+        "847B",
+        "847E",
+        "848B",
+        "848C",
+        "848F",
+        "8494",
+        "8495",
+        "849B",
+        "849D",
+        "849F",
+        "84A1",
+        "84A2"
+      ],
+      "dimensionTargetLayer": "PUB_DIM",
+      "boundary": [
+        [
+          48191.70152820798,
+          30325.213801956852,
+          0
+        ],
+        [
+          51111.70152820748,
+          30325.213801956852,
+          0
+        ],
+        [
+          51111.70152820748,
+          32105.21380199294,
+          0
+        ],
+        [
+          48191.70152820798,
+          32105.21380199294,
+          0
+        ]
+      ],
+      "netAreaMm2": 5197600.000104485,
+      "oldAreaSumMm2": 4984000.000100154,
+      "reconnectedInternalDoorStripMm2": 213600.00000433065,
+      "internalDoor": "824B",
+      "targetNameBounds": [
+        49866.04751976839,
+        31080.0,
+        50557.35553664603,
+        31469.87341772152
+      ],
+      "targetAreaBounds": [
+        49843.98724249292,
+        30751.117318435754,
+        50579.4158139215,
+        31030.0
+      ],
+      "oldGroups": {
+        "BCP_AREA_F1_R01": [
+          [
+            "8623",
+            "TEXT"
+          ],
+          [
+            "86A5",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R02": [
+          [
+            "8625",
+            "TEXT"
+          ],
+          [
+            "86A7",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R03": [
+          [
+            "8627",
+            "TEXT"
+          ],
+          [
+            "86A9",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R04": [
+          [
+            "8629",
+            "TEXT"
+          ],
+          [
+            "86AB",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R05": [
+          [
+            "862B",
+            "TEXT"
+          ],
+          [
+            "86AD",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R06": [
+          [
+            "862D",
+            "TEXT"
+          ],
+          [
+            "86AF",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R07": [
+          [
+            "862F",
+            "TEXT"
+          ],
+          [
+            "86B1",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R08": [
+          [
+            "8631",
+            "TEXT"
+          ],
+          [
+            "86B3",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R09": [
+          [
+            "8633",
+            "TEXT"
+          ],
+          [
+            "86B5",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R10": [
+          [
+            "8635",
+            "TEXT"
+          ],
+          [
+            "86B7",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_TOTAL": [
+          [
+            "8639",
+            "TEXT"
+          ],
+          [
+            "86B9",
+            "TEXT"
+          ]
+        ],
+        "BCP_GRID_H_A": [
+          [
+            "8431",
+            "LINE"
+          ],
+          [
+            "8432",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_H_B": [
+          [
+            "8434",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_H_C": [
+          [
+            "8436",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_H_D": [
+          [
+            "8438",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_H_E": [
+          [
+            "843A",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_H_F": [
+          [
+            "843C",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_H_G": [
+          [
+            "843E",
+            "LINE"
+          ],
+          [
+            "843F",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_1": [
+          [
+            "841B",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_2": [
+          [
+            "8420",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_3": [
+          [
+            "8422",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_4": [
+          [
+            "8424",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_5": [
+          [
+            "8426",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_6": [
+          [
+            "8428",
+            "LINE"
+          ],
+          [
+            "8429",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_7": [
+          [
+            "842B",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_8": [
+          [
+            "842D",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_9": [
+          [
+            "842F",
+            "LINE"
+          ]
+        ]
+      }
+    },
+    {
+      "floor": 2,
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门窗分类编号新规则_20261102\\方案施工图_二层_门窗分类编号确认样张_v10.dwg",
+      "sourceSHA256": "EA584FD9A7BC2F1B6D4D23800851028E87F050E5A95961FA325F2FB8FCA73E11",
+      "sourcePreview": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-152417-659520-floor2\\stage2-preview-native.json",
+      "sourceAudit": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-152417-659520-floor2\\product-axis-document-audit.json",
+      "sourcePublicRead": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门窗内部编号_20261102\\sdk-read-v152-floor2.json",
+      "control": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-153425\\bath-merge-floor-2\\control.dwg",
+      "log": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-153425\\bath-merge-floor-2\\drawing-edit.log",
+      "groupsLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-153425\\bath-merge-floor-2\\reopened-groups.log",
+      "metadataLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-153425\\bath-merge-floor-2\\reopened-area-text.log",
+      "expectedModelCount": 249,
+      "removed": [
+        "8629",
+        "86AA"
+      ],
+      "removedGroup": "BCP_AREA_F2_R09",
+      "retainedGroup": "BCP_AREA_F2_R10",
+      "retainedAreaMembers": [
+        "862B",
+        "86AC"
+      ],
+      "bodyHandle": "862B",
+      "nameHandle": "820F",
+      "nameText": "公卫",
+      "newText": "5.20m",
+      "moves": {
+        "820F": [
+          1502.845991563372,
+          -57.214129128067725,
+          0
+        ],
+        "862B": [
+          1.7316779121756554e-09,
+          -324.6551427563754,
+          0
+        ],
+        "86AC": [
+          1.7316779121756554e-09,
+          -324.6551427563754,
+          0
+        ]
+      },
+      "dimensionHandles": [
+        "8460",
+        "846B",
+        "8472",
+        "8475",
+        "8478",
+        "847B",
+        "847E",
+        "8481",
+        "8484",
+        "8489",
+        "848A",
+        "848E",
+        "8491",
+        "8494",
+        "8495",
+        "8497",
+        "8499",
+        "849B",
+        "849C"
+      ],
+      "dimensionTargetLayer": "PUB_DIM",
+      "boundary": [
+        [
+          94613.70152820786,
+          30325.213801956706,
+          0
+        ],
+        [
+          97533.70152820756,
+          30325.213801956706,
+          0
+        ],
+        [
+          97533.70152820756,
+          32105.21380199294,
+          0
+        ],
+        [
+          94613.70152820786,
+          32105.21380199294,
+          0
+        ]
+      ],
+      "netAreaMm2": 5197600.00010526,
+      "oldAreaSumMm2": 4984000.000100913,
+      "reconnectedInternalDoorStripMm2": 213600.00000434648,
+      "internalDoor": "8218",
+      "targetNameBounds": [
+        96288.04751976891,
+        31080.0,
+        96979.35553664653,
+        31469.87341772152
+      ],
+      "targetAreaBounds": [
+        96265.98724249343,
+        30751.117318435754,
+        97001.41581392201,
+        31030.0
+      ],
+      "oldGroups": {
+        "BCP_AREA_F2_R01": [
+          [
+            "8619",
+            "TEXT"
+          ],
+          [
+            "869A",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R02": [
+          [
+            "861B",
+            "TEXT"
+          ],
+          [
+            "869C",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R03": [
+          [
+            "861D",
+            "TEXT"
+          ],
+          [
+            "869E",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R04": [
+          [
+            "861F",
+            "TEXT"
+          ],
+          [
+            "86A0",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R05": [
+          [
+            "8621",
+            "TEXT"
+          ],
+          [
+            "86A2",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R06": [
+          [
+            "8623",
+            "TEXT"
+          ],
+          [
+            "86A4",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R07": [
+          [
+            "8625",
+            "TEXT"
+          ],
+          [
+            "86A6",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R08": [
+          [
+            "8627",
+            "TEXT"
+          ],
+          [
+            "86A8",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R09": [
+          [
+            "8629",
+            "TEXT"
+          ],
+          [
+            "86AA",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R10": [
+          [
+            "862B",
+            "TEXT"
+          ],
+          [
+            "86AC",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_TOTAL": [
+          [
+            "862E",
+            "TEXT"
+          ],
+          [
+            "86AE",
+            "TEXT"
+          ]
+        ],
+        "BCP_GRID_H_A": [
+          [
+            "8432",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_H_B": [
+          [
+            "8434",
+            "LINE"
+          ],
+          [
+            "8435",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_H_C": [
+          [
+            "8437",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_H_D": [
+          [
+            "8439",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_H_E": [
+          [
+            "843B",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_H_F": [
+          [
+            "843D",
+            "LINE"
+          ],
+          [
+            "843E",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_1": [
+          [
+            "841B",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_2": [
+          [
+            "8420",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_3": [
+          [
+            "8422",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_4": [
+          [
+            "8424",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_5": [
+          [
+            "8426",
+            "LINE"
+          ],
+          [
+            "8427",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_6": [
+          [
+            "8429",
+            "LINE"
+          ],
+          [
+            "842A",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_7": [
+          [
+            "842C",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_8": [
+          [
+            "842E",
+            "LINE"
+          ]
+        ],
+        "BCP_GRID_V_9": [
+          [
+            "8430",
+            "LINE"
+          ]
+        ]
+      }
+    }
+  ],
+  "bootSHA256": "E08B6F14830FFBF61AD4EA2D59B2155A1C46A254B6751A4BBA23A2A707A72C6F"
+}

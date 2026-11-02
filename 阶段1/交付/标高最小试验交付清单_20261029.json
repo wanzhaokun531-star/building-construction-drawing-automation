@@ -1,0 +1,105 @@
+{
+  "contract": "stage1.elevation-minimum-delivery.v1",
+  "recorded": "2026-10-29T13:09:13.045220+08:00",
+  "classification": "Stage1 capability fixture; not a construction drawing or project elevation assignment",
+  "api": "ObjectARX C++ + public TChangeValElev + standard Win32 controls on private desktop; no COM or Computer Use",
+  "sourceHandle": "CE8F",
+  "cloneHandle": "D0DA",
+  "fixtureTranslation": [
+    40000,
+    0,
+    0
+  ],
+  "drawingUnit": "mm",
+  "elevationUnit": "m",
+  "actualValues": [
+    "%%P0.000",
+    "0.123",
+    "%%P0.000"
+  ],
+  "businessAssertions": 3928,
+  "regressionTests": 54,
+  "evidence": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationroundtrip-20261029-130645-570487\\elevation-roundtrip-native.json",
+      "sha256": "694D74AC2BC5BE7C94AA33658C43819B1B47170E1E538CB133C504998F610023"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationroundtrip-20261029-130645-570487\\verify-result-v5.txt",
+      "sha256": "8A1D98B23D64D39669B199B2B0F642A1F332CF49D6D8053AC00E11038F25B4AC"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-130623\\window-observation-verification.json",
+      "sha256": "4040393677A4AA9444C9D6A94A736400FF7C590241E506C8AC44ED460D74E4F3"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-130623\\worker-config.json",
+      "sha256": "9CA0192EA7B4D193A788253A30A6CF87DB7587B98C605497D432ADC4239FEF1E"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_elevation_roundtrip_ui_native.py",
+      "sha256": "03E0160CB2E063454E15841FEDA527A0AA551FED600E222E51F03713A3E4F06E"
+    }
+  ],
+  "binarySHA256": "4457F9A1EC97549B3BACE2B62B931102B2B4457C12C17B30718E759B9DAA73A5",
+  "sourceFiles": {
+    "NativeAccessProbe.cpp": "42D6AD7898EFBD810998C11B63F3A28A0F12036F0206638BFCE79ECC35E641D7",
+    "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+    "NativeAxisContinuousNumberProbe.inc": "DD4FE3742543DBB956E69535D1319508C3074299740C3BD6B9362638B8C58DF5",
+    "NativeAxisExplodeReadback.inc": "E3CC2B10C1BFC8B072B1665B3558A53BD5EF2AF27EAABED865D4F98DE82FEA1D",
+    "NativeAxisMergeTwoProbe.inc": "D8BC749161698670B11D5F1DEBCA2765CC3F6A7DF1842B40B6AE8B4E23067962",
+    "NativeAxisOverlapPreview.inc": "FA6F8430BF4B094E60251C78123E7C8DD725055E17EA018104E01F5FB293BB0C",
+    "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5",
+    "NativeAxisTemplatePruneProbe.inc": "09F0936466364D560807EDEED6DFB525FB905D8F12D33BA5FAD21E6D593A2147",
+    "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+    "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+    "NativeDimensionMergeProbe.inc": "3A6DBB774AE866BA3C75513B4B43EB43378AF85D3E97F14A5984F038F2CB53E3",
+    "NativeElevationDialogProbe.inc": "01DF79966CA1F65F37EB4B083C2C7C1E5CE8F69271EBB2A1B4B6DE3EDF6462DB",
+    "NativeElevationInkPick.inc": "761FC0D00A4FF58E0C1663768F1B620B7227A5623853A6E556BAB1BCCB6C8043",
+    "NativeElevationRoundTripProbe.inc": "55592CC17935321B25A7BCB82C07E238AABB9D3B92AE2D2E974338157DD2D460",
+    "NativeElevationRoundTripUiProbe.inc": "29EB7CA88D0ACA62E1F74057591041EA8BE9D88CC4AE629C2417925C39088F3E",
+    "NativeElevationUiBridge.inc": "57A65CF5B9D134428688DFCA23AE1FC5D2AD9B71D2A0A3E720F3E295D741D2E1",
+    "NativeFourAxisPreview.inc": "281F02628E7D4CA72AD581CDC2114BC264D2AE73BC657DE9EB1DC3412F927F96",
+    "NativeFourSideAxisProbe.inc": "1D07D4E5C5887A4E0350A750B2A4E013DF7B3F7C647E8D7F0D88F744C52930E8",
+    "NativeFourSideAxisSeedProbe.inc": "AD7F473A8974B0AA896376D5054FBE94F9D13FED86B6B244589997F01161287F",
+    "NativeFourSideAxisSingletonProbe.inc": "C18D76E641E008F917CE702633BA069134FBB7265E5CA0DB90AB5833ECBF267A",
+    "NativeHorizontalAxisProbe.inc": "7B73E50E4B01707DEB9424A206134D4A1413E1376434F6CD58C8C7A68C0B915E",
+    "NativeInputVersionAudit.inc": "C086B23B959889AE1ED149230FCCA0D6D866E8E1E1DD427B35B0CE398448B351",
+    "NativeModernAxisGripProbe.inc": "BB12BBCBD74BD1EB01BDC443B9019D093D11F032442801829C12589F48D96C64",
+    "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+    "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+    "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+    "NativeQuietWorker.inc": "F43823A5AD5EEB5E0536F0CF5B8A9FCB3EB5F970FF6D2691CE0829CF696D323D",
+    "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+    "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+    "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+    "NativeSymbolTextBridgeProbe.inc": "979E71FF58FA5D165EA4F812D7F135D5C3577D6E90A022AE2297F4C9DDA2C56F",
+    "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849"
+  },
+  "deliveries": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\方案图副本_标高初始值验证_20261029.dwg",
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationroundtrip-20261029-130645-570487\\elevation-initial.dwg",
+      "sha256": "1525B0D0E1B8D70C529232F52E5B329513B51DC36824B7735306BD3289BFDA55",
+      "bytes": 3223536
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\方案图副本_标高增加0123m验证_20261029.dwg",
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationroundtrip-20261029-130645-570487\\elevation-increased.dwg",
+      "sha256": "7E443BF4286575CCE45674A1045534883FDEE57D00693BA6EA2C74FDB94F089E",
+      "bytes": 3223086
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\方案图副本_标高恢复原值验证_20261029.dwg",
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationroundtrip-20261029-130645-570487\\elevation-restored.dwg",
+      "sha256": "D29D606BADA753E95E5536161751AA7E9E54E005AA943677C08831DEC8D2A5DE",
+      "bytes": 3223022
+    }
+  ],
+  "phase2Started": false,
+  "limitations": [
+    "Public representation protected; no claim of full private field equivalence",
+    "Normal AutoCAD QUIT exit not proved; exact owned process stopped with receipt",
+    "No final reference style or whole-generation coverage claim"
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "returnCode": 1,
+  "error": "FAIL: output directory must be new",
+  "outputUnchanged": true
+}

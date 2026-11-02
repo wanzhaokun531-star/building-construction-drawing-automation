@@ -1,0 +1,19 @@
+{
+  "contract": "bcp.stage2.saved-preview-verification.v1",
+  "recorded": "2026-10-30T16:01:47.401843+08:00",
+  "source": "D:\\Codex\\建筑施工图自动化\\阶段2\\runs\\native-2026-10-30-15-49-3-2812-331004562\\方案施工图_阶段2中间图.dwg",
+  "sourceSHA256": "1D15D815144E3F9632C3CC8D53A06E395FF6AF9D6919E3BCFC7CD45E894FE1C2",
+  "job": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-20261030-160026",
+  "nativeReportSHA256": "88D6905462C9318AB424F5EAC39055E83556C65DB60E5D99DC1E10913D0FE134",
+  "PDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-20261030-160026\\stage2-A3-1-100.pdf",
+  "PDFSHA256": "6B67658FB2A3ABB8229FA4EA02EA6D0B298C49E734D81DCEB5813016B9380165",
+  "formattedDimensionsVerified": 36,
+  "all269PublicGeometrySnapshotsEqual": true,
+  "plotSettingsRestored": true,
+  "strictA3OneTo100": true,
+  "priorValidationFailureRetained": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\native-preview-run-v7.json",
+  "correction": "only observed one/two backslash A1 alignment prefix removed; rejects other content",
+  "formalFrameComplete": false,
+  "visualReview": "pending",
+  "stage2Complete": false
+}

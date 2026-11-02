@@ -1,0 +1,209 @@
+{
+  "contract": "bcp.stage2.grid-delivery.v1",
+  "nativeRun": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\native-run-v9.json",
+  "nativeRunSHA256": "276DFDC49F6A817B75BD0A28E3B375A03424C8C6F8CE4AA19B7C190B9292FC4D",
+  "previewRun": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\native-preview-run-v9.json",
+  "previewRunSHA256": "AF7EAB69B7AB6D668DE3292CA1A4CDAAB0C49424821524C53E49EC4F136688AB",
+  "stage2Complete": false,
+  "visual": {
+    "reviewed": true,
+    "oldEightDimensionsAbsent": true,
+    "clippingObserved": false,
+    "nearbyCDLabelsOverlap": true,
+    "short100DimensionCollision": true,
+    "formalStyleApproved": false
+  },
+  "files": {
+    "analysis.json": "2CE65FF72B3D675B64531C224B1F46BE0038D70BD3F3BC857174D1AAFC132455",
+    "axis-exclusions.tsv": "DD7AE93923D5475BC80A08332AE936D7E5DCC9A0DA2ED39DBDC568F6D99EEE07",
+    "endpoint-capture.json": "14D3492985EF1A9F4E5B4A559B2F3390DC51D2039A93187C7C43213800F1056B",
+    "endpoint-supplement.tsv": "31A4DA4337FC6A2FFABCB8A7F1BA3A7BF68CACF1B713415570D754E5F62743B8",
+    "native-annotations.json": "8EBE2A705346CBD270BFEE0E7EA8016D13FD5CD61B51512F4AD83B77AAAF458E",
+    "native-foundation.json": "ACA8BA9F1F7B0EAE81D81FCAE7EDA8CE1FBD371C3341A8A923510D3146D7C3F9",
+    "已确认轴线排除.json": "C921027EEC11C9B29A5C553E8641DB3D88329B70F4F582ED2CE2EBE3BA6EA8E6",
+    "待确认位置索引.svg": "26ECAF26A1CE13C1653E1908CF25624A1C88E69F61B1142AC5E2DCAEFED2C420",
+    "待确认清单.csv": "D65871C6DB8F788214950E3C09E59F982F26AEDE4DD6EE9F8764C1149B6F80A5",
+    "方案施工图_阶段2中间图.dwg": "4CC88637215871CA798C4D22ACFC253AA2130F2C52CA7B2A52CDE9DDB8E8A452",
+    "阅读说明.md": "459F9D2632208C8F793909D405B2D35FDF665908F0380140238EE85E28EA9AE8",
+    "阶段2中间图_A3_1比100.pdf": "5AB12F554C3EC0AE1B19928F95DAECA32EA0B05B7B63782F92D1C64FC90209AD",
+    "阶段2中间图预览.png": "05DF15613E1AB96D33950BFD201DBE0822DD37152D9A258E45EBCD9782AD24D3",
+    "待确认位置索引.png": "DDCF4A735DD392D3313A896C7617F0512387691EEC2A939FF2F87B51F833D11A"
+  },
+  "pendingItems": [
+    {
+      "mark": "Q2",
+      "handle": "CDAC",
+      "code": "WALL_ROLE_REQUIRED",
+      "x": 20511.890259172244,
+      "y": 28541.263551952623,
+      "near": "走廊",
+      "known": "200厚墙；用途未定",
+      "ask": "主要墙／门垛／局部短墙等用途；不按长度猜定"
+    },
+    {
+      "mark": "Q3",
+      "handle": "CDBA",
+      "code": "WALL_ROLE_REQUIRED",
+      "x": 24111.890259172244,
+      "y": 23891.26355195316,
+      "near": "庭院",
+      "known": "200厚墙；用途未定",
+      "ask": "主要墙／门垛／局部短墙等用途；不按长度猜定"
+    },
+    {
+      "mark": "Q4",
+      "handle": "CDBB",
+      "code": "WALL_ROLE_REQUIRED",
+      "x": 24111.890259172244,
+      "y": 21451.26355195287,
+      "near": "客厅",
+      "known": "200厚墙；用途未定",
+      "ask": "主要墙／门垛／局部短墙等用途；不按长度猜定"
+    },
+    {
+      "mark": "Q5",
+      "handle": "CDE9",
+      "code": "WALL_ROLE_REQUIRED",
+      "x": 20511.89025917236,
+      "y": 23891.26355195316,
+      "near": "玄关",
+      "known": "200厚墙；用途未定",
+      "ask": "主要墙／门垛／局部短墙等用途；不按长度猜定"
+    },
+    {
+      "mark": "K1",
+      "handle": "CD84",
+      "code": "OPENING_CATEGORY_REQUIRED",
+      "x": 30911.89025917306,
+      "y": 18541.263551952812,
+      "near": "卧室",
+      "known": "原生类型W；洞宽2400，洞高1500毫米",
+      "ask": "普通窗C／推拉窗LC等类别"
+    },
+    {
+      "mark": "K2",
+      "handle": "CD86",
+      "code": "OPENING_CATEGORY_REQUIRED",
+      "x": 26611.890259172244,
+      "y": 18541.263551952812,
+      "near": "花池",
+      "known": "原生类型W；洞宽3600，洞高1500毫米",
+      "ask": "普通窗C／推拉窗LC等类别"
+    },
+    {
+      "mark": "K3",
+      "handle": "CD8C",
+      "code": "OPENING_CATEGORY_REQUIRED",
+      "x": 17161.890259172244,
+      "y": 31941.263551952827,
+      "near": "庭院",
+      "known": "原生类型W；洞宽2400，洞高1500毫米",
+      "ask": "普通窗C／推拉窗LC等类别"
+    },
+    {
+      "mark": "K4",
+      "handle": "CD8E",
+      "code": "OPENING_CATEGORY_REQUIRED",
+      "x": 27211.890259172244,
+      "y": 34741.26355195283,
+      "near": "厨房",
+      "known": "原生类型W；洞宽2400，洞高1500毫米",
+      "ask": "普通窗C／推拉窗LC等类别"
+    },
+    {
+      "mark": "K5",
+      "handle": "CD90",
+      "code": "OPENING_CATEGORY_REQUIRED",
+      "x": 23311.890259172244,
+      "y": 34741.26355195283,
+      "near": "餐厅",
+      "known": "原生类型W；洞宽2400，洞高1500毫米",
+      "ask": "普通窗C／推拉窗LC等类别"
+    },
+    {
+      "mark": "K6",
+      "handle": "CD92",
+      "code": "OPENING_CATEGORY_REQUIRED",
+      "x": 18411.890259172244,
+      "y": 16541.263551952812,
+      "near": "卧室",
+      "known": "原生类型W；洞宽2400，洞高1500毫米",
+      "ask": "普通窗C／推拉窗LC等类别"
+    },
+    {
+      "mark": "K7",
+      "handle": "CD94",
+      "code": "OPENING_CATEGORY_REQUIRED",
+      "x": 22311.890259172244,
+      "y": 20831.263551952827,
+      "near": "门廊",
+      "known": "原生类型G；洞宽2400，洞高2400毫米",
+      "ask": "组合门类别，是否按门连窗FDM"
+    },
+    {
+      "mark": "K8",
+      "handle": "CDAF",
+      "code": "OPENING_CATEGORY_REQUIRED",
+      "x": 16311.890259172244,
+      "y": 23241.263551952827,
+      "near": "储物间",
+      "known": "原生类型W；洞宽900，洞高1600毫米",
+      "ask": "普通窗C／推拉窗LC等类别"
+    },
+    {
+      "mark": "K9",
+      "handle": "CDB2",
+      "code": "OPENING_CATEGORY_REQUIRED",
+      "x": 32711.890259172244,
+      "y": 23141.26355195172,
+      "near": "卫",
+      "known": "原生类型W；洞宽900，洞高1600毫米",
+      "ask": "普通窗C／推拉窗LC等类别"
+    },
+    {
+      "mark": "K10",
+      "handle": "CDB5",
+      "code": "OPENING_CATEGORY_REQUIRED",
+      "x": 15211.890259172244,
+      "y": 25791.263551952827,
+      "near": "楼梯",
+      "known": "原生类型W；洞宽2100，洞高1500毫米",
+      "ask": "普通窗C／推拉窗LC等类别"
+    },
+    {
+      "mark": "K11",
+      "handle": "CE48",
+      "code": "OPENING_CATEGORY_REQUIRED",
+      "x": 32711.890259172244,
+      "y": 24991.263551951775,
+      "near": "卫",
+      "known": "原生类型W；洞宽900，洞高1600毫米",
+      "ask": "普通窗C／推拉窗LC等类别"
+    },
+    {
+      "mark": "K12",
+      "handle": "CF62",
+      "code": "OPENING_CATEGORY_REQUIRED",
+      "x": 32711.890259172244,
+      "y": 26841.26355195291,
+      "near": "卫",
+      "known": "原生类型W；洞宽900，洞高1600毫米",
+      "ask": "普通窗C／推拉窗LC等类别"
+    },
+    {
+      "mark": "K13",
+      "handle": "D005",
+      "code": "OPENING_CATEGORY_REQUIRED",
+      "x": 16311.890259172244,
+      "y": 21441.263551952827,
+      "near": "卫",
+      "known": "原生类型W；洞宽900，洞高1600毫米",
+      "ask": "普通窗C／推拉窗LC等类别"
+    }
+  ],
+  "pendingCount": 17,
+  "confirmedAxisExclusions": [
+    "CD9A",
+    "CFB9"
+  ]
+}

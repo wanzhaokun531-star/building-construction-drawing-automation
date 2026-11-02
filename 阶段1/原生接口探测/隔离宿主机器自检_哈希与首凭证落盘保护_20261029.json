@@ -1,0 +1,29 @@
+{
+    "contract":  "stage1.isolation-supervisor-selftest.v1",
+    "recorded":  "2026-10-29T09:43:27.1884944+08:00",
+    "cadStarted":  false,
+    "checks":  {
+                   "EmptyArgument":  true,
+                   "SpaceArgument":  true,
+                   "TrailingSlash":  true,
+                   "EmbeddedQuote":  true,
+                   "IdentityPositive":  true,
+                   "IdentityRejectPidReuse":  true,
+                   "IdentityRejectOtherDesktop":  true,
+                   "LocalFileSHA256":  true,
+                   "MetadataFailureDoesNotThrow":  true,
+                   "MetadataFailurePreservesOwnership":  true,
+                   "DefaultLocalMetadataHashes":  true,
+                   "PhysicalMinimalReceiptSurvivesMetadataFailure":  true,
+                   "PrivateDesktopAllocated":  true,
+                   "InputDesktopNotSwitched":  true,
+                   "SupervisorThreadDesktopUnchanged":  true,
+                   "NoProcessCreated":  true,
+                   "MonitorStarted":  true,
+                   "MonitorStopped":  true,
+                   "MonitorNoError":  true,
+                   "MonitorNoDrops":  true,
+                   "DesktopClosed":  true
+               },
+    "result":  "PASS"
+}

@@ -1,0 +1,1612 @@
+{
+  "contract": "bce.material-fix1-review.v1",
+  "scope": [
+    "document-owned target rejection",
+    "finite positive area arithmetic",
+    "file-bound prototype and dependencies"
+  ],
+  "wholeWallCapability": "BLOCKED_CAPABILITY",
+  "nativeStatus": "GREEN actual partial: 41/41 passed, errors=[]; RED 37/41 passed, 4 failures preserved",
+  "baselineReceipt": {
+    "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-213801-020-reject-empty-pattern-explicit-partial-e7508e99\\receipt.json",
+    "sha256": "FBA2A7A14DDAD00DC7BD7C4CCAD5F7D94516077C823228F7D7BED3D1C9784F36"
+  },
+  "originalFullReviewManifest": {
+    "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\material\\M1-full-task-review-manifest.json",
+    "sha256": "3E3E83C678245602C3BDC3849ABC3C48ACB578CAFDB254524BF1CB9E00F286F7"
+  },
+  "diff": {
+    "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\material\\M1-fix1-vs-e750.diff",
+    "sha256": "910D6A4B95A30031051AAD002C38C1198187E6922A13599E00D6047409359063"
+  },
+  "files": [
+    {
+      "name": "NativeMaterials.h",
+      "baseline": {
+        "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-213801-020-reject-empty-pattern-explicit-partial-e7508e99\\src\\NativeMaterials.h",
+        "sha256": "C719B2341A79405CCD2DB2FC3279896EF361639AD5210EB129F95EE90E77D2C4"
+      },
+      "candidate": {
+        "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\NativeMaterials.h",
+        "sha256": "BBE24E0A2A387585F609B9D4B45A51CC1782AD888912BE314DC9063A03C2F542"
+      }
+    },
+    {
+      "name": "NativeMaterials.cpp",
+      "baseline": {
+        "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-213801-020-reject-empty-pattern-explicit-partial-e7508e99\\src\\NativeMaterials.cpp",
+        "sha256": "4DFE186B7A76828D31DB900AFD089F38E73ED73209AF55D428E8FA9F166C4469"
+      },
+      "candidate": {
+        "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\NativeMaterials.cpp",
+        "sha256": "771336F29B0152D175B8B17024355C2DC635AF09E616A7E23BA7C81423AAECA8"
+      }
+    },
+    {
+      "name": "MaterialDriver.cpp",
+      "baseline": {
+        "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-213801-020-reject-empty-pattern-explicit-partial-e7508e99\\src\\MaterialDriver.cpp",
+        "sha256": "3FFAC5FCBD7A571DD172AD5D63C79B2EF7073FD0896AF187AF1460913D1286E4"
+      },
+      "candidate": {
+        "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\MaterialDriver.cpp",
+        "sha256": "8B52AC3BA9E544CF6E84855343CCF0605E0771F10EBFE61F9DB96330A71BD054"
+      }
+    },
+    {
+      "name": "MaterialFixtures.h",
+      "baseline": {
+        "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-213801-020-reject-empty-pattern-explicit-partial-e7508e99\\src\\MaterialFixtures.h",
+        "sha256": "F1D19C859D47960261F5F5BB5514FF06BE1CC4566A1DB2CFF80ED448885F563F"
+      },
+      "candidate": {
+        "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\MaterialFixtures.h",
+        "sha256": "7D225A6CC4D19825F24B2F2F47A7FF8278197E95F53D686C14A024F4EC98A517"
+      }
+    },
+    {
+      "name": "ElevationMaterialCases.vcxproj",
+      "baseline": {
+        "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-213801-020-reject-empty-pattern-explicit-partial-e7508e99\\src\\ElevationMaterialCases.vcxproj",
+        "sha256": "606B5B43424786B33C0907A56E55B101E9A4AC4F9A0FC46F6DD6A5EEB7EE513F"
+      },
+      "candidate": {
+        "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\ElevationMaterialCases.vcxproj",
+        "sha256": "606B5B43424786B33C0907A56E55B101E9A4AC4F9A0FC46F6DD6A5EEB7EE513F"
+      }
+    }
+  ],
+  "red": {
+    "receipt": {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-215531-368-review-fix1-three-contracts-red-10feeaa7\\receipt.json",
+      "sha256": "AAFA82556732B0AFD078C224B042A55D9BB69E9CFE14F6F6F019F6CE40C319B0"
+    },
+    "raw": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-220528-cc654649\\case\\native-case.json",
+      "sha256": "F6E6B3275BC5A7FB98E949082618F65C716CA8B69CF3444A9A267F01EF53A34C"
+    },
+    "actual": {
+      "contract": "bce.native-case.v1",
+      "caseName": "NativeMaterialPreparation",
+      "status": "failed",
+      "pid": 35420,
+      "nonce": "cc6546495acb45b69ab5e96bcf327a6c",
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-220528-cc654649",
+      "desktop": "CodexS1_cc6546495acb45b69ab5e96bcf327a6c",
+      "modulePath": "c:\\program files\\autodesk\\applicationplugins\\codexelevationstage1_cc6546495acb45b69ab5e96bcf327a6c\\bcecase_cc654649.arx",
+      "moduleSHA256": "18DD8D2ECC85E04892F821948CAEA6CCA0E1E5AC4958BE5E41FB2A7DA13A6D89",
+      "expectedModuleSHA256": "18DD8D2ECC85E04892F821948CAEA6CCA0E1E5AC4958BE5E41FB2A7DA13A6D89",
+      "iniPath": "c:\\program files\\autodesk\\applicationplugins\\codexelevationstage1_cc6546495acb45b69ab5e96bcf327a6c\\bcecase_cc654649.ini",
+      "iniSHA256": "3A48AE43CDFE47E15B3B380E492AAFD2F5B5C105D658D97C5F9A5AB825C1834F",
+      "scheme": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-220528-cc654649\\scheme-input.dwg",
+        "sha256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+      },
+      "reference": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-220528-cc654649\\reference-input.dwg",
+        "sha256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+      },
+      "steps": [
+        {
+          "name": "EmptyPatternCannotAuthorizeCommittableBatch",
+          "status": "passed",
+          "details": "fixture-front/wall: EMPTY_NATIVE_PATTERN_OUTPUT: BLOCKED_CAPABILITY; no committable material batch"
+        },
+        {
+          "name": "PrepareSeparateSmallPanelHatch",
+          "status": "passed",
+          "details": "actual native material batch"
+        },
+        {
+          "name": "ImmutableBatchInitiallyIntact",
+          "status": "passed",
+          "details": "actual Hatch loops, patterns, appearance/resources and permanent mutation guard"
+        },
+        {
+          "name": "TargetRootListIsOnlyHatch",
+          "status": "passed",
+          "details": "no cloned old boundary or reference building root"
+        },
+        {
+          "name": "SmallPanelNativeAreaAndExactLoop",
+          "status": "passed",
+          "details": "nativeArea=2000000"
+        },
+        {
+          "name": "SmallPanelHasActualNativePatternOutput",
+          "status": "passed",
+          "details": "native generated segments=4039"
+        },
+        {
+          "name": "ReferencePatternPhysicalExpression",
+          "status": "passed",
+          "details": "scale=50 angle=0 spacing=374.99999942375075 sourceSpacing=374.99999942375075 definitions=67"
+        },
+        {
+          "name": "ExplicitPatternPhaseMapping",
+          "status": "passed",
+          "details": "origin=12.25,37.5"
+        },
+        {
+          "name": "OnlyPreparedHatchClonesToEmpty",
+          "status": "passed",
+          "details": "root-list cloning excludes old source geometry"
+        },
+        {
+          "name": "SmallPanelIndependentDwgReopen",
+          "status": "passed",
+          "details": "roots=1 loops=true area=2000000 scale=50 color=3271557279 origin=12.25,37.5"
+        },
+        {
+          "name": "NonintegerCoordinatesAndTranslation",
+          "status": "passed",
+          "details": "loops=true origin=112.375,17.125"
+        },
+        {
+          "name": "PaperScale50ChangesPatternOnly",
+          "status": "passed",
+          "details": "1:100 to 1:50 halves physical pattern spacing; building loops unchanged"
+        },
+        {
+          "name": "NonMmUnitsPreservePhysicalSpacing",
+          "status": "passed",
+          "details": "separate small panel vertices 2 x 1 metres, native area2, paper50 physical spacing"
+        },
+        {
+          "name": "SeparateSmallHoleAreaAndNativeVoid",
+          "status": "passed",
+          "details": "small-panel nativeArea=1840000 loops=2 generatedSegments=3763"
+        },
+        {
+          "name": "CurrentDocumentRejectedWhenWorkingDbIsSideDb",
+          "status": "failed",
+          "details": "REGRESSION: current document accepted as independent target"
+        },
+        {
+          "name": "OtherDocumentRejectedWhenWorkingDbIsSideDb",
+          "status": "failed",
+          "details": "REGRESSION: other document accepted as independent target"
+        },
+        {
+          "name": "InfinitePlanAreaRejected",
+          "status": "failed",
+          "details": "REGRESSION: nonfinite plan area accepted"
+        },
+        {
+          "name": "NaNPlanAreaRejected",
+          "status": "passed",
+          "details": "fixture-front/small-panel: MATERIAL_PLAN_FACTS_CHANGED"
+        },
+        {
+          "name": "AreaUnitSquareOverflowRejected",
+          "status": "passed",
+          "details": "fixture-front/small-panel: INVALID_MATERIAL_TOPOLOGY"
+        },
+        {
+          "name": "UnsavedReferenceChangesCannotBypassFileShaBinding",
+          "status": "failed",
+          "details": "output must use disk-bound color159,scale50,layer249 despite caller memory color1,scale100,layer2"
+        },
+        {
+          "name": "ModifiedReferenceMemoryRemainsUntouched",
+          "status": "passed",
+          "details": "caller unsaved color/pattern/layer changes preserved; events=0"
+        },
+        {
+          "name": "LineDrawingExplicitlyUnsupported",
+          "status": "passed",
+          "details": "fixture-front/small-panel: UNSUPPORTED_MATERIAL_EXPRESSION"
+        },
+        {
+          "name": "GlassBlockExplicitlyUnsupported",
+          "status": "passed",
+          "details": "fixture-front/small-panel: UNSUPPORTED_MATERIAL_EXPRESSION"
+        },
+        {
+          "name": "MissingSourceUnitFactRejected",
+          "status": "passed",
+          "details": "fixture-front/small-panel: REFERENCE_MATERIAL_FACTS_REQUIRED"
+        },
+        {
+          "name": "WrongReferenceShaRejected",
+          "status": "passed",
+          "details": "fixture-front/small-panel: REFERENCE_SHA_MISMATCH"
+        },
+        {
+          "name": "OpenRegionRejected",
+          "status": "passed",
+          "details": "fixture-front/small-panel: INVALID_MATERIAL_TOPOLOGY"
+        },
+        {
+          "name": "SelfIntersectingRegionRejected",
+          "status": "passed",
+          "details": "fixture-front/small-panel: INVALID_MATERIAL_TOPOLOGY"
+        },
+        {
+          "name": "InvalidHoleRejected",
+          "status": "passed",
+          "details": "fixture-front/small-panel: INVALID_MATERIAL_TOPOLOGY"
+        },
+        {
+          "name": "ZeroPatternScaleRejected",
+          "status": "passed",
+          "details": "fixture-front/small-panel: MATERIAL_PROTOTYPE_REQUIRED"
+        },
+        {
+          "name": "NonEntityBlockRecordRejectedAtOpen",
+          "status": "passed",
+          "details": "fixture-front/small-panel: open:93"
+        },
+        {
+          "name": "GradientExplicitlyUnsupported",
+          "status": "passed",
+          "details": "fixture-front/small-panel: UNSUPPORTED_MATERIAL_NATIVE_TYPE"
+        },
+        {
+          "name": "GradientSourceUntouched",
+          "status": "passed",
+          "details": "unsupported expression read only"
+        },
+        {
+          "name": "ExplicitDirectionRotatesPatternOnly",
+          "status": "passed",
+          "details": "loops=true angle=1.5707963267948968 spacing=374.99999942375081 origin=12.25,37.5"
+        },
+        {
+          "name": "ModifiedPreparationRejected0",
+          "status": "passed",
+          "details": "loop/pattern/entity/layer mutation invalidates immutable native batch before copying"
+        },
+        {
+          "name": "ModifiedPreparationRejected1",
+          "status": "passed",
+          "details": "loop/pattern/entity/layer mutation invalidates immutable native batch before copying"
+        },
+        {
+          "name": "ModifiedPreparationRejected2",
+          "status": "passed",
+          "details": "loop/pattern/entity/layer mutation invalidates immutable native batch before copying"
+        },
+        {
+          "name": "ModifiedPreparationRejected3",
+          "status": "passed",
+          "details": "loop/pattern/entity/layer mutation invalidates immutable native batch before copying"
+        },
+        {
+          "name": "OriginalBatchStillIntact",
+          "status": "passed",
+          "details": "read and clone leave immutable original prepared expression unchanged"
+        },
+        {
+          "name": "CurrentUnsavedChineseUnchanged",
+          "status": "passed",
+          "details": "current-memory Chinese fixture remains without saving current document"
+        },
+        {
+          "name": "SourceAndAmbientZeroMutation",
+          "status": "passed",
+          "details": "source events=0 ambient events=0"
+        },
+        {
+          "name": "GlobalsAndWorkingDatabaseRestored",
+          "status": "passed",
+          "details": "system variables, working DB pointer and current document restored after success/rejection"
+        }
+      ],
+      "capabilities": [
+        {
+          "wholeWallCapability": "BLOCKED_CAPABILITY",
+          "requestedNetAreaSquareMm": 58200000,
+          "supportedWholeWall": false,
+          "reason": "actual requested full-wall pattern output is empty; no committable batch returned"
+        },
+        {
+          "properties": [
+            {
+              "stage": "reference-original-read-only",
+              "hatch": {
+                "stage": "reference-original-read-only",
+                "originX": 0,
+                "originY": 0,
+                "scale": 50,
+                "angle": 0,
+                "pattern": "大理石",
+                "patternType": 1,
+                "solid": false,
+                "lineGeneration": true,
+                "numHatchLines": 3813,
+                "patternDefinitions": 67,
+                "getLinesStatus": 0,
+                "returnedSegments": 3813,
+                "definitionAngle": 0.7328151018595195,
+                "baseX": -591259.0767339575,
+                "baseY": 755447.2212848609,
+                "offsetX": 299.99999558906,
+                "offsetY": 225.00000492083782
+              },
+              "entityVisibility": 0,
+              "entityColorIndex": 159,
+              "entityColorValue": 3271557279,
+              "entityColorMethod": 195,
+              "entityTransparency": 0,
+              "entityAlpha": 255,
+              "entityTransparencyClear": true,
+              "entityLineWeight": -1,
+              "entityLineTypeScale": 1,
+              "layerName": "J-LM-外墙材料分色",
+              "layerOff": false,
+              "layerFrozen": false,
+              "layerLocked": false,
+              "layerPlottable": true,
+              "layerViewportDefaultFrozen": false,
+              "layerColorIndex": 249,
+              "layerColorValue": 3271557369,
+              "layerColorMethod": 195,
+              "layerTransparency": 0,
+              "layerAlpha": 255,
+              "layerLineWeight": -3,
+              "layerPlotStyle": "Color_249",
+              "databaseFillMode": true,
+              "databaseInsunits": 0,
+              "databaseLtscale": 1000,
+              "hatchStyle": 1,
+              "hatchAssociative": false,
+              "hatchElevation": 0,
+              "hatchNormal": [
+                0,
+                0,
+                1
+              ],
+              "backgroundColorValue": 3355443200,
+              "backgroundColorMethod": 200,
+              "loops": [
+                {
+                  "type": 7,
+                  "points": [
+                    [
+                      76073.23887282194,
+                      135679.16500736866
+                    ],
+                    [
+                      71233.49654720808,
+                      135679.1650074313
+                    ],
+                    [
+                      70833.75422159085,
+                      135679.16500728088
+                    ],
+                    [
+                      70833.75422159085,
+                      135619.16500728088
+                    ],
+                    [
+                      76073.23887282194,
+                      135619.16500728088
+                    ],
+                    [
+                      76073.23887282194,
+                      135679.16500736866
+                    ]
+                  ],
+                  "bulges": []
+                },
+                {
+                  "type": 7,
+                  "points": [
+                    [
+                      75553.49654719888,
+                      135619.16500728088
+                    ],
+                    [
+                      71353.49654719877,
+                      135619.16500728088
+                    ],
+                    [
+                      71353.49654719877,
+                      135559.16500728077
+                    ],
+                    [
+                      75553.49654719888,
+                      135559.16500728077
+                    ],
+                    [
+                      75553.49654719888,
+                      135619.16500728088
+                    ]
+                  ],
+                  "bulges": []
+                },
+                {
+                  "type": 7,
+                  "points": [
+                    [
+                      71353.49654719877,
+                      135619.16500728088
+                    ],
+                    [
+                      70833.75422159085,
+                      135619.16500728088
+                    ],
+                    [
+                      70833.75422159085,
+                      135617.0738694924
+                    ],
+                    [
+                      70833.75422159085,
+                      135559.16500728088
+                    ],
+                    [
+                      70883.75422159085,
+                      135559.16500728077
+                    ],
+                    [
+                      71353.49654719877,
+                      135559.16500728077
+                    ],
+                    [
+                      71353.49654719877,
+                      135619.16500728088
+                    ]
+                  ],
+                  "bulges": []
+                },
+                {
+                  "type": 7,
+                  "points": [
+                    [
+                      71353.49654719877,
+                      135559.16500728077
+                    ],
+                    [
+                      70883.75422159085,
+                      135559.16500728077
+                    ],
+                    [
+                      70883.75422159085,
+                      135497.16500728054
+                    ],
+                    [
+                      71353.49654719877,
+                      135497.16500728054
+                    ],
+                    [
+                      71353.49654719877,
+                      135559.16500728077
+                    ]
+                  ],
+                  "bulges": []
+                },
+                {
+                  "type": 7,
+                  "points": [
+                    [
+                      75553.49654719888,
+                      135559.16500728077
+                    ],
+                    [
+                      71353.49654719877,
+                      135559.16500728077
+                    ],
+                    [
+                      71353.49654719877,
+                      135497.16500728054
+                    ],
+                    [
+                      75553.49654719888,
+                      135497.16500728065
+                    ],
+                    [
+                      75553.49654719888,
+                      135559.16500728077
+                    ]
+                  ],
+                  "bulges": []
+                },
+                {
+                  "type": 7,
+                  "points": [
+                    [
+                      76023.23887282194,
+                      135559.16500728077
+                    ],
+                    [
+                      75553.49654719888,
+                      135559.16500728077
+                    ],
+                    [
+                      75553.49654719888,
+                      135497.16500728065
+                    ],
+                    [
+                      76023.23887282194,
+                      135497.16500728065
+                    ],
+                    [
+                      76023.23887282194,
+                      135559.16500728077
+                    ]
+                  ],
+                  "bulges": []
+                },
+                {
+                  "type": 7,
+                  "points": [
+                    [
+                      76073.23887282194,
+                      135617.07386949228
+                    ],
+                    [
+                      76073.23887282194,
+                      135619.16500728088
+                    ],
+                    [
+                      75553.49654719888,
+                      135619.16500728088
+                    ],
+                    [
+                      75553.49654719888,
+                      135559.16500728077
+                    ],
+                    [
+                      76073.23887282205,
+                      135559.16500728077
+                    ],
+                    [
+                      76073.23887282194,
+                      135617.07386949228
+                    ]
+                  ],
+                  "bulges": []
+                },
+                {
+                  "type": 7,
+                  "points": [
+                    [
+                      75673.4965472047,
+                      135877.0738694924
+                    ],
+                    [
+                      71233.49654721064,
+                      135877.0738694924
+                    ],
+                    [
+                      71233.49654720808,
+                      135679.1650074313
+                    ],
+                    [
+                      75673.4965472047,
+                      135679.16500737378
+                    ],
+                    [
+                      75673.4965472047,
+                      135877.0738694924
+                    ]
+                  ],
+                  "bulges": []
+                }
+              ]
+            },
+            {
+              "stage": "prepared-target-read-only",
+              "hatch": {
+                "stage": "prepared-target-read-only",
+                "originX": 12.25,
+                "originY": 37.5,
+                "scale": 50,
+                "angle": 0,
+                "pattern": "大理石",
+                "patternType": 1,
+                "solid": false,
+                "lineGeneration": true,
+                "numHatchLines": 4039,
+                "patternDefinitions": 67,
+                "getLinesStatus": 0,
+                "returnedSegments": 4039,
+                "definitionAngle": 0.7328151018595195,
+                "baseX": -591246.8267339575,
+                "baseY": 755484.7212848609,
+                "offsetX": 299.99999558906,
+                "offsetY": 225.00000492083782
+              },
+              "entityVisibility": 0,
+              "entityColorIndex": 159,
+              "entityColorValue": 3271557279,
+              "entityColorMethod": 195,
+              "entityTransparency": 0,
+              "entityAlpha": 255,
+              "entityTransparencyClear": true,
+              "entityLineWeight": -1,
+              "entityLineTypeScale": 1,
+              "layerName": "$0$J-LM-外墙材料分色",
+              "layerOff": false,
+              "layerFrozen": false,
+              "layerLocked": false,
+              "layerPlottable": true,
+              "layerViewportDefaultFrozen": false,
+              "layerColorIndex": 249,
+              "layerColorValue": 3271557369,
+              "layerColorMethod": 195,
+              "layerTransparency": 0,
+              "layerAlpha": 255,
+              "layerLineWeight": -3,
+              "layerPlotStyle": "Color_249",
+              "databaseFillMode": true,
+              "databaseInsunits": 0,
+              "databaseLtscale": 1,
+              "hatchStyle": 0,
+              "hatchAssociative": false,
+              "hatchElevation": 0,
+              "hatchNormal": [
+                0,
+                0,
+                1
+              ],
+              "backgroundColorValue": 3355443200,
+              "backgroundColorMethod": 200,
+              "loops": [
+                {
+                  "type": 3,
+                  "points": [
+                    [
+                      0,
+                      0
+                    ],
+                    [
+                      2000,
+                      0
+                    ],
+                    [
+                      2000,
+                      1000
+                    ],
+                    [
+                      0,
+                      1000
+                    ],
+                    [
+                      0,
+                      0
+                    ]
+                  ],
+                  "bulges": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "ambientReadOnlyGlobals": {
+            "FILLMODE": {
+              "getStatus": 5100,
+              "restype": 5003,
+              "value": 1
+            },
+            "HPMAXLINES": {
+              "getStatus": 5100,
+              "restype": 5010,
+              "value": 100000
+            },
+            "HPQUICKPREVIEW": {
+              "getStatus": 5100,
+              "restype": 5003,
+              "value": 1
+            },
+            "HPLINETYPE": {
+              "getStatus": 5100,
+              "restype": 5003,
+              "value": 0
+            },
+            "HPASSOC": {
+              "getStatus": 5100,
+              "restype": 5003,
+              "value": 1
+            }
+          },
+          "scope": "read-only actual entity/layer/database flags; no visibility/global overrides"
+        }
+      ],
+      "errors": [],
+      "checkpointCount": 1,
+      "sourceDrawingWritten": false,
+      "productionGenerationImplemented": false,
+      "businessSetterAttempted": false,
+      "tMergeDimExecuted": false,
+      "limitations": [
+        "Public snapshots cannot establish private TCH field completeness",
+        "13 segment prototype absent; connection validation pending",
+        "No production resource collision or business setter support is claimed"
+      ]
+    },
+    "closure": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-220528-cc654649\\native-result-closure.json",
+      "sha256": "80FA750CD71C8B4F48F82A0F9F9D3D826A75E6C6B579E48673FB34728CEA3DFE"
+    },
+    "retirement": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-220528-cc654649\\reader-retirement.json",
+      "sha256": "98B160337437B89BA7701420A278826D0325CB11B3C3AC94B45229F381171568"
+    }
+  },
+  "green": {
+    "receipt": {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\receipt.json",
+      "sha256": "A898B95C981FD852953F8500FCBFC244201C022A102CEC28E0D69A511B587BE6"
+    },
+    "binary": {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\out\\ElevationMaterialCases.arx",
+      "sha256": "D8AECBC2E733D1D8C1FEF44081F0DEE48438B38C3908B02334118E01B757D2DD"
+    },
+    "command": {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\build-command.cmd",
+      "sha256": "25856CDE8A037EF8402D5D146FAE1DA59B54387F1370763FA69CF40C0981C514"
+    },
+    "log": {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\build.log",
+      "sha256": "2F033124979999903094B4B2BD63263E4EEF752642455B6CD56166ED5504062D"
+    },
+    "exitCode": 0,
+    "inputOrigins": [
+      {
+        "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\ElevationModel.h",
+        "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\ElevationModel.h",
+        "sha256": "094EAB9687EB8A761E012CE5EF1DC09661B37BA3309D360E268B6A8C1C96454B"
+      },
+      {
+        "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\ElevationModel.cpp",
+        "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\ElevationModel.cpp",
+        "sha256": "A7ECE83C56489793BBF1982F5EEDB7E1587AF360A91C985FF31BC367EDD29A90"
+      },
+      {
+        "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\RuleModel.h",
+        "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\RuleModel.h",
+        "sha256": "38B6FC7AFB44FDC5B8A75B89015A671BABE30083513BFD24D689BBCCD1852C5F"
+      },
+      {
+        "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\Recognition.h",
+        "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\Recognition.h",
+        "sha256": "994C72FA6DB3BD5670F8FCE3E2B1E98897994168DF3781B1D2F230777413F09A"
+      },
+      {
+        "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\MaterialRules.h",
+        "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\MaterialRules.h",
+        "sha256": "B7A17F15731879F56F61BC67DEEA3B358EF293C1062F2216157FAF9E9D4E0053"
+      },
+      {
+        "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\MaterialRules.cpp",
+        "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\MaterialRules.cpp",
+        "sha256": "08F5B4562EA17387CA3B1973BFA1EE52EE5341E2169F335712A82DF4F8124BA6"
+      },
+      {
+        "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\NativeMaterials.h",
+        "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\NativeMaterials.h",
+        "sha256": "BBE24E0A2A387585F609B9D4B45A51CC1782AD888912BE314DC9063A03C2F542"
+      },
+      {
+        "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\NativeMaterials.cpp",
+        "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\NativeMaterials.cpp",
+        "sha256": "771336F29B0152D175B8B17024355C2DC635AF09E616A7E23BA7C81423AAECA8"
+      },
+      {
+        "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\NativeEvidence.h",
+        "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\NativeEvidence.h",
+        "sha256": "C6B083EE0346AA7CDB51090274CCCADCB2C6DE0AA92A196AD846E11C41C9EBB6"
+      },
+      {
+        "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\NativeEvidence.cpp",
+        "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\NativeEvidence.cpp",
+        "sha256": "1B3CA34A61CC2C2DB2C42A7FDFD01C029DE7BE82EAE6CE96D9DE1C3B363A8FE2"
+      },
+      {
+        "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\material\\MaterialDriver.cpp",
+        "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\MaterialDriver.cpp",
+        "sha256": "8B52AC3BA9E544CF6E84855343CCF0605E0771F10EBFE61F9DB96330A71BD054"
+      },
+      {
+        "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\material\\MaterialFixtures.h",
+        "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\MaterialFixtures.h",
+        "sha256": "7D225A6CC4D19825F24B2F2F47A7FF8278197E95F53D686C14A024F4EC98A517"
+      },
+      {
+        "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\material\\ElevationMaterialCases.vcxproj",
+        "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\ElevationMaterialCases.vcxproj",
+        "sha256": "606B5B43424786B33C0907A56E55B101E9A4AC4F9A0FC46F6DD6A5EEB7EE513F"
+      }
+    ],
+    "nativeExecuted": true,
+    "raw": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\case\\native-case.json",
+      "sha256": "C3E34DA0EAB9E745D534B665C2CB718631E7654EC58B42043EE74C6FF9F0B3D5"
+    },
+    "actual": {
+      "contract": "bce.native-case.v1",
+      "caseName": "NativeMaterialPreparation",
+      "status": "partial",
+      "pid": 5076,
+      "nonce": "e34e8df40aef42718a7931d46ab4c4d2",
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4",
+      "desktop": "CodexS1_e34e8df40aef42718a7931d46ab4c4d2",
+      "modulePath": "c:\\program files\\autodesk\\applicationplugins\\codexelevationstage1_e34e8df40aef42718a7931d46ab4c4d2\\bcecase_e34e8df4.arx",
+      "moduleSHA256": "D8AECBC2E733D1D8C1FEF44081F0DEE48438B38C3908B02334118E01B757D2DD",
+      "expectedModuleSHA256": "D8AECBC2E733D1D8C1FEF44081F0DEE48438B38C3908B02334118E01B757D2DD",
+      "iniPath": "c:\\program files\\autodesk\\applicationplugins\\codexelevationstage1_e34e8df40aef42718a7931d46ab4c4d2\\bcecase_e34e8df4.ini",
+      "iniSHA256": "EBF2BDBB32FC48663D58CD3E81DEF0FF6CEDF3219814FC1734E84FE8A9B775EF",
+      "scheme": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\scheme-input.dwg",
+        "sha256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+      },
+      "reference": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\reference-input.dwg",
+        "sha256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+      },
+      "steps": [
+        {
+          "name": "EmptyPatternCannotAuthorizeCommittableBatch",
+          "status": "passed",
+          "details": "fixture-front/wall: EMPTY_NATIVE_PATTERN_OUTPUT: BLOCKED_CAPABILITY; no committable material batch"
+        },
+        {
+          "name": "PrepareSeparateSmallPanelHatch",
+          "status": "passed",
+          "details": "actual native material batch"
+        },
+        {
+          "name": "ImmutableBatchInitiallyIntact",
+          "status": "passed",
+          "details": "actual Hatch loops, patterns, appearance/resources and permanent mutation guard"
+        },
+        {
+          "name": "TargetRootListIsOnlyHatch",
+          "status": "passed",
+          "details": "no cloned old boundary or reference building root"
+        },
+        {
+          "name": "SmallPanelNativeAreaAndExactLoop",
+          "status": "passed",
+          "details": "nativeArea=2000000"
+        },
+        {
+          "name": "SmallPanelHasActualNativePatternOutput",
+          "status": "passed",
+          "details": "native generated segments=4039"
+        },
+        {
+          "name": "ReferencePatternPhysicalExpression",
+          "status": "passed",
+          "details": "scale=50 angle=0 spacing=374.99999942375075 sourceSpacing=374.99999942375075 definitions=67"
+        },
+        {
+          "name": "ExplicitPatternPhaseMapping",
+          "status": "passed",
+          "details": "origin=12.25,37.5"
+        },
+        {
+          "name": "OnlyPreparedHatchClonesToEmpty",
+          "status": "passed",
+          "details": "root-list cloning excludes old source geometry"
+        },
+        {
+          "name": "SmallPanelIndependentDwgReopen",
+          "status": "passed",
+          "details": "roots=1 loops=true area=2000000 scale=50 color=3271557279 origin=12.25,37.5"
+        },
+        {
+          "name": "NonintegerCoordinatesAndTranslation",
+          "status": "passed",
+          "details": "loops=true origin=112.375,17.125"
+        },
+        {
+          "name": "PaperScale50ChangesPatternOnly",
+          "status": "passed",
+          "details": "1:100 to 1:50 halves physical pattern spacing; building loops unchanged"
+        },
+        {
+          "name": "NonMmUnitsPreservePhysicalSpacing",
+          "status": "passed",
+          "details": "separate small panel vertices 2 x 1 metres, native area2, paper50 physical spacing"
+        },
+        {
+          "name": "SeparateSmallHoleAreaAndNativeVoid",
+          "status": "passed",
+          "details": "small-panel nativeArea=1840000 loops=2 generatedSegments=3763"
+        },
+        {
+          "name": "CurrentDocumentRejectedWhenWorkingDbIsSideDb",
+          "status": "passed",
+          "details": "INDEPENDENT_TARGET_REQUIRED"
+        },
+        {
+          "name": "OtherDocumentRejectedWhenWorkingDbIsSideDb",
+          "status": "passed",
+          "details": "INDEPENDENT_TARGET_REQUIRED"
+        },
+        {
+          "name": "InfinitePlanAreaRejected",
+          "status": "passed",
+          "details": "fixture-front/small-panel: INVALID_MATERIAL_PLAN_AREA"
+        },
+        {
+          "name": "NaNPlanAreaRejected",
+          "status": "passed",
+          "details": "fixture-front/small-panel: INVALID_MATERIAL_PLAN_AREA"
+        },
+        {
+          "name": "AreaUnitSquareOverflowRejected",
+          "status": "passed",
+          "details": ": INVALID_MATERIAL_AREA_UNIT_SQUARE"
+        },
+        {
+          "name": "UnsavedReferenceChangesCannotBypassFileShaBinding",
+          "status": "passed",
+          "details": "output must use disk-bound color159,scale50,layer249 despite caller memory color1,scale100,layer2"
+        },
+        {
+          "name": "ModifiedReferenceMemoryRemainsUntouched",
+          "status": "passed",
+          "details": "caller unsaved color/pattern/layer changes preserved; events=0"
+        },
+        {
+          "name": "LineDrawingExplicitlyUnsupported",
+          "status": "passed",
+          "details": "fixture-front/small-panel: UNSUPPORTED_MATERIAL_EXPRESSION"
+        },
+        {
+          "name": "GlassBlockExplicitlyUnsupported",
+          "status": "passed",
+          "details": "fixture-front/small-panel: UNSUPPORTED_MATERIAL_EXPRESSION"
+        },
+        {
+          "name": "MissingSourceUnitFactRejected",
+          "status": "passed",
+          "details": "fixture-front/small-panel: REFERENCE_MATERIAL_FACTS_REQUIRED"
+        },
+        {
+          "name": "WrongReferenceShaRejected",
+          "status": "passed",
+          "details": "fixture-front/small-panel: REFERENCE_SHA_MISMATCH"
+        },
+        {
+          "name": "OpenRegionRejected",
+          "status": "passed",
+          "details": "fixture-front/small-panel: INVALID_MATERIAL_TOPOLOGY"
+        },
+        {
+          "name": "SelfIntersectingRegionRejected",
+          "status": "passed",
+          "details": "fixture-front/small-panel: INVALID_MATERIAL_TOPOLOGY"
+        },
+        {
+          "name": "InvalidHoleRejected",
+          "status": "passed",
+          "details": "fixture-front/small-panel: INVALID_MATERIAL_TOPOLOGY"
+        },
+        {
+          "name": "ZeroPatternScaleRejected",
+          "status": "passed",
+          "details": "fixture-front/small-panel: MATERIAL_PROTOTYPE_REQUIRED"
+        },
+        {
+          "name": "NonEntityBlockRecordRejectedAtOpen",
+          "status": "passed",
+          "details": "fixture-front/small-panel: open:93"
+        },
+        {
+          "name": "GradientExplicitlyUnsupported",
+          "status": "passed",
+          "details": "fixture-front/small-panel: UNSUPPORTED_MATERIAL_NATIVE_TYPE"
+        },
+        {
+          "name": "GradientSourceUntouched",
+          "status": "passed",
+          "details": "unsupported expression read only"
+        },
+        {
+          "name": "ExplicitDirectionRotatesPatternOnly",
+          "status": "passed",
+          "details": "loops=true angle=1.5707963267948968 spacing=374.99999942375081 origin=12.25,37.5"
+        },
+        {
+          "name": "ModifiedPreparationRejected0",
+          "status": "passed",
+          "details": "loop/pattern/entity/layer mutation invalidates immutable native batch before copying"
+        },
+        {
+          "name": "ModifiedPreparationRejected1",
+          "status": "passed",
+          "details": "loop/pattern/entity/layer mutation invalidates immutable native batch before copying"
+        },
+        {
+          "name": "ModifiedPreparationRejected2",
+          "status": "passed",
+          "details": "loop/pattern/entity/layer mutation invalidates immutable native batch before copying"
+        },
+        {
+          "name": "ModifiedPreparationRejected3",
+          "status": "passed",
+          "details": "loop/pattern/entity/layer mutation invalidates immutable native batch before copying"
+        },
+        {
+          "name": "OriginalBatchStillIntact",
+          "status": "passed",
+          "details": "read and clone leave immutable original prepared expression unchanged"
+        },
+        {
+          "name": "CurrentUnsavedChineseUnchanged",
+          "status": "passed",
+          "details": "current-memory Chinese fixture remains without saving current document"
+        },
+        {
+          "name": "SourceAndAmbientZeroMutation",
+          "status": "passed",
+          "details": "source events=0 ambient events=0"
+        },
+        {
+          "name": "GlobalsAndWorkingDatabaseRestored",
+          "status": "passed",
+          "details": "system variables, working DB pointer and current document restored after success/rejection"
+        }
+      ],
+      "capabilities": [
+        {
+          "wholeWallCapability": "BLOCKED_CAPABILITY",
+          "requestedNetAreaSquareMm": 58200000,
+          "supportedWholeWall": false,
+          "reason": "actual requested full-wall pattern output is empty; no committable batch returned"
+        },
+        {
+          "properties": [
+            {
+              "stage": "reference-original-read-only",
+              "hatch": {
+                "stage": "reference-original-read-only",
+                "originX": 0,
+                "originY": 0,
+                "scale": 50,
+                "angle": 0,
+                "pattern": "大理石",
+                "patternType": 1,
+                "solid": false,
+                "lineGeneration": true,
+                "numHatchLines": 3813,
+                "patternDefinitions": 67,
+                "getLinesStatus": 0,
+                "returnedSegments": 3813,
+                "definitionAngle": 0.7328151018595195,
+                "baseX": -591259.0767339575,
+                "baseY": 755447.2212848609,
+                "offsetX": 299.99999558906,
+                "offsetY": 225.00000492083782
+              },
+              "entityVisibility": 0,
+              "entityColorIndex": 159,
+              "entityColorValue": 3271557279,
+              "entityColorMethod": 195,
+              "entityTransparency": 0,
+              "entityAlpha": 255,
+              "entityTransparencyClear": true,
+              "entityLineWeight": -1,
+              "entityLineTypeScale": 1,
+              "layerName": "J-LM-外墙材料分色",
+              "layerOff": false,
+              "layerFrozen": false,
+              "layerLocked": false,
+              "layerPlottable": true,
+              "layerViewportDefaultFrozen": false,
+              "layerColorIndex": 249,
+              "layerColorValue": 3271557369,
+              "layerColorMethod": 195,
+              "layerTransparency": 0,
+              "layerAlpha": 255,
+              "layerLineWeight": -3,
+              "layerPlotStyle": "Color_249",
+              "databaseFillMode": true,
+              "databaseInsunits": 0,
+              "databaseLtscale": 1000,
+              "hatchStyle": 1,
+              "hatchAssociative": false,
+              "hatchElevation": 0,
+              "hatchNormal": [
+                0,
+                0,
+                1
+              ],
+              "backgroundColorValue": 3355443200,
+              "backgroundColorMethod": 200,
+              "loops": [
+                {
+                  "type": 7,
+                  "points": [
+                    [
+                      76073.23887282194,
+                      135679.16500736866
+                    ],
+                    [
+                      71233.49654720808,
+                      135679.1650074313
+                    ],
+                    [
+                      70833.75422159085,
+                      135679.16500728088
+                    ],
+                    [
+                      70833.75422159085,
+                      135619.16500728088
+                    ],
+                    [
+                      76073.23887282194,
+                      135619.16500728088
+                    ],
+                    [
+                      76073.23887282194,
+                      135679.16500736866
+                    ]
+                  ],
+                  "bulges": []
+                },
+                {
+                  "type": 7,
+                  "points": [
+                    [
+                      75553.49654719888,
+                      135619.16500728088
+                    ],
+                    [
+                      71353.49654719877,
+                      135619.16500728088
+                    ],
+                    [
+                      71353.49654719877,
+                      135559.16500728077
+                    ],
+                    [
+                      75553.49654719888,
+                      135559.16500728077
+                    ],
+                    [
+                      75553.49654719888,
+                      135619.16500728088
+                    ]
+                  ],
+                  "bulges": []
+                },
+                {
+                  "type": 7,
+                  "points": [
+                    [
+                      71353.49654719877,
+                      135619.16500728088
+                    ],
+                    [
+                      70833.75422159085,
+                      135619.16500728088
+                    ],
+                    [
+                      70833.75422159085,
+                      135617.0738694924
+                    ],
+                    [
+                      70833.75422159085,
+                      135559.16500728088
+                    ],
+                    [
+                      70883.75422159085,
+                      135559.16500728077
+                    ],
+                    [
+                      71353.49654719877,
+                      135559.16500728077
+                    ],
+                    [
+                      71353.49654719877,
+                      135619.16500728088
+                    ]
+                  ],
+                  "bulges": []
+                },
+                {
+                  "type": 7,
+                  "points": [
+                    [
+                      71353.49654719877,
+                      135559.16500728077
+                    ],
+                    [
+                      70883.75422159085,
+                      135559.16500728077
+                    ],
+                    [
+                      70883.75422159085,
+                      135497.16500728054
+                    ],
+                    [
+                      71353.49654719877,
+                      135497.16500728054
+                    ],
+                    [
+                      71353.49654719877,
+                      135559.16500728077
+                    ]
+                  ],
+                  "bulges": []
+                },
+                {
+                  "type": 7,
+                  "points": [
+                    [
+                      75553.49654719888,
+                      135559.16500728077
+                    ],
+                    [
+                      71353.49654719877,
+                      135559.16500728077
+                    ],
+                    [
+                      71353.49654719877,
+                      135497.16500728054
+                    ],
+                    [
+                      75553.49654719888,
+                      135497.16500728065
+                    ],
+                    [
+                      75553.49654719888,
+                      135559.16500728077
+                    ]
+                  ],
+                  "bulges": []
+                },
+                {
+                  "type": 7,
+                  "points": [
+                    [
+                      76023.23887282194,
+                      135559.16500728077
+                    ],
+                    [
+                      75553.49654719888,
+                      135559.16500728077
+                    ],
+                    [
+                      75553.49654719888,
+                      135497.16500728065
+                    ],
+                    [
+                      76023.23887282194,
+                      135497.16500728065
+                    ],
+                    [
+                      76023.23887282194,
+                      135559.16500728077
+                    ]
+                  ],
+                  "bulges": []
+                },
+                {
+                  "type": 7,
+                  "points": [
+                    [
+                      76073.23887282194,
+                      135617.07386949228
+                    ],
+                    [
+                      76073.23887282194,
+                      135619.16500728088
+                    ],
+                    [
+                      75553.49654719888,
+                      135619.16500728088
+                    ],
+                    [
+                      75553.49654719888,
+                      135559.16500728077
+                    ],
+                    [
+                      76073.23887282205,
+                      135559.16500728077
+                    ],
+                    [
+                      76073.23887282194,
+                      135617.07386949228
+                    ]
+                  ],
+                  "bulges": []
+                },
+                {
+                  "type": 7,
+                  "points": [
+                    [
+                      75673.4965472047,
+                      135877.0738694924
+                    ],
+                    [
+                      71233.49654721064,
+                      135877.0738694924
+                    ],
+                    [
+                      71233.49654720808,
+                      135679.1650074313
+                    ],
+                    [
+                      75673.4965472047,
+                      135679.16500737378
+                    ],
+                    [
+                      75673.4965472047,
+                      135877.0738694924
+                    ]
+                  ],
+                  "bulges": []
+                }
+              ]
+            },
+            {
+              "stage": "prepared-target-read-only",
+              "hatch": {
+                "stage": "prepared-target-read-only",
+                "originX": 12.25,
+                "originY": 37.5,
+                "scale": 50,
+                "angle": 0,
+                "pattern": "大理石",
+                "patternType": 1,
+                "solid": false,
+                "lineGeneration": true,
+                "numHatchLines": 4039,
+                "patternDefinitions": 67,
+                "getLinesStatus": 0,
+                "returnedSegments": 4039,
+                "definitionAngle": 0.7328151018595195,
+                "baseX": -591246.8267339575,
+                "baseY": 755484.7212848609,
+                "offsetX": 299.99999558906,
+                "offsetY": 225.00000492083782
+              },
+              "entityVisibility": 0,
+              "entityColorIndex": 159,
+              "entityColorValue": 3271557279,
+              "entityColorMethod": 195,
+              "entityTransparency": 0,
+              "entityAlpha": 255,
+              "entityTransparencyClear": true,
+              "entityLineWeight": -1,
+              "entityLineTypeScale": 1,
+              "layerName": "$0$J-LM-外墙材料分色",
+              "layerOff": false,
+              "layerFrozen": false,
+              "layerLocked": false,
+              "layerPlottable": true,
+              "layerViewportDefaultFrozen": false,
+              "layerColorIndex": 249,
+              "layerColorValue": 3271557369,
+              "layerColorMethod": 195,
+              "layerTransparency": 0,
+              "layerAlpha": 255,
+              "layerLineWeight": -3,
+              "layerPlotStyle": "Color_249",
+              "databaseFillMode": true,
+              "databaseInsunits": 0,
+              "databaseLtscale": 1,
+              "hatchStyle": 0,
+              "hatchAssociative": false,
+              "hatchElevation": 0,
+              "hatchNormal": [
+                0,
+                0,
+                1
+              ],
+              "backgroundColorValue": 3355443200,
+              "backgroundColorMethod": 200,
+              "loops": [
+                {
+                  "type": 3,
+                  "points": [
+                    [
+                      0,
+                      0
+                    ],
+                    [
+                      2000,
+                      0
+                    ],
+                    [
+                      2000,
+                      1000
+                    ],
+                    [
+                      0,
+                      1000
+                    ],
+                    [
+                      0,
+                      0
+                    ]
+                  ],
+                  "bulges": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "ambientReadOnlyGlobals": {
+            "FILLMODE": {
+              "getStatus": 5100,
+              "restype": 5003,
+              "value": 1
+            },
+            "HPMAXLINES": {
+              "getStatus": 5100,
+              "restype": 5010,
+              "value": 100000
+            },
+            "HPQUICKPREVIEW": {
+              "getStatus": 5100,
+              "restype": 5003,
+              "value": 1
+            },
+            "HPLINETYPE": {
+              "getStatus": 5100,
+              "restype": 5003,
+              "value": 0
+            },
+            "HPASSOC": {
+              "getStatus": 5100,
+              "restype": 5003,
+              "value": 1
+            }
+          },
+          "scope": "read-only actual entity/layer/database flags; no visibility/global overrides"
+        }
+      ],
+      "errors": [],
+      "checkpointCount": 1,
+      "sourceDrawingWritten": false,
+      "productionGenerationImplemented": false,
+      "businessSetterAttempted": false,
+      "tMergeDimExecuted": false,
+      "limitations": [
+        "Public snapshots cannot establish private TCH field completeness",
+        "13 segment prototype absent; connection validation pending",
+        "No production resource collision or business setter support is claimed"
+      ]
+    },
+    "closure": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\native-result-closure.json",
+      "sha256": "9FE8BCD956719C59AA0CDA43A4C698091B7E7E7532E55554A2D1338E1B9A60DB"
+    },
+    "retirement": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\reader-retirement.json",
+      "sha256": "027BB48276C46AC2E2DE5824D651E7B5A770E494F30016D3E4642FF5E4C740CF"
+    },
+    "binding": {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-e34e8df4.json",
+      "sha256": "3C597B541C225A8CC6B74A2C0819084FBCD3A24F2777A64DF64B1CFCCE5BF028"
+    },
+    "nativeCommand": "BCE_TEST_RUN",
+    "nativeGroup": "BCE_MATERIAL_CASES",
+    "runtimeArtifacts": [
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\case\\checkpoint-1.json",
+        "sha256": "9E303CAFA9B51C37FD83BCA667221B2EEE5EECADCA82D088EE2E43C0796EC768"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\case\\material-case.json",
+        "sha256": "D2E29399C96F79FD39F4F2AB68AECCAEE813B94A34059EF81C307DE624D2A8A9"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\case\\material-visibility-diagnostic.json",
+        "sha256": "F2008270B35FD73B88BC34C5B481BC5F3527353858632B7E33B979D7134EE88E"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\case\\native-case.json",
+        "sha256": "C3E34DA0EAB9E745D534B665C2CB718631E7654EC58B42043EE74C6FF9F0B3D5"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\dispatch_58408d9b11794e8e975bc90526834005.json",
+        "sha256": "1C19A32B913920EC55B65B2B22BCE42BD90D40583A0823FBEA466D98FD78E4AB"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\early-native-autoload-applied.json",
+        "sha256": "50477F1E26600DD63EF089C7779B602E4EEF213DDF1AEB7BCABC6EB4DFF534A1"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\early-native-autoload-before.json",
+        "sha256": "4BB0B598683CD55AAF0311DA9B9770748378CD079EC64381C31B48F4444F41E6"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\isolation-binding.json",
+        "sha256": "901FC7A43DFEEBD1A2D7ADE12E51371E3CC64D3791031202BD7F4878DC2C5EE1"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\isolation-final.json",
+        "sha256": "E2D5B5DDA3ADE48465A3A49436CB11D5439276A8FC4798E1799CF7AC551947FD"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\isolation-host-heartbeat.json",
+        "sha256": "B2BD2CC3ACEB764220C20BC6A0F78D1627A05A5E4D7D354D9166E45C4955901F"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\isolation-host-receipt.json",
+        "sha256": "0992D5BF1E0EE00B37835FB1C8E7B63B1265064730263A207B82183B75059BBF"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\isolation-stop-20261101-221448-782.json",
+        "sha256": "607A40874B05AF38B7CBD4D3523E46CE87D100664A7FC788456C5C8192C199AF"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\native-result-closure.json",
+        "sha256": "9FE8BCD956719C59AA0CDA43A4C698091B7E7E7532E55554A2D1338E1B9A60DB"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\post-startup-native-load-controls.json",
+        "sha256": "7D6E5A0310A904E31EF917F6D80EBA1B562DE8E5D6820ECFEB75025A800A9A6E"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\queue-controller-launch.json",
+        "sha256": "9D63AAA18033E96417A47093ED86B6B06E6A14AE132A96CD16AC627D86C26B1B"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\quiet-exit-error.json",
+        "sha256": "537AB7178FA72669D4E045F461E0FFB0542F6349746DB65897B7F00B2687A6BA"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\quiet-worker-ready.json",
+        "sha256": "512F4F3A9667F578559936A8D28A3A5E2805152A3E8399AE4B910982BE4C741C"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\reader-retirement.json",
+        "sha256": "027BB48276C46AC2E2DE5824D651E7B5A770E494F30016D3E4642FF5E4C740CF"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\worker-config.json",
+        "sha256": "3C597B541C225A8CC6B74A2C0819084FBCD3A24F2777A64DF64B1CFCCE5BF028"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221334-e34e8df4\\worker-state.json",
+        "sha256": "EF24B19083415E475A99A93282CECC8779E96969C984BCA4BD38AD0C8D03B02F"
+      }
+    ],
+    "nativeStatus": "partial",
+    "scopedReviewStatus": "awaiting original reviewer"
+  },
+  "report": {
+    "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\M1-原生材料准备报告.md",
+    "sha256": "2106BAC9639FA0783693433B2A8976B31EBD6E6A6ED2D5B3DD604DB7DC166633"
+  },
+  "sdkHeaders": [
+    {
+      "path": "C:\\Autodesk\\ObjectARX_for_AutoCAD_2020_Win_64_bit\\inc\\acdocman.h",
+      "sha256": "B10E00BFBE716750A40765CAA06B46377BBD6125E3AC494F4666307D6868D622"
+    },
+    {
+      "path": "C:\\Autodesk\\ObjectARX_for_AutoCAD_2020_Win_64_bit\\inc\\dbmain.h",
+      "sha256": "9F02BFCE3D04C1BA882E6106AD43EB03D9AE4E05081DEBA1E225FF4E0E910E0B"
+    }
+  ]
+}

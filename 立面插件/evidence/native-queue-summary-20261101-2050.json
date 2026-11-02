@@ -1,0 +1,559 @@
+{
+  "contract": "bce.native-queue-execution-summary.v1",
+  "recorded": "2026-11-01T20:51:16.521624+08:00",
+  "scope": "Authorized serial native cases only; no business source changes; no source drawing writes; all owned workers exited and exact staging retired. StopOwnedWorker exit70 is not normal QUIT even if supervisor forcedTermination field is false.",
+  "bindings": [
+    {
+      "binding": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-9d6933c7.json",
+      "bindingSHA256": "F444F6D0FBD53A4383BAC993D7E347493F9C2869758DB975F3CD2E9631955869",
+      "caseName": "InPlaceColdScope",
+      "status": "passed",
+      "nonce": "9d6933c7ab4a45708b49760e7c28141d",
+      "processId": 22684,
+      "initialThreadId": 36360,
+      "creationFileTime": "134380107770976692",
+      "creationUtc": "2026-11-01T12:46:17.0976692Z",
+      "candidateSHA256": "28C920FF6D58DB3C569E7BE908376424868C992120A13561E1F0802AF18F2B94",
+      "buildReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n2-20261101-202438-658-n6-shared-reader-green-84664abf\\receipt.json",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-202738-9d6933c7\\case\\native-case.json",
+      "nativeReportSHA256": "86A027889DE2439FEBDBD7040C1A1281E6146A40FE2C2B6938C88142C892F600",
+      "checks": [
+        {
+          "name": "ColdFixtureInstalledWithoutFontTableWrites",
+          "status": "passed"
+        },
+        {
+          "name": "ColdWriterScopeSucceeds",
+          "status": "passed"
+        },
+        {
+          "name": "ColdWriterScopeDoesNotWriteSource",
+          "status": "passed"
+        },
+        {
+          "name": "ColdWriterScopePreservesContentsAndGlobals",
+          "status": "passed"
+        },
+        {
+          "name": "UnnamedDocumentAndDiskInputsRemainUnchanged",
+          "status": "passed"
+        }
+      ],
+      "errors": [],
+      "closure": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-202738-9d6933c7\\native-result-closure.json",
+      "closureSHA256": "7E8E816804CF2C30A9F2383812D2D0B67027C94266D6958580A32B07EA0BF6C6",
+      "explicitStopHelperExitCode": 0,
+      "workerExitCode": 70,
+      "nativeQuitConfirmed": false,
+      "normalQuit": false,
+      "supervisorForcedTerminationField": true,
+      "stopEvidence": [
+        "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-202738-9d6933c7\\isolation-stop-20261101-204700-802.json"
+      ],
+      "retirement": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-202738-9d6933c7\\reader-retirement.json",
+      "removedCount": 4,
+      "sixInputHashes": [
+        {
+          "role": "scheme",
+          "kind": "source",
+          "path": "D:\\方案立面.dwg",
+          "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+        },
+        {
+          "role": "scheme",
+          "kind": "snapshot",
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\立面需求只读-fdb4cb22\\方案立面.dwg",
+          "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+        },
+        {
+          "role": "scheme",
+          "kind": "inspectionCopy",
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-202738-9d6933c7\\scheme-input.dwg",
+          "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+        },
+        {
+          "role": "reference",
+          "kind": "source",
+          "path": "D:\\建筑施工图立面图.dwg",
+          "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+        },
+        {
+          "role": "reference",
+          "kind": "snapshot",
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\立面需求只读-fdb4cb22\\建筑施工图立面图.dwg",
+          "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+        },
+        {
+          "role": "reference",
+          "kind": "inspectionCopy",
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-202738-9d6933c7\\reference-input.dwg",
+          "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+        }
+      ],
+      "workerUserDesktopShowEvents": 0,
+      "workerForegroundEvents": 0,
+      "inputDesktopReadErrors": 0,
+      "monitorError": null,
+      "droppedEvents": 0
+    },
+    {
+      "binding": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-5965fc78.json",
+      "bindingSHA256": "54EBDE534FFB5AE805A3B5A5BD56846EF4569A55A13B173D3C7AAB7E65ED9166",
+      "caseName": "PublicGraphicsRead",
+      "status": "failed",
+      "nonce": "5965fc781ee54d7a94a047cb521df547",
+      "processId": 21640,
+      "initialThreadId": 37408,
+      "creationFileTime": "134380108426057757",
+      "creationUtc": "2026-11-01T12:47:22.6057757Z",
+      "candidateSHA256": "FF6873BB3B5F0AC86F985DA632A6C0B0EEE2463CB41556BA6F9A51B821120D54",
+      "buildReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n5-20261101-195253-275-fix1-controls-green-sdkchecked-cc7ce3e3\\receipt.json",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-200915-5965fc78\\case\\native-case.json",
+      "nativeReportSHA256": "B87654C168B4FA944FA58F81D6D6A733B46FBF58F21A1395F50AF0673999A146",
+      "checks": [
+        {
+          "name": "actualStandardControl-0",
+          "status": "passed"
+        },
+        {
+          "name": "actualStandardControl-1",
+          "status": "partial",
+          "detailsFirst500": "[\"actual Arc center/radius/orientation/sweep mismatch\"]"
+        },
+        {
+          "name": "actualStandardControl-2",
+          "status": "passed"
+        },
+        {
+          "name": "actualStandardControl-3",
+          "status": "passed"
+        },
+        {
+          "name": "actualStandardControl-4",
+          "status": "passed"
+        },
+        {
+          "name": "actualStandardControl-5",
+          "status": "partial",
+          "detailsFirst500": "[\"formatted MText full layout not independently rendered; control remains partial\"]"
+        },
+        {
+          "name": "actualStandardControl-6",
+          "status": "passed"
+        }
+      ],
+      "errors": [
+        "source DB modification (including FontTable) or monitor logging failure"
+      ],
+      "closure": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-200915-5965fc78\\native-result-closure.json",
+      "closureSHA256": "EF8F99C8C03E63BFF462B92C5F7E2C7941E725F4B47A86E4A4118E34707925FA",
+      "explicitStopHelperExitCode": 0,
+      "workerExitCode": 70,
+      "nativeQuitConfirmed": false,
+      "normalQuit": false,
+      "supervisorForcedTerminationField": true,
+      "stopEvidence": [
+        "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-200915-5965fc78\\isolation-stop-20261101-204817-443.json"
+      ],
+      "retirement": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-200915-5965fc78\\reader-retirement.json",
+      "removedCount": 4,
+      "sixInputHashes": [
+        {
+          "role": "scheme",
+          "kind": "source",
+          "path": "D:\\方案立面.dwg",
+          "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+        },
+        {
+          "role": "scheme",
+          "kind": "snapshot",
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\立面需求只读-fdb4cb22\\方案立面.dwg",
+          "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+        },
+        {
+          "role": "scheme",
+          "kind": "inspectionCopy",
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-200915-5965fc78\\scheme-input.dwg",
+          "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+        },
+        {
+          "role": "reference",
+          "kind": "source",
+          "path": "D:\\建筑施工图立面图.dwg",
+          "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+        },
+        {
+          "role": "reference",
+          "kind": "snapshot",
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\立面需求只读-fdb4cb22\\建筑施工图立面图.dwg",
+          "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+        },
+        {
+          "role": "reference",
+          "kind": "inspectionCopy",
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-200915-5965fc78\\reference-input.dwg",
+          "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+        }
+      ],
+      "workerUserDesktopShowEvents": 0,
+      "workerForegroundEvents": 0,
+      "inputDesktopReadErrors": 0,
+      "monitorError": null,
+      "droppedEvents": 0
+    },
+    {
+      "binding": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-64dfab45.json",
+      "bindingSHA256": "55D21015CEA6950F18EA49945AEDAEEB47C6D20F15452D0262C5C439BF3D216C",
+      "caseName": "PublicAnalyzeCommandLifecycle",
+      "status": "passed",
+      "nonce": "64dfab4509c44b8d85824133c23d778f",
+      "processId": 3044,
+      "initialThreadId": 34172,
+      "creationFileTime": "134380109193549329",
+      "creationUtc": "2026-11-01T12:48:39.3549329Z",
+      "candidateSHA256": "FFB5D5D3C2BB1F42B49EDBF0A6A74B703AC80A87C007CA2436FC04C51B4B9FA5",
+      "buildReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i1-20261101-203305-773-current-memory-green-n4-n6-store-bound-3baf1146\\receipt.json",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-203451-64dfab45\\case\\native-case.json",
+      "nativeReportSHA256": "91F029715DE23FFA5565D11F988EA58C3FDEA64B8A4E556BE07883BC1C72EDE4",
+      "checks": [
+        {
+          "name": "FormalCommandsRegistered",
+          "status": "passed"
+        },
+        {
+          "name": "PublicCallbacksBelongToFrozenProduct",
+          "status": "passed"
+        },
+        {
+          "name": "OrdinaryPublicAnalyzeReturnsCurrentReport",
+          "status": "passed"
+        },
+        {
+          "name": "RealFourElevationsTwoSections",
+          "status": "passed"
+        },
+        {
+          "name": "MissingInputsRemainBlocked",
+          "status": "passed"
+        },
+        {
+          "name": "UnsavedChineseRead",
+          "status": "passed"
+        },
+        {
+          "name": "All741SourceMembersMatchIndependentFixture",
+          "status": "passed"
+        },
+        {
+          "name": "WorkerAbiRejectedBeforeSdkAccess",
+          "status": "passed"
+        },
+        {
+          "name": "NullAbiRequestRejected",
+          "status": "passed"
+        },
+        {
+          "name": "WrongAbiSizeRejected",
+          "status": "passed"
+        },
+        {
+          "name": "NullBufferWithCapacityRejected",
+          "status": "passed"
+        },
+        {
+          "name": "IllegalAbiVersionRejected",
+          "status": "passed"
+        },
+        {
+          "name": "StaleAbiSequenceRejected",
+          "status": "passed"
+        },
+        {
+          "name": "ForeignAbiIdentityRejected",
+          "status": "passed"
+        },
+        {
+          "name": "SmallAbiBufferRemainsUntouched",
+          "status": "passed"
+        },
+        {
+          "name": "CommandDoesNotModifySource",
+          "status": "passed"
+        },
+        {
+          "name": "GlobalsResourcesNodAndDbmodUnchanged",
+          "status": "passed"
+        },
+        {
+          "name": "FormalUnloadRemovesOnlyOwnCommands",
+          "status": "passed"
+        },
+        {
+          "name": "ConflictLoadPreservesForeignCommand",
+          "status": "passed"
+        },
+        {
+          "name": "ReloadHasNoOldResult",
+          "status": "passed"
+        },
+        {
+          "name": "ReloadedOrdinaryCommandWorks",
+          "status": "passed"
+        },
+        {
+          "name": "FreshOwnedDocumentVerifiedBeforeAnalyze",
+          "status": "passed"
+        },
+        {
+          "name": "ActualDocumentSwitchInvalidatesOldReport",
+          "status": "passed"
+        },
+        {
+          "name": "OrdinaryAnalyzeUsesNewDocumentIdentity",
+          "status": "passed"
+        },
+        {
+          "name": "NewDocumentAnalyzeIsReadOnly",
+          "status": "passed"
+        },
+        {
+          "name": "ActualCloseAndReturnInvalidateReport",
+          "status": "passed"
+        },
+        {
+          "name": "OrdinaryAnalyzeAfterRealCloseWorks",
+          "status": "passed"
+        },
+        {
+          "name": "OriginalUnsavedMembersSurviveDocumentLifecycle",
+          "status": "passed"
+        },
+        {
+          "name": "LifecycleUnloadRemovesAllProductCommands",
+          "status": "passed"
+        }
+      ],
+      "errors": [],
+      "closure": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-203451-64dfab45\\native-result-closure.json",
+      "closureSHA256": "8C051E682E03912608D714ABBAB54FD7CFB2757CBDEF8B47814CCB383E6BBD8C",
+      "explicitStopHelperExitCode": 0,
+      "workerExitCode": 70,
+      "nativeQuitConfirmed": false,
+      "normalQuit": false,
+      "supervisorForcedTerminationField": true,
+      "stopEvidence": [
+        "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-203451-64dfab45\\isolation-stop-20261101-204924-694.json"
+      ],
+      "retirement": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-203451-64dfab45\\reader-retirement.json",
+      "removedCount": 5,
+      "sixInputHashes": [
+        {
+          "role": "scheme",
+          "kind": "source",
+          "path": "D:\\方案立面.dwg",
+          "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+        },
+        {
+          "role": "scheme",
+          "kind": "snapshot",
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\立面需求只读-fdb4cb22\\方案立面.dwg",
+          "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+        },
+        {
+          "role": "scheme",
+          "kind": "inspectionCopy",
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-203451-64dfab45\\scheme-input.dwg",
+          "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+        },
+        {
+          "role": "reference",
+          "kind": "source",
+          "path": "D:\\建筑施工图立面图.dwg",
+          "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+        },
+        {
+          "role": "reference",
+          "kind": "snapshot",
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\立面需求只读-fdb4cb22\\建筑施工图立面图.dwg",
+          "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+        },
+        {
+          "role": "reference",
+          "kind": "inspectionCopy",
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-203451-64dfab45\\reference-input.dwg",
+          "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+        }
+      ],
+      "workerUserDesktopShowEvents": 0,
+      "workerForegroundEvents": 0,
+      "inputDesktopReadErrors": 0,
+      "monitorError": null,
+      "droppedEvents": 0
+    },
+    {
+      "binding": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-607e1f3e.json",
+      "bindingSHA256": "8FC5212E31B929234211179F8EB30DC067BB8DD08CEA3B7F244275CEC3BF16EE",
+      "caseName": "InPlaceBoundary",
+      "status": "passed",
+      "nonce": "607e1f3ecede4e378d1d4f526c8d0b53",
+      "processId": 11680,
+      "initialThreadId": 41208,
+      "creationFileTime": "134380109864718552",
+      "creationUtc": "2026-11-01T12:49:46.4718552Z",
+      "candidateSHA256": "28C920FF6D58DB3C569E7BE908376424868C992120A13561E1F0802AF18F2B94",
+      "buildReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n2-20261101-202438-658-n6-shared-reader-green-84664abf\\receipt.json",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-204941-607e1f3e\\case\\native-case.json",
+      "nativeReportSHA256": "940FA28E5DFF3562AAAFA2C7EC00D2F84DDCF6B1391D5F44CCFBF3E732DC3E36",
+      "checks": [
+        {
+          "name": "UnsavedFixtureExists",
+          "status": "passed"
+        },
+        {
+          "name": "ReadSceneIncludesUnsavedEdits",
+          "status": "passed"
+        },
+        {
+          "name": "PreparedBatchOwnsIndependentDatabase",
+          "status": "passed"
+        },
+        {
+          "name": "RollbackPreservesUnsavedEdits",
+          "status": "passed"
+        },
+        {
+          "name": "CancelDuringCommit",
+          "status": "passed"
+        },
+        {
+          "name": "PreparedCustomLineweightRejected",
+          "status": "passed"
+        },
+        {
+          "name": "PreparedInvisibleLineRejected",
+          "status": "passed"
+        },
+        {
+          "name": "SdkLargeTranslationDistortionObserved",
+          "status": "passed"
+        },
+        {
+          "name": "WriterRejectsPrecisionLosingTranslation",
+          "status": "passed"
+        },
+        {
+          "name": "SharedStyleConflictKeepsOtherContent",
+          "status": "passed"
+        },
+        {
+          "name": "OuterTransactionIsNotClosed",
+          "status": "passed"
+        },
+        {
+          "name": "StaleSceneRejectsWrite",
+          "status": "passed"
+        },
+        {
+          "name": "CrossContextSceneRejectsWrite",
+          "status": "passed"
+        },
+        {
+          "name": "CommittedLayerUsesTargetDatabaseLinetype",
+          "status": "passed"
+        },
+        {
+          "name": "SuccessfulCommitHasActualMutations",
+          "status": "passed"
+        },
+        {
+          "name": "AuditRejectsWrongNewLineEndpoint",
+          "status": "passed"
+        },
+        {
+          "name": "AuditRejectsWrongNewLineLayer",
+          "status": "passed"
+        },
+        {
+          "name": "AuditRejectsPreservedLineAttributeChange",
+          "status": "passed"
+        },
+        {
+          "name": "AuditRejectsExistingStyleChange",
+          "status": "passed"
+        },
+        {
+          "name": "GlobalVariablesRemainUnchanged",
+          "status": "passed"
+        },
+        {
+          "name": "UndoRestoresSelectedAndProtectedContent",
+          "status": "passed"
+        },
+        {
+          "name": "UnnamedDocumentAndDiskInputsRemainUnchanged",
+          "status": "passed"
+        }
+      ],
+      "errors": [],
+      "closure": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-204941-607e1f3e\\native-result-closure.json",
+      "closureSHA256": "ED2B128432D586B69AAED7184D5F64DED88C8AEAA4EAA56EF4361A81EFE2E931",
+      "explicitStopHelperExitCode": 0,
+      "workerExitCode": 70,
+      "nativeQuitConfirmed": false,
+      "normalQuit": false,
+      "supervisorForcedTerminationField": false,
+      "stopEvidence": [
+        "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-204941-607e1f3e\\isolation-stop-20261101-205033-489.json"
+      ],
+      "retirement": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-204941-607e1f3e\\reader-retirement.json",
+      "removedCount": 4,
+      "sixInputHashes": [
+        {
+          "role": "scheme",
+          "kind": "source",
+          "path": "D:\\方案立面.dwg",
+          "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+        },
+        {
+          "role": "scheme",
+          "kind": "snapshot",
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\立面需求只读-fdb4cb22\\方案立面.dwg",
+          "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+        },
+        {
+          "role": "scheme",
+          "kind": "inspectionCopy",
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-204941-607e1f3e\\scheme-input.dwg",
+          "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+        },
+        {
+          "role": "reference",
+          "kind": "source",
+          "path": "D:\\建筑施工图立面图.dwg",
+          "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+        },
+        {
+          "role": "reference",
+          "kind": "snapshot",
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\立面需求只读-fdb4cb22\\建筑施工图立面图.dwg",
+          "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+        },
+        {
+          "role": "reference",
+          "kind": "inspectionCopy",
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-204941-607e1f3e\\reference-input.dwg",
+          "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+        }
+      ],
+      "workerUserDesktopShowEvents": 0,
+      "workerForegroundEvents": 0,
+      "inputDesktopReadErrors": 0,
+      "monitorError": null,
+      "droppedEvents": 0
+    }
+  ],
+  "totalRetiredFiles": 17,
+  "allSixInputHashChecksPassed": true,
+  "allOwnedWorkersExited": true,
+  "extraExperimentPerformed": false
+}

@@ -1,0 +1,2726 @@
+{
+  "contract": "stage1.coverage-evidence-index.v2",
+  "recorded": "2026-10-30T11:47:14.148537+08:00",
+  "scope": "Run-specific capability evidence; PASS counts are not requirements-completion percentages or a claim that all tests reran on the current ARX. Old failures/at-run receipts remain separate.",
+  "phase1FullAcceptance": false,
+  "phase2Started": false,
+  "businessObjectAccess": "ObjectARX native and public Tianzheng commands",
+  "externalOrchestration": "Historical evidence includes COM and TCH command bridges. Latest ordinary-AutoCAD round uses private desktop/native file queue and public ObjectARX; no external COM/CUA/TCH business commands. Vendor internal startup behavior is not claimed absent.",
+  "computerUseUsedThisRound": false,
+  "inputVersionAudit": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\全需求验证_输入与模块终核_20261029.json",
+  "inputVersionAuditSHA256": "E49975906F7000FB9E65221C7FC9FF54E1F90D2B840AD7AEFD0AEC4A820D9AA8",
+  "inputWarning": "Historical92E/7055 observations retained in older records. Latest working originals: schemeD92251DF and reference245CB01E, observed read-only; all current tests remain bound to frozen5BC/8C3 and all six snapshots unchanged. No architectural or standard-change attribution/restore.",
+  "fieldExtraction": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-list-20261029-004034-482\\business-fields-extraction.json",
+  "results": [
+    {
+      "id": "E10",
+      "kind": "Family",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-family-20261028-230732-027",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-family-20261028-230732-027\\object-family-native.json",
+      "nativeReportSHA256": "45EA660C2519451012C7E9F5D2E9E5A344594404404609B88C27CE18CB897E50",
+      "currentValidationLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-family-20261028-230732-027\\verify-strengthened.txt",
+      "currentValidationLogSHA256": "E2507445357B548CB17BC57B91A5A84BE83E43352E395399BF9A296C77CF5248",
+      "assertions": 70655,
+      "passed": 70651,
+      "failed": 4,
+      "result": "FAIL",
+      "atRunVerificationExitCode": 1,
+      "atRunError": "Native capability assertions failed; original evidence preserved.",
+      "binarySHA256": "2F21B3CCD6AE091AE6866428AD3826D602244047D7C046A138403C2A28A1B199",
+      "archivedBinaryMatches": [
+        "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\revisions\\object-family-20261028\\NativeAccessProbe.arx"
+      ],
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "9D6CDDDC9DD9D69B24A564ACEDBAE1A11218753BBAE4060166B797D1667F1E58",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5"
+      },
+      "validatorDependenciesAtRun": {
+        "verify_object_family_native.py": "0F62C3F787ADAC10B19D3932FFF3D4D6108824DA550328A7FE3899B575876167",
+        "verify_scheme_native.py": "E8006C5B7E58BA8B0C9DE7817E7E8D3620FF89C57EB4538BDE688A632AEBCE0C"
+      },
+      "controllerAtRunSHA256": "5BC57B69802AB93C438738E37D013D6941E5EEF94F604DBED91B1DA5F0D990E1",
+      "hostReceiptSHA256": "673E7A53E38BFFF6F3C40E5508BE25CAE36572B7139D6CD23EC820770C7CA0DE",
+      "unload": "returned successfully",
+      "cleanup": "exact temporary ARX and INI removed after unload",
+      "postValidation": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-family-20261028-230732-027\\post-validation.json"
+    },
+    {
+      "id": "E11",
+      "kind": "Geometry",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-geometry-20261028-232845-683",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-geometry-20261028-232845-683\\standard-geometry-native.json",
+      "nativeReportSHA256": "E5AB4381E510D2DE138558D08A26DBAD99387383E758958507D2C1D92A3096C0",
+      "currentValidationLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-geometry-20261028-232845-683\\verify-strengthened.txt",
+      "currentValidationLogSHA256": "8B32D5C208C2C55C06B95545BFC74DA7F95048439BDC634ABEA3DEEB69A1ACB7",
+      "assertions": 2175,
+      "passed": 2175,
+      "failed": 0,
+      "result": "PASS",
+      "atRunVerificationExitCode": 0,
+      "atRunError": null,
+      "binarySHA256": "6DC3631D94B5107FF131EDCD4BEAA71CA39E4F690EE0CDA636E6BAB135224EA5",
+      "archivedBinaryMatches": [
+        "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\revisions\\coverage-before-dimension-20261028\\NativeAccessProbe.arx"
+      ],
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "2A8A98F3B55F8CBB8AE27508743CA6E734BD4C7516C8280DA6DAA86358CC73A4",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativePlotProbe.inc": "A4E1DF6046C3691382E6D340097558B75FE20EDD0063EE400C6B6D8CD1BD7DB9"
+      },
+      "validatorDependenciesAtRun": {
+        "verify_standard_geometry_native.py": "2DC5AE5790665475494DD7594F1F529A32E42935AB99BA048951C891BFF8D7BC",
+        "verify_scheme_native.py": "E8006C5B7E58BA8B0C9DE7817E7E8D3620FF89C57EB4538BDE688A632AEBCE0C"
+      },
+      "controllerAtRunSHA256": "5BC57B69802AB93C438738E37D013D6941E5EEF94F604DBED91B1DA5F0D990E1",
+      "hostReceiptSHA256": "E86B87B66A2115AC9575288393B1F076D2E0D2A53349D3BE9E84457F773BE4C0",
+      "unload": "returned successfully",
+      "cleanup": "exact temporary ARX and INI removed after unload",
+      "postValidation": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-geometry-20261028-232845-683\\post-validation.json"
+    },
+    {
+      "id": "E12",
+      "kind": "Safety",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-safety-20261028-232804-377",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-safety-20261028-232804-377\\native-safety-resources.json",
+      "nativeReportSHA256": "84A2938F0860356E78A6AC756D684672ABCFD68D61C4BD0283B96591FF037263",
+      "currentValidationLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-safety-20261028-232804-377\\verify-result.txt",
+      "currentValidationLogSHA256": "900B2A81688768653856DE6D29980402D0F8E2ED88F0154440A3B8BCF3162F44",
+      "assertions": 13966,
+      "passed": 13964,
+      "failed": 2,
+      "result": "FAIL",
+      "atRunVerificationExitCode": 1,
+      "atRunError": "Native capability assertions failed; original evidence preserved.",
+      "binarySHA256": "6DC3631D94B5107FF131EDCD4BEAA71CA39E4F690EE0CDA636E6BAB135224EA5",
+      "archivedBinaryMatches": [
+        "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\revisions\\coverage-before-dimension-20261028\\NativeAccessProbe.arx"
+      ],
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "2A8A98F3B55F8CBB8AE27508743CA6E734BD4C7516C8280DA6DAA86358CC73A4",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativePlotProbe.inc": "A4E1DF6046C3691382E6D340097558B75FE20EDD0063EE400C6B6D8CD1BD7DB9"
+      },
+      "validatorDependenciesAtRun": {
+        "verify_native_safety_resources.py": "384761F2E408299750F4307BC66C837F6217CAD83EDE40415775973BECC0D2C2",
+        "verify_scheme_native.py": "E8006C5B7E58BA8B0C9DE7817E7E8D3620FF89C57EB4538BDE688A632AEBCE0C"
+      },
+      "controllerAtRunSHA256": "5BC57B69802AB93C438738E37D013D6941E5EEF94F604DBED91B1DA5F0D990E1",
+      "hostReceiptSHA256": "927C04738EFCD266D6ADAC73EEC27D2FC0452BBC0DDB7EDB1A190B491921415A",
+      "unload": "returned successfully",
+      "cleanup": "exact temporary ARX and INI removed after unload",
+      "postValidation": null
+    },
+    {
+      "id": "E13",
+      "kind": "Combine",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-combine-20261028-234100-432",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-combine-20261028-234100-432\\dimension-bridge-native.json",
+      "nativeReportSHA256": "5B3C6A50D4B39A2999F7471ECCF272B229B910FB8D425A53659FC32A342C5E1D",
+      "currentValidationLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-combine-20261028-234100-432\\verify-corrected.txt",
+      "currentValidationLogSHA256": "5E07401564D5004F294858B31DD66CF196BDCF7F6EF52D3E1460DDD6666E9392",
+      "assertions": 5209,
+      "passed": 5209,
+      "failed": 0,
+      "result": "PASS",
+      "atRunVerificationExitCode": 1,
+      "atRunError": "Native capability assertions failed; original evidence preserved.",
+      "binarySHA256": "E81FEA3D59011100A8D10AB9CBA0D9690BCE58E9538E350F6C3AC5E96949E8F7",
+      "archivedBinaryMatches": [
+        "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\revisions\\dimension-plot-before-sync-20261028\\NativeAccessProbe.arx"
+      ],
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "E5A4C6B5918BFBC377AAAC5F685B4C9CA089223AB6D26CEA86969E2E33C45DB9",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativePlotProbe.inc": "2A7008FE2BF07D13F29DD22A1F91EAE1DFF6A9F92CA4C9FFEFBF12692E81891C",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2"
+      },
+      "validatorDependenciesAtRun": {
+        "verify_dimension_bridge_native.py": "92BA88532B4BC1772249C876FCE7C52718530C751FA2E782B07163CF311CC5EB",
+        "verify_scheme_native.py": "E8006C5B7E58BA8B0C9DE7817E7E8D3620FF89C57EB4538BDE688A632AEBCE0C"
+      },
+      "controllerAtRunSHA256": "C6AEF007F825F365A23AEEBF2AABD47F0CB0BBD5CA2CD3C190764D018EBDA711",
+      "hostReceiptSHA256": "55CF388D856576893059307A9409F8A7C7558D4A0A2CAF177E0E2C7D0251DF95",
+      "unload": "returned successfully",
+      "cleanup": "exact temporary ARX and INI removed after unload",
+      "postValidation": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-combine-20261028-234100-432\\post-validation.json"
+    },
+    {
+      "id": "E14",
+      "kind": "Plot",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-plot-20261029-010413-409",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-plot-20261029-010413-409\\native-plot.json",
+      "nativeReportSHA256": "D199ED3F4229DA3826EE3998EDE83B4AF23E03148F0123F31C81844F584A64BD",
+      "currentValidationLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-plot-20261029-010413-409\\verify-result.txt",
+      "currentValidationLogSHA256": "51B11F79AFBAD0C3B7173A9341A12147F81A2A246CDB0D12F2EB6C98F17CD57B",
+      "assertions": 2140,
+      "passed": 2140,
+      "failed": 0,
+      "result": "PASS",
+      "atRunVerificationExitCode": 0,
+      "atRunError": null,
+      "binarySHA256": "1B2E668513D9C82A34D90D06AE7EA585D3B27688D317C0B4F0D248057B899447",
+      "archivedBinaryMatches": [
+        "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\revisions\\text-list-cleanplot-20261029\\NativeAccessProbe.arx"
+      ],
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "E0EAC53BFA5D1612F40B3BE6A0F1A5CA2F0D63C36F07C27BAF2109A57AA68077",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativePlotProbe.inc": "40A28BA0D949972F70F99BDF1DFD0E7974EF33BCB23FE051869240404C622AAE",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722"
+      },
+      "validatorDependenciesAtRun": {
+        "verify_native_plot.py": "AD81AB88E2652A6AE7C1C150198D7B2BD014BFEE57DEAFFC6B960EC949F91C70",
+        "verify_scheme_native.py": "E8006C5B7E58BA8B0C9DE7817E7E8D3620FF89C57EB4538BDE688A632AEBCE0C"
+      },
+      "controllerAtRunSHA256": "A7ABE6D666AE4DB63FD6E562DE3F8C214471C14DB0A40AD3F894F0943CB5A926",
+      "hostReceiptSHA256": "D31558D012B3457958EF094C9976C75FFB2B30289249FCF289CB58447360D53A",
+      "unload": "returned successfully",
+      "cleanup": "exact temporary ARX and INI removed after unload",
+      "postValidation": null
+    },
+    {
+      "id": "E15",
+      "kind": "Text",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-text-20261029-003350-351",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-text-20261029-003350-351\\text-bridge-native.json",
+      "nativeReportSHA256": "D466CF9AC44F78392D5A0D394F8B7E165E8F71733B54E887EB4F4D65BAEC7A31",
+      "currentValidationLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-text-20261029-003350-351\\verify-strengthened.txt",
+      "currentValidationLogSHA256": "03692101034CCAC3A6F7EF428003B31D73B3B20767BE491C82A8221E25C2E42F",
+      "assertions": 5599,
+      "passed": 5599,
+      "failed": 0,
+      "result": "PASS",
+      "atRunVerificationExitCode": 0,
+      "atRunError": null,
+      "binarySHA256": "1B2E668513D9C82A34D90D06AE7EA585D3B27688D317C0B4F0D248057B899447",
+      "archivedBinaryMatches": [
+        "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\revisions\\text-list-cleanplot-20261029\\NativeAccessProbe.arx"
+      ],
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "E0EAC53BFA5D1612F40B3BE6A0F1A5CA2F0D63C36F07C27BAF2109A57AA68077",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativePlotProbe.inc": "40A28BA0D949972F70F99BDF1DFD0E7974EF33BCB23FE051869240404C622AAE",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722"
+      },
+      "validatorDependenciesAtRun": {
+        "verify_text_bridge_native.py": "3CE4A854351C4EF7366CDF7A2B77BCFB7F55F4EA4A5000C63BDCD1937FBCB2CE",
+        "verify_scheme_native.py": "E8006C5B7E58BA8B0C9DE7817E7E8D3620FF89C57EB4538BDE688A632AEBCE0C"
+      },
+      "controllerAtRunSHA256": "A7ABE6D666AE4DB63FD6E562DE3F8C214471C14DB0A40AD3F894F0943CB5A926",
+      "hostReceiptSHA256": "0FD79487D6CCFCAA0B88AEC1229BAE8E53AA03AD1FC9635FBEAE098597752C1B",
+      "unload": "returned successfully",
+      "cleanup": "exact temporary ARX and INI removed after unload",
+      "postValidation": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-text-20261029-003350-351\\post-validation.json"
+    },
+    {
+      "id": "E16",
+      "kind": "List",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-list-20261029-004034-482",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-list-20261029-004034-482\\business-list-native.json",
+      "nativeReportSHA256": "15F6851C02CA7B35429DD7AEF193B5FE2286EA9A388FBD1463EA2F2E9B648776",
+      "currentValidationLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-list-20261029-004034-482\\verify-corrected.txt",
+      "currentValidationLogSHA256": "1508F00AB8BC3813D1966AEA8AF29C0BECFE54A6F9970F8C5BBFA391431E7A9D",
+      "assertions": 2355,
+      "passed": 2355,
+      "failed": 0,
+      "result": "PASS",
+      "atRunVerificationExitCode": 1,
+      "atRunError": "Native capability assertions failed; original evidence preserved.",
+      "binarySHA256": "1B2E668513D9C82A34D90D06AE7EA585D3B27688D317C0B4F0D248057B899447",
+      "archivedBinaryMatches": [
+        "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\revisions\\text-list-cleanplot-20261029\\NativeAccessProbe.arx"
+      ],
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "E0EAC53BFA5D1612F40B3BE6A0F1A5CA2F0D63C36F07C27BAF2109A57AA68077",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativePlotProbe.inc": "40A28BA0D949972F70F99BDF1DFD0E7974EF33BCB23FE051869240404C622AAE",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722"
+      },
+      "validatorDependenciesAtRun": {
+        "verify_business_list_native.py": "CFC2009F06E3C9E4E06EA7BD57DF2574CF7B86935116DF99E06215D124505FC5",
+        "verify_scheme_native.py": "E8006C5B7E58BA8B0C9DE7817E7E8D3620FF89C57EB4538BDE688A632AEBCE0C"
+      },
+      "controllerAtRunSHA256": "A7ABE6D666AE4DB63FD6E562DE3F8C214471C14DB0A40AD3F894F0943CB5A926",
+      "hostReceiptSHA256": "9C4E323ACD8996D4F2E0608FDCA463CB844BAFAC6A6BB4C0ACC812CCF9327A79",
+      "unload": "returned successfully",
+      "cleanup": "exact temporary ARX and INI removed after unload",
+      "postValidation": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-list-20261029-004034-482\\post-validation.json"
+    },
+    {
+      "id": "E17",
+      "kind": "AxisDelete",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-axisdelete-20261029-011107-664",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-axisdelete-20261029-011107-664\\axis-template-delete-native.json",
+      "nativeReportSHA256": "B672E039C2E408EF2043B1D2BACEE2715989B37032438E593BC362470E12070B",
+      "currentValidationLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-axisdelete-20261029-011107-664\\verify-result.txt",
+      "currentValidationLogSHA256": "E91985E4E10E076A2194961E6887E35E4190617A8FAFBE1DABA573A2196EFDFE",
+      "assertions": 4360,
+      "passed": 4360,
+      "failed": 0,
+      "result": "PASS",
+      "atRunVerificationExitCode": 0,
+      "atRunError": null,
+      "binarySHA256": "55FB13AAD3B12BDA88112F4094D8F82D571CC38B15B0CADFB5D8D7249BC73DE8",
+      "archivedBinaryMatches": [
+        "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\revisions\\axis-template-delete-20261029\\NativeAccessProbe.arx"
+      ],
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "B0953C644EB11C749D0EA4112B11FD56D962D5AA2EC26E80A14A590CCE25567A",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativePlotProbe.inc": "40A28BA0D949972F70F99BDF1DFD0E7974EF33BCB23FE051869240404C622AAE",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5"
+      },
+      "validatorDependenciesAtRun": {
+        "verify_axis_template_delete_native.py": "7916EF2F1C18AEF7925F716EB90284AA976FCA80455F416B477BC6EAD1F24D18",
+        "verify_scheme_native.py": "E8006C5B7E58BA8B0C9DE7817E7E8D3620FF89C57EB4538BDE688A632AEBCE0C"
+      },
+      "controllerAtRunSHA256": "65B3DBCF2EAF848FA04BEB29E0E9ACBA7BE303B0CC7FA6177B62469893C26C39",
+      "hostReceiptSHA256": "587674EBAE37AC61DF13740F06AF4232E5C63A205EEDBA767507F6B41C389258",
+      "unload": "returned successfully",
+      "cleanup": "exact temporary ARX and INI removed after unload",
+      "postValidation": null
+    },
+    {
+      "id": "E18",
+      "kind": "Merge",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-merge-20261029-013543-370",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-merge-20261029-013543-370\\dimension-merge-native.json",
+      "nativeReportSHA256": "741A134382B97E0E14D0C762960490114462856BAA45F185AFEA5C043B31041E",
+      "currentValidationLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-merge-20261029-013543-370\\verify-result.txt",
+      "currentValidationLogSHA256": "0CBF762798692232B6EFC3E4C3ABEC916F4A0FF188DF4160D78B8DBAEC073CF2",
+      "assertions": 46,
+      "passed": 46,
+      "failed": 0,
+      "result": "PASS",
+      "atRunVerificationExitCode": 0,
+      "atRunError": null,
+      "binarySHA256": "2A8F2CD31656CF35C470F0FB4492BB14D0F4A21CBC82F4D8B3924264512F491E",
+      "archivedBinaryMatches": [
+        "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\revisions\\all-capability-first-20261029\\NativeAccessProbe.arx"
+      ],
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "8AD8A50E78FFA9D2E1E2E01B4022A1CD159387542C67BBEE80352ACEFF5AD999",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849",
+        "NativeSymbolTextBridgeProbe.inc": "979E71FF58FA5D165EA4F812D7F135D5C3577D6E90A022AE2297F4C9DDA2C56F",
+        "NativeDimensionMergeProbe.inc": "3A6DBB774AE866BA3C75513B4B43EB43378AF85D3E97F14A5984F038F2CB53E3",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5",
+        "NativeAxisTemplatePruneProbe.inc": "C99545FBB810440AE757EDD1C8BB53A8934856AA452D91FEE4481DB8601E6FC7"
+      },
+      "validatorDependenciesAtRun": {
+        "verify_dimension_merge_native.py": "0F4DCA8DE4174DB7F74E9BC2D4FDA5C1F24FEF364EB65A617F31469B310B759B",
+        "verify_scheme_native.py": "E8006C5B7E58BA8B0C9DE7817E7E8D3620FF89C57EB4538BDE688A632AEBCE0C"
+      },
+      "controllerAtRunSHA256": "639B348C3B7985D730DAE0549E07631D64A2BB3B3AB768989E544B172F04A6B1",
+      "hostReceiptSHA256": "7E8DC8149A927ABB0CAABB04A903E9BD622ECBBA105F116C5277F586B022756B",
+      "unload": "returned successfully",
+      "cleanup": "exact temporary ARX and INI removed after unload",
+      "postValidation": null
+    },
+    {
+      "id": "E19",
+      "kind": "SymbolText",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-symboltext-20261029-013538-618",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-symboltext-20261029-013538-618\\symbol-text-bridge-native.json",
+      "nativeReportSHA256": "50FB9512AD5412664F170EB257D3227D5C2D3AF1E7495EE2695016C6DF95A2C4",
+      "currentValidationLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-symboltext-20261029-013538-618\\verify-strengthened.txt",
+      "currentValidationLogSHA256": "359362C432032E091F3719C2394D1EF1A1393144BE1FA7EA7B05E099F1C8FDE0",
+      "assertions": 1922,
+      "passed": 1916,
+      "failed": 6,
+      "result": "FAIL",
+      "atRunVerificationExitCode": 1,
+      "atRunError": "Native capability assertions failed; original evidence preserved.",
+      "binarySHA256": "2A8F2CD31656CF35C470F0FB4492BB14D0F4A21CBC82F4D8B3924264512F491E",
+      "archivedBinaryMatches": [
+        "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\revisions\\all-capability-first-20261029\\NativeAccessProbe.arx"
+      ],
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "8AD8A50E78FFA9D2E1E2E01B4022A1CD159387542C67BBEE80352ACEFF5AD999",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849",
+        "NativeSymbolTextBridgeProbe.inc": "979E71FF58FA5D165EA4F812D7F135D5C3577D6E90A022AE2297F4C9DDA2C56F",
+        "NativeDimensionMergeProbe.inc": "3A6DBB774AE866BA3C75513B4B43EB43378AF85D3E97F14A5984F038F2CB53E3",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5",
+        "NativeAxisTemplatePruneProbe.inc": "C99545FBB810440AE757EDD1C8BB53A8934856AA452D91FEE4481DB8601E6FC7"
+      },
+      "validatorDependenciesAtRun": {
+        "verify_symbol_text_bridge_native.py": "F22F9F051A3F3AD0EC6B5867F5C6F747ABC149358DC9FBA410BB2DB7CE474C4E",
+        "verify_scheme_native.py": "E8006C5B7E58BA8B0C9DE7817E7E8D3620FF89C57EB4538BDE688A632AEBCE0C"
+      },
+      "controllerAtRunSHA256": "639B348C3B7985D730DAE0549E07631D64A2BB3B3AB768989E544B172F04A6B1",
+      "hostReceiptSHA256": "5E8CE963B325C203C1C1974C2BF3E8CD483F1C4F34888C1D30D845F1C85880C7",
+      "unload": "returned successfully",
+      "cleanup": "exact temporary ARX and INI removed after unload",
+      "postValidation": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-symboltext-20261029-013538-618\\post-validation.json"
+    },
+    {
+      "id": "E20a",
+      "kind": "AxisTwo",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-axistwo-20261029-015001-923",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-axistwo-20261029-015001-923\\axis-template-prune-native.json",
+      "nativeReportSHA256": "139A3C0AF7CC360C83C3EE2C0B5EFEA5800CAA2D574F660C8413BF57A966A311",
+      "currentValidationLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-axistwo-20261029-015001-923\\verify-result.txt",
+      "currentValidationLogSHA256": "A2F0D2027BC2C507115D23CA2F4B44BBAE52DA2269399317745169AE469A2C04",
+      "assertions": 5627,
+      "passed": 5627,
+      "failed": 0,
+      "result": "PASS",
+      "atRunVerificationExitCode": 0,
+      "atRunError": null,
+      "binarySHA256": "A499D3D95A17676DE3719B7812788B85BF27279784A284F4AB78F01B63CD3EAB",
+      "archivedBinaryMatches": [
+        "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\revisions\\templates-v2-horizontal-20261029\\NativeAccessProbe.arx"
+      ],
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "E916B118FC5190D6B8E9144C52E847691BA3B0F13F1671D88F66F7BFCEA7357E",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativeHorizontalAxisProbe.inc": "7B73E50E4B01707DEB9424A206134D4A1413E1376434F6CD58C8C7A68C0B915E",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849",
+        "NativeSymbolTextBridgeProbe.inc": "979E71FF58FA5D165EA4F812D7F135D5C3577D6E90A022AE2297F4C9DDA2C56F",
+        "NativeDimensionMergeProbe.inc": "3A6DBB774AE866BA3C75513B4B43EB43378AF85D3E97F14A5984F038F2CB53E3",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5",
+        "NativeAxisTemplatePruneProbe.inc": "09F0936466364D560807EDEED6DFB525FB905D8F12D33BA5FAD21E6D593A2147"
+      },
+      "validatorDependenciesAtRun": {
+        "verify_axis_template_prune_native.py": "B55DDD6CCA5DDF41E59A4CEC5B1B04CDD1118D10500C4B498B773554BC3BE46A",
+        "verify_scheme_native.py": "E8006C5B7E58BA8B0C9DE7817E7E8D3620FF89C57EB4538BDE688A632AEBCE0C"
+      },
+      "controllerAtRunSHA256": "916C3FB12CF1BEBCFA4A33D593F637028758BD3BA8F1F3BC78A6312DCB6866E8",
+      "hostReceiptSHA256": "6B891BBAB72E584DE3CE7895C924C773D43ADF2321AFD66248E828AC03A233B1",
+      "unload": "returned successfully",
+      "cleanup": "exact temporary ARX and INI removed after unload",
+      "postValidation": null
+    },
+    {
+      "id": "E20b",
+      "kind": "AxisThree",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-axisthree-20261029-015007-563",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-axisthree-20261029-015007-563\\axis-template-prune-native.json",
+      "nativeReportSHA256": "8DC56433A68736408860B40E5F806A06A9667AF2D60916F206549BE87FF3BA30",
+      "currentValidationLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-axisthree-20261029-015007-563\\verify-result.txt",
+      "currentValidationLogSHA256": "6511F321A162E17C98DE9F57EE0E54D3C68C881A374C185C312E857B38319134",
+      "assertions": 5589,
+      "passed": 5589,
+      "failed": 0,
+      "result": "PASS",
+      "atRunVerificationExitCode": 0,
+      "atRunError": null,
+      "binarySHA256": "A499D3D95A17676DE3719B7812788B85BF27279784A284F4AB78F01B63CD3EAB",
+      "archivedBinaryMatches": [
+        "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\revisions\\templates-v2-horizontal-20261029\\NativeAccessProbe.arx"
+      ],
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "E916B118FC5190D6B8E9144C52E847691BA3B0F13F1671D88F66F7BFCEA7357E",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativeHorizontalAxisProbe.inc": "7B73E50E4B01707DEB9424A206134D4A1413E1376434F6CD58C8C7A68C0B915E",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849",
+        "NativeSymbolTextBridgeProbe.inc": "979E71FF58FA5D165EA4F812D7F135D5C3577D6E90A022AE2297F4C9DDA2C56F",
+        "NativeDimensionMergeProbe.inc": "3A6DBB774AE866BA3C75513B4B43EB43378AF85D3E97F14A5984F038F2CB53E3",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5",
+        "NativeAxisTemplatePruneProbe.inc": "09F0936466364D560807EDEED6DFB525FB905D8F12D33BA5FAD21E6D593A2147"
+      },
+      "validatorDependenciesAtRun": {
+        "verify_axis_template_prune_native.py": "B55DDD6CCA5DDF41E59A4CEC5B1B04CDD1118D10500C4B498B773554BC3BE46A",
+        "verify_scheme_native.py": "E8006C5B7E58BA8B0C9DE7817E7E8D3620FF89C57EB4538BDE688A632AEBCE0C"
+      },
+      "controllerAtRunSHA256": "916C3FB12CF1BEBCFA4A33D593F637028758BD3BA8F1F3BC78A6312DCB6866E8",
+      "hostReceiptSHA256": "98C4FAB7E875BF64F182CE82CDCCE5235246BDD0939289370335EB5603632F3A",
+      "unload": "returned successfully",
+      "cleanup": "exact temporary ARX and INI removed after unload",
+      "postValidation": null
+    },
+    {
+      "id": "E21a",
+      "kind": "PreviewText",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-previewtext-20261029-012209-901",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-previewtext-20261029-012209-901\\nativeTextPreview.json",
+      "nativeReportSHA256": "F9251A99086B1DEB1AE658A2D7B41CFB9585D06A739E2879EE9F8D23321566BD",
+      "currentValidationLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-previewtext-20261029-012209-901\\verify-corrected.txt",
+      "currentValidationLogSHA256": "F4D1B7C74D0F0A06AF2FAE969A7315237D8C390914A792416BDDD27B390E9B28",
+      "assertions": 4634,
+      "passed": 4634,
+      "failed": 0,
+      "result": "PASS",
+      "atRunVerificationExitCode": null,
+      "atRunError": "Multiple definitions in dictionary at byte 0xb4d6 for key /PageMode",
+      "binarySHA256": "9C67589AE11EE2A601B49C65505CB0BD362C4D1276992B06DA09B8CCBB88500D",
+      "archivedBinaryMatches": [
+        "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\revisions\\saved-fixture-previews-initial-20261029\\NativeAccessProbe.arx"
+      ],
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "2F5BF05624701661B88477CCE46B625F83FF9151AFA6E61FE4F01961C5D6F52B",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativePlotPreview.inc": "A03B8C9755A0F486EACF3029232234C48DA67A05963925074236776991D8CC49",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5"
+      },
+      "validatorDependenciesAtRun": {
+        "verify_native_preview.py": "510E6C418F4EF70B0C502ADC838DFA982BD9CCE6F9C7E85846994A3035F1D38D",
+        "verify_scheme_native.py": "E8006C5B7E58BA8B0C9DE7817E7E8D3620FF89C57EB4538BDE688A632AEBCE0C",
+        "verify_native_plot.py": "AD81AB88E2652A6AE7C1C150198D7B2BD014BFEE57DEAFFC6B960EC949F91C70"
+      },
+      "controllerAtRunSHA256": "D2BB9BE19C64205A6BE5DDD61D45DA0C25D16EF1C9CB50C085A1A2E2045CA9DC",
+      "hostReceiptSHA256": "88AD3EC059979A8CE1A1AA045E026ECA1DD0B716A341624906E3F7CA8412905E",
+      "unload": "returned successfully",
+      "cleanup": "exact temporary ARX and INI removed after unload",
+      "postValidation": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-previewtext-20261029-012209-901\\post-validation.json"
+    },
+    {
+      "id": "E21b",
+      "kind": "PreviewCombine",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-previewcombine-20261029-012310-819",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-previewcombine-20261029-012310-819\\nativeCombinePreview.json",
+      "nativeReportSHA256": "371E216677A4DD22C417C1BFF8F45F355BE9318775B24DDA5EAA108745B16AED",
+      "currentValidationLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-previewcombine-20261029-012310-819\\verify-corrected.txt",
+      "currentValidationLogSHA256": "32CD6322009A3CA4DD9076D98E3D9C38DE0DDD4D6FF1D1DB98F868F5B303F660",
+      "assertions": 4565,
+      "passed": 4565,
+      "failed": 0,
+      "result": "PASS",
+      "atRunVerificationExitCode": 1,
+      "atRunError": "Native capability assertions failed; original evidence preserved.",
+      "binarySHA256": "9C67589AE11EE2A601B49C65505CB0BD362C4D1276992B06DA09B8CCBB88500D",
+      "archivedBinaryMatches": [
+        "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\revisions\\saved-fixture-previews-initial-20261029\\NativeAccessProbe.arx"
+      ],
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "2F5BF05624701661B88477CCE46B625F83FF9151AFA6E61FE4F01961C5D6F52B",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativePlotPreview.inc": "A03B8C9755A0F486EACF3029232234C48DA67A05963925074236776991D8CC49",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5"
+      },
+      "validatorDependenciesAtRun": {
+        "verify_native_preview.py": "65FE4E9F2C9A5CAFCDAF0D5086DAB48325F848E1243D361645D4138DEAA4886A",
+        "verify_scheme_native.py": "E8006C5B7E58BA8B0C9DE7817E7E8D3620FF89C57EB4538BDE688A632AEBCE0C",
+        "verify_native_plot.py": "AD81AB88E2652A6AE7C1C150198D7B2BD014BFEE57DEAFFC6B960EC949F91C70"
+      },
+      "controllerAtRunSHA256": "89043CD3A8B4EE97D124AFC04FFAC6F2EF186582A4DBD86E790B8AEC855DED61",
+      "hostReceiptSHA256": "48AE6FB3504C7360AE00A7A99DBBBF3484F4FCE44EA1179423E6C686038CC49D",
+      "unload": "returned successfully",
+      "cleanup": "exact temporary ARX and INI removed after unload",
+      "postValidation": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-previewcombine-20261029-012310-819\\post-validation.json"
+    },
+    {
+      "id": "E21c",
+      "kind": "PreviewGeometry",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-previewgeometry-20261029-012502-574",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-previewgeometry-20261029-012502-574\\nativeGeometryPreview.json",
+      "nativeReportSHA256": "0B75021333DE4525636FECB0F9E8F4CAFDA83FDA60B575D201D971D4248133FE",
+      "currentValidationLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-previewgeometry-20261029-012502-574\\verify-result.txt",
+      "currentValidationLogSHA256": "5530BAB6D7B3B483816F73E482A2784244627F11EB06C410F2909FAC72A82687",
+      "assertions": 4626,
+      "passed": 4626,
+      "failed": 0,
+      "result": "PASS",
+      "atRunVerificationExitCode": 0,
+      "atRunError": null,
+      "binarySHA256": "058F107666A97080F7368E97DEE6AB2DAC3E2B466D34EA20C3A859B268603729",
+      "archivedBinaryMatches": [
+        "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\revisions\\saved-fixture-previews-clean-20261029\\NativeAccessProbe.arx"
+      ],
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "2F5BF05624701661B88477CCE46B625F83FF9151AFA6E61FE4F01961C5D6F52B",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5"
+      },
+      "validatorDependenciesAtRun": {
+        "verify_native_preview.py": "C10D871726CA7516287F421B744AF690DC12D8310037DEB54707FC2BC935418D",
+        "verify_scheme_native.py": "E8006C5B7E58BA8B0C9DE7817E7E8D3620FF89C57EB4538BDE688A632AEBCE0C",
+        "verify_native_plot.py": "AD81AB88E2652A6AE7C1C150198D7B2BD014BFEE57DEAFFC6B960EC949F91C70"
+      },
+      "controllerAtRunSHA256": "89043CD3A8B4EE97D124AFC04FFAC6F2EF186582A4DBD86E790B8AEC855DED61",
+      "hostReceiptSHA256": "5939EBB2283FB44B02850C932AFDF6C86B86DA08785BCB7FFB5D72054231650E",
+      "unload": "returned successfully",
+      "cleanup": "exact temporary ARX and INI removed after unload",
+      "postValidation": null
+    },
+    {
+      "id": "E22",
+      "kind": "HorizontalAxis",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-horizontalaxis-20261029-015012-533",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-horizontalaxis-20261029-015012-533\\horizontal-axis-native.json",
+      "nativeReportSHA256": "53F3AB6F371C83214F3483FEDE58314A50F69C305F9E168DCA8E4276FDEE5DC2",
+      "currentValidationLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-horizontalaxis-20261029-015012-533\\verify-result.txt",
+      "currentValidationLogSHA256": "798221FDC5C771FCC8C2FF091E398BD87FAD22E53C50C5F67FA067832EDF5F36",
+      "assertions": 3926,
+      "passed": 3926,
+      "failed": 0,
+      "result": "PASS",
+      "atRunVerificationExitCode": 0,
+      "atRunError": null,
+      "binarySHA256": "A499D3D95A17676DE3719B7812788B85BF27279784A284F4AB78F01B63CD3EAB",
+      "archivedBinaryMatches": [
+        "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\revisions\\templates-v2-horizontal-20261029\\NativeAccessProbe.arx"
+      ],
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "E916B118FC5190D6B8E9144C52E847691BA3B0F13F1671D88F66F7BFCEA7357E",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativeHorizontalAxisProbe.inc": "7B73E50E4B01707DEB9424A206134D4A1413E1376434F6CD58C8C7A68C0B915E",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849",
+        "NativeSymbolTextBridgeProbe.inc": "979E71FF58FA5D165EA4F812D7F135D5C3577D6E90A022AE2297F4C9DDA2C56F",
+        "NativeDimensionMergeProbe.inc": "3A6DBB774AE866BA3C75513B4B43EB43378AF85D3E97F14A5984F038F2CB53E3",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5",
+        "NativeAxisTemplatePruneProbe.inc": "09F0936466364D560807EDEED6DFB525FB905D8F12D33BA5FAD21E6D593A2147"
+      },
+      "validatorDependenciesAtRun": {
+        "verify_horizontal_axis_native.py": "A729F74659DEB1A76BB9301B4F4D57116502A0DA16ACF3632972E32391334D21",
+        "verify_scheme_native.py": "E8006C5B7E58BA8B0C9DE7817E7E8D3620FF89C57EB4538BDE688A632AEBCE0C",
+        "verify_object_family_native.py": "26AF8D4325DB0EC8C5EA40745E3F36DEEB55143642307D523ACE6DEE537AECD5"
+      },
+      "controllerAtRunSHA256": "916C3FB12CF1BEBCFA4A33D593F637028758BD3BA8F1F3BC78A6312DCB6866E8",
+      "hostReceiptSHA256": "8A2B74997EDEFEC72D6878CFB6FB9A6858D18DE06882B2928BBBA7839C213C5F",
+      "unload": "returned successfully",
+      "cleanup": "exact temporary ARX and INI removed after unload",
+      "postValidation": null
+    },
+    {
+      "id": "E24",
+      "kind": "VersionAudit",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-versionaudit-20261029-020622-986",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-versionaudit-20261029-020622-986\\input-version-audit.json",
+      "nativeReportSHA256": "6EC1A3F2A6A9686F3D300460F3C0CA503114CB619E733C3FEA0AFFCC9FFB736B",
+      "currentValidationLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-versionaudit-20261029-020622-986\\verify-result.txt",
+      "currentValidationLogSHA256": "52F7993D85A862C4F5CDB6C996A7681A62A6E1EFD832050960ADC1833E7413B2",
+      "assertions": 1325,
+      "passed": 1325,
+      "failed": 0,
+      "result": "PASS",
+      "atRunVerificationExitCode": 0,
+      "atRunError": null,
+      "binarySHA256": "61D8A0F288FF778376DB1520DFAE78FD6EE41624D1D6E3FDFABF655B427E623B",
+      "archivedBinaryMatches": [
+        "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\revisions\\input-version-audit-readonly-20261029\\NativeAccessProbe.arx"
+      ],
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "BDBED75781AAE7E9FD84A0349EBE7586C01D68EC263BEC1711DFAF28C4CF2D1A",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativeHorizontalAxisProbe.inc": "7B73E50E4B01707DEB9424A206134D4A1413E1376434F6CD58C8C7A68C0B915E",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849",
+        "NativeInputVersionAudit.inc": "C086B23B959889AE1ED149230FCCA0D6D866E8E1E1DD427B35B0CE398448B351",
+        "NativeSymbolTextBridgeProbe.inc": "979E71FF58FA5D165EA4F812D7F135D5C3577D6E90A022AE2297F4C9DDA2C56F",
+        "NativeDimensionMergeProbe.inc": "3A6DBB774AE866BA3C75513B4B43EB43378AF85D3E97F14A5984F038F2CB53E3",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5",
+        "NativeAxisTemplatePruneProbe.inc": "09F0936466364D560807EDEED6DFB525FB905D8F12D33BA5FAD21E6D593A2147"
+      },
+      "validatorDependenciesAtRun": {
+        "verify_input_version_audit.py": "5C4381A100F497288EB470B8F7FC8F9DB8E5BF3FFBFF6EEA4EBE13EBE3C67FE9",
+        "verify_scheme_native.py": "E8006C5B7E58BA8B0C9DE7817E7E8D3620FF89C57EB4538BDE688A632AEBCE0C"
+      },
+      "controllerAtRunSHA256": "9A76F6302B6DDA184BA5D4573E4264A30730CEA5123C29616FBDB6922B6C0DAD",
+      "hostReceiptSHA256": "1C876B3C92B8A349C58DFA4B8BE521914F945FBE1BF21318ECBA4A0F3D9CADD6",
+      "unload": "returned successfully",
+      "cleanup": "exact temporary ARX and INI removed after unload",
+      "postValidation": null
+    },
+    {
+      "id": "E30",
+      "kind": "NativeNormalQuit",
+      "result": "PASS_ACTUAL_PROCESS_EXIT",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-154336\\normal-quit-verification.json",
+      "nativeReportSHA256": "EE92DD7B0F223B02A69F741774DE0C84F90FD2EECF0ABC14DFB6F69163FD9075",
+      "binarySHA256": "987D633C3CBE660E3AEDF7B2D8DD2B11083F55D409BED182CC67BBD4E2384C1E",
+      "COMUsed": false,
+      "ComputerUseUsed": false,
+      "scope": "Actual native notifications, normal exit0, no force, closed handles; no bounded fast-exit guarantee"
+    },
+    {
+      "id": "E31",
+      "kind": "slope",
+      "result": "PASS_BOUNDED_NATIVE_SYMBOL",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-slope-20261029-154346-195615\\symbol-business-native.json",
+      "nativeReportSHA256": "033E1FA6E9AA065A613605BEA36E0508C299348C81EFA8FF0BE92480A1881556",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-slope-20261029-154346-195615",
+      "binarySHA256": "987D633C3CBE660E3AEDF7B2D8DD2B11083F55D409BED182CC67BBD4E2384C1E",
+      "business": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-slope-20261029-154346-195615\\verify_symbol_business_native-closure-20261029-155349-934871.txt",
+        "SHA256": "2B51A9986FEC0CD8128432008A8322A783ACBBE7A322CFFE69BB154554034644",
+        "assertions": 73,
+        "passed": 73,
+        "failed": 0,
+        "result": "PASS_NATIVE_SYMBOL_TEXT_AND_PERSISTENCE"
+      },
+      "geometry": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-slope-20261029-154346-195615\\verify_symbol_geometry_native-closure-20261029-155349-934871.txt",
+        "SHA256": "C18CB47C557E031A6D6F431AAD0D3BDDC24F1351DF5B095C270BF848A22D8424",
+        "assertions": 15,
+        "passed": 15,
+        "failed": 0,
+        "result": "PASS_ACTUAL_PUBLIC_GEOMETRY_AND_WCS_INPUTS"
+      },
+      "preview": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-symbolpreview-20261029-154454-860589\\verify_symbol_preview_native-closure-20261029-155349-934871.txt",
+        "SHA256": "FAB0953B09C8C823140F22C78F875F19B3C45482CFED10BAB2872432B11033BE",
+        "assertions": 23,
+        "passed": 23,
+        "failed": 0,
+        "result": "PASS_NATIVE_SYMBOL_PREVIEW"
+      },
+      "COMUsed": false,
+      "ComputerUseUsed": false,
+      "phase2Started": false,
+      "scope": "Two explicit stage1 fixtures on frozen scheme, actual native types/text/geometry and saved fresh-reader/PDF; not project rules or final standards"
+    },
+    {
+      "id": "E32",
+      "kind": "section",
+      "result": "PASS_BOUNDED_NATIVE_SYMBOL",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-section-20261029-154435-453099\\symbol-business-native.json",
+      "nativeReportSHA256": "3924C7875E221D3CB4AD6FA60C91D90D8D319AB390A6426AE2ECC46D35C9354F",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-section-20261029-154435-453099",
+      "binarySHA256": "987D633C3CBE660E3AEDF7B2D8DD2B11083F55D409BED182CC67BBD4E2384C1E",
+      "business": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-section-20261029-154435-453099\\verify_symbol_business_native-closure-20261029-155349-934871.txt",
+        "SHA256": "6ABCD18ACDC981543AEDB21270652F769034DFDF71EE48E497614D614DBCEA0D",
+        "assertions": 75,
+        "passed": 75,
+        "failed": 0,
+        "result": "PASS_NATIVE_SYMBOL_TEXT_AND_PERSISTENCE"
+      },
+      "geometry": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-section-20261029-154435-453099\\verify_symbol_geometry_native-closure-20261029-155349-934871.txt",
+        "SHA256": "C18CB47C557E031A6D6F431AAD0D3BDDC24F1351DF5B095C270BF848A22D8424",
+        "assertions": 15,
+        "passed": 15,
+        "failed": 0,
+        "result": "PASS_ACTUAL_PUBLIC_GEOMETRY_AND_WCS_INPUTS"
+      },
+      "preview": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-symbolpreview-20261029-154500-028151\\verify_symbol_preview_native-closure-20261029-155349-934871.txt",
+        "SHA256": "6C550A6264984165584649D281A5AD69E5B7BFE52F0BAA7561FE596C357D0F86",
+        "assertions": 23,
+        "passed": 23,
+        "failed": 0,
+        "result": "PASS_NATIVE_SYMBOL_PREVIEW"
+      },
+      "COMUsed": false,
+      "ComputerUseUsed": false,
+      "phase2Started": false,
+      "scope": "Two explicit stage1 fixtures on frozen scheme, actual native types/text/geometry and saved fresh-reader/PDF; not project rules or final standards"
+    },
+    {
+      "id": "E33",
+      "kind": "pointer-index",
+      "result": "PASS_BOUNDED_NATIVE_SYMBOL",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-pointerindex-20261029-154402-285592\\symbol-business-native.json",
+      "nativeReportSHA256": "CE67105A78279DD5F75EA12ACD5F510B6D29FE3FEFF87D74075981E9C3C31F14",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-pointerindex-20261029-154402-285592",
+      "binarySHA256": "987D633C3CBE660E3AEDF7B2D8DD2B11083F55D409BED182CC67BBD4E2384C1E",
+      "business": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-pointerindex-20261029-154402-285592\\verify_symbol_business_native-closure-20261029-155349-934871.txt",
+        "SHA256": "332D47144994990E584819FF0C4AFD20A4BEBEB40019B9F4065761C0BE68BCFE",
+        "assertions": 77,
+        "passed": 77,
+        "failed": 0,
+        "result": "PASS_NATIVE_SYMBOL_TEXT_AND_PERSISTENCE"
+      },
+      "geometry": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-pointerindex-20261029-154402-285592\\verify_symbol_geometry_native-closure-20261029-155349-934871.txt",
+        "SHA256": "E890A2105BA48909803F7556ED9DF547A9765B9256143BF26BBCECBB4D601F3F",
+        "assertions": 23,
+        "passed": 23,
+        "failed": 0,
+        "result": "PASS_ACTUAL_PUBLIC_GEOMETRY_AND_WCS_INPUTS"
+      },
+      "preview": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-symbolpreview-20261029-154456-582067\\verify_symbol_preview_native-closure-20261029-155349-934871.txt",
+        "SHA256": "C340D998F39D04F2A33F65A7ED08D0902CFFC2410A338472B1FA0FB382512700",
+        "assertions": 23,
+        "passed": 23,
+        "failed": 0,
+        "result": "PASS_NATIVE_SYMBOL_PREVIEW"
+      },
+      "COMUsed": false,
+      "ComputerUseUsed": false,
+      "phase2Started": false,
+      "scope": "Two explicit stage1 fixtures on frozen scheme, actual native types/text/geometry and saved fresh-reader/PDF; not project rules or final standards"
+    },
+    {
+      "id": "E34",
+      "kind": "section-index",
+      "result": "PASS_BOUNDED_NATIVE_SYMBOL",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-sectionindex-20261029-154431-408405\\symbol-business-native.json",
+      "nativeReportSHA256": "16A708BBFFF91BE05C949D8435D52F15A615C4F4AB8F834C1A8DBEF632DA3D0B",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-sectionindex-20261029-154431-408405",
+      "binarySHA256": "987D633C3CBE660E3AEDF7B2D8DD2B11083F55D409BED182CC67BBD4E2384C1E",
+      "business": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-sectionindex-20261029-154431-408405\\verify_symbol_business_native-closure-20261029-155349-934871.txt",
+        "SHA256": "332D47144994990E584819FF0C4AFD20A4BEBEB40019B9F4065761C0BE68BCFE",
+        "assertions": 77,
+        "passed": 77,
+        "failed": 0,
+        "result": "PASS_NATIVE_SYMBOL_TEXT_AND_PERSISTENCE"
+      },
+      "geometry": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-sectionindex-20261029-154431-408405\\verify_symbol_geometry_native-closure-20261029-155349-934871.txt",
+        "SHA256": "A2ABA5C1BEE991B660F8AD894B818D90DCC34641AB22E0027C86B09BF34DCB3F",
+        "assertions": 27,
+        "passed": 27,
+        "failed": 0,
+        "result": "PASS_ACTUAL_PUBLIC_GEOMETRY_AND_WCS_INPUTS"
+      },
+      "preview": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-symbolpreview-20261029-154458-319779\\verify_symbol_preview_native-closure-20261029-155349-934871.txt",
+        "SHA256": "8D5CE60B12D3586DACF3036EC2E8A095E2AB1D3AA02F64C1F0ACE3C383E84531",
+        "assertions": 23,
+        "passed": 23,
+        "failed": 0,
+        "result": "PASS_NATIVE_SYMBOL_PREVIEW"
+      },
+      "COMUsed": false,
+      "ComputerUseUsed": false,
+      "phase2Started": false,
+      "scope": "Two explicit stage1 fixtures on frozen scheme, actual native types/text/geometry and saved fresh-reader/PDF; not project rules or final standards"
+    },
+    {
+      "id": "E35",
+      "kind": "AutoCadHost",
+      "label": "普通 AutoCAD，无天正组件",
+      "route": "ordinary AutoCAD + installed TCH support + public ObjectARX, no TCH business commands",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-autocadhost-20261029-185205-511627",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-autocadhost-20261029-185205-511627\\autocad-host-native.json",
+      "nativeReportSHA256": "B5B2BFB444A2256367B4CBF00FF90EE4E44895CF90366693B0D38FFE283D9EB0",
+      "assertions": 51,
+      "passed": 51,
+      "failed": 0,
+      "result": "PASS_NATIVE_HOST_FACTS_ONLY",
+      "binarySHA256": "8C2942AE75D0E7222066318F0B4FF71C76D17AD9D86B47E54C8A43F888721CA3",
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "7A06F26CBF6463E8CAB15643DBC19C5CE284BE8F129EFF68AAC9C7FE4D3AC9B0",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeAutoCadHostProbe.inc": "D7EA2D0E2E21843395A44A66446AF5D6C8A5BB8771D788843F9A6CF8FCEAC6D9",
+        "NativeAxisContinuousNumberProbe.inc": "DD4FE3742543DBB956E69535D1319508C3074299740C3BD6B9362638B8C58DF5",
+        "NativeAxisExplodeReadback.inc": "E3CC2B10C1BFC8B072B1665B3558A53BD5EF2AF27EAABED865D4F98DE82FEA1D",
+        "NativeAxisMergeTwoProbe.inc": "D8BC749161698670B11D5F1DEBCA2765CC3F6A7DF1842B40B6AE8B4E23067962",
+        "NativeAxisOverlapPreview.inc": "FA6F8430BF4B094E60251C78123E7C8DD725055E17EA018104E01F5FB293BB0C",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5",
+        "NativeAxisTemplatePruneProbe.inc": "09F0936466364D560807EDEED6DFB525FB905D8F12D33BA5FAD21E6D593A2147",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeDimensionMergeProbe.inc": "3A6DBB774AE866BA3C75513B4B43EB43378AF85D3E97F14A5984F038F2CB53E3",
+        "NativeElevationDialogProbe.inc": "01DF79966CA1F65F37EB4B083C2C7C1E5CE8F69271EBB2A1B4B6DE3EDF6462DB",
+        "NativeElevationInkPick.inc": "761FC0D00A4FF58E0C1663768F1B620B7227A5623853A6E556BAB1BCCB6C8043",
+        "NativeElevationRoundTripProbe.inc": "55592CC17935321B25A7BCB82C07E238AABB9D3B92AE2D2E974338157DD2D460",
+        "NativeElevationRoundTripUiProbe.inc": "29EB7CA88D0ACA62E1F74057591041EA8BE9D88CC4AE629C2417925C39088F3E",
+        "NativeElevationUiBridge.inc": "57A65CF5B9D134428688DFCA23AE1FC5D2AD9B71D2A0A3E720F3E295D741D2E1",
+        "NativeFourAxisPreview.inc": "281F02628E7D4CA72AD581CDC2114BC264D2AE73BC657DE9EB1DC3412F927F96",
+        "NativeFourSideAxisProbe.inc": "1D07D4E5C5887A4E0350A750B2A4E013DF7B3F7C647E8D7F0D88F744C52930E8",
+        "NativeFourSideAxisSeedProbe.inc": "AD7F473A8974B0AA896376D5054FBE94F9D13FED86B6B244589997F01161287F",
+        "NativeFourSideAxisSingletonProbe.inc": "C18D76E641E008F917CE702633BA069134FBB7265E5CA0DB90AB5833ECBF267A",
+        "NativeHorizontalAxisProbe.inc": "7B73E50E4B01707DEB9424A206134D4A1413E1376434F6CD58C8C7A68C0B915E",
+        "NativeInputVersionAudit.inc": "C086B23B959889AE1ED149230FCCA0D6D866E8E1E1DD427B35B0CE398448B351",
+        "NativeModernAxisGripProbe.inc": "BB12BBCBD74BD1EB01BDC443B9019D093D11F032442801829C12589F48D96C64",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativeQuietWorker.inc": "F78DB1CB30BF2DB8F2FC466B64E73BBF583800B6D5165E6A93D5CCD9D6714537",
+        "NativeQuitLifecycle.inc": "CFF4B36B93160CDF4505005BAA6FBD70BB946A64068BA9602EAD17B76AD21858",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeSymbolBusinessProbe.inc": "8DD6C1BA69A755BDACB516BF3BC80ADC7E5C1638D4187336571733090A5B0261",
+        "NativeSymbolDiscoveryProbe.inc": "5A3EEE23C1BAA871892D88B474C47FFAED50986C6B6453B6EA1D1DF96C1F6B28",
+        "NativeSymbolObjectEdit.inc": "CD2B1F26D75621CD3ED4CE72A16E867572A7D39BD84FAB6614D7EFDFDB72E985",
+        "NativeSymbolPreview.inc": "FF77AB286A7976168BA73DFD75C04F814D6134C81B1DA8B418D9544272C6B83D",
+        "NativeSymbolReadback.inc": "73EBE8290DC88A78628AC845A6E4FC2DA6D364E4DE670322D905A27B59FEEF3D",
+        "NativeSymbolTextBridgeProbe.inc": "979E71FF58FA5D165EA4F812D7F135D5C3577D6E90A022AE2297F4C9DDA2C56F",
+        "NativeSymbolUiBridge.inc": "4587E8B20143F637D697A629ADB6AF6D3D6BD21FD18ECFF1D9A0E12FCF53DB6E",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849"
+      },
+      "receipt": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-autocadhost-20261029-185205-511627\\quiet-job-receipt.json",
+        "SHA256": "B6DF6960C114F7AEBDF05BAD668BD295B788F31D59DEB046121F31BDB0ED0CF4",
+        "bytes": 6299
+      },
+      "controllerAtRun": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261029-185122\\candidate\\run_quiet_job.py",
+        "SHA256": "755D011B5DA3FEDC0B0AD30D718D35D803F2E41108B2A1287B7DE0D09D7C553A",
+        "bytes": 14292
+      },
+      "controllerArchiveGap": null,
+      "validation": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-autocadhost-20261029-185205-511627\\verify_autocad_host_native-closure-20261029-202148-182867.txt",
+        "SHA256": "B97DF38D206FA465CEE61745303D32968B1078871576036B19DF4648B06CD112",
+        "bytes": 69,
+        "exitCode": 0,
+        "assertions": 51,
+        "passed": 51,
+        "failed": 0,
+        "result": "PASS_NATIVE_HOST_FACTS_ONLY",
+        "validator": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_autocad_host_native.py",
+          "SHA256": "7CB1D2ADA33FA3FB6E8B4FAF969CA49B5A9215A16EFC806B7900F66BDA2FB023",
+          "bytes": 4484
+        }
+      },
+      "phase2Started": false
+    },
+    {
+      "id": "E36",
+      "kind": "AutoCadSupport",
+      "label": "专用配置的组件/安全核对",
+      "route": "ordinary AutoCAD + installed TCH support + public ObjectARX, no TCH business commands",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-autocadsupport-20261029-200731-206191",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-autocadsupport-20261029-200731-206191\\autocad-support-load-native.json",
+      "nativeReportSHA256": "88368C6E4BFCC3DE85DA6157F3E32106D9DF083FE488738B73EFAFEF4118F376",
+      "assertions": 10,
+      "passed": 10,
+      "failed": 0,
+      "result": "PASS_NATIVE_COMPONENT_LOAD",
+      "binarySHA256": "2FB0146F8C5CA703BB1865E48CF0ADD8F4994D01BA1620103FF7B87329DDB36E",
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "78A8DA7066A8014B94842E8A1CB98C6FF1B183FE56EA78D24865D7C90936B0D0",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeAutoCadHostProbe.inc": "162CDF42B03F0715E0ABFE40B04DB43C3DBB9768B1A3C22B4C8BE00039E85E1A",
+        "NativeAxisContinuousNumberProbe.inc": "DD4FE3742543DBB956E69535D1319508C3074299740C3BD6B9362638B8C58DF5",
+        "NativeAxisExplodeReadback.inc": "E3CC2B10C1BFC8B072B1665B3558A53BD5EF2AF27EAABED865D4F98DE82FEA1D",
+        "NativeAxisMergeTwoProbe.inc": "D8BC749161698670B11D5F1DEBCA2765CC3F6A7DF1842B40B6AE8B4E23067962",
+        "NativeAxisOverlapPreview.inc": "FA6F8430BF4B094E60251C78123E7C8DD725055E17EA018104E01F5FB293BB0C",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5",
+        "NativeAxisTemplatePruneProbe.inc": "09F0936466364D560807EDEED6DFB525FB905D8F12D33BA5FAD21E6D593A2147",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeCandidateLifecycleProbe.inc": "AB9A00EFE77DF79289BB0FE1C16D15C1471F5676EDD336D938AE55D264E21EF6",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeDimensionMergeProbe.inc": "3A6DBB774AE866BA3C75513B4B43EB43378AF85D3E97F14A5984F038F2CB53E3",
+        "NativeElevationDialogProbe.inc": "01DF79966CA1F65F37EB4B083C2C7C1E5CE8F69271EBB2A1B4B6DE3EDF6462DB",
+        "NativeElevationInkPick.inc": "761FC0D00A4FF58E0C1663768F1B620B7227A5623853A6E556BAB1BCCB6C8043",
+        "NativeElevationRoundTripProbe.inc": "55592CC17935321B25A7BCB82C07E238AABB9D3B92AE2D2E974338157DD2D460",
+        "NativeElevationRoundTripUiProbe.inc": "29EB7CA88D0ACA62E1F74057591041EA8BE9D88CC4AE629C2417925C39088F3E",
+        "NativeElevationUiBridge.inc": "57A65CF5B9D134428688DFCA23AE1FC5D2AD9B71D2A0A3E720F3E295D741D2E1",
+        "NativeFourAxisPreview.inc": "281F02628E7D4CA72AD581CDC2114BC264D2AE73BC657DE9EB1DC3412F927F96",
+        "NativeFourSideAxisProbe.inc": "1D07D4E5C5887A4E0350A750B2A4E013DF7B3F7C647E8D7F0D88F744C52930E8",
+        "NativeFourSideAxisSeedProbe.inc": "AD7F473A8974B0AA896376D5054FBE94F9D13FED86B6B244589997F01161287F",
+        "NativeFourSideAxisSingletonProbe.inc": "C18D76E641E008F917CE702633BA069134FBB7265E5CA0DB90AB5833ECBF267A",
+        "NativeHorizontalAxisProbe.inc": "7B73E50E4B01707DEB9424A206134D4A1413E1376434F6CD58C8C7A68C0B915E",
+        "NativeInputVersionAudit.inc": "C086B23B959889AE1ED149230FCCA0D6D866E8E1E1DD427B35B0CE398448B351",
+        "NativeModernAxisGripProbe.inc": "BB12BBCBD74BD1EB01BDC443B9019D093D11F032442801829C12589F48D96C64",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativeQuietWorker.inc": "F78DB1CB30BF2DB8F2FC466B64E73BBF583800B6D5165E6A93D5CCD9D6714537",
+        "NativeQuitLifecycle.inc": "CFF4B36B93160CDF4505005BAA6FBD70BB946A64068BA9602EAD17B76AD21858",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeSymbolBusinessProbe.inc": "8DD6C1BA69A755BDACB516BF3BC80ADC7E5C1638D4187336571733090A5B0261",
+        "NativeSymbolDiscoveryProbe.inc": "5A3EEE23C1BAA871892D88B474C47FFAED50986C6B6453B6EA1D1DF96C1F6B28",
+        "NativeSymbolObjectEdit.inc": "CD2B1F26D75621CD3ED4CE72A16E867572A7D39BD84FAB6614D7EFDFDB72E985",
+        "NativeSymbolPreview.inc": "FF77AB286A7976168BA73DFD75C04F814D6134C81B1DA8B418D9544272C6B83D",
+        "NativeSymbolReadback.inc": "73EBE8290DC88A78628AC845A6E4FC2DA6D364E4DE670322D905A27B59FEEF3D",
+        "NativeSymbolTextBridgeProbe.inc": "979E71FF58FA5D165EA4F812D7F135D5C3577D6E90A022AE2297F4C9DDA2C56F",
+        "NativeSymbolUiBridge.inc": "4587E8B20143F637D697A629ADB6AF6D3D6BD21FD18ECFF1D9A0E12FCF53DB6E",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849",
+        "NativeRxDiscoveryProbe.inc": "FC180715DC08522696598D2B060AB5093DCE0E0A5E831D611E6A4A8D12F05013"
+      },
+      "receipt": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-autocadsupport-20261029-200731-206191\\quiet-job-receipt.json",
+        "SHA256": "87F88405F7A106D3A388E7B41791AD6A7BF7A9D6C926BAD9FAAA91C6BC89E096",
+        "bytes": 6526
+      },
+      "controllerAtRun": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-autocadsupport-20261029-200731-206191\\run_quiet_job_at_run.py",
+        "SHA256": "6F5FFF9A54BEC3482D7B8FBAEA5EC0451876D4CA70C319BA8025D34C9A9BBBA4",
+        "bytes": 16214
+      },
+      "controllerArchiveGap": null,
+      "validation": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-autocadsupport-20261029-200731-206191\\verify_autocad_support_load_native-closure-20261029-202148-182867.txt",
+        "SHA256": "2D1CB05A1CD21A534E93C5F90CAB40CE50E077FBF415E9E9FC5BA81A5CB4AC35",
+        "bytes": 68,
+        "exitCode": 0,
+        "assertions": 10,
+        "passed": 10,
+        "failed": 0,
+        "result": "PASS_NATIVE_COMPONENT_LOAD",
+        "validator": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_autocad_support_load_native.py",
+          "SHA256": "D9074F0613798DE1225C372881FDE466B0B37E6BD60EA74A9E4DCF5A20368CA3",
+          "bytes": 1736
+        }
+      },
+      "phase2Started": false
+    },
+    {
+      "id": "E37",
+      "kind": "AutoCadSupportedHost",
+      "label": "AutoCAD 加对象支持组件",
+      "route": "ordinary AutoCAD + installed TCH support + public ObjectARX, no TCH business commands",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-autocadsupportedhost-20261029-195652-480485",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-autocadsupportedhost-20261029-195652-480485\\autocad-host-native.json",
+      "nativeReportSHA256": "30C85ED228A08DD2CD01BDE1C569065C41729CEE692CBF6F867ABD081B8ED95F",
+      "assertions": 43,
+      "passed": 43,
+      "failed": 0,
+      "result": "PASS_NATIVE_HOST_FACTS_ONLY",
+      "binarySHA256": "9103B3C85C63B861BB9136BA8546EADE9DC21E5DE8CB074F9C50329CB9679BC6",
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "12F934FFFB0400C3B9768A776A49B65C7CA07817CE9EC17BF819B4BB5228985B",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeAutoCadHostProbe.inc": "162CDF42B03F0715E0ABFE40B04DB43C3DBB9768B1A3C22B4C8BE00039E85E1A",
+        "NativeAxisContinuousNumberProbe.inc": "DD4FE3742543DBB956E69535D1319508C3074299740C3BD6B9362638B8C58DF5",
+        "NativeAxisExplodeReadback.inc": "E3CC2B10C1BFC8B072B1665B3558A53BD5EF2AF27EAABED865D4F98DE82FEA1D",
+        "NativeAxisMergeTwoProbe.inc": "D8BC749161698670B11D5F1DEBCA2765CC3F6A7DF1842B40B6AE8B4E23067962",
+        "NativeAxisOverlapPreview.inc": "FA6F8430BF4B094E60251C78123E7C8DD725055E17EA018104E01F5FB293BB0C",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5",
+        "NativeAxisTemplatePruneProbe.inc": "09F0936466364D560807EDEED6DFB525FB905D8F12D33BA5FAD21E6D593A2147",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeCandidateLifecycleProbe.inc": "AB9A00EFE77DF79289BB0FE1C16D15C1471F5676EDD336D938AE55D264E21EF6",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeDimensionMergeProbe.inc": "3A6DBB774AE866BA3C75513B4B43EB43378AF85D3E97F14A5984F038F2CB53E3",
+        "NativeElevationDialogProbe.inc": "01DF79966CA1F65F37EB4B083C2C7C1E5CE8F69271EBB2A1B4B6DE3EDF6462DB",
+        "NativeElevationInkPick.inc": "761FC0D00A4FF58E0C1663768F1B620B7227A5623853A6E556BAB1BCCB6C8043",
+        "NativeElevationRoundTripProbe.inc": "55592CC17935321B25A7BCB82C07E238AABB9D3B92AE2D2E974338157DD2D460",
+        "NativeElevationRoundTripUiProbe.inc": "29EB7CA88D0ACA62E1F74057591041EA8BE9D88CC4AE629C2417925C39088F3E",
+        "NativeElevationUiBridge.inc": "57A65CF5B9D134428688DFCA23AE1FC5D2AD9B71D2A0A3E720F3E295D741D2E1",
+        "NativeFourAxisPreview.inc": "281F02628E7D4CA72AD581CDC2114BC264D2AE73BC657DE9EB1DC3412F927F96",
+        "NativeFourSideAxisProbe.inc": "1D07D4E5C5887A4E0350A750B2A4E013DF7B3F7C647E8D7F0D88F744C52930E8",
+        "NativeFourSideAxisSeedProbe.inc": "AD7F473A8974B0AA896376D5054FBE94F9D13FED86B6B244589997F01161287F",
+        "NativeFourSideAxisSingletonProbe.inc": "C18D76E641E008F917CE702633BA069134FBB7265E5CA0DB90AB5833ECBF267A",
+        "NativeHorizontalAxisProbe.inc": "7B73E50E4B01707DEB9424A206134D4A1413E1376434F6CD58C8C7A68C0B915E",
+        "NativeInputVersionAudit.inc": "C086B23B959889AE1ED149230FCCA0D6D866E8E1E1DD427B35B0CE398448B351",
+        "NativeModernAxisGripProbe.inc": "BB12BBCBD74BD1EB01BDC443B9019D093D11F032442801829C12589F48D96C64",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativeQuietWorker.inc": "F78DB1CB30BF2DB8F2FC466B64E73BBF583800B6D5165E6A93D5CCD9D6714537",
+        "NativeQuitLifecycle.inc": "CFF4B36B93160CDF4505005BAA6FBD70BB946A64068BA9602EAD17B76AD21858",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeSymbolBusinessProbe.inc": "8DD6C1BA69A755BDACB516BF3BC80ADC7E5C1638D4187336571733090A5B0261",
+        "NativeSymbolDiscoveryProbe.inc": "5A3EEE23C1BAA871892D88B474C47FFAED50986C6B6453B6EA1D1DF96C1F6B28",
+        "NativeSymbolObjectEdit.inc": "CD2B1F26D75621CD3ED4CE72A16E867572A7D39BD84FAB6614D7EFDFDB72E985",
+        "NativeSymbolPreview.inc": "FF77AB286A7976168BA73DFD75C04F814D6134C81B1DA8B418D9544272C6B83D",
+        "NativeSymbolReadback.inc": "73EBE8290DC88A78628AC845A6E4FC2DA6D364E4DE670322D905A27B59FEEF3D",
+        "NativeSymbolTextBridgeProbe.inc": "979E71FF58FA5D165EA4F812D7F135D5C3577D6E90A022AE2297F4C9DDA2C56F",
+        "NativeSymbolUiBridge.inc": "4587E8B20143F637D697A629ADB6AF6D3D6BD21FD18ECFF1D9A0E12FCF53DB6E",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849"
+      },
+      "receipt": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-autocadsupportedhost-20261029-195652-480485\\quiet-job-receipt.json",
+        "SHA256": "CE205A01800ADE62F9E35FBAA8963ECD9A805CCD905D8C8E462BE8ABAE2CE2A1",
+        "bytes": 6443
+      },
+      "controllerAtRun": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-autocadsupportedhost-20261029-195652-480485\\run_quiet_job_at_run.py",
+        "SHA256": "834D9971BC667C7B0EF45F8A8534DADD5A3751004746BB156AE58EEE12F01393",
+        "bytes": 16102
+      },
+      "controllerArchiveGap": null,
+      "validation": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-autocadsupportedhost-20261029-195652-480485\\verify_autocad_host_native-closure-20261029-202148-182867.txt",
+        "SHA256": "80169B8114F65746ADCCF37C4D9243B17A5FCE4E48EB541DFEF0E7ED3E52FB92",
+        "bytes": 69,
+        "exitCode": 0,
+        "assertions": 43,
+        "passed": 43,
+        "failed": 0,
+        "result": "PASS_NATIVE_HOST_FACTS_ONLY",
+        "validator": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_autocad_host_native.py",
+          "SHA256": "7CB1D2ADA33FA3FB6E8B4FAF969CA49B5A9215A16EFC806B7900F66BDA2FB023",
+          "bytes": 4484
+        }
+      },
+      "phase2Started": false
+    },
+    {
+      "id": "E38",
+      "kind": "SchemeNative",
+      "label": "方案实际墙端点生成/编辑天正尺寸",
+      "route": "ordinary AutoCAD + installed TCH support + public ObjectARX, no TCH business commands",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-schemenative-20261029-190733-901755",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-schemenative-20261029-190733-901755\\scheme-native.json",
+      "nativeReportSHA256": "51A861F05E8466A06ACD8F9126F6531E7B02453AD6CCA714FE3DA3F9F0AC656A",
+      "assertions": 2189,
+      "passed": 2189,
+      "failed": 0,
+      "result": "PASS",
+      "binarySHA256": "4B77A8682B24A592EF0E150B1E300F6479416BDB2C0B5016497A793BA56116D8",
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "FBFFF433EAC7F5669CD6730E5F0D04312FDA9088D1ECE3C6AC85A16415C06D23",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeAutoCadHostProbe.inc": "162CDF42B03F0715E0ABFE40B04DB43C3DBB9768B1A3C22B4C8BE00039E85E1A",
+        "NativeAxisContinuousNumberProbe.inc": "DD4FE3742543DBB956E69535D1319508C3074299740C3BD6B9362638B8C58DF5",
+        "NativeAxisExplodeReadback.inc": "E3CC2B10C1BFC8B072B1665B3558A53BD5EF2AF27EAABED865D4F98DE82FEA1D",
+        "NativeAxisMergeTwoProbe.inc": "D8BC749161698670B11D5F1DEBCA2765CC3F6A7DF1842B40B6AE8B4E23067962",
+        "NativeAxisOverlapPreview.inc": "FA6F8430BF4B094E60251C78123E7C8DD725055E17EA018104E01F5FB293BB0C",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5",
+        "NativeAxisTemplatePruneProbe.inc": "09F0936466364D560807EDEED6DFB525FB905D8F12D33BA5FAD21E6D593A2147",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeDimensionMergeProbe.inc": "3A6DBB774AE866BA3C75513B4B43EB43378AF85D3E97F14A5984F038F2CB53E3",
+        "NativeElevationDialogProbe.inc": "01DF79966CA1F65F37EB4B083C2C7C1E5CE8F69271EBB2A1B4B6DE3EDF6462DB",
+        "NativeElevationInkPick.inc": "761FC0D00A4FF58E0C1663768F1B620B7227A5623853A6E556BAB1BCCB6C8043",
+        "NativeElevationRoundTripProbe.inc": "55592CC17935321B25A7BCB82C07E238AABB9D3B92AE2D2E974338157DD2D460",
+        "NativeElevationRoundTripUiProbe.inc": "29EB7CA88D0ACA62E1F74057591041EA8BE9D88CC4AE629C2417925C39088F3E",
+        "NativeElevationUiBridge.inc": "57A65CF5B9D134428688DFCA23AE1FC5D2AD9B71D2A0A3E720F3E295D741D2E1",
+        "NativeFourAxisPreview.inc": "281F02628E7D4CA72AD581CDC2114BC264D2AE73BC657DE9EB1DC3412F927F96",
+        "NativeFourSideAxisProbe.inc": "1D07D4E5C5887A4E0350A750B2A4E013DF7B3F7C647E8D7F0D88F744C52930E8",
+        "NativeFourSideAxisSeedProbe.inc": "AD7F473A8974B0AA896376D5054FBE94F9D13FED86B6B244589997F01161287F",
+        "NativeFourSideAxisSingletonProbe.inc": "C18D76E641E008F917CE702633BA069134FBB7265E5CA0DB90AB5833ECBF267A",
+        "NativeHorizontalAxisProbe.inc": "7B73E50E4B01707DEB9424A206134D4A1413E1376434F6CD58C8C7A68C0B915E",
+        "NativeInputVersionAudit.inc": "C086B23B959889AE1ED149230FCCA0D6D866E8E1E1DD427B35B0CE398448B351",
+        "NativeModernAxisGripProbe.inc": "BB12BBCBD74BD1EB01BDC443B9019D093D11F032442801829C12589F48D96C64",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativeQuietWorker.inc": "F78DB1CB30BF2DB8F2FC466B64E73BBF583800B6D5165E6A93D5CCD9D6714537",
+        "NativeQuitLifecycle.inc": "CFF4B36B93160CDF4505005BAA6FBD70BB946A64068BA9602EAD17B76AD21858",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeSymbolBusinessProbe.inc": "8DD6C1BA69A755BDACB516BF3BC80ADC7E5C1638D4187336571733090A5B0261",
+        "NativeSymbolDiscoveryProbe.inc": "5A3EEE23C1BAA871892D88B474C47FFAED50986C6B6453B6EA1D1DF96C1F6B28",
+        "NativeSymbolObjectEdit.inc": "CD2B1F26D75621CD3ED4CE72A16E867572A7D39BD84FAB6614D7EFDFDB72E985",
+        "NativeSymbolPreview.inc": "FF77AB286A7976168BA73DFD75C04F814D6134C81B1DA8B418D9544272C6B83D",
+        "NativeSymbolReadback.inc": "73EBE8290DC88A78628AC845A6E4FC2DA6D364E4DE670322D905A27B59FEEF3D",
+        "NativeSymbolTextBridgeProbe.inc": "979E71FF58FA5D165EA4F812D7F135D5C3577D6E90A022AE2297F4C9DDA2C56F",
+        "NativeSymbolUiBridge.inc": "4587E8B20143F637D697A629ADB6AF6D3D6BD21FD18ECFF1D9A0E12FCF53DB6E",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849"
+      },
+      "receipt": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-schemenative-20261029-190733-901755\\quiet-job-receipt.json",
+        "SHA256": "9A85F9B897D32972ED1558F653FD8139A53C094867015DDEF21BA5B4B49A8D45",
+        "bytes": 6303
+      },
+      "controllerAtRun": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261029-190610\\candidate\\run_quiet_job.py",
+        "SHA256": "E80D1D0DBC4E9F6F4627198299F060ED7DFF425334E717A6213AE0E0C23A30A7",
+        "bytes": 14694
+      },
+      "controllerArchiveGap": null,
+      "validation": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-schemenative-20261029-190733-901755\\verify_scheme_native-closure-20261029-202148-182867.txt",
+        "SHA256": "E0C206F279370401657B363AA51A4059D25AF3D6CFCEC816C4C38C5DC927A615",
+        "bytes": 134,
+        "exitCode": 0,
+        "assertions": 2189,
+        "passed": 2189,
+        "failed": 0,
+        "result": "PASS",
+        "validator": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_scheme_native.py",
+          "SHA256": "E8006C5B7E58BA8B0C9DE7817E7E8D3620FF89C57EB4538BDE688A632AEBCE0C",
+          "bytes": 7828
+        }
+      },
+      "phase2Started": false
+    },
+    {
+      "id": "E39",
+      "kind": "BusinessReadNative",
+      "label": "直接实体 list() 的业务参数读取",
+      "route": "ordinary AutoCAD + installed TCH support + public ObjectARX, no TCH business commands",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-businessreadnative-20261029-193232-725218",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-businessreadnative-20261029-193232-725218\\business-list-native.json",
+      "nativeReportSHA256": "6FE78B3BC46595C63C3A10C29EE57FA16AD5C7AD5C2D6F1F3B7BB1579FE86FEE",
+      "assertions": 2355,
+      "passed": 2355,
+      "failed": 0,
+      "result": "PASS",
+      "binarySHA256": "09A495DA868E08FF1972330952DB099C498078AE565ADB6C51306EE00BBA69C7",
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "12F934FFFB0400C3B9768A776A49B65C7CA07817CE9EC17BF819B4BB5228985B",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeAutoCadHostProbe.inc": "162CDF42B03F0715E0ABFE40B04DB43C3DBB9768B1A3C22B4C8BE00039E85E1A",
+        "NativeAxisContinuousNumberProbe.inc": "DD4FE3742543DBB956E69535D1319508C3074299740C3BD6B9362638B8C58DF5",
+        "NativeAxisExplodeReadback.inc": "E3CC2B10C1BFC8B072B1665B3558A53BD5EF2AF27EAABED865D4F98DE82FEA1D",
+        "NativeAxisMergeTwoProbe.inc": "D8BC749161698670B11D5F1DEBCA2765CC3F6A7DF1842B40B6AE8B4E23067962",
+        "NativeAxisOverlapPreview.inc": "FA6F8430BF4B094E60251C78123E7C8DD725055E17EA018104E01F5FB293BB0C",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5",
+        "NativeAxisTemplatePruneProbe.inc": "09F0936466364D560807EDEED6DFB525FB905D8F12D33BA5FAD21E6D593A2147",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeCandidateLifecycleProbe.inc": "82972843C72E8897EC9EBE7163566C3C9827A375EBAAADA85C8FF7FD37E74547",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeDimensionMergeProbe.inc": "3A6DBB774AE866BA3C75513B4B43EB43378AF85D3E97F14A5984F038F2CB53E3",
+        "NativeElevationDialogProbe.inc": "01DF79966CA1F65F37EB4B083C2C7C1E5CE8F69271EBB2A1B4B6DE3EDF6462DB",
+        "NativeElevationInkPick.inc": "761FC0D00A4FF58E0C1663768F1B620B7227A5623853A6E556BAB1BCCB6C8043",
+        "NativeElevationRoundTripProbe.inc": "55592CC17935321B25A7BCB82C07E238AABB9D3B92AE2D2E974338157DD2D460",
+        "NativeElevationRoundTripUiProbe.inc": "29EB7CA88D0ACA62E1F74057591041EA8BE9D88CC4AE629C2417925C39088F3E",
+        "NativeElevationUiBridge.inc": "57A65CF5B9D134428688DFCA23AE1FC5D2AD9B71D2A0A3E720F3E295D741D2E1",
+        "NativeFourAxisPreview.inc": "281F02628E7D4CA72AD581CDC2114BC264D2AE73BC657DE9EB1DC3412F927F96",
+        "NativeFourSideAxisProbe.inc": "1D07D4E5C5887A4E0350A750B2A4E013DF7B3F7C647E8D7F0D88F744C52930E8",
+        "NativeFourSideAxisSeedProbe.inc": "AD7F473A8974B0AA896376D5054FBE94F9D13FED86B6B244589997F01161287F",
+        "NativeFourSideAxisSingletonProbe.inc": "C18D76E641E008F917CE702633BA069134FBB7265E5CA0DB90AB5833ECBF267A",
+        "NativeHorizontalAxisProbe.inc": "7B73E50E4B01707DEB9424A206134D4A1413E1376434F6CD58C8C7A68C0B915E",
+        "NativeInputVersionAudit.inc": "C086B23B959889AE1ED149230FCCA0D6D866E8E1E1DD427B35B0CE398448B351",
+        "NativeModernAxisGripProbe.inc": "BB12BBCBD74BD1EB01BDC443B9019D093D11F032442801829C12589F48D96C64",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativeQuietWorker.inc": "F78DB1CB30BF2DB8F2FC466B64E73BBF583800B6D5165E6A93D5CCD9D6714537",
+        "NativeQuitLifecycle.inc": "CFF4B36B93160CDF4505005BAA6FBD70BB946A64068BA9602EAD17B76AD21858",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeSymbolBusinessProbe.inc": "8DD6C1BA69A755BDACB516BF3BC80ADC7E5C1638D4187336571733090A5B0261",
+        "NativeSymbolDiscoveryProbe.inc": "5A3EEE23C1BAA871892D88B474C47FFAED50986C6B6453B6EA1D1DF96C1F6B28",
+        "NativeSymbolObjectEdit.inc": "CD2B1F26D75621CD3ED4CE72A16E867572A7D39BD84FAB6614D7EFDFDB72E985",
+        "NativeSymbolPreview.inc": "FF77AB286A7976168BA73DFD75C04F814D6134C81B1DA8B418D9544272C6B83D",
+        "NativeSymbolReadback.inc": "73EBE8290DC88A78628AC845A6E4FC2DA6D364E4DE670322D905A27B59FEEF3D",
+        "NativeSymbolTextBridgeProbe.inc": "979E71FF58FA5D165EA4F812D7F135D5C3577D6E90A022AE2297F4C9DDA2C56F",
+        "NativeSymbolUiBridge.inc": "4587E8B20143F637D697A629ADB6AF6D3D6BD21FD18ECFF1D9A0E12FCF53DB6E",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849"
+      },
+      "receipt": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-businessreadnative-20261029-193232-725218\\quiet-job-receipt.json",
+        "SHA256": "E177E6C97B600E591160454ADD55ADDCCA3486CE0760FA00E75D0DBA6AD158BF",
+        "bytes": 7921
+      },
+      "controllerAtRun": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-businessreadnative-20261029-193232-725218\\run_quiet_job_at_run.py",
+        "SHA256": "834D9971BC667C7B0EF45F8A8534DADD5A3751004746BB156AE58EEE12F01393",
+        "bytes": 16102
+      },
+      "controllerArchiveGap": null,
+      "validation": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-businessreadnative-20261029-193232-725218\\verify_business_list_native-closure-20261029-202148-182867.txt",
+        "SHA256": "1508F00AB8BC3813D1966AEA8AF29C0BECFE54A6F9970F8C5BBFA391431E7A9D",
+        "bytes": 204,
+        "exitCode": 0,
+        "assertions": 2355,
+        "passed": 2355,
+        "failed": 0,
+        "result": "PASS",
+        "validator": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_business_list_native.py",
+          "SHA256": "3B6E5B20D6C646914FD295494ACD51C7B8E4350845310D68600E27A7F6926CFD",
+          "bytes": 8359
+        }
+      },
+      "phase2Started": false
+    },
+    {
+      "id": "E40",
+      "kind": "FamilyNative",
+      "label": "18类对象家族与拆克隆",
+      "route": "ordinary AutoCAD + installed TCH support + public ObjectARX, no TCH business commands",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-familynative-20261029-190943-311200",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-familynative-20261029-190943-311200\\object-family-native.json",
+      "nativeReportSHA256": "28C9E6E66D21304655F7072DD4030493F87D2D09FB108A81F00F4B2EAF301B35",
+      "assertions": 70655,
+      "passed": 70651,
+      "failed": 4,
+      "result": "FAIL",
+      "binarySHA256": "4B77A8682B24A592EF0E150B1E300F6479416BDB2C0B5016497A793BA56116D8",
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "FBFFF433EAC7F5669CD6730E5F0D04312FDA9088D1ECE3C6AC85A16415C06D23",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeAutoCadHostProbe.inc": "162CDF42B03F0715E0ABFE40B04DB43C3DBB9768B1A3C22B4C8BE00039E85E1A",
+        "NativeAxisContinuousNumberProbe.inc": "DD4FE3742543DBB956E69535D1319508C3074299740C3BD6B9362638B8C58DF5",
+        "NativeAxisExplodeReadback.inc": "E3CC2B10C1BFC8B072B1665B3558A53BD5EF2AF27EAABED865D4F98DE82FEA1D",
+        "NativeAxisMergeTwoProbe.inc": "D8BC749161698670B11D5F1DEBCA2765CC3F6A7DF1842B40B6AE8B4E23067962",
+        "NativeAxisOverlapPreview.inc": "FA6F8430BF4B094E60251C78123E7C8DD725055E17EA018104E01F5FB293BB0C",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5",
+        "NativeAxisTemplatePruneProbe.inc": "09F0936466364D560807EDEED6DFB525FB905D8F12D33BA5FAD21E6D593A2147",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeDimensionMergeProbe.inc": "3A6DBB774AE866BA3C75513B4B43EB43378AF85D3E97F14A5984F038F2CB53E3",
+        "NativeElevationDialogProbe.inc": "01DF79966CA1F65F37EB4B083C2C7C1E5CE8F69271EBB2A1B4B6DE3EDF6462DB",
+        "NativeElevationInkPick.inc": "761FC0D00A4FF58E0C1663768F1B620B7227A5623853A6E556BAB1BCCB6C8043",
+        "NativeElevationRoundTripProbe.inc": "55592CC17935321B25A7BCB82C07E238AABB9D3B92AE2D2E974338157DD2D460",
+        "NativeElevationRoundTripUiProbe.inc": "29EB7CA88D0ACA62E1F74057591041EA8BE9D88CC4AE629C2417925C39088F3E",
+        "NativeElevationUiBridge.inc": "57A65CF5B9D134428688DFCA23AE1FC5D2AD9B71D2A0A3E720F3E295D741D2E1",
+        "NativeFourAxisPreview.inc": "281F02628E7D4CA72AD581CDC2114BC264D2AE73BC657DE9EB1DC3412F927F96",
+        "NativeFourSideAxisProbe.inc": "1D07D4E5C5887A4E0350A750B2A4E013DF7B3F7C647E8D7F0D88F744C52930E8",
+        "NativeFourSideAxisSeedProbe.inc": "AD7F473A8974B0AA896376D5054FBE94F9D13FED86B6B244589997F01161287F",
+        "NativeFourSideAxisSingletonProbe.inc": "C18D76E641E008F917CE702633BA069134FBB7265E5CA0DB90AB5833ECBF267A",
+        "NativeHorizontalAxisProbe.inc": "7B73E50E4B01707DEB9424A206134D4A1413E1376434F6CD58C8C7A68C0B915E",
+        "NativeInputVersionAudit.inc": "C086B23B959889AE1ED149230FCCA0D6D866E8E1E1DD427B35B0CE398448B351",
+        "NativeModernAxisGripProbe.inc": "BB12BBCBD74BD1EB01BDC443B9019D093D11F032442801829C12589F48D96C64",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativeQuietWorker.inc": "F78DB1CB30BF2DB8F2FC466B64E73BBF583800B6D5165E6A93D5CCD9D6714537",
+        "NativeQuitLifecycle.inc": "CFF4B36B93160CDF4505005BAA6FBD70BB946A64068BA9602EAD17B76AD21858",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeSymbolBusinessProbe.inc": "8DD6C1BA69A755BDACB516BF3BC80ADC7E5C1638D4187336571733090A5B0261",
+        "NativeSymbolDiscoveryProbe.inc": "5A3EEE23C1BAA871892D88B474C47FFAED50986C6B6453B6EA1D1DF96C1F6B28",
+        "NativeSymbolObjectEdit.inc": "CD2B1F26D75621CD3ED4CE72A16E867572A7D39BD84FAB6614D7EFDFDB72E985",
+        "NativeSymbolPreview.inc": "FF77AB286A7976168BA73DFD75C04F814D6134C81B1DA8B418D9544272C6B83D",
+        "NativeSymbolReadback.inc": "73EBE8290DC88A78628AC845A6E4FC2DA6D364E4DE670322D905A27B59FEEF3D",
+        "NativeSymbolTextBridgeProbe.inc": "979E71FF58FA5D165EA4F812D7F135D5C3577D6E90A022AE2297F4C9DDA2C56F",
+        "NativeSymbolUiBridge.inc": "4587E8B20143F637D697A629ADB6AF6D3D6BD21FD18ECFF1D9A0E12FCF53DB6E",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849"
+      },
+      "receipt": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-familynative-20261029-190943-311200\\quiet-job-receipt.json",
+        "SHA256": "2733DC62A96F4149872D032C4372D8984A2383E4827D85FE20523D144EC15E82",
+        "bytes": 6362
+      },
+      "controllerAtRun": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-familynative-20261029-190943-311200\\run_quiet_job_at_run.py",
+        "SHA256": "B34D2B78AC3A60D1C322D73CF85C1BE7D74D7D0F5316658FE86897A78BB95556",
+        "bytes": 15182
+      },
+      "controllerArchiveGap": null,
+      "validation": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-familynative-20261029-190943-311200\\verify_object_family_native-closure-20261029-202148-182867.txt",
+        "SHA256": "E2507445357B548CB17BC57B91A5A84BE83E43352E395399BF9A296C77CF5248",
+        "bytes": 329,
+        "exitCode": 1,
+        "assertions": 70655,
+        "passed": 70651,
+        "failed": 4,
+        "result": "FAIL",
+        "validator": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_object_family_native.py",
+          "SHA256": "26AF8D4325DB0EC8C5EA40745E3F36DEEB55143642307D523ACE6DEE537AECD5",
+          "bytes": 8023
+        }
+      },
+      "phase2Started": false
+    },
+    {
+      "id": "E41",
+      "kind": "StylesNative",
+      "label": "资源表样本核对",
+      "route": "ordinary AutoCAD + installed TCH support + public ObjectARX, no TCH business commands",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-stylesnative-20261029-190952-255643",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-stylesnative-20261029-190952-255643\\native-styles.json",
+      "nativeReportSHA256": "8543AEC32FE9AF060FC60B5807DF6835089D69DC6FB37616E227A7D005DAD3B9",
+      "assertions": 61,
+      "passed": 61,
+      "failed": 0,
+      "result": "PASS",
+      "binarySHA256": "4B77A8682B24A592EF0E150B1E300F6479416BDB2C0B5016497A793BA56116D8",
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "FBFFF433EAC7F5669CD6730E5F0D04312FDA9088D1ECE3C6AC85A16415C06D23",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeAutoCadHostProbe.inc": "162CDF42B03F0715E0ABFE40B04DB43C3DBB9768B1A3C22B4C8BE00039E85E1A",
+        "NativeAxisContinuousNumberProbe.inc": "DD4FE3742543DBB956E69535D1319508C3074299740C3BD6B9362638B8C58DF5",
+        "NativeAxisExplodeReadback.inc": "E3CC2B10C1BFC8B072B1665B3558A53BD5EF2AF27EAABED865D4F98DE82FEA1D",
+        "NativeAxisMergeTwoProbe.inc": "D8BC749161698670B11D5F1DEBCA2765CC3F6A7DF1842B40B6AE8B4E23067962",
+        "NativeAxisOverlapPreview.inc": "FA6F8430BF4B094E60251C78123E7C8DD725055E17EA018104E01F5FB293BB0C",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5",
+        "NativeAxisTemplatePruneProbe.inc": "09F0936466364D560807EDEED6DFB525FB905D8F12D33BA5FAD21E6D593A2147",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeDimensionMergeProbe.inc": "3A6DBB774AE866BA3C75513B4B43EB43378AF85D3E97F14A5984F038F2CB53E3",
+        "NativeElevationDialogProbe.inc": "01DF79966CA1F65F37EB4B083C2C7C1E5CE8F69271EBB2A1B4B6DE3EDF6462DB",
+        "NativeElevationInkPick.inc": "761FC0D00A4FF58E0C1663768F1B620B7227A5623853A6E556BAB1BCCB6C8043",
+        "NativeElevationRoundTripProbe.inc": "55592CC17935321B25A7BCB82C07E238AABB9D3B92AE2D2E974338157DD2D460",
+        "NativeElevationRoundTripUiProbe.inc": "29EB7CA88D0ACA62E1F74057591041EA8BE9D88CC4AE629C2417925C39088F3E",
+        "NativeElevationUiBridge.inc": "57A65CF5B9D134428688DFCA23AE1FC5D2AD9B71D2A0A3E720F3E295D741D2E1",
+        "NativeFourAxisPreview.inc": "281F02628E7D4CA72AD581CDC2114BC264D2AE73BC657DE9EB1DC3412F927F96",
+        "NativeFourSideAxisProbe.inc": "1D07D4E5C5887A4E0350A750B2A4E013DF7B3F7C647E8D7F0D88F744C52930E8",
+        "NativeFourSideAxisSeedProbe.inc": "AD7F473A8974B0AA896376D5054FBE94F9D13FED86B6B244589997F01161287F",
+        "NativeFourSideAxisSingletonProbe.inc": "C18D76E641E008F917CE702633BA069134FBB7265E5CA0DB90AB5833ECBF267A",
+        "NativeHorizontalAxisProbe.inc": "7B73E50E4B01707DEB9424A206134D4A1413E1376434F6CD58C8C7A68C0B915E",
+        "NativeInputVersionAudit.inc": "C086B23B959889AE1ED149230FCCA0D6D866E8E1E1DD427B35B0CE398448B351",
+        "NativeModernAxisGripProbe.inc": "BB12BBCBD74BD1EB01BDC443B9019D093D11F032442801829C12589F48D96C64",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativeQuietWorker.inc": "F78DB1CB30BF2DB8F2FC466B64E73BBF583800B6D5165E6A93D5CCD9D6714537",
+        "NativeQuitLifecycle.inc": "CFF4B36B93160CDF4505005BAA6FBD70BB946A64068BA9602EAD17B76AD21858",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeSymbolBusinessProbe.inc": "8DD6C1BA69A755BDACB516BF3BC80ADC7E5C1638D4187336571733090A5B0261",
+        "NativeSymbolDiscoveryProbe.inc": "5A3EEE23C1BAA871892D88B474C47FFAED50986C6B6453B6EA1D1DF96C1F6B28",
+        "NativeSymbolObjectEdit.inc": "CD2B1F26D75621CD3ED4CE72A16E867572A7D39BD84FAB6614D7EFDFDB72E985",
+        "NativeSymbolPreview.inc": "FF77AB286A7976168BA73DFD75C04F814D6134C81B1DA8B418D9544272C6B83D",
+        "NativeSymbolReadback.inc": "73EBE8290DC88A78628AC845A6E4FC2DA6D364E4DE670322D905A27B59FEEF3D",
+        "NativeSymbolTextBridgeProbe.inc": "979E71FF58FA5D165EA4F812D7F135D5C3577D6E90A022AE2297F4C9DDA2C56F",
+        "NativeSymbolUiBridge.inc": "4587E8B20143F637D697A629ADB6AF6D3D6BD21FD18ECFF1D9A0E12FCF53DB6E",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849"
+      },
+      "receipt": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-stylesnative-20261029-190952-255643\\quiet-job-receipt.json",
+        "SHA256": "546929ACB54988B8C8C15CEAF2DACEC085DCBE45BFC04F4844EA5DB83A4EBCFC",
+        "bytes": 6301
+      },
+      "controllerAtRun": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-stylesnative-20261029-190952-255643\\run_quiet_job_at_run.py",
+        "SHA256": "B34D2B78AC3A60D1C322D73CF85C1BE7D74D7D0F5316658FE86897A78BB95556",
+        "bytes": 15182
+      },
+      "controllerArchiveGap": null,
+      "validation": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-stylesnative-20261029-190952-255643\\verify_native_styles-closure-20261029-202148-182867.txt",
+        "SHA256": "F1E5192982D5AF7C2D8B0CD1B1ACBA71031579F077545A7357E4635FC854377D",
+        "bytes": 147,
+        "exitCode": 0,
+        "assertions": 61,
+        "passed": 61,
+        "failed": 0,
+        "result": "PASS",
+        "validator": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_native_styles.py",
+          "SHA256": "F7D873B615DC617656AC7E88240EC8ED7A66635E34C17AF8E5AB6BE5D17F7AD8",
+          "bytes": 3402
+        }
+      },
+      "phase2Started": false
+    },
+    {
+      "id": "E42",
+      "kind": "SafetyNative",
+      "label": "事务及资源保护",
+      "route": "ordinary AutoCAD + installed TCH support + public ObjectARX, no TCH business commands",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-safetynative-20261029-190953-003756",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-safetynative-20261029-190953-003756\\native-safety-resources.json",
+      "nativeReportSHA256": "1C68A8D87E0330CF56E98C0DDCC3EF4895E89C92710FD51D0683B57886B793D7",
+      "assertions": 13966,
+      "passed": 13964,
+      "failed": 2,
+      "result": "FAIL",
+      "binarySHA256": "4B77A8682B24A592EF0E150B1E300F6479416BDB2C0B5016497A793BA56116D8",
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "FBFFF433EAC7F5669CD6730E5F0D04312FDA9088D1ECE3C6AC85A16415C06D23",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeAutoCadHostProbe.inc": "162CDF42B03F0715E0ABFE40B04DB43C3DBB9768B1A3C22B4C8BE00039E85E1A",
+        "NativeAxisContinuousNumberProbe.inc": "DD4FE3742543DBB956E69535D1319508C3074299740C3BD6B9362638B8C58DF5",
+        "NativeAxisExplodeReadback.inc": "E3CC2B10C1BFC8B072B1665B3558A53BD5EF2AF27EAABED865D4F98DE82FEA1D",
+        "NativeAxisMergeTwoProbe.inc": "D8BC749161698670B11D5F1DEBCA2765CC3F6A7DF1842B40B6AE8B4E23067962",
+        "NativeAxisOverlapPreview.inc": "FA6F8430BF4B094E60251C78123E7C8DD725055E17EA018104E01F5FB293BB0C",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5",
+        "NativeAxisTemplatePruneProbe.inc": "09F0936466364D560807EDEED6DFB525FB905D8F12D33BA5FAD21E6D593A2147",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeDimensionMergeProbe.inc": "3A6DBB774AE866BA3C75513B4B43EB43378AF85D3E97F14A5984F038F2CB53E3",
+        "NativeElevationDialogProbe.inc": "01DF79966CA1F65F37EB4B083C2C7C1E5CE8F69271EBB2A1B4B6DE3EDF6462DB",
+        "NativeElevationInkPick.inc": "761FC0D00A4FF58E0C1663768F1B620B7227A5623853A6E556BAB1BCCB6C8043",
+        "NativeElevationRoundTripProbe.inc": "55592CC17935321B25A7BCB82C07E238AABB9D3B92AE2D2E974338157DD2D460",
+        "NativeElevationRoundTripUiProbe.inc": "29EB7CA88D0ACA62E1F74057591041EA8BE9D88CC4AE629C2417925C39088F3E",
+        "NativeElevationUiBridge.inc": "57A65CF5B9D134428688DFCA23AE1FC5D2AD9B71D2A0A3E720F3E295D741D2E1",
+        "NativeFourAxisPreview.inc": "281F02628E7D4CA72AD581CDC2114BC264D2AE73BC657DE9EB1DC3412F927F96",
+        "NativeFourSideAxisProbe.inc": "1D07D4E5C5887A4E0350A750B2A4E013DF7B3F7C647E8D7F0D88F744C52930E8",
+        "NativeFourSideAxisSeedProbe.inc": "AD7F473A8974B0AA896376D5054FBE94F9D13FED86B6B244589997F01161287F",
+        "NativeFourSideAxisSingletonProbe.inc": "C18D76E641E008F917CE702633BA069134FBB7265E5CA0DB90AB5833ECBF267A",
+        "NativeHorizontalAxisProbe.inc": "7B73E50E4B01707DEB9424A206134D4A1413E1376434F6CD58C8C7A68C0B915E",
+        "NativeInputVersionAudit.inc": "C086B23B959889AE1ED149230FCCA0D6D866E8E1E1DD427B35B0CE398448B351",
+        "NativeModernAxisGripProbe.inc": "BB12BBCBD74BD1EB01BDC443B9019D093D11F032442801829C12589F48D96C64",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativeQuietWorker.inc": "F78DB1CB30BF2DB8F2FC466B64E73BBF583800B6D5165E6A93D5CCD9D6714537",
+        "NativeQuitLifecycle.inc": "CFF4B36B93160CDF4505005BAA6FBD70BB946A64068BA9602EAD17B76AD21858",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeSymbolBusinessProbe.inc": "8DD6C1BA69A755BDACB516BF3BC80ADC7E5C1638D4187336571733090A5B0261",
+        "NativeSymbolDiscoveryProbe.inc": "5A3EEE23C1BAA871892D88B474C47FFAED50986C6B6453B6EA1D1DF96C1F6B28",
+        "NativeSymbolObjectEdit.inc": "CD2B1F26D75621CD3ED4CE72A16E867572A7D39BD84FAB6614D7EFDFDB72E985",
+        "NativeSymbolPreview.inc": "FF77AB286A7976168BA73DFD75C04F814D6134C81B1DA8B418D9544272C6B83D",
+        "NativeSymbolReadback.inc": "73EBE8290DC88A78628AC845A6E4FC2DA6D364E4DE670322D905A27B59FEEF3D",
+        "NativeSymbolTextBridgeProbe.inc": "979E71FF58FA5D165EA4F812D7F135D5C3577D6E90A022AE2297F4C9DDA2C56F",
+        "NativeSymbolUiBridge.inc": "4587E8B20143F637D697A629ADB6AF6D3D6BD21FD18ECFF1D9A0E12FCF53DB6E",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849"
+      },
+      "receipt": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-safetynative-20261029-190953-003756\\quiet-job-receipt.json",
+        "SHA256": "C093C98DCFE35BA11B6D364B9D7D1359095F4AA900188BC6F66F99C3FBFD2CF5",
+        "bytes": 6365
+      },
+      "controllerAtRun": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-safetynative-20261029-190953-003756\\run_quiet_job_at_run.py",
+        "SHA256": "B34D2B78AC3A60D1C322D73CF85C1BE7D74D7D0F5316658FE86897A78BB95556",
+        "bytes": 15182
+      },
+      "controllerArchiveGap": null,
+      "validation": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-safetynative-20261029-190953-003756\\verify_native_safety_resources-closure-20261029-202148-182867.txt",
+        "SHA256": "5A74781F0B72CEA12C6C1844E9E0DC71B612ECCABD38677170CECEA1CAE5A349",
+        "bytes": 349,
+        "exitCode": 1,
+        "assertions": 13966,
+        "passed": 13964,
+        "failed": 2,
+        "result": "FAIL",
+        "validator": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_native_safety_resources.py",
+          "SHA256": "384761F2E408299750F4307BC66C837F6217CAD83EDE40415775973BECC0D2C2",
+          "bytes": 18560
+        }
+      },
+      "phase2Started": false
+    },
+    {
+      "id": "E43",
+      "kind": "GeometryNative",
+      "label": "标准几何能力控制样本",
+      "route": "ordinary AutoCAD + installed TCH support + public ObjectARX, no TCH business commands",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-geometrynative-20261029-190954-485523",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-geometrynative-20261029-190954-485523\\standard-geometry-native.json",
+      "nativeReportSHA256": "8E9CCB4F45B5EB36656126EE9235D53468FA990BC346788C31E3F55F5CC5FB9B",
+      "assertions": 2175,
+      "passed": 2175,
+      "failed": 0,
+      "result": "PASS",
+      "binarySHA256": "4B77A8682B24A592EF0E150B1E300F6479416BDB2C0B5016497A793BA56116D8",
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "FBFFF433EAC7F5669CD6730E5F0D04312FDA9088D1ECE3C6AC85A16415C06D23",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeAutoCadHostProbe.inc": "162CDF42B03F0715E0ABFE40B04DB43C3DBB9768B1A3C22B4C8BE00039E85E1A",
+        "NativeAxisContinuousNumberProbe.inc": "DD4FE3742543DBB956E69535D1319508C3074299740C3BD6B9362638B8C58DF5",
+        "NativeAxisExplodeReadback.inc": "E3CC2B10C1BFC8B072B1665B3558A53BD5EF2AF27EAABED865D4F98DE82FEA1D",
+        "NativeAxisMergeTwoProbe.inc": "D8BC749161698670B11D5F1DEBCA2765CC3F6A7DF1842B40B6AE8B4E23067962",
+        "NativeAxisOverlapPreview.inc": "FA6F8430BF4B094E60251C78123E7C8DD725055E17EA018104E01F5FB293BB0C",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5",
+        "NativeAxisTemplatePruneProbe.inc": "09F0936466364D560807EDEED6DFB525FB905D8F12D33BA5FAD21E6D593A2147",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeDimensionMergeProbe.inc": "3A6DBB774AE866BA3C75513B4B43EB43378AF85D3E97F14A5984F038F2CB53E3",
+        "NativeElevationDialogProbe.inc": "01DF79966CA1F65F37EB4B083C2C7C1E5CE8F69271EBB2A1B4B6DE3EDF6462DB",
+        "NativeElevationInkPick.inc": "761FC0D00A4FF58E0C1663768F1B620B7227A5623853A6E556BAB1BCCB6C8043",
+        "NativeElevationRoundTripProbe.inc": "55592CC17935321B25A7BCB82C07E238AABB9D3B92AE2D2E974338157DD2D460",
+        "NativeElevationRoundTripUiProbe.inc": "29EB7CA88D0ACA62E1F74057591041EA8BE9D88CC4AE629C2417925C39088F3E",
+        "NativeElevationUiBridge.inc": "57A65CF5B9D134428688DFCA23AE1FC5D2AD9B71D2A0A3E720F3E295D741D2E1",
+        "NativeFourAxisPreview.inc": "281F02628E7D4CA72AD581CDC2114BC264D2AE73BC657DE9EB1DC3412F927F96",
+        "NativeFourSideAxisProbe.inc": "1D07D4E5C5887A4E0350A750B2A4E013DF7B3F7C647E8D7F0D88F744C52930E8",
+        "NativeFourSideAxisSeedProbe.inc": "AD7F473A8974B0AA896376D5054FBE94F9D13FED86B6B244589997F01161287F",
+        "NativeFourSideAxisSingletonProbe.inc": "C18D76E641E008F917CE702633BA069134FBB7265E5CA0DB90AB5833ECBF267A",
+        "NativeHorizontalAxisProbe.inc": "7B73E50E4B01707DEB9424A206134D4A1413E1376434F6CD58C8C7A68C0B915E",
+        "NativeInputVersionAudit.inc": "C086B23B959889AE1ED149230FCCA0D6D866E8E1E1DD427B35B0CE398448B351",
+        "NativeModernAxisGripProbe.inc": "BB12BBCBD74BD1EB01BDC443B9019D093D11F032442801829C12589F48D96C64",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativeQuietWorker.inc": "F78DB1CB30BF2DB8F2FC466B64E73BBF583800B6D5165E6A93D5CCD9D6714537",
+        "NativeQuitLifecycle.inc": "CFF4B36B93160CDF4505005BAA6FBD70BB946A64068BA9602EAD17B76AD21858",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeSymbolBusinessProbe.inc": "8DD6C1BA69A755BDACB516BF3BC80ADC7E5C1638D4187336571733090A5B0261",
+        "NativeSymbolDiscoveryProbe.inc": "5A3EEE23C1BAA871892D88B474C47FFAED50986C6B6453B6EA1D1DF96C1F6B28",
+        "NativeSymbolObjectEdit.inc": "CD2B1F26D75621CD3ED4CE72A16E867572A7D39BD84FAB6614D7EFDFDB72E985",
+        "NativeSymbolPreview.inc": "FF77AB286A7976168BA73DFD75C04F814D6134C81B1DA8B418D9544272C6B83D",
+        "NativeSymbolReadback.inc": "73EBE8290DC88A78628AC845A6E4FC2DA6D364E4DE670322D905A27B59FEEF3D",
+        "NativeSymbolTextBridgeProbe.inc": "979E71FF58FA5D165EA4F812D7F135D5C3577D6E90A022AE2297F4C9DDA2C56F",
+        "NativeSymbolUiBridge.inc": "4587E8B20143F637D697A629ADB6AF6D3D6BD21FD18ECFF1D9A0E12FCF53DB6E",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849"
+      },
+      "receipt": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-geometrynative-20261029-190954-485523\\quiet-job-receipt.json",
+        "SHA256": "275777F4F260B285822DDF6D3E5823542DA69997E5A1CE9E68EE3C59AD84EF37",
+        "bytes": 6313
+      },
+      "controllerAtRun": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-geometrynative-20261029-190954-485523\\run_quiet_job_at_run.py",
+        "SHA256": "B34D2B78AC3A60D1C322D73CF85C1BE7D74D7D0F5316658FE86897A78BB95556",
+        "bytes": 15182
+      },
+      "controllerArchiveGap": null,
+      "validation": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-geometrynative-20261029-190954-485523\\verify_standard_geometry_native-closure-20261029-202148-182867.txt",
+        "SHA256": "8B32D5C208C2C55C06B95545BFC74DA7F95048439BDC634ABEA3DEEB69A1ACB7",
+        "bytes": 249,
+        "exitCode": 0,
+        "assertions": 2175,
+        "passed": 2175,
+        "failed": 0,
+        "result": "PASS",
+        "validator": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_standard_geometry_native.py",
+          "SHA256": "61170973240B2ADC30857232B591CBB8B4B44B7A67D9D743B5486B66B777528E",
+          "bytes": 6346
+        }
+      },
+      "phase2Started": false
+    },
+    {
+      "id": "E44",
+      "kind": "CandidateDiscardNative",
+      "label": "候选库验证、拒绝覆盖及成功发布",
+      "route": "ordinary AutoCAD + installed TCH support + public ObjectARX, no TCH business commands",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-candidatediscardnative-20261029-195655-078732",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-candidatediscardnative-20261029-195655-078732\\native-candidate-discard.json",
+      "nativeReportSHA256": "A54FB47967B68A0BED159FB05C3BB2ACADD78E172E6E7A2082AD5FFF63A371FB",
+      "assertions": 27,
+      "passed": 27,
+      "failed": 0,
+      "result": "PASS_BOUNDED_NATIVE_LIFECYCLE",
+      "binarySHA256": "9103B3C85C63B861BB9136BA8546EADE9DC21E5DE8CB074F9C50329CB9679BC6",
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "12F934FFFB0400C3B9768A776A49B65C7CA07817CE9EC17BF819B4BB5228985B",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeAutoCadHostProbe.inc": "162CDF42B03F0715E0ABFE40B04DB43C3DBB9768B1A3C22B4C8BE00039E85E1A",
+        "NativeAxisContinuousNumberProbe.inc": "DD4FE3742543DBB956E69535D1319508C3074299740C3BD6B9362638B8C58DF5",
+        "NativeAxisExplodeReadback.inc": "E3CC2B10C1BFC8B072B1665B3558A53BD5EF2AF27EAABED865D4F98DE82FEA1D",
+        "NativeAxisMergeTwoProbe.inc": "D8BC749161698670B11D5F1DEBCA2765CC3F6A7DF1842B40B6AE8B4E23067962",
+        "NativeAxisOverlapPreview.inc": "FA6F8430BF4B094E60251C78123E7C8DD725055E17EA018104E01F5FB293BB0C",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5",
+        "NativeAxisTemplatePruneProbe.inc": "09F0936466364D560807EDEED6DFB525FB905D8F12D33BA5FAD21E6D593A2147",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeCandidateLifecycleProbe.inc": "AB9A00EFE77DF79289BB0FE1C16D15C1471F5676EDD336D938AE55D264E21EF6",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeDimensionMergeProbe.inc": "3A6DBB774AE866BA3C75513B4B43EB43378AF85D3E97F14A5984F038F2CB53E3",
+        "NativeElevationDialogProbe.inc": "01DF79966CA1F65F37EB4B083C2C7C1E5CE8F69271EBB2A1B4B6DE3EDF6462DB",
+        "NativeElevationInkPick.inc": "761FC0D00A4FF58E0C1663768F1B620B7227A5623853A6E556BAB1BCCB6C8043",
+        "NativeElevationRoundTripProbe.inc": "55592CC17935321B25A7BCB82C07E238AABB9D3B92AE2D2E974338157DD2D460",
+        "NativeElevationRoundTripUiProbe.inc": "29EB7CA88D0ACA62E1F74057591041EA8BE9D88CC4AE629C2417925C39088F3E",
+        "NativeElevationUiBridge.inc": "57A65CF5B9D134428688DFCA23AE1FC5D2AD9B71D2A0A3E720F3E295D741D2E1",
+        "NativeFourAxisPreview.inc": "281F02628E7D4CA72AD581CDC2114BC264D2AE73BC657DE9EB1DC3412F927F96",
+        "NativeFourSideAxisProbe.inc": "1D07D4E5C5887A4E0350A750B2A4E013DF7B3F7C647E8D7F0D88F744C52930E8",
+        "NativeFourSideAxisSeedProbe.inc": "AD7F473A8974B0AA896376D5054FBE94F9D13FED86B6B244589997F01161287F",
+        "NativeFourSideAxisSingletonProbe.inc": "C18D76E641E008F917CE702633BA069134FBB7265E5CA0DB90AB5833ECBF267A",
+        "NativeHorizontalAxisProbe.inc": "7B73E50E4B01707DEB9424A206134D4A1413E1376434F6CD58C8C7A68C0B915E",
+        "NativeInputVersionAudit.inc": "C086B23B959889AE1ED149230FCCA0D6D866E8E1E1DD427B35B0CE398448B351",
+        "NativeModernAxisGripProbe.inc": "BB12BBCBD74BD1EB01BDC443B9019D093D11F032442801829C12589F48D96C64",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativeQuietWorker.inc": "F78DB1CB30BF2DB8F2FC466B64E73BBF583800B6D5165E6A93D5CCD9D6714537",
+        "NativeQuitLifecycle.inc": "CFF4B36B93160CDF4505005BAA6FBD70BB946A64068BA9602EAD17B76AD21858",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeSymbolBusinessProbe.inc": "8DD6C1BA69A755BDACB516BF3BC80ADC7E5C1638D4187336571733090A5B0261",
+        "NativeSymbolDiscoveryProbe.inc": "5A3EEE23C1BAA871892D88B474C47FFAED50986C6B6453B6EA1D1DF96C1F6B28",
+        "NativeSymbolObjectEdit.inc": "CD2B1F26D75621CD3ED4CE72A16E867572A7D39BD84FAB6614D7EFDFDB72E985",
+        "NativeSymbolPreview.inc": "FF77AB286A7976168BA73DFD75C04F814D6134C81B1DA8B418D9544272C6B83D",
+        "NativeSymbolReadback.inc": "73EBE8290DC88A78628AC845A6E4FC2DA6D364E4DE670322D905A27B59FEEF3D",
+        "NativeSymbolTextBridgeProbe.inc": "979E71FF58FA5D165EA4F812D7F135D5C3577D6E90A022AE2297F4C9DDA2C56F",
+        "NativeSymbolUiBridge.inc": "4587E8B20143F637D697A629ADB6AF6D3D6BD21FD18ECFF1D9A0E12FCF53DB6E",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849"
+      },
+      "receipt": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-candidatediscardnative-20261029-195655-078732\\quiet-job-receipt.json",
+        "SHA256": "7DCC2888089BC66CA79CEC6D6279CF42646BABE35B5AFD669B92F1F78AEE006B",
+        "bytes": 6455
+      },
+      "controllerAtRun": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-candidatediscardnative-20261029-195655-078732\\run_quiet_job_at_run.py",
+        "SHA256": "834D9971BC667C7B0EF45F8A8534DADD5A3751004746BB156AE58EEE12F01393",
+        "bytes": 16102
+      },
+      "controllerArchiveGap": null,
+      "validation": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-candidatediscardnative-20261029-195655-078732\\verify_native_candidate_lifecycle-closure-20261029-202148-182867.txt",
+        "SHA256": "ECC28E051C635F283F24AB16A68702D22D97068337A3DB90CD5620D125D1AFE8",
+        "bytes": 71,
+        "exitCode": 0,
+        "assertions": 27,
+        "passed": 27,
+        "failed": 0,
+        "result": "PASS_BOUNDED_NATIVE_LIFECYCLE",
+        "validator": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_native_candidate_lifecycle.py",
+          "SHA256": "67023455047774AFC1FBF1A20A130A038524473147D58D66762B7AB58A9566AC",
+          "bytes": 5784
+        }
+      },
+      "phase2Started": false
+    },
+    {
+      "id": "E45",
+      "kind": "ReopenDimensionNative",
+      "label": "已保存天正尺寸重开、移动、读回及恢复",
+      "route": "ordinary AutoCAD + installed TCH support + public ObjectARX, no TCH business commands",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-reopendimensionnative-20261029-195657-583956",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-reopendimensionnative-20261029-195657-583956\\native-reopen-dimension.json",
+      "nativeReportSHA256": "7BB6F87ADE9FADA7BD6D012B9B45F8C2B0E42814378401D25908FDEA8F792D75",
+      "assertions": 68,
+      "passed": 68,
+      "failed": 0,
+      "result": "PASS_BOUNDED_NATIVE_LIFECYCLE",
+      "binarySHA256": "9103B3C85C63B861BB9136BA8546EADE9DC21E5DE8CB074F9C50329CB9679BC6",
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "12F934FFFB0400C3B9768A776A49B65C7CA07817CE9EC17BF819B4BB5228985B",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeAutoCadHostProbe.inc": "162CDF42B03F0715E0ABFE40B04DB43C3DBB9768B1A3C22B4C8BE00039E85E1A",
+        "NativeAxisContinuousNumberProbe.inc": "DD4FE3742543DBB956E69535D1319508C3074299740C3BD6B9362638B8C58DF5",
+        "NativeAxisExplodeReadback.inc": "E3CC2B10C1BFC8B072B1665B3558A53BD5EF2AF27EAABED865D4F98DE82FEA1D",
+        "NativeAxisMergeTwoProbe.inc": "D8BC749161698670B11D5F1DEBCA2765CC3F6A7DF1842B40B6AE8B4E23067962",
+        "NativeAxisOverlapPreview.inc": "FA6F8430BF4B094E60251C78123E7C8DD725055E17EA018104E01F5FB293BB0C",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5",
+        "NativeAxisTemplatePruneProbe.inc": "09F0936466364D560807EDEED6DFB525FB905D8F12D33BA5FAD21E6D593A2147",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeCandidateLifecycleProbe.inc": "AB9A00EFE77DF79289BB0FE1C16D15C1471F5676EDD336D938AE55D264E21EF6",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeDimensionMergeProbe.inc": "3A6DBB774AE866BA3C75513B4B43EB43378AF85D3E97F14A5984F038F2CB53E3",
+        "NativeElevationDialogProbe.inc": "01DF79966CA1F65F37EB4B083C2C7C1E5CE8F69271EBB2A1B4B6DE3EDF6462DB",
+        "NativeElevationInkPick.inc": "761FC0D00A4FF58E0C1663768F1B620B7227A5623853A6E556BAB1BCCB6C8043",
+        "NativeElevationRoundTripProbe.inc": "55592CC17935321B25A7BCB82C07E238AABB9D3B92AE2D2E974338157DD2D460",
+        "NativeElevationRoundTripUiProbe.inc": "29EB7CA88D0ACA62E1F74057591041EA8BE9D88CC4AE629C2417925C39088F3E",
+        "NativeElevationUiBridge.inc": "57A65CF5B9D134428688DFCA23AE1FC5D2AD9B71D2A0A3E720F3E295D741D2E1",
+        "NativeFourAxisPreview.inc": "281F02628E7D4CA72AD581CDC2114BC264D2AE73BC657DE9EB1DC3412F927F96",
+        "NativeFourSideAxisProbe.inc": "1D07D4E5C5887A4E0350A750B2A4E013DF7B3F7C647E8D7F0D88F744C52930E8",
+        "NativeFourSideAxisSeedProbe.inc": "AD7F473A8974B0AA896376D5054FBE94F9D13FED86B6B244589997F01161287F",
+        "NativeFourSideAxisSingletonProbe.inc": "C18D76E641E008F917CE702633BA069134FBB7265E5CA0DB90AB5833ECBF267A",
+        "NativeHorizontalAxisProbe.inc": "7B73E50E4B01707DEB9424A206134D4A1413E1376434F6CD58C8C7A68C0B915E",
+        "NativeInputVersionAudit.inc": "C086B23B959889AE1ED149230FCCA0D6D866E8E1E1DD427B35B0CE398448B351",
+        "NativeModernAxisGripProbe.inc": "BB12BBCBD74BD1EB01BDC443B9019D093D11F032442801829C12589F48D96C64",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativeQuietWorker.inc": "F78DB1CB30BF2DB8F2FC466B64E73BBF583800B6D5165E6A93D5CCD9D6714537",
+        "NativeQuitLifecycle.inc": "CFF4B36B93160CDF4505005BAA6FBD70BB946A64068BA9602EAD17B76AD21858",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeSymbolBusinessProbe.inc": "8DD6C1BA69A755BDACB516BF3BC80ADC7E5C1638D4187336571733090A5B0261",
+        "NativeSymbolDiscoveryProbe.inc": "5A3EEE23C1BAA871892D88B474C47FFAED50986C6B6453B6EA1D1DF96C1F6B28",
+        "NativeSymbolObjectEdit.inc": "CD2B1F26D75621CD3ED4CE72A16E867572A7D39BD84FAB6614D7EFDFDB72E985",
+        "NativeSymbolPreview.inc": "FF77AB286A7976168BA73DFD75C04F814D6134C81B1DA8B418D9544272C6B83D",
+        "NativeSymbolReadback.inc": "73EBE8290DC88A78628AC845A6E4FC2DA6D364E4DE670322D905A27B59FEEF3D",
+        "NativeSymbolTextBridgeProbe.inc": "979E71FF58FA5D165EA4F812D7F135D5C3577D6E90A022AE2297F4C9DDA2C56F",
+        "NativeSymbolUiBridge.inc": "4587E8B20143F637D697A629ADB6AF6D3D6BD21FD18ECFF1D9A0E12FCF53DB6E",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849"
+      },
+      "receipt": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-reopendimensionnative-20261029-195657-583956\\quiet-job-receipt.json",
+        "SHA256": "7705349BEA83B58BA143D2E734CF8D6DB0F9823BD385468D1CE61A22E9E1DFB7",
+        "bytes": 6819
+      },
+      "controllerAtRun": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-reopendimensionnative-20261029-195657-583956\\run_quiet_job_at_run.py",
+        "SHA256": "834D9971BC667C7B0EF45F8A8534DADD5A3751004746BB156AE58EEE12F01393",
+        "bytes": 16102
+      },
+      "controllerArchiveGap": null,
+      "validation": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-reopendimensionnative-20261029-195657-583956\\verify_native_candidate_lifecycle-closure-20261029-202148-182867.txt",
+        "SHA256": "68A293C73F37EC296D50F60E85C42557983B71F42FFC666F1311E1F35B2541A3",
+        "bytes": 71,
+        "exitCode": 0,
+        "assertions": 68,
+        "passed": 68,
+        "failed": 0,
+        "result": "PASS_BOUNDED_NATIVE_LIFECYCLE",
+        "validator": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_native_candidate_lifecycle.py",
+          "SHA256": "67023455047774AFC1FBF1A20A130A038524473147D58D66762B7AB58A9566AC",
+          "bytes": 5784
+        }
+      },
+      "phase2Started": false
+    },
+    {
+      "id": "E46",
+      "kind": "RxDiscoveryNative",
+      "label": "公开 RX 属性只读发现",
+      "route": "ordinary AutoCAD + installed TCH support + public ObjectARX, no TCH business commands",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-rxdiscoverynative-20261029-200731-743368",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-rxdiscoverynative-20261029-200731-743368\\native-rx-discovery.json",
+      "nativeReportSHA256": "8FA21CE1A14E8561A1C912B698916C444F3103EE1B0ED53ABD273C5E1976F9FB",
+      "assertions": 33,
+      "passed": 33,
+      "failed": 0,
+      "result": "PASS_READ_ONLY_DISCOVERY",
+      "binarySHA256": "2FB0146F8C5CA703BB1865E48CF0ADD8F4994D01BA1620103FF7B87329DDB36E",
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "78A8DA7066A8014B94842E8A1CB98C6FF1B183FE56EA78D24865D7C90936B0D0",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeAutoCadHostProbe.inc": "162CDF42B03F0715E0ABFE40B04DB43C3DBB9768B1A3C22B4C8BE00039E85E1A",
+        "NativeAxisContinuousNumberProbe.inc": "DD4FE3742543DBB956E69535D1319508C3074299740C3BD6B9362638B8C58DF5",
+        "NativeAxisExplodeReadback.inc": "E3CC2B10C1BFC8B072B1665B3558A53BD5EF2AF27EAABED865D4F98DE82FEA1D",
+        "NativeAxisMergeTwoProbe.inc": "D8BC749161698670B11D5F1DEBCA2765CC3F6A7DF1842B40B6AE8B4E23067962",
+        "NativeAxisOverlapPreview.inc": "FA6F8430BF4B094E60251C78123E7C8DD725055E17EA018104E01F5FB293BB0C",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5",
+        "NativeAxisTemplatePruneProbe.inc": "09F0936466364D560807EDEED6DFB525FB905D8F12D33BA5FAD21E6D593A2147",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeCandidateLifecycleProbe.inc": "AB9A00EFE77DF79289BB0FE1C16D15C1471F5676EDD336D938AE55D264E21EF6",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeDimensionMergeProbe.inc": "3A6DBB774AE866BA3C75513B4B43EB43378AF85D3E97F14A5984F038F2CB53E3",
+        "NativeElevationDialogProbe.inc": "01DF79966CA1F65F37EB4B083C2C7C1E5CE8F69271EBB2A1B4B6DE3EDF6462DB",
+        "NativeElevationInkPick.inc": "761FC0D00A4FF58E0C1663768F1B620B7227A5623853A6E556BAB1BCCB6C8043",
+        "NativeElevationRoundTripProbe.inc": "55592CC17935321B25A7BCB82C07E238AABB9D3B92AE2D2E974338157DD2D460",
+        "NativeElevationRoundTripUiProbe.inc": "29EB7CA88D0ACA62E1F74057591041EA8BE9D88CC4AE629C2417925C39088F3E",
+        "NativeElevationUiBridge.inc": "57A65CF5B9D134428688DFCA23AE1FC5D2AD9B71D2A0A3E720F3E295D741D2E1",
+        "NativeFourAxisPreview.inc": "281F02628E7D4CA72AD581CDC2114BC264D2AE73BC657DE9EB1DC3412F927F96",
+        "NativeFourSideAxisProbe.inc": "1D07D4E5C5887A4E0350A750B2A4E013DF7B3F7C647E8D7F0D88F744C52930E8",
+        "NativeFourSideAxisSeedProbe.inc": "AD7F473A8974B0AA896376D5054FBE94F9D13FED86B6B244589997F01161287F",
+        "NativeFourSideAxisSingletonProbe.inc": "C18D76E641E008F917CE702633BA069134FBB7265E5CA0DB90AB5833ECBF267A",
+        "NativeHorizontalAxisProbe.inc": "7B73E50E4B01707DEB9424A206134D4A1413E1376434F6CD58C8C7A68C0B915E",
+        "NativeInputVersionAudit.inc": "C086B23B959889AE1ED149230FCCA0D6D866E8E1E1DD427B35B0CE398448B351",
+        "NativeModernAxisGripProbe.inc": "BB12BBCBD74BD1EB01BDC443B9019D093D11F032442801829C12589F48D96C64",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativeQuietWorker.inc": "F78DB1CB30BF2DB8F2FC466B64E73BBF583800B6D5165E6A93D5CCD9D6714537",
+        "NativeQuitLifecycle.inc": "CFF4B36B93160CDF4505005BAA6FBD70BB946A64068BA9602EAD17B76AD21858",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeSymbolBusinessProbe.inc": "8DD6C1BA69A755BDACB516BF3BC80ADC7E5C1638D4187336571733090A5B0261",
+        "NativeSymbolDiscoveryProbe.inc": "5A3EEE23C1BAA871892D88B474C47FFAED50986C6B6453B6EA1D1DF96C1F6B28",
+        "NativeSymbolObjectEdit.inc": "CD2B1F26D75621CD3ED4CE72A16E867572A7D39BD84FAB6614D7EFDFDB72E985",
+        "NativeSymbolPreview.inc": "FF77AB286A7976168BA73DFD75C04F814D6134C81B1DA8B418D9544272C6B83D",
+        "NativeSymbolReadback.inc": "73EBE8290DC88A78628AC845A6E4FC2DA6D364E4DE670322D905A27B59FEEF3D",
+        "NativeSymbolTextBridgeProbe.inc": "979E71FF58FA5D165EA4F812D7F135D5C3577D6E90A022AE2297F4C9DDA2C56F",
+        "NativeSymbolUiBridge.inc": "4587E8B20143F637D697A629ADB6AF6D3D6BD21FD18ECFF1D9A0E12FCF53DB6E",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849",
+        "NativeRxDiscoveryProbe.inc": "FC180715DC08522696598D2B060AB5093DCE0E0A5E831D611E6A4A8D12F05013"
+      },
+      "receipt": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-rxdiscoverynative-20261029-200731-743368\\quiet-job-receipt.json",
+        "SHA256": "670B39C4D1482E5C94DEEDD9FF6BBD27F0DBDD90D8CAB3EC984C603997D0EDEB",
+        "bytes": 6538
+      },
+      "controllerAtRun": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-rxdiscoverynative-20261029-200731-743368\\run_quiet_job_at_run.py",
+        "SHA256": "6F5FFF9A54BEC3482D7B8FBAEA5EC0451876D4CA70C319BA8025D34C9A9BBBA4",
+        "bytes": 16214
+      },
+      "controllerArchiveGap": null,
+      "validation": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-rxdiscoverynative-20261029-200731-743368\\verify_native_rx_discovery-closure-20261029-202148-182867.txt",
+        "SHA256": "39D1619F0E2F4214CD293B3227AA7BBD7FFE9C1F67514547629BF886C2093EF3",
+        "bytes": 66,
+        "exitCode": 0,
+        "assertions": 33,
+        "passed": 33,
+        "failed": 0,
+        "result": "PASS_READ_ONLY_DISCOVERY",
+        "validator": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_native_rx_discovery.py",
+          "SHA256": "64049E6928F589EFA877C8DA8B8350966EEDBA280B8FAEA2E375B50FF4B5A3E7",
+          "bytes": 2108
+        }
+      },
+      "phase2Started": false
+    },
+    {
+      "id": "E47",
+      "kind": "PreexistingCandidateProtection",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-preexistingcandidate-20261029-195738-386444",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-preexistingcandidate-20261029-195738-386444\\native-candidate-discard.json",
+      "nativeReportSHA256": "7E56614BBB5E911733D8AD6AA5A0BE8367DE75EFFB83C2B4053133A62004B890",
+      "binarySHA256": "9103B3C85C63B861BB9136BA8546EADE9DC21E5DE8CB074F9C50329CB9679BC6",
+      "result": "PASS_EXPECTED_PREFLIGHT_REJECTION",
+      "expectedNativeAttemptRejected": true,
+      "assertions": 5,
+      "passed": 5,
+      "failed": 0,
+      "evidence": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-preexistingcandidate-20261029-195738-386444\\preexisting-protection.json",
+        "SHA256": "D5D25D4DFED617BE7CDB9A585C1964039752FDA0542F3B4A50452FDC3AF07249",
+        "bytes": 6816,
+        "completed": true,
+        "preserved": true,
+        "binarySHA256": "9103B3C85C63B861BB9136BA8546EADE9DC21E5DE8CB074F9C50329CB9679BC6",
+        "driverAtRun": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-preexistingcandidate-20261029-195738-386444\\ProbePreexistingCandidate.py",
+          "SHA256": "8FCA05C28D0F17B02BAB8D05205EF49E12917D4AA5E1D6F628FB8991CB654FB0",
+          "bytes": 2862
+        }
+      },
+      "scope": "Five actual driver checks; expected native case rejection is not a successful full native publication-suite run"
+    },
+    {
+      "id": "E48",
+      "kind": "SchemeCatalogNative",
+      "route": "AutoCAD SDK only; no TCH business commands or panels",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-schemecatalognative-20261030-093625-625530",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-schemecatalognative-20261030-093625-625530\\native-semantic-catalog.json",
+      "nativeReportSHA256": "1CFB6096273886CBB7EF2A009115A602A02B15F842B858B2BC6817F8E5A0B1CE",
+      "binarySHA256": "963E9C8EDFF2055A9D90CAC0561E905719D00A428E4229CB3689E75C02A46C65",
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "96B83996D6BEF1E01CA9CE14CC22E1CCCD64AAB17ABB24D44F1AF09F963471F4",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeAutoCadHostProbe.inc": "162CDF42B03F0715E0ABFE40B04DB43C3DBB9768B1A3C22B4C8BE00039E85E1A",
+        "NativeAxisContinuousNumberProbe.inc": "DD4FE3742543DBB956E69535D1319508C3074299740C3BD6B9362638B8C58DF5",
+        "NativeAxisExplodeReadback.inc": "E3CC2B10C1BFC8B072B1665B3558A53BD5EF2AF27EAABED865D4F98DE82FEA1D",
+        "NativeAxisMergeTwoProbe.inc": "D8BC749161698670B11D5F1DEBCA2765CC3F6A7DF1842B40B6AE8B4E23067962",
+        "NativeAxisOverlapPreview.inc": "FA6F8430BF4B094E60251C78123E7C8DD725055E17EA018104E01F5FB293BB0C",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5",
+        "NativeAxisTemplatePruneProbe.inc": "09F0936466364D560807EDEED6DFB525FB905D8F12D33BA5FAD21E6D593A2147",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeCandidateLifecycleProbe.inc": "AB9A00EFE77DF79289BB0FE1C16D15C1471F5676EDD336D938AE55D264E21EF6",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeDimensionMergeProbe.inc": "3A6DBB774AE866BA3C75513B4B43EB43378AF85D3E97F14A5984F038F2CB53E3",
+        "NativeElevationDialogProbe.inc": "01DF79966CA1F65F37EB4B083C2C7C1E5CE8F69271EBB2A1B4B6DE3EDF6462DB",
+        "NativeElevationInkPick.inc": "761FC0D00A4FF58E0C1663768F1B620B7227A5623853A6E556BAB1BCCB6C8043",
+        "NativeElevationRoundTripProbe.inc": "55592CC17935321B25A7BCB82C07E238AABB9D3B92AE2D2E974338157DD2D460",
+        "NativeElevationRoundTripUiProbe.inc": "29EB7CA88D0ACA62E1F74057591041EA8BE9D88CC4AE629C2417925C39088F3E",
+        "NativeElevationUiBridge.inc": "57A65CF5B9D134428688DFCA23AE1FC5D2AD9B71D2A0A3E720F3E295D741D2E1",
+        "NativeFourAxisPreview.inc": "281F02628E7D4CA72AD581CDC2114BC264D2AE73BC657DE9EB1DC3412F927F96",
+        "NativeFourSideAxisProbe.inc": "1D07D4E5C5887A4E0350A750B2A4E013DF7B3F7C647E8D7F0D88F744C52930E8",
+        "NativeFourSideAxisSeedProbe.inc": "AD7F473A8974B0AA896376D5054FBE94F9D13FED86B6B244589997F01161287F",
+        "NativeFourSideAxisSingletonProbe.inc": "C18D76E641E008F917CE702633BA069134FBB7265E5CA0DB90AB5833ECBF267A",
+        "NativeHorizontalAxisProbe.inc": "7B73E50E4B01707DEB9424A206134D4A1413E1376434F6CD58C8C7A68C0B915E",
+        "NativeInputVersionAudit.inc": "C086B23B959889AE1ED149230FCCA0D6D866E8E1E1DD427B35B0CE398448B351",
+        "NativeModernAxisGripProbe.inc": "BB12BBCBD74BD1EB01BDC443B9019D093D11F032442801829C12589F48D96C64",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativeQuietWorker.inc": "F78DB1CB30BF2DB8F2FC466B64E73BBF583800B6D5165E6A93D5CCD9D6714537",
+        "NativeQuitLifecycle.inc": "CFF4B36B93160CDF4505005BAA6FBD70BB946A64068BA9602EAD17B76AD21858",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeSymbolBusinessProbe.inc": "8DD6C1BA69A755BDACB516BF3BC80ADC7E5C1638D4187336571733090A5B0261",
+        "NativeSymbolDiscoveryProbe.inc": "5A3EEE23C1BAA871892D88B474C47FFAED50986C6B6453B6EA1D1DF96C1F6B28",
+        "NativeSymbolObjectEdit.inc": "CD2B1F26D75621CD3ED4CE72A16E867572A7D39BD84FAB6614D7EFDFDB72E985",
+        "NativeSymbolPreview.inc": "FF77AB286A7976168BA73DFD75C04F814D6134C81B1DA8B418D9544272C6B83D",
+        "NativeSymbolReadback.inc": "73EBE8290DC88A78628AC845A6E4FC2DA6D364E4DE670322D905A27B59FEEF3D",
+        "NativeSymbolTextBridgeProbe.inc": "979E71FF58FA5D165EA4F812D7F135D5C3577D6E90A022AE2297F4C9DDA2C56F",
+        "NativeSymbolUiBridge.inc": "4587E8B20143F637D697A629ADB6AF6D3D6BD21FD18ECFF1D9A0E12FCF53DB6E",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849",
+        "NativeRxDiscoveryProbe.inc": "FC180715DC08522696598D2B060AB5093DCE0E0A5E831D611E6A4A8D12F05013",
+        "NativePureContinuationProbe.inc": "BFA79388F43699E3373256618A23D30D1D72B982FB3E07BB94B981C2ACFFB74E"
+      },
+      "receipt": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-schemecatalognative-20261030-093625-625530\\quiet-job-receipt.json",
+        "SHA256": "16D458ACCBF2B93A2BD6A7020E6C88D143A22040BF7D4E342EFC8E657A7F37C6"
+      },
+      "controller": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-schemecatalognative-20261030-093625-625530\\run_quiet_job_at_run.py",
+        "SHA256": "28BAE124B199C7C34C800F7903D784D96124483A2A98A52D04B89DB6CBAFA9EA"
+      },
+      "assertions": 151,
+      "passed": 151,
+      "failed": 0,
+      "result": "PASS_BOUNDED_NATIVE_CONTRACT",
+      "validation": {
+        "log": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-schemecatalognative-20261030-093625-625530\\verify-pure-closure-20261030-100157.txt",
+          "SHA256": "B7681211E42EF676230DA20F431C375AA65D50CAB0C7975416E2DD503FC4B457"
+        },
+        "validator": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_pure_native_continuation.py",
+          "SHA256": "826C36D6BDD2764831A9AE0D1106F3EE3E9C3EA6AE889191992FD2FFF457287A"
+        },
+        "exitCode": 0,
+        "assertions": 151,
+        "passed": 151,
+        "failed": 0,
+        "result": "PASS_BOUNDED_NATIVE_CONTRACT"
+      }
+    },
+    {
+      "id": "E49",
+      "kind": "ReferenceCatalogNative",
+      "route": "AutoCAD SDK only; no TCH business commands or panels",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-referencecatalognative-20261030-093630-252326",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-referencecatalognative-20261030-093630-252326\\native-semantic-catalog.json",
+      "nativeReportSHA256": "E95C7A2E10A5369B6847F828600A6B40FDA2A8F4A4B0E752A9D37B8A3A278A3C",
+      "binarySHA256": "963E9C8EDFF2055A9D90CAC0561E905719D00A428E4229CB3689E75C02A46C65",
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "96B83996D6BEF1E01CA9CE14CC22E1CCCD64AAB17ABB24D44F1AF09F963471F4",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeAutoCadHostProbe.inc": "162CDF42B03F0715E0ABFE40B04DB43C3DBB9768B1A3C22B4C8BE00039E85E1A",
+        "NativeAxisContinuousNumberProbe.inc": "DD4FE3742543DBB956E69535D1319508C3074299740C3BD6B9362638B8C58DF5",
+        "NativeAxisExplodeReadback.inc": "E3CC2B10C1BFC8B072B1665B3558A53BD5EF2AF27EAABED865D4F98DE82FEA1D",
+        "NativeAxisMergeTwoProbe.inc": "D8BC749161698670B11D5F1DEBCA2765CC3F6A7DF1842B40B6AE8B4E23067962",
+        "NativeAxisOverlapPreview.inc": "FA6F8430BF4B094E60251C78123E7C8DD725055E17EA018104E01F5FB293BB0C",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5",
+        "NativeAxisTemplatePruneProbe.inc": "09F0936466364D560807EDEED6DFB525FB905D8F12D33BA5FAD21E6D593A2147",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeCandidateLifecycleProbe.inc": "AB9A00EFE77DF79289BB0FE1C16D15C1471F5676EDD336D938AE55D264E21EF6",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeDimensionMergeProbe.inc": "3A6DBB774AE866BA3C75513B4B43EB43378AF85D3E97F14A5984F038F2CB53E3",
+        "NativeElevationDialogProbe.inc": "01DF79966CA1F65F37EB4B083C2C7C1E5CE8F69271EBB2A1B4B6DE3EDF6462DB",
+        "NativeElevationInkPick.inc": "761FC0D00A4FF58E0C1663768F1B620B7227A5623853A6E556BAB1BCCB6C8043",
+        "NativeElevationRoundTripProbe.inc": "55592CC17935321B25A7BCB82C07E238AABB9D3B92AE2D2E974338157DD2D460",
+        "NativeElevationRoundTripUiProbe.inc": "29EB7CA88D0ACA62E1F74057591041EA8BE9D88CC4AE629C2417925C39088F3E",
+        "NativeElevationUiBridge.inc": "57A65CF5B9D134428688DFCA23AE1FC5D2AD9B71D2A0A3E720F3E295D741D2E1",
+        "NativeFourAxisPreview.inc": "281F02628E7D4CA72AD581CDC2114BC264D2AE73BC657DE9EB1DC3412F927F96",
+        "NativeFourSideAxisProbe.inc": "1D07D4E5C5887A4E0350A750B2A4E013DF7B3F7C647E8D7F0D88F744C52930E8",
+        "NativeFourSideAxisSeedProbe.inc": "AD7F473A8974B0AA896376D5054FBE94F9D13FED86B6B244589997F01161287F",
+        "NativeFourSideAxisSingletonProbe.inc": "C18D76E641E008F917CE702633BA069134FBB7265E5CA0DB90AB5833ECBF267A",
+        "NativeHorizontalAxisProbe.inc": "7B73E50E4B01707DEB9424A206134D4A1413E1376434F6CD58C8C7A68C0B915E",
+        "NativeInputVersionAudit.inc": "C086B23B959889AE1ED149230FCCA0D6D866E8E1E1DD427B35B0CE398448B351",
+        "NativeModernAxisGripProbe.inc": "BB12BBCBD74BD1EB01BDC443B9019D093D11F032442801829C12589F48D96C64",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativeQuietWorker.inc": "F78DB1CB30BF2DB8F2FC466B64E73BBF583800B6D5165E6A93D5CCD9D6714537",
+        "NativeQuitLifecycle.inc": "CFF4B36B93160CDF4505005BAA6FBD70BB946A64068BA9602EAD17B76AD21858",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeSymbolBusinessProbe.inc": "8DD6C1BA69A755BDACB516BF3BC80ADC7E5C1638D4187336571733090A5B0261",
+        "NativeSymbolDiscoveryProbe.inc": "5A3EEE23C1BAA871892D88B474C47FFAED50986C6B6453B6EA1D1DF96C1F6B28",
+        "NativeSymbolObjectEdit.inc": "CD2B1F26D75621CD3ED4CE72A16E867572A7D39BD84FAB6614D7EFDFDB72E985",
+        "NativeSymbolPreview.inc": "FF77AB286A7976168BA73DFD75C04F814D6134C81B1DA8B418D9544272C6B83D",
+        "NativeSymbolReadback.inc": "73EBE8290DC88A78628AC845A6E4FC2DA6D364E4DE670322D905A27B59FEEF3D",
+        "NativeSymbolTextBridgeProbe.inc": "979E71FF58FA5D165EA4F812D7F135D5C3577D6E90A022AE2297F4C9DDA2C56F",
+        "NativeSymbolUiBridge.inc": "4587E8B20143F637D697A629ADB6AF6D3D6BD21FD18ECFF1D9A0E12FCF53DB6E",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849",
+        "NativeRxDiscoveryProbe.inc": "FC180715DC08522696598D2B060AB5093DCE0E0A5E831D611E6A4A8D12F05013",
+        "NativePureContinuationProbe.inc": "BFA79388F43699E3373256618A23D30D1D72B982FB3E07BB94B981C2ACFFB74E"
+      },
+      "receipt": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-referencecatalognative-20261030-093630-252326\\quiet-job-receipt.json",
+        "SHA256": "375044DC6D286705685D159BA5751D17126523C493747EF49EA3B32E0256587C"
+      },
+      "controller": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-referencecatalognative-20261030-093630-252326\\run_quiet_job_at_run.py",
+        "SHA256": "28BAE124B199C7C34C800F7903D784D96124483A2A98A52D04B89DB6CBAFA9EA"
+      },
+      "assertions": 151,
+      "passed": 151,
+      "failed": 0,
+      "result": "PASS_BOUNDED_NATIVE_CONTRACT",
+      "validation": {
+        "log": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-referencecatalognative-20261030-093630-252326\\verify-pure-closure-20261030-100157.txt",
+          "SHA256": "B7681211E42EF676230DA20F431C375AA65D50CAB0C7975416E2DD503FC4B457"
+        },
+        "validator": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_pure_native_continuation.py",
+          "SHA256": "826C36D6BDD2764831A9AE0D1106F3EE3E9C3EA6AE889191992FD2FFF457287A"
+        },
+        "exitCode": 0,
+        "assertions": 151,
+        "passed": 151,
+        "failed": 0,
+        "result": "PASS_BOUNDED_NATIVE_CONTRACT"
+      }
+    },
+    {
+      "id": "E50",
+      "kind": "ActualFontsNative",
+      "route": "AutoCAD SDK only; no TCH business commands or panels",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-actualfontsnative-20261030-093625-059536",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-actualfontsnative-20261030-093625-059536\\native-actual-fonts.json",
+      "nativeReportSHA256": "0A1DA6543AF9D9C91E01B8FA69F159CBF12EAFC64729996C6BC8EC4C99A2D322",
+      "binarySHA256": "963E9C8EDFF2055A9D90CAC0561E905719D00A428E4229CB3689E75C02A46C65",
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "96B83996D6BEF1E01CA9CE14CC22E1CCCD64AAB17ABB24D44F1AF09F963471F4",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeAutoCadHostProbe.inc": "162CDF42B03F0715E0ABFE40B04DB43C3DBB9768B1A3C22B4C8BE00039E85E1A",
+        "NativeAxisContinuousNumberProbe.inc": "DD4FE3742543DBB956E69535D1319508C3074299740C3BD6B9362638B8C58DF5",
+        "NativeAxisExplodeReadback.inc": "E3CC2B10C1BFC8B072B1665B3558A53BD5EF2AF27EAABED865D4F98DE82FEA1D",
+        "NativeAxisMergeTwoProbe.inc": "D8BC749161698670B11D5F1DEBCA2765CC3F6A7DF1842B40B6AE8B4E23067962",
+        "NativeAxisOverlapPreview.inc": "FA6F8430BF4B094E60251C78123E7C8DD725055E17EA018104E01F5FB293BB0C",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5",
+        "NativeAxisTemplatePruneProbe.inc": "09F0936466364D560807EDEED6DFB525FB905D8F12D33BA5FAD21E6D593A2147",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeCandidateLifecycleProbe.inc": "AB9A00EFE77DF79289BB0FE1C16D15C1471F5676EDD336D938AE55D264E21EF6",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeDimensionMergeProbe.inc": "3A6DBB774AE866BA3C75513B4B43EB43378AF85D3E97F14A5984F038F2CB53E3",
+        "NativeElevationDialogProbe.inc": "01DF79966CA1F65F37EB4B083C2C7C1E5CE8F69271EBB2A1B4B6DE3EDF6462DB",
+        "NativeElevationInkPick.inc": "761FC0D00A4FF58E0C1663768F1B620B7227A5623853A6E556BAB1BCCB6C8043",
+        "NativeElevationRoundTripProbe.inc": "55592CC17935321B25A7BCB82C07E238AABB9D3B92AE2D2E974338157DD2D460",
+        "NativeElevationRoundTripUiProbe.inc": "29EB7CA88D0ACA62E1F74057591041EA8BE9D88CC4AE629C2417925C39088F3E",
+        "NativeElevationUiBridge.inc": "57A65CF5B9D134428688DFCA23AE1FC5D2AD9B71D2A0A3E720F3E295D741D2E1",
+        "NativeFourAxisPreview.inc": "281F02628E7D4CA72AD581CDC2114BC264D2AE73BC657DE9EB1DC3412F927F96",
+        "NativeFourSideAxisProbe.inc": "1D07D4E5C5887A4E0350A750B2A4E013DF7B3F7C647E8D7F0D88F744C52930E8",
+        "NativeFourSideAxisSeedProbe.inc": "AD7F473A8974B0AA896376D5054FBE94F9D13FED86B6B244589997F01161287F",
+        "NativeFourSideAxisSingletonProbe.inc": "C18D76E641E008F917CE702633BA069134FBB7265E5CA0DB90AB5833ECBF267A",
+        "NativeHorizontalAxisProbe.inc": "7B73E50E4B01707DEB9424A206134D4A1413E1376434F6CD58C8C7A68C0B915E",
+        "NativeInputVersionAudit.inc": "C086B23B959889AE1ED149230FCCA0D6D866E8E1E1DD427B35B0CE398448B351",
+        "NativeModernAxisGripProbe.inc": "BB12BBCBD74BD1EB01BDC443B9019D093D11F032442801829C12589F48D96C64",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativeQuietWorker.inc": "F78DB1CB30BF2DB8F2FC466B64E73BBF583800B6D5165E6A93D5CCD9D6714537",
+        "NativeQuitLifecycle.inc": "CFF4B36B93160CDF4505005BAA6FBD70BB946A64068BA9602EAD17B76AD21858",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeSymbolBusinessProbe.inc": "8DD6C1BA69A755BDACB516BF3BC80ADC7E5C1638D4187336571733090A5B0261",
+        "NativeSymbolDiscoveryProbe.inc": "5A3EEE23C1BAA871892D88B474C47FFAED50986C6B6453B6EA1D1DF96C1F6B28",
+        "NativeSymbolObjectEdit.inc": "CD2B1F26D75621CD3ED4CE72A16E867572A7D39BD84FAB6614D7EFDFDB72E985",
+        "NativeSymbolPreview.inc": "FF77AB286A7976168BA73DFD75C04F814D6134C81B1DA8B418D9544272C6B83D",
+        "NativeSymbolReadback.inc": "73EBE8290DC88A78628AC845A6E4FC2DA6D364E4DE670322D905A27B59FEEF3D",
+        "NativeSymbolTextBridgeProbe.inc": "979E71FF58FA5D165EA4F812D7F135D5C3577D6E90A022AE2297F4C9DDA2C56F",
+        "NativeSymbolUiBridge.inc": "4587E8B20143F637D697A629ADB6AF6D3D6BD21FD18ECFF1D9A0E12FCF53DB6E",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849",
+        "NativeRxDiscoveryProbe.inc": "FC180715DC08522696598D2B060AB5093DCE0E0A5E831D611E6A4A8D12F05013",
+        "NativePureContinuationProbe.inc": "BFA79388F43699E3373256618A23D30D1D72B982FB3E07BB94B981C2ACFFB74E"
+      },
+      "receipt": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-actualfontsnative-20261030-093625-059536\\quiet-job-receipt.json",
+        "SHA256": "F2314411ABD701BF19E3B42348617DA4E4FDA3149C13B403E46D9CC8E8A1EBAB"
+      },
+      "controller": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-actualfontsnative-20261030-093625-059536\\run_quiet_job_at_run.py",
+        "SHA256": "28BAE124B199C7C34C800F7903D784D96124483A2A98A52D04B89DB6CBAFA9EA"
+      },
+      "assertions": 52,
+      "passed": 45,
+      "failed": 7,
+      "result": "FAIL",
+      "validation": {
+        "log": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-actualfontsnative-20261030-093625-059536\\verify-pure-closure-20261030-100157.txt",
+          "SHA256": "4947B01833532FFCACBDB0DD67AE8E903AAE62DC942140CBC30C1613C3BA9883"
+        },
+        "validator": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_pure_native_continuation.py",
+          "SHA256": "826C36D6BDD2764831A9AE0D1106F3EE3E9C3EA6AE889191992FD2FFF457287A"
+        },
+        "exitCode": 1,
+        "assertions": 52,
+        "passed": 45,
+        "failed": 7,
+        "result": "FAIL"
+      }
+    },
+    {
+      "id": "E51",
+      "kind": "GenericTextNative",
+      "route": "AutoCAD SDK only; no TCH business commands or panels",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-generictextnative-20261030-095446-675381",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-generictextnative-20261030-095446-675381\\native-generic-text-copy.json",
+      "nativeReportSHA256": "9B7DB998396529C95E3D0E701803D66D9B42800FEA49E3EF6FA6472D78DC698D",
+      "binarySHA256": "3F98175605D7F1E08F3D0E690C95FE41AB93563C46937080FDE42759FF663655",
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "890A41EC31F7B3BDB7BA8141B7411460F2306D1921CFA3C2A3BF259CA0E32569",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeAutoCadHostProbe.inc": "162CDF42B03F0715E0ABFE40B04DB43C3DBB9768B1A3C22B4C8BE00039E85E1A",
+        "NativeAxisContinuousNumberProbe.inc": "DD4FE3742543DBB956E69535D1319508C3074299740C3BD6B9362638B8C58DF5",
+        "NativeAxisExplodeReadback.inc": "E3CC2B10C1BFC8B072B1665B3558A53BD5EF2AF27EAABED865D4F98DE82FEA1D",
+        "NativeAxisMergeTwoProbe.inc": "D8BC749161698670B11D5F1DEBCA2765CC3F6A7DF1842B40B6AE8B4E23067962",
+        "NativeAxisOverlapPreview.inc": "FA6F8430BF4B094E60251C78123E7C8DD725055E17EA018104E01F5FB293BB0C",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5",
+        "NativeAxisTemplatePruneProbe.inc": "09F0936466364D560807EDEED6DFB525FB905D8F12D33BA5FAD21E6D593A2147",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeCandidateLifecycleProbe.inc": "AB9A00EFE77DF79289BB0FE1C16D15C1471F5676EDD336D938AE55D264E21EF6",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeDimensionMergeProbe.inc": "3A6DBB774AE866BA3C75513B4B43EB43378AF85D3E97F14A5984F038F2CB53E3",
+        "NativeElevationDialogProbe.inc": "01DF79966CA1F65F37EB4B083C2C7C1E5CE8F69271EBB2A1B4B6DE3EDF6462DB",
+        "NativeElevationInkPick.inc": "761FC0D00A4FF58E0C1663768F1B620B7227A5623853A6E556BAB1BCCB6C8043",
+        "NativeElevationRoundTripProbe.inc": "55592CC17935321B25A7BCB82C07E238AABB9D3B92AE2D2E974338157DD2D460",
+        "NativeElevationRoundTripUiProbe.inc": "29EB7CA88D0ACA62E1F74057591041EA8BE9D88CC4AE629C2417925C39088F3E",
+        "NativeElevationUiBridge.inc": "57A65CF5B9D134428688DFCA23AE1FC5D2AD9B71D2A0A3E720F3E295D741D2E1",
+        "NativeFourAxisPreview.inc": "281F02628E7D4CA72AD581CDC2114BC264D2AE73BC657DE9EB1DC3412F927F96",
+        "NativeFourSideAxisProbe.inc": "1D07D4E5C5887A4E0350A750B2A4E013DF7B3F7C647E8D7F0D88F744C52930E8",
+        "NativeFourSideAxisSeedProbe.inc": "AD7F473A8974B0AA896376D5054FBE94F9D13FED86B6B244589997F01161287F",
+        "NativeFourSideAxisSingletonProbe.inc": "C18D76E641E008F917CE702633BA069134FBB7265E5CA0DB90AB5833ECBF267A",
+        "NativeHorizontalAxisProbe.inc": "7B73E50E4B01707DEB9424A206134D4A1413E1376434F6CD58C8C7A68C0B915E",
+        "NativeInputVersionAudit.inc": "C086B23B959889AE1ED149230FCCA0D6D866E8E1E1DD427B35B0CE398448B351",
+        "NativeModernAxisGripProbe.inc": "BB12BBCBD74BD1EB01BDC443B9019D093D11F032442801829C12589F48D96C64",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativeQuietWorker.inc": "F78DB1CB30BF2DB8F2FC466B64E73BBF583800B6D5165E6A93D5CCD9D6714537",
+        "NativeQuitLifecycle.inc": "CFF4B36B93160CDF4505005BAA6FBD70BB946A64068BA9602EAD17B76AD21858",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeSymbolBusinessProbe.inc": "8DD6C1BA69A755BDACB516BF3BC80ADC7E5C1638D4187336571733090A5B0261",
+        "NativeSymbolDiscoveryProbe.inc": "5A3EEE23C1BAA871892D88B474C47FFAED50986C6B6453B6EA1D1DF96C1F6B28",
+        "NativeSymbolObjectEdit.inc": "CD2B1F26D75621CD3ED4CE72A16E867572A7D39BD84FAB6614D7EFDFDB72E985",
+        "NativeSymbolPreview.inc": "FF77AB286A7976168BA73DFD75C04F814D6134C81B1DA8B418D9544272C6B83D",
+        "NativeSymbolReadback.inc": "73EBE8290DC88A78628AC845A6E4FC2DA6D364E4DE670322D905A27B59FEEF3D",
+        "NativeSymbolTextBridgeProbe.inc": "979E71FF58FA5D165EA4F812D7F135D5C3577D6E90A022AE2297F4C9DDA2C56F",
+        "NativeSymbolUiBridge.inc": "4587E8B20143F637D697A629ADB6AF6D3D6BD21FD18ECFF1D9A0E12FCF53DB6E",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849",
+        "NativeRxDiscoveryProbe.inc": "FC180715DC08522696598D2B060AB5093DCE0E0A5E831D611E6A4A8D12F05013",
+        "NativePureContinuationProbe.inc": "9C008E3977A0B1DF22E920D01A32EBD3730EB4553D39C7D41FAA4481A9001E6B",
+        "PureCommandBoundary.h": "0ACD81561428DCF9647E5AA19BF79AE78B859145D5D2EA6B4CD84049063A769D",
+        "NativeTextFinderProbe.inc": "FFA27CA19F78BF45099E6F7C13362C88F30A37CE1BF6BE80C16A376ED0C80AB2"
+      },
+      "receipt": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-generictextnative-20261030-095446-675381\\quiet-job-receipt.json",
+        "SHA256": "0973E18D772500B6D3904D7CCAB757533A2050A7FCF34AFD16B609715A3FE145"
+      },
+      "controller": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-generictextnative-20261030-095446-675381\\run_quiet_job_at_run.py",
+        "SHA256": "2EC78CBE6C1E7278150E9E8C4A30E08A972946342198CB965576D6CE3A6ED37C"
+      },
+      "assertions": 9,
+      "passed": 8,
+      "failed": 1,
+      "result": "FAIL",
+      "validation": {
+        "log": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-generictextnative-20261030-095446-675381\\verify-pure-closure-20261030-100157.txt",
+          "SHA256": "91B0046E2351C46D335730AC8286C7D73E0F2987DEA0B938290A788EF65A5F20"
+        },
+        "validator": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_pure_native_continuation.py",
+          "SHA256": "826C36D6BDD2764831A9AE0D1106F3EE3E9C3EA6AE889191992FD2FFF457287A"
+        },
+        "exitCode": 1,
+        "assertions": 9,
+        "passed": 8,
+        "failed": 1,
+        "result": "FAIL"
+      }
+    },
+    {
+      "id": "E52",
+      "kind": "TextFinderNative",
+      "route": "AutoCAD SDK only; no TCH business commands or panels",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-textfindernative-20261030-095446-122533",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-textfindernative-20261030-095446-122533\\native-text-finder.json",
+      "nativeReportSHA256": "19C77B4299277CFBC54D442FB1A49D1C0606903AE9EE64ACA88F57C1C750DDAD",
+      "binarySHA256": "3F98175605D7F1E08F3D0E690C95FE41AB93563C46937080FDE42759FF663655",
+      "sourceFilesAtRun": {
+        "NativeAccessProbe.cpp": "890A41EC31F7B3BDB7BA8141B7411460F2306D1921CFA3C2A3BF259CA0E32569",
+        "NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+        "NativeAutoCadHostProbe.inc": "162CDF42B03F0715E0ABFE40B04DB43C3DBB9768B1A3C22B4C8BE00039E85E1A",
+        "NativeAxisContinuousNumberProbe.inc": "DD4FE3742543DBB956E69535D1319508C3074299740C3BD6B9362638B8C58DF5",
+        "NativeAxisExplodeReadback.inc": "E3CC2B10C1BFC8B072B1665B3558A53BD5EF2AF27EAABED865D4F98DE82FEA1D",
+        "NativeAxisMergeTwoProbe.inc": "D8BC749161698670B11D5F1DEBCA2765CC3F6A7DF1842B40B6AE8B4E23067962",
+        "NativeAxisOverlapPreview.inc": "FA6F8430BF4B094E60251C78123E7C8DD725055E17EA018104E01F5FB293BB0C",
+        "NativeAxisTemplateDeleteProbe.inc": "5751E7F17E80B3D8EC0A28FD4DC336FA3819B60298AC6D074BC124D7E4E8ABC5",
+        "NativeAxisTemplatePruneProbe.inc": "09F0936466364D560807EDEED6DFB525FB905D8F12D33BA5FAD21E6D593A2147",
+        "NativeBusinessListProbe.inc": "CD4FDC26E4A2F5CCD734D32954D755759A427BA6585EDC5FF813812BC039B722",
+        "NativeCandidateLifecycleProbe.inc": "AB9A00EFE77DF79289BB0FE1C16D15C1471F5676EDD336D938AE55D264E21EF6",
+        "NativeDimensionBridgeProbe.inc": "B168562866E1D3119903A3F9993E05A8017B5A73E750A81D728CEEE3F9418AC2",
+        "NativeDimensionMergeProbe.inc": "3A6DBB774AE866BA3C75513B4B43EB43378AF85D3E97F14A5984F038F2CB53E3",
+        "NativeElevationDialogProbe.inc": "01DF79966CA1F65F37EB4B083C2C7C1E5CE8F69271EBB2A1B4B6DE3EDF6462DB",
+        "NativeElevationInkPick.inc": "761FC0D00A4FF58E0C1663768F1B620B7227A5623853A6E556BAB1BCCB6C8043",
+        "NativeElevationRoundTripProbe.inc": "55592CC17935321B25A7BCB82C07E238AABB9D3B92AE2D2E974338157DD2D460",
+        "NativeElevationRoundTripUiProbe.inc": "29EB7CA88D0ACA62E1F74057591041EA8BE9D88CC4AE629C2417925C39088F3E",
+        "NativeElevationUiBridge.inc": "57A65CF5B9D134428688DFCA23AE1FC5D2AD9B71D2A0A3E720F3E295D741D2E1",
+        "NativeFourAxisPreview.inc": "281F02628E7D4CA72AD581CDC2114BC264D2AE73BC657DE9EB1DC3412F927F96",
+        "NativeFourSideAxisProbe.inc": "1D07D4E5C5887A4E0350A750B2A4E013DF7B3F7C647E8D7F0D88F744C52930E8",
+        "NativeFourSideAxisSeedProbe.inc": "AD7F473A8974B0AA896376D5054FBE94F9D13FED86B6B244589997F01161287F",
+        "NativeFourSideAxisSingletonProbe.inc": "C18D76E641E008F917CE702633BA069134FBB7265E5CA0DB90AB5833ECBF267A",
+        "NativeHorizontalAxisProbe.inc": "7B73E50E4B01707DEB9424A206134D4A1413E1376434F6CD58C8C7A68C0B915E",
+        "NativeInputVersionAudit.inc": "C086B23B959889AE1ED149230FCCA0D6D866E8E1E1DD427B35B0CE398448B351",
+        "NativeModernAxisGripProbe.inc": "BB12BBCBD74BD1EB01BDC443B9019D093D11F032442801829C12589F48D96C64",
+        "NativeObjectFamilyProbe.inc": "46DB1E52A7FA733D2680646CD6AA85C28FD52D13052E16475E7227BD35ACD2A5",
+        "NativePlotPreview.inc": "2009FD6B55FE717857CF2730C40ACFE58D7EB96D72CFA59AF62D197843590925",
+        "NativePlotProbe.inc": "9F7D06557944C540FEE2A19A7B10033B069CB33CD17303FB67125F01EE6AEA0E",
+        "NativeQuietWorker.inc": "F78DB1CB30BF2DB8F2FC466B64E73BBF583800B6D5165E6A93D5CCD9D6714537",
+        "NativeQuitLifecycle.inc": "CFF4B36B93160CDF4505005BAA6FBD70BB946A64068BA9602EAD17B76AD21858",
+        "NativeSafetyResourceProbe.inc": "E6402E3128CE1FB2B74E42C8ED416A7BA1B21A72B69CC810B141024678A6D5FD",
+        "NativeStandardGeometryProbe.inc": "76B61E36F51068EB1B29B0E6D1F296250015FB6120F9D55EE837C2C688FDEBCD",
+        "NativeStyleAudit.inc": "E346DB021126342E9DB817B3F372054E1F19F926CA08BE964E3193ABCA78675F",
+        "NativeSymbolBusinessProbe.inc": "8DD6C1BA69A755BDACB516BF3BC80ADC7E5C1638D4187336571733090A5B0261",
+        "NativeSymbolDiscoveryProbe.inc": "5A3EEE23C1BAA871892D88B474C47FFAED50986C6B6453B6EA1D1DF96C1F6B28",
+        "NativeSymbolObjectEdit.inc": "CD2B1F26D75621CD3ED4CE72A16E867572A7D39BD84FAB6614D7EFDFDB72E985",
+        "NativeSymbolPreview.inc": "FF77AB286A7976168BA73DFD75C04F814D6134C81B1DA8B418D9544272C6B83D",
+        "NativeSymbolReadback.inc": "73EBE8290DC88A78628AC845A6E4FC2DA6D364E4DE670322D905A27B59FEEF3D",
+        "NativeSymbolTextBridgeProbe.inc": "979E71FF58FA5D165EA4F812D7F135D5C3577D6E90A022AE2297F4C9DDA2C56F",
+        "NativeSymbolUiBridge.inc": "4587E8B20143F637D697A629ADB6AF6D3D6BD21FD18ECFF1D9A0E12FCF53DB6E",
+        "NativeTextBridgeProbe.inc": "F7DB39B1A54D964D0E6786E3A7705822E83E35627F65863DA1E69E3B8968B849",
+        "NativeRxDiscoveryProbe.inc": "FC180715DC08522696598D2B060AB5093DCE0E0A5E831D611E6A4A8D12F05013",
+        "NativePureContinuationProbe.inc": "9C008E3977A0B1DF22E920D01A32EBD3730EB4553D39C7D41FAA4481A9001E6B",
+        "PureCommandBoundary.h": "0ACD81561428DCF9647E5AA19BF79AE78B859145D5D2EA6B4CD84049063A769D",
+        "NativeTextFinderProbe.inc": "FFA27CA19F78BF45099E6F7C13362C88F30A37CE1BF6BE80C16A376ED0C80AB2"
+      },
+      "receipt": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-textfindernative-20261030-095446-122533\\quiet-job-receipt.json",
+        "SHA256": "EDB79CF9EE613BAECD446B5F8B5D4C5CB9928EC3FA4851E5FFAFE737D1A740EE"
+      },
+      "controller": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-textfindernative-20261030-095446-122533\\run_quiet_job_at_run.py",
+        "SHA256": "2EC78CBE6C1E7278150E9E8C4A30E08A972946342198CB965576D6CE3A6ED37C"
+      },
+      "assertions": 8,
+      "passed": 6,
+      "failed": 2,
+      "result": "FAIL",
+      "validation": {
+        "log": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-textfindernative-20261030-095446-122533\\verify-pure-closure-20261030-100157.txt",
+          "SHA256": "79430FDF75636EDFA832BFB4581CE9C14DD43AB18D097D2D8A89BE68E793AD43"
+        },
+        "validator": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_pure_native_continuation.py",
+          "SHA256": "826C36D6BDD2764831A9AE0D1106F3EE3E9C3EA6AE889191992FD2FFF457287A"
+        },
+        "exitCode": 1,
+        "assertions": 8,
+        "passed": 6,
+        "failed": 2,
+        "result": "FAIL"
+      }
+    },
+    {
+      "id": "E53",
+      "kind": "PublicEntModFailed",
+      "evidence": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-publictextpatchnative-20261030-103913-900619\\quiet-job-receipt.json",
+        "SHA256": "E38E97C60AE6488747BB886EAB2F257507580835C0061839D836BD70CD2A861F"
+      },
+      "status": "FAILED_OWN_HOST_CRASH",
+      "route": "AutoCAD SDK native only; no COM/CUA/TCH business commands or panels"
+    },
+    {
+      "id": "E54",
+      "kind": "WholeDxfFailed",
+      "evidence": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-publicdxftextnative-20261030-104713-927527\\native-public-dxf-text.json",
+        "SHA256": "A4607958EA4BA07E95F964394BBA34190D2230892F8F6F6C49B79045EB7655C9"
+      },
+      "status": "FAILED_TCH_WALL_IMPORT",
+      "route": "AutoCAD SDK native only; no COM/CUA/TCH business commands or panels"
+    },
+    {
+      "id": "E55",
+      "kind": "SingleTchDxfFailed",
+      "evidence": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-textonlydxfnative-20261030-105430-763667\\quiet-job-receipt.json",
+        "SHA256": "03581BACCDE247D9CA193DB95030F6CE0E9985022FD01F5E38D89D60CEBE215C"
+      },
+      "status": "FAILED_OWN_HOST_CRASH",
+      "route": "AutoCAD SDK native only; no COM/CUA/TCH business commands or panels"
+    },
+    {
+      "id": "E56",
+      "kind": "NativePlainTextSingle",
+      "evidence": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\天正文字替换_单项独立验收_20261030.json",
+        "SHA256": "DC3400A1C55FDC75F76F8A59DE227986695C010913458110BA2EB521E6B86459"
+      },
+      "status": "BOUNDED_SINGLE_PASS_ORIGINAL_BATCH_FAIL_PRESERVED",
+      "route": "AutoCAD SDK native only; no COM/CUA/TCH business commands or panels"
+    },
+    {
+      "id": "E57",
+      "kind": "NativeTextPdfCrop",
+      "evidence": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\evidence\\plain-text-single-target-crop-20261030.json",
+        "SHA256": "650FB13015F29F10BAD9C195D7B3505E61111BD80CCB889F0AA5DE88DFCE3F29"
+      },
+      "status": "SELECTED_TEXT_CROP_EXACT_WHOLE_PAGE_NOT_EXACT",
+      "route": "AutoCAD SDK native only; no COM/CUA/TCH business commands or panels"
+    },
+    {
+      "id": "E58",
+      "kind": "NativePlainTextV2",
+      "evidence": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-112404\\isolation-final.json",
+        "SHA256": "54E71C784C1761A4AC9FF67E08308EF3891C6D719EBA27400915F22F57295092"
+      },
+      "status": "STARTUP_BLOCKED_NOT_EXECUTED",
+      "route": "AutoCAD SDK native only; no COM/CUA/TCH business commands or panels"
+    },
+    {
+      "id": "E59",
+      "kind": "NativePlainTextClosure",
+      "evidence": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\文字替换_输入模块与退出终核_20261030.json",
+        "SHA256": "DE94F23292C2943C3B916C67FF42F9BB682F662D4A9865CC8289936E35A24734"
+      },
+      "status": "ALL_OWN_HOSTS_STOPPED_NOT_NORMAL_QUIT",
+      "route": "AutoCAD SDK native only; no COM/CUA/TCH business commands or panels"
+    },
+    {
+      "id": "E60",
+      "kind": "NativeTextBatch32",
+      "evidence": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-plaintextreplacementnative-20261030-123733-079793\\native-plain-text-replacement.json",
+        "SHA256": "BA1C578372447AC4D1FDDF42E3E33284D5901A2BAA059C701BBC2B89C46CC077"
+      },
+      "status": "PASS_32_NATIVE_TEXT_2_COMPLEX_TCH_RETAINED_54_CHECKS",
+      "route": "AutoCAD SDK native only; no COM/CUA/TCH business commands or panels"
+    },
+    {
+      "id": "E61",
+      "kind": "WholeDatabasePublicContractAudit",
+      "evidence": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-publiccontractauditnative-20261030-130228-246843\\public-native-contract-audit.json",
+        "SHA256": "DFFF4A56F55E066625605460B8728695B2A897564B078A4532B921B943BA873F"
+      },
+      "status": "DISCOVERY_ONLY_31_PASS_0_PROXY_NO_WRITE_PROOF",
+      "route": "AutoCAD SDK native only; no COM/CUA/TCH business commands or panels"
+    },
+    {
+      "id": "E62",
+      "kind": "DedicatedProfileRuntimeData",
+      "evidence": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\evidence\\native-runtime-data-mirror-20261030.json",
+        "SHA256": "B6AA3B405198ADF1446D7381F9A93DEC354EEFD278C7B31D5BB9586E3B1D7EB7"
+      },
+      "status": "DEDICATED_DATA_ONLY_SHARED_REGISTRATION_NOT_CHANGED",
+      "route": "AutoCAD SDK native only; no COM/CUA/TCH business commands or panels"
+    },
+    {
+      "id": "E63",
+      "kind": "NativeElevationPublicFieldTrial",
+      "evidence": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-nativeelevationpatch-20261030-131625-235208\\quiet-job-receipt.json",
+        "SHA256": "8D91A30F45E7D8CC727048292DF55A62888D634A9DAEBB2AB82ED7D22CC1A2E6"
+      },
+      "status": "FAIL_HEAP_EXCEPTION_AFTER_PRECALL_CHECKPOINT_NO_SAVED_RESULT",
+      "route": "AutoCAD SDK native only; no COM/CUA/TCH business commands or panels"
+    },
+    {
+      "id": "E64",
+      "kind": "NativeMTextCapability",
+      "evidence": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-mtextnative-20261030-132447-494281\\native-mtext-capability.json",
+        "SHA256": "4EE8A5710E13350D4AD6715671CE6F82FDB0AB82D377F125BD5EED2BD80AB368"
+      },
+      "status": "PASS_19_CHECKS_VISUAL_STANDARD_NOT_PROVEN",
+      "route": "AutoCAD SDK native only; no COM/CUA/TCH business commands or panels"
+    },
+    {
+      "id": "E65",
+      "kind": "NativeContinuationClosure",
+      "evidence": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\evidence\\native-continuation-all-six-closure-20261030.json",
+        "SHA256": "C5F826B658508377B41A4E1CD831C32C1A968542CABBD8F637B62B96B563255E"
+      },
+      "status": "ALL_OWN_HOSTS_EXITED_AND_CLEANED_NORMAL_QUIT_NOT_PASSED",
+      "route": "AutoCAD SDK native only; no COM/CUA/TCH business commands or panels"
+    }
+  ],
+  "retainedHistoricalFailures": [
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\native-open-axislabels2pt-20261028-225717-034",
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-merge-20261029-013053-695",
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-axistwo-20261029-013814-133",
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-axisthree-20261029-013819-079"
+  ],
+  "inputDifferenceReview": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\coverage-versionaudit-20261029-020622-986\\input-version-diff-review.json",
+  "inputDifferenceScope": "213 to217; four added objects and18 anonymous block-reference names differ; original213 public geometry/common/nativeText unchanged; private/nested semantic equality not asserted. Version audit PASS means validated reads and provenance only.",
+  "latestNativeSymbolsRound": {
+    "recorded": "2026-10-29T15:53:49.938858+08:00",
+    "report": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\坡向剖切详图索引与正常退出验证报告_20261029.md",
+      "SHA256": "A5598600E39A7FC374C6874216DD59BB02B5B5E9B6E5C302522A6EA4EDB06E6E"
+    },
+    "closure": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\坡向剖切索引与QUIT_终核_20261029-155349-934871.json",
+      "SHA256": "469DBE6E41505C1A70CB8031F14146224D5E6D480461B91C95706DF4B0B3A32E"
+    },
+    "phase1FullAcceptance": false,
+    "phase2Started": false,
+    "COMUsed": false,
+    "ComputerUseUsed": false
+  },
+  "latestAutoCadNative": {
+    "recorded": "2026-10-29T20:26:02.894103+08:00",
+    "report": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\AutoCAD原生接口迁移与继续验证报告_20261029.md",
+      "SHA256": "57D3AF8861A15BFB64536EDA1A6A4901008404FB0F38DB6C9BC7BE5E6B0DCCBA"
+    },
+    "closure": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\AutoCAD宿主迁移_输入与模块终核_20261029.json",
+      "SHA256": "79675B3B8B90CA30F0E9CF54D2EB7DC69941B13DFB093687B233445CF63FD6E1"
+    },
+    "phase1FullAcceptance": false,
+    "phase2Started": false,
+    "publicRxBusinessSetterEstablished": false,
+    "profile": {
+      "authorization": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\evidence\\autocad-support-profile-20261029.json",
+        "SHA256": "1F3D6003FFA36E9346AFF09639AD76D31FA7DF69A86C848A25020EDB737E56FD",
+        "bytes": 2374
+      },
+      "correction": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\evidence\\autocad-support-profile-correction-20261029.json",
+        "SHA256": "9A1300DD81EABD1C21C262FE1D2D96F6850B02D65E89806C40355694E7047A0A",
+        "bytes": 2764
+      },
+      "current": {
+        "profile": "CodexS1Native_6f6df19579f3",
+        "SECURELOAD": "1",
+        "TRUSTEDPATHS": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\TranSketchPlugin.bundle\\Contents\\Win64\\2020;C:\\Tangent\\TArchT20V8\\SYS23x64",
+        "ACAD": "%UserProfile%\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support;D:\\CAD2020\\AutoCAD 2020\\support;D:\\CAD2020\\AutoCAD 2020\\support\\zh-CN;D:\\CAD2020\\AutoCAD 2020\\fonts;D:\\CAD2020\\AutoCAD 2020\\Express;D:\\CAD2020\\AutoCAD 2020\\support\\color;C:\\Program Files (x86)\\Autodesk\\ApplicationPlugins\\Autodesk AppManager 2020.bundle\\Contents\\Windows;C:\\Program Files (x86)\\Autodesk\\ApplicationPlugins\\Autodesk AppManager 2020.bundle\\Contents\\Windows\\2020;C:\\Program Files (x86)\\Autodesk\\ApplicationPlugins\\Autodesk FeaturedApps 2020.bundle\\Contents\\Resources;C:\\Program Files (x86)\\Autodesk\\ApplicationPlugins\\Autodesk FeaturedApps 2020.bundle\\Contents\\Windows\\2020\\Win64;%UserProfile%\\AppData\\Roaming\\Autodesk\\ApplicationPlugins\\TitleFrameTangent.bundle\\Contents\\Windows\\v0.1.2-native-97C32A7651461ED4;C:\\Program Files\\Autodesk\\ApplicationPlugins\\TranSketchPlugin.bundle\\Contents\\Win64\\2020;C:\\Tangent\\TArchT20V8\\SYS23x64;%UserProfile%\\AppData\\Roaming\\Autodesk\\ApplicationPlugins\\TitleFrameTangent.bundle\\Contents\\Windows\\v0.1.3-native-7F3032C789A678F8;",
+        "defaultProfile": "TArch20V8",
+        "sourceSECURELOAD": "1",
+        "sourceTRUSTEDPATHS": ";;C:\\Program Files\\Autodesk\\ApplicationPlugins\\TranSketchPlugin.bundle\\Contents\\Win64\\2020"
+      },
+      "scope": "Direct configuration writes only to the dedicated test profile. Vendor/application cache changes by other processes are not globally judged equal. Dedicated profile retained for authorized reuse."
+    },
+    "inputs": [
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\方案平面图.dwg",
+        "SHA256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+        "bytes": 3266205,
+        "expectedSHA256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+        "unchanged": true
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\施工图平面参考图.dwg",
+        "SHA256": "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27",
+        "bytes": 378381,
+        "expectedSHA256": "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27",
+        "unchanged": true
+      },
+      {
+        "path": "D:\\cad插件\\方案平面图.dwg",
+        "SHA256": "D92251DF0797EB9338FF9A1E94121FB24D81D72B597E8931413B7974712BE54F",
+        "bytes": 3655782,
+        "lastWrite": "2026-10-29T16:18:26+08:00",
+        "testInput": false,
+        "scope": "Read-only working-original observation; no architectural-change inference or restore"
+      },
+      {
+        "path": "D:\\cad插件\\施工图平面参考图.dwg",
+        "SHA256": "245CB01E3955ABB6CB9581436E0313C93B5A771C1983E318B0E2A61DD9C6E273",
+        "bytes": 398504,
+        "lastWrite": "2026-10-29T16:49:54+08:00",
+        "testInput": false,
+        "scope": "Read-only working-original observation; no architectural-change inference or restore"
+      }
+    ],
+    "sixGroupInputAudit": [
+      {
+        "id": "S01",
+        "source": {
+          "path": "D:\\cad插件\\方案平面图.dwg",
+          "SHA256": "D92251DF0797EB9338FF9A1E94121FB24D81D72B597E8931413B7974712BE54F",
+          "bytes": 3655782
+        },
+        "snapshot": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\方案平面图.dwg",
+          "SHA256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+          "bytes": 3266205
+        },
+        "snapshotUnchanged": true,
+        "sourceMatchesPriorObservation": false,
+        "sourceIsCurrentTestInput": false
+      },
+      {
+        "id": "S02",
+        "source": {
+          "path": "D:\\cad插件\\施工图平面参考图.dwg",
+          "SHA256": "245CB01E3955ABB6CB9581436E0313C93B5A771C1983E318B0E2A61DD9C6E273",
+          "bytes": 398504
+        },
+        "snapshot": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\施工图平面参考图.dwg",
+          "SHA256": "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27",
+          "bytes": 378381
+        },
+        "snapshotUnchanged": true,
+        "sourceMatchesPriorObservation": false,
+        "sourceIsCurrentTestInput": false
+      },
+      {
+        "id": "S03",
+        "source": {
+          "path": "D:\\Codex\\建筑施工图自动化\\图纸读取\\方案图对象属性.json",
+          "SHA256": "33B3953F3366F97F6CF11C5B5CCAA35C4F76A5FB98C4834E0758DC5C96160DFD",
+          "bytes": 652006
+        },
+        "snapshot": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\方案图对象属性.json",
+          "SHA256": "33B3953F3366F97F6CF11C5B5CCAA35C4F76A5FB98C4834E0758DC5C96160DFD",
+          "bytes": 652006
+        },
+        "snapshotUnchanged": true,
+        "sourceMatchesPriorObservation": true,
+        "sourceIsCurrentTestInput": false
+      },
+      {
+        "id": "S04",
+        "source": {
+          "path": "D:\\Codex\\建筑施工图自动化\\图纸读取\\参考图对象属性.json",
+          "SHA256": "7B5FFA455F700BEA353166D68910110798423B5054179FCECDD9644BF610B39E",
+          "bytes": 1637712
+        },
+        "snapshot": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\参考图对象属性.json",
+          "SHA256": "7B5FFA455F700BEA353166D68910110798423B5054179FCECDD9644BF610B39E",
+          "bytes": 1637712
+        },
+        "snapshotUnchanged": true,
+        "sourceMatchesPriorObservation": true,
+        "sourceIsCurrentTestInput": false
+      },
+      {
+        "id": "S05",
+        "source": {
+          "path": "D:\\Codex\\建筑施工图自动化\\docs\\superpowers\\specs\\2026-10-28-建筑施工图平面自动化需求基线.md",
+          "SHA256": "5A8732C11344E18B9D5547AEDE9573E8C5FC638483411AECF7BD84B46A013517",
+          "bytes": 15735
+        },
+        "snapshot": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\2026-10-28-建筑施工图平面自动化需求基线.md",
+          "SHA256": "5A8732C11344E18B9D5547AEDE9573E8C5FC638483411AECF7BD84B46A013517",
+          "bytes": 15735
+        },
+        "snapshotUnchanged": true,
+        "sourceMatchesPriorObservation": true,
+        "sourceIsCurrentTestInput": false
+      },
+      {
+        "id": "S06",
+        "source": {
+          "path": "D:\\Codex\\建筑施工图自动化\\docs\\superpowers\\plans\\2026-10-28-建筑施工图平面自动化分阶段实施方案.md",
+          "SHA256": "19871DAC839B57C05F7667CEAC266117EA6A7E6AE888FB3E8923B6671D5EFE74",
+          "bytes": 22658
+        },
+        "snapshot": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\2026-10-28-建筑施工图平面自动化分阶段实施方案.md",
+          "SHA256": "19871DAC839B57C05F7667CEAC266117EA6A7E6AE888FB3E8923B6671D5EFE74",
+          "bytes": 22658
+        },
+        "snapshotUnchanged": true,
+        "sourceMatchesPriorObservation": true,
+        "sourceIsCurrentTestInput": false
+      }
+    ],
+    "negativeProtection": [
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-preexistingcandidate-20261029-195222-456115\\preexisting-protection.json",
+        "SHA256": "CD32BEFDB1FE98D510FBA31CA0670A424CC22DBEAEBEC66D0A2A6560DF7FC955",
+        "bytes": 6696,
+        "completed": false,
+        "preserved": false,
+        "binarySHA256": "09A495DA868E08FF1972330952DB099C498078AE565ADB6C51306EE00BBA69C7",
+        "driverAtRun": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-preexistingcandidate-20261029-195222-456115\\ProbePreexistingCandidate.py",
+          "SHA256": "A20B50BDE0C4E3DB64C5E8BEEFF8CF76351408497043847B38741CEC4FB4F009",
+          "bytes": 2282
+        }
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-preexistingcandidate-20261029-195653-050613\\preexisting-protection.json",
+        "SHA256": "6ECD9EF108FD920F686FC86E7A9F06DC96FB684F618258B99B487257E86975DE",
+        "bytes": 6818,
+        "completed": false,
+        "preserved": true,
+        "binarySHA256": "9103B3C85C63B861BB9136BA8546EADE9DC21E5DE8CB074F9C50329CB9679BC6",
+        "driverAtRun": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-preexistingcandidate-20261029-195653-050613\\ProbePreexistingCandidate.py",
+          "SHA256": "DF72A499813636981528BAF591C7BC9B599AE45467EFD59D6886908E7231691C",
+          "bytes": 2834
+        }
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-preexistingcandidate-20261029-195738-386444\\preexisting-protection.json",
+        "SHA256": "D5D25D4DFED617BE7CDB9A585C1964039752FDA0542F3B4A50452FDC3AF07249",
+        "bytes": 6816,
+        "completed": true,
+        "preserved": true,
+        "binarySHA256": "9103B3C85C63B861BB9136BA8546EADE9DC21E5DE8CB074F9C50329CB9679BC6",
+        "driverAtRun": {
+          "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-preexistingcandidate-20261029-195738-386444\\ProbePreexistingCandidate.py",
+          "SHA256": "8FCA05C28D0F17B02BAB8D05205EF49E12917D4AA5E1D6F628FB8991CB654FB0",
+          "bytes": 2862
+        }
+      }
+    ]
+  },
+  "latestPureNative": {
+    "recorded": "2026-10-30T10:05:50.655417+08:00",
+    "report": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\阶段1纯原生续测与阻断报告_20261030.md",
+      "SHA256": "DE181F372003B6572D663D41F941D5D0AFF952BB26AE3545AE7593C66DD8E1B2"
+    },
+    "closure": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\纯原生阶段1_输入模块与退出终核_20261030.json",
+      "SHA256": "0AC9B77AE53FEFE744F7D059F7386D5C277174250DE8DEA3ABA358577889726F"
+    },
+    "analysis": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\纯原生全量读取与字体分项_20261030.json",
+      "SHA256": "D97B49A05DE61232E44FB2894206DC46980CD8BEF02F3F43FFA28150429FB72A"
+    },
+    "phase1FullAcceptance": false,
+    "phase2Started": false,
+    "blocker": "Essential arbitrary TDbText business content writes still fail the tested SDK-only routes; no private serialization guesses or command fallback."
+  },
+  "latestTextScope": "User permits native independent text;32 eligible replacements and native MText API/save proven;2 complex TCH retained;full visual standard not proven.",
+  "latestNativeContinuation": {
+    "recorded": "2026-10-30T13:39:47.134181+08:00",
+    "report": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生续测与能力边界报告_20261030.md",
+      "SHA256": "8F83DFA45EB2B2960F2B7ABE18AB6767C1CB5B2565D0442CDB89BC2E7F598EE7"
+    },
+    "closure": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\evidence\\native-continuation-all-six-closure-20261030.json",
+      "SHA256": "C5F826B658508377B41A4E1CD831C32C1A968542CABBD8F637B62B96B563255E"
+    },
+    "phase1FullAcceptance": false,
+    "phase2Started": false,
+    "normalQuitPassed": false,
+    "sharedRegistrationEditsAuthorized": false,
+    "sharedRegistrationEditsPerformed": false,
+    "offline": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\evidence\\native-continuation-final-offline-20261030.log",
+      "SHA256": "999E63142FFDCA6BF9A44B7E0012F9A3119CFDA6531EB7BA723FC3B19E013B61"
+    }
+  }
+}

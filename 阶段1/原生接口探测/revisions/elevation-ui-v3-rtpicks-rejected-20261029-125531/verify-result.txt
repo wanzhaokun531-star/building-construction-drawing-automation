@@ -1,0 +1,75 @@
+FAIL: complete actual roundtrip and defaults lifecycle, no partial success
+FAIL: all actual readback stages present in predeclared order
+FAIL: increased: actual public Decimal metre value equals 0.123
+FAIL: increasedSnapshot: actual independent fresh214 persistence
+FAIL: increasedSnapshot: new isolated actual snapshot file
+FAIL: increasedSnapshot: complete original213 and target public geometry persist
+FAIL: increasedSnapshot/liveReadback: complete public readback contract
+FAIL: increasedSnapshot/liveReadback: same real TCH elevation root unchanged by public const explode
+FAIL: increasedSnapshot/liveReadback: complete unique transient identities
+FAIL: increasedSnapshot/liveReadback: actual public leaves, no guessed private value
+FAIL: increasedSnapshot/liveReadback: every returned transient safely released once
+FAIL: increasedSnapshot/liveReadback: actual finite Text/MText payloads
+FAIL: increasedSnapshot/liveReadback: all explicitly empty public structures retained
+FAIL: increasedSnapshot/liveReadback: actual successful explode calls, only proved empties admitted
+FAIL: increasedSnapshot/liveReadback: exactly one actual three-decimal visible metre value
+FAIL: increasedSnapshot/liveReadback: actual root geometry bound to this live/saved stage
+FAIL: increasedSnapshot/savedReadback: complete public readback contract
+FAIL: increasedSnapshot/savedReadback: same real TCH elevation root unchanged by public const explode
+FAIL: increasedSnapshot/savedReadback: complete unique transient identities
+FAIL: increasedSnapshot/savedReadback: actual public leaves, no guessed private value
+FAIL: increasedSnapshot/savedReadback: every returned transient safely released once
+FAIL: increasedSnapshot/savedReadback: actual finite Text/MText payloads
+FAIL: increasedSnapshot/savedReadback: all explicitly empty public structures retained
+FAIL: increasedSnapshot/savedReadback: actual successful explode calls, only proved empties admitted
+FAIL: increasedSnapshot/savedReadback: exactly one actual three-decimal visible metre value
+FAIL: increasedSnapshot/originalElevationLive: complete6 protected original elevations
+FAIL: increasedSnapshot/originalElevationLive: original6 visible and empty structures persist
+FAIL: increasedSnapshot/originalElevationSaved: complete6 protected original elevations
+FAIL: increasedSnapshot/originalElevationSaved: original6 visible and empty structures persist
+FAIL: restoredSnapshot: actual independent fresh214 persistence
+FAIL: restoredSnapshot: new isolated actual snapshot file
+FAIL: restoredSnapshot: complete original213 and target public geometry persist
+FAIL: restoredSnapshot/liveReadback: complete public readback contract
+FAIL: restoredSnapshot/liveReadback: same real TCH elevation root unchanged by public const explode
+FAIL: restoredSnapshot/liveReadback: complete unique transient identities
+FAIL: restoredSnapshot/liveReadback: actual public leaves, no guessed private value
+FAIL: restoredSnapshot/liveReadback: every returned transient safely released once
+FAIL: restoredSnapshot/liveReadback: actual finite Text/MText payloads
+FAIL: restoredSnapshot/liveReadback: all explicitly empty public structures retained
+FAIL: restoredSnapshot/liveReadback: actual successful explode calls, only proved empties admitted
+FAIL: restoredSnapshot/liveReadback: exactly one actual three-decimal visible metre value
+FAIL: restoredSnapshot/savedReadback: complete public readback contract
+FAIL: restoredSnapshot/savedReadback: same real TCH elevation root unchanged by public const explode
+FAIL: restoredSnapshot/savedReadback: complete unique transient identities
+FAIL: restoredSnapshot/savedReadback: actual public leaves, no guessed private value
+FAIL: restoredSnapshot/savedReadback: every returned transient safely released once
+FAIL: restoredSnapshot/savedReadback: actual finite Text/MText payloads
+FAIL: restoredSnapshot/savedReadback: all explicitly empty public structures retained
+FAIL: restoredSnapshot/savedReadback: actual successful explode calls, only proved empties admitted
+FAIL: restoredSnapshot/savedReadback: exactly one actual three-decimal visible metre value
+FAIL: restoredSnapshot/originalElevationLive: complete6 protected original elevations
+FAIL: restoredSnapshot/originalElevationLive: original6 visible and empty structures persist
+FAIL: restoredSnapshot/originalElevationSaved: complete6 protected original elevations
+FAIL: restoredSnapshot/originalElevationSaved: original6 visible and empty structures persist
+FAIL: actual six operation wrappers in declared order
+FAIL: bridge0/attempt: v2 implementation with durable defaults and no fabricated edit notifications
+FAIL: bridge0/attempt: one actual field callback at proven GetPoint prompt
+FAIL: bridge1: bridge wrapper completed safely
+FAIL: bridge1/attempt: actual UI attempt contract
+FAIL: bridge1/attempt: v2 implementation with durable defaults and no fabricated edit notifications
+FAIL: bridge1/attempt: actual configured radio/raw value readback
+FAIL: bridge1/attempt: field write actually attempted through standard message
+FAIL: bridge1/attempt: one actual field callback at proven GetPoint prompt
+FAIL: bridge1/attempt: selection audit equals actual input reactor handles
+FAIL: bridge1/attempt: actual selection only the native elevation target
+FAIL: bridge1/preflight: v2 implementation with durable defaults and no fabricated edit notifications
+FAIL: bridge1/preflight: one actual field callback at proven GetPoint prompt
+FAIL: bridge2/attempt: v2 implementation with durable defaults and no fabricated edit notifications
+FAIL: bridge2/attempt: one actual field callback at proven GetPoint prompt
+FAIL: bridge2: actual request bound to correct delta/direction/clone
+FAIL: bridge3/attempt: v2 implementation with durable defaults and no fabricated edit notifications
+FAIL: bridge3/attempt: one actual field callback at proven GetPoint prompt
+FAIL: bridge3: actual request bound to correct delta/direction/clone
+assertions=2100 passed=2027 failed=73 result=FAIL
+elevation_roundtrip=UNVERIFIED

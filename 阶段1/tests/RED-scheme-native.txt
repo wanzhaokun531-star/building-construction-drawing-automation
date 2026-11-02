@@ -1,0 +1,3 @@
+FAIL: scheme-native result missing: D:\Codex\����ʩ��ͼ�Զ���\�׶�1\tests\not-generated-scheme-native.json
+assertions=1 passed=0 failed=1 result=FAIL
+This verifies scheme-input trials; it is not full construction drawing generation.

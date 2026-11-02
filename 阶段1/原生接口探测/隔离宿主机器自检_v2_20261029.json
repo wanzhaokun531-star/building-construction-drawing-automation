@@ -1,0 +1,23 @@
+{
+    "contract":  "stage1.isolation-supervisor-selftest.v1",
+    "recorded":  "2026-10-29T09:27:56.2312915+08:00",
+    "cadStarted":  false,
+    "checks":  {
+                   "EmptyArgument":  true,
+                   "SpaceArgument":  true,
+                   "TrailingSlash":  true,
+                   "EmbeddedQuote":  true,
+                   "IdentityPositive":  true,
+                   "IdentityRejectPidReuse":  true,
+                   "IdentityRejectOtherDesktop":  true,
+                   "PrivateDesktopAllocated":  true,
+                   "InputDesktopNotSwitched":  true,
+                   "NoProcessCreated":  true,
+                   "MonitorStarted":  true,
+                   "MonitorStopped":  true,
+                   "MonitorNoError":  true,
+                   "MonitorNoDrops":  true,
+                   "DesktopClosed":  true
+               },
+    "result":  "PASS"
+}

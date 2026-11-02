@@ -1,0 +1,28 @@
+{
+  "recorded": "2026-10-29T10:52:32.1175415+08:00",
+  "contract": "stage1.window-attribution.v1",
+  "userConfirmation": {
+    "question": "今天约10:24—10:27是否主动在原有AutoCAD/天正窗口中操作或切换窗口",
+    "answer": "我当时在操作 CAD",
+    "interpretation": "在该约略时间段内已有CAD的切换有用户活动解释；原始事件保留，不改写为0"
+  },
+  "otherThread": {
+    "id": "01a18132-ca34-7de0-a2df-69f77e284689",
+    "title": "梳理图框图签自动化需求",
+    "observedProcessIds": [
+      31844,
+      22132
+    ],
+    "observedCommandRoot": "D:\\Codex\\建筑施工图图框、图签\\phase0\\runs\\native-auto-host-*",
+    "relation": "另一个任务自身启动CAD；本任务未创建或操作这些进程",
+    "authorization": "授权发送并协调",
+    "messageSent": true,
+    "acknowledgement": "已改为在独立的非输入桌面运行测试，日常桌面保持不变。",
+    "limitation": "其他任务自己的实际执行与最终验收由其报告证明，不以一句状态说明替代验收"
+  },
+  "ownEvidence": [
+    "runs\\isolated-axis-20261029-101307\\isolation-observation-report.json",
+    "runs\\isolated-axis-20261029-103728\\isolation-observation-report.json"
+  ],
+  "scope": "来源归因与跨任务协调记录；不替代原始WinEvent与业务验收"
+}

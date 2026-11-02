@@ -1,0 +1,11 @@
+{
+  "sourceSession": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-125507",
+  "sourceRun": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationroundtrip-20261029-125531-680657",
+  "actualResult": "business FAIL; own exact RTPICKS length1/handle D0DA/release5100 verified; TCH actual endSSGet -5001 selected[]; lifecycle safe; defaults actual restored3.000/increase; no claim of elevation roundtrip",
+  "files": {
+    "NativeElevationUiBridge.inc": "2AFD0CA5CB5D14C961CDA5603AA4A4A090927575EA46B995738D85F3FF256FE9",
+    "NativeElevationRoundTripUiProbe.inc": "29EB7CA88D0ACA62E1F74057591041EA8BE9D88CC4AE629C2417925C39088F3E",
+    "NativeElevationDialogProbe.inc": "01DF79966CA1F65F37EB4B083C2C7C1E5CE8F69271EBB2A1B4B6DE3EDF6462DB",
+    "NativeAccessProbe.arx": "5B081CECFCA1ADBA7ABDF942202147981A97FE775CA92DE1CAC098C6597B4B76"
+  }
+}

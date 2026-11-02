@@ -1,0 +1,801 @@
+--- src/AnalysisCommands.cpp
++++ src/AnalysisCommands.cpp
+@@ -12,18 +12,23 @@
+ #include <cstring>
+ #include <limits>
+ #include <memory>
++#include <set>
+ #include <sstream>
+ #include <stdexcept>
+ namespace {
+ constexpr auto group = L"BCE_ANALYSIS_PRODUCT_8D5BB4A2";
+-bool analyzeOwned{}, infoOwned{};
++bool analyzeOwned{}, infoOwned{}, issuesOwned{};
+ DWORD ownerThread{};
+ std::unique_ptr<bce::NativeSceneContext> context;
+ std::string lastReport;
++std::vector<bce::Issue> lastIssues;
++std::size_t issueCursor{};
+ std::uint64_t sequence{}, lastRevision{};
+ AcApDocument *reportDocument{};
+ void invalidate() noexcept {
+   lastReport.clear();
++  lastIssues.clear();
++  issueCursor = 0;
+   lastRevision = 0;
+   reportDocument = nullptr;
+ }
+@@ -69,22 +74,91 @@
+       << '\t' << (i.source.entity ? field(i.source.entity->handle) : "") << '\t'
+       << field(i.message) << '\n';
+ }
++constexpr std::size_t issuePageSize = 12;
++bool criticalInput(const bce::Issue &issue) {
++  return issue.code == bce::diagnostic::unitRequired ||
++         issue.code == bce::diagnostic::unitConflict ||
++         issue.code == bce::diagnostic::planRequired ||
++         issue.code.rfind("PROJECT_", 0) == 0;
++}
++void showIssue(const bce::Issue &issue, const std::string &prefix = {}) {
++  std::string location;
++  if (issue.source.entity)
++    location += " [" + issue.source.entity->handle + "]";
++  if (!issue.source.viewIdentity.empty())
++    location += " [" + issue.source.viewIdentity + "]";
++  const auto message = issue.code == "PROJECT_NOT_FOUND"
++                           ? std::string(u8"当前图纸没有已保存的本项目配置。")
++                           : issue.message;
++  const auto text = bce::native_scene::utf16("\n" + prefix + issue.code +
++                                             location + "：" + message);
++  say(text.c_str());
++}
+ void showIssues(const std::vector<bce::Issue> &issues) noexcept {
+   try {
+-    std::size_t shown = 0;
+-    for (const auto &i : issues) {
+-      if (shown++ == 12)
++    std::set<std::string> emittedCriticalCodes;
++    std::size_t shown{};
++    // Critical input gaps cannot be hidden behind geometry candidates. Repeated
++    // per-view copies remain available in the complete paged list.
++    for (const auto &issue : issues)
++      if (criticalInput(issue) &&
++          emittedCriticalCodes.insert(issue.code).second) {
++        showIssue(issue);
++        ++shown;
++      }
++    for (const auto &issue : issues) {
++      if (shown >= issuePageSize)
+         break;
+-      const auto location =
+-          i.source.entity ? " [" + i.source.entity->handle + "]" : "";
+-      const auto text =
+-          bce::native_scene::utf16("\n" + i.code + location + "：" + i.message);
+-      say(text.c_str());
+-    }
+-    if (issues.size() > 12)
+-      say(L"\n其余问题已保留在本次只读分析报告中。");
++      if (criticalInput(issue))
++        continue;
++      showIssue(issue);
++      ++shown;
++    }
++    if (!issues.empty())
++      say(L"\n执行 BCE_ISSUES "
++          L"查看全部定位问题：每次12项，再次执行继续下一页，Esc可暂停。");
+   } catch (...) {
+     say(L"\n部分诊断文字显示失败，分析资格仍未授予。");
++  }
++}
++bool currentReport() noexcept {
++  if (!context || !context->currentDatabase() || lastReport.empty() ||
++      context->revision() != lastRevision ||
++      acDocManager->curDocument() != reportDocument) {
++    invalidate();
++    return false;
++  }
++  return true;
++}
++void issuesCommand() noexcept {
++  try {
++    if (!currentReport()) {
++      say(L"\n没有当前有效的问题列表；请先执行 BCE_ANALYZE。\n");
++      return;
++    }
++    if (lastIssues.empty()) {
++      say(L"\n本次分析没有记录问题。\n");
++      return;
++    }
++    const auto end = (std::min)(lastIssues.size(), issueCursor + issuePageSize);
++    while (issueCursor < end) {
++      if (acedUsrBrk()) {
++        say(L"\n问题查看已暂停，再次执行 BCE_ISSUES 继续。\n");
++        return;
++      }
++      showIssue(lastIssues[issueCursor],
++                "[" + std::to_string(issueCursor + 1) + "/" +
++                    std::to_string(lastIssues.size()) + "] ");
++      ++issueCursor;
++    }
++    if (issueCursor == lastIssues.size()) {
++      issueCursor = 0;
++      say(L"\n已显示全部问题；再次执行 BCE_ISSUES 从第一页开始。\n");
++    } else
++      say(L"\n再次执行 BCE_ISSUES 显示下一页。\n");
++  } catch (...) {
++    invalidate();
++    say(L"\n问题显示失败，请重新执行 BCE_ANALYZE。\n");
+   }
+ }
+ void analyze() noexcept {
+@@ -163,6 +237,7 @@
+     for (const auto &i : issues)
+       issueRow(out, i);
+     lastReport = out.str();
++    lastIssues = issues;
+     lastRevision = revision;
+     reportDocument = acDocManager->curDocument();
+     const auto summary = bce::native_scene::utf16(
+@@ -191,7 +266,8 @@
+ }
+ void info() noexcept {
+   say(L"\n立面插件开发候选：BCE_"
+-      L"ANALYZE只读分析当前内存图纸；尚无施工图生成及交互配置功能。\n");
++      L"ANALYZE只读分析当前内存图纸；BCE_"
++      L"ISSUES分页查看本次全部定位问题；尚无施工图生成及交互配置功能。\n");
+ }
+ bool removeOwned(const wchar_t *name, bool &owned) {
+   if (!owned)
+@@ -211,9 +287,10 @@
+       lifecycle.reset();
+     }
+     context.reset();
++    const bool issuesRemoved = removeOwned(L"BCE_ISSUES", issuesOwned);
+     const bool infoRemoved = removeOwned(L"BCE_INFO", infoOwned);
+     const bool analyzeRemoved = removeOwned(L"BCE_ANALYZE", analyzeOwned);
+-    return infoRemoved && analyzeRemoved;
++    return issuesRemoved && infoRemoved && analyzeRemoved;
+   } catch (...) {
+     return false;
+   }
+@@ -224,7 +301,9 @@
+     if (acedRegCmds->lookupGlobalCmd(L"BCE_ANALYZE") ||
+         acedRegCmds->lookupLocalCmd(L"BCE_ANALYZE") ||
+         acedRegCmds->lookupGlobalCmd(L"BCE_INFO") ||
+-        acedRegCmds->lookupLocalCmd(L"BCE_INFO"))
++        acedRegCmds->lookupLocalCmd(L"BCE_INFO") ||
++        acedRegCmds->lookupGlobalCmd(L"BCE_ISSUES") ||
++        acedRegCmds->lookupLocalCmd(L"BCE_ISSUES"))
+       return false;
+     analyzeOwned =
+         acedRegCmds->addCommand(group, L"BCE_ANALYZE", L"BCE_ANALYZE",
+@@ -237,6 +316,13 @@
+       shutdown();
+       return false;
+     }
++    issuesOwned =
++        acedRegCmds->addCommand(group, L"BCE_ISSUES", L"BCE_ISSUES",
++                                ACRX_CMD_MODAL, issuesCommand) == Acad::eOk;
++    if (!issuesOwned) {
++      shutdown();
++      return false;
++    }
+     lifecycle = std::make_unique<Lifecycle>();
+     acDocManager->addReactor(lifecycle.get());
+     return true;
+@@ -254,11 +340,8 @@
+     if (!report || report->size != sizeof(BceAnalysisReportV1) ||
+         report->version != 1 || (!bytes && capacity))
+       return 3;
+-    if (!context || !context->currentDatabase() || lastReport.empty() ||
+-        context->revision() != lastRevision) {
+-      invalidate();
++    if (!currentReport())
+       return 1;
+-    }
+     if (report->sequence && report->sequence != sequence)
+       return 4;
+     const auto identity = context->documentIdentity();
+
+--- tests/native/command/CommandDriver.cpp
++++ tests/native/command/CommandDriver.cpp
+@@ -1,4 +1,5 @@
+ #include "AnalysisCommandAbi.h"
++#include "CommandTranscript.h"
+ #include "ExpectedMembership.h"
+ #include "NativeEvidence.h"
+ #include "ProductBinding.h"
+@@ -139,12 +140,61 @@
+         boolean(acedRegCmds->lookupGlobalCmd(L"BCE_ANALYZE") != nullptr)},
+        {"infoPresent",
+         boolean(acedRegCmds->lookupGlobalCmd(L"BCE_INFO") != nullptr)},
++       {"issuesPresent",
++        boolean(acedRegCmds->lookupGlobalCmd(L"BCE_ISSUES") != nullptr)},
+        {"testRunPresent",
+         boolean(acedRegCmds->lookupGlobalCmd(L"BCE_TEST_RUN") != nullptr)},
+        {"analyzeCallbackOwnedByProduct",
+         boolean(commandOwnedBy(L"BCE_ANALYZE", module))},
+        {"infoCallbackOwnedByProduct",
+         boolean(commandOwnedBy(L"BCE_INFO", module))}});
++}
++struct PrintedCommand {
++  std::string text;
++  std::wstring path;
++  bool readOnly{}, restored{};
++  int status{};
++};
++PrintedCommand printedCommand(const wchar_t *command,
++                              const std::wstring &folder, AcDbDatabase &db) {
++  using namespace bce::native;
++  const auto mode = bce::command_test::Transcript::mode();
++  const auto oldPath = bce::command_test::Transcript::pathVar(L"LOGFILEPATH");
++  const auto outerGlobals = globals();
++  bce::command_test::Transcript transcript(folder);
++  const auto capturePath =
++      bce::command_test::Transcript::pathVar(L"LOGFILEPATH");
++  const auto preGlobals = globals(), preResources = resources(db),
++             preNod = nod(db);
++  const auto preRoots = roots(db);
++  auto *doc = acDocManager->curDocument();
++  auto *working = acdbHostApplicationServices()->workingDatabase();
++  Monitor monitor(db);
++  PrintedCommand result;
++  result.status = acedCommandS(RTSTR, command, RTNONE);
++  result.readOnly =
++      monitor.changes == 0 && preRoots == roots(db) &&
++      preGlobals == globals() && preResources == resources(db) &&
++      preNod == nod(db) && doc == acDocManager->curDocument() &&
++      working == acdbHostApplicationServices()->workingDatabase() &&
++      bce::command_test::Transcript::mode() == 1 &&
++      bce::command_test::Transcript::sameFolder(
++          bce::command_test::Transcript::pathVar(L"LOGFILEPATH"), capturePath);
++  result.text = transcript.stop();
++  result.path = transcript.file();
++  result.restored =
++      mode == bce::command_test::Transcript::mode() &&
++      bce::command_test::Transcript::sameFolder(
++          bce::command_test::Transcript::pathVar(L"LOGFILEPATH"), oldPath) &&
++      outerGlobals == globals();
++  return result;
++}
++void recordPrinted(bce::native::Evidence &evidence,
++                   const PrintedCommand &result, const std::string &command) {
++  using namespace bce::native;
++  evidence.capability(object({{"ordinaryCommand", quote(command)},
++                              {"transcript", quote(result.path)},
++                              {"SHA256", quote(sha256(result.path))}}));
+ }
+ void foreignCommand() noexcept {}
+ struct LifecycleRun {
+@@ -164,6 +214,8 @@
+   std::string newGlobals, newResources, newNod;
+ };
+ std::unique_ptr<LifecycleRun> lifecycleRun;
++void documentAfterNew() noexcept;
++void documentFinish() noexcept;
+ void lifecycleExpect(const char *name, bool condition,
+                      const std::string &details) {
+   auto &r = *lifecycleRun;
+@@ -190,6 +242,67 @@
+   }
+   // On failure leave owned documents in place for exact supervisor shutdown;
+   // never close a modified or uncertain document merely to complete a test.
++}
++void documentCheckNew() noexcept {
++  try {
++    using namespace bce::native;
++    require(lifecycleRun != nullptr, "lifecycle missing");
++    auto &r = *lifecycleRun;
++    require(acDocManager->curDocument() == r.temporary &&
++                r.temporary->database() == r.temporaryDatabase,
++            "new owned document for issues");
++    require(r.newDocumentMonitor && r.newDocumentMonitor->changes == 0,
++            "new document unchanged before issue command");
++    r.newDocumentMonitor.reset();
++    const auto printed = printedCommand(
++        L"BCE_ISSUES", r.config.output + L"/issues-after-real-switch",
++        *r.temporaryDatabase);
++    recordPrinted(*r.evidence, printed,
++                  "BCE_ISSUES after real document switch");
++    lifecycleExpect("RealDocumentSwitchInvalidatesOrdinaryIssuePages",
++                    printed.status == RTNORM && printed.readOnly &&
++                        printed.restored &&
++                        printed.text.find("BCE_ANALYZE") != std::string::npos &&
++                        printed.text.find("[1/") == std::string::npos,
++                    "actual ordinary user command cannot display previous "
++                    "document's locations");
++    r.newDocumentMonitor = std::make_unique<Monitor>(*r.temporaryDatabase);
++    require(acedCommandS(RTSTR, L"BCE_ANALYZE", RTNONE) == RTNORM,
++            "new document ordinary analyze");
++    documentAfterNew();
++  } catch (const std::exception &e) {
++    lifecycleFailure(e.what());
++  } catch (...) {
++    lifecycleFailure("new issues lifecycle exception");
++  }
++}
++void documentCheckReturn() noexcept {
++  try {
++    using namespace bce::native;
++    require(lifecycleRun != nullptr, "lifecycle missing");
++    auto &r = *lifecycleRun;
++    require(acDocManager->curDocument() == r.original,
++            "owned original after close");
++    const auto printed = printedCommand(
++        L"BCE_ISSUES", r.config.output + L"/issues-after-real-close",
++        *r.original->database());
++    recordPrinted(*r.evidence, printed,
++                  "BCE_ISSUES after real close and return");
++    lifecycleExpect("RealCloseInvalidatesOrdinaryIssuePages",
++                    printed.status == RTNORM && printed.readOnly &&
++                        printed.restored &&
++                        printed.text.find("BCE_ANALYZE") != std::string::npos &&
++                        printed.text.find("[1/") == std::string::npos,
++                    "actual close/return cannot display locations of closed "
++                    "document or prior analysis");
++    require(acedCommandS(RTSTR, L"BCE_ANALYZE", RTNONE) == RTNORM,
++            "return ordinary analyze");
++    documentFinish();
++  } catch (const std::exception &e) {
++    lifecycleFailure(e.what());
++  } catch (...) {
++    lifecycleFailure("return issues lifecycle exception");
++  }
+ }
+ void documentCreate() noexcept {
+   try {
+@@ -241,9 +354,9 @@
+     lifecycleExpect(
+         "ActualDocumentSwitchInvalidatesOldReport", r.copy(&q, nullptr, 0) == 1,
+         "actual SDK-created current document differs from original");
+-    require(acDocManager->sendStringToExecute(
+-                r.temporary, L"BCE_ANALYZE\nBCE_COMMAND_AFTER_NEW\n", true,
+-                false, false) == Acad::eOk,
++    require(acDocManager->sendStringToExecute(r.temporary,
++                                              L"BCE_COMMAND_CHECK_STALE_NEW\n",
++                                              true, false, false) == Acad::eOk,
+             "queue ordinary new-document command");
+   } catch (const std::exception &e) {
+     lifecycleFailure(e.what());
+@@ -315,7 +428,7 @@
+         "ActualCloseAndReturnInvalidateReport", r.copy(&q, nullptr, 0) == 1,
+         "actual SDK close then original current; no cross-document cache");
+     require(acDocManager->sendStringToExecute(
+-                r.original, L"BCE_ANALYZE\nBCE_COMMAND_FINISH\n", true, false,
++                r.original, L"BCE_COMMAND_CHECK_STALE_RETURN\n", true, false,
+                 false) == Acad::eOk,
+             "queue resumed ordinary analyze");
+   } catch (const std::exception &e) {
+@@ -357,7 +470,8 @@
+     r.loaded = false;
+     lifecycleExpect("LifecycleUnloadRemovesAllProductCommands",
+                     !acedRegCmds->lookupGlobalCmd(L"BCE_ANALYZE") &&
+-                        !acedRegCmds->lookupGlobalCmd(L"BCE_INFO"),
++                        !acedRegCmds->lookupGlobalCmd(L"BCE_INFO") &&
++                        !acedRegCmds->lookupGlobalCmd(L"BCE_ISSUES"),
+                     "normal SDK unload after real document close");
+     require(sha256(r.config.scheme) == r.config.schemeSHA256 &&
+                 sha256(r.config.reference) == r.config.referenceSHA256,
+@@ -382,6 +496,7 @@
+     validate_identity(c);
+     require(c.caseName == L"PublicAnalyzeCommandLifecycle", "case mismatch");
+     bool pass = true;
++    std::vector<std::string> expectedIssueRows;
+     auto expect = [&](const char *name, bool ok, const std::string &details) {
+       e->step(name, ok ? "passed" : "failed", details);
+       pass = pass && ok;
+@@ -404,13 +519,15 @@
+     expect("FormalCommandsRegistered",
+            acedRegCmds->lookupGlobalCmd(L"BCE_ANALYZE") &&
+                acedRegCmds->lookupGlobalCmd(L"BCE_INFO") &&
++               acedRegCmds->lookupGlobalCmd(L"BCE_ISSUES") &&
+                !acedRegCmds->lookupGlobalCmd(L"BCE_BUILD") &&
+                !acedRegCmds->lookupGlobalCmd(L"BCE_CONFIG"),
+            "only useful public commands");
+     expect("PublicCallbacksBelongToFrozenProduct",
+            commandOwnedBy(L"BCE_ANALYZE", GetModuleHandleW(product.c_str())) &&
+-               commandOwnedBy(L"BCE_INFO", GetModuleHandleW(product.c_str())),
+-           "VirtualQuery verifies both actual callback allocation bases");
++               commandOwnedBy(L"BCE_INFO", GetModuleHandleW(product.c_str())) &&
++               commandOwnedBy(L"BCE_ISSUES", GetModuleHandleW(product.c_str())),
++           "VirtualQuery verifies all three public callback allocation bases");
+     auto copy = reinterpret_cast<BceCopyAnalysisV1>(GetProcAddress(
+         GetModuleHandleW(product.c_str()), "BceCopyLastAnalysisV1"));
+     require(copy != nullptr, "read-only ABI missing");
+@@ -430,6 +547,7 @@
+                                       acdbSymUtil()->blockModelSpaceId(&db),
+                                       mapping, AcDb::kDrcIgnore) == Acad::eOk,
+             "current-memory scheme clone");
++    AcDbObjectId currentMarker;
+     {
+       AcDbDatabase fixture(true, true);
+       struct WorkingScope {
+@@ -471,8 +589,18 @@
+                   ids, acdbSymUtil()->blockModelSpaceId(&db), textMapping,
+                   AcDb::kDrcIgnore) == Acad::eOk,
+               "raw clone cold text to actual current source");
++      AcDbIdPair marker;
++      marker.setKey(textId);
++      require(textMapping.compute(marker) && marker.isCloned(),
++              "marker mapping");
++      currentMarker = marker.value();
+     }
+ 
++    const auto loggingModeBefore = bce::command_test::Transcript::mode();
++    const auto loggingPathBefore =
++        bce::command_test::Transcript::pathVar(L"LOGFILEPATH");
++    bce::command_test::Transcript analyzeTranscript(c.output +
++                                                    L"/analyze-output");
+     const auto before = roots(db);
+     const auto beforeGlobals = globals(), beforeResources = resources(db),
+                beforeNod = nod(db);
+@@ -492,6 +620,33 @@
+       std::vector<char> bytes(static_cast<std::size_t>(report.requiredBytes));
+       require(copy(&report, bytes.data(), bytes.size()) == 0, "report copy");
+       const std::string body(bytes.data());
++      {
++        std::istringstream input(body);
++        std::string line;
++        std::vector<std::vector<std::string>> issues;
++        while (std::getline(input, line)) {
++          if (line.rfind("issue\t", 0) != 0)
++            continue;
++          std::vector<std::string> fields;
++          std::istringstream row(line);
++          std::string field;
++          while (std::getline(row, field, '\t'))
++            fields.push_back(field);
++          require(fields.size() >= 5, "issue report row");
++          issues.push_back(fields);
++        }
++        for (std::size_t i = 0; i < issues.size(); ++i) {
++          const auto &fields = issues[i];
++          std::string expected = "[" + std::to_string(i + 1) + "/" +
++                                 std::to_string(issues.size()) + "] " +
++                                 fields[1];
++          if (!fields[3].empty())
++            expected += " [" + fields[3] + "]";
++          if (!fields[2].empty())
++            expected += " [" + fields[2] + "]";
++          expectedIssueRows.push_back(expected);
++        }
++      }
+       e->capability(object({{"publicReport", quote(body)}}));
+       expect("RealFourElevationsTwoSections",
+              body.find("elevations\t4\n") != std::string::npos &&
+@@ -582,6 +737,99 @@
+                beforeNod == nod(db) &&
+                working == acdbHostApplicationServices()->workingDatabase(),
+            "12 global values including DBMOD, resources, NOD and working DB");
++    expect("AnalyzePreservesActiveTranscriptSettings",
++           bce::command_test::Transcript::mode() == 1 &&
++               bce::command_test::Transcript::sameFolder(
++                   std::filesystem::path(analyzeTranscript.file())
++                       .parent_path()
++                       .wstring(),
++                   bce::command_test::Transcript::pathVar(L"LOGFILEPATH")),
++           "logging remains exactly at owned capture state throughout ordinary "
++           "analysis");
++    const auto analyzePrinted = analyzeTranscript.stop();
++    e->capability(
++        object({{"ordinaryAnalyzeTranscript", quote(analyzeTranscript.file())},
++                {"SHA256", quote(sha256(analyzeTranscript.file()))}}));
++    expect("OrdinaryAnalyzePrintsAllCriticalMissingInputs",
++           analyzePrinted.find("PLAN_REQUIRED") != std::string::npos &&
++               analyzePrinted.find("UNIT_REQUIRED") != std::string::npos &&
++               analyzePrinted.find("PROJECT_NOT_FOUND") != std::string::npos,
++           "actual native command transcript includes all three critical "
++           "missing codes");
++    expect("OrdinaryAnalyzeShowsUserIssueEntry",
++           analyzePrinted.find("BCE_ISSUES") != std::string::npos &&
++               acedRegCmds->lookupGlobalCmd(L"BCE_ISSUES"),
++           "actual command output and ordinary public command, not QA ABI");
++    expect(
++        "TranscriptRestoresActualLoggingGlobals",
++        bce::command_test::Transcript::mode() == loggingModeBefore &&
++            bce::command_test::Transcript::sameFolder(
++                bce::command_test::Transcript::pathVar(L"LOGFILEPATH"),
++                loggingPathBefore),
++        "original logging mode and path restored after real command capture");
++    const auto infoPrinted =
++        printedCommand(L"BCE_INFO", c.output + L"/info-output", db);
++    recordPrinted(*e, infoPrinted, "BCE_INFO");
++    expect("OrdinaryInfoExplainsIssueEntry",
++           infoPrinted.status == RTNORM &&
++               infoPrinted.text.find("BCE_ISSUES") != std::string::npos &&
++               infoPrinted.text.find("BCE_ANALYZE") != std::string::npos &&
++               infoPrinted.readOnly && infoPrinted.restored,
++           "actual INFO output and full source/global guards");
++    if (acedRegCmds->lookupGlobalCmd(L"BCE_ISSUES")) {
++      bool pagesReadOnly = true;
++      std::string pageText;
++      const auto pageCount = (expectedIssueRows.size() + 11) / 12;
++      for (std::size_t page = 0; page < pageCount; ++page) {
++        const auto printed = printedCommand(
++            L"BCE_ISSUES",
++            c.output + L"/issues-page-" + std::to_wstring(page + 1), db);
++        recordPrinted(*e, printed, "BCE_ISSUES");
++        pagesReadOnly = pagesReadOnly && printed.status == RTNORM &&
++                        printed.readOnly && printed.restored;
++        pageText += printed.text;
++      }
++      bool allRows = !expectedIssueRows.empty();
++      for (const auto &row : expectedIssueRows) {
++        const auto first = pageText.find(row);
++        allRows = allRows && first != std::string::npos &&
++                  pageText.find(row, first + row.size()) == std::string::npos;
++      }
++      expect("OrdinaryIssuePagesDisplayEveryLocatedIssueOnce", allRows,
++             "actual printed ordinal/code/entity/view for " +
++                 std::to_string(expectedIssueRows.size()) + " issues across " +
++                 std::to_string(pageCount) + " ordinary calls");
++      expect(
++          "OrdinaryIssuesPreserveDrawingAndLoggingGlobals", pagesReadOnly,
++          "each actual page independently checks DB "
++          "events/roots/resources/NOD/global/working DB and restores logging");
++      const auto restarted =
++          printedCommand(L"BCE_ISSUES", c.output + L"/issues-restart", db);
++      recordPrinted(*e, restarted, "BCE_ISSUES restart");
++      expect("CompletedIssuePagingRestartsAtFirstIssue",
++             restarted.readOnly && restarted.restored &&
++                 !expectedIssueRows.empty() &&
++                 restarted.text.find(expectedIssueRows.front()) !=
++                     std::string::npos,
++             "ordinary command wraps after final page");
++      {
++        Open<AcDbText> marker(currentMarker, AcDb::kForWrite);
++        require(marker.p->setTextString(L"I1未保存中文内容-修改后") ==
++                    Acad::eOk,
++                "owned unsaved marker edit");
++      }
++      const auto stale = printedCommand(
++          L"BCE_ISSUES", c.output + L"/issues-after-owned-edit", db);
++      recordPrinted(*e, stale, "BCE_ISSUES after source edit");
++      auto staleMeta = query();
++      expect("SourceEditImmediatelyInvalidatesOrdinaryIssuePages",
++             stale.readOnly && stale.restored &&
++                 stale.text.find("BCE_ANALYZE") != std::string::npos &&
++                 stale.text.find("[1/") == std::string::npos &&
++                 copy(&staleMeta, nullptr, 0) == 1,
++             "only owned marker edited before command gate; no stale issue "
++             "locations displayed");
++    }
+     e->capability(object({{"phase", quote(std::string("before-formal-unload"))},
+                           {"state", moduleState(product)}}));
+     const bool unloaded =
+@@ -593,30 +841,35 @@
+     expect("FormalUnloadRemovesOnlyOwnCommands",
+            unloaded && !acedRegCmds->lookupGlobalCmd(L"BCE_ANALYZE") &&
+                !acedRegCmds->lookupGlobalCmd(L"BCE_INFO") &&
++               !acedRegCmds->lookupGlobalCmd(L"BCE_ISSUES") &&
+                acedRegCmds->lookupGlobalCmd(L"BCE_TEST_RUN"),
+            "matched asCmd=true SDK unload; state recorded");
+-    require(acedRegCmds->addCommand(L"BCE_COMMAND_FOREIGN", L"BCE_INFO",
+-                                    L"BCE_INFO", ACRX_CMD_MODAL,
+-                                    foreignCommand) == Acad::eOk,
+-            "foreign fixture command");
+-    auto *const foreign = acedRegCmds->lookupGlobalCmd(L"BCE_INFO");
+-    const bool conflictLoad =
+-        acrxDynamicLinker->loadModule(product.c_str(), false, true);
+-    e->capability(
+-        object({{"phase", quote(std::string("after-conflicting-load"))},
+-                {"sdkReturn", conflictLoad ? "true" : "false"},
+-                {"state", moduleState(product)}}));
+-    expect("ConflictLoadPreservesForeignCommand",
+-           !conflictLoad &&
+-               acedRegCmds->lookupGlobalCmd(L"BCE_INFO") == foreign &&
+-               !acedRegCmds->lookupGlobalCmd(L"BCE_ANALYZE"),
+-           "foreign command preserved on rejected init");
+-    if (conflictLoad) {
+-      acrxDynamicLinker->unloadModule(product.c_str(), true);
+-    }
+-    require(acedRegCmds->removeCmd(L"BCE_COMMAND_FOREIGN", L"BCE_INFO") ==
+-                Acad::eOk,
+-            "remove owned conflict fixture");
++    for (const auto *conflictName : {L"BCE_INFO", L"BCE_ISSUES"}) {
++      require(acedRegCmds->addCommand(L"BCE_COMMAND_FOREIGN", conflictName,
++                                      conflictName, ACRX_CMD_MODAL,
++                                      foreignCommand) == Acad::eOk,
++              "foreign fixture command");
++      auto *const foreign = acedRegCmds->lookupGlobalCmd(conflictName);
++      const bool conflictLoad =
++          acrxDynamicLinker->loadModule(product.c_str(), false, true);
++      e->capability(
++          object({{"phase", quote(std::string("after-conflicting-load"))},
++                  {"sdkReturn", conflictLoad ? "true" : "false"},
++                  {"state", moduleState(product)}}));
++      expect(conflictName == std::wstring(L"BCE_INFO")
++                 ? "ConflictLoadPreservesForeignCommand"
++                 : "IssuesConflictLoadPreservesForeignCommand",
++             !conflictLoad &&
++                 acedRegCmds->lookupGlobalCmd(conflictName) == foreign &&
++                 !acedRegCmds->lookupGlobalCmd(L"BCE_ANALYZE"),
++             "foreign command preserved on rejected init");
++      if (conflictLoad) {
++        acrxDynamicLinker->unloadModule(product.c_str(), true);
++      }
++      require(acedRegCmds->removeCmd(L"BCE_COMMAND_FOREIGN", conflictName) ==
++                  Acad::eOk,
++              "remove owned conflict fixture");
++    }
+     loaded = acrxDynamicLinker->loadModule(product.c_str(), false, true);
+     require(loaded, "formal reload");
+     copy = reinterpret_cast<BceCopyAnalysisV1>(GetProcAddress(
+@@ -627,6 +880,16 @@
+     empty.version = 1;
+     expect("ReloadHasNoOldResult", copy(&empty, nullptr, 0) == 1,
+            "old cache and callbacks discarded");
++    if (acedRegCmds->lookupGlobalCmd(L"BCE_ISSUES")) {
++      const auto emptyPage =
++          printedCommand(L"BCE_ISSUES", c.output + L"/issues-after-reload", db);
++      recordPrinted(*e, emptyPage, "BCE_ISSUES after reload");
++      expect("ReloadHasNoOrdinaryIssuePages",
++             emptyPage.readOnly && emptyPage.restored &&
++                 emptyPage.text.find("BCE_ANALYZE") != std::string::npos &&
++                 emptyPage.text.find("[1/") == std::string::npos,
++             "actual command after unload/reload rejects old page state");
++    }
+     require(acedCommandS(RTSTR, L"BCE_ANALYZE", RTNONE) == RTNORM,
+             "reloaded ordinary command");
+     expect("ReloadedOrdinaryCommandWorks", copy(&empty, nullptr, 0) == 2,
+@@ -664,9 +927,11 @@
+     }
+   }
+   try {
+-    auto *foreign = acedRegCmds->lookupGlobalCmd(L"BCE_INFO");
+-    if (foreign && foreign->functionAddr() == foreignCommand)
+-      acedRegCmds->removeCmd(L"BCE_COMMAND_FOREIGN", L"BCE_INFO");
++    for (const auto *foreignName : {L"BCE_INFO", L"BCE_ISSUES"}) {
++      auto *foreign = acedRegCmds->lookupGlobalCmd(foreignName);
++      if (foreign && foreign->functionAddr() == foreignCommand)
++        acedRegCmds->removeCmd(L"BCE_COMMAND_FOREIGN", foreignName);
++    }
+   } catch (...) {
+   }
+   if (loaded) {
+@@ -698,6 +963,9 @@
+       const Entry entries[] = {
+           {L"BCE_TEST_RUN", ACRX_CMD_MODAL, run},
+           {L"BCE_COMMAND_CREATE_NEW", ACRX_CMD_SESSION, documentCreate},
++          {L"BCE_COMMAND_CHECK_STALE_NEW", ACRX_CMD_MODAL, documentCheckNew},
++          {L"BCE_COMMAND_CHECK_STALE_RETURN", ACRX_CMD_MODAL,
++           documentCheckReturn},
+           {L"BCE_COMMAND_AFTER_NEW", ACRX_CMD_MODAL, documentAfterNew},
+           {L"BCE_COMMAND_CLOSE_NEW", ACRX_CMD_SESSION, documentClose},
+           {L"BCE_COMMAND_FINISH", ACRX_CMD_MODAL, documentFinish}};
+
+--- /dev/null
++++ tests/native/command/CommandTranscript.h
+@@ -0,0 +1,119 @@
++#pragma once
++#include "NativeEvidence.h"
++#include <aced.h>
++#include <acutmem.h>
++#include <adscodes.h>
++#include <algorithm>
++#include <filesystem>
++namespace bce::command_test {
++class Transcript final {
++public:
++  Transcript(const Transcript &) = delete;
++  Transcript &operator=(const Transcript &) = delete;
++  static short mode() {
++    resbuf r{};
++    native::require(acedGetVar(L"LOGFILEMODE", &r) == RTNORM &&
++                        r.restype == RTSHORT,
++                    "read logging mode");
++    return r.resval.rint;
++  }
++  static std::wstring pathVar(const wchar_t *name) {
++    resbuf r{};
++    native::require(acedGetVar(name, &r) == RTNORM && r.restype == RTSTR,
++                    "read logging path");
++    std::wstring result(r.resval.rstring);
++    acutDelString(r.resval.rstring);
++    return result;
++  }
++  static void setMode(short value) {
++    resbuf r{};
++    r.restype = RTSHORT;
++    r.resval.rint = value;
++    native::require(acedSetVar(L"LOGFILEMODE", &r) == RTNORM,
++                    "set owned log mode");
++  }
++  static void setPath(const std::wstring &value) {
++    resbuf r{};
++    r.restype = RTSTR;
++    r.resval.rstring = const_cast<wchar_t *>(value.c_str());
++    native::require(acedSetVar(L"LOGFILEPATH", &r) == RTNORM,
++                    "set owned log path");
++  }
++  static bool sameFolder(const std::wstring &a, const std::wstring &b) {
++    auto x = std::filesystem::weakly_canonical(a).wstring(),
++         y = std::filesystem::weakly_canonical(b).wstring();
++    while (x.size() > 3 && (x.back() == L'\\' || x.back() == L'/'))
++      x.pop_back();
++    while (y.size() > 3 && (y.back() == L'\\' || y.back() == L'/'))
++      y.pop_back();
++    return CompareStringOrdinal(x.c_str(), -1, y.c_str(), -1, TRUE) ==
++           CSTR_EQUAL;
++  }
++  explicit Transcript(const std::wstring &folder)
++      : beforeMode_(mode()), beforePath_(pathVar(L"LOGFILEPATH")) {
++    native::require(beforeMode_ == 0,
++                    "do not replace an existing logging session");
++    native::require(std::filesystem::create_directory(folder),
++                    "transcript directory must be new");
++    changed_ = true;
++    try {
++      setPath(folder + L"\\");
++      file_ = pathVar(L"LOGFILENAME");
++      native::require(
++          sameFolder(std::filesystem::path(file_).parent_path().wstring(),
++                     folder) &&
++              !std::filesystem::exists(file_),
++          "transcript filename outside owned new folder");
++      setMode(1);
++      native::require(mode() == 1, "log did not enable");
++    } catch (...) {
++      restore();
++      throw;
++    }
++  }
++  ~Transcript() noexcept { restore(); }
++  bool restore() noexcept {
++    if (!changed_)
++      return restored_;
++    try {
++      setMode(0);
++      if (mode() != 0)
++        return false;
++      setPath(beforePath_);
++      restored_ = mode() == beforeMode_ &&
++                  sameFolder(pathVar(L"LOGFILEPATH"), beforePath_);
++      if (restored_)
++        changed_ = false;
++      return restored_;
++    } catch (...) {
++      return false;
++    }
++  }
++  std::string stop() {
++    native::require(restore(), "transcript globals restoration failed");
++    native::File f(CreateFileW(file_.c_str(), GENERIC_READ,
++                               FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr,
++                               OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr));
++    native::require(f.valid(), "transcript missing");
++    LARGE_INTEGER length{};
++    native::require(GetFileSizeEx(f.get(), &length) && length.QuadPart >= 0 &&
++                        length.QuadPart <= 4 * 1024 * 1024,
++                    "transcript size");
++    std::string bytes(static_cast<std::size_t>(length.QuadPart), '\0');
++    DWORD read{};
++    native::require(ReadFile(f.get(), bytes.data(),
++                             static_cast<DWORD>(bytes.size()), &read,
++                             nullptr) &&
++                        read == bytes.size(),
++                    "transcript read");
++    bytes.erase(std::remove(bytes.begin(), bytes.end(), '\0'), bytes.end());
++    return bytes;
++  }
++  const std::wstring &file() const noexcept { return file_; }
++
++private:
++  short beforeMode_{};
++  std::wstring beforePath_, file_;
++  bool changed_{}, restored_{};
++};
++} // namespace bce::command_test
+
+--- tools/build_commands.ps1
++++ tools/build_commands.ps1
+@@ -32,7 +32,7 @@
+         if ($verifiedCount -ne $expectedCount) { throw ('Dependency source set incomplete: ' + $dependency.contract + ' count=' + $verifiedCount) }
+         $receipt.dependencyReceipts += [ordered]@{ path=$resolvedDependency; SHA256=(Get-FileHash -LiteralPath $resolvedDependency).Hash; verifiedOwnedSources=$verifiedCount }
+     }
+-    $inputs = @('src/ElevationModel.h','src/ElevationModel.cpp','src/RuleModel.h','src/Recognition.h','src/Recognition.cpp','src/SceneReader.h','src/SceneReader.cpp','src/AnalysisReader.h','src/AnalysisReader.cpp','src/ProjectStore.h','src/ProjectStore.cpp','src/ProjectStoreCodec.h','src/ProjectStoreCodec.cpp','src/GenerationState.h','src/GenerationState.cpp','src/WriteContracts.h','src/AnalysisCommands.h','src/AnalysisCommands.cpp','src/AnalysisCommandAbi.h','src/ElevationArx.cpp','src/BuildingElevation2020.vcxproj','tests/native/NativeEvidence.h','tests/native/NativeEvidence.cpp','tests/native/command/CommandDriver.cpp','tests/native/command/ElevationCommandCases.vcxproj')
++    $inputs = @('src/ElevationModel.h','src/ElevationModel.cpp','src/RuleModel.h','src/Recognition.h','src/Recognition.cpp','src/SceneReader.h','src/SceneReader.cpp','src/AnalysisReader.h','src/AnalysisReader.cpp','src/ProjectStore.h','src/ProjectStore.cpp','src/ProjectStoreCodec.h','src/ProjectStoreCodec.cpp','src/GenerationState.h','src/GenerationState.cpp','src/WriteContracts.h','src/AnalysisCommands.h','src/AnalysisCommands.cpp','src/AnalysisCommandAbi.h','src/ElevationArx.cpp','src/BuildingElevation2020.vcxproj','tests/native/NativeEvidence.h','tests/native/NativeEvidence.cpp','tests/native/command/CommandDriver.cpp','tests/native/command/CommandTranscript.h','tests/native/command/ElevationCommandCases.vcxproj')
+     foreach ($relative in $inputs) {
+         $source = Join-Path $projectRoot $relative
+         $destination = Join-Path $sourceRoot (Split-Path $relative -Leaf)
+

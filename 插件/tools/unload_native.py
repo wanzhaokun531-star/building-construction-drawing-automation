@@ -1,0 +1,6 @@
+from prepare_native import ROOT,S,P,read,sha
+from pathlib import Path
+import sys,datetime,json,importlib.util
+version=sys.argv[1];b=read(S/f'evidence/native-host-binding-{version}.json');session=Path(b['session']);ready=read(session/'quiet-worker-ready.json');run=ROOT/'阶段1/runs'/('stage2-product-unload-'+datetime.datetime.now().strftime('%Y%m%d-%H%M%S'));run.mkdir();(run/'phase2-product-unload.only').write_text('exact owned product module only\n',encoding='ascii')
+spec=importlib.util.spec_from_file_location('queue',P/'run_quiet_job.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);step=m.dispatch(session,ready,'S1PHASE2EXECUTE',run,'native-product-unload.json',60);r=read(run/'native-product-unload.json');assert r['unloaded'] and r['commandsRemoved'] and r['error'] is None
+r.update(session=str(session),nonce=b['nonce'],processId=ready['processId'],moduleSHA256=b['moduleSHA256'],job=str(run),reportSHA256=sha(run/'native-product-unload.json'),step=step);out=ROOT/f'插件/evidence/unload-product-{version}.json';assert not out.exists();out.write_text(json.dumps(r,ensure_ascii=False,indent=2),encoding='utf-8');print(json.dumps({k:r[k] for k in ('unloaded','commandsRemoved','moduleSHA256')},ensure_ascii=False))

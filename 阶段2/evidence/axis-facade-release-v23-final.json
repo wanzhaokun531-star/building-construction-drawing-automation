@@ -1,0 +1,419 @@
+{
+  "contract": "bcp.axis-facade-release-gate.v1",
+  "passed": true,
+  "nativeRun": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\native-run-v23.json",
+  "DWGSHA256": "7BEB8D6DA850D80344C6C758BBCF247B4DF541113B13B2689F3570EDF713A9E7",
+  "PDFSHA256": "4E039CDE33D0E35ECA57DD9A9B1B346D78496D32D345C16D44449CF26686DE6A",
+  "analysisSHA256": "D68380996B93510D16E548834014C1C923D85A50F9817EFEF922B49A4035E4C3",
+  "annotationsSHA256": "E3B607B82A81A3A62E709BF948788D5BBD87B6F4A5F31120702DACED524EF709",
+  "logicalAxes": 20,
+  "renderedNativeAxes": 18,
+  "visibleEnds": 24,
+  "axisDimensions": 20,
+  "totalSampleDimensions": 4,
+  "savedMeasurementEndpoints": 48,
+  "axisClipChecks": 18,
+  "nativeCircles": 36,
+  "witnessStart": 1000,
+  "dimensionPositions": [
+    2000,
+    2800,
+    3600
+  ],
+  "modelRoots": 259,
+  "decisions": [
+    {
+      "label": "1",
+      "side": "bottom",
+      "shown": true,
+      "outerFace": 24041.263551952827,
+      "wallReach": 24141.263551952827,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "1",
+      "side": "top",
+      "shown": true,
+      "outerFace": 32041.263551952827,
+      "wallReach": 31941.263551952827,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "2",
+      "side": "bottom",
+      "shown": true,
+      "outerFace": 16441.263551952798,
+      "wallReach": 16541.263551952827,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 100.0000000000291,
+      "supported": true
+    },
+    {
+      "label": "2",
+      "side": "top",
+      "shown": false,
+      "outerFace": 32041.263551952827,
+      "wallReach": 24141.263551952827,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 7900.0,
+      "supported": false
+    },
+    {
+      "label": "3",
+      "side": "bottom",
+      "shown": false,
+      "outerFace": 16441.263551952816,
+      "wallReach": 20541.263551952827,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 4100.000000000011,
+      "supported": false
+    },
+    {
+      "label": "3",
+      "side": "top",
+      "shown": true,
+      "outerFace": 32041.263551952827,
+      "wallReach": 31941.263551952827,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "4",
+      "side": "bottom",
+      "shown": true,
+      "outerFace": 16441.263551952827,
+      "wallReach": 16541.263551952827,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "4",
+      "side": "top",
+      "shown": false,
+      "outerFace": 30841.263551952827,
+      "wallReach": 22341.263551952827,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 8500.0,
+      "supported": false
+    },
+    {
+      "label": "5",
+      "side": "bottom",
+      "shown": false,
+      "outerFace": 20341.263551952827,
+      "wallReach": 30741.263551952827,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 10400.0,
+      "supported": false
+    },
+    {
+      "label": "5",
+      "side": "top",
+      "shown": true,
+      "outerFace": 34841.26355195283,
+      "wallReach": 34741.26355195283,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "6",
+      "side": "bottom",
+      "shown": true,
+      "outerFace": 18441.263551952798,
+      "wallReach": 18541.263551952827,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 100.0000000000291,
+      "supported": true
+    },
+    {
+      "label": "6",
+      "side": "top",
+      "shown": false,
+      "outerFace": 34841.26355195283,
+      "wallReach": 20441.263551952827,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 14400.0,
+      "supported": false
+    },
+    {
+      "label": "7",
+      "side": "bottom",
+      "shown": false,
+      "outerFace": 18441.2635519528,
+      "wallReach": 30741.263551952827,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 12300.000000000025,
+      "supported": false
+    },
+    {
+      "label": "7",
+      "side": "top",
+      "shown": true,
+      "outerFace": 34841.26355195283,
+      "wallReach": 34741.26355195283,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "8",
+      "side": "bottom",
+      "shown": true,
+      "outerFace": 18441.263551952816,
+      "wallReach": 18541.263551952827,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 100.00000000001091,
+      "supported": true
+    },
+    {
+      "label": "8",
+      "side": "top",
+      "shown": true,
+      "outerFace": 34841.26355195283,
+      "wallReach": 34741.26355195283,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "9",
+      "side": "bottom",
+      "shown": true,
+      "outerFace": 18441.263551952827,
+      "wallReach": 18541.263551952827,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "9",
+      "side": "top",
+      "shown": true,
+      "outerFace": 32841.26355195283,
+      "wallReach": 32741.263551952827,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "A",
+      "side": "left",
+      "shown": true,
+      "outerFace": 16211.890259172244,
+      "wallReach": 16311.890259172244,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "A",
+      "side": "right",
+      "shown": false,
+      "outerFace": 20611.890259172244,
+      "wallReach": 20511.890259172244,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "B",
+      "side": "left",
+      "shown": false,
+      "outerFace": 16211.890259172244,
+      "wallReach": 24111.890259172244,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 7900.0,
+      "supported": false
+    },
+    {
+      "label": "B",
+      "side": "right",
+      "shown": true,
+      "outerFace": 32811.89025917224,
+      "wallReach": 32711.890259172244,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "D",
+      "side": "left",
+      "shown": true,
+      "outerFace": 16211.890259172244,
+      "wallReach": 16311.890259172244,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "D",
+      "side": "right",
+      "shown": false,
+      "outerFace": 32811.89025917224,
+      "wallReach": 19111.890259172244,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 13700.0,
+      "supported": false
+    },
+    {
+      "label": "E",
+      "side": "left",
+      "shown": true,
+      "outerFace": 16211.890259172244,
+      "wallReach": 16311.890259172244,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "E",
+      "side": "right",
+      "shown": false,
+      "outerFace": 32811.89025917224,
+      "wallReach": 20511.890259172244,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 12300.0,
+      "supported": false
+    },
+    {
+      "label": "F",
+      "side": "left",
+      "shown": true,
+      "outerFace": 15111.890259172244,
+      "wallReach": 15211.890259172244,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "F",
+      "side": "right",
+      "shown": true,
+      "outerFace": 32811.89025917224,
+      "wallReach": 32711.890259173873,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 99.99999999837019,
+      "supported": true
+    },
+    {
+      "label": "G",
+      "side": "left",
+      "shown": true,
+      "outerFace": 15111.890259172082,
+      "wallReach": 15211.890259172244,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 100.00000000016189,
+      "supported": true
+    },
+    {
+      "label": "G",
+      "side": "right",
+      "shown": true,
+      "outerFace": 32811.89025917224,
+      "wallReach": 32711.890259172244,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "J",
+      "side": "left",
+      "shown": true,
+      "outerFace": 15111.890259171894,
+      "wallReach": 15211.890259172244,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 100.00000000034925,
+      "supported": true
+    },
+    {
+      "label": "J",
+      "side": "right",
+      "shown": false,
+      "outerFace": 32811.89025917224,
+      "wallReach": 19111.890259172244,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 13700.0,
+      "supported": false
+    },
+    {
+      "label": "K",
+      "side": "left",
+      "shown": false,
+      "outerFace": 21211.890259172244,
+      "wallReach": 29111.890259172244,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 7900.0,
+      "supported": false
+    },
+    {
+      "label": "K",
+      "side": "right",
+      "shown": true,
+      "outerFace": 32811.89025917224,
+      "wallReach": 32711.890259172244,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "L",
+      "side": "left",
+      "shown": true,
+      "outerFace": 21211.890259172244,
+      "wallReach": 21311.890259172244,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 100.0,
+      "supported": true
+    },
+    {
+      "label": "L",
+      "side": "right",
+      "shown": true,
+      "outerFace": 29211.890259172244,
+      "wallReach": 29111.890259172244,
+      "wallHalfThickness": 100.0,
+      "wallFaceGap": 100.0,
+      "supported": true
+    }
+  ],
+  "chains": {
+    "top": [
+      3900,
+      2200,
+      4000,
+      3800,
+      3600
+    ],
+    "bottom": [
+      1100,
+      4200,
+      3600,
+      5000,
+      3600
+    ],
+    "left": [
+      4000,
+      1800,
+      1799.9999999992433,
+      3600.0000000007567,
+      4200,
+      2800
+    ],
+    "right": [
+      5599.999999999243,
+      3600.0000000007567,
+      5000,
+      2000
+    ]
+  },
+  "bottom3Hidden": true,
+  "top3Retained": true,
+  "constructionDrawingComplete": false
+}

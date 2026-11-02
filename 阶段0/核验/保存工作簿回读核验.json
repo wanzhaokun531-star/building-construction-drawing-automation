@@ -1,0 +1,120 @@
+{
+  "saved_xlsx_readback": "passed",
+  "sheet_count": 12,
+  "table_count": 18,
+  "cached_errors": [],
+  "editable_inputs_blank": true,
+  "sheets": [
+    {
+      "sheet": "阶段0总览",
+      "formulas": 14,
+      "validations": 0,
+      "freeze": 0,
+      "tables": 1,
+      "summary_values": [
+        2,
+        205,
+        82,
+        0,
+        23,
+        21,
+        10,
+        34,
+        265,
+        120,
+        96,
+        0,
+        49,
+        1
+      ]
+    },
+    {
+      "sheet": "资料优先级",
+      "formulas": 0,
+      "validations": 0,
+      "freeze": 1,
+      "tables": 1
+    },
+    {
+      "sheet": "待补参数",
+      "formulas": 120,
+      "validations": 1,
+      "freeze": 1,
+      "tables": 1
+    },
+    {
+      "sheet": "实测台账",
+      "formulas": 34,
+      "validations": 1,
+      "freeze": 1,
+      "tables": 1
+    },
+    {
+      "sheet": "资源清单",
+      "formulas": 0,
+      "validations": 0,
+      "freeze": 1,
+      "tables": 1
+    },
+    {
+      "sheet": "输入基线",
+      "formulas": 0,
+      "validations": 0,
+      "freeze": 1,
+      "tables": 1
+    },
+    {
+      "sheet": "图层清单",
+      "formulas": 0,
+      "validations": 0,
+      "freeze": 1,
+      "tables": 1
+    },
+    {
+      "sheet": "图层对照",
+      "formulas": 0,
+      "validations": 0,
+      "freeze": 1,
+      "tables": 3
+    },
+    {
+      "sheet": "文字样式",
+      "formulas": 0,
+      "validations": 0,
+      "freeze": 1,
+      "tables": 3
+    },
+    {
+      "sheet": "线型标注样式",
+      "formulas": 0,
+      "validations": 0,
+      "freeze": 1,
+      "tables": 2
+    },
+    {
+      "sheet": "原图处理建议",
+      "formulas": 0,
+      "validations": 2,
+      "freeze": 1,
+      "tables": 2
+    },
+    {
+      "sheet": "属性证据",
+      "formulas": 0,
+      "validations": 0,
+      "freeze": 1,
+      "tables": 1
+    }
+  ],
+  "final_workbook_sha256": "62BBA4C44B629CE5F7AEEF83B1A37C0FE246EA4C97123454C36D520CB851F4BA",
+  "priority_rows": 24,
+  "priority_additions_verified": [
+    "B09",
+    "B10",
+    "B11"
+  ],
+  "current_phase1_readiness_gap": [
+    "A02"
+  ],
+  "final_readback": "passed"
+}

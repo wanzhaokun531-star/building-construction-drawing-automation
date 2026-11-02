@@ -1,0 +1,285 @@
+{
+  "contract": "bce.n7-review-package.v1",
+  "actualCandidateRun": "pending-controller",
+  "candidateArxSHA256": "E6372D7E4634954197339911CA08D1E187A37178790CCB8FFDF44037214FF356",
+  "compiledSources": [
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\NativeEvidence.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-213402-772-reports-closed-frozen-7dfdec74\\src\\NativeEvidence.h",
+      "sha256": "C6B083EE0346AA7CDB51090274CCCADCB2C6DE0AA92A196AD846E11C41C9EBB6"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\NativeEvidence.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-213402-772-reports-closed-frozen-7dfdec74\\src\\NativeEvidence.cpp",
+      "sha256": "1B3CA34A61CC2C2DB2C42A7FDFD01C029DE7BE82EAE6CE96D9DE1C3B363A8FE2"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\provenance.json",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-213402-772-reports-closed-frozen-7dfdec74\\src\\provenance.json",
+      "sha256": "A2531EE4A9FEE04726946732A3172D8756C3A68B41DF949D1C382821B4E5B450"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\prepare-ready.schema.json",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-213402-772-reports-closed-frozen-7dfdec74\\src\\prepare-ready.schema.json",
+      "sha256": "D0406984B5867225CECB1B1034DAD1EFB384D38A7884E997194CFB0F430399FF"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\ViewportFixtures.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-213402-772-reports-closed-frozen-7dfdec74\\src\\ViewportFixtures.h",
+      "sha256": "69B13CB727BFB2B7A07C956A847568783DDE38381C192AD5FB3B1E0EE341F2D6"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\ViewportForward.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-213402-772-reports-closed-frozen-7dfdec74\\src\\ViewportForward.h",
+      "sha256": "910E7D2B1FDEDE2ED35A8CB3214CFA774C12F48E1FD44CCF74B9BC333FB5074A"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\ViewportProbe.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-213402-772-reports-closed-frozen-7dfdec74\\src\\ViewportProbe.h",
+      "sha256": "4786CC5F02D9FDF8B698FAB03384B57272E109E19B32780B4EC31366305A748A"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\ViewportProbe.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-213402-772-reports-closed-frozen-7dfdec74\\src\\ViewportProbe.cpp",
+      "sha256": "290B913B4E3B828768B8C5EDE580384FD6192A5ACD9F2E8BBEFAE4168C60C748"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\ViewportCapture.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-213402-772-reports-closed-frozen-7dfdec74\\src\\ViewportCapture.cpp",
+      "sha256": "763887B2A70560BBFB5BDC307656D62A623F77CB3D72EB1F6FF21987FCE4E0FC"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\GraphicsPolicy.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-213402-772-reports-closed-frozen-7dfdec74\\src\\GraphicsPolicy.h",
+      "sha256": "9F4DD6AF7C950BDA3A5D78444EE4EDFA63381DCFFCA96A39B6BA92B0D4A9DB97"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\GraphicsControlPolicy.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-213402-772-reports-closed-frozen-7dfdec74\\src\\GraphicsControlPolicy.h",
+      "sha256": "4A6AA82F67E722D29934D30184538B46DA7BB727305E7DAC32D809F5DFD95B1E"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\ElevationViewportCases.vcxproj",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-213402-772-reports-closed-frozen-7dfdec74\\src\\ElevationViewportCases.vcxproj",
+      "sha256": "EB65C705EE0D380C91E4F4FC0A76812432862014339542A664E7136FB665893A"
+    }
+  ],
+  "allLiveSourcesMatch": true,
+  "files": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-213402-772-reports-closed-frozen-7dfdec74\\receipt.json",
+      "sha256": "3001428DF84FFB61157F25AAB75E02F9AEE873A0BDA56E949BC72262D86F1CF9"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-213402-772-reports-closed-frozen-7dfdec74\\build-command.cmd",
+      "sha256": "2115A374D858B26FCB1ABED9BE2ABA126EF76DDD5B2FBED42E07743DC43957DF"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-213402-772-reports-closed-frozen-7dfdec74\\build.log",
+      "sha256": "FC03741B21533A254D9232E029303F80680BD3B51CC6D713E71113B9A46D594B"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-213402-772-reports-closed-frozen-7dfdec74\\out\\ElevationViewportCases.arx",
+      "sha256": "E6372D7E4634954197339911CA08D1E187A37178790CCB8FFDF44037214FF356"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-211856-983-stub-red-805dc0d3\\receipt.json",
+      "sha256": "51B3EAE253619591C6052C1E785533C4251FAEF1236D693CA635FD737E654FEF"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-211856-983-stub-red-805dc0d3\\build.log",
+      "sha256": "27D9867187C2BD3D8CFC070414DB623801E0436229E66EAA371ED43686ACCA01"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-212057-596805fa\\case\\native-case.json",
+      "sha256": "88230FA34BBDB9C7ACC24AC35CF2BA56C29AC1155870C07046865C90A24CD75A"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-212057-596805fa\\case\\graphics-viewport.json",
+      "sha256": "F835FCBA328D8BC9CA211B1AD3999D9B737C14592BFC0C08F75F662053472B97"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\review-7dfdec74\\stub-to-candidate.diff",
+      "sha256": "C37AFCC16548CECD4633039D809983E7FC06D0929A4D0ED7ED8D71D76955A20B"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\review-7dfdec74\\red-summary.json",
+      "sha256": "F64AB7C4CFCF6D7AA04802F1639AF049D4A124D5C0EC774AF08E56BBBE3D7A9F"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcApDocManagerReactor__documentBecameCurrent@AcApDocument_.html",
+      "sha256": "728555AA54209594DCE4074AC4E50F016AB6C882BC686981C30F9C9BB708D18F",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcApDocManager__sendStringToExecute@AcApDocument_@ACHAR__@bool@bool@bool.html",
+      "sha256": "0588F0F5082214DD2FBAA27BAEE39B29CED95C9718C18D24712F5E8F1CD2EA6C",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcDbHostApplicationServices__setWorkingDatabase@AcDbDatabase_.html",
+      "sha256": "B74B455A19625DFFECE524B03C22A1540297992F6CC23E7E7AF9B999BCEB3B89",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\acdocman.h",
+      "sha256": "B10E00BFBE716750A40765CAA06B46377BBD6125E3AC494F4666307D6868D622",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\acedCmdNF.h",
+      "sha256": "B1480D0B103ADA79CF894B3AD6365DB6CEEC1283EB287AA734ABCBEB14E26D44",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\acedSetCurrentView@AcDbViewTableRecord__@AcDbViewport__.html",
+      "sha256": "88D11875D19D752063636822286E72D7074D2F4C43BCE0AC14A23C770CADCFE0",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\acgi.h",
+      "sha256": "BAFD7C2356A29783AFE4A503B08FEDDC34E80C69E7BE10B4D5AA66D4AA37D67A",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiCommonDraw__context.html",
+      "sha256": "618FE327FCC327F91F4DFB7EEB821F24D3923CF991D86B55C5783F7C75EEF84A",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiCommonDraw__rawGeometry.html",
+      "sha256": "93739CF554C30FA0210F1CCEC59013AFD18150F67F40871DB4AA1DA1963F4B02",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiDrawableOverrule.html",
+      "sha256": "658E0C60BF01B253C91FC5CC6A91884947BF8BF496232964CCAB58B7429AD45F",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiDrawableOverrule__AcGiDrawableOverrule.html",
+      "sha256": "1889ADD59FCAD31EA74E2744C49E5818078D36C134521912A60D6243C55CE342",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiDrawableOverrule__setAttributes@AcGiDrawable_@AcGiDrawableTraits__.html",
+      "sha256": "3C358D6364332F62033C911FB116ECC3C7194AD5F91EBD8275E700CF1C69425A",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiDrawableOverrule__viewportDraw@AcGiDrawable_@AcGiViewportDraw__.html",
+      "sha256": "4767066723BF41AD367C629C4821B1270AA20AE336654A563847D5A80E3333DF",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiDrawableOverrule__viewportDrawLogicalFlags@AcGiDrawable_@AcGiViewportDraw__.html",
+      "sha256": "283A7FFC57CFC7E080140BCF9213D9DC37BC230800403C06D85CF274D707E59A",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiDrawableOverrule__worldDraw@AcGiDrawable_@AcGiWorldDraw__.html",
+      "sha256": "18745F4162AD495305CA616E403630E55C533B5762743C06D0D9762D94DA52D2",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiViewportDraw__geometry.html",
+      "sha256": "D24920E3A69F602D85E1EC3EA9B5E0ED171682B7B61C8DB9F31767DCFDA63DF6",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiViewportDraw__isValidId@Adesk__ULongPtr@const.html",
+      "sha256": "373F5AF4047F4D04F7563C95512AB38F82D9CA145E26A0F6B0280A676C60304C",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiViewportDraw__sequenceNumber.html",
+      "sha256": "27CE0BCC4211FFD0287DE9A0FF2AAB051BE8E6F98470322933A2D993CCEBBCC5",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiViewportDraw__viewport.html",
+      "sha256": "CAA2A5C7636FBD3A71B7E7D38F34BBA35DD47054000459DFD464DEF2E0500C90",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiViewportDraw__viewportObjectId.html",
+      "sha256": "A4D0BBDDF84378C289C9EC29665BC0805FBC71534E78E23C4339C190ECD1CC9E",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcGiWorldDraw__geometry.html",
+      "sha256": "1A3BD12CC76C804583DB2FA4E24367284D1DEC483B2B7F35FAEB44D76A65BAAA",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcRxOverrule__addOverrule@AcRxClass_@AcRxOverrule_@bool.html",
+      "sha256": "3CD9750B4DF22BD2245D4C2C0BA4F1F27E9605DB984362D8BA676E9D874A448A",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcRxOverrule__hasOverrule@AcRxObject_@AcRxClass_.html",
+      "sha256": "B8E939342383EBC991C3ADC3BF7FEA44849993CFA5B4327DA1DF6F9767E72AFD",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcRxOverrule__isApplicable@AcRxObject_@const.html",
+      "sha256": "BBE94209595A36F1AE3161B9B9149D226D818E54165822ACE13886336F18FC21",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcRxOverrule__isOverruling.html",
+      "sha256": "5B23336EA97CA3A28BF139B2F2A928FAF33F85A9BDC56AD1D137CEC9D9EDE226",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcRxOverrule__removeOverrule@AcRxClass_@AcRxOverrule_.html",
+      "sha256": "40FAA86A272BC363E409429ED34BB83353FA8AB1D7EEDDE6A5A6AEC0DAD7F3CD",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcRxOverrule__setIsOverruling@bool.html",
+      "sha256": "91BA5A573F900DF5F860ACC5D5923713BD067FA5F8D55236E9736B36C75DF0D0",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\AcRxOverrule__~AcRxOverrule.html",
+      "sha256": "11FB51A80BFB04917CDA23B996DE9E7406A3534D5302490B9EEA3C805B7EA659",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\adscodes.h",
+      "sha256": "F2BDFD81BEC1B8E01255314182B427EE974976B44F4637B13A2050881435105C",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\dbapserv.h",
+      "sha256": "6DD11DFCBCD323EABA7580053D62194E12AC8332432A867E5F1534A619B8C731",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\drawable.h",
+      "sha256": "BE4D3F150A70EE40B7DB89EEB5093D52D668297E999643C6C581F7F94CBD9CAC",
+      "role": "official installed SDK contract; reference only"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\sdk-public-contracts\\rxoverrule.h",
+      "sha256": "533B97D4311D04B8DA1375616F36275D8926405F5BD4900ECE8D70CC31FA54DB",
+      "role": "official installed SDK contract; reference only"
+    }
+  ],
+  "notClaimed": [
+    "actual viewport capture success",
+    "glyph coverage",
+    "MText full layout",
+    "clip occupancy",
+    "TrueType backend",
+    "normal host QUIT",
+    "review No findings"
+  ],
+  "writeScope": [
+    "tests/native/graphics-viewport",
+    "tools/build_graphics_viewport.ps1",
+    "执行/N7-真实宿主视口采集报告.md",
+    "isolated build/n7-* generated outputs"
+  ]
+}

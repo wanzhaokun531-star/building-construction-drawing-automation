@@ -1,0 +1,51 @@
+{
+  "contract": "stage1.pure-native-continuation.v1",
+  "clientDate": "2026-10-30",
+  "recorded": "2026-10-30T09:11:02.959089+08:00",
+  "scope": "ordinary AutoCAD 2020 + installed object support; AutoCAD SDK only; no COM/CUA/TCH business commands or business panels; minimal stage1 probes, no phase2",
+  "inputSchemeSHA256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+  "inputReferenceSHA256": "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27",
+  "baseBinarySHA256": "2FB0146F8C5CA703BB1865E48CF0ADD8F4994D01BA1620103FF7B87329DDB36E",
+  "phase1FullAcceptance": false,
+  "phase2Started": false,
+  "tasks": [
+    {
+      "id": "N01",
+      "task": "All native TCH entity list capture and semantic coverage, no subtype guessing",
+      "status": "native catalog complete, both143"
+    },
+    {
+      "id": "N02",
+      "task": "Actual text-style font resolution and GS load flags, no substitution counted exact",
+      "status": "partial16/23, seven not exact"
+    },
+    {
+      "id": "N03",
+      "task": "Documented generic native copyFrom/protocol extensions on owned text clone, save/reopen only if validated",
+      "status": "blocked: copyFrom invalid input and native text finder misses TCH, standard controls succeed"
+    },
+    {
+      "id": "N04",
+      "task": "Fresh verification, owned-host native QUIT, exact cleanup and technical-gap report",
+      "status": "closed: two normal QUIT, one missing-font stop70, exact staging cleanup"
+    }
+  ],
+  "rulings": [
+    "Ruling: Existing folder has no Git repository; use unique native run/candidate archives, do not initialize Git or discard evidence — no Git snapshots if a local edit must be recovered; before-source copies are required.",
+    "Ruling: This request does not authorize weakening native-only or TCH-type criteria. Historical command-bridge PASS remains historical; a safe unsupported result is not business capability PASS — stage1 may remain blocked if essential native setters are absent.",
+    "Ruling: Public DXF display of a custom group does not document its business write schema; no private serialization patching — may leave content writes unproven rather than corrupt custom objects.",
+    "Ruling: Construction parameters, CTB and final product layout belong to their originally assigned stages; phase1 verifies underlying APIs, without moving later algorithms into this probe — later product acceptance remains required."
+  ],
+  "routeConfirmation": "用户明确：只允许 AutoCAD SDK 原生读写，不调用天正业务命令或面板",
+  "currentSession": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-091926",
+  "report": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\阶段1纯原生续测与阻断报告_20261030.md",
+    "SHA256": "DE181F372003B6572D663D41F941D5D0AFF952BB26AE3545AE7593C66DD8E1B2"
+  },
+  "closure": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\纯原生阶段1_输入模块与退出终核_20261030.json",
+    "SHA256": "0AC9B77AE53FEFE744F7D059F7386D5C277174250DE8DEA3ABA358577889726F"
+  },
+  "additionalNativeTextFinder": "Public 2020 SDK api tested, TCH content write unsupported for this sample, no FIND command",
+  "finalReview": "Two P2 fixes: boundary native4 RED3->GREEN0; three saved-contract negatives RED3->GREEN0; suite293 green. No minors."
+}

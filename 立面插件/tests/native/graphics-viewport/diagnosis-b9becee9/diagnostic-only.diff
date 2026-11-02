@@ -1,0 +1,223 @@
+--- 7dfdec74/ElevationViewportCases.vcxproj
++++ 8fcbf595/ElevationViewportCases.vcxproj
+@@ -10,6 +10,6 @@
+     <ClCompile><WarningLevel>Level4</WarningLevel><TreatWarningAsError>true</TreatWarningAsError><SDLCheck>true</SDLCheck><ConformanceMode>true</ConformanceMode><LanguageStandard>stdcpp17</LanguageStandard><RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary><DisableSpecificWarnings>4828;%(DisableSpecificWarnings)</DisableSpecificWarnings><AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions><ExceptionHandling>Sync</ExceptionHandling><PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;UNICODE;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions><AdditionalIncludeDirectories>$(ObjectArxSdk)\inc;$(ObjectArxSdk)\inc-x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories></ClCompile>
+     <Link><SubSystem>Windows</SubSystem><ModuleDefinitionFile>$(ObjectArxSdk)\inc\AcRxDefault.def</ModuleDefinitionFile><AdditionalLibraryDirectories>$(ObjectArxSdk)\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories><AdditionalDependencies>acad.lib;rxapi.lib;acdb23.lib;acge23.lib;accore.lib;ac1st23.lib;Advapi32.lib;User32.lib;%(AdditionalDependencies)</AdditionalDependencies></Link>
+   </ItemDefinitionGroup>
+-  <ItemGroup><ClCompile Include="ViewportProbe.cpp" /><ClCompile Include="ViewportCapture.cpp" /><ClCompile Include="NativeEvidence.cpp" /></ItemGroup>
++  <ItemGroup><ClCompile Include="ViewportProbe.cpp" /><ClCompile Include="ViewportCapture.cpp" /><ClCompile Include="NativeEvidence.cpp" /><ClCompile Include="ViewportTrace.cpp" /></ItemGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+ </Project>
+--- 7dfdec74/ViewportCapture.cpp
++++ 8fcbf595/ViewportCapture.cpp
+@@ -1,4 +1,5 @@
+ #include "ViewportProbe.h"
++#include "ViewportTrace.h"
+ #include <aced.h>
+ #include <adscodes.h>
+ #include <acedCmdNF.h>
+@@ -91,15 +92,18 @@
+         emit(g,"text",f);
+     }
+     void guarded(){require(callbackError.empty(),callbackError);ambientMonitor->check();sourceMonitor->check();if(targetMonitor)targetMonitor->check();}
+-    ~Session(){if(queueAttached)acDocManager->removeReactor(queue.get());}
++    ~Session(){trace("session.destroy",{{"queued",queued?"true":"false"},{"capturing",capturing?"true":"false"}});if(queueAttached)acDocManager->removeReactor(queue.get());}
+ };
+ std::unique_ptr<Session> session;
+ void QueueReactor::documentBecameCurrent(AcApDocument* doc){
++    trace("document.becameCurrent",{{"eventDocPath",quote(std::wstring(doc&&doc->fileName()?doc->fileName():L""))},{"queued",s.queued?"true":"false"},{"capturing",s.capturing?"true":"false"}});
+     if(s.queued||s.capturing||!doc||!doc->database())return;
+     try {const ACHAR* name{};if(doc->database()->getFilename(name)!=Acad::eOk||!name)return;
+         const auto expected=s.config.session+L"\\viewport-native-job\\control.dwg";
+-        if(_wcsicmp(name,expected.c_str())!=0)return;
+-        s.queued=true;const auto status=acDocManager->sendStringToExecute(doc,L"BCE_VIEWPORT_CAPTURE\n",false,false,false);
++        if(_wcsicmp(name,expected.c_str())!=0){trace("document.pathRejected",{{"path",quote(std::wstring(name))},{"expected",quote(expected)}});return;}
++        s.queued=true;trace("document.captureQueue.before",{{"command",quote(std::wstring(L"BCE_VIEWPORT_CAPTURE\n"))}});
++        const auto status=acDocManager->sendStringToExecute(doc,L"BCE_VIEWPORT_CAPTURE\n",false,false,false);
++        trace("document.captureQueue.after",{{"status",std::to_string(status)}});
+         if(status!=Acad::eOk)s.callbackError="sendStringToExecute failed status="+std::to_string(status);
+     }catch(const std::exception& e){s.callbackError=e.what();}catch(...){s.callbackError="document reactor failure";}
+ }
+@@ -156,6 +160,7 @@
+ }
+ }
+ void prepare(const Config& config,Evidence& evidence){
++    trace("prepare.implementation.enter",{{"existingSession",session?"true":"false"},{"existingOverrule",overrule?"true":"false"}});
+     require(!session&&!overrule,"N7 already prepared");session=std::make_unique<Session>(config,evidence);auto& s=*session;
+     s.ambient=acdbHostApplicationServices()->workingDatabase();require(s.ambient,"ambient missing");
+     const auto sink=[&s](const std::string& line){s.write(line);};s.ambientMonitor=std::make_unique<Monitor>(*s.ambient,"ambient",sink);
+@@ -179,8 +184,10 @@
+     const auto ready=object({{"contract",q("bce.graphics-viewport-prepare.v1")},{"nonce",quote(config.nonce)},{"pid",std::to_string(GetCurrentProcessId())},{"targetPath",quote(config.output+L"\\viewport-target.dwg")},{"targetSHA256",quote(s.targetSHA)},{"modelRootCount",std::to_string(s.rootHandles.size())},{"rootHandles",array(handles)},{"sourceSHA",object({{"scheme",quote(config.schemeSHA256)},{"reference",quote(config.referenceSHA256)}})}});
+     {auto f=create_new(config.output+L"\\prepare-ready.tmp");write_flushed(f.get(),ready);}
+     require(MoveFileExW((config.output+L"\\prepare-ready.tmp").c_str(),(config.output+L"\\prepare-ready.json").c_str(),MOVEFILE_WRITE_THROUGH)!=FALSE,"atomic prepare ready publish failed");
++    trace("prepare.readyPublished");
+ }
+ Result capture(const Config& config,Evidence& evidence){
++    trace("capture.implementation.enter",{{"existingSession",session?"true":"false"}});
+     require(session&&session->queued&&!session->capturing,"N7 not prepared/queued or capture repeated");auto& s=*session;s.capturing=true;s.guarded();
+     const auto control=config.session+L"\\viewport-native-job\\control.dwg";s.target=acdbHostApplicationServices()->workingDatabase();
+     require(s.target&&s.target!=s.ambient&&s.target!=s.source.get()&&curDoc()&&curDoc()->database()==s.target,"capture target/context invalid");
+--- 7dfdec74/ViewportProbe.cpp
++++ 8fcbf595/ViewportProbe.cpp
+@@ -1,33 +1,44 @@
+ #include "ViewportProbe.h"
++#include "ViewportTrace.h"
+ #include <aced.h>
+ #include <rxregsvc.h>
+ #include <memory>
+ #include <exception>
++#include <cstdint>
+ namespace {
+ using namespace bce::native;
+ HMODULE module{};
+ Config pendingConfig;
+ std::unique_ptr<Evidence> pendingEvidence;
++unsigned prepareCalls{},captureCalls{};
+ void failPending(const std::string& reason) noexcept {
++    bce::viewport::trace("handler.failPending",{{"reason",quote(reason)},{"pendingEvidence",pendingEvidence?"true":"false"},{"prepareCalls",std::to_string(prepareCalls)},{"captureCalls",std::to_string(captureCalls)}});
+     bce::viewport::cleanup();
+     if(pendingEvidence){try{pendingEvidence->error(reason);pendingEvidence->finish(pendingConfig,"failed");}catch(...){}}
+     pendingEvidence.reset();
+ }
+ void prepareRun() noexcept {
++    ++prepareCalls;
++    bce::viewport::trace("handler.prepare.enter",{{"prepareCalls",std::to_string(prepareCalls)},{"captureCalls",std::to_string(captureCalls)},{"pendingEvidence",pendingEvidence?"true":"false"}});
+     try {
+         require(!pendingEvidence,"N7 prepare already active");
+         pendingConfig=load_config(module);pendingEvidence=std::make_unique<Evidence>(pendingConfig);
+         pendingEvidence->checkpoint("validate-N7-identity");validate_identity(pendingConfig);
+         require(pendingConfig.caseName==L"PublicGraphicsViewport","unsupported N7 case");
+         bce::viewport::prepare(pendingConfig,*pendingEvidence);
++        require(bce::viewport::traceHealthy(),"command trace logging failed");
++        bce::viewport::trace("handler.prepare.return",{{"pendingEvidence",pendingEvidence?"true":"false"}});
+     } catch(const std::exception& ex){failPending(ex.what());}catch(...){failPending("unknown prepare failure");}
+ }
+ void run() noexcept {
++    ++captureCalls;
++    bce::viewport::trace("handler.capture.enter",{{"prepareCalls",std::to_string(prepareCalls)},{"captureCalls",std::to_string(captureCalls)},{"pendingEvidence",pendingEvidence?"true":"false"}});
+     if(!pendingEvidence)return;
+     auto& config=pendingConfig;auto& evidence=pendingEvidence;
+     try {
+         validate_identity(config);
+         const auto result=bce::viewport::capture(config,*evidence);
++        require(bce::viewport::traceHealthy(),"command trace logging failed");
+         unsigned failed{};
+         auto check=[&](bool value,const std::string& name){evidence->step(name,value?"passed":"failed",value?"observed":"required observation missing");if(!value){++failed;evidence->error(name);}};
+         check(result.prepared,"owned-target-prepared");check(result.naturalRegen,"host-natural-regen-executed");
+@@ -50,12 +61,25 @@
+         evidence->capability(object({{"actualGlyphCoverage","false"},{"mtextLayoutVerified","false"},{"clipAppliedToCollectedPrimitives","false"},{"trueTypeBackendVerified","false"}}));
+         evidence->finish(config,failed?"failed":"partial");
+         require(bce::viewport::cleanup(),"N7 cleanup failed");evidence.reset();
++        bce::viewport::trace("handler.capture.return");
+     } catch(const std::exception& ex){failPending(ex.what());}
+     catch(...){failPending("unknown N7 failure");}
+ }
+ }
+ extern "C" BOOL WINAPI DllMain(HINSTANCE instance,DWORD reason,LPVOID){if(reason==DLL_PROCESS_ATTACH){module=instance;DisableThreadLibraryCalls(instance);}return TRUE;}
+ extern "C" AcRx::AppRetCode acrxEntryPoint(AcRx::AppMsgCode message,void* id){
+-    if(message==AcRx::kInitAppMsg){acrxDynamicLinker->unlockApplication(id);acrxRegisterAppMDIAware(id);if(acedRegCmds->addCommand(L"BCE_VIEWPORT_CASES",L"BCE_TEST_RUN",L"BCE_TEST_RUN",ACRX_CMD_MODAL,prepareRun)!=Acad::eOk)return AcRx::kRetError;return acedRegCmds->addCommand(L"BCE_VIEWPORT_CASES",L"BCE_VIEWPORT_CAPTURE",L"BCE_VIEWPORT_CAPTURE",ACRX_CMD_MODAL,run)==Acad::eOk?AcRx::kRetOK:AcRx::kRetError;}
+-    if(message==AcRx::kUnloadAppMsg){if(pendingEvidence)failPending("unload before capture completion");if(!bce::viewport::cleanup())return AcRx::kRetError;return acedRegCmds->removeGroup(L"BCE_VIEWPORT_CASES")==Acad::eOk?AcRx::kRetOK:AcRx::kRetError;}return AcRx::kRetOK;
++    try {
++        if(message==AcRx::kInitAppMsg){
++            const auto config=load_config(module);bce::viewport::initializeTrace(config);
++            bce::viewport::trace("module.init",{{"prepareHandler",std::to_string(reinterpret_cast<std::uintptr_t>(&prepareRun))},{"captureHandler",std::to_string(reinterpret_cast<std::uintptr_t>(&run))}});
++            acrxDynamicLinker->unlockApplication(id);acrxRegisterAppMDIAware(id);
++            const auto first=acedRegCmds->addCommand(L"BCE_VIEWPORT_CASES",L"BCE_TEST_RUN",L"BCE_TEST_RUN",ACRX_CMD_MODAL,prepareRun);
++            bce::viewport::trace("module.prepareRegistered",{{"status",std::to_string(first)}});if(first!=Acad::eOk){bce::viewport::closeTrace();return AcRx::kRetError;}
++            const auto second=acedRegCmds->addCommand(L"BCE_VIEWPORT_CASES",L"BCE_VIEWPORT_CAPTURE",L"BCE_VIEWPORT_CAPTURE",ACRX_CMD_MODAL,run);
++            bce::viewport::trace("module.captureRegistered",{{"status",std::to_string(second)}});
++            if(second!=Acad::eOk){acedRegCmds->removeGroup(L"BCE_VIEWPORT_CASES");bce::viewport::closeTrace();return AcRx::kRetError;}return AcRx::kRetOK;
++        }
++        bce::viewport::trace("module.message",{{"message",std::to_string(message)}});
++        if(message==AcRx::kUnloadAppMsg){if(pendingEvidence)failPending("unload before capture completion");if(!bce::viewport::cleanup())return AcRx::kRetError;const auto status=acedRegCmds->removeGroup(L"BCE_VIEWPORT_CASES");bce::viewport::trace("module.commandsRemoved",{{"status",std::to_string(status)}});bce::viewport::closeTrace();return status==Acad::eOk?AcRx::kRetOK:AcRx::kRetError;}return AcRx::kRetOK;
++    }catch(...){bce::viewport::trace("module.exception");bce::viewport::closeTrace();return AcRx::kRetError;}
+ }
+--- 7dfdec74/ViewportTrace.cpp
++++ 8fcbf595/ViewportTrace.cpp
+@@ -0,0 +1,64 @@
++#include "ViewportTrace.h"
++#include <aced.h>
++#include <accmd.h>
++#include <acdocman.h>
++#include <dbapserv.h>
++#include <dbmain.h>
++#include <atomic>
++#include <mutex>
++#include <cstdint>
++namespace bce::viewport {
++using namespace bce::native;
++namespace {
++File file;
++std::recursive_mutex mutex;
++std::atomic<bool> failed{false};
++std::size_t sequence{};
++std::wstring nonce;
++bool attached{};
++std::string address(const void* p){return std::to_string(reinterpret_cast<std::uintptr_t>(p));}
++std::wstring dbName(AcDbDatabase* db){const ACHAR* p{};if(db&&db->getFilename(p)==Acad::eOk&&p)return p;return {};}
++struct Editor final:AcEditorReactor {
++    void event(const char* name,const ACHAR* p) noexcept {try {trace(name,{{"command",quote(std::wstring(p?p:L""))}});}catch(...){failed=true;}}
++    void commandWillStart(const ACHAR* p) override {event("editor.commandWillStart",p);}
++    void commandEnded(const ACHAR* p) override {event("editor.commandEnded",p);}
++    void commandCancelled(const ACHAR* p) override {event("editor.commandCancelled",p);}
++    void commandFailed(const ACHAR* p) override {event("editor.commandFailed",p);}
++} editor;
++struct Commands final:AcEdCommandStackReactor {
++    void event(const char* name,AcEdCommand* c,AcEdCommandEventArgs* args) noexcept {
++        try {trace(name,{{"command",c&&c->globalName()?quote(std::wstring(c->globalName())):"null"},{"localName",c&&c->localName()?quote(std::wstring(c->localName())):"null"},{"group",args&&args->groupName()?quote(std::wstring(args->groupName())):"null"},{"commandStatus",args?std::to_string(args->status()):"null"},{"commandFlags",c?std::to_string(c->commandFlags()):"null"},{"handler",c?std::to_string(reinterpret_cast<std::uintptr_t>(c->functionAddr())):"null"}});}
++        catch(...){failed=true;}
++    }
++    void commandAdded(AcEdCommand* c,AcEdCommandEventArgs* a) override {event("stack.commandAdded",c,a);}
++    void commandRemoved(AcEdCommand* c,AcEdCommandEventArgs* a) override {event("stack.commandRemoved",c,a);}
++    void commandWillStart(AcEdCommand* c,AcEdCommandEventArgs* a) override {event("stack.commandWillStart",c,a);}
++    void commandEnded(AcEdCommand* c,AcEdCommandEventArgs* a) override {event("stack.commandEnded",c,a);}
++} commands;
++}
++void trace(const char* event,Fields fields) noexcept {
++    try {std::lock_guard<std::recursive_mutex> lock(mutex);if(!file.valid())return;
++        auto* doc=acDocManager?acDocManager->curDocument():nullptr;auto* db=doc?doc->database():nullptr;
++        auto* working=acdbHostApplicationServices()->workingDatabase();
++        fields.push_back({"contract",quote(std::string("bce.viewport-command-trace.v1"))});
++        fields.push_back({"event",quote(std::string(event))});fields.push_back({"sequence",std::to_string(++sequence)});
++        fields.push_back({"tickMs",std::to_string(GetTickCount64())});fields.push_back({"pid",std::to_string(GetCurrentProcessId())});fields.push_back({"threadId",std::to_string(GetCurrentThreadId())});fields.push_back({"nonce",quote(nonce)});
++        fields.push_back({"currentDocAddress",address(doc)});fields.push_back({"currentDbAddress",address(db)});fields.push_back({"currentDocPath",quote(dbName(db))});
++        fields.push_back({"workingDbAddress",address(working)});fields.push_back({"workingDbPath",quote(dbName(working))});
++        write_flushed(file.get(),object(fields)+"\n");
++    }catch(...){failed=true;}
++}
++void initializeTrace(const Config& config){
++    require(!file.valid()&&!attached,"trace already initialized");nonce=config.nonce;failed=false;sequence=0;
++    file=create_new(config.output+L"\\viewport-command-trace.jsonl");
++    require(acedEditor&&acedRegCmds,"trace editor/command stack unavailable");
++    acedEditor->addReactor(&editor);acedRegCmds->addReactor(&commands);attached=true;
++    trace("trace.attached",{{"moduleSHA256",quote(config.moduleSHA256)}});require(!failed,"trace initialization logging failed");
++}
++bool traceHealthy() noexcept{return file.valid()&&!failed;}
++void closeTrace() noexcept {
++    trace("trace.detaching");
++    if(attached){acedRegCmds->removeReactor(&commands);acedEditor->removeReactor(&editor);attached=false;}
++    file=File();
++}
++}
+--- 7dfdec74/ViewportTrace.h
++++ 8fcbf595/ViewportTrace.h
+@@ -0,0 +1,8 @@
++#pragma once
++#include "NativeEvidence.h"
++namespace bce::viewport {
++void initializeTrace(const bce::native::Config& config);
++void trace(const char* event,bce::native::Fields fields={}) noexcept;
++bool traceHealthy() noexcept;
++void closeTrace() noexcept;
++}
+--- 7dfdec74/build_graphics_viewport.ps1
++++ 8fcbf595/build_graphics_viewport.ps1
+@@ -8,7 +8,7 @@
+ $receipt = [ordered]@{ contract='bce.graphics-viewport-build.v1'; label=$Label; startedUtc=[DateTime]::UtcNow.ToString('o'); compiledSourcesDirectory=$sourceRoot; sourceFiles=[ordered]@{}; inputOrigins=@(); binary=$null; binarySHA256=$null; log=(Join-Path $buildRoot 'build.log'); exitCode=1; toolchain='AutoCAD2020 SDK23.1 / v141 14.16.27023 / x64 / C++17' }
+ $exitResult = 1
+ try {
+-    $inputs = @('tests/native/NativeEvidence.h','tests/native/NativeEvidence.cpp','tests/native/graphics-viewport/provenance.json','tests/native/graphics-viewport/prepare-ready.schema.json','tests/native/graphics-viewport/ViewportFixtures.h','tests/native/graphics-viewport/ViewportForward.h','tests/native/graphics-viewport/ViewportProbe.h','tests/native/graphics-viewport/ViewportProbe.cpp','tests/native/graphics-viewport/ViewportCapture.cpp','tests/native/graphics-viewport/GraphicsPolicy.h','tests/native/graphics-viewport/GraphicsControlPolicy.h','tests/native/graphics-viewport/ElevationViewportCases.vcxproj')
++    $inputs = @('tests/native/NativeEvidence.h','tests/native/NativeEvidence.cpp','tests/native/graphics-viewport/provenance.json','tests/native/graphics-viewport/prepare-ready.schema.json','tests/native/graphics-viewport/ViewportFixtures.h','tests/native/graphics-viewport/ViewportForward.h','tests/native/graphics-viewport/ViewportTrace.h','tests/native/graphics-viewport/ViewportTrace.cpp','tests/native/graphics-viewport/ViewportProbe.h','tests/native/graphics-viewport/ViewportProbe.cpp','tests/native/graphics-viewport/ViewportCapture.cpp','tests/native/graphics-viewport/GraphicsPolicy.h','tests/native/graphics-viewport/GraphicsControlPolicy.h','tests/native/graphics-viewport/ElevationViewportCases.vcxproj')
+     foreach ($relative in $inputs) {
+         $source = Join-Path $projectRoot $relative
+         $destination = Join-Path $sourceRoot (Split-Path $relative -Leaf)

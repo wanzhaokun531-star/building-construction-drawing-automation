@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-28",
+  "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\native-access-scheme-20261028-175845-433",
+  "sourceBinaryAndValidatorMatchReceipt": true,
+  "freshValidation": "assertions=2189 passed=2189 failed=0 result=PASS\nThis verifies scheme-input trials; it is not full construction drawing generation.",
+  "scope": "scheme input only; native dimension trials",
+  "caseSummary": [
+    {
+      "case": "scheme-existing-dimension",
+      "count": 213,
+      "sourceObjectsCompared": 213,
+      "allowedChangedOriginals": [
+        "CDE6"
+      ],
+      "selectedDimensionLength": 17500,
+      "nativeType": "TDbDimension2"
+    },
+    {
+      "case": "scheme-added-dimension",
+      "count": 214,
+      "sourceObjectsCompared": 213,
+      "allowedChangedOriginals": [],
+      "selectedDimensionLength": 3600,
+      "nativeType": "TDbDimension2"
+    }
+  ],
+  "files": {
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\src\\NativeAccessProbe.cpp": "DFF61314796749711A952E1142602CDFFD67D392413AC327F735C7B405E12029",
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\src\\NativeAccessProbe.vcxproj": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\bin\\NativeAccessProbe.arx": "2CF23A794C8F9B04922173188FB47780F8AC48B0B687CFC41B3EB99FD7F0203C",
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_scheme_native.py": "E8006C5B7E58BA8B0C9DE7817E7E8D3620FF89C57EB4538BDE688A632AEBCE0C",
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\运行原生接口探测.ps1": "F4F5622B0EDA9983BBEF5B34017F60D7C359C51DB14B8E896E1B0F8FA4AA42EB",
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\native-access-scheme-20261028-175845-433\\scheme-native.json": "D2988B1B85BB0037BF28F5928139EEE93805D803984E9900A1B59A83643FE36A"
+  },
+  "fullStage1Acceptance": false
+}

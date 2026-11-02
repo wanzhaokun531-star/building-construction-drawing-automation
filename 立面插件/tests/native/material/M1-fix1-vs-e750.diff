@@ -1,0 +1,213 @@
+--- e750/NativeMaterials.h
++++ fix1/NativeMaterials.h
+@@ -7,7 +7,7 @@
+ #include <memory>
+ namespace bce {
+ struct ReferenceMaterialSeed {
+-    AcDbDatabase* database{}; // Borrowed, read only for the entire synchronous call.
++    AcDbDatabase* database{}; // Borrowed for filename only; prototypes/dependencies load from SHA-verified file bytes.
+     std::string referenceSha256, prototypeId, handle;
+     double mmPerSourceUnit{}, sourcePaperScale{};
+     std::string unitConfirmationSource, scaleConfirmationSource, prototypeConfirmationSource;
+--- e750/NativeMaterials.cpp
++++ fix1/NativeMaterials.cpp
+@@ -8,6 +8,7 @@
+ #include <dbsymtb.h>
+ #include <dbsymutl.h>
+ #include <acstring.h>
++#include <acdocman.h>
+ #include <cmath>
+ #include <iomanip>
+ #include <locale>
+@@ -35,15 +36,12 @@
+ };
+ bool finite(Point2 p){return std::isfinite(p.x)&&std::isfinite(p.y);}
+ bool positive(double n){return std::isfinite(n)&&n>0;}
+-std::string fileSha(AcDbDatabase& db){
+-    const ACHAR* path{};check(db.getFilename(path),"reference filename");need(path&&*path,"REFERENCE_FILE_REQUIRED");
+-    struct File {HANDLE h;~File(){if(h!=INVALID_HANDLE_VALUE)CloseHandle(h);}} f{CreateFileW(path,GENERIC_READ,FILE_SHARE_READ,nullptr,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,nullptr)};
+-    need(f.h!=INVALID_HANDLE_VALUE,"reference hash open");
++std::string fileSha(HANDLE file){
+     struct Crypto {HCRYPTPROV provider{};HCRYPTHASH hash{};~Crypto(){if(hash)CryptDestroyHash(hash);if(provider)CryptReleaseContext(provider,0);}} c;
+     need(CryptAcquireContextW(&c.provider,nullptr,nullptr,PROV_RSA_AES,CRYPT_VERIFYCONTEXT)!=FALSE,"hash provider");
+     need(CryptCreateHash(c.provider,CALG_SHA_256,0,0,&c.hash)!=FALSE,"hash create");
+     BYTE buffer[65536];DWORD size{};
+-    do{need(ReadFile(f.h,buffer,sizeof(buffer),&size,nullptr)!=FALSE,"reference hash read");if(size)need(CryptHashData(c.hash,buffer,size,0)!=FALSE,"hash data");}while(size);
++    do{need(ReadFile(file,buffer,sizeof(buffer),&size,nullptr)!=FALSE,"reference hash read");if(size)need(CryptHashData(c.hash,buffer,size,0)!=FALSE,"hash data");}while(size);
+     BYTE digest[32];size=sizeof(digest);need(CryptGetHashParam(c.hash,HP_HASHVAL,digest,&size,0)!=FALSE&&size==32,"hash result");
+     const char* hex="0123456789ABCDEF";std::string result;for(auto b:digest){result+=hex[b>>4];result+=hex[b&15];}return result;
+ }
+@@ -64,6 +62,22 @@
+ AcDbObjectId clone(AcDbDatabase& from,AcDbObjectId id,AcDbDatabase& to){
+     AcDbObjectIdArray ids;ids.append(id);AcDbIdMapping map;check(from.wblockCloneObjects(ids,acdbSymUtil()->blockModelSpaceId(&to),map,AcDb::kDrcMangleName),"clone hatch dependencies");
+     AcDbIdPair pair;pair.setKey(id);need(map.compute(pair)&&pair.isCloned()&&!pair.value().isNull(),"clone mapping");return pair.value();
++}
++AcDbObjectId cloneVerifiedReference(const ReferenceMaterialSeed& seed,const std::string& expectedSha,AcDbDatabase& target){
++    const ACHAR* filename{};check(seed.database->getFilename(filename),"reference filename");need(filename&&*filename,"REFERENCE_FILE_REQUIRED");
++    const std::wstring path(filename);
++    // Pin the exact file against writes/deletion throughout hashing, loading and dependency cloning.
++    struct File {HANDLE h;~File(){if(h!=INVALID_HANDLE_VALUE)CloseHandle(h);}} file{CreateFileW(path.c_str(),GENERIC_READ,FILE_SHARE_READ,nullptr,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,nullptr)};
++    need(file.h!=INVALID_HANDLE_VALUE,"reference hash open");need(fileSha(file.h)==expectedSha,"REFERENCE_SHA_MISMATCH");
++    AcDbDatabase reference(false,true);AcDbObjectId sourceId;
++    {
++        // Loading fonts/symbols must resolve against this owned file database, never ambient.
++        Working work(reference);check(reference.readDwgFile(path.c_str(),AcDbDatabase::kForReadAndReadShare,false),"read verified reference");check(reference.closeInput(true),"close verified reference input");
++        auto fileSeed=seed;fileSeed.database=&reference;sourceId=objectId(fileSeed);
++        Open<AcDbEntity> entity(sourceId);need(entity->isA()==AcDbHatch::desc(),"UNSUPPORTED_MATERIAL_NATIVE_TYPE");
++    }
++    // The prototype and all wblockCloneObjects dependencies come from these verified file bytes.
++    return clone(reference,sourceId,target);
+ }
+ struct Canonical {
+     std::ostringstream out;
+@@ -98,13 +112,15 @@
+     }return c.out.str();
+ }
+ void validateRegion(const MaterialPlan& plan,const MaterialRegionPlan& region){
++    need(positive(region.areaSquareMm),"INVALID_MATERIAL_PLAN_AREA");
+     need(!region.confirmationSource.empty()&&!region.prototypeApprovalSource.empty()&&!region.familyId.empty()&&!region.sources.empty(),"MATERIAL_CONFIRMATION_REQUIRED");
+     FeatureModel model;SemanticFeature f;f.identity=region.identity;f.viewIdentity=region.viewIdentity;f.role=SemanticRole::materialRegion;f.confirmed=true;f.confirmationSource=region.confirmationSource;f.region=region.geometry;f.sources=region.sources;f.tableViewIdentity=region.tableViewIdentity;f.sharedTableIdentity=region.sharedTableIdentity;f.materialKey="adapter-explicit";f.materialPrototypeId=region.expression.prototypeId;model.rules.semanticFeatures.push_back(f);
+     RuleView view;view.viewIdentity=region.viewIdentity;view.familyId=region.familyId;model.rules.views.push_back(view);model.rules.materialOverrides.push_back({"adapter-explicit",region.materialNumber,region.materialName,region.expression.prototypeId});
+     ReferenceStandard standard;standard.referenceSha256=plan.referenceSha256;ReferenceFamily family;family.identity=region.familyId;family.approved=true;family.approvalSource=region.prototypeApprovalSource;family.roles={SemanticRole::materialRegion};standard.families.push_back(family);standard.materialPrototypes.push_back({region.expression,true,region.prototypeApprovalSource});
+     ProjectConfig config;config.databaseIdentity=region.sources.front().databaseIdentity;config.units=plan.unitDeclaration;config.unitConfirmationSource=plan.unitConfirmationSource;
+     auto validated=planMaterials(model,standard,config);need(validated.canCommit()&&validated.value->regions.size()==1,validated.issues.empty()?"INVALID_MATERIAL_PLAN":validated.issues.front().code);
+-    need(validated.value->mmPerInputUnit==plan.mmPerInputUnit&&std::abs(validated.value->regions[0].areaSquareMm-region.areaSquareMm)<=1e-8*(std::max)(1.0,region.areaSquareMm),"MATERIAL_PLAN_FACTS_CHANGED");
++    const auto recomputedArea=validated.value->regions[0].areaSquareMm;need(positive(recomputedArea),"INVALID_DERIVED_MATERIAL_AREA");
++    need(validated.value->mmPerInputUnit==plan.mmPerInputUnit&&std::abs(recomputedArea-region.areaSquareMm)<=1e-8*(std::max)(1.0,region.areaSquareMm),"MATERIAL_PLAN_FACTS_CHANGED");
+ }
+ void appendRing(AcDbHatch& hatch,const ClosedRing& ring,bool outer){
+     AcGePoint2dArray points;AcGeDoubleArray bulges;
+@@ -138,6 +154,7 @@
+ Result<std::vector<AcDbObjectId>> PreparedMaterialBatch::cloneToEmpty(AcDbDatabase& target) const {
+     try{
+         need(state_&&&target!=state_->database.get()&&state_->sources.count(&target)==0&&&target!=acdbHostApplicationServices()->workingDatabase(),"INDEPENDENT_TARGET_REQUIRED");
++        need(acDocManager&&acDocManager->document(&target)==nullptr,"INDEPENDENT_TARGET_REQUIRED");
+         need(intact(),"PREPARED_MATERIAL_CHANGED");Working work(target);need(::bce::roots(target).isEmpty(),"EMPTY_TARGET_REQUIRED");
+         AcDbIdMapping mapping;check(state_->database->wblockCloneObjects(state_->roots,acdbSymUtil()->blockModelSpaceId(&target),mapping,AcDb::kDrcMangleName),"clone prepared roots");
+         std::vector<AcDbObjectId> ids;for(int i=0;i<state_->roots.length();++i){AcDbIdPair pair;pair.setKey(state_->roots[i]);need(mapping.compute(pair)&&pair.isCloned(),"output mapping");ids.push_back(pair.value());}
+@@ -148,21 +165,22 @@
+     std::string location;
+     try {
+         need(positive(plan.mmPerInputUnit)&&!plan.unitConfirmationSource.empty()&&!plan.regions.empty(),"MATERIAL_FACTS_REQUIRED");
++        const auto squareUnit=plan.mmPerInputUnit*plan.mmPerInputUnit;need(positive(squareUnit),"INVALID_MATERIAL_AREA_UNIT_SQUARE");
+         need(options.placements.size()==plan.regions.size(),"EXPLICIT_MATERIAL_PLACEMENT_REQUIRED");
+         auto state=std::make_unique<PreparedMaterialBatch::State>();state->database=std::make_unique<AcDbDatabase>(true,true);Working work(*state->database);
+         std::set<std::pair<std::string,std::string>> seen;
+         for(const auto& region:plan.regions){
+             location=region.viewIdentity+"/"+region.identity;need(seen.emplace(region.viewIdentity,region.identity).second,"DUPLICATE_MATERIAL_REGION");
+             need(region.expression.kind==MaterialExpressionKind::hatch,"UNSUPPORTED_MATERIAL_EXPRESSION");validateRegion(plan,region);
++            const auto expectedArea=region.areaSquareMm/squareUnit;need(positive(expectedArea),"INVALID_DERIVED_NATIVE_MATERIAL_AREA");
+             const ReferenceMaterialSeed* seed{};for(const auto& s:seeds)if(s.prototypeId==region.expression.prototypeId){need(!seed,"DUPLICATE_MATERIAL_PROTOTYPE");seed=&s;}
+             need(seed&&seed->database&&!seed->prototypeConfirmationSource.empty()&&!seed->unitConfirmationSource.empty()&&!seed->scaleConfirmationSource.empty()&&!seed->phaseConfirmationSource.empty(),"REFERENCE_MATERIAL_FACTS_REQUIRED");
+             need(positive(seed->mmPerSourceUnit)&&positive(seed->sourcePaperScale)&&finite(seed->referenceAnchor),"INVALID_REFERENCE_UNITS_SCALE_PHASE");
+-            need(upper(seed->referenceSha256)==upper(plan.referenceSha256)&&fileSha(*seed->database)==upper(plan.referenceSha256),"REFERENCE_SHA_MISMATCH");
++            need(upper(seed->referenceSha256)==upper(plan.referenceSha256),"REFERENCE_SHA_MISMATCH");
+             const MaterialPlacement* placement{};for(const auto& p:options.placements)if(p.regionIdentity==region.identity&&p.viewIdentity==region.viewIdentity){need(!placement,"DUPLICATE_PLACEMENT");placement=&p;}
+             need(placement&&positive(placement->targetPaperScale)&&finite(placement->targetAnchor)&&!placement->scaleConfirmationSource.empty()&&!placement->phaseConfirmationSource.empty(),"TARGET_PLACEMENT_REQUIRED");
+-            const auto sourceId=objectId(*seed);state->sources.insert(seed->database);
+-            {Open<AcDbEntity> e(sourceId);need(e->isA()==AcDbHatch::desc(),"UNSUPPORTED_MATERIAL_NATIVE_TYPE");}
+-            const auto targetId=clone(*seed->database,sourceId,*state->database);
++            state->sources.insert(seed->database);
++            const auto targetId=cloneVerifiedReference(*seed,upper(plan.referenceSha256),*state->database);
+             {
+                 Open<AcDbHatch> h(targetId,AcDb::kForWrite);Canonical original;pattern(original,*h);appearance(original,*h);
+                 need(region.expression.patternName.empty()||wide(region.expression.patternName)==h->patternName(),"PROTOTYPE_PATTERN_MISMATCH");
+@@ -188,7 +206,7 @@
+             {
+                 // Close and reopen after changing loops. A previously queried area may be cached on an open Hatch.
+                 Open<AcDbHatch> h(targetId);double area{};check(h->getArea(area),"reopened native material area");
+-                const auto expected=region.areaSquareMm/(plan.mmPerInputUnit*plan.mmPerInputUnit);need(std::isfinite(area)&&std::abs(area-expected)<=1e-8*(std::max)(1.0,expected),"NATIVE_MATERIAL_AREA_MISMATCH");
++                need(positive(area)&&std::abs(area-expectedArea)<=1e-8*(std::max)(1.0,expectedArea),"NATIVE_MATERIAL_AREA_MISMATCH");
+             }
+             state->roots.append(targetId);
+         }
+--- e750/MaterialDriver.cpp
++++ fix1/MaterialDriver.cpp
+@@ -12,6 +12,8 @@
+         using namespace bce; using namespace bce::native; using namespace bce::material_test;
+         config=load_config(moduleHandle); evidence=std::make_unique<Evidence>(config); validate_identity(config);
+         require(config.caseName==L"NativeMaterialPreparation", "unsupported case");
++        require(acDocManager->isApplicationContext(),"M1 test command application context");
++        DocumentLock originalDocumentLock(acDocManager->curDocument());
+         auto report=create_new(config.output+L"/material-case.json");
+         AcDbDatabase source(false,true); require(source.readDwgFile(config.reference.c_str(),AcDbDatabase::kForReadAndReadShare,false)==Acad::eOk,"read reference"); source.closeInput(true);
+         MaterialPlan plan; plan.referenceSha256=config.referenceSHA256; plan.mmPerInputUnit=1; plan.unitDeclaration.confirmedMmPerInputUnit=1; plan.unitConfirmationSource="M1 explicit mm fixture";
+@@ -68,7 +70,21 @@
+             expect("NonMmUnitsPreservePhysicalSpacing",metersOk,meters.issues.empty()?"separate small panel vertices 2 x 1 metres, native area2, paper50 physical spacing":meters.issues.front().message);
+             auto holePlan=plan;holePlan.regions[0].geometry.holes={{{{200,200},{600,200},{600,600},{200,600}},true}};holePlan.regions[0].areaSquareMm=1840000;auto holeResult=prepareMaterials(holePlan,{seed},options);bool holeOk=false;std::string holeDetail=holeResult.issues.empty()?"":holeResult.issues.front().message;
+             if(holeResult.canCommit()){Working work(holeResult.value->database());Open<AcDbHatch> h(holeResult.value->roots()[0]);double area{};ok(h->getArea(area),"small-hole area");int segments{};holeOk=panelLoops(*h.p,0,0,true)&&nearValue(area,1840000)&&smallWindowVoid(*h.p,segments);holeDetail="small-panel nativeArea="+number(area)+" loops="+std::to_string(h->numLoops())+" generatedSegments="+std::to_string(segments);}
+-            expect("SeparateSmallHoleAreaAndNativeVoid",holeOk,holeDetail);            auto rejected=[&](const std::string& name,const MaterialPlan& p,const std::vector<ReferenceMaterialSeed>& ss,const MaterialPreparationOptions& o){auto r=prepareMaterials(p,ss,o);expect(name,!r.canCommit()&&!r.value,r.issues.empty()?"no diagnosis":r.issues.front().message);};
++            expect("SeparateSmallHoleAreaAndNativeVoid",holeOk,holeDetail);            rejectDocumentTargets(batch,expect);
++            for(const auto value:{std::numeric_limits<double>::infinity(),std::numeric_limits<double>::quiet_NaN()}){
++                auto nonfinite=plan;nonfinite.regions[0].areaSquareMm=value;auto denied=prepareMaterials(nonfinite,{seed},options);
++                expect(std::isnan(value)?"NaNPlanAreaRejected":"InfinitePlanAreaRejected",!denied.canCommit()&&!denied.value,denied.issues.empty()?"REGRESSION: nonfinite plan area accepted":denied.issues.front().message);
++            }
++            {auto overflow=plan;overflow.mmPerInputUnit=1e200;overflow.unitDeclaration.confirmedMmPerInputUnit=1e200;auto denied=prepareMaterials(overflow,{seed},options);expect("AreaUnitSquareOverflowRejected",!denied.canCommit()&&!denied.value,denied.issues.empty()?"REGRESSION: overflowing area conversion accepted":denied.issues.front().message);}
++            {AcDbDatabase changedReference(false,true);{Working work(changedReference);ok(changedReference.readDwgFile(config.reference.c_str(),AcDbDatabase::kForReadAndReadShare,false),"load independently modified memory reference");changedReference.closeInput(true);}
++                AcDbObjectId changedId;ok(changedReference.getAcDbObjectId(changedId,false,AcDbHandle(L"114CF")),"memory reference handle");AcDbObjectId changedLayer;
++                {Working work(changedReference);Open<AcDbHatch> h(changedId,AcDb::kForWrite);changedLayer=h->layerId();ok(h->setColorIndex(1),"unsaved reference color mutation");ok(h->setPatternScale(sourceScale*2),"unsaved reference pattern mutation");}
++                {Open<AcDbLayerTableRecord> l(changedLayer,AcDb::kForWrite);AcCmColor color;color.setColorIndex(2);l->setColor(color);}
++                Monitor changedMonitor(changedReference);auto changedSeed=seed;changedSeed.database=&changedReference;auto anchored=prepareMaterials(plan,{changedSeed},options);bool anchoredToFile=false;
++                if(anchored.canCommit()){Open<AcDbHatch> h(anchored.value->roots()[0]);Open<AcDbLayerTableRecord> l(h->layerId());anchoredToFile=h->color().color()==sourceColor&&nearValue(h->patternScale(),sourceScale)&&l->color().colorIndex()==249;}
++                expect("UnsavedReferenceChangesCannotBypassFileShaBinding",anchoredToFile&&sha256(config.reference)==config.referenceSHA256,anchored.issues.empty()?"output must use disk-bound color159,scale50,layer249 despite caller memory color1,scale100,layer2":anchored.issues.front().message);
++                {Open<AcDbHatch> h(changedId);Open<AcDbLayerTableRecord> l(changedLayer);expect("ModifiedReferenceMemoryRemainsUntouched",changedMonitor.changes==0&&h->colorIndex()==1&&nearValue(h->patternScale(),sourceScale*2)&&l->color().colorIndex()==2,"caller unsaved color/pattern/layer changes preserved; events="+std::to_string(changedMonitor.changes));}
++            }            auto rejected=[&](const std::string& name,const MaterialPlan& p,const std::vector<ReferenceMaterialSeed>& ss,const MaterialPreparationOptions& o){auto r=prepareMaterials(p,ss,o);expect(name,!r.canCommit()&&!r.value,r.issues.empty()?"no diagnosis":r.issues.front().message);};
+             auto wrongKind=plan;wrongKind.regions[0].expression.kind=MaterialExpressionKind::lineDrawing;rejected("LineDrawingExplicitlyUnsupported",wrongKind,{seed},options);wrongKind.regions[0].expression.kind=MaterialExpressionKind::glassBlock;rejected("GlassBlockExplicitlyUnsupported",wrongKind,{seed},options);
+             auto missing=seed;missing.unitConfirmationSource.clear();rejected("MissingSourceUnitFactRejected",plan,{missing},options);missing=seed;missing.referenceSha256=std::string(64,'0');rejected("WrongReferenceShaRejected",plan,{missing},options);
+             auto invalid=plan;invalid.regions[0].geometry.outer.closed=false;rejected("OpenRegionRejected",invalid,{seed},options);invalid=plan;std::swap(invalid.regions[0].geometry.outer.vertices[1],invalid.regions[0].geometry.outer.vertices[2]);rejected("SelfIntersectingRegionRejected",invalid,{seed},options);invalid=plan;invalid.regions[0].geometry.holes={{{{-1,200},{600,200},{600,600},{200,600}},true}};rejected("InvalidHoleRejected",invalid,{seed},options);invalid=plan;invalid.regions[0].expression.scale=0;rejected("ZeroPatternScaleRejected",invalid,{seed},options);
+@@ -100,7 +116,7 @@
+ }
+ }
+ BOOL APIENTRY DllMain(HMODULE h,DWORD reason,LPVOID){if(reason==DLL_PROCESS_ATTACH){moduleHandle=h;DisableThreadLibraryCalls(h);}return TRUE;}
+-extern "C" __declspec(dllexport) AcRx::AppRetCode acrxEntryPoint(AcRx::AppMsgCode message,void* id){try{if(message==AcRx::kInitAppMsg){acrxDynamicLinker->unlockApplication(id);acrxRegisterAppMDIAware(id);return acedRegCmds->addCommand(L"BCE_MATERIAL_CASES",L"BCE_TEST_RUN",L"BCE_TEST_RUN",ACRX_CMD_MODAL,runCase)==Acad::eOk?AcRx::kRetOK:AcRx::kRetError;}if(message==AcRx::kUnloadAppMsg)return acedRegCmds->removeGroup(L"BCE_MATERIAL_CASES")==Acad::eOk?AcRx::kRetOK:AcRx::kRetError;return AcRx::kRetOK;}catch(...){return AcRx::kRetError;}}
++extern "C" __declspec(dllexport) AcRx::AppRetCode acrxEntryPoint(AcRx::AppMsgCode message,void* id){try{if(message==AcRx::kInitAppMsg){acrxDynamicLinker->unlockApplication(id);acrxRegisterAppMDIAware(id);return acedRegCmds->addCommand(L"BCE_MATERIAL_CASES",L"BCE_TEST_RUN",L"BCE_TEST_RUN",ACRX_CMD_SESSION,runCase)==Acad::eOk?AcRx::kRetOK:AcRx::kRetError;}if(message==AcRx::kUnloadAppMsg)return acedRegCmds->removeGroup(L"BCE_MATERIAL_CASES")==Acad::eOk?AcRx::kRetOK:AcRx::kRetError;return AcRx::kRetOK;}catch(...){return AcRx::kRetError;}}
+ 
+ 
+ 
+@@ -111,3 +127,4 @@
+ 
+ 
+ 
++
+--- e750/MaterialFixtures.h
++++ fix1/MaterialFixtures.h
+@@ -15,6 +15,7 @@
+ #include <functional>
+ #include <iomanip>
+ #include <sstream>
++#include <limits>
+ namespace bce::material_test {
+ inline void ok(Acad::ErrorStatus s,const char* m){native::require(s==Acad::eOk,std::string(m)+":"+std::to_string(s));}
+ template<class T> class Open final {public:explicit Open(AcDbObjectId id,AcDb::OpenMode mode=AcDb::kForRead){ok(acdbOpenObject(p,id,mode),"test open");}~Open(){if(p)p->close();}Open(const Open&)=delete;Open& operator=(const Open&)=delete;T* operator->()const{return p;}T* p{};};
+@@ -117,6 +118,26 @@
+     for(int i=0;i<count;++i){AcGePoint2d a,b;ok(h.getHatchLineDataAt(i,a,b),"small window native line");double lo=0,hi=1;bool intersects=true;const double av[2]={a.x,a.y},dv[2]={b.x-a.x,b.y-a.y};
+         for(int k=0;k<2;++k){if(std::abs(dv[k])<1e-14){if(av[k]<=200.00001||av[k]>=599.99999){intersects=false;break;}}else{auto t1=(200.00001-av[k])/dv[k],t2=(599.99999-av[k])/dv[k];if(t1>t2)std::swap(t1,t2);lo=(std::max)(lo,t1);hi=(std::min)(hi,t2);if(lo>=hi){intersects=false;break;}}}if(intersects&&hi>lo)return false;
+     }return true;
++}class DocumentLock final {
++public:
++    explicit DocumentLock(AcApDocument* document):document_(document){ok(acDocManager->lockDocument(document_,AcAp::kWrite,nullptr,nullptr,false),"lock owned test document");}
++    ~DocumentLock(){if(document_)acDocManager->unlockDocument(document_);}
++    DocumentLock(const DocumentLock&)=delete;DocumentLock& operator=(const DocumentLock&)=delete;
++private:AcApDocument* document_;
++};
++inline void rejectDocumentTargets(const PreparedMaterialBatch& batch,const std::function<void(const std::string&,bool,const std::string&)>& expect) {
++    native::require(acDocManager->isApplicationContext(),"document-target test requires explicit application context");
++    auto* original=acDocManager->curDocument();
++    struct OwnedDocuments {AcApDocument* original;std::vector<AcApDocument*> documents;~OwnedDocuments(){acDocManager->setCurDocument(original,AcAp::kNone,true);for(auto* d:documents)acDocManager->appContextCloseDocument(d);acDocManager->setCurDocument(original,AcAp::kNone,true);}} owned{original,{}};
++    for(int i=0;i<2;++i){ok(acDocManager->appContextNewDocument(L"C:/Users/PC/AppData/Local/Autodesk/AutoCAD 2020/R23.1/chs/Template/acadiso.dwt"),"new owned target document");auto* doc=acDocManager->curDocument();native::require(doc&&doc!=original&&std::find(owned.documents.begin(),owned.documents.end(),doc)==owned.documents.end(),"fresh owned document identity");owned.documents.push_back(doc);native::require(modelRoots(*doc->database()).isEmpty(),"empty target fixture");}
++    auto* current=owned.documents[0];auto* other=owned.documents[1];
++    {DocumentLock currentLock(current),otherLock(other);ok(acDocManager->setCurDocument(current,AcAp::kNone,true),"select owned current document");AcDbDatabase side(true,true);Monitor currentMonitor(*current->database()),otherMonitor(*other->database());
++        {Working work(side);native::require(acDocManager->curDocument()==current&&acdbHostApplicationServices()->workingDatabase()==&side,"current/working DB intentionally differ");
++            auto result=batch.cloneToEmpty(*current->database());expect("CurrentDocumentRejectedWhenWorkingDbIsSideDb",!result.canCommit()&&!result.value&&modelRoots(*current->database()).isEmpty()&&currentMonitor.changes==0,result.issues.empty()?"REGRESSION: current document accepted as independent target":result.issues.front().message);
++            auto second=batch.cloneToEmpty(*other->database());expect("OtherDocumentRejectedWhenWorkingDbIsSideDb",!second.canCommit()&&!second.value&&modelRoots(*other->database()).isEmpty()&&otherMonitor.changes==0,second.issues.empty()?"REGRESSION: other document accepted as independent target":second.issues.front().message);
++        }
++    }
++    ok(acDocManager->setCurDocument(original,AcAp::kNone,true),"restore original current document");
+ }}
+ 
+ 
+@@ -124,3 +145,4 @@
+ 
+ 
+ 
++

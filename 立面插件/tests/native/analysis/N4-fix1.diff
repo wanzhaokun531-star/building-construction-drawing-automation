@@ -1,0 +1,170 @@
+--- reviewed799/src/AnalysisReader.cpp
++++ fix1/src/AnalysisReader.cpp
+@@ -423,6 +423,8 @@
+         record.effectiveVisible = ancestorVisible && e->visibility() == AcDb::kVisible && layerVisible(layer);
+         if (auto *attr = AcDbAttribute::cast(e.get()))
+             record.effectiveVisible = record.effectiveVisible && !attr->isInvisible();
++        if (auto *definition = AcDbAttributeDefinition::cast(e.get()))
++            record.effectiveVisible = record.effectiveVisible && !definition->isInvisible();
+         Primitive2 p;
+         p.key = key(id);
+         p.layer = native_scene::symbolName(layer);
+@@ -546,11 +548,11 @@
+             *rootPrimitive = std::move(p);
+         return record.canonicalGeometry;
+     }
+-    NativeAnalysis run(const std::string &identity, std::uint64_t revision,
++    NativeAnalysis run(const std::string &documentIdentity, const std::string &identity, std::uint64_t revision,
+                        const AnalysisReadOptions &options) {
+         auto &scene = output.scene;
+         scene.databaseIdentity = identity;
+-        scene.documentIdentity = identity;
++        scene.documentIdentity = documentIdentity;
+         scene.revision = revision;
+         scene.sourceSha256 = options.sourceSha256;
+         scene.units.insunits = static_cast<int>(db.insunits());
+@@ -655,25 +657,31 @@
+         return std::move(output);
+     }
+ };
++Result<NativeAnalysis> readAnalysis(AcDbDatabase &db, const std::string &documentIdentity,
++                                   const std::string &databaseIdentity, std::uint64_t revision,
++                                   const AnalysisReadOptions &options) {
++    if (documentIdentity.empty() || databaseIdentity.empty() || revision == 0)
++        return {std::nullopt, {{"INVALID_DATABASE_IDENTITY", "数据库读取须提供显式身份和版本。", {}, true}}};
++    try {
++        auto value = Reader(db).run(documentIdentity, databaseIdentity, revision, options);
++        auto issues = value.readIssues;
++        return {std::move(value), std::move(issues)};
++    } catch (const std::exception &e) {
++        return {std::nullopt, {{"NATIVE_READ_FAILED", e.what(), {documentIdentity, {}, {}}, true}}};
++    }
++}
+ } // namespace
+ Result<NativeAnalysis> readDatabaseAnalysis(AcDbDatabase &db, const std::string &identity,
+                                             std::uint64_t revision, const AnalysisReadOptions &options) {
+-    if (identity.empty() || revision == 0)
+-        return {std::nullopt, {{"INVALID_DATABASE_IDENTITY", "数据库读取须提供显式身份和版本。", {}, true}}};
+-    try {
+-        auto value = Reader(db).run(identity, revision, options);
+-        auto issues = value.readIssues;
+-        return {std::move(value), std::move(issues)};
+-    } catch (const std::exception &e) {
+-        return {std::nullopt, {{"NATIVE_READ_FAILED", e.what(), {identity, {}, {}}, true}}};
+-    }
++    return readAnalysis(db, identity, identity, revision, options);
+ }
+ Result<NativeAnalysis> readCurrentAnalysis(NativeSceneContext &context, const AnalysisReadOptions &options) {
+     auto *db = context.currentDatabase();
+     if (!db)
+         return {std::nullopt, {{diagnostic::staleDocument, "当前文档上下文失效。", {}, true}}};
+     const auto revision = context.revision();
+-    auto result = readDatabaseAnalysis(*db, context.documentIdentity(), revision, options);
++    const auto documentIdentity = context.documentIdentity();
++    auto result = readAnalysis(*db, documentIdentity, documentIdentity + "/database", revision, options);
+     if (db != context.currentDatabase() || revision != context.revision())
+         return {std::nullopt, {{diagnostic::staleDocument, "读取过程中当前文档内容变化。", {}, true}}};
+     return result;
+--- reviewed799/tests/native/analysis/AnalysisDriver.cpp
++++ fix1/tests/native/analysis/AnalysisDriver.cpp
+@@ -149,6 +149,47 @@
+         NativeSceneContext context;
+         auto *db = context.currentDatabase();
+         require(db != nullptr, "current database unavailable");
++        // Match the existing SceneReader/InPlaceWriter contract without calling
++        // their source-bound geometry getters (which could warm the font cache).
++        const auto identityBlock = analysis_test::block(*db, L"N4_IdentityLines");
++        analysis_test::append(identityBlock, std::make_unique<AcDbLine>(
++                                                  AcGePoint3d(0, 0, 0), AcGePoint3d(1, 1, 0)));
++        analysis_test::append(acdbSymUtil()->blockModelSpaceId(db),
++                              std::make_unique<AcDbBlockReference>(AcGePoint3d(0, 0, 0), identityBlock));
++        const auto identityRevision = context.revision();
++        const auto identityEvents = ambientMonitor.changes;
++        const auto identityRead = readCurrentAnalysis(context, options);
++        const auto documentToken = context.documentIdentity();
++        const auto databaseToken = documentToken + "/database";
++        bool identities = identityRead.value &&
++                          identityRead.value->scene.documentIdentity == documentToken &&
++                          identityRead.value->scene.databaseIdentity == databaseToken &&
++                          identityRead.value->scene.revision == identityRevision;
++        std::size_t identityLeaves = 0;
++        if (identityRead.value) {
++            const auto validKey = [&](const EntityKey &key) {
++                return key.databaseIdentity == databaseToken && key.revision == identityRevision &&
++                       !key.handle.empty();
++            };
++            for (const auto &p : identityRead.value->scene.primitives)
++                identities = identities && validKey(p.key);
++            for (const auto &r : identityRead.value->geometry) {
++                identities = identities && validKey(r.root) && validKey(r.leaf) &&
++                             validKey(r.worldGeometry.key);
++                identityLeaves += r.root.handle != r.leaf.handle;
++            }
++            for (const auto &e : identityRead.value->scene.preserved)
++                identities = identities && validKey(e.key);
++            for (const auto &i : identityRead.value->readIssues)
++                identities = identities && i.source.documentIdentity == documentToken &&
++                             (!i.source.entity || validKey(*i.source.entity));
++        }
++        expect("CurrentIdentityMatchesSceneWriterContract",
++               identities && identityLeaves > 0 && context.revision() == identityRevision &&
++                   ambientMonitor.changes == identityEvents,
++               "document=" + documentToken + " expected database=" + databaseToken +
++                   " actual=" + (identityRead.value ? identityRead.value->scene.databaseIdentity : "none") +
++                   "; actual root/leaf keys and diagnostics share the existing context contract");
+         // Construct away from Main: Text construction/close can already load fonts.
+         // Import raw geometry/style, then prove Main's font cache stayed untouched.
+         const auto fontEventsBeforeFixture = ambientMonitor.fontEvents;
+--- reviewed799/tests/native/analysis/AnalysisFixtures.h
++++ fix1/tests/native/analysis/AnalysisFixtures.h
+@@ -246,6 +246,11 @@
+         append(inner, std::make_unique<AcDbArc>(AcGePoint3d(0, 0, 0), 2, 0, 1.57079632679489661923));
+     const auto textId =
+         append(inner, std::make_unique<AcDbText>(AcGePoint3d(1, 2, 0), L"镜像", AcDbObjectId::kNull, 1));
++    auto constant = std::make_unique<AcDbAttributeDefinition>(
++        AcGePoint3d(2, 2, 0), L"隐藏常量", L"N4_CONST", L"constant");
++    ok(constant->setConstant(true), "constant attribute definition");
++    ok(constant->setInvisible(true), "hidden constant attribute definition");
++    const auto constantId = append(inner, std::move(constant));
+     auto nested = std::make_unique<AcDbBlockReference>(AcGePoint3d(10, 20, 0), inner);
+     ok(nested->setRotation(1.57079632679489661923), "inner rotate");
+     ok(nested->setScaleFactors(AcGeScale3d(2, 2, 2)), "inner scale");
+@@ -308,6 +313,11 @@
+     const auto *arc = leaf(a, rootId, arcId);
+     const auto *text = leaf(a, rootId, textId);
+     const auto *second = leaf(a, root2Id, lineId);
++    const auto *hiddenConstant = leaf(a, rootId, constantId);
++    expect("InvisibleConstantAttributeDefinitionPreserved",
++           hiddenConstant && hiddenConstant->complete && !hiddenConstant->effectiveVisible &&
++               !hiddenConstant->worldGeometry.effectiveVisible && protectedRoot(a, rootId),
++           "constant ATTDEF is read as hidden geometry under a visible block, root remains preserved");
+     const auto *nestedRecord = leaf(a, rootId, nestedId);
+     const bool worldBlockBounds = nestedRecord && nestedRecord->worldGeometry.bounds &&
+                                   nestedRecord->worldGeometry.bounds->minimum.x <= 94 &&
+@@ -374,6 +384,26 @@
+            h && hc && h->complete && hc->complete && h->canonicalGeometry != hc->canonicalGeometry &&
+                syntheticMonitor.changes == changesBeforeHoleRead,
+            "inner hole changed behind identical outer envelope");
++    {
++        Open<AcDbAttributeDefinition> edit(constantId, AcDb::kForWrite);
++        ok(edit->setInvisible(false), "show constant attribute definition");
++    }
++    const auto changesBeforeVisibilityRead = syntheticMonitor.changes;
++    const auto shown = readDatabaseAnalysis(db, "synthetic-curves", 6, options);
++    native::require(shown.value.has_value(), "constant visibility read");
++    const auto *shownConstant = leaf(*shown.value, rootId, constantId);
++    const auto *hiddenRoot = leaf(a, rootId, rootId);
++    const auto *shownRoot = leaf(*shown.value, rootId, rootId);
++    expect("ConstantAttributeVisibilityChangesDetailedSignature",
++           hiddenConstant && shownConstant && hiddenRoot && shownRoot &&
++               !hiddenConstant->effectiveVisible && shownConstant->effectiveVisible &&
++               hiddenConstant->canonicalGeometry != shownConstant->canonicalGeometry &&
++               hiddenRoot->canonicalGeometry != shownRoot->canonicalGeometry &&
++               hiddenRoot->worldGeometry.nativeGeometrySignature !=
++                   shownRoot->worldGeometry.nativeGeometrySignature &&
++               protectedRoot(*shown.value, rootId) &&
++               syntheticMonitor.changes == changesBeforeVisibilityRead,
++           "only ATTDEF invisible flag toggled; leaf and aggregate root signatures change without read writes");
+     evidence.capability(details(a));
+ }
+ } // namespace bce::analysis_test

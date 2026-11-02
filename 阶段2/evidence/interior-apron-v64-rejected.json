@@ -1,0 +1,7 @@
+{
+  "version": "v64",
+  "error": "apron note contents: mistaken setContents >0 check; actual API returns0, next verifies copied contents readback",
+  "DWGSaved": false,
+  "knownUpdateErrorClose": "owned-update-startup-close-v64.json",
+  "sourcePreserved": true
+}

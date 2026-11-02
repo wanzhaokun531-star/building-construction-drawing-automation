@@ -1,0 +1,37 @@
+{
+  "contract": "bcp.area-under-name-delivery.v1",
+  "recorded": "2026-11-01T19:19:22.914551+08:00",
+  "version": "v136",
+  "pluginCodeChanged": false,
+  "pluginBinarySHA256": "835B9E0F67B65C0F3A43F06F0C443BFB2029B1CBFACEB751C24938B894631FEA",
+  "namedAreasBelowName": 15,
+  "unnamedAreasNearRoomCenter": 5,
+  "areaTextMembers": 40,
+  "originalNamesMoved": 10,
+  "wholeTCHDimensionsPreserved": 54,
+  "areasAndTotalsUnchanged": true,
+  "normalQUITPassed": false,
+  "stage2Complete": false,
+  "COMUsed": false,
+  "ComputerUseUsed": false,
+  "TianzhengBusinessCommandsUsed": false,
+  "DWGs": [
+    {
+      "floor": 1,
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\房间面积随房名_20261101\\方案施工图_一层_房名下方面积确认样张_v6.dwg",
+      "DWGSHA256": "7C680A013A384C4C4344727EB8FFFDA2E7FB6552EC8CA43DEB3038B4A3BF0692"
+    },
+    {
+      "floor": 2,
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\房间面积随房名_20261101\\方案施工图_二层_房名下方面积确认样张_v6.dwg",
+      "DWGSHA256": "09FC0B46B3E5303CE3C49DAE5C45EBE513C517A14D9524D3410666B78E0DDC0C"
+    }
+  ],
+  "qaSHA256": "DE3DB76B809459C13AC9D64DF7A2E8705CF95800335582E1B8283554D8980099",
+  "manifestSHA256": "C71C6157E83B99EC31DF61D3964684AC8E40DCBD3B8912DCEEEDAB43323CD5C4",
+  "hostClosureSHA256": "EDEE47CA40FE946EB0A35651B636C2608A256A1D3E930A1200090C931C355789",
+  "helpers": {
+    "prepare_area_name_sample.py": "C87C5858C72BAA29B9A4FC2A14EBBE9C637C0EE9871D4AD32BB0AC268DC3DB67",
+    "verify_area_name_sample.py": "25CBA8EFACC55E69BE18DB7F910B947E41B79D9614CDCF40DC36A3768C86E7F8"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "purpose": "Preserve v4 native22-fit success and exact overlapping-circle selection failure; no geometry changes authorized for v5",
+  "files": [
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\src\\NativeFourSideAxisSingletonProbe.inc",
+      "file": "NativeFourSideAxisSingletonProbe.inc",
+      "SHA256": "8F36D148804D1481D0DB22CCC258066062B9D5B19F0BA35B4DC9B1E9789042EE"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_four_side_singletons_native.py",
+      "file": "verify_four_side_singletons_native.py",
+      "SHA256": "BDBCD1F5790C01CA5127AB6039E0C8021EFB8D977B0D1FE4548E405A982BFB5A"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\test_four_side_singletons_contract.py",
+      "file": "test_four_side_singletons_contract.py",
+      "SHA256": "D750B7056E55B6A88A49DE8DACD53159E2F3D8BB5D4DB255033754CBB780E08F"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-singletons-20261029-110631-879163\\four-side-singletons-native.json",
+      "file": "four-side-singletons-native.json",
+      "SHA256": "B5502DCDFC419480119614444D40707DC16A7535E2DBDD9A05848E38FF4CC578"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-singletons-20261029-110631-879163\\verify-result.txt",
+      "file": "verify-result.txt",
+      "SHA256": "870D0E291E1CC31DAECF5593B7BC76EE99E49E15F19A88A3CFE25497A2437EF5"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-singletons-20261029-110631-879163\\quiet-job-receipt.json",
+      "file": "quiet-job-receipt.json",
+      "SHA256": "741B803A28A6B1C95A8946B5369FA1FACBE9C518D28611A37A9F0C88BD8F2CA2"
+    }
+  ]
+}

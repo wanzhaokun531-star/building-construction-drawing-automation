@@ -1,0 +1,64 @@
+{
+  "sourceNativeRun": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\native-run-v39.json",
+  "sourceNativeRunSHA256": "FD88E75B4289EC6633A6AA0F0486F54887935A65A65EDBCF18D3167832311F7B",
+  "contract": "bcp.stage2.preview-run.v1",
+  "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261031-125804",
+  "nonce": "8b96fed45ca640f89d51d510c73e0c68",
+  "processId": 34040,
+  "job": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-20261031-125901",
+  "source": "D:\\Codex\\建筑施工图自动化\\阶段2\\runs\\native-2026-10-31-12-59-0-34040-407201125\\方案施工图_阶段2中间图.dwg",
+  "sourceSHA256": "6E45FC14B4D817788A63D17651A3129F4DC0ECC86CD7A256DA29068855CA95AE",
+  "controlSHA256": "6E45FC14B4D817788A63D17651A3129F4DC0ECC86CD7A256DA29068855CA95AE",
+  "indexSHA256": "1129404F9A822FCB8014F887026F6967E085E3080EE687B27307AC4B9780620C",
+  "steps": [
+    {
+      "serial": "7aacf2b8b9044a618195caf214604fb0",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261031-125804\\dispatch_7aacf2b8b9044a618195caf214604fb0.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "8b96fed45ca640f89d51d510c73e0c68",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261031-125804",
+        "processId": 34040,
+        "desktop": "CodexS1_8b96fed45ca640f89d51d510c73e0c68",
+        "inputDesktop": "Default",
+        "serial": "7aacf2b8b9044a618195caf214604fb0",
+        "command": "S1OPENPROBECONTROL",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-20261031-125901",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-20261031-125901\\control.dwg",
+        "error": null
+      }
+    },
+    {
+      "serial": "9d879fa262974d5eb5d9240cd62634a0",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261031-125804\\dispatch_9d879fa262974d5eb5d9240cd62634a0.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "8b96fed45ca640f89d51d510c73e0c68",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261031-125804",
+        "processId": 34040,
+        "desktop": "CodexS1_8b96fed45ca640f89d51d510c73e0c68",
+        "inputDesktop": "Default",
+        "serial": "9d879fa262974d5eb5d9240cd62634a0",
+        "command": "S1PHASE2PREVIEW",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-20261031-125901",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-20261031-125901\\control.dwg",
+        "error": null
+      }
+    }
+  ],
+  "error": "AssertionError({'handle': 'D2BB', 'expected': 116.08781026812721, 'measurement': 116.08781026810902, 'override': '', 'formatted': '\\\\A1;116', 'dimexo': 300, 'dimscale': 1, 'fixedExtensionLength': False, 'gapClip': None, 'geometry': [{'handle': 'D2BB', 'type': 'TDbDimension2', 'layer': 'A-PUB_DIM', 'proxy': False, 'extentStatus': 0, 'min': [19411.890259172247, 27841.263551952845, 0], 'max': [20111.890259172247, 27957.351362220954, 0], 'curve': {'startStatus': 0, 'endStatus': 0, 'endParamStatus': 0, 'distanceStatus': 0, 'start': [19861.890259172247, 27841.263551952845, 0], 'end': [19861.890259172247, 27957.351362220954, 0], 'endParam': 1, 'length': 116.08781026810902}, 'grip': {'status': 0, 'points': [[19861.890259172247, 27841.263551952845, 0], [19861.890259172247, 27957.351362220954, 0], [19111.890259172247, 27841.263551952845, 0], [19111.890259172247, 27957.351362220954, 0], [19586.890259172247, 28549.3074570869, 0], [17111.890259172247, 27841.263551952845, 0], [17111.890259172247, 27899.3074570869, 0], [17111.890259172247, 27957.351362220954, 0]], 'osnapModes': [], 'geomIds': []}, 'stretch': {'status': 0, 'points': [[19861.890259172247, 27841.263551952845, 0], [19861.890259172247, 27957.351362220954, 0], [19111.890259172247, 27841.263551952845, 0], [19111.890259172247, 27957.351362220954, 0], [19586.890259172247, 28549.3074570869, 0], [17111.890259172247, 27841.263551952845, 0], [17111.890259172247, 27899.3074570869, 0], [17111.890259172247, 27957.351362220954, 0]]}}]})"
+}

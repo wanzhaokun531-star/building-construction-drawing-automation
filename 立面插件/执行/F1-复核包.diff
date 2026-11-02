@@ -1,0 +1,544 @@
+--- /dev/null
++++ D:\Codex\建筑施工图自动化\立面插件\src\ElevationModel.h
+@@ -0,0 +1,107 @@
++#ifndef BCE_ELEVATION_MODEL_H
++#define BCE_ELEVATION_MODEL_H
++
++#include <algorithm>
++#include <cstdint>
++#include <optional>
++#include <string>
++#include <vector>
++
++namespace bce {
++
++namespace diagnostic {
++inline constexpr char unitRequired[] = "UNIT_REQUIRED";
++inline constexpr char unitConflict[] = "UNIT_CONFLICT";
++inline constexpr char ambiguousFeature[] = "AMBIGUOUS_FEATURE";
++inline constexpr char resourceConflict[] = "RESOURCE_CONFLICT";
++inline constexpr char staleDocument[] = "STALE_DOCUMENT";
++inline constexpr char outsideWriteScope[] = "OUTSIDE_WRITE_SCOPE";
++inline constexpr char noLayoutSpace[] = "NO_LAYOUT_SPACE";
++inline constexpr char unsupportedNativeWrite[] = "UNSUPPORTED_NATIVE_WRITE";
++}
++
++struct Point2 { double x{0.0}; double y{0.0}; };
++struct Bounds2 { Point2 minimum; Point2 maximum; };
++
++// revision is the snapshot revision, not an SDK object address or a live handle.
++struct EntityKey {
++    std::string databaseIdentity;
++    std::string handle;
++    std::uint64_t revision{0};
++};
++bool operator==(const EntityKey& left, const EntityKey& right) noexcept;
++
++struct IssueSource {
++    std::string documentIdentity;
++    std::string viewIdentity;
++    std::optional<EntityKey> entity;
++};
++struct Issue {
++    std::string code;
++    std::string message; // UTF-8 Chinese, independent of host code page.
++    IssueSource source;
++    bool blocking{true};
++};
++
++template<class T>
++struct Result {
++    std::optional<T> value;
++    std::vector<Issue> issues;
++    [[nodiscard]] bool canCommit() const noexcept {
++        return value.has_value() && std::none_of(issues.begin(), issues.end(),
++            [](const Issue& issue) { return issue.blocking; });
++    }
++};
++
++struct UnitDeclaration {
++    int insunits{0}; // AutoCAD: 0 unspecified, 4 millimeters, 6 meters.
++    bool trustedInsunits{false};
++    std::optional<double> confirmedMmPerInputUnit;
++    std::string labelHint; // A drawing's "mm" label is not confirmation.
++};
++struct UnitScale { double mmPerInputUnit{0.0}; };
++
++struct SceneEntity {
++    EntityKey key;
++    std::string layer;
++    Bounds2 bounds;
++    std::string viewIdentity;
++};
++struct ResourceDefinition {
++    std::string kind;
++    std::string name;
++    std::string definitionSignature;
++    bool referencedByPreserved{false};
++};
++struct SceneSnapshot {
++    std::string documentIdentity;
++    std::string databaseIdentity;
++    std::uint64_t revision{0};
++    UnitDeclaration units;
++    std::vector<SceneEntity> targets;
++    std::vector<SceneEntity> preserved;
++    std::vector<ResourceDefinition> resources;
++};
++struct WriteRequest {
++    std::string expectedDocumentIdentity;
++    std::uint64_t expectedRevision{0};
++    std::string viewIdentity;
++    std::vector<EntityKey> modifications;
++    std::vector<ResourceDefinition> requiredResources;
++};
++struct WriteScopePlan {
++    std::string documentIdentity;
++    std::string databaseIdentity;
++    std::uint64_t revision{0};
++    UnitScale units;
++    std::vector<EntityKey> writableEntities;
++    std::vector<ResourceDefinition> reusedResources;
++    std::vector<ResourceDefinition> newResources;
++};
++
++[[nodiscard]] Result<UnitScale> resolveUnits(const UnitDeclaration& declaration);
++[[nodiscard]] Result<WriteScopePlan> planWriteScope(
++    const SceneSnapshot& snapshot, const WriteRequest& request);
++
++} // namespace bce
++#endif
+--- /dev/null
++++ D:\Codex\建筑施工图自动化\立面插件\src\ElevationModel.cpp
+@@ -0,0 +1,130 @@
++#include "ElevationModel.h"
++#include <cmath>
++#include <utility>
++
++namespace bce {
++namespace {
++template<class T>
++Result<T> failure(const char* code, const char* message, IssueSource source = {}) {
++    return {std::nullopt, {{code, message, std::move(source), true}}};
++}
++
++bool sameResourceName(const ResourceDefinition& left, const ResourceDefinition& right) noexcept {
++    return left.kind == right.kind && left.name == right.name;
++}
++
++bool validSnapshotKey(const EntityKey& key, const SceneSnapshot& snapshot) noexcept {
++    return !key.handle.empty() && key.databaseIdentity == snapshot.databaseIdentity &&
++        key.revision == snapshot.revision;
++}
++
++IssueSource sourceFor(const SceneSnapshot& snapshot, const WriteRequest& request,
++    std::optional<EntityKey> entity = std::nullopt) {
++    return {snapshot.documentIdentity, request.viewIdentity, std::move(entity)};
++}
++}
++
++bool operator==(const EntityKey& left, const EntityKey& right) noexcept {
++    return left.databaseIdentity == right.databaseIdentity &&
++        left.handle == right.handle && left.revision == right.revision;
++}
++
++Result<UnitScale> resolveUnits(const UnitDeclaration& declaration) {
++    const auto confirmed = declaration.confirmedMmPerInputUnit;
++    if (confirmed && (!std::isfinite(*confirmed) || *confirmed <= 0.0)) {
++        return failure<UnitScale>(diagnostic::unitRequired, u8"确认的单位比例必须是有限正数。");
++    }
++    std::optional<double> trusted;
++    if (declaration.trustedInsunits) {
++        if (declaration.insunits == 4) { trusted = 1.0; }
++        else if (declaration.insunits == 6) { trusted = 1000.0; }
++    }
++    if (trusted && confirmed && *trusted != *confirmed) {
++        return failure<UnitScale>(diagnostic::unitConflict, u8"可信单位声明与明确确认的比例冲突，请核实两者后重新提交。");
++    }
++    if (trusted) { return {UnitScale{*trusted}, {}}; }
++    if (confirmed) { return {UnitScale{*confirmed}, {}}; }
++    return failure<UnitScale>(diagnostic::unitRequired, u8"缺少可信单位，请明确确认每输入单位对应的毫米数。");
++}
++
++Result<WriteScopePlan> planWriteScope(const SceneSnapshot& snapshot, const WriteRequest& request) {
++    if (snapshot.documentIdentity.empty() || snapshot.databaseIdentity.empty() ||
++        request.expectedDocumentIdentity != snapshot.documentIdentity ||
++        request.expectedRevision != snapshot.revision) {
++        return failure<WriteScopePlan>(diagnostic::staleDocument, u8"文档身份或场景修订已变化，必须重新读取。",
++            sourceFor(snapshot, request));
++    }
++    for (const auto* entities : {&snapshot.targets, &snapshot.preserved}) {
++        for (const auto& entity : *entities) {
++            if (!validSnapshotKey(entity.key, snapshot)) {
++                return failure<WriteScopePlan>(diagnostic::staleDocument, u8"场景实体属于其他数据库或修订，必须重新读取。",
++                    sourceFor(snapshot, request, entity.key));
++            }
++        }
++    }
++    for (const auto& target : snapshot.targets) {
++        const auto overlap = std::find_if(snapshot.preserved.begin(), snapshot.preserved.end(),
++            [&target](const SceneEntity& entity) { return entity.key == target.key; });
++        if (overlap != snapshot.preserved.end()) {
++            return failure<WriteScopePlan>(diagnostic::outsideWriteScope, u8"目标实体与保留实体清单交叠，禁止制定写入计划。",
++                sourceFor(snapshot, request, target.key));
++        }
++    }
++
++    const auto units = resolveUnits(snapshot.units);
++    if (!units.canCommit()) {
++        Result<WriteScopePlan> result{std::nullopt, units.issues};
++        for (auto& issue : result.issues) { issue.source = sourceFor(snapshot, request); }
++        return result;
++    }
++    WriteScopePlan plan{snapshot.documentIdentity, snapshot.databaseIdentity, snapshot.revision,
++        *units.value, {}, {}, {}};
++    for (const auto& key : request.modifications) {
++        if (!validSnapshotKey(key, snapshot)) {
++            return failure<WriteScopePlan>(diagnostic::staleDocument, u8"请求实体的数据库、句柄或修订无效，必须重新读取。",
++                sourceFor(snapshot, request, key));
++        }
++        const auto selected = std::find_if(snapshot.targets.begin(), snapshot.targets.end(),
++            [&key](const SceneEntity& entity) { return entity.key == key; });
++        if (selected == snapshot.targets.end()) {
++            return failure<WriteScopePlan>(diagnostic::outsideWriteScope, u8"请求实体不在明确目标清单中，禁止扩散写入范围。",
++                sourceFor(snapshot, request, key));
++        }
++        if (std::find(plan.writableEntities.begin(), plan.writableEntities.end(), key) == plan.writableEntities.end()) {
++            plan.writableEntities.push_back(key);
++        }
++    }
++
++    // No database mutation, global replacement, prefixing or automatic renaming.
++    for (const auto& required : request.requiredResources) {
++        bool reuse = false;
++        for (const auto& actual : snapshot.resources) {
++            if (!sameResourceName(actual, required)) { continue; }
++            if (actual.definitionSignature != required.definitionSignature) {
++                return failure<WriteScopePlan>(diagnostic::resourceConflict,
++                    u8"同名资源定义冲突，禁止覆盖、添加前缀或自动改名。", sourceFor(snapshot, request));
++            }
++            reuse = true;
++        }
++        for (const auto* resources : {&plan.reusedResources, &plan.newResources}) {
++            for (const auto& planned : *resources) {
++                if (sameResourceName(planned, required) && planned.definitionSignature != required.definitionSignature) {
++                    return failure<WriteScopePlan>(diagnostic::resourceConflict,
++                        u8"本次请求包含同名不同定义的资源，禁止提交。", sourceFor(snapshot, request));
++                }
++            }
++        }
++        auto& destination = reuse ? plan.reusedResources : plan.newResources;
++        const auto duplicate = std::find_if(destination.begin(), destination.end(),
++            [&required](const ResourceDefinition& resource) { return sameResourceName(resource, required); });
++        if (duplicate == destination.end()) {
++            if (reuse) {
++                const auto actual = std::find_if(snapshot.resources.begin(), snapshot.resources.end(),
++                    [&required](const ResourceDefinition& resource) { return sameResourceName(resource, required); });
++                destination.push_back(*actual);
++            } else { destination.push_back(required); }
++        }
++    }
++    return {std::move(plan), {}};
++}
++}
+--- /dev/null
++++ D:\Codex\建筑施工图自动化\立面插件\tests\CoreTests.cpp
+@@ -0,0 +1,31 @@
++#include "TestSupport.h"
++#include <array>
++#include <iostream>
++#include <string>
++
++namespace {
++struct TestCase { const char* name; void (*run)(); };
++const std::array<TestCase, 5> cases{{
++    {"UndefinedUnitRequiresConfirmation", bce::test::undefinedUnitRequiresConfirmation},
++    {"KnownUnitsConflictNeedsConfirmation", bce::test::knownUnitsConflictNeedsConfirmation},
++    {"OnlySelectedElevationIsWritable", bce::test::onlySelectedElevationIsWritable},
++    {"SharedStyleConflictKeepsOtherContent", bce::test::sharedStyleConflictKeepsOtherContent},
++    {"StaleDocumentOrEntityCannotCommit", bce::test::staleDocumentOrEntityCannotCommit}
++}};
++}
++int main(int argc, char** argv) {
++    const bool all = argc == 2 && std::string(argv[1]) == "--all";
++    const bool single = argc == 3 && std::string(argv[1]) == "--case";
++    if (!all && !single) { std::cerr << "usage: ElevationCoreTests.exe --all | --case <name>\n"; return 2; }
++    int executed = 0;
++    int failures = 0;
++    for (const auto& test : cases) {
++        if (!all && std::string(argv[2]) != test.name) { continue; }
++        ++executed;
++        try { test.run(); std::cout << "PASS " << test.name << '\n'; }
++        catch (const std::exception& error) { ++failures; std::cerr << "FAIL " << test.name << ": " << error.what() << '\n'; }
++    }
++    if (executed == 0) { std::cerr << "unknown case: " << argv[2] << '\n'; return 2; }
++    std::cout << "Executed " << executed << ", failed " << failures << '\n';
++    return failures == 0 ? 0 : 1;
++}
+--- /dev/null
++++ D:\Codex\建筑施工图自动化\立面插件\tests\ReferenceTests.cpp
+@@ -0,0 +1,47 @@
++#include "TestSupport.h"
++#include <limits>
++
++namespace bce::test {
++// Catches treating a label/INSUNITS=0 as mm, or accepting invalid scale values.
++void undefinedUnitRequiresConfirmation() {
++    UnitDeclaration declaration{0, false, std::nullopt, "mm"};
++    const auto unknown = resolveUnits(declaration);
++    require(!unknown.value && !unknown.canCommit() && hasCode(unknown, "UNIT_REQUIRED"),
++        "unknown units must require explicit confirmation despite mm label");
++    declaration.confirmedMmPerInputUnit = 1.0;
++    const auto confirmed = resolveUnits(declaration);
++    require(confirmed.canCommit() && confirmed.value->mmPerInputUnit == 1.0,
++        "explicit 1.0 confirmation must resolve to millimeters");
++    for (const auto invalid : {std::numeric_limits<double>::infinity(),
++             std::numeric_limits<double>::quiet_NaN(), 0.0, -1.0}) {
++        declaration.confirmedMmPerInputUnit = invalid;
++        const auto result = resolveUnits(declaration);
++        require(!result.value && !result.canCommit() && hasCode(result, "UNIT_REQUIRED"),
++            "nonfinite/nonpositive confirmation must be rejected");
++    }
++    const auto untrusted = resolveUnits({4, false, std::nullopt, "mm"});
++    require(!untrusted.canCommit() && hasCode(untrusted, "UNIT_REQUIRED"),
++        "untrusted INSUNITS must not establish scale");
++    Result<UnitScale> blocking{UnitScale{1.0}, {{"UNIT_CONFLICT", u8"单位冲突", {}, true}}};
++    require(!blocking.canCommit(), "blocking issue must disable commit even with value");
++    blocking.issues.front().blocking = false;
++    require(blocking.canCommit(), "nonblocking issue must allow a valid value");
++}
++
++// Catches silent precedence of confirmation over trusted declarations, and mm/m mixup.
++void knownUnitsConflictNeedsConfirmation() {
++    const auto mm = resolveUnits({4, true, std::nullopt, {}});
++    require(mm.canCommit() && mm.value->mmPerInputUnit == 1.0, "trusted mm must be 1");
++    const auto meters = resolveUnits({6, true, std::nullopt, {}});
++    require(meters.canCommit() && meters.value->mmPerInputUnit == 1000.0,
++        "trusted meters must be 1000 mm/input unit");
++    const auto matching = resolveUnits({6, true, 1000.0, {}});
++    require(matching.canCommit(), "matching explicit confirmation must succeed");
++    const auto conflict = resolveUnits({6, true, 1.0, {}});
++    require(!conflict.value && !conflict.canCommit() && hasCode(conflict, "UNIT_CONFLICT"),
++        "conflicting confirmation must not silently override trusted meters");
++    const auto unsupported = resolveUnits({99, true, std::nullopt, {}});
++    require(!unsupported.canCommit() && hasCode(unsupported, "UNIT_REQUIRED"),
++        "unsupported declarations must not invent scale");
++}
++}
+--- /dev/null
++++ D:\Codex\建筑施工图自动化\立面插件\tests\ScopeTests.cpp
+@@ -0,0 +1,89 @@
++#include "TestSupport.h"
++
++namespace bce::test {
++// Catches layer/rectangle expansion, preserved overlap and whole-target expansion.
++void onlySelectedElevationIsWritable() {
++    auto snapshot = scene();
++    const auto original = snapshot;
++    snapshot.targets.push_back({{"database-1", "E2", 7}, "shared", {{0, 100}, {100, 200}}, "elevation-E"});
++    const auto selected = planWriteScope(snapshot, request());
++    require(selected.canCommit() && selected.value->writableEntities.size() == 1 &&
++        selected.value->writableEntities.front().handle == "E1", "only explicitly requested E1 is writable");
++    require(selected.value->documentIdentity == "document-1" && selected.value->databaseIdentity == "database-1" &&
++        selected.value->revision == 7 && selected.value->units.mmPerInputUnit == 1.0,
++        "plan must retain snapshot identity and resolved scale");
++    auto other = request();
++    other.modifications = {{"database-1", "S1", 7}};
++    const auto denied = planWriteScope(snapshot, other);
++    require(!denied.value && hasCode(denied, "OUTSIDE_WRITE_SCOPE"), "adjacent shared-layer section must be rejected");
++    require(denied.issues.front().source.viewIdentity == "elevation-E" &&
++        denied.issues.front().source.entity && denied.issues.front().source.entity->handle == "S1",
++        "denial must identify requested view and offending object");
++    snapshot.preserved.push_back(snapshot.targets.front());
++    const auto overlap = planWriteScope(snapshot, request());
++    require(!overlap.value && hasCode(overlap, "OUTSIDE_WRITE_SCOPE"), "overlapping target/preserved sets must fail closed");
++    snapshot = original;
++    snapshot.units = {0, false, std::nullopt, "mm"};
++    const auto unknown = planWriteScope(snapshot, request());
++    require(!unknown.value && hasCode(unknown, "UNIT_REQUIRED"), "scope cannot commit unknown drawing units");
++    auto missing = request();
++    missing.modifications = {{"database-1", "missing", 7}};
++    require(hasCode(planWriteScope(original, missing), "OUTSIDE_WRITE_SCOPE"), "unknown handle must be rejected");
++}
++
++// Catches shared-style overwrite, auto-renaming and duplicate resource additions.
++void sharedStyleConflictKeepsOtherContent() {
++    auto snapshot = scene();
++    snapshot.resources = {{"TextStyle", "Shared", "font-A", true}};
++    auto write = request();
++    write.requiredResources = {{"TextStyle", "Shared", "font-B", false}};
++    const auto conflict = planWriteScope(snapshot, write);
++    require(!conflict.value && !conflict.canCommit() && hasCode(conflict, "RESOURCE_CONFLICT"),
++        "protected content's shared style must not be overwritten");
++    snapshot.resources.front().referencedByPreserved = false;
++    require(hasCode(planWriteScope(snapshot, write), "RESOURCE_CONFLICT"),
++        "minimal service must reject same-name different definitions even if unprotected");
++    snapshot.resources.front().referencedByPreserved = true;
++    write.requiredResources = {{"TextStyle", "Shared", "font-A", false},
++        {"Layer", "New", "color-3", false}, {"Layer", "New", "color-3", false}};
++    const auto accepted = planWriteScope(snapshot, write);
++    require(accepted.canCommit() && accepted.value->reusedResources.size() == 1 &&
++        accepted.value->newResources.size() == 1, "identical resources reused, new resources deduplicated");
++    require(accepted.value->reusedResources.front().referencedByPreserved &&
++        accepted.value->newResources.front().name == "New", "reuse retains actual resource, new resource keeps requested name");
++    require(snapshot.resources.size() == 1 && snapshot.resources.front().definitionSignature == "font-A",
++        "planning must not modify actual resource definitions");
++    write.requiredResources.push_back({"Layer", "New", "color-4", false});
++    require(hasCode(planWriteScope(snapshot, write), "RESOURCE_CONFLICT"), "request-internal definition conflict must fail");
++}
++
++// Catches handle-only equality, switched document and stale entity/snapshot revision.
++void staleDocumentOrEntityCannotCommit() {
++    const auto snapshot = scene();
++    auto write = request();
++    write.expectedDocumentIdentity = "different-document";
++    require(hasCode(planWriteScope(snapshot, write), "STALE_DOCUMENT"), "document switch must fail");
++    write = request();
++    write.expectedRevision = 6;
++    require(hasCode(planWriteScope(snapshot, write), "STALE_DOCUMENT"), "changed snapshot revision must fail");
++    write = request();
++    write.modifications.front().revision = 6;
++    auto result = planWriteScope(snapshot, write);
++    require(!result.value && !result.canCommit() && hasCode(result, "STALE_DOCUMENT"), "old entity revision must fail");
++    write = request();
++    write.modifications.front().databaseIdentity = "foreign-database";
++    result = planWriteScope(snapshot, write);
++    require(!result.value && !result.canCommit() && hasCode(result, "STALE_DOCUMENT"), "same handle in different database must fail");
++    auto staleScene = snapshot;
++    staleScene.targets.front().key.revision = 6;
++    require(hasCode(planWriteScope(staleScene, request()), "STALE_DOCUMENT"), "inconsistent snapshot entity must fail");
++    staleScene = snapshot;
++    staleScene.documentIdentity.clear();
++    write = request();
++    write.expectedDocumentIdentity.clear();
++    require(hasCode(planWriteScope(staleScene, write), "STALE_DOCUMENT"), "empty matching document identities cannot authorize writes");
++    staleScene = snapshot;
++    staleScene.preserved.front().key.databaseIdentity = "foreign-database";
++    require(hasCode(planWriteScope(staleScene, request()), "STALE_DOCUMENT"), "all snapshot keys must belong to the database");
++}
++}
+--- /dev/null
++++ D:\Codex\建筑施工图自动化\立面插件\tests\TestSupport.h
+@@ -0,0 +1,37 @@
++#ifndef BCE_TEST_SUPPORT_H
++#define BCE_TEST_SUPPORT_H
++#include "../src/ElevationModel.h"
++#include <stdexcept>
++#include <string>
++
++namespace bce::test {
++inline void require(bool condition, const char* message) {
++    if (!condition) { throw std::runtime_error(message); }
++}
++template<class T>
++bool hasCode(const Result<T>& result, const std::string& code) {
++    for (const auto& issue : result.issues) {
++        if (issue.code == code && issue.blocking && !issue.message.empty()) { return true; }
++    }
++    return false;
++}
++inline SceneSnapshot scene() {
++    SceneSnapshot snapshot;
++    snapshot.documentIdentity = "document-1";
++    snapshot.databaseIdentity = "database-1";
++    snapshot.revision = 7;
++    snapshot.units = {4, true, std::nullopt, "mm"};
++    snapshot.targets = {{{"database-1", "E1", 7}, "shared", {{0, 0}, {100, 100}}, "elevation-E"}};
++    snapshot.preserved = {{{"database-1", "S1", 7}, "shared", {{101, 0}, {200, 100}}, "section-S"}};
++    return snapshot;
++}
++inline WriteRequest request() {
++    return {"document-1", 7, "elevation-E", {{"database-1", "E1", 7}}, {}};
++}
++void undefinedUnitRequiresConfirmation();
++void knownUnitsConflictNeedsConfirmation();
++void onlySelectedElevationIsWritable();
++void sharedStyleConflictKeepsOtherContent();
++void staleDocumentOrEntityCannotCommit();
++}
++#endif
+--- /dev/null
++++ D:\Codex\建筑施工图自动化\立面插件\tests\ElevationCoreTests.vcxproj
+@@ -0,0 +1,14 @@
++<?xml version="1.0" encoding="utf-8"?>
++<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <ItemGroup Label="ProjectConfigurations"><ProjectConfiguration Include="Release|x64"><Configuration>Release</Configuration><Platform>x64</Platform></ProjectConfiguration></ItemGroup>
++  <PropertyGroup Label="Globals"><ProjectGuid>{D31086B1-9E22-4FB5-A394-AC717EA35221}</ProjectGuid><RootNamespace>ElevationCoreTests</RootNamespace><WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion></PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
++  <PropertyGroup Label="Configuration"><ConfigurationType>Application</ConfigurationType><UseDebugLibraries>false</UseDebugLibraries><PlatformToolset>v141</PlatformToolset><CharacterSet>Unicode</CharacterSet></PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
++  <PropertyGroup><OutDir>..\..\out\</OutDir><IntDir>..\..\obj\</IntDir><TargetName>ElevationCoreTests</TargetName></PropertyGroup>
++  <ItemDefinitionGroup><ClCompile><WarningLevel>Level4</WarningLevel><TreatWarningAsError>true</TreatWarningAsError><SDLCheck>true</SDLCheck><ConformanceMode>true</ConformanceMode><LanguageStandard>stdcpp17</LanguageStandard><RuntimeLibrary>MultiThreaded</RuntimeLibrary><AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions><ExceptionHandling>Sync</ExceptionHandling></ClCompile><Link><SubSystem>Console</SubSystem></Link></ItemDefinitionGroup>
++  <ItemGroup><ClCompile Include="..\src\ElevationModel.cpp" /><ClCompile Include="CoreTests.cpp" /><ClCompile Include="ReferenceTests.cpp" /><ClCompile Include="ScopeTests.cpp" /></ItemGroup>
++  <ItemGroup><ClInclude Include="..\src\ElevationModel.h" /><ClInclude Include="TestSupport.h" /></ItemGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
++</Project>
++
+--- /dev/null
++++ D:\Codex\建筑施工图自动化\立面插件\tools\build.ps1
+@@ -0,0 +1,65 @@
++param(
++    [ValidateSet('CoreTests', 'NativeCases', 'All')][string]$Target = 'CoreTests',
++    [string]$Label = 'run'
++)
++$ErrorActionPreference = 'Stop'
++$projectRoot = Split-Path $PSScriptRoot -Parent
++$safeLabel = $Label -replace '[^A-Za-z0-9_-]', '_'
++$buildName = 'f1-' + (Get-Date -Format 'yyyyMMdd-HHmmss-fff') + '-' + $safeLabel + '-' + [Guid]::NewGuid().ToString('N').Substring(0,8)
++$buildRoot = Join-Path (Join-Path $projectRoot 'build') $buildName
++$null = New-Item -ItemType Directory -Path $buildRoot
++$receipt = [ordered]@{ target=$Target; label=$Label; startedUtc=[DateTime]::UtcNow.ToString('o'); buildRoot=$buildRoot; inputs=@(); commands=@(); outputs=@(); buildExitCode=$null; testExitCode=$null; unknownCaseExitCode=$null; exitCode=1 }
++$finalExit = 1
++try {
++    $inputs = @('src/ElevationModel.h','src/ElevationModel.cpp','tests/CoreTests.cpp','tests/ReferenceTests.cpp','tests/ScopeTests.cpp','tests/TestSupport.h','tests/ElevationCoreTests.vcxproj','tools/build.ps1')
++    foreach ($relative in $inputs) {
++        $source = Join-Path $projectRoot $relative
++        $destination = Join-Path (Join-Path $buildRoot 'input') $relative
++        $null = New-Item -ItemType Directory -Force -Path (Split-Path $destination -Parent)
++        Copy-Item -LiteralPath $source -Destination $destination
++        $receipt.inputs += [ordered]@{ path=$relative; sha256=(Get-FileHash -LiteralPath $destination -Algorithm SHA256).Hash }
++    }
++    if ($Target -ne 'CoreTests') {
++        $receipt.reason = 'NOT_IMPLEMENTED: NativeCases/All are unavailable until native projects are added.'
++        Set-Content -LiteralPath (Join-Path $buildRoot 'not-implemented.log') -Value $receipt.reason -Encoding UTF8
++        $finalExit = 3
++    } else {
++        $vcvars = 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat'
++        $msbuild = 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe'
++        if (!(Test-Path -LiteralPath $vcvars) -or !(Test-Path -LiteralPath $msbuild)) { throw 'VS2019 v141 build environment not found.' }
++        $command = '@echo off' + "`r`n" + 'call "' + $vcvars + '" -vcvars_ver=14.16' + "`r`n" + 'if errorlevel 1 exit /b %errorlevel%' + "`r`n" + '"' + $msbuild + '" ElevationCoreTests.vcxproj /t:Rebuild /p:Configuration=Release /p:Platform=x64 /p:VCToolsVersion=14.16.27023 /m:1 /nologo /verbosity:normal' + "`r`n" + 'exit /b %errorlevel%' + "`r`n"
++        $commandFile = Join-Path $buildRoot 'build-command.cmd'
++        Set-Content -LiteralPath $commandFile -Value $command -Encoding ASCII
++        $receipt.commands += 'cmd.exe /d /c ..\..\build-command.cmd (cwd=input/tests)'
++        Push-Location (Join-Path $buildRoot 'input/tests')
++        try {
++            & $env:ComSpec /d /c '..\..\build-command.cmd' > (Join-Path $buildRoot 'build.log') 2>&1
++            $receipt.buildExitCode = $LASTEXITCODE
++        } finally { Pop-Location }
++        if ($receipt.buildExitCode -ne 0) { $finalExit = $receipt.buildExitCode }
++        else {
++            $exe = Join-Path $buildRoot 'out/ElevationCoreTests.exe'
++            $receipt.commands += 'out/ElevationCoreTests.exe --all'
++            & $exe --all > (Join-Path $buildRoot 'tests-all.log') 2>&1
++            $receipt.testExitCode = $LASTEXITCODE
++            $receipt.commands += 'out/ElevationCoreTests.exe --case UnknownCase (expected 2)'
++            & $exe --case UnknownCase > (Join-Path $buildRoot 'tests-unknown.log') 2>&1
++            $receipt.unknownCaseExitCode = $LASTEXITCODE
++            $finalExit = if ($receipt.testExitCode -ne 0) { $receipt.testExitCode } elseif ($receipt.unknownCaseExitCode -ne 2) { 1 } else { 0 }
++        }
++    }
++} catch {
++    $receipt.error = $_.Exception.Message
++    Set-Content -LiteralPath (Join-Path $buildRoot 'error.log') -Value ($_ | Out-String) -Encoding UTF8
++    $finalExit = 1
++} finally {
++    foreach ($file in Get-ChildItem -LiteralPath $buildRoot -File -Recurse | Where-Object { $_.FullName -notlike '*\input\*' -and $_.Name -ne 'receipt.json' }) {
++        $receipt.outputs += [ordered]@{ path=$file.FullName.Substring($buildRoot.Length+1); sha256=(Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash }
++    }
++    $receipt.exitCode = $finalExit
++    $receipt.finishedUtc = [DateTime]::UtcNow.ToString('o')
++    $receipt | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath (Join-Path $buildRoot 'receipt.json') -Encoding UTF8
++    Write-Output ('RECEIPT=' + (Join-Path $buildRoot 'receipt.json'))
++    Write-Output ('EXIT_CODE=' + $finalExit)
++}
++exit $finalExit

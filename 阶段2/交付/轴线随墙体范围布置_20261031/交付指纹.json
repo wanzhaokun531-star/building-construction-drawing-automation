@@ -1,0 +1,90 @@
+{
+  "contract": "bcp.wall-following-axes.delivery.v1",
+  "directory": "D:\\Codex\\建筑施工图自动化\\阶段2\\交付\\轴线随墙体范围布置_20261031",
+  "files": [
+    {
+      "name": "analysis.json",
+      "SHA256": "D68380996B93510D16E548834014C1C923D85A50F9817EFEF922B49A4035E4C3",
+      "bytes": 26405
+    },
+    {
+      "name": "native-annotations.json",
+      "SHA256": "92E3001D6602DEDB8B2DAB1443F70B02E5D50C2BBBCAF15372948694F5C89865",
+      "bytes": 37924
+    },
+    {
+      "name": "native-foundation.json",
+      "SHA256": "B14D528C153B1B8C4076D1E2D2128E90A6B97A78724C6CD50558F010C9CDBAEC",
+      "bytes": 760
+    },
+    {
+      "name": "全四侧尺寸与轴线出图检查.json",
+      "SHA256": "C8A35ACBEB445820E1073DA3F77F5C9F8991ABEA30FDB17E09CECEC872CBCD5E",
+      "bytes": 10122
+    },
+    {
+      "name": "完整逻辑轴线.csv",
+      "SHA256": "218AABE9FF0E0E39D78C8E03EEFE57956CBE88F3097346519BCCC090779AD387",
+      "bytes": 2858
+    },
+    {
+      "name": "待确认支撑墙范围核对.json",
+      "SHA256": "A55E65924011545CA51449649A1FABED0CBE23DE566FDD9C3095AFBD5F687195",
+      "bytes": 432
+    },
+    {
+      "name": "待确认清单.csv",
+      "SHA256": "D65871C6DB8F788214950E3C09E59F982F26AEDE4DD6EE9F8764C1149B6F80A5",
+      "bytes": 2873
+    },
+    {
+      "name": "方案施工图_轴线随墙体布置.dwg",
+      "SHA256": "ADB44EC8D08477C88177B9374B30151DB5CCD2FDE3E415C46D24EE11B568CBCB",
+      "bytes": 3262026
+    },
+    {
+      "name": "施工图预览.png",
+      "SHA256": "3F0B30562CD2FCB42C78B3DCAF479FBC6F668A986893020A37AF723B2FCA05D2",
+      "bytes": 166887
+    },
+    {
+      "name": "旧版拒绝与规则测试.json",
+      "SHA256": "9B260EBC785E69E926771CD5932E7CD54A5540ACD11B7BE3B4BD4FD5F4F058EA",
+      "bytes": 620
+    },
+    {
+      "name": "第二道尺寸及测点.csv",
+      "SHA256": "3BF80DA6B654E9CC274E931C788EA367FF5BF1BC790B7A91D22629EF3CCD6DC0",
+      "bytes": 1760
+    },
+    {
+      "name": "轴线显示分段及逻辑组.csv",
+      "SHA256": "5815003D6B4A6BFD19E2F90F58B6C670F47B00DA6A1D9F1A4A3E1E6F4D03CC73",
+      "bytes": 2459
+    },
+    {
+      "name": "轴线随墙体布置_A2.pdf",
+      "SHA256": "96A48F68E2CC4ECB1E58D728CCC98BDA86B535348567B6BD262A7521E6DD793D",
+      "bytes": 128134
+    },
+    {
+      "name": "输入保护及宿主清理.json",
+      "SHA256": "868E3C502F40451EB965079CE35EE07FB9CB4A9DC0ADA2EAFD7282A3057AC3F6",
+      "bytes": 7664
+    },
+    {
+      "name": "阅读说明.txt",
+      "SHA256": "CE8D5F0DCAA54B13D87F44831D5A2EA9D7EBFC7BEE4D0C905841357B93DD09EF",
+      "bytes": 934
+    },
+    {
+      "name": "验证报告.md",
+      "SHA256": "268416C790E5A8E6DC57486BFD7124978DA9FAEE4437413603B2561F526A124A",
+      "bytes": 4037
+    }
+  ],
+  "nativeRun": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\native-run-v32.json",
+  "gate": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\wall-following-axes-release-v32-final.json",
+  "sourceCandidateARXSHA256": "1A0CFC71E8093FDEC8DBF57CB0FDF69538AB73243ED4915B75DC6D35B0472F40",
+  "constructionDrawingComplete": false
+}

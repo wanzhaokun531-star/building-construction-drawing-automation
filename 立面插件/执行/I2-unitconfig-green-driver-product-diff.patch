@@ -1,0 +1,300 @@
+--- D:\Codex\建筑施工图自动化\立面插件\build\i2-20261101-221338-563-stub-red-raw-log-metadata-only-fa7b68b5\src\UnitConfig.cpp
++++ D:\Codex\建筑施工图自动化\立面插件\build\i2-20261101-222304-757-green-unit-only-current-dwg-54e52bbb\src\UnitConfig.cpp
+@@ -1,7 +1,97 @@
+ #include "UnitConfig.h"
++#include <Windows.h>
++#include <wincrypt.h>
++#include <array>
++#include <cmath>
++#include <iomanip>
++#include <limits>
++#include <sstream>
++#include <stdexcept>
+ namespace bce {
+-bool isUnitOnlyProject(const StoredProject&) noexcept { return false; }
+-Result<StoreReceipt> configureProjectUnits(NativeSceneContext&, double) {
+-  return {std::nullopt, {{"UNIT_CONFIG_NOT_IMPLEMENTED", "RED stub", {}, true}}};
++namespace {
++Result<StoreReceipt> rejected(const char* code, const std::string& message) {
++    return {std::nullopt, {{code, message, {}, true}}};
++}
++// Cryptographic random UUIDs identify a project and each explicit confirmation;
++// no filename, fixture hash, handle or geometric identity is used as a project ID.
++std::string randomId() {
++    HCRYPTPROV provider{};
++    if (!CryptAcquireContextW(&provider, nullptr, nullptr, PROV_RSA_AES,
++                              CRYPT_VERIFYCONTEXT))
++        throw std::runtime_error("project identity entropy provider unavailable");
++    struct ProviderScope {
++        HCRYPTPROV value;
++        ~ProviderScope() noexcept { CryptReleaseContext(value, 0); }
++    } scope{provider};
++    std::array<BYTE, 16> bytes{};
++    if (!CryptGenRandom(provider, static_cast<DWORD>(bytes.size()), bytes.data()))
++        throw std::runtime_error("project identity entropy generation failed");
++    bytes[6] = static_cast<BYTE>((bytes[6] & 0x0F) | 0x40);
++    bytes[8] = static_cast<BYTE>((bytes[8] & 0x3F) | 0x80);
++    std::ostringstream out;
++    out.imbue(std::locale::classic());
++    for (std::size_t n = 0; n < bytes.size(); ++n) {
++        if (n == 4 || n == 6 || n == 8 || n == 10) out << '-';
++        out << std::hex << std::setw(2) << std::setfill('0')
++            << static_cast<unsigned>(bytes[n]);
++    }
++    return out.str();
+ }
+ }
++bool isUnitOnlyProject(const StoredProject& p) noexcept {
++    const auto& zero = p.config.zeroLevel;
++    // Every geometry-bearing collection and provenance field is enumerated.
++    // Even empty generation metadata is kept out of this deliberately narrow route.
++    if (zero.confirmed || !zero.value.empty() || !zero.source.empty() ||
++        !p.config.views.empty() || !p.rules.views.empty() ||
++        !p.rules.semanticFeatures.empty() || !p.rules.materialOverrides.empty() ||
++        !p.ruleInputsConfirmationSource.empty() || !p.confirmedEntities.empty() ||
++        !p.generation.views.empty() || !p.generation.documentIdentity.empty() ||
++        !p.generation.databaseIdentity.empty()) return false;
++    const auto scale = p.config.units.confirmedMmPerInputUnit;
++    return !scale || (std::isfinite(*scale) && *scale > 0 &&
++                      !p.config.unitConfirmationSource.empty());
++}
++Result<StoreReceipt> configureProjectUnits(NativeSceneContext& context, double scale) {
++    try {
++        if (!std::isfinite(scale) || scale <= 0)
++            return rejected("UNIT_CONFIG_INVALID", u8"单位比例必须是有限正数；未修改档案。");
++        auto* db = context.currentDatabase();
++        if (!db) return rejected(diagnostic::staleDocument, u8"当前文档上下文已失效。");
++        const auto identity = context.documentIdentity();
++        const auto revision = context.revision();
++        const auto existing = readProjectStore(*db);
++        ProjectArchive archive;
++        if (existing.readable()) {
++            if (!existing.issues.empty() || !isUnitOnlyProject(existing.value->project))
++                return rejected("PROJECT_CONFIG_REQUIRES_FULL_BINDING",
++                    u8"档案含零点、视图、规则或生成历史；本单位首次配置入口拒绝改写，原档案保留。");
++            archive = *existing.value;
++        } else {
++            if (existing.issues.size() != 1 || existing.issues[0].code != "PROJECT_NOT_FOUND")
++                return {std::nullopt, existing.issues};
++            archive.project.persistentProjectId = randomId();
++        }
++        // This binding authorizes exactly the non-geometric unit write. It is
++        // not a bindProjectArchive result or an ObservedScene qualification.
++        archive.project.config.databaseIdentity = identity + "/database";
++        archive.project.config.units.confirmedMmPerInputUnit = scale;
++        archive.project.config.units.trustedInsunits = false;
++        archive.project.config.units.insunits = 0;
++        std::ostringstream source;
++        source.imbue(std::locale::classic());
++        source << "BCE_CONFIG:user-explicit; mmPerInputUnit="
++               << std::setprecision(std::numeric_limits<double>::max_digits10) << scale
++               << "; confirmation=" << randomId();
++        archive.project.config.unitConfirmationSource = source.str();
++        if (!isUnitOnlyProject(archive.project))
++            return rejected("PROJECT_CONFIG_REQUIRES_FULL_BINDING", "unit-only contract changed");
++        archive.bound = true;
++        return writeProjectStore(context, {identity, revision, std::move(archive)});
++    } catch (const std::exception& error) {
++        return rejected("UNIT_CONFIG_FAILED", error.what());
++    } catch (...) {
++        return rejected("UNIT_CONFIG_FAILED", "unknown unit configuration failure");
++    }
++}
++}
+--- D:\Codex\建筑施工图自动化\立面插件\build\i2-20261101-221338-563-stub-red-raw-log-metadata-only-fa7b68b5\src\ConfigCommands.cpp
++++ D:\Codex\建筑施工图自动化\立面插件\build\i2-20261101-222304-757-green-unit-only-current-dwg-54e52bbb\src\ConfigCommands.cpp
+@@ -7,10 +7,17 @@
+ void configureUnits() noexcept {
+   try {
+     acutPrintf(L"\nBCE_CONFIG当前仅配置本图单位；不配置零点、轴、材料或生成资格。");
++    NativeSceneContext context;
++    const auto identity = context.documentIdentity();
++    const auto revision = context.revision();
+     double scale{};
+     const auto status = acedGetReal(L"\n1模型单位相当于多少毫米（取消不修改）: ", &scale);
+     if (status != RTNORM) { acutPrintf(L"\n单位配置已取消。\n"); return; }
+-    NativeSceneContext context;
++    if (!context.currentDatabase() || context.documentIdentity() != identity ||
++        context.revision() != revision) {
++      acutPrintf(L"\nSTALE_DOCUMENT：输入期间当前文档发生变化；未修改档案。\n");
++      return;
++    }
+     const auto result = configureProjectUnits(context, scale);
+     if (result.canCommit()) acutPrintf(L"\n本图单位已保存；可用一次U撤销。尚未获得生成资格。\n");
+     else for (const auto& issue : result.issues) {
+--- D:\Codex\建筑施工图自动化\立面插件\build\i2-20261101-221338-563-stub-red-raw-log-metadata-only-fa7b68b5\src\AnalysisCommands.cpp
++++ D:\Codex\建筑施工图自动化\立面插件\build\i2-20261101-222304-757-green-unit-only-current-dwg-54e52bbb\src\AnalysisCommands.cpp
+@@ -12,6 +12,7 @@
+ #include <aced.h>
+ #include <acutads.h>
+ #include <cstring>
++#include <iomanip>
+ #include <limits>
+ #include <memory>
+ #include <set>
+@@ -180,6 +181,15 @@
+     auto archive = bce::readProjectStore(*context->currentDatabase());
+     bce::AnalysisReadOptions
+         options; // No project-specific assumptions or qualification inputs.
++    const bool unitOnly = archive.readable() && archive.issues.empty() &&
++                          bce::isUnitOnlyProject(archive.value->project);
++    std::string unitSource;
++    if (unitOnly && archive.value->project.config.units.confirmedMmPerInputUnit) {
++      options.confirmedMmPerInputUnit =
++          archive.value->project.config.units.confirmedMmPerInputUnit;
++      unitSource = archive.value->project.config.unitConfirmationSource;
++    }
++    // No historic ProjectConfig, plan, views, zero, axes or materials are passed.
+     auto result = bce::readCurrentAnalysis(*context, options);
+     if (acedUsrBrk()) {
+       say(L"\n分析已取消，旧结果已清除。\n");
+@@ -199,15 +209,19 @@
+     for (const auto &view : analysis.recognition.views)
+       issues.insert(issues.end(), view.unconfirmed.begin(),
+                     view.unconfirmed.end());
+-    const auto units = bce::resolveUnits(analysis.scene.units);
++    auto unitDeclaration = analysis.scene.units;
++    if (options.confirmedMmPerInputUnit &&
++        (unitDeclaration.insunits == 4 || unitDeclaration.insunits == 6))
++      unitDeclaration.trustedInsunits = true;
++    const auto units = bce::resolveUnits(unitDeclaration);
+     issues.insert(issues.end(), units.issues.begin(), units.issues.end());
+-    if (archive.value)
++    if (archive.value && !unitOnly)
+       issues.push_back({"PROJECT_HISTORY_UNBOUND",
+                         u8"已读取历史项目档案；未与本次内存完整绑定，单位、视图"
+                         u8"、轴及材料确认均未沿用。",
+                         {identity, {}, {}},
+                         true});
+-    else
++    else if (!archive.value)
+       issues.insert(issues.end(), archive.issues.begin(), archive.issues.end());
+     if (!context->currentDatabase() || context->revision() != revision ||
+         context->documentIdentity() != identity)
+@@ -218,6 +232,12 @@
+     out << "contract\tbce.analysis-report.v1\nidentity\t" << identity
+         << "\ndatabaseIdentity\t" << field(analysis.scene.databaseIdentity)
+         << "\nrevision\t" << revision << "\nsequence\t" << sequence << "\n";
++    if (options.confirmedMmPerInputUnit)
++      out << "unitMmPerInputUnit\t"
++          << std::setprecision(std::numeric_limits<double>::max_digits10)
++          << *options.confirmedMmPerInputUnit << "\nunitSource\t"
++          << field(unitSource) << "\nunitResolved\t"
++          << (units.canCommit() ? "true" : "false") << "\n";
+     for (const auto &view : analysis.recognition.views) {
+       elevations += view.kind == bce::ViewKind::elevation;
+       sections += view.kind == bce::ViewKind::section;
+@@ -250,6 +270,14 @@
+         u8"个对象，问题" + std::to_string(issues.size()) +
+         u8"项。未生成施工图。");
+     say(summary.c_str());
++    if (options.confirmedMmPerInputUnit) {
++      std::ostringstream unitSummary;
++      unitSummary.imbue(std::locale::classic());
++      unitSummary << u8"\n本图明确单位：1模型单位="
++                  << std::setprecision(std::numeric_limits<double>::max_digits10)
++                  << *options.confirmedMmPerInputUnit << u8"毫米；来源：" << unitSource;
++      say(bce::native_scene::utf16(unitSummary.str()).c_str());
++    }
+     showIssues(issues);
+     say(L"\n");
+   } catch (const std::exception &failure) {
+--- D:\Codex\建筑施工图自动化\立面插件\build\i2-20261101-221338-563-stub-red-raw-log-metadata-only-fa7b68b5\src\UnitConfigDriver.cpp
++++ D:\Codex\建筑施工图自动化\立面插件\build\i2-20261101-222304-757-green-unit-only-current-dwg-54e52bbb\src\UnitConfigDriver.cpp
+@@ -7,6 +7,7 @@
+ #include "ProjectStore.h"
+ #include "AnalysisReader.h"
+ #include <dbxrecrd.h>
++#include <dbtrans.h>
+ #include <rxevent.h>
+ #include <acdocman.h>
+ #include <aced.h>
+@@ -299,9 +300,30 @@
+    {"encoding",quote(std::string("raw AutoCAD log bytes; not decoded; retained at path"))}});
+ }
+ // END RAW_TRANSCRIPT_METADATA
++void closeTranscript() {
++ if(state->transcript){state->transcript->stop();state->evidence->capability(rawTranscriptEvidence(state->transcript->file()));state->transcript.reset();}
++}
++// Only a strict, lossless decode may be used for the one Unicode INFO assertion.
++// Native log bytes remain in their original file; no decoded text enters JSON.
++bool logContainsUnicode(const std::string& bytes, const std::wstring& expected) {
++ UINT page=CP_UTF8;
++ int length=MultiByteToWideChar(page,MB_ERR_INVALID_CHARS,bytes.data(),static_cast<int>(bytes.size()),nullptr,0);
++ if(!length){page=GetACP();length=MultiByteToWideChar(page,MB_ERR_INVALID_CHARS,bytes.data(),static_cast<int>(bytes.size()),nullptr,0);}
++ if(length<=0)return false;
++ std::wstring wide(static_cast<std::size_t>(length),L'\0');
++ if(MultiByteToWideChar(page,MB_ERR_INVALID_CHARS,bytes.data(),static_cast<int>(bytes.size()),wide.data(),length)!=length)return false;
++ BOOL defaultUsed{};
++ const auto flags=page==CP_UTF8?WC_ERR_INVALID_CHARS:WC_NO_BEST_FIT_CHARS;
++ const auto count=WideCharToMultiByte(page,flags,wide.data(),length,nullptr,0,nullptr,page==CP_UTF8?nullptr:&defaultUsed);
++ if(count<=0||defaultUsed)return false;
++ std::string back(static_cast<std::size_t>(count),'\0');
++ if(WideCharToMultiByte(page,flags,wide.data(),length,back.data(),count,nullptr,page==CP_UTF8?nullptr:&defaultUsed)!=count||defaultUsed||back!=bytes)return false;
++ state->evidence->capability(bce::native::object({{"infoAssertionCodePage",std::to_string(page)},{"strictRoundtrip", "true"}}));
++ return wide.find(expected)!=std::wstring::npos;
++}
+ void finish(){
+  using namespace bce::native;if(terminal){trace("duplicate-finish-ignored");return;}auto& s=*state;trace("finish-begin");s.watch.reset();s.undo.reset();
+- if(s.transcript){s.transcript->stop();s.evidence->capability(rawTranscriptEvidence(s.transcript->file()));s.transcript.reset();}
++ closeTranscript();
+  if(s.loaded){const bool unloaded=acrxDynamicLinker->unloadModule(s.product.c_str(),true);s.loaded=!unloaded;expect("FourCommandsUnloadOwnedOnly",unloaded&&!acedRegCmds->lookupGlobalCmd(L"BCE_CONFIG")&&!acedRegCmds->lookupGlobalCmd(L"BCE_ANALYZE")&&!acedRegCmds->lookupGlobalCmd(L"BCE_INFO")&&!acedRegCmds->lookupGlobalCmd(L"BCE_ISSUES"),"SDK unload four command callbacks");}
+  expect("FrozenSourcesUnchanged",sha256(s.config.scheme)==s.config.schemeSHA256&&sha256(s.config.reference)==s.config.referenceSHA256,"source/reference hash readback; supervisor checks six sources");
+  s.evidence->finish(s.config,s.pass?"passed":"failed");
+@@ -322,13 +344,15 @@
+ }
+ void rejectFixtures(){
+  using namespace bce;using namespace bce::native;const auto good=raw();const auto base=archive().project;
+- for(int test=0;test<7;++test){
++ for(int test=0;test<9;++test){
+    auto p=base;
+    if(test==0)p.config.zeroLevel={"0","test-only confirmed zero",true};
+    if(test==1||test==2||test==4)p.config.views.push_back({"test-view","test-shape",{},{},{}});
+    if(test==2){RuleView v;v.viewIdentity="test-view";v.familyId="test-family";p.rules.views.push_back(v);p.ruleInputsConfirmationSource="test-only rules";}
+    if(test==3)p.confirmedEntities.push_back({{p.config.databaseIdentity,bce::native_scene::handle(state->marker),0},"test-explicit-geometry","test-explicit-text","test-explicit-resources","AcDbText"});
+    if(test==4){GeneratedViewState g;g.viewIdentity="test-view";g.moduleIdentity="test-module";g.moduleVersion="1";g.generationId="test-generation";g.sourceSignature="test-source";g.configSignature="test-config";g.commitEvidence="test-commit";g.postCommitEvidence="test-post";g.sourceEntities.push_back({{p.config.databaseIdentity,bce::native_scene::handle(state->marker),0},"test-geometry","test-text","test-resources","AcDbText"});auto ids=roots(db());g.outputs.push_back({{p.config.databaseIdentity,bce::native_scene::handle(ids[0]),0},"test-output","test-text","test-resources","AcDbEntity"});p.generation.documentIdentity="test-history";p.generation.databaseIdentity=p.config.databaseIdentity;p.generation.views.push_back(g);}
++   if(test==7)p.generation.documentIdentity="empty-history-metadata-is-not-unit-only";
++   if(test==8)p.ruleInputsConfirmationSource="rule-source-with-empty-collections";
+    auto encoded=encodeProject(p);require(encoded.canCommit(),"valid history fixture encode");auto bytes=*encoded.value;
+    if(test==5)bytes[0]='X';if(test==6)bytes.back()^=1;
+    setBytes(bytes);ChangeWatch watch(db());configInput(1);auto q=query();
+@@ -363,6 +387,7 @@
+    const auto a=readProjectStore(db());auto q=query();const bool saved=a.readable()&&a.value->project.config.units.confirmedMmPerInputUnit==std::optional<double>(1)&&!a.value->project.config.unitConfirmationSource.empty();
+    expect("OrdinaryConfigPersistsExplicitUnit",saved,"ordinary BCE_CONFIG input 1, G2 archive readback");expect("ConfigInvalidatesAnalysisAndPages",s.copy(&q,nullptr,0)==1,"old read-only report no longer available");expect("OnlyProjectDictionaryWritten",s.watch&&s.watch->onlyStore(),"event whitelist NOD + exact owned dictionary/record; zero global writes");s.watch.reset();expect("All741AndUnsavedChineseResourcesUnchanged",preserved(),"all canonical root/leaf geometry, text, resources and global values");
+    if(!saved){finish();return;}
++   closeTranscript();
+    s.persistentId=a.value->project.persistentProjectId;s.originSource=a.value->project.config.unitConfirmationSource;s.oldBytes=raw();
+    const auto stale=printedCommand(L"BCE_ISSUES",s.config.output+L"/issues-after-config",db());recordPrinted(*s.evidence,stale,"BCE_ISSUES after CONFIG");expect("ConfigInvalidatesOrdinaryIssuePages",stale.text.find("[1/")==std::string::npos&&stale.text.find("BCE_ANALYZE")!=std::string::npos,"actual output");
+    analyze();const auto body=report();s.evidence->capability(object({{"configuredAnalysis",quote(body)}}));expect("AnalyzeConsumesOnlyExplicitUnit",body.find("UNIT_REQUIRED")==std::string::npos&&body.find("unitMmPerInputUnit\t1\n")!=std::string::npos&&body.find("unitSource\tBCE_CONFIG")!=std::string::npos&&body.find("PLAN_REQUIRED")!=std::string::npos&&body.find("generationAuthorized\tfalse")!=std::string::npos,"unit provenance + missing plan + false authorization");expect("RecognizesFourElevationsTwoSectionsAndChinese",body.find("elevations\t4\n")!=std::string::npos&&body.find("sections\t2\n")!=std::string::npos&&body.find(u8"I2未保存中文内容")!=std::string::npos,"current memory, no save");
+@@ -374,6 +399,18 @@
+  if(s.phase==5){expect("OneActualUndoRestoresOldUnitBytes",s.undo&&s.undo->started==1&&s.undo->ended==1&&s.undo->failed==0&&raw()==s.oldBytes&&preserved(),"one U restores exact previous archive and prior unsaved edits");s.undo.reset();
+    for(double n:{0.0,-1.0}){ChangeWatch w(db());const auto old=raw();analyze();configInput(n);auto q=query();expect("InvalidNumericInputWritesNothing",raw()==old&&w.modified.empty()&&w.headers==0&&s.copy(&q,nullptr,0)==1,"input="+std::to_string(n));}
+    {ChangeWatch w(db());const auto old=raw();analyze();require(acedCommandS(RTSTR,L"BCE_CONFIG",RTSTR,L"",RTNONE)==RTNORM,"empty cancel input");auto q=query();expect("EmptyCancelWritesNothing",raw()==old&&w.modified.empty()&&w.headers==0&&s.copy(&q,nullptr,0)==1,"null response cancels without default");}
++   {
++    auto* manager=db().transactionManager();auto* tx=manager->startTransaction();require(tx!=nullptr,"outer test transaction");
++    struct Abort {AcDbTransactionManager* manager;~Abort(){manager->abortTransaction();}} abort{manager};
++    const auto old=raw();ChangeWatch w(db());configInput(3);
++    expect("CallerTransactionRejectedWithoutWrite",manager->topTransaction()==tx&&manager->numActiveTransactions()==1&&raw()==old&&w.modified.empty()&&w.headers==0,"ordinary CONFIG within caller transaction; ownership retained");
++   }
++   {
++    require(acedCommandS(RTSTR,L"_.UNDO",RTSTR,L"_BEgin",RTNONE)==RTNORM,"start caller Undo group");
++    struct End {~End(){acedCommandS(RTSTR,L"_.UNDO",RTSTR,L"_End",RTNONE);}} end;
++    const auto old=raw();ChangeWatch w(db());configInput(3);
++    expect("CallerUndoGroupRejectedWithoutWrite",raw()==old&&w.modified.empty()&&w.headers==0,"ordinary CONFIG refuses caller Undo boundary");
++   }
+    s.phase=6;queue(L"BCE_CONFIG\n\x03" L"BCE_I2_STEP\n");return;
+  }
+  if(s.phase==6){expect("EscapeCancelPreservesArchive",raw()==s.oldBytes&&preserved(),"actual queued Esc");rejectFixtures();expect("HistoryTestsPreserveCurrentDrawing",preserved(),"test archive restored; geometry unchanged");
+@@ -382,9 +419,10 @@
+  }
+  });}
+ void newDocument()noexcept{boundary([]{using namespace bce::native;auto& s=*state;require(acDocManager->isApplicationContext()&&acDocManager->curDocument()==s.original,"owned application context");std::unique_ptr<AcApDocumentIterator> it(acDocManager->newAcApDocumentIterator());for(;!it->done();it->step()){s.previousDocs.insert(it->document());s.previousDbs.insert(it->document()->database());}require(acDocManager->appContextNewDocument(L"C:/Users/PC/AppData/Local/Autodesk/AutoCAD 2020/R23.1/chs/Template/acadiso.dwt")==Acad::eOk,"new owned project");s.second=acDocManager->curDocument();s.secondDb=s.second->database();require(!s.previousDocs.count(s.second)&&!s.previousDbs.count(s.secondDb),"fresh owned doc/db");auto q=query();expect("ActualSwitchInvalidatesReport",s.copy(&q,nullptr,0)==1,"new current doc");queue(L"BCE_I2_SECOND\n");});}
+-void second()noexcept{boundary([]{using namespace bce::native;auto& s=*state;require(acDocManager->curDocument()==s.second&&&db()==s.secondDb,"owned second doc");const auto stale=printedCommand(L"BCE_ISSUES",s.config.output+L"/issues-after-switch",db());recordPrinted(*s.evidence,stale,"BCE_ISSUES after switch");expect("SwitchInvalidatesOrdinaryIssuePages",stale.text.find("[1/")==std::string::npos&&stale.text.find("BCE_ANALYZE")!=std::string::npos,"ordinary output");configInput(1000);const auto a=archive();expect("IndependentProjectGetsOwnIdAndUnit",a.project.persistentProjectId!=s.persistentId&&a.project.config.units.confirmedMmPerInputUnit==std::optional<double>(1000),"second project explicit input 1000");analyze();const auto body=report();expect("SecondAnalysisDoesNotReuseFirstUnit",body.find("unitMmPerInputUnit\t1000\n")!=std::string::npos&&body.find("generationAuthorized\tfalse")!=std::string::npos,"actual second document report");queue(L"BCE_I2_RETURN\n");});}
++void second()noexcept{boundary([]{using namespace bce::native;auto& s=*state;require(acDocManager->curDocument()==s.second&&&db()==s.secondDb,"owned second doc");const auto stale=printedCommand(L"BCE_ISSUES",s.config.output+L"/issues-after-switch",db());recordPrinted(*s.evidence,stale,"BCE_ISSUES after switch");expect("SwitchInvalidatesOrdinaryIssuePages",stale.text.find("[1/")==std::string::npos&&stale.text.find("BCE_ANALYZE")!=std::string::npos,"ordinary output");configInput(1000);const auto a=archive();expect("IndependentProjectGetsOwnIdAndUnit",a.project.persistentProjectId!=s.persistentId&&a.project.config.units.confirmedMmPerInputUnit==std::optional<double>(1000),"second project explicit input 1000");analyze();const auto body=report();expect("SecondAnalysisDoesNotReuseFirstUnit",body.find("unitMmPerInputUnit\t1000\n")!=std::string::npos&&body.find("generationAuthorized\tfalse")!=std::string::npos,"actual second document report");
++ if(static_cast<int>(db().insunits())==4)expect("ActualInsunitsConflictIsDiagnosed",body.find("UNIT_CONFLICT")!=std::string::npos&&body.find("unitResolved\tfalse")!=std::string::npos,"actual template INSUNITS 4 vs explicit 1000; global remains unchanged");queue(L"BCE_I2_RETURN\n");});}
+ void returnDocument()noexcept{boundary([]{using namespace bce::native;auto& s=*state;require(acDocManager->isApplicationContext()&&acDocManager->curDocument()==s.second&&s.second->database()==s.secondDb,"second owned session context");require(acDocManager->setCurDocument(s.original,AcAp::kNone,true)==Acad::eOk,"return original");require(acDocManager->curDocument()==s.original,"original now current");queue(L"BCE_I2_FINISH\n");});}
+-void finalCheck()noexcept{boundary([]{using namespace bce::native;auto& s=*state;auto q=query();expect("ReturnInvalidatesReportAndPreservesUnit",s.copy(&q,nullptr,0)==1&&raw()==s.oldBytes&&preserved(),"switch back; no current file save/close");analyze();expect("ReturnAnalysisUsesOriginalUnit",report().find("unitMmPerInputUnit\t1\n")!=std::string::npos,"no cross-document scale cache");const auto infoResult=printedCommand(L"BCE_INFO",s.config.output+L"/info",db());recordPrinted(*s.evidence,infoResult,"BCE_INFO");expect("InfoDisclosesUnitOnlyScope",infoResult.text.find("BCE_CONFIG")!=std::string::npos&&infoResult.text.find(u8"仅配置")!=std::string::npos,"ordinary info output");require(acrxDynamicLinker->unloadModule(s.product.c_str(),true),"unload before conflict");s.loaded=false;
++void finalCheck()noexcept{boundary([]{using namespace bce::native;auto& s=*state;auto q=query();expect("ReturnInvalidatesReportAndPreservesUnit",s.copy(&q,nullptr,0)==1&&raw()==s.oldBytes&&preserved(),"switch back; no current file save/close");analyze();expect("ReturnAnalysisUsesOriginalUnit",report().find("unitMmPerInputUnit\t1\n")!=std::string::npos,"no cross-document scale cache");const auto infoResult=printedCommand(L"BCE_INFO",s.config.output+L"/info",db());recordPrinted(*s.evidence,infoResult,"BCE_INFO");expect("InfoDisclosesUnitOnlyScope",infoResult.text.find("BCE_CONFIG")!=std::string::npos&&logContainsUnicode(infoResult.text,L"仅配置"),"ordinary info output");require(acrxDynamicLinker->unloadModule(s.product.c_str(),true),"unload before conflict");s.loaded=false;
+  require(acedRegCmds->addCommand(L"BCE_I2_FOREIGN",L"BCE_CONFIG",L"BCE_CONFIG",ACRX_CMD_MODAL,foreignCommand)==Acad::eOk,"register foreign config");const bool loaded=acrxDynamicLinker->loadModule(s.product.c_str(),false,true);auto* foreign=acedRegCmds->lookupGlobalCmd(L"BCE_CONFIG");expect("ForeignConfigConflictIsPreserved",!loaded&&foreign&&foreign->functionAddr()==foreignCommand&&!acedRegCmds->lookupGlobalCmd(L"BCE_ANALYZE")&&!acedRegCmds->lookupGlobalCmd(L"BCE_INFO")&&!acedRegCmds->lookupGlobalCmd(L"BCE_ISSUES"),"failed product load preserves foreign callback and registers no partial commands");if(loaded){s.loaded=true;require(acrxDynamicLinker->unloadModule(s.product.c_str(),true),"unexpected module unload");s.loaded=false;}require(acedRegCmds->removeCmd(L"BCE_I2_FOREIGN",L"BCE_CONFIG")==Acad::eOk,"remove own foreign fixture");s.loaded=acrxDynamicLinker->loadModule(s.product.c_str(),false,true);expect("ReloadAfterConflictRestoresFourCommands",s.loaded&&commandOwnedBy(L"BCE_CONFIG",GetModuleHandleW(s.product.c_str())),"ordinary SDK reload");finish();});}
+ } // namespace
+ BOOL APIENTRY DllMain(HMODULE module,DWORD reason,LPVOID){if(reason==DLL_PROCESS_ATTACH){moduleHandle=module;DisableThreadLibraryCalls(module);}return TRUE;}

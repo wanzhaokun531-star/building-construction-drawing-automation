@@ -1,0 +1,926 @@
+--- D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-170941-094-fix-round1-green-97696fea\input\src\ElevationModel.h
++++ D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-172847-104-r1-finite-green-final-8e89a51a\input\src\ElevationModel.h
+@@ -78,6 +78,38 @@
+     std::string definitionSignature;
+     bool referencedByPreserved{false};
+ };
++enum class PrimitiveKind { line, text, dimension, polyline, arc, other };
++struct Arc2 {
++    Point2 center;
++    double radius{0.0};
++    double startAngle{0.0};
++    double sweepAngle{0.0}; // Signed: positive is counterclockwise.
++};
++struct Primitive2 {
++    EntityKey key;
++    PrimitiveKind kind{PrimitiveKind::other};
++    std::string layer;
++    std::optional<Bounds2> bounds;
++    std::optional<Point2> start;
++    std::optional<Point2> end;
++    std::optional<std::string> text;
++    std::optional<Point2> textPosition;
++    std::optional<double> textHeight;
++    std::optional<double> textRotation;
++    std::optional<double> dimensionMeasurement;
++    std::optional<Arc2> arc;
++    bool topologyComplete{false};
++};
++// Explicit association from a reader/user, never inferred from a nearby text alone.
++struct LevelAssociation {
++    EntityKey lowerGeometry;
++    EntityKey upperGeometry;
++    EntityKey declarationText;
++    Point2 lowerPoint;
++    Point2 upperPoint;
++    Point2 heightDirection{0.0, 1.0};
++    double mmPerInputUnit{1.0};
++};
+ struct SceneSnapshot {
+     std::string documentIdentity;
+     std::string databaseIdentity;
+@@ -86,6 +118,9 @@
+     std::vector<SceneEntity> targets;
+     std::vector<SceneEntity> preserved;
+     std::vector<ResourceDefinition> resources;
++    std::string sourceSha256;
++    std::vector<Primitive2> primitives;
++    std::vector<LevelAssociation> levelAssociations;
+ };
+ struct WriteRequest {
+     std::string expectedDocumentIdentity;
+--- /dev/null
++++ D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-172847-104-r1-finite-green-final-8e89a51a\input\src\Recognition.h
+@@ -0,0 +1,86 @@
++#ifndef BCE_RECOGNITION_H
++#define BCE_RECOGNITION_H
++#include "ElevationModel.h"
++
++namespace bce {
++namespace diagnostic {
++inline constexpr char planRequired[] = "PLAN_REQUIRED";
++inline constexpr char levelConflict[] = "LEVEL_CONFLICT";
++inline constexpr char configChanged[] = "VIEW_CONFIG_CHANGED";
++inline constexpr char invalidTransform[] = "INVALID_TRANSFORM";
++}
++struct Affine2 {
++    double xx{1}, xy{0}, yx{0}, yy{1}, tx{0}, ty{0};
++    bool planar{true};
++};
++[[nodiscard]] Result<Affine2> compose(const Affine2& outer, const Affine2& inner);
++[[nodiscard]] Result<Primitive2> transformed(const Primitive2& primitive, const Affine2& transform);
++enum class ViewKind { elevation, section, ambiguous };
++enum class FeatureRole { candidate, confirmed };
++struct Feature {
++    std::string kind;
++    FeatureRole role{FeatureRole::candidate};
++    std::vector<EntityKey> sources;
++    std::optional<double> declaredMm;
++    std::optional<double> geometryMm;
++    std::string confirmationSource;
++};
++struct Axis {
++    EntityKey key;
++    std::string label;
++    Point2 position;
++};
++struct PlanSnapshot {
++    std::string databaseIdentity;
++    std::vector<Axis> axes;
++    std::optional<double> confirmedMmPerInputUnit;
++};
++struct AxisChain {
++    std::vector<std::string> labels;
++    std::vector<EntityKey> sources;
++    std::vector<double> spacingsMm;
++};
++struct Confirmation {
++    std::string value;
++    std::string source;
++    bool confirmed{false};
++};
++struct ViewConfig {
++    std::string viewIdentity;
++    std::string geometrySignature;
++    Confirmation material;
++    Confirmation axisMapping;
++    std::optional<Point2> axisDirection;
++};
++struct ProjectConfig {
++    std::string databaseIdentity;
++    UnitDeclaration units;
++    std::string unitConfirmationSource;
++    Confirmation zeroLevel;
++    std::vector<ViewConfig> views;
++};
++struct View {
++    std::string identity;
++    EntityKey titleKey;
++    ViewKind kind{ViewKind::ambiguous};
++    std::vector<EntityKey> members;
++    Bounds2 bounds;
++    std::string geometrySignature;
++    std::vector<Feature> levelCandidates;
++    std::vector<Issue> unconfirmed;
++    std::optional<AxisChain> projectedAxes;
++};
++struct FeatureModel { std::vector<Feature> features; };
++struct AnalysisResult {
++    std::string sourceSha256;
++    std::vector<View> views;
++    FeatureModel model;
++    std::vector<EntityKey> preserved;
++    std::vector<EntityKey> unassigned;
++    std::vector<Issue> issues;
++};
++[[nodiscard]] Result<AxisChain> projectAxes(const PlanSnapshot& plan, Point2 direction);
++[[nodiscard]] AnalysisResult analyse(const SceneSnapshot&, const PlanSnapshot&, const ProjectConfig&);
++[[nodiscard]] Result<ProjectConfig> validateConfig(const SceneSnapshot&, const ProjectConfig&);
++}
++#endif
+--- /dev/null
++++ D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-172847-104-r1-finite-green-final-8e89a51a\input\src\Recognition.cpp
+@@ -0,0 +1,357 @@
++#include "Recognition.h"
++#include <array>
++#include <cmath>
++#include <iomanip>
++#include <limits>
++#include <locale>
++#include <numeric>
++#include <regex>
++#include <sstream>
++
++namespace bce {
++namespace {
++bool finite(Point2 p) { return std::isfinite(p.x) && std::isfinite(p.y); }
++bool finite(Bounds2 b) {
++    return finite(b.minimum) && finite(b.maximum) && b.minimum.x <= b.maximum.x && b.minimum.y <= b.maximum.y;
++}
++Issue issue(const SceneSnapshot& scene, const char* code, std::string message,
++    std::optional<EntityKey> entity = std::nullopt, std::string view = {}, bool blocking = true) {
++    return {code, std::move(message), {scene.documentIdentity, std::move(view), std::move(entity)}, blocking};
++}
++Issue transformIssue() { return {diagnostic::invalidTransform, "变换非有限、奇异、非二维，或当前几何值类型无法忠实表达变换结果。", {}, true}; }
++double determinant(const Affine2& a) { return a.xx*a.yy-a.xy*a.yx; }
++bool valid(const Affine2& a) {
++    if (!a.planar || !std::isfinite(a.xx) || !std::isfinite(a.xy) || !std::isfinite(a.yx) ||
++        !std::isfinite(a.yy) || !std::isfinite(a.tx) || !std::isfinite(a.ty)) { return false; }
++    const double scale = (std::max)({std::abs(a.xx),std::abs(a.xy),std::abs(a.yx),std::abs(a.yy)});
++    const double det = determinant(a);
++    return scale > 0 && std::isfinite(det) && std::abs(det) > std::numeric_limits<double>::epsilon()*scale*scale*64;
++}
++Point2 apply(const Affine2& a, Point2 p) { return {a.xx*p.x+a.xy*p.y+a.tx, a.yx*p.x+a.yy*p.y+a.ty}; }
++Point2 vectorApply(const Affine2& a, Point2 p) { return {a.xx*p.x+a.xy*p.y, a.yx*p.x+a.yy*p.y}; }
++double norm(Point2 p) { return std::hypot(p.x,p.y); }
++bool similarity(const Affine2& a) {
++    const double s1 = std::hypot(a.xx,a.yx), s2 = std::hypot(a.xy,a.yy);
++    return std::abs(s1-s2) <= s1*1e-10 && std::abs(a.xx*a.xy+a.yx*a.yy) <= s1*s2*1e-10;
++}
++Bounds2 unionBounds(Bounds2 a, Bounds2 b) {
++    return {{(std::min)(a.minimum.x,b.minimum.x),(std::min)(a.minimum.y,b.minimum.y)},
++        {(std::max)(a.maximum.x,b.maximum.x),(std::max)(a.maximum.y,b.maximum.y)}};
++}
++Bounds2 movedBounds(Bounds2 b, const Affine2& a) {
++    const std::array<Point2,4> corners{{b.minimum,{b.minimum.x,b.maximum.y},b.maximum,{b.maximum.x,b.minimum.y}}};
++    const auto initial = apply(a,corners.front());
++    Bounds2 result{initial,initial};
++    for (const auto p : corners) { const auto q = apply(a,p); result=unionBounds(result,{q,q}); }
++    return result;
++}
++std::string canonicalHandle(std::string handle) {
++    for (auto& c : handle) { if (c >= 'a' && c <= 'f') { c = static_cast<char>(c-'a'+'A'); } }
++    const auto start = handle.find_first_not_of('0');
++    return start == std::string::npos ? "0" : handle.substr(start);
++}
++std::optional<ViewKind> titleKind(const Primitive2& p) {
++    if (p.kind != PrimitiveKind::text || !p.text) { return std::nullopt; }
++    const bool elevation = p.text->find("立面") != std::string::npos || p.text->find("elevation") != std::string::npos;
++    const bool section = p.text->find("剖面") != std::string::npos || p.text->find("section") != std::string::npos;
++    if (!elevation && !section) { return std::nullopt; }
++    return elevation == section ? ViewKind::ambiguous : elevation ? ViewKind::elevation : ViewKind::section;
++}
++bool isLevelLabel(const Primitive2& p) {
++    return p.text && (p.text->find("层") != std::string::npos || p.text->find("标高") != std::string::npos || p.text->find("level") != std::string::npos);
++}
++std::optional<double> levelMm(const Primitive2& p) {
++    if (!isLevelLabel(p)) { return std::nullopt; }
++    static const std::regex declaration("([+-]?[0-9]+(?:\\.[0-9]+)?)\\s*(mm|m)(?:\\s|$)");
++    std::smatch match;
++    if (!std::regex_search(*p.text,match,declaration)) { return std::nullopt; }
++    std::istringstream number(match[1].str()); number.imbue(std::locale::classic());
++    double parsed=0;
++    if(!(number >> parsed)) { return std::nullopt; }
++    const double value=parsed*(match[2].str()=="m" ? 1000.0 : 1.0);
++    return std::isfinite(value) ? std::optional<double>{value} : std::nullopt;
++}
++void appendString(std::ostream& out, const std::string& s) { out << s.size() << ':' << s; }
++void appendPoint(std::ostream& out, const std::optional<Point2>& p) {
++    out << (p ? "p" : "-"); if (p) { out << p->x << ',' << p->y << ';'; }
++}
++void appendNumber(std::ostream& out, const std::optional<double>& n) { out << (n ? "n" : "-"); if (n) { out << *n << ';'; } }
++std::string signature(const SceneSnapshot& scene, std::vector<std::size_t> members) {
++    std::sort(members.begin(),members.end(),[&](std::size_t a,std::size_t b) {
++        return canonicalHandle(scene.primitives[a].key.handle) < canonicalHandle(scene.primitives[b].key.handle);
++    });
++    // Full canonical value, rather than a lossy hash: equality cannot hide a changed vertex.
++    std::ostringstream out; out.imbue(std::locale::classic()); out << "bce-geometry-v1;" << std::hexfloat;
++    for (const auto index : members) {
++        const auto& p=scene.primitives[index]; appendString(out,canonicalHandle(p.key.handle));
++        out << static_cast<int>(p.kind) << ';' << p.topologyComplete << ';';
++        appendString(out,p.layer);
++        if (p.bounds) { out << 'b' << p.bounds->minimum.x << ',' << p.bounds->minimum.y << ',' << p.bounds->maximum.x << ',' << p.bounds->maximum.y << ';'; }
++        else { out << '-'; }
++        appendPoint(out,p.start); appendPoint(out,p.end); appendPoint(out,p.textPosition);
++        appendNumber(out,p.textHeight); appendNumber(out,p.textRotation); appendNumber(out,p.dimensionMeasurement);
++        out << (p.text ? "t" : "-"); if (p.text) { appendString(out,*p.text); }
++        if (p.arc) { out << 'a' << p.arc->center.x << ',' << p.arc->center.y << ',' << p.arc->radius << ',' << p.arc->startAngle << ',' << p.arc->sweepAngle << ';'; }
++        else { out << '-'; }
++    }
++    return out.str();
++}
++struct Located { std::size_t primitive; Bounds2 local; bool title; };
++struct Gap { bool exists{false}; bool alongX{true}; double boundary{0}; double score{0}; };
++Gap chooseGap(const std::vector<Located>& group) {
++    Gap best;
++    const auto titleCount=std::count_if(group.begin(),group.end(),[](const Located& p){return p.title;});
++    for (const bool alongX : {true,false}) {
++        auto sorted=group;
++        const auto low=[alongX](const Located& p){return alongX ? p.local.minimum.x : p.local.minimum.y;};
++        const auto high=[alongX](const Located& p){return alongX ? p.local.maximum.x : p.local.maximum.y;};
++        std::sort(sorted.begin(),sorted.end(),[&](const Located& a,const Located& b){return low(a)<low(b);});
++        double end=high(sorted.front()), maximum=end;
++        for(const auto& p:sorted) { maximum=(std::max)(maximum,high(p)); }
++        const double span=maximum-low(sorted.front());
++        auto leftTitles=sorted.front().title ? std::ptrdiff_t{1} : std::ptrdiff_t{0};
++        for(std::size_t i=1;i<sorted.size();++i) {
++            const double start=low(sorted[i]);
++            const double tolerance=std::numeric_limits<double>::epsilon()*(std::max)({1.0,std::abs(end),std::abs(start)})*64;
++            if(start>end+tolerance && leftTitles>0 && leftTitles<titleCount && span>0) {
++                const double score=(start-end)/span;
++                if(!best.exists || score>best.score) { best={true,alongX,end+(start-end)/2,score}; }
++            }
++            end=(std::max)(end,high(sorted[i]));
++            if(sorted[i].title) { ++leftTitles; }
++        }
++    }
++    return best;
++}
++void markUnassigned(const SceneSnapshot& scene, const std::vector<Located>& group, AnalysisResult& result, const char* message) {
++    for(const auto& p:group) {
++        const auto& key=scene.primitives[p.primitive].key;
++        result.unassigned.push_back(key); result.preserved.push_back(key);
++        result.issues.push_back(issue(scene,diagnostic::ambiguousFeature,message,key));
++    }
++}
++void partition(const SceneSnapshot& scene, const std::vector<Located>& group, AnalysisResult& result) {
++    if(group.empty()) { return; }
++    const auto count=std::count_if(group.begin(),group.end(),[](const Located& p){return p.title;});
++    if(count==0) { markUnassigned(scene,group,result,"没有标题依据，保留为未归属内容。"); return; }
++    if(count>1) {
++        const auto gap=chooseGap(group);
++        if(gap.exists) {
++            std::vector<Located> left,right;
++            for(const auto& p:group) { ((gap.alongX ? p.local.maximum.x : p.local.maximum.y)<gap.boundary ? left : right).push_back(p); }
++            partition(scene,left,result); partition(scene,right,result); return;
++        }
++        markUnassigned(scene,group,result,"多个标题占位竞争且无可证二维空白带，不能强制划分。");
++        return;
++    }
++    const auto at=std::find_if(group.begin(),group.end(),[](const Located& p){return p.title;});
++    const auto& title=scene.primitives[at->primitive];
++    View view; view.titleKey=title.key; view.identity="view:"+canonicalHandle(title.key.handle); view.kind=*titleKind(title);
++    if(view.kind==ViewKind::ambiguous) { markUnassigned(scene,group,result,"标题同时声明立面和剖面，需要确认。"); return; }
++    view.bounds=*scene.primitives[group.front().primitive].bounds;
++    std::vector<std::size_t> indices;
++    Feature unresolved; unresolved.kind="unresolvedGeometry";
++    for(const auto& p:group) {
++        const auto& primitive=scene.primitives[p.primitive];
++        view.members.push_back(primitive.key); indices.push_back(p.primitive);
++        if(primitive.kind!=PrimitiveKind::text) { unresolved.sources.push_back(primitive.key); }
++        view.bounds=unionBounds(view.bounds,*primitive.bounds);
++        if(view.kind==ViewKind::section) { result.preserved.push_back(primitive.key); }
++        if(!primitive.topologyComplete) {
++            view.unconfirmed.push_back(issue(scene,diagnostic::ambiguousFeature,"仅有可见bounds，来源拓扑尚未完整读取；不能认定边界完整。",primitive.key,view.identity));
++        }
++    }
++    if(!unresolved.sources.empty()) {
++        // A title/blank-band partition proves spatial membership, not the ownership or
++        // role of every detached object. Keep even distant extras explicitly pending.
++        result.model.features.push_back(std::move(unresolved));
++        view.unconfirmed.push_back(issue(scene,diagnostic::ambiguousFeature,"空间分区中的几何构件（含孤立额外内容）角色仍为候选；不能据此删除或认作门窗。",title.key,view.identity));
++    }
++    view.geometrySignature=signature(scene,std::move(indices));
++    result.views.push_back(std::move(view));
++}
++bool samePoint(Point2 a,Point2 b) {
++    const double scale=(std::max)({1.0,std::abs(a.x),std::abs(a.y),std::abs(b.x),std::abs(b.y)});
++    return norm({a.x-b.x,a.y-b.y}) <= std::numeric_limits<double>::epsilon()*scale*64;
++}
++void rectangles(const SceneSnapshot& scene,AnalysisResult& result) {
++    std::vector<std::size_t> lines;
++    for(std::size_t i=0;i<scene.primitives.size();++i) {
++        const auto& p=scene.primitives[i];
++        if(p.kind==PrimitiveKind::line && p.topologyComplete && p.start && p.end && finite(*p.start) && finite(*p.end) && !samePoint(*p.start,*p.end)) { lines.push_back(i); }
++    }
++    std::vector<bool> visited(lines.size(),false);
++    for(std::size_t root=0;root<lines.size();++root) {
++        if(visited[root]) { continue; }
++        std::vector<std::size_t> component{root}; visited[root]=true;
++        for(std::size_t at=0;at<component.size();++at) {
++            const auto& p=scene.primitives[lines[component[at]]];
++            for(std::size_t j=0;j<lines.size();++j) {
++                if(visited[j]) { continue; } const auto& q=scene.primitives[lines[j]];
++                if(samePoint(*p.start,*q.start)||samePoint(*p.start,*q.end)||samePoint(*p.end,*q.start)||samePoint(*p.end,*q.end)) { visited[j]=true; component.push_back(j); }
++            }
++        }
++        if(component.size()!=4) { continue; }
++        std::vector<Point2> vertices; std::vector<std::vector<Point2>> directions;
++        Feature rectangle; rectangle.kind="rectangle";
++        for(const auto index:component) {
++            const auto& p=scene.primitives[lines[index]]; rectangle.sources.push_back(p.key);
++            for(const bool first:{true,false}) {
++                const auto a=first ? *p.start : *p.end, b=first ? *p.end : *p.start;
++                const auto v=std::find_if(vertices.begin(),vertices.end(),[&](Point2 point){return samePoint(point,a);});
++                const auto vi=static_cast<std::size_t>(std::distance(vertices.begin(),v));
++                if(v==vertices.end()) { vertices.push_back(a); directions.emplace_back(); }
++                directions[vi].push_back({b.x-a.x,b.y-a.y});
++            }
++        }
++        bool rectangular=vertices.size()==4;
++        for(const auto& d:directions) {
++            if(d.size()!=2 || std::abs(d[0].x*d[1].x+d[0].y*d[1].y)>norm(d[0])*norm(d[1])*1e-10) { rectangular=false; }
++        }
++        if(!rectangular) { continue; }
++        result.model.features.push_back(rectangle);
++        for(const auto& k:rectangle.sources) { result.issues.push_back(issue(scene,diagnostic::ambiguousFeature,"闭合矩形仅为几何候选；缺少洞口角色及配套平面确认，不能认定为窗。",k)); }
++    }
++}
++bool contains(const View& view,const EntityKey& key) { return std::find(view.members.begin(),view.members.end(),key)!=view.members.end(); }
++void levels(const SceneSnapshot& scene,View& view,AnalysisResult& result) {
++    for(const auto& p:scene.primitives) {
++        if(!contains(view,p.key)) { continue; }
++        if(!isLevelLabel(p)) { continue; }
++        const auto declared=levelMm(p);
++        Feature level; level.kind="level"; level.sources={p.key}; level.declaredMm=declared;
++        if(!declared) {
++            view.unconfirmed.push_back(issue(scene,diagnostic::ambiguousFeature,"楼层文字缺少可读取的有限数值及单位，保留候选，不填零。",p.key,view.identity));
++            view.levelCandidates.push_back(std::move(level)); continue;
++        }
++        const auto assoc=std::find_if(scene.levelAssociations.begin(),scene.levelAssociations.end(),[&](const LevelAssociation& a){return a.declarationText==p.key;});
++        if(assoc!=scene.levelAssociations.end() && contains(view,assoc->lowerGeometry) && contains(view,assoc->upperGeometry) &&
++            finite(assoc->lowerPoint) && finite(assoc->upperPoint) && finite(assoc->heightDirection) && norm(assoc->heightDirection)>0 &&
++            std::isfinite(assoc->mmPerInputUnit) && assoc->mmPerInputUnit>0) {
++            level.sources.push_back(assoc->lowerGeometry); level.sources.push_back(assoc->upperGeometry);
++            const auto d=assoc->heightDirection;
++            level.geometryMm=((assoc->upperPoint.x-assoc->lowerPoint.x)*d.x+(assoc->upperPoint.y-assoc->lowerPoint.y)*d.y)/norm(d)*assoc->mmPerInputUnit;
++            if(std::abs(*level.geometryMm-*declared)>1e-7) {
++                std::ostringstream values; values.imbue(std::locale::classic()); values << std::setprecision(17) << "已关联几何高差 " << *level.geometryMm << " mm（" << assoc->lowerGeometry.handle << "," << assoc->upperGeometry.handle << "），文本声明 " << *declared << " mm（" << p.key.handle << "）；需确认。";
++                auto conflict=issue(scene,diagnostic::levelConflict,values.str(),p.key,view.identity);
++                view.unconfirmed.push_back(conflict); result.issues.push_back(std::move(conflict));
++            }
++        } else {
++            view.unconfirmed.push_back(issue(scene,diagnostic::ambiguousFeature,"楼层文字仅为候选，尚无完整几何基准关联。",p.key,view.identity));
++        }
++        view.levelCandidates.push_back(std::move(level));
++    }
++}
++}
++
++Result<Affine2> compose(const Affine2& outer,const Affine2& inner) {
++    if(!valid(outer)||!valid(inner)) { return {std::nullopt,{transformIssue()}}; }
++    const Affine2 result{outer.xx*inner.xx+outer.xy*inner.yx,outer.xx*inner.xy+outer.xy*inner.yy,
++        outer.yx*inner.xx+outer.yy*inner.yx,outer.yx*inner.xy+outer.yy*inner.yy,
++        outer.xx*inner.tx+outer.xy*inner.ty+outer.tx,outer.yx*inner.tx+outer.yy*inner.ty+outer.ty,true};
++    if(!valid(result)) { return {std::nullopt,{transformIssue()}}; }
++    return {result,{}};
++}
++Result<Primitive2> transformed(const Primitive2& primitive,const Affine2& a) {
++    if(!valid(a)) { return {std::nullopt,{transformIssue()}}; }
++    auto p=primitive;
++    if(p.bounds) { if(!finite(*p.bounds)) { return {std::nullopt,{transformIssue()}}; } p.bounds=movedBounds(*p.bounds,a); if(!finite(*p.bounds)) { return {std::nullopt,{transformIssue()}}; } }
++    for(auto* point:{&p.start,&p.end,&p.textPosition}) { if(*point) { **point=apply(a,**point); if(!finite(**point)) { return {std::nullopt,{transformIssue()}}; } } }
++    if(p.textRotation) {
++        if(!std::isfinite(*p.textRotation)||!similarity(a)) { return {std::nullopt,{transformIssue()}}; }
++        const auto v=vectorApply(a,{std::cos(*p.textRotation),std::sin(*p.textRotation)}); p.textRotation=std::atan2(v.y,v.x);
++    }
++    if(p.textHeight) {
++        if(!std::isfinite(*p.textHeight)||!similarity(a)) { return {std::nullopt,{transformIssue()}}; }
++        *p.textHeight*=std::hypot(a.xx,a.yx);
++        if(!std::isfinite(*p.textHeight)) { return {std::nullopt,{transformIssue()}}; }
++    }
++    if(p.arc) {
++        if(!similarity(a)||!finite(p.arc->center)||!std::isfinite(p.arc->radius)||p.arc->radius<=0 || !std::isfinite(p.arc->startAngle)||!std::isfinite(p.arc->sweepAngle)) { return {std::nullopt,{transformIssue()}}; }
++        const auto v=vectorApply(a,{std::cos(p.arc->startAngle),std::sin(p.arc->startAngle)});
++        p.arc->center=apply(a,p.arc->center); p.arc->radius*=std::hypot(a.xx,a.yx); p.arc->startAngle=std::atan2(v.y,v.x);
++        if(determinant(a)<0) { p.arc->sweepAngle=-p.arc->sweepAngle; }
++        if(!finite(p.arc->center)||!std::isfinite(p.arc->radius)) { return {std::nullopt,{transformIssue()}}; }
++    }
++    return {p,{}};
++}
++Result<AxisChain> projectAxes(const PlanSnapshot& plan,Point2 direction) {
++    const auto failure=[](const char* code,const char* message) { return Result<AxisChain>{std::nullopt,{{code,message,{},true}}}; };
++    if(plan.axes.empty()||plan.databaseIdentity.empty()) { return failure(diagnostic::planRequired,"缺少本项目配套平面，不能从参考轴号建立映射。"); }
++    if(!plan.confirmedMmPerInputUnit || !std::isfinite(*plan.confirmedMmPerInputUnit)||*plan.confirmedMmPerInputUnit<=0) { return failure(diagnostic::unitRequired,"平面轴位单位需确认。"); }
++    if(!finite(direction)||norm(direction)==0) { return failure(diagnostic::ambiguousFeature,"轴投影方向无效。"); }
++    const double length=norm(direction); direction={direction.x/length,direction.y/length};
++    std::vector<std::pair<double,const Axis*>> axes;
++    for(const auto& axis:plan.axes) {
++        if(!finite(axis.position)||axis.label.empty()) { return failure(diagnostic::ambiguousFeature,"平面轴位或编号缺失。"); }
++        const double station=(axis.position.x*direction.x+axis.position.y*direction.y)* *plan.confirmedMmPerInputUnit;
++        if(!std::isfinite(station)) { return failure(diagnostic::ambiguousFeature,"投影轴位非有限。"); }
++        axes.emplace_back(station,&axis);
++    }
++    std::sort(axes.begin(),axes.end(),[](const auto& a,const auto& b){return a.first<b.first;});
++    AxisChain chain;
++    for(std::size_t i=0;i<axes.size();++i) {
++        chain.labels.push_back(axes[i].second->label); chain.sources.push_back(axes[i].second->key);
++        if(i>0) {
++            const double spacing=axes[i].first-axes[i-1].first;
++            if(spacing<=0) { return failure(diagnostic::ambiguousFeature,"轴投影重合，需要人工确认映射。"); }
++            chain.spacingsMm.push_back(spacing);
++        }
++    }
++    return {chain,{}};
++}
++AnalysisResult analyse(const SceneSnapshot& scene,const PlanSnapshot& plan,const ProjectConfig& config) {
++    AnalysisResult result; result.sourceSha256=scene.sourceSha256;
++    std::vector<Located> group; std::optional<double> direction; bool consistent=true;
++    for(const auto& p:scene.primitives) {
++        if(titleKind(p)) {
++            if(!p.textRotation||!std::isfinite(*p.textRotation)) { consistent=false; }
++            else if(!direction) { direction=*p.textRotation; }
++            else if(std::abs(std::sin(*p.textRotation-*direction))>1e-10 || std::cos(*p.textRotation-*direction)<0) { consistent=false; }
++        }
++    }
++    const double angle=direction.value_or(0);
++    const Affine2 local{std::cos(angle),std::sin(angle),-std::sin(angle),std::cos(angle),0,0,true};
++    for(std::size_t i=0;i<scene.primitives.size();++i) {
++        const auto& p=scene.primitives[i];
++        if(!p.bounds||!finite(*p.bounds)) {
++            result.unassigned.push_back(p.key); result.preserved.push_back(p.key);
++            result.issues.push_back(issue(scene,diagnostic::ambiguousFeature,"缺失或非有限的实际bounds，保留且不参与空间断言。",p.key)); continue;
++        }
++        group.push_back({i,movedBounds(*p.bounds,local),titleKind(p).has_value()});
++    }
++    if(!consistent) { markUnassigned(scene,group,result,"标题方向未读取或互不一致，不能在单一局部坐标中明确分组。"); }
++    else { partition(scene,group,result); }
++    rectangles(scene,result);
++    const bool missingPlan=plan.axes.empty()||plan.databaseIdentity.empty();
++    if(missingPlan) { result.issues.push_back(issue(scene,diagnostic::planRequired,"没有本项目配套平面；轴号及轴位映射待补，禁止借用参考平面。")); }
++    for(auto& view:result.views) {
++        levels(scene,view,result);
++        if(missingPlan) { view.unconfirmed.push_back(issue(scene,diagnostic::planRequired,"配套平面缺失，轴映射未确认。",view.titleKey,view.identity)); }
++        else {
++            const auto binding=std::find_if(config.views.begin(),config.views.end(),[&](const ViewConfig& v){return v.viewIdentity==view.identity;});
++            if(config.databaseIdentity==scene.databaseIdentity && binding!=config.views.end() && binding->geometrySignature==view.geometrySignature && binding->axisMapping.confirmed && !binding->axisMapping.source.empty() && binding->axisDirection) {
++                const auto projected=projectAxes(plan,*binding->axisDirection);
++                if(projected.canCommit()) { view.projectedAxes=projected.value; }
++                else { view.unconfirmed.insert(view.unconfirmed.end(),projected.issues.begin(),projected.issues.end()); result.issues.insert(result.issues.end(),projected.issues.begin(),projected.issues.end()); }
++            } else { view.unconfirmed.push_back(issue(scene,diagnostic::ambiguousFeature,"轴方向及本项目平面映射尚未确认。",view.titleKey,view.identity)); }
++        }
++    }
++    return result;
++}
++Result<ProjectConfig> validateConfig(const SceneSnapshot& scene,const ProjectConfig& config) {
++    if(config.databaseIdentity.empty()||config.databaseIdentity!=scene.databaseIdentity) {
++        return {std::nullopt,{issue(scene,diagnostic::staleDocument,"配置属于其他数据库或缺少数据库身份，不能沿用确认。")}};
++    }
++    auto validated=config; Result<ProjectConfig> result;
++    const auto current=analyse(scene,{},{});
++    for(auto& v:validated.views) {
++        const auto found=std::find_if(current.views.begin(),current.views.end(),[&](const View& view){return view.identity==v.viewIdentity;});
++        if(found==current.views.end()||found->geometrySignature!=v.geometrySignature) {
++            v.material.confirmed=false; v.axisMapping.confirmed=false;
++            result.issues.push_back(issue(scene,diagnostic::configChanged,"此视图几何签名变化或无法明确识别，材料与轴映射需重新确认；保留原确认来源。",std::nullopt,v.viewIdentity,false));
++        }
++    }
++    result.value=std::move(validated); return result;
++}
++}
+--- D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-170941-094-fix-round1-green-97696fea\input\tests\CoreTests.cpp
++++ D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-172847-104-r1-finite-green-final-8e89a51a\input\tests\CoreTests.cpp
+@@ -2,10 +2,32 @@
+ #include <array>
+ #include <iostream>
+ #include <string>
++namespace bce::test {
++void fourElevationsExcludeTwoSections();
++void sceneTranslationAndQuarterTurnKeepMembership();
++void verticalOrGridViewsUseTwoDimensionalGaps();
++void ambiguousRectangleNeedsRole();
++void mirroredNestedBlockKeepsWorldGeometry();
++void multipleBuildingsRemainSeparate();
++void axisProjectionReversesOrder();
++void levelConflictRequiresConfirmation();
++void changedGeometryInvalidatesOnlyAffectedConfig();
++void overlappingOrUnlabelledViewsNeedConfirmation();
++}
+ 
+ namespace {
+ struct TestCase { const char* name; void (*run)(); };
+-const std::array<TestCase, 15> cases{{
++const std::array<TestCase, 25> cases{{
++    {"FourElevationsExcludeTwoSections", bce::test::fourElevationsExcludeTwoSections},
++    {"SceneTranslationAndQuarterTurnKeepMembership", bce::test::sceneTranslationAndQuarterTurnKeepMembership},
++    {"VerticalOrGridViewsUseTwoDimensionalGaps", bce::test::verticalOrGridViewsUseTwoDimensionalGaps},
++    {"AmbiguousRectangleNeedsRole", bce::test::ambiguousRectangleNeedsRole},
++    {"MirroredNestedBlockKeepsWorldGeometry", bce::test::mirroredNestedBlockKeepsWorldGeometry},
++    {"MultipleBuildingsRemainSeparate", bce::test::multipleBuildingsRemainSeparate},
++    {"AxisProjectionReversesOrder", bce::test::axisProjectionReversesOrder},
++    {"LevelConflictRequiresConfirmation", bce::test::levelConflictRequiresConfirmation},
++    {"ChangedGeometryInvalidatesOnlyAffectedConfig", bce::test::changedGeometryInvalidatesOnlyAffectedConfig},
++    {"OverlappingOrUnlabelledViewsNeedConfirmation", bce::test::overlappingOrUnlabelledViewsNeedConfirmation},
+     {"UndefinedUnitRequiresConfirmation", bce::test::undefinedUnitRequiresConfirmation},
+     {"KnownUnitsConflictNeedsConfirmation", bce::test::knownUnitsConflictNeedsConfirmation},
+     {"OnlySelectedElevationIsWritable", bce::test::onlySelectedElevationIsWritable},
+--- /dev/null
++++ D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-172847-104-r1-finite-green-final-8e89a51a\input\tests\RecognitionTests.cpp
+@@ -0,0 +1,332 @@
++#include "TestSupport.h"
++#include "../src/Recognition.h"
++#include <Windows.h>
++#include <array>
++#include <cmath>
++#include <filesystem>
++#include <fstream>
++#include <iomanip>
++#include <limits>
++#include <map>
++#include <set>
++#include <sstream>
++
++namespace bce::test {
++namespace {
++namespace fs = std::filesystem;
++fs::path outputDirectory() {
++    std::array<wchar_t, 32768> path{};
++    const auto size = GetModuleFileNameW(nullptr, path.data(), static_cast<DWORD>(path.size()));
++    require(size > 0 && size < path.size(), "test executable path unavailable");
++    return fs::path(path.data()).parent_path();
++}
++fs::path fixture(const char* name) { return outputDirectory().parent_path() / "input" / "tests" / "fixtures" / name; }
++std::vector<std::string> fields(const std::string& row) {
++    std::vector<std::string> values;
++    std::size_t start = 0;
++    for (;;) {
++        const auto tab = row.find('\t', start);
++        values.push_back(row.substr(start, tab == std::string::npos ? tab : tab - start));
++        if (tab == std::string::npos) { break; }
++        start = tab + 1;
++    }
++    if (!values.empty() && !values.back().empty() && values.back().back() == '\r') { values.back().pop_back(); }
++    return values;
++}
++SceneSnapshot emptyScene() {
++    SceneSnapshot scene;
++    scene.documentIdentity = "scheme-document"; scene.databaseIdentity = "scheme-database"; scene.revision = 1;
++    scene.units = {0, false, 1.0, ""};
++    return scene;
++}
++EntityKey key(const std::string& handle) { return {"scheme-database", handle, 1}; }
++SceneSnapshot realScene() {
++    auto scene = emptyScene();
++    scene.sourceSha256 = "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1";
++    std::ifstream input(fixture("scheme-scene.tsv"));
++    require(input.good(), "frozen fixture missing");
++    std::string row;
++    std::getline(input, row);
++    while (std::getline(input, row)) {
++        if (row.empty()) { continue; }
++        const auto f = fields(row);
++        require(f.size() == 18, "invalid fixture columns");
++        Primitive2 p; p.key = key(f[0]); p.layer = f[2];
++        p.kind = f[1] == "AcDbLine" ? PrimitiveKind::line : f[1] == "AcDbText" ? PrimitiveKind::text :
++            f[1] == "AcDbDimension" ? PrimitiveKind::dimension : PrimitiveKind::polyline;
++        if (!f[3].empty() && !f[4].empty() && !f[5].empty() && !f[6].empty()) {
++            p.bounds = Bounds2{{std::stod(f[3]), std::stod(f[4])}, {std::stod(f[5]), std::stod(f[6])}};
++        }
++        if (!f[7].empty() && !f[8].empty()) { p.start = Point2{std::stod(f[7]), std::stod(f[8])}; }
++        if (!f[9].empty() && !f[10].empty()) { p.end = Point2{std::stod(f[9]), std::stod(f[10])}; }
++        if (!f[11].empty()) { p.text = f[11]; }
++        if (!f[12].empty() && !f[13].empty()) { p.textPosition = Point2{std::stod(f[12]), std::stod(f[13])}; }
++        if (!f[14].empty()) { p.textHeight = std::stod(f[14]); }
++        if (!f[15].empty()) { p.textRotation = std::stod(f[15]); }
++        if (!f[16].empty()) { p.dimensionMeasurement = std::stod(f[16]); }
++        p.topologyComplete = f[17] == "1";
++        scene.primitives.push_back(p);
++    }
++    require(scene.primitives.size() == 741, "real fixture record count");
++    return scene;
++}
++std::map<std::string, std::pair<std::string, ViewKind>> expected() {
++    std::ifstream input(fixture("scheme-expected.tsv"));
++    require(input.good(), "frozen expected fixture missing");
++    std::map<std::string, std::pair<std::string, ViewKind>> values;
++    std::string row; std::getline(input, row);
++    while (std::getline(input, row)) {
++        if (row.empty()) { continue; }
++        const auto f = fields(row);
++        require(f.size() == 4, "invalid expected columns");
++        values.emplace(f[0], std::make_pair(f[1], f[2] == "elevation" ? ViewKind::elevation : ViewKind::section));
++    }
++    require(values.size() == 741, "expected fixture count");
++    return values;
++}
++bool issueCode(const AnalysisResult& result, const char* code) {
++    for (const auto& issue : result.issues) { if (issue.code == code) { return true; } }
++    return false;
++}
++void checkMembership(const AnalysisResult& result) {
++    const auto truth = expected();
++    require(result.views.size() == 6, "expected six views from title/gap evidence");
++    std::set<std::string> seen, sections;
++    std::map<std::string, std::size_t> counts;
++    for (const auto& view : result.views) {
++        require(view.kind != ViewKind::ambiguous, "real fixture unexpectedly ambiguous");
++        for (const auto& member : view.members) {
++            require(seen.insert(member.handle).second, "member duplicated across views");
++            const auto at = truth.find(member.handle);
++            require(at != truth.end(), "unexpected member");
++            require(at->second.first == view.titleKey.handle, "member assigned to wrong title");
++            require(at->second.second == view.kind, "view type mismatch");
++            if (view.kind == ViewKind::section) { sections.insert(member.handle); }
++        }
++        counts[view.titleKey.handle] = view.members.size();
++    }
++    require(seen.size() == 741 && result.unassigned.empty(), "741 entities must be covered");
++    require(counts == std::map<std::string, std::size_t>{{"6AC",159},{"737",139},{"7BC",133},{"844",136},{"885",65},{"8F2",109}}, "exact view counts");
++    std::set<std::string> preserved;
++    for (const auto& member : result.preserved) { preserved.insert(member.handle); }
++    require(preserved == sections, "all section members must be preserved");
++    require(issueCode(result, diagnostic::planRequired), "no plan must remain explicit");
++}
++std::string quote(const std::string& text) {
++    std::ostringstream out; out << '"';
++    for (const auto c : text) {
++        if (c == '"' || c == '\\') { out << '\\' << c; }
++        else if (static_cast<unsigned char>(c) < 32) { out << "\\u" << std::hex << std::setw(4) << std::setfill('0') << static_cast<unsigned int>(static_cast<unsigned char>(c)); }
++        else { out << c; }
++    }
++    out << '"'; return out.str();
++}
++void writeKeys(std::ostream& out, const std::vector<EntityKey>& keys) {
++    out << '['; bool first = true;
++    for (const auto& k : keys) { if (!first) { out << ','; } first = false; out << quote(k.handle); }
++    out << ']';
++}
++void writeIssues(std::ostream& out, const std::vector<Issue>& issues) {
++    out << '['; bool first = true;
++    for (const auto& i : issues) {
++        if (!first) { out << ','; } first = false;
++        out << "{\"code\":" << quote(i.code) << ",\"message\":" << quote(i.message)
++            << ",\"entity\":" << (i.source.entity ? quote(i.source.entity->handle) : "null") << '}';
++    }
++    out << ']';
++}
++void writeFeature(std::ostream& out, const Feature& f) {
++    out << "{\"kind\":" << quote(f.kind) << ",\"role\":" << quote(f.role == FeatureRole::candidate ? "candidate" : "confirmed") << ",\"sources\":";
++    writeKeys(out, f.sources);
++    out << ",\"declaredMm\":"; if (f.declaredMm) { out << *f.declaredMm; } else { out << "null"; }
++    out << ",\"geometryMm\":"; if (f.geometryMm) { out << *f.geometryMm; } else { out << "null"; }
++    out << '}';
++}
++void exportAnalysis(const AnalysisResult& result) {
++    std::ofstream out(outputDirectory() / "recognition-analysis.json");
++    require(out.good(), "analysis export unavailable");
++    out << std::setprecision(17) << "{\"contract\":\"bce.r1.analysis.v1\",\"sameAnalyseInvocation\":true,\"sourceSHA256\":" << quote(result.sourceSha256) << ",\"views\":[";
++    bool first = true;
++    for (const auto& v : result.views) {
++        if (!first) { out << ','; } first = false;
++        out << "{\"titleHandle\":" << quote(v.titleKey.handle) << ",\"kind\":" << quote(v.kind == ViewKind::elevation ? "elevation" : v.kind == ViewKind::section ? "section" : "ambiguous") << ",\"members\":";
++        writeKeys(out, v.members);
++        out << ",\"bounds\":[" << v.bounds.minimum.x << ',' << v.bounds.minimum.y << ',' << v.bounds.maximum.x << ',' << v.bounds.maximum.y << "],\"levelCandidates\":[";
++        bool levelFirst = true;
++        for (const auto& f : v.levelCandidates) { if (!levelFirst) { out << ','; } levelFirst = false; writeFeature(out, f); }
++        out << "],\"unconfirmed\":"; writeIssues(out, v.unconfirmed); out << '}';
++    }
++    out << "],\"features\":["; first = true;
++    for (const auto& f : result.model.features) { if (!first) { out << ','; } first = false; writeFeature(out, f); }
++    out << "],\"preserved\":"; writeKeys(out, result.preserved);
++    out << ",\"unassigned\":"; writeKeys(out, result.unassigned);
++    out << ",\"issues\":"; writeIssues(out, result.issues); out << "}\n";
++}
++Primitive2 line(const char* handle, Point2 a, Point2 b) {
++    Primitive2 p; p.key = key(handle); p.kind = PrimitiveKind::line; p.start = a; p.end = b;
++    p.bounds = Bounds2{{(std::min)(a.x,b.x),(std::min)(a.y,b.y)},{(std::max)(a.x,b.x),(std::max)(a.y,b.y)}};
++    p.topologyComplete = true; return p;
++}
++Primitive2 title(const char* handle, Point2 p, const char* text = "正立面") {
++    Primitive2 t; t.key = key(handle); t.kind = PrimitiveKind::text; t.text = text;
++    t.textPosition = p; t.textHeight = 1; t.textRotation = 0;
++    t.bounds = Bounds2{p, {p.x + 3, p.y + 1}}; t.topologyComplete = true; return t;
++}
++void group(SceneSnapshot& s, const char* label, const char* a, const char* b, double x, double y) {
++    s.primitives.push_back(title(label,{x,y}));
++    s.primitives.push_back(line(a,{x,y+3},{x+10,y+3}));
++    s.primitives.push_back(line(b,{x+7,y+8},{x+9,y+8})); // separate component is intentional
++}
++void checkNear(double got, double want, const char* message) { require(std::abs(got-want) < 1e-7, message); }
++}
++// Catches fixed-count, nearest-title and largest-component classification.
++void fourElevationsExcludeTwoSections() {
++    const auto result = analyse(realScene(), {}, {});
++    checkMembership(result);
++    exportAnalysis(result); // This exact result, never a second classification algorithm.
++}
++// Catches global-X-only grouping, untranslated bounds or ignored text direction.
++void sceneTranslationAndQuarterTurnKeepMembership() {
++    for (const bool turn : {false,true}) {
++        auto s = realScene();
++        const auto move = [turn](Point2 p) { return turn ? Point2{90000-p.y,-50000+p.x} : Point2{p.x+12345,p.y-9876}; };
++        for (auto& p : s.primitives) {
++            const auto b = *p.bounds;
++            const auto a = move(b.minimum), c = move(b.maximum);
++            p.bounds = Bounds2{{(std::min)(a.x,c.x),(std::min)(a.y,c.y)},{(std::max)(a.x,c.x),(std::max)(a.y,c.y)}};
++            if (p.start) { p.start = move(*p.start); } if (p.end) { p.end = move(*p.end); }
++            if (p.textPosition) { p.textPosition = move(*p.textPosition); }
++            if (turn && p.textRotation) { *p.textRotation += 1.57079632679489661923; }
++        }
++        const auto r = analyse(s, {}, {}); checkMembership(r);
++        const auto at = std::find_if(r.views.begin(),r.views.end(),[](const View& v){ return v.titleKey.handle == "6AC"; });
++        require(at != r.views.end(), "transformed front view absent");
++        checkNear(at->bounds.minimum.x, turn ? 90000-33227.065940573 : 20300.44442866703+12345,"world minX");
++        checkNear(at->bounds.maximum.y, turn ? -50000+41620.02804049577 : 33227.065940573-9876,"world maxY");
++    }
++}
++void verticalOrGridViewsUseTwoDimensionalGaps() {
++    auto s = emptyScene();
++    group(s,"A1","A2","A3",0,0); group(s,"B1","B2","B3",0,30);
++    auto r = analyse(s,{},{}); require(r.views.size() == 2,"overlapping X needs Y split");
++    group(s,"C1","C2","C3",30,0); group(s,"D1","D2","D3",30,30);
++    r = analyse(s,{},{}); require(r.views.size() == 4,"grid must split along both axes");
++    for (const auto& v : r.views) { require(v.members.size()==3 && v.kind==ViewKind::elevation,"grid member leakage"); }
++}
++void ambiguousRectangleNeedsRole() {
++    auto s=emptyScene(); s.primitives={line("1",{0,0},{10,0}),line("2",{10,0},{10,20}),line("3",{10,20},{0,20}),line("4",{0,20},{0,0})};
++    const auto r=analyse(s,{},{});
++    require(r.model.features.size()==1,"rectangle candidate missing");
++    const auto& f=r.model.features.front();
++    require(f.kind=="rectangle" && f.role==FeatureRole::candidate && f.sources.size()==4,"rectangle must not become window");
++    require(r.unassigned.size()==4 && issueCode(r,diagnostic::ambiguousFeature),"unlabelled rectangle needs confirmation");
++    std::set<std::string> located;
++    for(const auto& i:r.issues) { if(i.source.entity) { located.insert(i.source.entity->handle); } }
++    require(located==std::set<std::string>{"1","2","3","4"},"all four source lines must be locatable");
++}
++void mirroredNestedBlockKeepsWorldGeometry() {
++    const Affine2 inner{0,-1,1,0,10,20,true};
++    const Affine2 outer{-2,0,0,2,100,-10,true};
++    const auto combined=compose(outer,inner); require(combined.canCommit(),"valid affine composition rejected");
++    const auto r=transformed(line("1",{3,4},{5,6}),*combined.value);
++    require(r.canCommit(),"valid world line rejected");
++    // Hand result: inner (6,23)/(4,25), outer (88,36)/(92,40).
++    checkNear(r.value->start->x,88,"nested mirror startX"); checkNear(r.value->start->y,36,"nested mirror startY");
++    checkNear(r.value->end->x,92,"nested mirror endX"); checkNear(r.value->end->y,40,"nested mirror endY");
++    Primitive2 arc; arc.key=key("2"); arc.kind=PrimitiveKind::arc;
++    arc.arc=Arc2{{3,4},2,0,1.5707963267948966}; arc.bounds=Bounds2{{3,4},{5,6}};
++    const auto mirrored=transformed(arc,*combined.value);
++    require(mirrored.canCommit() && mirrored.value->arc->sweepAngle<0,"reflection must reverse arc orientation");
++    checkNear(mirrored.value->arc->center.x,88,"arc world centerX"); checkNear(mirrored.value->arc->radius,4,"arc world radius");
++    require(!compose({1,0,0,0,0,0,true},inner).canCommit(),"singular transform accepted");
++    require(!compose({1,0,0,1,0,0,false},inner).canCommit(),"3D transform silently projected");
++    require(!compose({1,0,0,1,std::numeric_limits<double>::infinity(),0,true},inner).canCommit(),"nonfinite transform accepted");
++    require(!transformed(arc,{2,0,0,1,0,0,true}).canCommit(),"noncircular affine arc silently retained as circle");
++    auto hugeText=title("3",{0,0}); hugeText.textHeight=(std::numeric_limits<double>::max)();
++    require(!transformed(hugeText,{2,0,0,2,0,0,true}).canCommit(),"overflowed text height must not escape as a finite transform result");
++}
++void multipleBuildingsRemainSeparate() {
++    auto s=emptyScene(); group(s,"A1","A2","A3",0,0); group(s,"B1","B2","B3",50,0);
++    const auto r=analyse(s,{},{}); require(r.views.size()==2,"both labelled buildings required");
++    std::map<std::string,std::set<std::string>> members;
++    for(const auto& v:r.views) { for(const auto& k:v.members) { members[v.titleKey.handle].insert(k.handle); } }
++    require(members==std::map<std::string,std::set<std::string>>{{"A1",{"A1","A2","A3"}},{"B1",{"B1","B2","B3"}}},"disconnected members lost or borrowed");
++}
++void axisProjectionReversesOrder() {
++    PlanSnapshot p; p.databaseIdentity="matching-plan"; p.confirmedMmPerInputUnit=1;
++    p.axes={{key("1"),"1",{0,0}},{key("2"),"2",{3000,0}},{key("3"),"3",{7000,0}},{key("4"),"4",{10000,0}}};
++    const auto r=projectAxes(p,{-1,0}); require(r.canCommit(),"real plan projection failed");
++    require(r.value->labels==std::vector<std::string>{"4","3","2","1"},"axis order must reverse");
++    require(r.value->spacingsMm==std::vector<double>{3000,4000,3000},"real axis spacing mismatch");
++    require(hasCode(projectAxes({}, {1,0}),diagnostic::planRequired),"empty plan must not invent axes");
++    auto s=emptyScene(); group(s,"A1","A2","A3",0,0);
++    const auto analysis=analyse(s,{},{}); require(issueCode(analysis,diagnostic::planRequired),"analyse no-plan limitation absent");
++    require(!analysis.views.front().projectedAxes,"axes fabricated without plan");
++    ProjectConfig c; c.databaseIdentity=s.databaseIdentity;
++    const auto& view=analysis.views.front();
++    c.views.push_back({view.identity,view.geometrySignature,{}, {"matching-plan direction","user axis confirmation",true},Point2{-1,0}});
++    const auto withPlan=analyse(s,p,c);
++    require(withPlan.views.front().projectedAxes.has_value(),"analyse did not use confirmed real-plan mapping");
++    require(withPlan.views.front().projectedAxes->labels==std::vector<std::string>{"4","3","2","1"},"analyse projected order differs from real plan");
++    require(withPlan.views.front().projectedAxes->spacingsMm==std::vector<double>{3000,4000,3000},"analyse real-plan spacings differ");
++}
++void levelConflictRequiresConfirmation() {
++    auto s=emptyScene(); group(s,"A1","A2","A3",0,0);
++    s.primitives.push_back(title("A4",{5,5},"二层平面图 +3900 mm"));
++    s.levelAssociations.push_back({key("A2"),key("A3"),key("A4"),{0,0},{0,3000},{0,1},1});
++    const auto r=analyse(s,{},{});
++    require(issueCode(r,diagnostic::levelConflict),"geometry 3000/text 3900 must conflict");
++    const auto& levels=r.views.front().levelCandidates;
++    require(levels.size()==1 && levels.front().declaredMm==3900 && levels.front().geometryMm==3000,"both level values must survive");
++    require(levels.front().role==FeatureRole::candidate && levels.front().sources.size()==3,"conflict must retain provenance and candidate role");
++    bool located=false;
++    for(const auto& i:r.issues) { if(i.code==diagnostic::levelConflict && i.source.entity && i.source.entity->handle=="A4" && i.message.find("3000")!=std::string::npos && i.message.find("3900")!=std::string::npos) { located=true; } }
++    require(located,"conflict diagnosis must locate text and report both values");
++    s.primitives.back().text="二层平面图 +"+std::string(400,'9')+" mm";
++    const auto extreme=analyse(s,{},{});
++    require(extreme.views.size()==1,"unreadable level number must not abort view analysis");
++    const auto& pending=extreme.views.front().levelCandidates;
++    require(pending.size()==1 && !pending.front().declaredMm && pending.front().role==FeatureRole::candidate,"unreadable declared height must remain a located candidate without fake zero");
++}
++void changedGeometryInvalidatesOnlyAffectedConfig() {
++    auto s=emptyScene(); group(s,"A1","A2","A3",0,0); group(s,"B1","B2","B3",50,0);
++    const auto before=analyse(s,{},{}); require(before.views.size()==2,"config fixture partition failed");
++    ProjectConfig c; c.databaseIdentity=s.databaseIdentity; c.units=s.units; c.unitConfirmationSource="user: one unit=one mm";
++    c.zeroLevel={"first-floor +0 mm","user, geometry coordinate pending",true};
++    for(const auto& v:before.views) { c.views.push_back({v.identity,v.geometrySignature,{"brick","user material",true},{"plan mapping","user mapping",true},Point2{1,0}}); }
++    s.primitives[1].end->x=11; s.primitives[1].bounds->maximum.x=11;
++    const auto validated=validateConfig(s,c); require(validated.value.has_value(),"changed view should invalidate locally");
++    const auto& result=*validated.value;
++    for(const auto& v:result.views) {
++        const auto original=std::find_if(before.views.begin(),before.views.end(),[&](const View& a){return a.identity==v.viewIdentity;});
++        const bool changed=original->titleKey.handle=="A1";
++        require(v.material.confirmed==!changed && v.axisMapping.confirmed==!changed,"only changed view confirmations should be cleared");
++        require(!v.material.source.empty() && !v.axisMapping.source.empty(),"confirmation sources must be retained");
++    }
++    require(result.units.confirmedMmPerInputUnit==1 && result.unitConfirmationSource==c.unitConfirmationSource && result.zeroLevel.confirmed,"independent confirmations lost");
++    s.databaseIdentity="different-database";
++    require(!validateConfig(s,c).value.has_value(),"old database config must be rejected");
++}
++void overlappingOrUnlabelledViewsNeedConfirmation() {
++    auto s=emptyScene(); s.primitives={title("A1",{0,0}),title("B1",{0,0}),line("A2",{0,3},{10,3})};
++    auto r=analyse(s,{},{}); require(issueCode(r,diagnostic::ambiguousFeature),"coincident titles cannot be forced apart");
++    for(const auto& v:r.views) { require(v.kind==ViewKind::ambiguous,"overlapping labels cannot claim clear view"); }
++    require(r.unassigned.size()==3,"ambiguous content must remain retained/unassigned");
++    s.primitives={line("1",{0,0},{10,0})}; r=analyse(s,{},{});
++    require(r.views.empty() && r.unassigned.size()==1 && issueCode(r,diagnostic::ambiguousFeature),"unlabelled scene cannot invent views");
++    s.primitives={title("A1",{0,0}),title("B1",{5,0}),line("A2",{-2,-2},{12,12})};
++    r=analyse(s,{},{}); require(issueCode(r,diagnostic::ambiguousFeature) && r.unassigned.size()==3,"overlapping occupancy has no empty cut");
++    s=emptyScene(); group(s,"A1","A2","A3",0,0);
++    s.primitives.push_back(line("FF",{1000,1000},{1001,1001}));
++    r=analyse(s,{},{});
++    bool extraPending=false;
++    for(const auto& k:r.unassigned) { if(k.handle=="FF") { extraPending=true; } }
++    for(const auto& f:r.model.features) {
++        if(f.role==FeatureRole::candidate && f.kind=="unresolvedGeometry") {
++            for(const auto& k:f.sources) { if(k.handle=="FF") { extraPending=true; } }
++        }
++    }
++    require(extraPending,"isolated extra content must remain explicitly pending, never silently accepted or removed");
++}
++}
++
+--- D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-170941-094-fix-round1-green-97696fea\input\tests\ElevationCoreTests.vcxproj
++++ D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-172847-104-r1-finite-green-final-8e89a51a\input\tests\ElevationCoreTests.vcxproj
+@@ -7,7 +7,7 @@
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+   <PropertyGroup><OutDir>..\..\out\</OutDir><IntDir>..\..\obj\</IntDir><TargetName>ElevationCoreTests</TargetName></PropertyGroup>
+   <ItemDefinitionGroup><ClCompile><WarningLevel>Level4</WarningLevel><TreatWarningAsError>true</TreatWarningAsError><SDLCheck>true</SDLCheck><ConformanceMode>true</ConformanceMode><LanguageStandard>stdcpp17</LanguageStandard><RuntimeLibrary>MultiThreaded</RuntimeLibrary><AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions><ExceptionHandling>Sync</ExceptionHandling></ClCompile><Link><SubSystem>Console</SubSystem></Link></ItemDefinitionGroup>
+-  <ItemGroup><ClCompile Include="..\src\ElevationModel.cpp" /><ClCompile Include="CoreTests.cpp" /><ClCompile Include="ReferenceTests.cpp" /><ClCompile Include="ScopeTests.cpp" /></ItemGroup>
++  <ItemGroup><ClCompile Include="..\src\ElevationModel.cpp" /><ClCompile Include="..\src\Recognition.cpp" /><ClCompile Include="RecognitionTests.cpp" /><ClCompile Include="CoreTests.cpp" /><ClCompile Include="ReferenceTests.cpp" /><ClCompile Include="ScopeTests.cpp" /></ItemGroup>
+   <ItemGroup><ClInclude Include="..\src\ElevationModel.h" /><ClInclude Include="TestSupport.h" /></ItemGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+ </Project>
+--- D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-170941-094-fix-round1-green-97696fea\input\tools\build.ps1
++++ D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-172847-104-r1-finite-green-final-8e89a51a\input\tools\build.ps1
+@@ -11,7 +11,7 @@
+ $receipt = [ordered]@{ target=$Target; label=$Label; startedUtc=[DateTime]::UtcNow.ToString('o'); buildRoot=$buildRoot; inputs=@(); commands=@(); outputs=@(); buildExitCode=$null; testExitCode=$null; unknownCaseExitCode=$null; exitCode=1 }
+ $finalExit = 1
+ try {
+-    $inputs = @('src/ElevationModel.h','src/ElevationModel.cpp','tests/CoreTests.cpp','tests/ReferenceTests.cpp','tests/ScopeTests.cpp','tests/TestSupport.h','tests/ElevationCoreTests.vcxproj','tools/build.ps1')
++    $inputs = @('src/ElevationModel.h','src/ElevationModel.cpp','src/Recognition.h','src/Recognition.cpp','tests/CoreTests.cpp','tests/RecognitionTests.cpp','tests/ReferenceTests.cpp','tests/ScopeTests.cpp','tests/TestSupport.h','tests/ElevationCoreTests.vcxproj','tools/build.ps1','tests/fixtures/scheme-scene.tsv','tests/fixtures/scheme-expected.tsv','tests/fixtures/scheme-scene-manifest.json')
+     foreach ($relative in $inputs) {
+         $source = Join-Path $projectRoot $relative
+         $destination = Join-Path (Join-Path $buildRoot 'input') $relative
+@@ -19,6 +19,10 @@
+         Copy-Item -LiteralPath $source -Destination $destination
+         $receipt.inputs += [ordered]@{ path=$relative; sha256=(Get-FileHash -LiteralPath $destination -Algorithm SHA256).Hash }
+     }
++    $fixtureManifest = Get-Content -Raw -LiteralPath (Join-Path $buildRoot 'input/tests/fixtures/scheme-scene-manifest.json') | ConvertFrom-Json
++    if ((Get-FileHash -LiteralPath (Join-Path $buildRoot 'input/tests/fixtures/scheme-scene.tsv') -Algorithm SHA256).Hash -ne $fixtureManifest.fixtureSHA256) { throw 'Scene fixture does not match manifest.' }
++    if ((Get-FileHash -LiteralPath (Join-Path $buildRoot 'input/tests/fixtures/scheme-expected.tsv') -Algorithm SHA256).Hash -ne $fixtureManifest.expectedMembershipTSVSHA256) { throw 'Expected membership fixture does not match manifest.' }
++    $receipt.fixtureSourceSHA256 = $fixtureManifest.schemeSHA256
+     if ($Target -ne 'CoreTests') {
+         $receipt.reason = 'NOT_IMPLEMENTED: NativeCases/All are unavailable until native projects are added.'
+         Set-Content -LiteralPath (Join-Path $buildRoot 'not-implemented.log') -Value $receipt.reason -Encoding UTF8
+@@ -40,11 +44,17 @@
+         else {
+             $exe = Join-Path $buildRoot 'out/ElevationCoreTests.exe'
+             $receipt.commands += 'out/ElevationCoreTests.exe --all'
+-            & $exe --all > (Join-Path $buildRoot 'tests-all.log') 2>&1
+-            $receipt.testExitCode = $LASTEXITCODE
++            try {
++                $ErrorActionPreference = 'Continue' # Native stderr is test output, not a PowerShell exception.
++                & $exe --all > (Join-Path $buildRoot 'tests-all.log') 2>&1
++                $receipt.testExitCode = $LASTEXITCODE
++            } finally { $ErrorActionPreference = 'Stop' }
+             $receipt.commands += 'out/ElevationCoreTests.exe --case UnknownCase (expected 2)'
+-            & $exe --case UnknownCase > (Join-Path $buildRoot 'tests-unknown.log') 2>&1
+-            $receipt.unknownCaseExitCode = $LASTEXITCODE
++            try {
++                $ErrorActionPreference = 'Continue'
++                & $exe --case UnknownCase > (Join-Path $buildRoot 'tests-unknown.log') 2>&1
++                $receipt.unknownCaseExitCode = $LASTEXITCODE
++            } finally { $ErrorActionPreference = 'Stop' }
+             $finalExit = if ($receipt.testExitCode -ne 0) { $receipt.testExitCode } elseif ($receipt.unknownCaseExitCode -ne 2) { 1 } else { 0 }
+         }
+     }

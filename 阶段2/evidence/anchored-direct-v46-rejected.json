@@ -1,0 +1,7 @@
+{
+  "candidate": "v46",
+  "ARXSHA256": "9847E78B892188183DD28E827BDEC5FE5E40BB49B5E2270FE73EF16932C1CB07",
+  "nativeError": "failure: public native third-row witness offset is not 1000",
+  "DWGProduced": false,
+  "stage2Complete": false
+}

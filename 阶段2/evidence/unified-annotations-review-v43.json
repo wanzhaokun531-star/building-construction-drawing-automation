@@ -1,0 +1,25 @@
+{
+  "contract": "bcp.unified-final-review.v1",
+  "reviewer": "unified_annotations_review",
+  "result": "No findings",
+  "previousP2": [
+    "pending Chinese actual glyphs corrected with full native TrueType face",
+    "unresolved text conflicts corrected via public DIMTMOVE=1 and native leaders",
+    "opening host complete-chain gate corrected"
+  ],
+  "positive": {
+    "rules": 102,
+    "frozenFacadeRegression": 14,
+    "actualSavedTextBoxConflicts": 0,
+    "nativeDimensions": 130,
+    "measurementEndpoints": 260
+  },
+  "negative": [
+    "CD9E complete-chain deletion rejected by reviewer",
+    "unresolvedConflicts=1 rejected by reviewer",
+    "old v33 missing requested annotations rejected by gate",
+    "superseded publisher rejected after retirement"
+  ],
+  "nativeRun": "native-run-v43.json",
+  "scope": "fixed frozen scheme; reviewer did not start CAD, write files, or publish; stage2 remains incomplete"
+}

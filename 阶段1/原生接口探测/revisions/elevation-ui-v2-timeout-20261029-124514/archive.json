@@ -1,0 +1,11 @@
+{
+  "sourceSession": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-124459",
+  "sourceRun": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-elevationroundtrip-20261029-124514-705318",
+  "result": "TIMEOUT; all standard field writes/readbacks returned; Apply requested repeated selection; target business result and defaults restoration unproven",
+  "files": {
+    "NativeElevationUiBridge.inc": "8A5E72062B93E8946B19152FB4A24A3C09DA47E97C9B11A48A08E62E3D6CC54C",
+    "NativeElevationRoundTripUiProbe.inc": "29EB7CA88D0ACA62E1F74057591041EA8BE9D88CC4AE629C2417925C39088F3E",
+    "NativeElevationDialogProbe.inc": "01DF79966CA1F65F37EB4B083C2C7C1E5CE8F69271EBB2A1B4B6DE3EDF6462DB",
+    "NativeAccessProbe.arx": "5C913D4482F9A583DF09EF2DA24435EE172353BB35D227CB2155BA5854F06393"
+  }
+}

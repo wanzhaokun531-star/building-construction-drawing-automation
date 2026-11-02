@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>AcEdSSGetSubSelectFilter::getSubentPathsAtGsMarker  Method</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+<link rel="stylesheet" type="text/css" href="default_plus.css" media="screen, projection, tv " />
+<script language=javascript src="arxref.js"></script>
+<script language=javascript src="ac_common.js"></script>
+<script language=javascript src="ac.acad_ak.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="ObjectARX_Reference_Guide.html">ObjectARX Reference Guide</a> &gt; <a href="AcEd_Classes_(WIN).html">AcEd Classes (WIN)</a> &gt; <a href="AcEdSSGetSubSelectFilter.html">AcEdSSGetSubSelectFilter Class</a> &gt; <a href="!!MEMBERTYPE_Methods_AcEdSSGetSubSelectFilter.html">AcEdSSGetSubSelectFilter Methods</a> &gt; <a href="AcEdSSGetSubSelectFilter__getSubentPathsAtGsMarker@AcDbEntity_@bool@AcDbFullSubentPathArray_@AcDb__SubentType@Adesk__GsMarker@AcGePoint3d_@AcGeMatrix3d_@int_@AcDbFullSubentPath.html">getSubentPathsAtGsMarker Method</a></div>
+<div class="Element92">
+<div class="Element5">
+AcEdSSGetSubSelectFilter::getSubentPathsAtGsMarker  Method</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<div class="Element58">
+<a name="432B2B"></a><div class="Element99">
+C++</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #871F78">virtual</span></strong> Acad::ErrorStatus <strong><span style="color: #660000">getSubentPathsAtGsMarker</span></strong>(
+    AcDbEntity* <strong><span style="color: #660000">pEnt</span></strong>, 
+    <strong><span style="color: #871F78">bool</span></strong> <strong><span style="color: #660000">bAdding</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> AcDbFullSubentPathArray&amp; <strong><span style="color: #660000">selectedPaths</span></strong>, 
+    AcDb::SubentType <strong><span style="color: #660000">type</span></strong>, 
+    Adesk::GsMarker <strong><span style="color: #660000">gsMark</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> AcGePoint3d&amp; <strong><span style="color: #660000">pickPoint</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> AcGeMatrix3d&amp; <strong><span style="color: #660000">viewXForm</span></strong>, 
+    <strong><span style="color: #871F78">int</span></strong>&amp; <strong><span style="color: #660000">numPaths</span></strong>, 
+    AcDbFullSubentPath*&amp; <strong><span style="color: #660000">subentPaths</span></strong>, 
+    <strong><span style="color: #871F78">int</span></strong> <strong><span style="color: #660000">numInserts</span></strong>, 
+    AcDbObjectId* <strong><span style="color: #660000">entAndInsertStack</span></strong>
+) = 0;</pre></div></div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element252">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element240" valign="top" width="50%">
+<div class="Element241">
+Parameters&nbsp;</div></td><td class="Element244" valign="top" width="50%">
+<div class="Element245">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+pEnt&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input pointer to the entity being sub-selected&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+bAdding&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+True if the selection operation is adding entities to the selection set, false if the operation is removing entities&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+selectedPaths&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input IDs of the currently selected subentities on the entity&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+type&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input subentity type desired&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+gsMark&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input GS marker representing a specific subentity (typically obtained from <span class="Element146">ads_ssnamex()</span>)&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+pickPoint&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input point (in WCS coordinates) picked during selection of the entity (this point will be on or very near the desired subentity)&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+viewXForm&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input transformation matrix to transform from WCS to DCS&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+numPaths&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Output number of <span class="Element146">AcDbFullSubentPath</span> objects in the <span class="Element146">subentPaths</span> array&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+subentPaths&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Output address of a dynamically allocated array of one or more <span class="Element146">AcDbFullSubentPath</span> objects generated from the GS marker and other information passed into this function&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+numInserts&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input number of object IDs for <span class="Element146">AcDbBlockReferences</span> in <span class="Element146">entAndInsertStack</span>&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+entAndInsertStack&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input array of object IDs of the objects that are the nested containers of the subentity&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="4465736372697074696F6E"></a><div class="Element14">
+Description</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This method is called when a subentity selection is performed on an entity and the filter is registered for the entity's class. This method allows entities to return a different <span class="Element146">AcDbFullSubentPath</span> for a given GS marker, depending on what has already been sub-selected on the entity.&nbsp;</p>
+<p class="Element10">
+<span class="Element146">numInserts</span> should be one less than the total number of entries in the <span class="Element146">entAndInsertStack</span> list because the first entry is the entity itself, which is not a block reference. If the entity is directly owned by the model space or paper space block table records, then omit this argument so that its default of zero (0) will be used.&nbsp;</p>
+<p class="Element10">
+The <span class="Element146">entAndInsertStack</span> list is in order from the &quot;main&quot; entity that the subentity is a part of, to the outermost <span class="Element146">AcDbBlockReference</span> that is in model space or paper space. If the entity itself is directly owned by model space or paper space, then omit this argument so that its default of null will be used.&nbsp;</p>
+<p class="Element10">
+Returns <span class="Element146">Acad::eOk</span> if successful.</p></div>
+</div>
+<a name="4C696E6B73"></a><div class="Element14">
+Links</div>
+<div class="Element11">
+<div class="Element10">
+<a href="AcEdSSGetSubSelectFilter.html">AcEdSSGetSubSelectFilter</a></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<table class=FooterTable width=100%><tr valign=top>
+<td>&nbsp;</td>
+<td align=right>&nbsp;<span class="CommentsLink" onclick="doComments();" title="Click here to send a comment about this topic.">Comments?</span>&nbsp;</td>
+</tr></table>
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

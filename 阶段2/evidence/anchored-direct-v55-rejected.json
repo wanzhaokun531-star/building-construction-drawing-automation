@@ -1,0 +1,6 @@
+{
+  "candidate": "v55",
+  "nativeError": "failure: native mask state owner=target-model frame=1 show=1",
+  "DWGProduced": false,
+  "next": "Assert saved standard DXF frame70=0 and independently audit actual active DWG WIPEOUTFRAME/public mask frame before plotting; side DB frame() observes current document context"
+}

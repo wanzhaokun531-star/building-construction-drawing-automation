@@ -1,0 +1,49 @@
+{
+  "contract": "bce.unitconfig-utf8-log-freeze.v1",
+  "candidateReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i2-20261101-221338-563-stub-red-raw-log-metadata-only-fa7b68b5\\receipt.json",
+  "candidateReceiptSHA256": "80C93A11138B929DECD57F70B776778A2C3B47BB410432CDF83E37EDFAFA9555",
+  "baselineReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i2-20261101-215812-006-stub-red-current-context-trace-1c672f76\\receipt.json",
+  "changedSources": [
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\unitconfig\\UnitConfigDriver.cpp",
+      "before": "F77E797437EB0060E5CBE42DC77E406442DDF6E9E0728B9D520A56B61ECBA463",
+      "after": "A9C84C9E2B2C21C4D2615D4C54A951B4966B5E4607B470C1419045F06D72A86F"
+    }
+  ],
+  "productSourceUnchanged": true,
+  "dependencies": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\receipt.json",
+      "SHA256": "70AFC5BA63D9D8431F76A8D51194E5F0C7BC0DF0B36609A59FEEDE5C71B68488",
+      "verifiedOwnedSources": 7
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\g2-20261101-193143-056-fix1-undo-reopen-green-candidate-3d68c479\\receipt.json",
+      "SHA256": "D3562019037590BF58B44C390579120C35EAE8DC6709057F9C663B9A8C4E516B",
+      "verifiedOwnedSources": 4
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n2-20261101-202438-658-n6-shared-reader-green-84664abf\\receipt.json",
+      "SHA256": "518C2B461E08922C67F0BCE572DE7199221C98651B3FEB55FAA70563EE81562D",
+      "verifiedOwnedSources": 2
+    }
+  ],
+  "regression": {
+    "compileExitCode": 0,
+    "executionExitCode": 0,
+    "strictUtf8JsonParsed": true,
+    "rawSHAExact": true,
+    "files": {
+      "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i2-transcript-json-regression-20261101-2220\\build.cmd": "54B84155438CCA8549BCD17DE2BF0201105F12663D92846391CF5F71349B2D96",
+      "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i2-transcript-json-regression-20261101-2220\\build.log": "96F1DE90567F4700DEBDDAE4F583BE049B16180AF9561BE826EFFA1DB33AF152",
+      "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i2-transcript-json-regression-20261101-2220\\NativeEvidence.cpp": "1B3CA34A61CC2C2DB2C42A7FDFD01C029DE7BE82EAE6CE96D9DE1C3B363A8FE2",
+      "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i2-transcript-json-regression-20261101-2220\\NativeEvidence.h": "C6B083EE0346AA7CDB51090274CCCADCB2C6DE0AA92A196AD846E11C41C9EBB6",
+      "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i2-transcript-json-regression-20261101-2220\\NativeEvidence.obj": "6669B60D1377B8EB72DDDEB4FE30BCA15BD0FA38C877E0F3B9EAC7258B98D398",
+      "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i2-transcript-json-regression-20261101-2220\\result.json": "1C77FC31685183FC59728B8F8AF6956D5AB689788A8939348344456E33A4213C",
+      "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i2-transcript-json-regression-20261101-2220\\TranscriptJsonRegression.cpp": "7AB2224ED5D18D34994CFF85DDC692F57051417FE9412753DCB34B1D055D7661",
+      "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i2-transcript-json-regression-20261101-2220\\TranscriptJsonRegression.exe": "408A7EDD412A11EFD2FEFFE9C7583A3A9DC5359116B26FEB50CAC5C15FA05DCD",
+      "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i2-transcript-json-regression-20261101-2220\\TranscriptJsonRegression.obj": "A6C6D0C00BC9E038279C8250E564EB1552F0E2D817F344D26AF4B62A7FF311EE"
+    }
+  },
+  "nativeExecution": "pending; production remains stub"
+}

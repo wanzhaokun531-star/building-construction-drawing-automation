@@ -1,0 +1,20 @@
+{
+  "rules": 92,
+  "failed": 0,
+  "frozenRegression": 14,
+  "regressionFailed": 0,
+  "initialFailure": "new API declared and called by tests; linker LNK2019 until implementation added",
+  "rejections": [
+    {
+      "case": "old-v31",
+      "rejected": true,
+      "reason": "wall-following span contract missing: old body-wide grid"
+    },
+    {
+      "case": "old-v31-with-forged-mode",
+      "rejected": true,
+      "reason": "axis crosses beyond associated wall span or misses external join"
+    }
+  ],
+  "scope": "Offline + old actual native baseline refusal; new native candidate awaiting run"
+}

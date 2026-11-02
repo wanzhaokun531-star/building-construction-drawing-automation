@@ -1,0 +1,1787 @@
+{
+  "contract": "bcp.drawing-demo-door-axis-edits.v1",
+  "scope": "One-time drawing demonstration only; plugin source and binary unchanged; native-CAD save/reopen and visual confirmation pending",
+  "units": "mm",
+  "floors": [
+    {
+      "floor": 1,
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层.dwg",
+      "sourceSHA256": "5DD3E9AA007D571D8FEE3D76CE30F522BD64A5223C3ED8EFEBF5C5A68129FBDF",
+      "previewJSON": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-dynamic-20261101-143804\\stage2-preview-native.json",
+      "previewSHA256": "242C4463F547466FDC29496262D9C7DBD24EA88D1F20A436834E127FF7041C2E",
+      "moves": [
+        {
+          "handle": "84A8",
+          "opening": "7F39",
+          "text": "M0927",
+          "from": [
+            36754.20152820693,
+            31535.213801995444,
+            0
+          ],
+          "to": [
+            38141.70152820693,
+            30540.213801995444,
+            0
+          ],
+          "delta": [
+            1387.5,
+            -995.0,
+            0
+          ],
+          "oldBounds": [
+            36604.20152820693,
+            31080.213801995444,
+            36904.20152820693,
+            31990.213801995444
+          ],
+          "newBounds": [
+            37991.70152820693,
+            30085.213801995444,
+            38291.70152820693,
+            30995.213801995444
+          ],
+          "reason": "Prefer opening lower-end blank on existing swing side",
+          "checkedGaps": {
+            "doorAndOtherOpenings": 80,
+            "walls": 40,
+            "fixedTextAndDimension": 60,
+            "furniture": 60.01
+          }
+        },
+        {
+          "handle": "84B1",
+          "opening": "7FE5",
+          "text": "M0927",
+          "from": [
+            35114.20152820693,
+            28275.21380195598,
+            0
+          ],
+          "to": [
+            35901.70152820693,
+            27280.21380195598,
+            0
+          ],
+          "delta": [
+            787.5,
+            -995.0,
+            0
+          ],
+          "oldBounds": [
+            34964.20152820693,
+            27820.21380195598,
+            35264.20152820693,
+            28730.21380195598
+          ],
+          "newBounds": [
+            35751.70152820693,
+            26825.21380195598,
+            36051.70152820693,
+            27735.21380195598
+          ],
+          "reason": "Prefer opening lower-end blank on existing swing side",
+          "checkedGaps": {
+            "doorAndOtherOpenings": 80,
+            "walls": 40,
+            "fixedTextAndDimension": 60,
+            "furniture": 60.01
+          }
+        },
+        {
+          "handle": "84B2",
+          "opening": "7FFA",
+          "text": "M2227",
+          "from": [
+            36681.70152820693,
+            30467.55057494616,
+            0
+          ],
+          "to": [
+            36561.70152820693,
+            29422.55057494616,
+            0
+          ],
+          "delta": [
+            -120.0,
+            -1045.0,
+            0
+          ],
+          "oldBounds": [
+            36531.70152820693,
+            30012.55057494616,
+            36831.70152820693,
+            30922.55057494616
+          ],
+          "newBounds": [
+            36411.70152820693,
+            28967.55057494616,
+            36711.70152820693,
+            29877.55057494616
+          ],
+          "reason": "Prefer opening lower-end blank on existing swing side",
+          "checkedGaps": {
+            "doorAndOtherOpenings": 80,
+            "walls": 40,
+            "fixedTextAndDimension": 60,
+            "furniture": 60.01
+          }
+        }
+      ],
+      "captionPlacements": [
+        {
+          "handle": "84A6",
+          "opening": "7F36",
+          "text": "M2221",
+          "position": [
+            44851.7015282074,
+            26957.713801956615,
+            0
+          ],
+          "bounds": [
+            44438.487242493116,
+            26807.713801956615,
+            45264.91581392169,
+            27107.713801956615
+          ],
+          "verticalOpening": false,
+          "sameSide": 1,
+          "status": "retain-safe-existing",
+          "safeLowerCandidates": 0
+        },
+        {
+          "handle": "84A8",
+          "opening": "7F39",
+          "text": "M0927",
+          "position": [
+            38141.70152820693,
+            30540.213801995444,
+            0
+          ],
+          "bounds": [
+            37991.70152820693,
+            30085.213801995444,
+            38291.70152820693,
+            30995.213801995444
+          ],
+          "verticalOpening": true,
+          "sameSide": -1,
+          "status": "proposed-move",
+          "safeLowerCandidates": 30
+        },
+        {
+          "handle": "84A9",
+          "opening": "7F3B",
+          "text": "M0927",
+          "position": [
+            44381.70152820693,
+            32780.21380199498,
+            0
+          ],
+          "bounds": [
+            44231.70152820693,
+            32325.213801994978,
+            44531.70152820693,
+            33235.21380199498
+          ],
+          "verticalOpening": true,
+          "sameSide": 1,
+          "status": "retain-safe-existing",
+          "safeLowerCandidates": 9
+        },
+        {
+          "handle": "84AC",
+          "opening": "7F43",
+          "text": "M0927",
+          "position": [
+            47521.70152804465,
+            29087.713801956696,
+            0
+          ],
+          "bounds": [
+            47066.70152804465,
+            28937.713801956696,
+            47976.70152804465,
+            29237.713801956696
+          ],
+          "verticalOpening": false,
+          "sameSide": -1,
+          "status": "retain-safe-existing",
+          "safeLowerCandidates": 57
+        },
+        {
+          "handle": "84AE",
+          "opening": "7F45",
+          "text": "M0927",
+          "position": [
+            48571.701528036494,
+            32435.213801953625,
+            0
+          ],
+          "bounds": [
+            48116.701528036494,
+            32285.213801953625,
+            49026.701528036494,
+            32585.213801953625
+          ],
+          "verticalOpening": false,
+          "sameSide": 1,
+          "status": "retain-safe-existing",
+          "safeLowerCandidates": 2
+        },
+        {
+          "handle": "84AF",
+          "opening": "7FE0",
+          "text": "M0927",
+          "position": [
+            33771.70152820693,
+            33435.21380195598,
+            0
+          ],
+          "bounds": [
+            33316.70152820693,
+            33285.21380195598,
+            34226.70152820693,
+            33585.21380195598
+          ],
+          "verticalOpening": false,
+          "sameSide": 1,
+          "status": "retain-safe-existing",
+          "safeLowerCandidates": 2
+        },
+        {
+          "handle": "84B0",
+          "opening": "7FE2",
+          "text": "M2227",
+          "position": [
+            34131.70152820693,
+            29275.21380195598,
+            0
+          ],
+          "bounds": [
+            33676.70152820693,
+            29125.21380195598,
+            34586.70152820693,
+            29425.21380195598
+          ],
+          "verticalOpening": false,
+          "sameSide": 1,
+          "status": "retain-safe-existing",
+          "safeLowerCandidates": 34
+        },
+        {
+          "handle": "84B1",
+          "opening": "7FE5",
+          "text": "M0927",
+          "position": [
+            35901.70152820693,
+            27280.21380195598,
+            0
+          ],
+          "bounds": [
+            35751.70152820693,
+            26825.21380195598,
+            36051.70152820693,
+            27735.21380195598
+          ],
+          "verticalOpening": true,
+          "sameSide": -1,
+          "status": "proposed-move",
+          "safeLowerCandidates": 6
+        },
+        {
+          "handle": "84B2",
+          "opening": "7FFA",
+          "text": "M2227",
+          "position": [
+            36561.70152820693,
+            29422.55057494616,
+            0
+          ],
+          "bounds": [
+            36411.70152820693,
+            28967.55057494616,
+            36711.70152820693,
+            29877.55057494616
+          ],
+          "verticalOpening": true,
+          "sameSide": 1,
+          "status": "proposed-move",
+          "safeLowerCandidates": 80
+        },
+        {
+          "handle": "84B4",
+          "opening": "8107",
+          "text": "M0827",
+          "position": [
+            35211.70152820693,
+            33725.213801956095,
+            0
+          ],
+          "bounds": [
+            35061.70152820693,
+            33270.213801956095,
+            35361.70152820693,
+            34180.213801956095
+          ],
+          "verticalOpening": true,
+          "sameSide": -1,
+          "status": "retain-safe-existing",
+          "safeLowerCandidates": 3
+        }
+      ],
+      "lineAdditions": [
+        {
+          "id": "V_1_negative",
+          "label": "1",
+          "vertical": true,
+          "side": "negative",
+          "station": 32031.701528206933,
+          "start": [
+            32031.701528206933,
+            24525.21380195598,
+            0
+          ],
+          "end": [
+            32031.70152820641,
+            21325.213801955982,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83AC",
+          "sourceLineHandle": "841B",
+          "sourceCircleCentre": [
+            32031.70152820641,
+            20925.213801955982,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "V_1_positive",
+          "label": "1",
+          "vertical": true,
+          "side": "positive",
+          "station": 32031.701528206933,
+          "start": [
+            32031.701528206933,
+            37225.213801957034,
+            0
+          ],
+          "end": [
+            32031.701528206955,
+            40425.213801957034,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83AC",
+          "sourceLineHandle": "841B",
+          "sourceCircleCentre": [
+            32031.701528206955,
+            40825.213801957034,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "V_2_positive",
+          "label": "2",
+          "vertical": true,
+          "side": "positive",
+          "station": 34431.70152820693,
+          "start": [
+            34431.70152820693,
+            37225.213801957034,
+            0
+          ],
+          "end": [
+            34431.701528206955,
+            40425.213801957034,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83B5",
+          "sourceLineHandle": "8420",
+          "sourceCircleCentre": [
+            34431.701528206955,
+            40825.213801957034,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "V_3_negative",
+          "label": "3",
+          "vertical": true,
+          "side": "negative",
+          "station": 36231.70152820693,
+          "start": [
+            36231.70152820693,
+            24525.21380195598,
+            0
+          ],
+          "end": [
+            36231.70152820641,
+            21325.213801955982,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83B6",
+          "sourceLineHandle": "8422",
+          "sourceCircleCentre": [
+            36231.70152820641,
+            20925.213801955982,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "V_3_positive",
+          "label": "3",
+          "vertical": true,
+          "side": "positive",
+          "station": 36231.70152820693,
+          "start": [
+            36231.70152820693,
+            37225.213801957034,
+            0
+          ],
+          "end": [
+            36231.701528206955,
+            40425.213801957034,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83B6",
+          "sourceLineHandle": "8422",
+          "sourceCircleCentre": [
+            36231.701528206955,
+            40825.213801957034,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "V_4_negative",
+          "label": "4",
+          "vertical": true,
+          "side": "negative",
+          "station": 38471.70152820693,
+          "start": [
+            38471.70152820693,
+            24525.21380195598,
+            0
+          ],
+          "end": [
+            38471.70152820641,
+            21325.213801955982,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83B7",
+          "sourceLineHandle": "8424",
+          "sourceCircleCentre": [
+            38471.70152820641,
+            20925.213801955982,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "V_4_positive",
+          "label": "4",
+          "vertical": true,
+          "side": "positive",
+          "station": 38471.70152820693,
+          "start": [
+            38471.70152820693,
+            37225.213801957034,
+            0
+          ],
+          "end": [
+            38471.701528206955,
+            40425.213801957034,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83B7",
+          "sourceLineHandle": "8424",
+          "sourceCircleCentre": [
+            38471.701528206955,
+            40825.213801957034,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "V_5_positive",
+          "label": "5",
+          "vertical": true,
+          "side": "positive",
+          "station": 42851.70152820693,
+          "start": [
+            42851.70152820693,
+            37225.213801957034,
+            0
+          ],
+          "end": [
+            42851.701528206955,
+            40425.213801957034,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83B8",
+          "sourceLineHandle": "8426",
+          "sourceCircleCentre": [
+            42851.701528206955,
+            40825.213801957034,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "V_6_negative",
+          "label": "6",
+          "vertical": true,
+          "side": "negative",
+          "station": 46851.70152820693,
+          "start": [
+            46851.70152820693,
+            24525.21380195598,
+            0
+          ],
+          "end": [
+            46851.70152820641,
+            21325.213801955982,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83B9",
+          "sourceLineHandle": "8428",
+          "sourceCircleCentre": [
+            46851.70152820641,
+            20925.213801955982,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "V_6_positive",
+          "label": "6",
+          "vertical": true,
+          "side": "positive",
+          "station": 46851.70152820693,
+          "start": [
+            46851.70152820693,
+            37225.213801957034,
+            0
+          ],
+          "end": [
+            46851.701528206955,
+            40425.213801957034,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83B9",
+          "sourceLineHandle": "8429",
+          "sourceCircleCentre": [
+            46851.701528206955,
+            40825.213801957034,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "V_9_negative",
+          "label": "9",
+          "vertical": true,
+          "side": "negative",
+          "station": 51231.70152820693,
+          "start": [
+            51231.70152820693,
+            24525.21380195598,
+            0
+          ],
+          "end": [
+            51231.70152820641,
+            21325.213801955982,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83BA",
+          "sourceLineHandle": "842F",
+          "sourceCircleCentre": [
+            51231.70152820641,
+            20925.213801955982,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "V_9_positive",
+          "label": "9",
+          "vertical": true,
+          "side": "positive",
+          "station": 51231.70152820693,
+          "start": [
+            51231.70152820693,
+            37225.213801957034,
+            0
+          ],
+          "end": [
+            51231.701528206955,
+            40425.213801957034,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83BA",
+          "sourceLineHandle": "842F",
+          "sourceCircleCentre": [
+            51231.701528206955,
+            40825.213801957034,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "H_A_negative",
+          "label": "A",
+          "vertical": false,
+          "side": "negative",
+          "station": 25645.21380195598,
+          "start": [
+            30911.701528206933,
+            25645.21380195598,
+            0
+          ],
+          "end": [
+            27711.701528206933,
+            25645.21380195598,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83BB",
+          "sourceLineHandle": "8431",
+          "sourceCircleCentre": [
+            27311.701528206933,
+            25645.21380195598,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "H_A_positive",
+          "label": "A",
+          "vertical": false,
+          "side": "positive",
+          "station": 25645.21380195598,
+          "start": [
+            52351.70152820787,
+            25645.21380195598,
+            0
+          ],
+          "end": [
+            55551.70152820787,
+            25645.21380195598,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83BB",
+          "sourceLineHandle": "8432",
+          "sourceCircleCentre": [
+            55951.70152820787,
+            25645.21380195598,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "H_B_negative",
+          "label": "B",
+          "vertical": false,
+          "side": "negative",
+          "station": 28945.21380195598,
+          "start": [
+            30911.701528206933,
+            28945.21380195598,
+            0
+          ],
+          "end": [
+            27711.701528206933,
+            28945.21380195598,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83C3",
+          "sourceLineHandle": "8434",
+          "sourceCircleCentre": [
+            27311.701528206933,
+            28945.21380195598,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "H_C_positive",
+          "label": "C",
+          "vertical": false,
+          "side": "positive",
+          "station": 30205.213801956677,
+          "start": [
+            52351.70152820787,
+            30205.213801956677,
+            0
+          ],
+          "end": [
+            55551.70152820787,
+            30205.213801956677,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83C4",
+          "sourceLineHandle": "8436",
+          "sourceCircleCentre": [
+            55951.70152820787,
+            30205.213801956677,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "H_F_negative",
+          "label": "F",
+          "vertical": false,
+          "side": "negative",
+          "station": 33105.21380195598,
+          "start": [
+            30911.701528206933,
+            33105.21380195598,
+            0
+          ],
+          "end": [
+            27711.701528206933,
+            33105.21380195598,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83C5",
+          "sourceLineHandle": "843C",
+          "sourceCircleCentre": [
+            27311.701528206933,
+            33105.21380195598,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "H_G_negative",
+          "label": "G",
+          "vertical": false,
+          "side": "negative",
+          "station": 36105.21380195598,
+          "start": [
+            30911.701528206933,
+            36105.21380195598,
+            0
+          ],
+          "end": [
+            27711.701528206933,
+            36105.21380195598,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83C6",
+          "sourceLineHandle": "843E",
+          "sourceCircleCentre": [
+            27311.701528206933,
+            36105.21380195598,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "H_G_positive",
+          "label": "G",
+          "vertical": false,
+          "side": "positive",
+          "station": 36105.21380195598,
+          "start": [
+            52351.70152820787,
+            36105.21380195598,
+            0
+          ],
+          "end": [
+            55551.70152820787,
+            36105.21380195598,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83C6",
+          "sourceLineHandle": "843F",
+          "sourceCircleCentre": [
+            55951.70152820787,
+            36105.21380195598,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        }
+      ],
+      "dimensionMoves": [],
+      "unresolved": [
+        {
+          "kind": "door-placement",
+          "handle": "84A6",
+          "opening": "7F36",
+          "status": "retain-safe-existing",
+          "detail": "No sampled lower-region candidate clears every conservative obstacle. Existing same-side position is clear; lower-placement coverage remains pending."
+        },
+        {
+          "kind": "door-swing",
+          "opening": "7FE2",
+          "handle": "84B0",
+          "status": "existing-side-preserved",
+          "detail": "No source swing arc; side not inferred."
+        },
+        {
+          "kind": "door-swing",
+          "opening": "7FFA",
+          "handle": "84B2",
+          "status": "existing-side-preserved",
+          "detail": "Actual source has no swing arc (may be sliding or combined opening); this demo preserves original label side, no swing direction inferred."
+        }
+      ]
+    },
+    {
+      "floor": 2,
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层.dwg",
+      "sourceSHA256": "9EF6A84A3AAD6FE5A67905BAEEC18F36CFC4BC2A893A88366C9A4A1DA2552AA6",
+      "previewJSON": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-dynamic-20261101-143807\\stage2-preview-native.json",
+      "previewSHA256": "EE6BB6C7A5B225B6A81FBCFF34DA46BEAFBD765D4BB29B77F4B9FA605134C0CE",
+      "moves": [
+        {
+          "handle": "84A0",
+          "opening": "801A",
+          "text": "M2121",
+          "from": [
+            91273.70152820786,
+            26095.21380195656,
+            0
+          ],
+          "to": [
+            91273.70152820786,
+            25975.213801956623,
+            0
+          ],
+          "delta": [
+            0.0,
+            -119.99999999993815,
+            0
+          ],
+          "oldBounds": [
+            90879.05867106501,
+            25945.21380195656,
+            91668.34438535072,
+            26245.21380195656
+          ],
+          "newBounds": [
+            90879.05867106501,
+            25825.213801956623,
+            91668.34438535072,
+            26125.213801956623
+          ],
+          "reason": "Prefer opening lower-end blank on existing swing side",
+          "checkedGaps": {
+            "doorAndOtherOpenings": 80,
+            "walls": 40,
+            "fixedTextAndDimension": 60,
+            "furniture": 60.01
+          }
+        },
+        {
+          "handle": "84AA",
+          "opening": "81C1",
+          "text": "M0927",
+          "from": [
+            83776.20152820693,
+            32795.21380149078,
+            0
+          ],
+          "to": [
+            84563.70152820693,
+            31800.213801490783,
+            0
+          ],
+          "delta": [
+            787.5,
+            -995.0,
+            0
+          ],
+          "oldBounds": [
+            83626.20152820693,
+            32340.213801490783,
+            83926.20152820693,
+            33250.21380149078
+          ],
+          "newBounds": [
+            84413.70152820693,
+            31345.213801490783,
+            84713.70152820693,
+            32255.213801490783
+          ],
+          "reason": "Prefer opening lower-end blank on existing swing side",
+          "checkedGaps": {
+            "doorAndOtherOpenings": 80,
+            "walls": 40,
+            "fixedTextAndDimension": 60,
+            "furniture": 60.01
+          }
+        },
+        {
+          "handle": "84AD",
+          "opening": "82B0",
+          "text": "M0927",
+          "from": [
+            79143.70152820693,
+            34822.71380195598,
+            0
+          ],
+          "to": [
+            80193.70152820693,
+            33435.21380195598,
+            0
+          ],
+          "delta": [
+            1050.0,
+            -1387.5,
+            0
+          ],
+          "oldBounds": [
+            78688.70152820693,
+            34672.71380195598,
+            79598.70152820693,
+            34972.71380195598
+          ],
+          "newBounds": [
+            79738.70152820693,
+            33285.21380195598,
+            80648.70152820693,
+            33585.21380195598
+          ],
+          "reason": "Prefer opening lower-end blank on existing swing side",
+          "checkedGaps": {
+            "doorAndOtherOpenings": 80,
+            "walls": 40,
+            "fixedTextAndDimension": 60,
+            "furniture": 60.01
+          }
+        }
+      ],
+      "captionPlacements": [
+        {
+          "handle": "84A0",
+          "opening": "801A",
+          "text": "M2121",
+          "position": [
+            91273.70152820786,
+            25975.213801956623,
+            0
+          ],
+          "bounds": [
+            90879.05867106501,
+            25825.213801956623,
+            91668.34438535072,
+            26125.213801956623
+          ],
+          "verticalOpening": false,
+          "sameSide": 1,
+          "status": "proposed-move",
+          "safeLowerCandidates": 119
+        },
+        {
+          "handle": "84A4",
+          "opening": "8025",
+          "text": "M0927",
+          "position": [
+            93943.70152804488,
+            29087.713801956696,
+            0
+          ],
+          "bounds": [
+            93488.70152804488,
+            28937.713801956696,
+            94398.70152804488,
+            29237.713801956696
+          ],
+          "verticalOpening": false,
+          "sameSide": -1,
+          "status": "retain-safe-existing",
+          "safeLowerCandidates": 63
+        },
+        {
+          "handle": "84A5",
+          "opening": "8078",
+          "text": "M0927",
+          "position": [
+            88603.70152816131,
+            29087.713801956423,
+            0
+          ],
+          "bounds": [
+            88148.70152816131,
+            28937.713801956423,
+            89058.70152816131,
+            29237.713801956423
+          ],
+          "verticalOpening": false,
+          "sameSide": -1,
+          "status": "retain-safe-existing",
+          "safeLowerCandidates": 62
+        },
+        {
+          "handle": "84A7",
+          "opening": "8103",
+          "text": "M0927",
+          "position": [
+            91553.70152836898,
+            32435.213801956612,
+            0
+          ],
+          "bounds": [
+            91098.70152836898,
+            32285.213801956612,
+            92008.70152836898,
+            32585.213801956612
+          ],
+          "verticalOpening": false,
+          "sameSide": 1,
+          "status": "retain-safe-existing",
+          "safeLowerCandidates": 2
+        },
+        {
+          "handle": "84A8",
+          "opening": "8147",
+          "text": "M1227",
+          "position": [
+            88193.70152820228,
+            30662.666800885323,
+            0
+          ],
+          "bounds": [
+            87757.27295677371,
+            30512.666800885323,
+            88630.13009963086,
+            30812.666800885323
+          ],
+          "verticalOpening": false,
+          "sameSide": -1,
+          "status": "retain-safe-existing",
+          "safeLowerCandidates": 7
+        },
+        {
+          "handle": "84AA",
+          "opening": "81C1",
+          "text": "M0927",
+          "position": [
+            84563.70152820693,
+            31800.213801490783,
+            0
+          ],
+          "bounds": [
+            84413.70152820693,
+            31345.213801490783,
+            84713.70152820693,
+            32255.213801490783
+          ],
+          "verticalOpening": true,
+          "sameSide": -1,
+          "status": "proposed-move",
+          "safeLowerCandidates": 59
+        },
+        {
+          "handle": "84AB",
+          "opening": "81EA",
+          "text": "M0927",
+          "position": [
+            94993.7015280365,
+            32435.21380196096,
+            0
+          ],
+          "bounds": [
+            94538.7015280365,
+            32285.21380196096,
+            95448.7015280365,
+            32585.21380196096
+          ],
+          "verticalOpening": false,
+          "sameSide": 1,
+          "status": "retain-safe-existing",
+          "safeLowerCandidates": 2
+        },
+        {
+          "handle": "84AD",
+          "opening": "82B0",
+          "text": "M0927",
+          "position": [
+            80193.70152820693,
+            33435.21380195598,
+            0
+          ],
+          "bounds": [
+            79738.70152820693,
+            33285.21380195598,
+            80648.70152820693,
+            33585.21380195598
+          ],
+          "verticalOpening": false,
+          "sameSide": 1,
+          "status": "proposed-move",
+          "safeLowerCandidates": 2
+        },
+        {
+          "handle": "84AE",
+          "opening": "82B2",
+          "text": "M0827",
+          "position": [
+            81633.70152820693,
+            33725.213801956095,
+            0
+          ],
+          "bounds": [
+            81483.70152820693,
+            33270.213801956095,
+            81783.70152820693,
+            34180.213801956095
+          ],
+          "verticalOpening": true,
+          "sameSide": -1,
+          "status": "retain-safe-existing",
+          "safeLowerCandidates": 3
+        }
+      ],
+      "lineAdditions": [
+        {
+          "id": "V_1_positive",
+          "label": "1",
+          "vertical": true,
+          "side": "positive",
+          "station": 78453.70152820693,
+          "start": [
+            78453.70152820693,
+            37225.213801957034,
+            0
+          ],
+          "end": [
+            78453.70152820695,
+            40425.213801957034,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83AC",
+          "sourceLineHandle": "841B",
+          "sourceCircleCentre": [
+            78453.70152820695,
+            40825.213801957034,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "V_2_positive",
+          "label": "2",
+          "vertical": true,
+          "side": "positive",
+          "station": 80853.70152820693,
+          "start": [
+            80853.70152820693,
+            37225.213801957034,
+            0
+          ],
+          "end": [
+            80853.70152820695,
+            40425.213801957034,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83B5",
+          "sourceLineHandle": "8420",
+          "sourceCircleCentre": [
+            80853.70152820695,
+            40825.213801957034,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "V_3_positive",
+          "label": "3",
+          "vertical": true,
+          "side": "positive",
+          "station": 82653.70152820693,
+          "start": [
+            82653.70152820693,
+            37225.213801957034,
+            0
+          ],
+          "end": [
+            82653.70152820695,
+            40425.213801957034,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83B6",
+          "sourceLineHandle": "8422",
+          "sourceCircleCentre": [
+            82653.70152820695,
+            40825.213801957034,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "V_4_negative",
+          "label": "4",
+          "vertical": true,
+          "side": "negative",
+          "station": 84893.70152820693,
+          "start": [
+            84893.70152820693,
+            24525.213801956088,
+            0
+          ],
+          "end": [
+            84893.7015282064,
+            21325.213801956088,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83B7",
+          "sourceLineHandle": "8424",
+          "sourceCircleCentre": [
+            84893.7015282064,
+            20925.213801956088,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "V_4_positive",
+          "label": "4",
+          "vertical": true,
+          "side": "positive",
+          "station": 84893.70152820693,
+          "start": [
+            84893.70152820693,
+            37225.213801957034,
+            0
+          ],
+          "end": [
+            84893.70152820695,
+            40425.213801957034,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83B7",
+          "sourceLineHandle": "8424",
+          "sourceCircleCentre": [
+            84893.70152820695,
+            40825.213801957034,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "V_5_negative",
+          "label": "5",
+          "vertical": true,
+          "side": "negative",
+          "station": 89273.70152820693,
+          "start": [
+            89273.70152820693,
+            24525.213801956088,
+            0
+          ],
+          "end": [
+            89273.7015282064,
+            21325.213801956088,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83B8",
+          "sourceLineHandle": "8426",
+          "sourceCircleCentre": [
+            89273.7015282064,
+            20925.213801956088,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "V_5_positive",
+          "label": "5",
+          "vertical": true,
+          "side": "positive",
+          "station": 89273.70152820693,
+          "start": [
+            89273.70152820693,
+            37225.213801957034,
+            0
+          ],
+          "end": [
+            89273.70152820695,
+            40425.213801957034,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83B8",
+          "sourceLineHandle": "8427",
+          "sourceCircleCentre": [
+            89273.70152820695,
+            40825.213801957034,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "V_6_negative",
+          "label": "6",
+          "vertical": true,
+          "side": "negative",
+          "station": 93273.70152820693,
+          "start": [
+            93273.70152820693,
+            24525.213801956088,
+            0
+          ],
+          "end": [
+            93273.7015282064,
+            21325.213801956088,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83B9",
+          "sourceLineHandle": "8429",
+          "sourceCircleCentre": [
+            93273.7015282064,
+            20925.213801956088,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "V_6_positive",
+          "label": "6",
+          "vertical": true,
+          "side": "positive",
+          "station": 93273.70152820693,
+          "start": [
+            93273.70152820693,
+            37225.213801957034,
+            0
+          ],
+          "end": [
+            93273.70152820695,
+            40425.213801957034,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83B9",
+          "sourceLineHandle": "842A",
+          "sourceCircleCentre": [
+            93273.70152820695,
+            40825.213801957034,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "V_9_negative",
+          "label": "9",
+          "vertical": true,
+          "side": "negative",
+          "station": 97653.70152820693,
+          "start": [
+            97653.70152820693,
+            24525.213801956088,
+            0
+          ],
+          "end": [
+            97653.7015282064,
+            21325.213801956088,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83BA",
+          "sourceLineHandle": "8430",
+          "sourceCircleCentre": [
+            97653.7015282064,
+            20925.213801956088,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "V_9_positive",
+          "label": "9",
+          "vertical": true,
+          "side": "positive",
+          "station": 97653.70152820693,
+          "start": [
+            97653.70152820693,
+            37225.213801957034,
+            0
+          ],
+          "end": [
+            97653.70152820695,
+            40425.213801957034,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83BA",
+          "sourceLineHandle": "8430",
+          "sourceCircleCentre": [
+            97653.70152820695,
+            40825.213801957034,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "H_A_negative",
+          "label": "A",
+          "vertical": false,
+          "side": "negative",
+          "station": 25645.213801956328,
+          "start": [
+            77333.70152820693,
+            25645.213801956328,
+            0
+          ],
+          "end": [
+            74133.70152820693,
+            25645.213801956328,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83BB",
+          "sourceLineHandle": "8432",
+          "sourceCircleCentre": [
+            73733.70152820693,
+            25645.213801956328,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "H_A_positive",
+          "label": "A",
+          "vertical": false,
+          "side": "positive",
+          "station": 25645.213801956328,
+          "start": [
+            98773.70152820788,
+            25645.213801956328,
+            0
+          ],
+          "end": [
+            101973.70152820788,
+            25645.213801956328,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83BB",
+          "sourceLineHandle": "8432",
+          "sourceCircleCentre": [
+            102373.70152820788,
+            25645.213801956328,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "H_B_negative",
+          "label": "B",
+          "vertical": false,
+          "side": "negative",
+          "station": 30205.213801956095,
+          "start": [
+            77333.70152820693,
+            30205.213801956095,
+            0
+          ],
+          "end": [
+            74133.70152820693,
+            30205.213801956095,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83C3",
+          "sourceLineHandle": "8434",
+          "sourceCircleCentre": [
+            73733.70152820693,
+            30205.213801956095,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "H_B_positive",
+          "label": "B",
+          "vertical": false,
+          "side": "positive",
+          "station": 30205.213801956095,
+          "start": [
+            98773.70152820788,
+            30205.213801956095,
+            0
+          ],
+          "end": [
+            101973.70152820788,
+            30205.213801956095,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83C3",
+          "sourceLineHandle": "8435",
+          "sourceCircleCentre": [
+            102373.70152820788,
+            30205.213801956095,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "H_C_negative",
+          "label": "C",
+          "vertical": false,
+          "side": "negative",
+          "station": 32105.21380195621,
+          "start": [
+            77333.70152820693,
+            32105.21380195621,
+            0
+          ],
+          "end": [
+            74133.70152820693,
+            32105.21380195621,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83C4",
+          "sourceLineHandle": "8437",
+          "sourceCircleCentre": [
+            73733.70152820693,
+            32105.21380195621,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "H_E_negative",
+          "label": "E",
+          "vertical": false,
+          "side": "negative",
+          "station": 33105.21380195598,
+          "start": [
+            77333.70152820693,
+            33105.21380195598,
+            0
+          ],
+          "end": [
+            74133.70152820693,
+            33105.21380195598,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83C5",
+          "sourceLineHandle": "843B",
+          "sourceCircleCentre": [
+            73733.70152820693,
+            33105.21380195598,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "H_F_negative",
+          "label": "F",
+          "vertical": false,
+          "side": "negative",
+          "station": 36105.21380195598,
+          "start": [
+            77333.70152820693,
+            36105.21380195598,
+            0
+          ],
+          "end": [
+            74133.70152820693,
+            36105.21380195598,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83C6",
+          "sourceLineHandle": "843D",
+          "sourceCircleCentre": [
+            73733.70152820693,
+            36105.21380195598,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        },
+        {
+          "id": "H_F_positive",
+          "label": "F",
+          "vertical": false,
+          "side": "positive",
+          "station": 36105.21380195598,
+          "start": [
+            98773.70152820788,
+            36105.21380195598,
+            0
+          ],
+          "end": [
+            101973.70152820788,
+            36105.21380195598,
+            0
+          ],
+          "layer": "A-AXIS",
+          "linetype": "Continuous",
+          "colour": 3,
+          "sourceAxisHandle": "83C6",
+          "sourceLineHandle": "843E",
+          "sourceCircleCentre": [
+            102373.70152820788,
+            36105.21380195598,
+            0
+          ],
+          "sourceCircleRadius": 400,
+          "mayCoincideWithExistingTchTail": true
+        }
+      ],
+      "dimensionMoves": [],
+      "unresolved": [
+        {
+          "kind": "door-swing",
+          "opening": "801A",
+          "handle": "84A0",
+          "status": "existing-side-preserved",
+          "detail": "Actual source has no swing arc (may be sliding or combined opening); this demo preserves original label side, no swing direction inferred."
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Existing TCH axis tail ink not separately witnessed. New green continuous connectors may coincide with existing TCH tail segments. This is a drawing presentation proposal, not product root-cause repair.",
+    "Actual reopened-DWG bounds, furniture primitive boxes conservatively, and actual dimension text/baseline boxes checked. Area-label coordination pending."
+  ]
+}

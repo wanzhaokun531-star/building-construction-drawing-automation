@@ -1,0 +1,39 @@
+{
+  "contract": "bcp.input-adaptation-qa.v1",
+  "version": "v115",
+  "moduleSHA256": "9F32986BA3D71C58D8328A3D4C09DF6F6B6BA53BDC75A6F839AAAD82A7462F8F",
+  "passed": true,
+  "visualReviewed": true,
+  "visualScope": "Actual opened native whole-floor previews reviewed; local crowded annotation, original extra frame strokes and final CTB/frame are not declared fully resolved.",
+  "summaries": [
+    {
+      "modelRoots": 216,
+      "dimensionChains": 27,
+      "dimensionSegments": 93,
+      "captions": 21,
+      "axisCarriers": 12,
+      "logicalAxes": 16,
+      "floor": 1,
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-123134\\插件生成施工图_一层.dwg",
+      "SHA256": "14FF20FD4D321033D1893A811FD8661D7AD1F64AA96BD4878F17A1BB173DBBCC"
+    },
+    {
+      "modelRoots": 205,
+      "dimensionChains": 27,
+      "dimensionSegments": 88,
+      "captions": 19,
+      "axisCarriers": 12,
+      "logicalAxes": 15,
+      "floor": 2,
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-123134\\插件生成施工图_二层.dwg",
+      "SHA256": "42CD92061CB98F632C1EE01540D761EC1E97F4EA6F9501793B05F49229B9D09F"
+    }
+  ],
+  "extraRootQA": "插件/evidence/qa-extra-root-v114.json",
+  "closureSHA256": "979152B2D3EB4839B83368DF432A2648D944F9D647992F067831D7DB9C96F4DA",
+  "sourceSHA256": "FD1F766C52E1D870F39D2C643857FD0A4EDE244837B1B2B62631F8EE69F44628",
+  "frozenSourceSHA256": "FD1F766C52E1D870F39D2C643857FD0A4EDE244837B1B2B62631F8EE69F44628",
+  "selfForegroundEvents": 0,
+  "selfDesktopShowEvents": 0,
+  "normalQuitPassed": false
+}

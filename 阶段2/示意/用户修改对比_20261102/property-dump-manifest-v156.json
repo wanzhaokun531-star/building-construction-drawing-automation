@@ -1,0 +1,22 @@
+{
+  "version": "v156",
+  "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-160349",
+  "nonce": "17ce5d926d69467fac34bc4c6b1ea6ae",
+  "rows": [
+    {
+      "tag": "baseline",
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-154243\\bath-merge-floor-2\\control.dwg",
+      "SHA256": "DB1BA4F2175C276209CAF7054B2B46092245BD768DAAD18CCF5A1047C6AFC4B0",
+      "control": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-160349\\baseline\\control.dwg",
+      "report": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-160349\\baseline\\public-entity-layer-style.tsv"
+    },
+    {
+      "tag": "modified",
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-155644\\inspection-input.dwg",
+      "SHA256": "1D73F911C4DBE944DDD5AD35FDE0C0AA4410F61AE2E46B48081C67571536A4DB",
+      "control": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-160349\\modified\\control.dwg",
+      "report": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-160349\\modified\\public-entity-layer-style.tsv"
+    }
+  ],
+  "bootSHA256": "A7B39A81DBC2644184702E6D180712793AA4E5FDDCB39ADC1A3DAC6629FB1091"
+}

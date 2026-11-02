@@ -1,0 +1,616 @@
+{
+  "contract": "bcp.true-native-chain-probe.v1",
+  "version": "v69",
+  "nativeBinding": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\native-host-binding-v69.json",
+  "ARXSHA256": "7A2E7009838D5057BD6D93944B86716BAC7ADFA5532E1302D1B792207A744EE6",
+  "probeSHA256": "AAFCDD54558C9E6A99F6F1B85BA51C09D98170005C4A114314C6E122CE2EC9EC",
+  "sourceUnchanged": true,
+  "samples": [
+    {
+      "template": "1A40",
+      "handle": "D342",
+      "segments": 3,
+      "grips": 12,
+      "values": [
+        350,
+        349.9999999998836,
+        2450.0000000626314
+      ],
+      "changedByOneNode": [
+        390,
+        309.9999999998836,
+        2450.0000000626314
+      ],
+      "oneNodeLinked": true,
+      "oneGripWholeBaseline": true,
+      "restoredAllGrips": true,
+      "joinProtocol": false,
+      "polylineBase": false,
+      "ancestry": "TDbDimension2/TDbCurveEntity/AcDbCurve/AcDbEntity/AcDbObject/AcGiDrawable/AcRxObject"
+    },
+    {
+      "template": "19A1",
+      "handle": "D346",
+      "segments": 7,
+      "grips": 20,
+      "values": [
+        120.00000000791624,
+        5199.999999999767,
+        1600,
+        4200.000000000466,
+        1399.9999999997672,
+        5600.000000000466,
+        120.00000000651926
+      ],
+      "changedByOneNode": [
+        160.00000000792352,
+        5159.99999999976,
+        1600,
+        4200.000000000466,
+        1399.9999999997672,
+        5600.000000000466,
+        120.00000000651926
+      ],
+      "oneNodeLinked": true,
+      "oneGripWholeBaseline": true,
+      "restoredAllGrips": true,
+      "joinProtocol": false,
+      "polylineBase": false,
+      "ancestry": "TDbDimension2/TDbCurveEntity/AcDbCurve/AcDbEntity/AcDbObject/AcGiDrawable/AcRxObject"
+    },
+    {
+      "template": "19A8",
+      "handle": "D34A",
+      "segments": 8,
+      "grips": 22,
+      "values": [
+        120.0000000083819,
+        3799.9999996528495,
+        3000.0000003469177,
+        4199.999999999767,
+        1440.0000000006985,
+        2100.000000000233,
+        3460.0000000006985,
+        120.00000002398156
+      ],
+      "changedByOneNode": [
+        160.00000000837463,
+        3759.999999652857,
+        3000.0000003469177,
+        4199.999999999767,
+        1440.0000000006985,
+        2100.000000000233,
+        3460.0000000006985,
+        120.00000002398156
+      ],
+      "oneNodeLinked": true,
+      "oneGripWholeBaseline": true,
+      "restoredAllGrips": true,
+      "joinProtocol": false,
+      "polylineBase": false,
+      "ancestry": "TDbDimension2/TDbCurveEntity/AcDbCurve/AcDbEntity/AcDbObject/AcGiDrawable/AcRxObject"
+    }
+  ],
+  "growthProbes": [
+    {
+      "source": "1A40",
+      "beforeSegments": 3,
+      "setFromAcGeCurveStatus": 1,
+      "extendStatus": 0,
+      "beforeParam": 3,
+      "afterParam": 3,
+      "afterGrips": 12,
+      "afterValues": [
+        350,
+        349.9999999998836,
+        14700.000000375796
+      ]
+    },
+    {
+      "source": "19A2",
+      "beforeSegments": 15,
+      "setFromAcGeCurveStatus": 1,
+      "extendStatus": 0,
+      "beforeParam": 15,
+      "afterParam": 15,
+      "afterGrips": 36,
+      "afterValues": [
+        899.9999999909196,
+        2800.000000000233,
+        1500.000000008382,
+        399.99999999138527,
+        799.9999999937136,
+        400.000000015134,
+        500.00000003841706,
+        2999.9999999527354,
+        700.0000000090804,
+        200.00000003050081,
+        799.9999999606516,
+        400.00000000861473,
+        1499.9999999913853,
+        2799.999999999767,
+        23400.000000163433
+      ]
+    }
+  ],
+  "kitchen": {
+    "handle": "D34D",
+    "values": [
+      700,
+      2400,
+      700
+    ],
+    "oneNodeChangedValues": [
+      740,
+      2360,
+      700
+    ],
+    "singleEntity": true,
+    "ownerModel": true
+  },
+  "sampleDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-foundation-20261031-175532\\厨房连续天正尺寸_仅能力试验.dwg",
+  "sampleDWGSHA256": "6AF08523636FBCAD58AAA962FDF27D3D9A7ADF1C465AC659A1C7E1D0099A8CD4",
+  "savedReopened": true,
+  "chainInventory": [
+    {
+      "kind": "axis",
+      "location": "bottom",
+      "segments": 7,
+      "sourceSegments": [
+        "D1A6",
+        "D1A7",
+        "D1A8",
+        "D1A9",
+        "D1AA",
+        "D1AB",
+        "D1AC"
+      ],
+      "stations": [
+        15111.89025917189,
+        15211.890259172244,
+        16311.890259172244,
+        20511.890259172244,
+        24111.890259172244,
+        29111.890259172244,
+        32711.890259172244,
+        32811.89025917224
+      ]
+    },
+    {
+      "kind": "axis",
+      "location": "top",
+      "segments": 7,
+      "sourceSegments": [
+        "D1AD",
+        "D1AE",
+        "D1AF",
+        "D1B0",
+        "D1B1",
+        "D1B2",
+        "D1B3"
+      ],
+      "stations": [
+        15111.89025917189,
+        15211.890259172244,
+        19111.890259172244,
+        21311.890259172244,
+        25311.890259172244,
+        29111.890259172244,
+        32711.890259172244,
+        32811.89025917224
+      ]
+    },
+    {
+      "kind": "axis",
+      "location": "left",
+      "segments": 8,
+      "sourceSegments": [
+        "D1B4",
+        "D1B5",
+        "D1B6",
+        "D1B7",
+        "D1B8",
+        "D1B9",
+        "D1BA",
+        "D1BB"
+      ],
+      "stations": [
+        16441.263551952798,
+        16541.263551952827,
+        20541.263551952827,
+        22341.263551952827,
+        24141.26355195207,
+        27741.263551952827,
+        31941.263551952827,
+        34741.26355195283,
+        34841.26355195283
+      ]
+    },
+    {
+      "kind": "axis",
+      "location": "right",
+      "segments": 6,
+      "sourceSegments": [
+        "D1BC",
+        "D1BD",
+        "D1BE",
+        "D1BF",
+        "D1C0",
+        "D1C1"
+      ],
+      "stations": [
+        16441.263551952798,
+        18541.263551952827,
+        24141.26355195207,
+        27741.263551952827,
+        32741.263551952827,
+        34741.26355195283,
+        34841.26355195283
+      ]
+    },
+    {
+      "kind": "total-body-envelope",
+      "location": "bottom",
+      "segments": 1,
+      "sourceSegments": [
+        "D1C2"
+      ],
+      "stations": [
+        15111.890259171894,
+        32811.89025917224
+      ]
+    },
+    {
+      "kind": "total-body-envelope",
+      "location": "top",
+      "segments": 1,
+      "sourceSegments": [
+        "D1C3"
+      ],
+      "stations": [
+        15111.890259171894,
+        32811.89025917224
+      ]
+    },
+    {
+      "kind": "total-body-envelope",
+      "location": "left",
+      "segments": 1,
+      "sourceSegments": [
+        "D1C4"
+      ],
+      "stations": [
+        16441.263551952798,
+        34841.26355195283
+      ]
+    },
+    {
+      "kind": "total-body-envelope",
+      "location": "right",
+      "segments": 1,
+      "sourceSegments": [
+        "D1C5"
+      ],
+      "stations": [
+        16441.263551952798,
+        34841.26355195283
+      ]
+    },
+    {
+      "kind": "third",
+      "location": "bottom",
+      "segments": 1,
+      "sourceSegments": [
+        "D208"
+      ],
+      "stations": [
+        15111.89025917189,
+        15211.890259172244
+      ]
+    },
+    {
+      "kind": "third",
+      "location": "bottom",
+      "segments": 13,
+      "sourceSegments": [
+        "D1DA",
+        "D1D9",
+        "D1D8",
+        "D1DD",
+        "D1DC",
+        "D1DB",
+        "D1CB",
+        "D1CA",
+        "D1C9",
+        "D1C8",
+        "D1C7",
+        "D1C6",
+        "D209"
+      ],
+      "stations": [
+        16311.890259172244,
+        17211.890259172244,
+        19611.890259172244,
+        20511.890259172244,
+        21111.890259172244,
+        23511.890259172244,
+        24111.890259172244,
+        24811.890259172244,
+        28411.890259172244,
+        29111.890259172244,
+        29711.89025917306,
+        32111.89025917306,
+        32711.890259172244,
+        32811.89025917224
+      ]
+    },
+    {
+      "kind": "internal-opening-chain",
+      "location": "CD88",
+      "segments": 3,
+      "sourceSegments": [
+        "D1CE",
+        "D1CD",
+        "D1CC"
+      ],
+      "stations": [
+        21411.890259172244,
+        22111.890259172244,
+        24511.890259172244,
+        25211.890259172244
+      ]
+    },
+    {
+      "kind": "third",
+      "location": "top",
+      "segments": 17,
+      "sourceSegments": [
+        "D20A",
+        "D207",
+        "D206",
+        "D205",
+        "D1D1",
+        "D1D0",
+        "D1CF",
+        "D1D7",
+        "D1D6",
+        "D1D5",
+        "D1D4",
+        "D1D3",
+        "D1D2",
+        "D1E0",
+        "D1DF",
+        "D1DE",
+        "D20B"
+      ],
+      "stations": [
+        15111.89025917189,
+        15211.890259172244,
+        15961.890259172244,
+        18361.890259172244,
+        19111.890259172244,
+        19371.890259172244,
+        20271.890259172244,
+        21311.890259172244,
+        22111.890259172244,
+        24511.890259172244,
+        25311.890259172244,
+        26011.890259172244,
+        28411.890259172244,
+        29111.890259172244,
+        29331.89025917795,
+        30231.89025917795,
+        32711.890259172244,
+        32811.89025917224
+      ]
+    },
+    {
+      "kind": "internal-opening-chain",
+      "location": "CDA5",
+      "segments": 3,
+      "sourceSegments": [
+        "D1E1",
+        "D1E2",
+        "D1E3"
+      ],
+      "stations": [
+        24241.263551952827,
+        24941.263551957833,
+        25741.263551957833,
+        25941.263551952914
+      ]
+    },
+    {
+      "kind": "third",
+      "location": "left",
+      "segments": 1,
+      "sourceSegments": [
+        "D20C"
+      ],
+      "stations": [
+        16441.263551952798,
+        16541.263551952827
+      ]
+    },
+    {
+      "kind": "third",
+      "location": "left",
+      "segments": 9,
+      "sourceSegments": [
+        "D1FC",
+        "D1FD",
+        "D1FE",
+        "D1E4",
+        "D1E5",
+        "D1E6",
+        "D1EA",
+        "D1EB",
+        "D1EC"
+      ],
+      "stations": [
+        20541.263551952827,
+        20991.263551952827,
+        21891.263551952827,
+        22341.263551952827,
+        22791.263551952827,
+        23691.263551952827,
+        24141.263551952827,
+        24741.263551952827,
+        26841.263551952827,
+        27741.263551952827
+      ]
+    },
+    {
+      "kind": "third",
+      "location": "left",
+      "segments": 1,
+      "sourceSegments": [
+        "D20D"
+      ],
+      "stations": [
+        34741.26355195283,
+        34841.26355195283
+      ]
+    },
+    {
+      "kind": "third",
+      "location": "right",
+      "segments": 1,
+      "sourceSegments": [
+        "D20E"
+      ],
+      "stations": [
+        16441.263551952798,
+        18541.263551952827
+      ]
+    },
+    {
+      "kind": "third",
+      "location": "right",
+      "segments": 9,
+      "sourceSegments": [
+        "D1E7",
+        "D1E8",
+        "D1E9",
+        "D1F6",
+        "D1F7",
+        "D1F8",
+        "D1F9",
+        "D1FA",
+        "D1FB"
+      ],
+      "stations": [
+        22141.263551952827,
+        22691.26355195172,
+        23591.26355195172,
+        24141.26355195079,
+        24541.263551951775,
+        25441.263551951775,
+        25941.263551952827,
+        26391.26355195291,
+        27291.26355195291,
+        27741.263551952798
+      ]
+    },
+    {
+      "kind": "third",
+      "location": "right",
+      "segments": 1,
+      "sourceSegments": [
+        "D20F"
+      ],
+      "stations": [
+        34741.26355195283,
+        34841.26355195283
+      ]
+    },
+    {
+      "kind": "internal-opening-chain",
+      "location": "CDB7",
+      "segments": 3,
+      "sourceSegments": [
+        "D1ED",
+        "D1EE",
+        "D1EF"
+      ],
+      "stations": [
+        20641.263551952827,
+        20741.26355195306,
+        21541.26355195306,
+        22241.263551952827
+      ]
+    },
+    {
+      "kind": "internal-opening-chain",
+      "location": "CDB8",
+      "segments": 3,
+      "sourceSegments": [
+        "D1F0",
+        "D1F1",
+        "D1F2"
+      ],
+      "stations": [
+        27841.263551952827,
+        27957.351362220954,
+        28857.351362220954,
+        30641.263551952827
+      ]
+    },
+    {
+      "kind": "internal-opening-chain",
+      "location": "CDBC",
+      "segments": 3,
+      "sourceSegments": [
+        "D1F3",
+        "D1F4",
+        "D1F5"
+      ],
+      "stations": [
+        30841.263551952827,
+        31541.263551952827,
+        33941.26355195283,
+        34641.26355195283
+      ]
+    },
+    {
+      "kind": "internal-opening-chain",
+      "location": "D006",
+      "segments": 3,
+      "sourceSegments": [
+        "D1FF",
+        "D200",
+        "D201"
+      ],
+      "stations": [
+        22441.263551952827,
+        22541.263551950964,
+        23441.263551950964,
+        24041.263551952827
+      ]
+    },
+    {
+      "kind": "internal-opening-chain",
+      "location": "D009",
+      "segments": 3,
+      "sourceSegments": [
+        "D202",
+        "D203",
+        "D204"
+      ],
+      "stations": [
+        30841.263551952827,
+        30941.263551952943,
+        31841.263551952943,
+        34641.26355195283
+      ]
+    }
+  ],
+  "missingNativeSegmentCountTemplates": [
+    9,
+    13,
+    17
+  ],
+  "productionRequirementsComplete": false,
+  "apronWorkStopped": true,
+  "userDecisionPending": "Allow fixed public TCH merge command via ObjectARX SDK in private copy, or provide native9/13/17 templates. Earlier prohibition remains until actual reply."
+}

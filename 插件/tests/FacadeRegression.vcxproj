@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+ <ItemGroup Label="ProjectConfigurations"><ProjectConfiguration Include="Release|x64"><Configuration>Release</Configuration><Platform>x64</Platform></ProjectConfiguration></ItemGroup>
+ <PropertyGroup Label="Globals"><ProjectGuid>{FC6E6ED0-8C54-475C-BD36-60B2BAC4FE88}</ProjectGuid><WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion></PropertyGroup>
+ <Import Project="$(VCTargetsPath)Microsoft.Cpp.Default.props"/><PropertyGroup Label="Configuration"><ConfigurationType>Application</ConfigurationType><PlatformToolset>v141</PlatformToolset><CharacterSet>Unicode</CharacterSet></PropertyGroup><Import Project="$(VCTargetsPath)Microsoft.Cpp.props"/>
+ <PropertyGroup><OutDir>$(MSBuildThisFileDirectory)..\bin\</OutDir><IntDir>$(MSBuildThisFileDirectory)..\build\facaderegression\</IntDir></PropertyGroup>
+ <ItemDefinitionGroup><ClCompile><LanguageStandard>stdcpp17</LanguageStandard><ExceptionHandling>Sync</ExceptionHandling><AdditionalIncludeDirectories>../../阶段2/src</AdditionalIncludeDirectories><AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions></ClCompile><Link><SubSystem>Console</SubSystem></Link></ItemDefinitionGroup>
+ <ItemGroup><ClCompile Include="../../阶段2/tests/AxisFacadeRegression.cpp"/><ClCompile Include="../../阶段2/src/PlanRules.cpp"/><ClCompile Include="../../阶段2/src/GroupEndpoints.cpp"/><ClCompile Include="../../阶段2/src/WallTopology.cpp"/></ItemGroup><Import Project="$(VCTargetsPath)Microsoft.Cpp.targets"/>
+</Project>

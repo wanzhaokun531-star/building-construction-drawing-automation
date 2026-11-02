@@ -1,0 +1,331 @@
+{
+  "日期": "2026-10-28T16:25:00.3464828+08:00",
+  "核对方式": "只读进程、文件、注册表元数据；未启动CAD，未调用CAD/COM，不改变用户环境",
+  "AutoCAD": {
+    "GUI": {
+      "路径": "D:\\CAD2020\\AutoCAD 2020\\acad.exe",
+      "文件版本": "R23.1.47.0.0",
+      "产品版本": "R23.1.47.0.0",
+      "字节数": 5799808,
+      "最后修改UTC": "2026-10-26T10:50:00.9412265Z"
+    },
+    "CoreConsole": {
+      "路径": "D:\\CAD2020\\AutoCAD 2020\\accoreconsole.exe",
+      "文件版本": "23.1.47.0.0",
+      "产品版本": "23.1.47.0.0",
+      "字节数": 897408,
+      "最后修改UTC": "2019-01-30T09:35:46.0000000Z"
+    },
+    "当前进程ID": 18652,
+    "开始时间": "2026-10-27T23:10:40.4229790+08:00"
+  },
+  "ObjectARX": {
+    "SDK根": "C:\\Autodesk\\ObjectARX_for_AutoCAD_2020_Win_64_bit",
+    "版本头": "inc/id.h",
+    "版本宏": {
+      "ACADV_RELMINOR": 1,
+      "ACADV_RELMAJOR": 23
+    },
+    "库目录": "lib-x64",
+    "已见库": [
+      "acad.lib",
+      "accore.lib",
+      "acdb23.lib",
+      "acge23.lib",
+      "rxapi.lib"
+    ],
+    "配置依据": [
+      "inc/arx.props",
+      "inc/dbx.props"
+    ],
+    "编译兼容性": "未验证"
+  },
+  "工具链": {
+    "VS根": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community",
+    "VS安装版本": "16.11.37823.30",
+    "VS显示版本": "16.11.61",
+    "MSBuild": {
+      "路径": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe",
+      "文件版本": "16.11.6.22506",
+      "产品版本": "16.11.6+a918ceb31339d7d4a383ca4c79bbc4c612bf25f3",
+      "字节数": 324640,
+      "最后修改UTC": "2026-10-26T12:56:07.4134518Z"
+    },
+    "VC工具目录": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.16.27023",
+    "cl": {
+      "路径": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.16.27023\\bin\\Hostx64\\x64\\cl.exe",
+      "文件版本": "19.16.27054.0 built by: cloudtest",
+      "产品版本": "14.16.27054.0",
+      "字节数": 427080,
+      "最后修改UTC": "2026-10-26T13:22:52.6985885Z"
+    },
+    "link": {
+      "路径": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.16.27023\\bin\\Hostx64\\x64\\link.exe",
+      "文件版本": "14.16.27054.0 built by: cloudtest",
+      "产品版本": "14.16.27054.0",
+      "字节数": 1711720,
+      "最后修改UTC": "2026-10-26T13:22:52.7364616Z"
+    },
+    "环境脚本": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Auxiliary\\Build\\vcvarsall.bat",
+    "v141Targets": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\MSBuild\\Microsoft\\VC\\v150\\",
+    "v141配置": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\MSBuild\\Microsoft\\VC\\v150\\Platforms\\x64\\PlatformToolsets\\v141\\Toolset.props",
+    "并存工具版本": [
+      "14.16.27023",
+      "14.29.30133"
+    ],
+    "选择说明": "v160平台目录只含v142；v150平台目录存在v141。工程若声明v141应显式核对VCTargetsPath，或用v141环境脚本直接cl/link。不得误用v142。",
+    "WindowsSDK版本": "10.0.19041.0",
+    "资源编译器": {
+      "路径": "C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.19041.0\\x64\\rc.exe",
+      "文件版本": "10.0.19041.5609 (WinBuild.160101.0800)",
+      "产品版本": "10.0.19041.5609",
+      "字节数": 71208,
+      "最后修改UTC": "2025-03-11T21:02:20.0000000Z"
+    },
+    "建议参数": [
+      "Release",
+      "x64",
+      "/MD",
+      "Unicode"
+    ],
+    "构建状态": "仅文件级核查，尚未构建加载"
+  },
+  "天正": {
+    "运行模块根": "C:\\Tangent\\TArchT20V8\\sys23x64",
+    "配置文件": "C:\\Tangent\\TArchT20V8\\SYS\\tch.ini",
+    "配置标识": {
+      "NewVersion": "V8.0",
+      "EName": "TArch",
+      "Version": "10",
+      "SubVer": "Build210809"
+    },
+    "配置行号": [
+      5,
+      7,
+      8,
+      9
+    ],
+    "实际模块数": 34,
+    "实际模块": [
+      {
+        "名称": "tch_kernal.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_kernal.arx",
+        "文件版本": "6, 0, 404, 8",
+        "产品版本": "6, 0, 0, 0"
+      },
+      {
+        "名称": "tch_utility.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_utility.arx",
+        "文件版本": "6, 0, 404, 8",
+        "产品版本": "6, 0, 0, 0"
+      },
+      {
+        "名称": "tch_pipewire.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_pipewire.arx",
+        "文件版本": null,
+        "产品版本": null
+      },
+      {
+        "名称": "tch_pipebase.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_pipebase.arx",
+        "文件版本": "1, 0, 0, 1",
+        "产品版本": "1, 0, 0, 1"
+      },
+      {
+        "名称": "tch_initstart.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_initstart.arx",
+        "文件版本": "6, 0, 404, 8",
+        "产品版本": "6, 0, 0, 0"
+      },
+      {
+        "名称": "tch.dll",
+        "路径": "C:\\Tangent\\TArchT20V8\\sys23x64\\tch.dll",
+        "文件版本": null,
+        "产品版本": null
+      },
+      {
+        "名称": "tch_uiframe.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_uiframe.arx",
+        "文件版本": "1, 0, 0, 1",
+        "产品版本": "1, 0, 0, 1"
+      },
+      {
+        "名称": "tch_common.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_common.arx",
+        "文件版本": null,
+        "产品版本": null
+      },
+      {
+        "名称": "TCH_UIPanelAxis.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelAxis.arx",
+        "文件版本": "1, 0, 0, 1",
+        "产品版本": "1, 0, 0, 1"
+      },
+      {
+        "名称": "TCH_UIPanelColumn.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelColumn.arx",
+        "文件版本": "1, 0, 0, 1",
+        "产品版本": "1, 0, 0, 1"
+      },
+      {
+        "名称": "TCH_UIPanelLayer.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelLayer.arx",
+        "文件版本": "1, 0, 0, 1",
+        "产品版本": "1, 0, 0, 1"
+      },
+      {
+        "名称": "tch_sqlite.dll",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_sqlite.dll",
+        "文件版本": "1.0.0.1",
+        "产品版本": "1.0.0.1"
+      },
+      {
+        "名称": "TCH_UIPanelRedLine.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelRedLine.arx",
+        "文件版本": "1, 0, 0, 1",
+        "产品版本": "1, 0, 0, 1"
+      },
+      {
+        "名称": "TCH_UIPanelWall.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelWall.arx",
+        "文件版本": "1, 0, 0, 1",
+        "产品版本": "1, 0, 0, 1"
+      },
+      {
+        "名称": "TCH_UIPanelWindowAndDoor.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelWindowAndDoor.arx",
+        "文件版本": "1, 0, 0, 1",
+        "产品版本": "1, 0, 0, 1"
+      },
+      {
+        "名称": "TCH_UIPanelsymbol.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelsymbol.arx",
+        "文件版本": "1, 0, 0, 1",
+        "产品版本": "1, 0, 0, 1"
+      },
+      {
+        "名称": "TCH_UIPanelSymbolManage.ARX",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelSymbolManage.ARX",
+        "文件版本": "1.0.0.1",
+        "产品版本": "1.0.0.1"
+      },
+      {
+        "名称": "TCH_UIToolBar.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIToolBar.arx",
+        "文件版本": "1, 0, 0, 1",
+        "产品版本": "1, 0, 0, 1"
+      },
+      {
+        "名称": "tch3_kernal.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch3_kernal.arx",
+        "文件版本": null,
+        "产品版本": null
+      },
+      {
+        "名称": "tch_kerncmd.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_kerncmd.arx",
+        "文件版本": "6, 0, 312, 24",
+        "产品版本": "6, 0, 0, 0"
+      },
+      {
+        "名称": "tch_annotate.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_annotate.arx",
+        "文件版本": "6, 0, 312, 24",
+        "产品版本": "6, 0, 0, 0"
+      },
+      {
+        "名称": "tch_toolcmd.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_toolcmd.arx",
+        "文件版本": null,
+        "产品版本": null
+      },
+      {
+        "名称": "tch_elevation.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_elevation.arx",
+        "文件版本": "6, 0, 312, 24",
+        "产品版本": "6, 0, 0, 0"
+      },
+      {
+        "名称": "tch_collision.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_collision.arx",
+        "文件版本": "1.0.0.1",
+        "产品版本": "1.0.0.1"
+      },
+      {
+        "名称": "tch_structure.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_structure.arx",
+        "文件版本": "1, 0, 0, 1",
+        "产品版本": "1, 0, 0, 1"
+      },
+      {
+        "名称": "tch_siteplan.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_siteplan.arx",
+        "文件版本": "1, 0, 0, 1",
+        "产品版本": "1, 0, 0, 1"
+      },
+      {
+        "名称": "tch_public.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_public.arx",
+        "文件版本": "1.0.0.1",
+        "产品版本": "1.0.0.1"
+      },
+      {
+        "名称": "tch_blklib.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_blklib.arx",
+        "文件版本": "6, 0, 312, 24",
+        "产品版本": "6, 0, 0, 0"
+      },
+      {
+        "名称": "tch_3dsolids.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_3dsolids.arx",
+        "文件版本": "6, 0, 312, 10",
+        "产品版本": "6, 0, 0, 0"
+      },
+      {
+        "名称": "tch_interior.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_interior.arx",
+        "文件版本": "6, 0, 312, 10",
+        "产品版本": "6, 0, 0, 0"
+      },
+      {
+        "名称": "tch_tgedit.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_tgedit.arx",
+        "文件版本": "1, 0, 0, 1",
+        "产品版本": "1, 0, 0, 1"
+      },
+      {
+        "名称": "tch_tginterior.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_tginterior.arx",
+        "文件版本": "1, 0, 0, 1",
+        "产品版本": "1, 0, 0, 1"
+      },
+      {
+        "名称": "tch_tgtool.arx",
+        "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_tgtool.arx",
+        "文件版本": "1, 0, 0, 1",
+        "产品版本": "1, 0, 0, 1"
+      },
+      {
+        "名称": "Tch10_Com23.dll",
+        "路径": "C:\\Tangent\\TArchT20V8\\SYS23x64\\Tch10_Com23.dll",
+        "文件版本": "6, 0, 312, 17",
+        "产品版本": "6, 0, 0, 0"
+      }
+    ],
+    "说明": "配置产品标识、模块文件版本分别记录；二者不等价。加载模块不证明开发SDK或创建修改接口可用。"
+  },
+  "COM注册": {
+    "AutoCADApplication23_1": true,
+    "ObjectDBX23": true,
+    "实际激活": "未执行"
+  },
+  "已有提取复用": {
+    "目录": "D:\\Codex\\建筑施工图自动化\\图纸读取",
+    "JSON读取说明": "AutoCAD ObjectDBX with loaded Tianzheng object support; getters only",
+    "提取脚本": "工作区检索未找到ps1/lsp/py/js/scr提取脚本",
+    "单位状态": "现有JSON缺全局单位证据，不能仅由块单位及bounds猜测",
+    "可复用": "复用getter属性名称与样本句柄、源数据结构；须对冻结DWG重新首读绑定当次哈希",
+    "后台方案": "优先在已加载天正的AutoCAD进程内GetInterfaceObject取得ObjectDBX.AxDbDocument.23，打开新工作副本进行只读首读；原生ARX探针可在宿主加载后操作独立AcDbDatabase。ObjectDBX可读不等于ARX创建/写入/关联已通过。"
+  },
+  "结论": "候选环境已定位，v141、SDK23.1、宿主23.1文件证据齐全。编译、加载、天正对象读写和重开均仍须由阶段1实际执行，未以本次核对冒充运行通过。"
+}

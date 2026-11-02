@@ -1,0 +1,56 @@
+{
+  "contract": "bcp.facade-gate.legacy-publishers.v1",
+  "activePublisher": "publish_axis_facade_fix.py",
+  "originalsArchived": "D:\\Codex\\建筑施工图自动化\\阶段2\\revisions\\retired-publishers-before-facade-gate",
+  "blocked": [
+    {
+      "name": "publish_axis_sides.py",
+      "blockedBeforeWrites": true,
+      "returnCode": 1,
+      "sha256": "183F3BEFC71B66ED164A0D5BCEFF40CF028F1A431F5C871C0DF59A9C97A33C34",
+      "importAlsoBlocked": true
+    },
+    {
+      "name": "publish_confirmed_gap.py",
+      "blockedBeforeWrites": true,
+      "returnCode": 1,
+      "sha256": "64F6E8031E142A628F53DB74EE97B66B4A363EF8E8F9AC8BE4B64DF7B5CE15BF",
+      "importAlsoBlocked": true
+    },
+    {
+      "name": "publish_grid_intermediate.py",
+      "blockedBeforeWrites": true,
+      "returnCode": 1,
+      "sha256": "ABED2992492B5A57FE2980F83BBA930C660381C6F4AA434CF8CFE44C8F785DBA",
+      "importAlsoBlocked": true
+    },
+    {
+      "name": "publish_outer_priority.py",
+      "blockedBeforeWrites": true,
+      "returnCode": 1,
+      "sha256": "31BD5B1F3518BC5889D373A40BF5967977AE3D0B242B023A0F610FF6DC1B05C9",
+      "importAlsoBlocked": true
+    },
+    {
+      "name": "publish_side_dimensions.py",
+      "blockedBeforeWrites": true,
+      "returnCode": 1,
+      "sha256": "F75F857FF6844AC2B74A0040A008325995F48149EDF5F947577A29D4B85D789D",
+      "importAlsoBlocked": true
+    },
+    {
+      "name": "publish_spacing_trial.py",
+      "blockedBeforeWrites": true,
+      "returnCode": 1,
+      "sha256": "0B4698CAEF49A22BCC864CCA5691F311934FE6572F677B8E95F607C41514851D",
+      "importAlsoBlocked": true
+    }
+  ],
+  "exempt": [
+    {
+      "name": "publish_analysis.py",
+      "reason": "read-only source analysis presentation; does not publish generated axis annotation DWG",
+      "originalSHA256": "D8F7D07E2F4E04FBFA2356EF9D57552866AC8DE687A558050017C8CC5560F37E"
+    }
+  ]
+}

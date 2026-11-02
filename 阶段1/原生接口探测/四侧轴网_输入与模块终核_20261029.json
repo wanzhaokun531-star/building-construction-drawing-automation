@@ -1,0 +1,213 @@
+{
+  "contract": "stage1.axis-input-staging-delivery-closure.v1",
+  "recorded": "2026-10-29T11:28:45.241003+08:00",
+  "inputs": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\方案平面图.dwg",
+      "sha256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+      "expectedPriorSHA256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+      "unchangedSincePrior": true,
+      "bytes": 3266205
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\施工图平面参考图.dwg",
+      "sha256": "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27",
+      "expectedPriorSHA256": "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27",
+      "unchangedSincePrior": true,
+      "bytes": 378381
+    },
+    {
+      "path": "D:\\cad插件\\方案平面图.dwg",
+      "sha256": "92E01E8DD5BD4BA2B65CA48C6A3E8F6C38E3CB5F7EF3C3C36E8B692980B8BDD6",
+      "expectedPriorSHA256": "92E01E8DD5BD4BA2B65CA48C6A3E8F6C38E3CB5F7EF3C3C36E8B692980B8BDD6",
+      "unchangedSincePrior": true,
+      "bytes": 3469806
+    },
+    {
+      "path": "D:\\cad插件\\施工图平面参考图.dwg",
+      "sha256": "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27",
+      "expectedPriorSHA256": "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27",
+      "unchangedSincePrior": true,
+      "bytes": 378381
+    }
+  ],
+  "staging": [
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-093149",
+      "module": "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_969326F08C69_ed5b3718.arx",
+      "ini": "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_969326F08C69_ed5b3718.ini",
+      "nonce": "ed5b371834bd41ce8519421f0bbc5d56",
+      "deleted": [],
+      "status": "SKIPPED_NO_PROCESS_RECEIPT"
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-101013",
+      "module": "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_B16C1624E117_8d99d5ad.arx",
+      "ini": "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_B16C1624E117_8d99d5ad.ini",
+      "nonce": "8d99d5ad4d064cbf9fe62dae9524e9bb",
+      "deleted": [
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_B16C1624E117_8d99d5ad.arx",
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_B16C1624E117_8d99d5ad.ini"
+      ],
+      "status": "EXACT_OWNED_STAGING_ARCHIVED_AND_REMOVED",
+      "processId": 33436,
+      "processAliveOrUnknown": false,
+      "binarySHA256": "B16C1624E1173EE1AEA5D5C28467E8A7554A12FFFCBCFA92D3EA52A252958DF1",
+      "iniSHA256": "721BC030C67B562A912F22E9DDEE434FA1DA3448FE1EA35E444D5770D2B7F03D"
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-101307",
+      "module": "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_B16C1624E117_965849df.arx",
+      "ini": "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_B16C1624E117_965849df.ini",
+      "nonce": "965849df5f2d4f72aea13814c2f880ae",
+      "deleted": [
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_B16C1624E117_965849df.arx",
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_B16C1624E117_965849df.ini"
+      ],
+      "status": "EXACT_OWNED_STAGING_ARCHIVED_AND_REMOVED",
+      "processId": 31952,
+      "processAliveOrUnknown": false,
+      "binarySHA256": "B16C1624E1173EE1AEA5D5C28467E8A7554A12FFFCBCFA92D3EA52A252958DF1",
+      "iniSHA256": "F2B1059D3C635D31816D82FDE670AF1D85F861D4967CBA130974F18CB0DE016F"
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-102351",
+      "module": "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_FE9E32CF03CF_e99249ce.arx",
+      "ini": "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_FE9E32CF03CF_e99249ce.ini",
+      "nonce": "e99249ce267f423eb4021637cd8a2e62",
+      "deleted": [
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_FE9E32CF03CF_e99249ce.arx",
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_FE9E32CF03CF_e99249ce.ini"
+      ],
+      "status": "EXACT_OWNED_STAGING_ARCHIVED_AND_REMOVED",
+      "processId": 19004,
+      "processAliveOrUnknown": false,
+      "binarySHA256": "FE9E32CF03CF0F95D9B9211C2C6950018C57502E74BE0A861E942E7CBAF6D7C5",
+      "iniSHA256": "D18691DBA35FB9185D9AF15BFBFBF82E84695E2EE826A82F1C722C2FE908E4C3"
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-103207",
+      "module": "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_594CAA79CF45_7cb5dcf5.arx",
+      "ini": "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_594CAA79CF45_7cb5dcf5.ini",
+      "nonce": "7cb5dcf53b544e7cbee7e3c53e4965cf",
+      "deleted": [
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_594CAA79CF45_7cb5dcf5.arx",
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_594CAA79CF45_7cb5dcf5.ini"
+      ],
+      "status": "EXACT_OWNED_STAGING_ARCHIVED_AND_REMOVED",
+      "processId": 34224,
+      "processAliveOrUnknown": false,
+      "binarySHA256": "594CAA79CF4569CD483C53336CE04FBAA3501F0D1F43DC78623A227F4792EEBA",
+      "iniSHA256": "8BDF7776DFECF78DD9DFDEA62F9D4E764DF9A5DE8AB8A96E55884EB13B1FDC37"
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-103728",
+      "module": "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_76306F82B20B_54f8e260.arx",
+      "ini": "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_76306F82B20B_54f8e260.ini",
+      "nonce": "54f8e260dfc7446babcc735b5ca915df",
+      "deleted": [
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_76306F82B20B_54f8e260.arx",
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_76306F82B20B_54f8e260.ini"
+      ],
+      "status": "EXACT_OWNED_STAGING_ARCHIVED_AND_REMOVED",
+      "processId": 16588,
+      "processAliveOrUnknown": false,
+      "binarySHA256": "76306F82B20B8C795AEC8EB2AC66FC8F4F198C19D512B3129B1F9BF77D0614DC",
+      "iniSHA256": "63BCA79EC748A45A61F0AC07F94E838F1A47F4A11DA2175881B7FA9F69E9EC5B"
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-105207",
+      "module": "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_405910B9BEE4_93073202.arx",
+      "ini": "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_405910B9BEE4_93073202.ini",
+      "nonce": "93073202a39248c6b381286c89c8d1c6",
+      "deleted": [
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_405910B9BEE4_93073202.arx",
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_405910B9BEE4_93073202.ini"
+      ],
+      "status": "EXACT_OWNED_STAGING_ARCHIVED_AND_REMOVED",
+      "processId": 25500,
+      "processAliveOrUnknown": false,
+      "binarySHA256": "405910B9BEE42C4F36200C57C962C83357B817500ADFF10A18009AF99A8ECC6B",
+      "iniSHA256": "1E1F78FD58FB53BE8AB71E0F670A77139061B449A653D22720950EA6962A4AFF"
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-105837",
+      "module": "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_AFA600FE696E_1d678564.arx",
+      "ini": "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_AFA600FE696E_1d678564.ini",
+      "nonce": "1d678564dff74f61bbb2e634563528fc",
+      "deleted": [
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_AFA600FE696E_1d678564.arx",
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_AFA600FE696E_1d678564.ini"
+      ],
+      "status": "EXACT_OWNED_STAGING_ARCHIVED_AND_REMOVED",
+      "processId": 19392,
+      "processAliveOrUnknown": false,
+      "binarySHA256": "AFA600FE696E86F31C9B8B2C554DCFFE3A16747E9706F3107602844D66C81D9A",
+      "iniSHA256": "98755403A0F6D1A6D9249A23DDA6DAE24824B29834D009AA0DF3301E8F92A7C7"
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-110540",
+      "module": "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_FE18423BCA36_04dfaeca.arx",
+      "ini": "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_FE18423BCA36_04dfaeca.ini",
+      "nonce": "04dfaecaf1634075a593da65a84a00ab",
+      "deleted": [
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_FE18423BCA36_04dfaeca.arx",
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_FE18423BCA36_04dfaeca.ini"
+      ],
+      "status": "EXACT_OWNED_STAGING_ARCHIVED_AND_REMOVED",
+      "processId": 860,
+      "processAliveOrUnknown": false,
+      "binarySHA256": "FE18423BCA36A254EF0377CDBD9FE80911A02331E8E182A6725F876997FC7367",
+      "iniSHA256": "C03A82AFFB247F788FE662512614B47FBB51416FFCDCF59A76CFF3E9A3CF31B3"
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-axis-20261029-111530",
+      "module": "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_246BC6FE121E_0db9e114.arx",
+      "ini": "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_246BC6FE121E_0db9e114.ini",
+      "nonce": "0db9e114eee6486c9277fe3e4fc1dc9d",
+      "deleted": [
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_246BC6FE121E_0db9e114.arx",
+        "C:\\Users\\PC\\AppData\\Roaming\\Tangent\\TArch20V8\\sys\\S1Quiet_246BC6FE121E_0db9e114.ini"
+      ],
+      "status": "EXACT_OWNED_STAGING_ARCHIVED_AND_REMOVED",
+      "processId": 12148,
+      "processAliveOrUnknown": false,
+      "binarySHA256": "246BC6FE121EF4AEF2E02EA24DE386E5621B1B47773A2D025D0EE99C376D0C7E",
+      "iniSHA256": "DA098085557F97106A2690830DB69CB221C1348CD9E7004B30C207A4FB1B3CD8"
+    }
+  ],
+  "deliveries": [
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-singletons-20261029-111721-958785\\four-side-singletons-generated.dwg",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\方案图副本_四侧轴网能力验证_20261029.dwg",
+      "sha256": "77C1DB9B4632E45A52CF4C9D848D0B0888C8283AF46F7AACCB2946BFF094D686",
+      "bytes": 3232136,
+      "classification": "stage1 capability fixture; not issued construction drawing"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-preview-20261029-111750-826844\\axis-preview.pdf",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\四侧轴网能力验证_20261029.pdf",
+      "sha256": "1536B77ECD92C3FEAEEDA4F784665980CA13D9826BBB9AFF4972B2168007D01F",
+      "bytes": 172444,
+      "classification": "stage1 capability fixture; not issued construction drawing"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-preview-20261029-111750-826844\\root-review\\full-plan.png",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\四侧轴网能力验证_20261029.png",
+      "sha256": "1BE8461FDC0A8E424003A97F6CF66045A7741607068C5B0252751701F1EB1240",
+      "bytes": 201450,
+      "classification": "stage1 capability fixture; not issued construction drawing"
+    }
+  ],
+  "phase2Started": false,
+  "semanticEvidence": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-explode-20261029-111748-994266\\verify-44-numbers.json",
+    "sha256": "5A8D4E2C154AACECDC817AECE0A8F47752B45AD27B1AD3EFE7B7F64C61527137",
+    "assertions": 482
+  },
+  "visualEvidence": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-preview-20261029-111750-826844\\visual-review-window-orchestration\\visual-review.json",
+    "sha256": "1FE7483562371157EC7763F83CB6AA3894AE51020D858210FF00E5491836EF18",
+    "overlapPending": true
+  }
+}

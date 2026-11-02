@@ -1,0 +1,66 @@
+{
+  "contract": "stage1.symbols-and-quit-plan.v1",
+  "recorded": "2026-10-29T13:40:13.164531+08:00",
+  "authorization": "Continue stage1 slope/section/detail-index and normal QUIT; native C++/TCH bridge only, private desktop copies; no COM/CUA, no phase2",
+  "baseline": "Frozen scheme5BC + reference8C3; existing native source/candidate/history reused",
+  "steps": [
+    {
+      "id": "quit-baseline",
+      "status": "complete_bounded_probe",
+      "acceptance": "Native QUIT events plus exact owned process normal exit, no StopOwnedWorker; distinguish queue/UI teardown/process exit",
+      "evidence": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\坡向剖切索引与QUIT_终核_20261029-155349-934871.json",
+      "actual": "Final four types text/geometry/save/PDF plus normal process exit and exact staging closure; full phase1 still pending"
+    },
+    {
+      "id": "symbol-readback-discovery",
+      "status": "complete_with_resource_side_effect_limits",
+      "acceptance": "Actual source TCH types/public text and true owned panels/control roles; no private serialization",
+      "evidence": "runs/quiet-slopediscover-20261029-135029-448209; section135044; pointer135130; sectionindex135146",
+      "actual": "All actual panels/controls captured. Slope13PASS; other3 raw Discovery2FAIL because starting command adds missing_TCH_LABEL style and DBMOD1; original213 unchanged and callbacks detached. Keep originalFAIL, do not claim whole command read-only."
+    },
+    {
+      "id": "slope",
+      "status": "complete_bounded_probe",
+      "acceptance": "Native TDbSymbArrow actual2% and reversed endpoints, source protection, save/new-reader and preview",
+      "evidence": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\坡向剖切索引与QUIT_终核_20261029-155349-934871.json",
+      "actual": "Final four types text/geometry/save/PDF plus normal process exit and exact staging closure; full phase1 still pending"
+    },
+    {
+      "id": "section",
+      "status": "complete_bounded_probe",
+      "acceptance": "Native section number/sheet, endpoints/direction, source protection, save/new-reader and preview",
+      "evidence": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\坡向剖切索引与QUIT_终核_20261029-155349-934871.json",
+      "actual": "Final four types text/geometry/save/PDF plus normal process exit and exact staging closure; full phase1 still pending"
+    },
+    {
+      "id": "detail-index",
+      "status": "complete_bounded_probe",
+      "acceptance": "Actual pointer and section index classes/detail+sheet texts/leaders; no drawing-title substitution; save/new-reader/preview",
+      "evidence": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\坡向剖切索引与QUIT_终核_20261029-155349-934871.json",
+      "actual": "Final four types text/geometry/save/PDF plus normal process exit and exact staging closure; full phase1 still pending"
+    },
+    {
+      "id": "closure",
+      "status": "complete_bounded_probe",
+      "acceptance": "Independent validators; source/style limitations, normal-exit and zero-own-user-popup evidence; exact staging cleanup",
+      "evidence": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\坡向剖切索引与QUIT_终核_20261029-155349-934871.json",
+      "actual": "Final four types text/geometry/save/PDF plus normal process exit and exact staging closure; full phase1 still pending"
+    }
+  ],
+  "rulings": [
+    "No Git repository: preserve current workspace and archive source/binary revisions; do not initialize Git or create unrelated worktrees.",
+    "Execute the authorized phase1 probes inline, reuse valid baselines; no per-task delegation.",
+    "Business fixture parameters2%, arbitrary test number/sheet are explicitly capability data, never project defaults.",
+    "Previously pending normal QUIT had only short post-queue waits; first measure real native exit before changing code."
+  ],
+  "events": [
+    {
+      "state": "v2_real_focus_and_native_preview_compiled",
+      "details": "Candidate03DD/v1 slope and pointer blocked by independent preflight; UI raw text did not persist empty command, no symbols created; defaults restored. Archive revisions/symbol-business-v1-before-real-focus-20261029-1411. New v2 only nonSection actual private child focus/write/restore, no fakeKILLFOCUS or foreground API. SymbolPreview/native AcPl added. Nextprepare must bind current build."
+    }
+  ],
+  "latestClosure": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\坡向剖切索引与QUIT_终核_20261029-155349-934871.json",
+    "SHA256": "469DBE6E41505C1A70CB8031F14146224D5E6D480461B91C95706DF4B0B3A32E"
+  }
+}

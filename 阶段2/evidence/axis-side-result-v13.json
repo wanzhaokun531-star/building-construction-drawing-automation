@@ -1,0 +1,294 @@
+{
+  "contract": "bcp.axis-side-result.v1",
+  "sourceNativeRun": "阶段2\\evidence\\native-run-v13.json",
+  "axes": 20,
+  "visibleEnds": 29,
+  "hiddenEnds": 11,
+  "nativeClipContainers": 11,
+  "nativeAxisType": "TDbAxisLabelSet;11 nested in clip blocks,9 model roots",
+  "original213HandleTypesRetained": true,
+  "nativeDimensionsRetained": 36,
+  "userSourceQ1Q6ExclusionsApplied": true,
+  "axisA": {
+    "label": "A",
+    "vertical": false,
+    "negative": true,
+    "positive": false,
+    "nested": true,
+    "offset": [
+      0,
+      0,
+      0
+    ]
+  },
+  "axisB": {
+    "label": "B",
+    "vertical": false,
+    "negative": false,
+    "positive": true,
+    "nested": true,
+    "offset": [
+      0,
+      0,
+      0
+    ]
+  },
+  "axisD": {
+    "label": "D",
+    "vertical": false,
+    "negative": true,
+    "positive": false,
+    "nested": true,
+    "offset": [
+      -800,
+      800,
+      0
+    ]
+  },
+  "savedReopened": true,
+  "rootStructureUnchanged": false,
+  "directTchEditingValidated": false,
+  "stage2Complete": false,
+  "rows": [
+    {
+      "label": "1",
+      "vertical": true,
+      "negative": true,
+      "positive": true,
+      "nested": false,
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "2",
+      "vertical": true,
+      "negative": true,
+      "positive": false,
+      "nested": true,
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "3",
+      "vertical": true,
+      "negative": true,
+      "positive": true,
+      "nested": false,
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "4",
+      "vertical": true,
+      "negative": true,
+      "positive": false,
+      "nested": true,
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "5",
+      "vertical": true,
+      "negative": false,
+      "positive": true,
+      "nested": true,
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "6",
+      "vertical": true,
+      "negative": true,
+      "positive": false,
+      "nested": true,
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "7",
+      "vertical": true,
+      "negative": false,
+      "positive": true,
+      "nested": true,
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "8",
+      "vertical": true,
+      "negative": true,
+      "positive": true,
+      "nested": false,
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "9",
+      "vertical": true,
+      "negative": true,
+      "positive": true,
+      "nested": false,
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "A",
+      "vertical": false,
+      "negative": true,
+      "positive": false,
+      "nested": true,
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "B",
+      "vertical": false,
+      "negative": false,
+      "positive": true,
+      "nested": true,
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "C",
+      "vertical": false,
+      "negative": true,
+      "positive": true,
+      "nested": false,
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "D",
+      "vertical": false,
+      "negative": true,
+      "positive": false,
+      "nested": true,
+      "offset": [
+        -800,
+        800,
+        0
+      ]
+    },
+    {
+      "label": "E",
+      "vertical": false,
+      "negative": true,
+      "positive": false,
+      "nested": true,
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "F",
+      "vertical": false,
+      "negative": true,
+      "positive": true,
+      "nested": false,
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "G",
+      "vertical": false,
+      "negative": true,
+      "positive": true,
+      "nested": false,
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "H",
+      "vertical": false,
+      "negative": true,
+      "positive": true,
+      "nested": false,
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "J",
+      "vertical": false,
+      "negative": true,
+      "positive": false,
+      "nested": true,
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "K",
+      "vertical": false,
+      "negative": false,
+      "positive": true,
+      "nested": true,
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "L",
+      "vertical": false,
+      "negative": true,
+      "positive": true,
+      "nested": false,
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    }
+  ]
+}

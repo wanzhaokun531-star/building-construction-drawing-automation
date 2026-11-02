@@ -1,0 +1,15 @@
+test_default_restore_claim_needs_actual_reopen (__main__.SymbolEvidenceRegression.test_default_restore_claim_needs_actual_reopen) ... ok
+test_original_scheme_change_is_rejected (__main__.SymbolEvidenceRegression.test_original_scheme_change_is_rejected) ... ok
+test_own_temporary_clone_must_be_erased (__main__.SymbolEvidenceRegression.test_own_temporary_clone_must_be_erased) ... ok
+test_real_four_families (__main__.SymbolEvidenceRegression.test_real_four_families) ... ok
+test_removed_arrowhead_is_rejected (__main__.SymbolEvidenceRegression.test_removed_arrowhead_is_rejected) ... ok
+test_requested_ui_text_is_not_output (__main__.SymbolEvidenceRegression.test_requested_ui_text_is_not_output) ... ok
+test_reversed_cutting_stroke_is_rejected (__main__.SymbolEvidenceRegression.test_reversed_cutting_stroke_is_rejected) ... ok
+test_snapped_input_is_rejected (__main__.SymbolEvidenceRegression.test_snapped_input_is_rejected) ... ok
+test_standard_geometry_cannot_replace_native_symbol (__main__.SymbolEvidenceRegression.test_standard_geometry_cannot_replace_native_symbol) ... ok
+test_unrestored_host_mode_is_rejected (__main__.SymbolEvidenceRegression.test_unrestored_host_mode_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.181s
+
+OK

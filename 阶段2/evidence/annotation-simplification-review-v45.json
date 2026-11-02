@@ -1,0 +1,25 @@
+{
+  "contract": "bcp.annotation-simplification-review.v1",
+  "reviewer": "unified_annotations_review",
+  "result": "No findings",
+  "P2Closed": "third-row end legs now checked against actual saved GP2/3 constructed from physical exterior plane and retained end axes, not only same-length metadata",
+  "positive": [
+    "111 pure-rule checks",
+    "v45 native and saved geometry gate",
+    "actual PNG examined; kitchen continuous; 13 C readable; entry/exterior annotations retained"
+  ],
+  "negativeRejected": [
+    "old v43",
+    "delete legitimate CD9E chain",
+    "restore omitted CDBF caption",
+    "split local chain baseline",
+    "move actual text GP4 while reporting conflict0",
+    "wrong C9999",
+    "terminal GP2/3 along-axis500",
+    "terminal GP2/3 cross-axis500",
+    "superseded publisher"
+  ],
+  "DWGChangedForGateFix": false,
+  "reviewerStartedCad": false,
+  "reviewerPublished": false
+}

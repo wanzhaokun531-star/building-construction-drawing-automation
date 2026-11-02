@@ -1,0 +1,32 @@
+{
+  "contract": "bcp.stage2.native-input-rejection.v1",
+  "case": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-cache-rejection-20261030-141254",
+  "step": {
+    "serial": "72899a39ecf74360a098631c73c8f63a",
+    "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-140540\\dispatch_72899a39ecf74360a098631c73c8f63a.json",
+    "idleState": {
+      "contract": "stage1.quiet-worker-state.v1",
+      "nonce": "592a2540c4f842be8fad6c9c4e5f4ef6",
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-140540",
+      "processId": 26016,
+      "desktop": "CodexS1_592a2540c4f842be8fad6c9c4e5f4ef6",
+      "inputDesktop": "Default",
+      "serial": "72899a39ecf74360a098631c73c8f63a",
+      "command": "S1PHASE2EXECUTE",
+      "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-cache-rejection-20261030-141254",
+      "phase": "idle",
+      "commandStarted": true,
+      "commandEnded": true,
+      "commandFailed": false,
+      "cmdActive": 0,
+      "inputPending": 0,
+      "nativePending": false,
+      "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-140540\\Drawing1.dwg",
+      "error": null
+    }
+  },
+  "expectedFailure": "failure: frozen input/cache hash mismatch",
+  "newStage2Outputs": false,
+  "sidecarRestored": true,
+  "sourceUnchanged": true
+}

@@ -1,0 +1,38 @@
+{
+  "contract": "bce.m1-review.v1",
+  "nativeStatus": "awaiting-controller-red-and-green",
+  "redReceipt": "立面插件\\build\\m1-20261101-204728-683-red-stub-80d8f1dd\\receipt.json",
+  "greenReceipt": "立面插件\\build\\m1-20261101-205402-216-green-ready-0c10f7b4\\receipt.json",
+  "files": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\NativeMaterials.h",
+      "sha256": "C719B2341A79405CCD2DB2FC3279896EF361639AD5210EB129F95EE90E77D2C4",
+      "redSHA256": "C719B2341A79405CCD2DB2FC3279896EF361639AD5210EB129F95EE90E77D2C4"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\NativeMaterials.cpp",
+      "sha256": "6A59277C57768535A85A09A559577DA3879376B93F2EC30F5F358AD50AB866DA",
+      "redSHA256": "14FB2B1EA8489041C6F4D0C0E6FB679CDFA314126456F0B39ABA92F158A4E2DD"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\material\\MaterialDriver.cpp",
+      "sha256": "E5504874C061425261A3A6FD8F8A13E2222BF9F0A0C6DB1570574C0AC9F94C23",
+      "redSHA256": "034ED802B434031DDE588B389639FC1A6F1D68744F878C8F3D64519A3B5F41F4"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\material\\MaterialFixtures.h",
+      "sha256": "5C27C6567EA339EBFF8032A39EA94A1E63E15C5093AE14A87AEF5FA0686DC770",
+      "redSHA256": null
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\material\\ElevationMaterialCases.vcxproj",
+      "sha256": "606B5B43424786B33C0907A56E55B101E9A4AC4F9A0FC46F6DD6A5EEB7EE513F",
+      "redSHA256": "606B5B43424786B33C0907A56E55B101E9A4AC4F9A0FC46F6DD6A5EEB7EE513F"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\build_material.ps1",
+      "sha256": "797B2F9B0B3AD3B578BC06EDA9A93EC2A753D95A36A35799CB06594B32FCD068",
+      "redSHA256": "28867A47D26A8C5CB73D1BE11C853ED66FEDF4B018B67D5C7197409472986B97"
+    }
+  ]
+}

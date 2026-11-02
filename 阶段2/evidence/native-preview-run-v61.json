@@ -1,0 +1,40 @@
+{
+  "sourceNativeRun": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\native-run-v61.json",
+  "sourceNativeRunSHA256": "E6480C20E51BD1C3BEC2D50DBEE67887621C4275094B2E90A916CA949C63E85F",
+  "contract": "bcp.stage2.preview-run.v1",
+  "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261031-151729",
+  "nonce": "f15e38bb60d64365b90e73b0b927bd86",
+  "processId": 12192,
+  "job": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-20261031-151951",
+  "source": "D:\\Codex\\建筑施工图自动化\\阶段2\\runs\\native-2026-10-31-15-18-14-12192-415555218\\方案施工图_阶段2中间图.dwg",
+  "sourceSHA256": "99D38F3467DD21B268BF69E67DF89EF35FA1BF8D1BB16CCC7982A6C9D96AFC59",
+  "controlSHA256": "99D38F3467DD21B268BF69E67DF89EF35FA1BF8D1BB16CCC7982A6C9D96AFC59",
+  "indexSHA256": "FB9FECF2D2167ED0A5D8EC3DD0ED1010FB02E93CEE846488F77EF3AD600AABD0",
+  "steps": [
+    {
+      "serial": "ae89e5d576d44735a80267c48a8bd880",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261031-151729\\dispatch_ae89e5d576d44735a80267c48a8bd880.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "f15e38bb60d64365b90e73b0b927bd86",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261031-151729",
+        "processId": 12192,
+        "desktop": "CodexS1_f15e38bb60d64365b90e73b0b927bd86",
+        "inputDesktop": "Default",
+        "serial": "ae89e5d576d44735a80267c48a8bd880",
+        "command": "S1OPENPROBECONTROL",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-20261031-151951",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-20261031-151951\\control.dwg",
+        "error": null
+      }
+    }
+  ],
+  "error": "RuntimeError(\"native dispatch guard rejected request: {'contract': 'stage1.quiet-native-dispatch.v1', 'nonce': 'f15e38bb60d64365b90e73b0b927bd86', 'session': 'D:\\\\\\\\Codex\\\\\\\\建筑施工图自动化\\\\\\\\阶段1\\\\\\\\runs\\\\\\\\isolated-autocad-20261031-151729', 'processId': 12192, 'desktop': 'CodexS1_f15e38bb60d64365b90e73b0b927bd86', 'inputDesktop': 'Default', 'serial': '4bac8d747bb64386835bee4a12ac2911', 'command': 'BCP_STAGE2_MASKAUDIT', 'run': 'D:\\\\\\\\Codex\\\\\\\\建筑施工图自动化\\\\\\\\阶段1\\\\\\\\runs\\\\\\\\stage2-preview-20261031-151951', 'queueStatus': -9999, 'error': 'queue command is not a single registered S1 name'}\")"
+}

@@ -1,0 +1,40 @@
+{
+  "sourceSHA256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+  "path": "D:\\Codex\\建筑施工图自动化\\阶段2\\inputs\\interior-dimension-decisions-v1.tsv",
+  "SHA256": "C47DD0BFF2FAA014CFA9643B5120623CF8664F1B39F0BE08BFEBB197C117A850",
+  "decisions": [
+    {
+      "wall": "CD95",
+      "action": "OMIT"
+    },
+    {
+      "wall": "CD9E",
+      "action": "OMIT"
+    },
+    {
+      "wall": "CFB7",
+      "action": "OMIT"
+    },
+    {
+      "wall": "CDA7",
+      "action": "OMIT"
+    },
+    {
+      "wall": "CDA3",
+      "action": "OMIT"
+    },
+    {
+      "wall": "D006",
+      "action": "LEFT"
+    },
+    {
+      "wall": "CDB7",
+      "action": "LEFT"
+    },
+    {
+      "wall": "CD88",
+      "action": "DOWN"
+    }
+  ],
+  "basis": "User annotated screenshots in current turn; only fixed project; other local chains retained"
+}

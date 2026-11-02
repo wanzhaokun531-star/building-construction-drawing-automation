@@ -1,0 +1,11 @@
+FAIL: native API and operation completion
+FAIL: both single-station semantic outcomes
+FAIL: vertical: actual semantic result
+FAIL: vertical: only predeclared station groups removed; all retained/auxiliary points preserved
+FAIL: vertical: only predeclared station groups removed; all retained/auxiliary points preserved
+FAIL: horizontal: actual raw point observations
+FAIL: added exact native addition cohort
+FAIL: savedAdded exact native addition cohort
+FAIL: two distinct added seed identities
+assertions=45 passed=36 failed=9 result=FAIL
+Scope: two single-station TDbAxisLabelSet carriers only; numbering/four-side project axis selection/rendering not yet established.

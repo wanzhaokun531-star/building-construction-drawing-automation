@@ -1,0 +1,54 @@
+{
+  "contract": "bcp.direct-native-axis-dwg-delivery.v1",
+  "recorded": "2026-11-02T17:14:44.604624+08:00",
+  "version": "v164",
+  "DWGVersion": "v12",
+  "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\原生轴号与可拉伸轴线_20261102\\方案施工图_二层_原生轴号与可拉伸轴线确认样张_v12.dwg",
+  "SHA256": "826A28E22AAE0639868DBE5EE01E0ACD0541E01A8F752185D50C8A1FAAEC2AD7",
+  "source": "D:/修改.dwg",
+  "sourceSHA256": "1D73F911C4DBE944DDD5AD35FDE0C0AA4410F61AE2E46B48081C67571536A4DB",
+  "sourcePreserved": true,
+  "nativeAxisLabelSets": 12,
+  "nativeAxisModelRoots": true,
+  "axisBlockWrappersRemoved": 12,
+  "axisCADGroupsDissolved": 15,
+  "visibleAxisCircles": 20,
+  "lowerAxis1Added": true,
+  "axisLinesStandalone": true,
+  "lineStretchAndRestoreTestMm": 123,
+  "axisCommandsVerified": [
+    "TReAxisNo:1 to21 to1",
+    "TReAxisNo:A toP toA",
+    "TObjEdit:M side control"
+  ],
+  "axisLeadControls": "Separate one-off ObjectARX modern grip pair; opaque appData passed unchanged; only inner-anchor changed",
+  "titleMove": {
+    "handle": "8073",
+    "delta": [
+      1000,
+      -1200,
+      0
+    ]
+  },
+  "allUserModifiedDimensionsOpeningsAreasAndLayer25Preserved": true,
+  "visibleWholeTCHDimensions": 19,
+  "pluginCodeChanged": false,
+  "pluginBinarySHA256": "835B9E0F67B65C0F3A43F06F0C443BFB2029B1CBFACEB751C24938B894631FEA",
+  "COMUsed": false,
+  "ComputerUseUsed": false,
+  "normalQUITPassed": false,
+  "stage2Complete": false,
+  "qaSHA256": "3DE66BFC69F45E293D552BD630CBC40B7EF7D9C79055AD5AE90432F5D2325CE2",
+  "manifestSHA256": "29084D4A8AD9AB8DA64C7454F61A6F5C0DE2D6776BA8C6E5C12F6DCFECB6663A",
+  "visualSHA256": "018EB91D6C64326B547951D1B923CB74EC036C70680951FB1EFE79F76B301633",
+  "closureSHA256": "F220DB089D93DD9D74D2DF5AEB4E564E38E192E4B732F373747F2D4BD5D94BDC",
+  "auxiliaryProbe": {
+    "module": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexStage1Probe_ef4d2f2d31c24f68a0d22518fda0c0a7\\AXLead_ef4d2f2d.arx",
+    "moduleSHA256": "531B90A55A8B74E53CB43C483C7B0CF3E9BC8EEE63C7D1AD8427F2F08753312B",
+    "sidecar": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexStage1Probe_ef4d2f2d31c24f68a0d22518fda0c0a7\\AXLead_ef4d2f2d.ini",
+    "sidecarSHA256": "CD75A7DEE85FB4005D1F2F2722EAE4BDD985EFD31FFC234B5C20F5245A0EDA92"
+  },
+  "auxiliaryFilesCleaned": 2,
+  "auxiliaryCleanupSHA256": "9A600629F29EB4A7523FA57DDB6734A5DE7939FA21A830AF59276AB3892F00A4",
+  "nativeLeadEndpointEdits": 8
+}

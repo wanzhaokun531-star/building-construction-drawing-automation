@@ -1,0 +1,498 @@
+{
+  "contract": "stage1.font-evidence-addendum.v1",
+  "time": "2026-10-29T01:17:15.998223+08:00",
+  "nativeSource": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\native-access-styles-20261028-191032-152\\native-styles.json",
+  "nativeSourceSHA256": "C6EF09DC7B16D9A22C3357C7AB90E8B49F4CB7BF69C76A4C2EFF9C7E68938F8F",
+  "nativeFontPaths": [
+    {
+      "drawing": "scheme",
+      "style": "Standard",
+      "role": "primary",
+      "requested": "gbenor.shx",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "C:\\Tangent\\TArchT20V8\\SYS\\gbenor.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "A2385ED77E4438D6B54B5AD617E9748660A985F301C138D849F3E865EE18FF7A"
+    },
+    {
+      "drawing": "scheme",
+      "style": "Standard",
+      "role": "bigFont",
+      "requested": "gbcbig.shx",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "D:\\CAD2020\\AutoCAD 2020\\FONTS\\gbcbig.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150"
+    },
+    {
+      "drawing": "scheme",
+      "style": "ASHADE",
+      "role": "primary",
+      "requested": "txt.shx",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "D:\\CAD2020\\AutoCAD 2020\\FONTS\\txt.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "2280ABC0BC7B827C21AE43A651A8DFBC14873550FF61B123A72773A5DBCE0D8F"
+    },
+    {
+      "drawing": "scheme",
+      "style": "ASHADE",
+      "role": "bigFont",
+      "requested": "chineset.shx",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "D:\\CAD2020\\AutoCAD 2020\\FONTS\\chineset.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "48CEC34ED7DF94CD259D2B59BB0DCAF0D797BA0E02C334E05681886C1DFD6A3D"
+    },
+    {
+      "drawing": "scheme",
+      "style": "_TCH_DIM",
+      "role": "primary",
+      "requested": "SIMPLEX",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\SUPPORT\\SIMPLEX.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "30DC50FA379935E4D7EB6E60041FA070A11FBA6DEAC337A2FA9E34DCB5BFBCC1"
+    },
+    {
+      "drawing": "scheme",
+      "style": "_TCH_DIM",
+      "role": "bigFont",
+      "requested": "GBCBIG",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "D:\\CAD2020\\AutoCAD 2020\\FONTS\\GBCBIG.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150"
+    },
+    {
+      "drawing": "scheme",
+      "style": "_TCH_WINDOW",
+      "role": "primary",
+      "requested": "SIMPLEX",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\SUPPORT\\SIMPLEX.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "30DC50FA379935E4D7EB6E60041FA070A11FBA6DEAC337A2FA9E34DCB5BFBCC1"
+    },
+    {
+      "drawing": "scheme",
+      "style": "_TCH_WINDOW",
+      "role": "bigFont",
+      "requested": "GBCBIG",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "D:\\CAD2020\\AutoCAD 2020\\FONTS\\GBCBIG.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150"
+    },
+    {
+      "drawing": "scheme",
+      "style": "TranSketch-1",
+      "role": "primary",
+      "requested": "gbenor.shx",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "C:\\Tangent\\TArchT20V8\\SYS\\gbenor.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "A2385ED77E4438D6B54B5AD617E9748660A985F301C138D849F3E865EE18FF7A"
+    },
+    {
+      "drawing": "scheme",
+      "style": "TranSketch-1",
+      "role": "bigFont",
+      "requested": "gbcbig.shx",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "D:\\CAD2020\\AutoCAD 2020\\FONTS\\gbcbig.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150"
+    },
+    {
+      "drawing": "scheme",
+      "style": "_TCH_DIM_T3",
+      "role": "primary",
+      "requested": "SIMPLEX",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\SUPPORT\\SIMPLEX.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "30DC50FA379935E4D7EB6E60041FA070A11FBA6DEAC337A2FA9E34DCB5BFBCC1"
+    },
+    {
+      "drawing": "scheme",
+      "style": "_TCH_DIM_T3",
+      "role": "bigFont",
+      "requested": "GBCBIG",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "D:\\CAD2020\\AutoCAD 2020\\FONTS\\GBCBIG.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150"
+    },
+    {
+      "drawing": "scheme",
+      "style": "-宋体",
+      "role": "primary",
+      "requested": "",
+      "nativeFindState": "NotReferenced",
+      "nativeResolvedPath": null,
+      "resolvedFileExistsNow": null,
+      "resolvedFileSHA256": null
+    },
+    {
+      "drawing": "scheme",
+      "style": "-宋体",
+      "role": "bigFont",
+      "requested": "",
+      "nativeFindState": "NotReferenced",
+      "nativeResolvedPath": null,
+      "resolvedFileExistsNow": null,
+      "resolvedFileSHA256": null
+    },
+    {
+      "drawing": "scheme",
+      "style": "黑体",
+      "role": "primary",
+      "requested": "simhei.ttf",
+      "nativeFindState": "Unknown",
+      "nativeResolvedPath": null,
+      "resolvedFileExistsNow": null,
+      "resolvedFileSHA256": null
+    },
+    {
+      "drawing": "scheme",
+      "style": "黑体",
+      "role": "bigFont",
+      "requested": "",
+      "nativeFindState": "NotReferenced",
+      "nativeResolvedPath": null,
+      "resolvedFileExistsNow": null,
+      "resolvedFileSHA256": null
+    },
+    {
+      "drawing": "scheme",
+      "style": "宋体",
+      "role": "primary",
+      "requested": "",
+      "nativeFindState": "NotReferenced",
+      "nativeResolvedPath": null,
+      "resolvedFileExistsNow": null,
+      "resolvedFileSHA256": null
+    },
+    {
+      "drawing": "scheme",
+      "style": "宋体",
+      "role": "bigFont",
+      "requested": "",
+      "nativeFindState": "NotReferenced",
+      "nativeResolvedPath": null,
+      "resolvedFileExistsNow": null,
+      "resolvedFileSHA256": null
+    },
+    {
+      "drawing": "reference",
+      "style": "Standard",
+      "role": "primary",
+      "requested": "gbenor.shx",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "C:\\Tangent\\TArchT20V8\\SYS\\gbenor.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "A2385ED77E4438D6B54B5AD617E9748660A985F301C138D849F3E865EE18FF7A"
+    },
+    {
+      "drawing": "reference",
+      "style": "Standard",
+      "role": "bigFont",
+      "requested": "gbcbig.shx",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "D:\\CAD2020\\AutoCAD 2020\\FONTS\\gbcbig.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150"
+    },
+    {
+      "drawing": "reference",
+      "style": "ASHADE",
+      "role": "primary",
+      "requested": "txt.shx",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "D:\\CAD2020\\AutoCAD 2020\\FONTS\\txt.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "2280ABC0BC7B827C21AE43A651A8DFBC14873550FF61B123A72773A5DBCE0D8F"
+    },
+    {
+      "drawing": "reference",
+      "style": "ASHADE",
+      "role": "bigFont",
+      "requested": "chineset.shx",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "D:\\CAD2020\\AutoCAD 2020\\FONTS\\chineset.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "48CEC34ED7DF94CD259D2B59BB0DCAF0D797BA0E02C334E05681886C1DFD6A3D"
+    },
+    {
+      "drawing": "reference",
+      "style": "_TCH_DIM",
+      "role": "primary",
+      "requested": "SIMPLEX",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\SUPPORT\\SIMPLEX.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "30DC50FA379935E4D7EB6E60041FA070A11FBA6DEAC337A2FA9E34DCB5BFBCC1"
+    },
+    {
+      "drawing": "reference",
+      "style": "_TCH_DIM",
+      "role": "bigFont",
+      "requested": "GBCBIG",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "D:\\CAD2020\\AutoCAD 2020\\FONTS\\GBCBIG.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150"
+    },
+    {
+      "drawing": "reference",
+      "style": "_TCH_WINDOW",
+      "role": "primary",
+      "requested": "SIMPLEX.shx",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\SUPPORT\\SIMPLEX.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "30DC50FA379935E4D7EB6E60041FA070A11FBA6DEAC337A2FA9E34DCB5BFBCC1"
+    },
+    {
+      "drawing": "reference",
+      "style": "_TCH_WINDOW",
+      "role": "bigFont",
+      "requested": "GBCBIG.shx",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "D:\\CAD2020\\AutoCAD 2020\\FONTS\\GBCBIG.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150"
+    },
+    {
+      "drawing": "reference",
+      "style": "_TCH_AXIS",
+      "role": "primary",
+      "requested": "COMPLEX",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "D:\\CAD2020\\AutoCAD 2020\\FONTS\\COMPLEX.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "69FFDD1CB63E964686185DC8C17C13B3E04B6572D7C98E5FB4A5999DC177A274"
+    },
+    {
+      "drawing": "reference",
+      "style": "_TCH_AXIS",
+      "role": "bigFont",
+      "requested": "GBCBIG",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "D:\\CAD2020\\AutoCAD 2020\\FONTS\\GBCBIG.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150"
+    },
+    {
+      "drawing": "reference",
+      "style": "FY_FS",
+      "role": "primary",
+      "requested": "",
+      "nativeFindState": "NotReferenced",
+      "nativeResolvedPath": null,
+      "resolvedFileExistsNow": null,
+      "resolvedFileSHA256": null
+    },
+    {
+      "drawing": "reference",
+      "style": "FY_FS",
+      "role": "bigFont",
+      "requested": "",
+      "nativeFindState": "NotReferenced",
+      "nativeResolvedPath": null,
+      "resolvedFileExistsNow": null,
+      "resolvedFileSHA256": null
+    },
+    {
+      "drawing": "reference",
+      "style": "FY_HZ",
+      "role": "primary",
+      "requested": "tssdeng.shx",
+      "nativeFindState": "Unknown",
+      "nativeResolvedPath": null,
+      "resolvedFileExistsNow": null,
+      "resolvedFileSHA256": null
+    },
+    {
+      "drawing": "reference",
+      "style": "FY_HZ",
+      "role": "bigFont",
+      "requested": "hztxt.shx",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "C:\\Tangent\\TArchT20V8\\SYS\\hztxt.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "95F9EC57EEDE9095A2DC738EF5034887DC42C3DECE048724BC602FF7994144C7"
+    },
+    {
+      "drawing": "reference",
+      "style": "-宋体",
+      "role": "primary",
+      "requested": "",
+      "nativeFindState": "NotReferenced",
+      "nativeResolvedPath": null,
+      "resolvedFileExistsNow": null,
+      "resolvedFileSHA256": null
+    },
+    {
+      "drawing": "reference",
+      "style": "-宋体",
+      "role": "bigFont",
+      "requested": "",
+      "nativeFindState": "NotReferenced",
+      "nativeResolvedPath": null,
+      "resolvedFileExistsNow": null,
+      "resolvedFileSHA256": null
+    },
+    {
+      "drawing": "reference",
+      "style": "宋体",
+      "role": "primary",
+      "requested": "",
+      "nativeFindState": "NotReferenced",
+      "nativeResolvedPath": null,
+      "resolvedFileExistsNow": null,
+      "resolvedFileSHA256": null
+    },
+    {
+      "drawing": "reference",
+      "style": "宋体",
+      "role": "bigFont",
+      "requested": "",
+      "nativeFindState": "NotReferenced",
+      "nativeResolvedPath": null,
+      "resolvedFileExistsNow": null,
+      "resolvedFileSHA256": null
+    },
+    {
+      "drawing": "reference",
+      "style": "_TCH_SPACE",
+      "role": "primary",
+      "requested": "SIMPLEX",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\SUPPORT\\SIMPLEX.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "30DC50FA379935E4D7EB6E60041FA070A11FBA6DEAC337A2FA9E34DCB5BFBCC1"
+    },
+    {
+      "drawing": "reference",
+      "style": "_TCH_SPACE",
+      "role": "bigFont",
+      "requested": "GBCBIG",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "D:\\CAD2020\\AutoCAD 2020\\FONTS\\GBCBIG.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150"
+    },
+    {
+      "drawing": "reference",
+      "style": "_TCH_DIM_T3",
+      "role": "primary",
+      "requested": "SIMPLEX",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\SUPPORT\\SIMPLEX.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "30DC50FA379935E4D7EB6E60041FA070A11FBA6DEAC337A2FA9E34DCB5BFBCC1"
+    },
+    {
+      "drawing": "reference",
+      "style": "_TCH_DIM_T3",
+      "role": "bigFont",
+      "requested": "GBCBIG",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "D:\\CAD2020\\AutoCAD 2020\\FONTS\\GBCBIG.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150"
+    },
+    {
+      "drawing": "reference",
+      "style": "_TCH_LABEL",
+      "role": "primary",
+      "requested": "COMPLEX",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "D:\\CAD2020\\AutoCAD 2020\\FONTS\\COMPLEX.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "69FFDD1CB63E964686185DC8C17C13B3E04B6572D7C98E5FB4A5999DC177A274"
+    },
+    {
+      "drawing": "reference",
+      "style": "_TCH_LABEL",
+      "role": "bigFont",
+      "requested": "GBCBIG",
+      "nativeFindState": "Found",
+      "nativeResolvedPath": "D:\\CAD2020\\AutoCAD 2020\\FONTS\\GBCBIG.shx",
+      "resolvedFileExistsNow": true,
+      "resolvedFileSHA256": "B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150"
+    },
+    {
+      "drawing": "reference",
+      "style": "黑体",
+      "role": "primary",
+      "requested": "simhei.ttf",
+      "nativeFindState": "Unknown",
+      "nativeResolvedPath": null,
+      "resolvedFileExistsNow": null,
+      "resolvedFileSHA256": null
+    },
+    {
+      "drawing": "reference",
+      "style": "黑体",
+      "role": "bigFont",
+      "requested": "",
+      "nativeFindState": "NotReferenced",
+      "nativeResolvedPath": null,
+      "resolvedFileExistsNow": null,
+      "resolvedFileSHA256": null
+    },
+    {
+      "drawing": "reference",
+      "style": "图框字体",
+      "role": "primary",
+      "requested": "",
+      "nativeFindState": "NotReferenced",
+      "nativeResolvedPath": null,
+      "resolvedFileExistsNow": null,
+      "resolvedFileSHA256": null
+    },
+    {
+      "drawing": "reference",
+      "style": "图框字体",
+      "role": "bigFont",
+      "requested": "",
+      "nativeFindState": "NotReferenced",
+      "nativeResolvedPath": null,
+      "resolvedFileExistsNow": null,
+      "resolvedFileSHA256": null
+    }
+  ],
+  "windowsRegistry": [
+    {
+      "hive": "HKLM",
+      "name": "SimSun & NSimSun (TrueType)",
+      "value": "simsun.ttc"
+    },
+    {
+      "hive": "HKLM",
+      "name": "SimSun-ExtB (TrueType)",
+      "value": "simsunb.ttf"
+    },
+    {
+      "hive": "HKLM",
+      "name": "SimHei (TrueType)",
+      "value": "simhei.ttf"
+    }
+  ],
+  "windowsFiles": [
+    {
+      "path": "C:\\Windows\\Fonts\\simhei.ttf",
+      "exists": true,
+      "sha256": "AA4560DD8FE5645745FED3FFA301C3CA4D6C03CBD738145B613303961BA733B8"
+    },
+    {
+      "path": "C:\\Windows\\Fonts\\simsun.ttc",
+      "exists": true,
+      "sha256": "05068FA1ACAE212120DCC7E98C884B174A6ECA252A636B4B64030235473EC27E"
+    }
+  ],
+  "scope": "Native findFile observations reused unchanged. Independent filesystem and registry observations do not prove AutoCAD selected these Windows fonts or rendered every reference glyph without substitution. Unknown native states remain Unknown; CTB and actual glyph comparison remain pending."
+}

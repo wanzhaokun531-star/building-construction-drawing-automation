@@ -1,0 +1,16 @@
+{
+  "contract": "bcp.unified-annotations.delivery.v1",
+  "directory": "D:\\Codex\\建筑施工图自动化\\阶段2\\交付\\门窗尺寸编号及图层统一_20261031",
+  "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\交付\\门窗尺寸编号及图层统一_20261031\\方案施工图_尺寸门窗及图层统一.dwg",
+  "DWGSHA256": "4BC29814030D0C10512C37EEE741D35B279E02074A8E6C287777E1EE0F939F32",
+  "ARXSHA256": "FFCD3C47FC865DB0392917C7533038486EB3E8A56F14792F9B8A367B7B923906",
+  "gate": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\unified-annotations-release-v43-release-final.json",
+  "gateSHA256": "51D207BDCFFAB694332C1F9B158BBCA834AC9DB72183975BC5E47317FCC03A1B",
+  "gateScriptSHA256": "F50BAA0C9C32C73621FA421666F58E77930B2F157325EB232B04870D46A82D72",
+  "closureSHA256": "89F3DAEEF5DD1FD0C99D4676062E0D39C1F65E98CE4660D26BCBE7145377EF7C",
+  "userDeliveryFiles": [
+    "方案施工图_尺寸门窗及图层统一.dwg"
+  ],
+  "PDFDelivered": false,
+  "constructionDrawingComplete": false
+}

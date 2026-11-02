@@ -1,0 +1,16 @@
+{
+  "contract": "bcp.product-package-final-check.v1",
+  "recorded": "2026-10-31T22:04:02.078421+08:00",
+  "archive": "D:\\Codex\\建筑施工图自动化\\插件\\交付\\建筑施工图助手_0.1.0_20261031.zip",
+  "archiveSHA256": "E94D0D79E8D1B24DA9406892341D46FA41D9345E2F471A8D16E7DAD3D4658CDD",
+  "manifestFiles": 53,
+  "zipEntries": 65,
+  "ARXVerified": true,
+  "DWGVerified": true,
+  "noPDF": true,
+  "validationModeAbsent": true,
+  "ruleChecks121Passed": true,
+  "frozenChecks14Passed": true,
+  "policyChecks12Passed": true,
+  "pythonTests6Passed": true
+}

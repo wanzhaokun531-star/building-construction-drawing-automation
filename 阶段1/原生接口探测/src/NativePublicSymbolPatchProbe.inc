@@ -1,0 +1,41 @@
+// Only independently matched public group 1; no private field decoding.
+std::string patchVerifiedPublicSymbol(AcDbObjectId id,const std::wstring& rx,const std::wstring& dxf,const std::wstring& expected,const std::wstring& replacement,const std::wstring& checkpoint){
+ {auto root=open<AcDbEntity>(id);if(root->isAProxy()||std::wstring(root->isA()->name())!=rx)throw std::runtime_error("native symbol class differs");}
+ ads_name name{};check(acdbGetAdsName(name,id),"native symbol entity name");std::unique_ptr<resbuf,ReleaseAxisDxfBuffer> bag(acdbEntGet(name));if(!bag)throw std::runtime_error("native symbol public bag absent");
+ std::vector<stage1::PublicTextToken> tokens;std::vector<resbuf*> nodes;
+ for(auto* item=bag.get();item;item=item->rbnext){if(nodes.size()>=1000000)throw std::runtime_error("native symbol bag exceeds limit");nodes.push_back(item);const bool str=item->restype==0||item->restype==1||item->restype==100;tokens.push_back({item->restype,str&&item->resval.rstring?item->resval.rstring:L"",str&&item->resval.rstring!=nullptr});}
+ const auto slot=stage1::publicSymbolSlot(tokens,dxf,rx,expected);if(slot>=nodes.size())throw std::runtime_error("native symbol field is absent, ambiguous, mismatched or outside actual subclass");
+ const auto before=publicAxisDxf(id);check(acutUpdString(replacement.c_str(),nodes[slot]->resval.rstring),"SDK-owned native symbol replacement string");
+ writeNewReport(checkpoint,"{\"target\":"+quote(handleOf(id))+",\"type\":"+quote(rx)+",\"beforePublicBag\":"+before+",\"verifiedSlot\":"+std::to_string(slot)+",\"old\":"+quote(expected)+",\"new\":"+quote(replacement)+",\"apiAboutToRun\":\"acdbEntMod\",\"onlyWrittenField\":\"independently matched public group 1\"}");
+ const int status=acdbEntMod(bag.get());const int upd=status==RTNORM?acdbEntUpd(name):-9999;
+ return "{\"entModStatus\":"+std::to_string(status)+",\"entUpdStatus\":"+std::to_string(upd)+",\"beforePublicBag\":"+before+",\"afterPublicBag\":"+publicAxisDxf(id)+"}";
+}
+void nativePublicSymbolPatchCase(bool elevation){
+ const auto p=paths();quietRequireIsolatedWorker();PureCommandTrace trace;std::string error="null",originalBefore="[]",originalAfter="[]",sourceJson="null",control="null";std::vector<std::string> states;std::wstring targetHandle;bool passed=false;
+ const std::wstring rx=elevation?L"TDbSymbElevation":L"TDbSymbSection",dxf=elevation?L"TCH_ELEVATION":L"TCH_SYMB_SECTION",old=elevation?L"-0.030":L"1",next=elevation?L"0.123":L"12";
+ try{
+  auto* doc=acDocManager?acDocManager->curDocument():nullptr;auto* db=doc?doc->database():nullptr;fourAxisGuard(p,doc,db);const auto originals=modelIds(*db);if(originals.length()!=213)throw std::runtime_error("native symbol requires frozen scheme213");const auto handles=nsrHandles(originals);originalBefore=businessGeometryJson(originals);
+  auto reference=lifecycleRead(p.reference);const auto source=nsrFind(*reference,elevation?L"199E":L"1A05");const auto sourceRead=symbolPublicReadback(source);sourceJson=sourceRead.json;
+  const std::vector<std::wstring> expectedOld(elevation?1:2,old);if(!sourceRead.completed||!sourceRead.ownershipSafe||sourceRead.texts!=expectedOld)throw std::runtime_error("public symbol source text does not independently match public literal");
+  AcDbObjectIdArray one;one.append(source);AcDbIdMapping mapping;check(reference->wblockCloneObjects(one,modelId(*db),mapping,AcDb::kDrcMangleName,false),"clone one verified symbol template into scheme");AcDbIdPair pair;pair.setKey(source);if(!mapping.compute(pair)||!pair.isCloned()||pair.value().isNull())throw std::runtime_error("native symbol template mapping absent");const auto target=pair.value();targetHandle=handleOf(target);reference.reset();
+  {auto root=open<AcDbEntity>(target,AcDb::kForWrite);check(root->transformBy(AcGeMatrix3d::translation(AcGeVector3d(40000,0,0))),"translate owned native symbol diagnostic");}
+  AcDbObjectId standard;{auto model=open<AcDbBlockTableRecord>(modelId(*db),AcDb::kForWrite);auto text=std::make_unique<AcDbText>();text->setDatabaseDefaults(db);check(text->setTextString(L"S1_PUBLIC_PATCH_CONTROL"),"symbol positive control value");check(model->appendAcDbEntity(standard,text.get()),"append symbol positive control");auto* resident=text.release();check(resident->close(),"close symbol positive control");}
+  control=nativePublicTextSet(standard,L"S1_PUBLIC_PATCH_CONTROL",L"S1_PUBLIC_PATCH_OK",p.output+L"\\symbol-standard-control-attempt.json",false);
+  {auto text=open<AcDbText>(standard,AcDb::kForWrite);AcString actual;check(text->textString(actual),"symbol standard control read");if(std::wstring(actual.kACharPtr())!=L"S1_PUBLIC_PATCH_OK")throw std::runtime_error("standard EntMod positive control failed");check(text->erase(),"erase symbol standard control");}
+  writeNewReport(p.output+L"\\symbol-standard-control-result.json",control);
+  std::wstring current=old;int index=0;
+  for(const auto& value:std::vector<std::wstring>{next,old}){
+   const auto stem=p.output+L"\\native-symbol-state-"+std::to_wstring(++index);const auto before=symbolPublicReadback(target);if(!before.completed||!before.ownershipSafe||before.texts!=std::vector<std::wstring>(elevation?1:2,current))throw std::runtime_error("live symbol does not match independent prior literal");
+   const auto api=patchVerifiedPublicSymbol(target,rx,dxf,current,value,stem+L"-attempt.json");const auto live=symbolPublicReadback(target);std::wstring actualType;{auto root=open<AcDbEntity>(target);actualType=root->isA()->name();}originalAfter=businessGeometryJson(originals);
+   const bool changed=actualType==rx&&live.completed&&live.ownershipSafe&&live.texts==std::vector<std::wstring>(elevation?1:2,value)&&modelCount(*db)==214&&originalAfter==originalBefore;
+   std::string saved="null",savedProtected="[]",savedBag="null";int count=-1,save=-9999;bool reopened=false;std::wstring savedType;
+   if(changed){requireNewFile(stem+L".dwg");save=db->saveAs((stem+L".dwg").c_str(),false,AcDb::kDHL_CURRENT);check(static_cast<Acad::ErrorStatus>(save),"save native symbol state");auto reader=lifecycleRead(stem+L".dwg");WorkingDatabaseScope fresh(*reader);const auto id=nsrFind(*reader,targetHandle.c_str());const auto read=symbolPublicReadback(id);saved=read.json;savedBag=publicAxisDxf(id);savedProtected=businessGeometryJson(nsrResolve(*reader,handles));count=modelCount(*reader);{auto root=open<AcDbEntity>(id);savedType=root->isA()->name();}reopened=read.completed&&read.ownershipSafe&&read.texts==std::vector<std::wstring>(elevation?1:2,value)&&savedType==rx&&count==214&&savedProtected==originalBefore;}
+   states.push_back("{\"expected\":"+quote(value)+",\"api\":"+api+",\"before\":"+before.json+",\"live\":"+live.json+",\"liveRootType\":"+quote(actualType)+",\"liveModelCount\":"+std::to_string(modelCount(*db))+",\"changed\":"+plotBool(changed)+",\"saveStatus\":"+std::to_string(save)+",\"saved\":"+saved+",\"savedPublicBag\":"+savedBag+",\"savedRootType\":"+quote(savedType)+",\"savedModelCount\":"+std::to_string(count)+",\"savedProtected\":"+savedProtected+",\"reopened\":"+plotBool(reopened)+"}");
+   if(!changed||!reopened)throw std::runtime_error("native symbol actual value/protection/reopen failed");current=value;
+  }
+  passed=states.size()==2;
+ }catch(const std::exception& e){error=familyError(e);}catch(...){error=quote(L"unknown native public-symbol failure");}
+ writeNewReport(p.output+L"\\native-public-symbol-patch.json","{\"contract\":\"stage1.native-public-symbol-patch.v1\",\"type\":"+quote(rx)+",\"target\":"+quote(targetHandle)+",\"sourceVisible\":"+sourceJson+",\"standardPositiveControl\":"+control+",\"originalBefore\":"+originalBefore+",\"originalAfter\":"+originalAfter+",\"states\":"+axisTraceArray(states)+",\"passed\":"+plotBool(passed)+",\"commandTrace\":"+trace.json()+",\"COMUsed\":false,\"ComputerUseUsed\":false,\"TianzhengBusinessCommandsUsed\":false,\"sourceDrawingWritten\":false,\"phase2Started\":false,\"error\":"+error+"}");
+}
+void nativeElevationPatchImpl(){nativePublicSymbolPatchCase(true);}void nativeSectionPatchImpl(){nativePublicSymbolPatchCase(false);}
+void nativeElevationPatch()noexcept{pureEntry(nativeElevationPatchImpl);}void nativeSectionPatch()noexcept{pureEntry(nativeSectionPatchImpl);}

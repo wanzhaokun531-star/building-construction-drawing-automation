@@ -1,0 +1,161 @@
+{
+  "contract": "stage1.final-delivery-manifest.v1",
+  "recorded": "2026-10-30T11:47:14.157748+08:00",
+  "phase1FullAcceptance": false,
+  "phase2Started": false,
+  "frozenSchemeSHA256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+  "observedCurrentOriginalSHA256": "D92251DF0797EB9338FF9A1E94121FB24D81D72B597E8931413B7974712BE54F",
+  "inputScope": "Current frozen5BC/8C3 tested inputs; working original DWGs observed read-only, no architectural/standard-change inference. See latest ordinary-AutoCAD closure.",
+  "artifacts": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\阶段1全需求验证结论.md",
+      "SHA256": "D975256842923C0D673AA00BEE84632F5437C02219E115037E9ADE030145D4B6"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\全需求能力覆盖矩阵.md",
+      "SHA256": "4F322133277BB167922D3B417C02172F12BA6F21B03023B7EC5666B01F96B3E5"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\全需求证据独立复核_20261029.md",
+      "SHA256": "2E1DB55FFE52439001D045BCAEEAB3A67BC710DE9123617470A1D0ECE1525DDE"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\全需求验证证据索引.json",
+      "SHA256": "80F68A0EAF12E1B69B71855E3C2EB134E8645BD08295576C999E5FD128D88646"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\原生PDF纸幅验证.pdf",
+      "SHA256": "5FCEF0B4A8F57072553BE7CDD3E5FC30FB5CB007BBA55E66ABEA9CF3FA00AE26"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\全需求验证_只读调查后终核_20261029.json",
+      "SHA256": "D28BBBF3838789EE985B66D721560444F792D14931268163E29890E130DE092C"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\坡向剖切索引与QUIT_交付清单_20261029.json",
+      "SHA256": "047E6EB242AF6C9FB99759E37F64E095BBFEB3C23ADB4E48488D8500CB29B6D1"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\坡向剖切详图索引与正常退出验证报告_20261029.md",
+      "SHA256": "A5598600E39A7FC374C6874216DD59BB02B5B5E9B6E5C302522A6EA4EDB06E6E"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\AutoCAD原生接口迁移与继续验证报告_20261029.md",
+      "SHA256": "57D3AF8861A15BFB64536EDA1A6A4901008404FB0F38DB6C9BC7BE5E6B0DCCBA"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\AutoCAD宿主迁移_输入与模块终核_20261029.json",
+      "SHA256": "79675B3B8B90CA30F0E9CF54D2EB7DC69941B13DFB093687B233445CF63FD6E1"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\AutoCAD原生续测_交付清单_20261029.json",
+      "SHA256": "C68D0A1B7FB6655E20770E1DFEA2D2EAD2D117D5C0256FA35BC0EB3A64572A3C"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\AutoCAD原生续测_独立复核记录_20261029.md",
+      "SHA256": "DF1E803375308B9F7A451F436C73F89BA895D872A3E28DC8DED869DBEF43E54E"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\AutoCAD原生尺寸_线位试移_阶段1.dwg",
+      "SHA256": "BE8869040F39A457AE8045BBCBFE117125AD8FB59CB9EB0023046123D3A80A45"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\AutoCAD原生尺寸_线位恢复_阶段1.dwg",
+      "SHA256": "DD51794B5160F68DEC125570FA1110660235016B39680B150ABA5880461030B3"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\阶段1纯原生续测与阻断报告_20261030.md",
+      "SHA256": "DE181F372003B6572D663D41F941D5D0AFF952BB26AE3545AE7593C66DD8E1B2"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\纯原生阶段1_输入模块与退出终核_20261030.json",
+      "SHA256": "0AC9B77AE53FEFE744F7D059F7386D5C277174250DE8DEA3ABA358577889726F"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\纯原生全量读取与字体分项_20261030.json",
+      "SHA256": "D97B49A05DE61232E44FB2894206DC46980CD8BEF02F3F43FFA28150429FB72A"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\纯原生阶段1续测_执行账本_20261030.json",
+      "SHA256": "8FE40346996A0D802448D9DCDC83EC569872715E283591CF03D68B8A023C7804"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\evidence\\pure-native-final-offline-20261030.txt",
+      "SHA256": "3FA4A4F4857CC21FD0C3C9D3552A0B30E53704C0509AF3EE99DA4EFD1D0BC4BB"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\evidence\\pure-boundary-green-20261030.txt",
+      "SHA256": "CD49EB20A1EDB25430CB7ABAF20A79F59D7D48286945AA93B46F6D2078C1402F"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\阶段1纯原生续测_交付清单_20261030.json",
+      "SHA256": "4FD4D9F05B68FBFCA73EB316891994A77686D756EFEAF82DF60AEA24A2D10353"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\文字替换验证\\方案副本_单个文字转原生_保持原文.dwg",
+      "SHA256": "53807FFDFDA36D2FDD3F4EA67CD7DA5C7924FC099EF7BF12BD06848DEAE335CF"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\文字替换验证\\方案副本_单个文字改为C09235_试验.dwg",
+      "SHA256": "BC7A96B22E6F1975592510F8AC504B63FB4A3B1820498429C3BDF523D9D06FFC"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\文字替换验证\\方案副本_单个文字改为待确认_试验.dwg",
+      "SHA256": "CB0B08909CA2F502DA9F7A90FDEA39B3168ED46EF8AAD2927C05E00D9BC06159"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\文字替换验证\\方案副本_原生文字恢复原文.dwg",
+      "SHA256": "68B5E318DFD49C4B2D4EDC16A898774D977EC9A07F2A42AB2BF86F498D5E9C52"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\天正文字转原生文字验证报告_20261030.md",
+      "SHA256": "814737EE53E95D68022FB127F40745D0E3E650FFE9D971D4742A5AEE7D9D81AE"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\天正文字替换_单项独立验收_20261030.json",
+      "SHA256": "DC3400A1C55FDC75F76F8A59DE227986695C010913458110BA2EB521E6B86459"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\文字替换_输入模块与退出终核_20261030.json",
+      "SHA256": "DE94F23292C2943C3B916C67FF42F9BB682F662D4A9865CC8289936E35A24734"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\evidence\\plain-text-single-target-crop-20261030.json",
+      "SHA256": "650FB13015F29F10BAD9C195D7B3505E61111BD80CCB889F0AA5DE88DFCE3F29"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\evidence\\plain-text-final-offline-20261030.txt",
+      "SHA256": "79A63C9809C6438E00D5A8E133F49D013D21B8B94DF50A77FAF1B329EBA4EC3B"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\文字替换验证_交付清单_20261030.json",
+      "SHA256": "786F5A829CAB11CCA0CE728E21B9879AEEBBBF92FE69B44B2C4BEB1E5E675A4B"
+    }
+  ],
+  "unitRegression": "Current symbol acceptance 10 tests passed; historical regression scopes retained in prior manifest",
+  "preservedFailures": "Family4, Safety2, SymbolText6 current failures plus historical axis-factory/v1 pruning/first-merge receipts retained; counts not a completion percentage",
+  "temporaryModules": "Current symbol-round10 owned hosts exited; exact nonce/hash-bound S1Quiet ARX/INI archived and removed; PID reuse checked without process control",
+  "priorManifest": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\evidence\\before-pure-native-status-20261030-100550\\本轮交付清单.json",
+    "SHA256": "12B4DD5CB0BC2A7C6670329176AB5498ADAF3F8F37BA637578EAEE9E8FDFD26A"
+  },
+  "latestRound": {
+    "report": "D:\\Codex\\建筑施工图自动化\\阶段1\\坡向剖切详图索引与正常退出验证报告_20261029.md",
+    "evidenceIndex": "D:\\Codex\\建筑施工图自动化\\阶段1\\全需求验证证据索引.json",
+    "business": 302,
+    "geometry": 80,
+    "preview": 92,
+    "hostAssertions": 49,
+    "phase2Started": false
+  },
+  "latestAutoCadNativeDelivery": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\AutoCAD原生续测_交付清单_20261029.json",
+    "SHA256": "C68D0A1B7FB6655E20770E1DFEA2D2EAD2D117D5C0256FA35BC0EB3A64572A3C"
+  },
+  "observedCurrentReferenceSHA256": "245CB01E3955ABB6CB9581436E0313C93B5A771C1983E318B0E2A61DD9C6E273",
+  "latestPureNativeDelivery": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\阶段1纯原生续测_交付清单_20261030.json",
+    "SHA256": "4FD4D9F05B68FBFCA73EB316891994A77686D756EFEAF82DF60AEA24A2D10353"
+  },
+  "latestTextReplacement": "bounded native AcDbText migration passed; batch/normal quit not passed"
+}

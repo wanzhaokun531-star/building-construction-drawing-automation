@@ -1,0 +1,6 @@
+{
+  "candidate": "v47",
+  "nativeError": "failure: restore reference dimension style name",
+  "DWGProduced": false,
+  "scope": "reference-memory style rename/restore experiment rejected; source snapshot unchanged"
+}

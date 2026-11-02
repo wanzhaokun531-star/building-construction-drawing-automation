@@ -1,0 +1,20 @@
+{
+  "contract": "bce.g2-review-inputs.v1",
+  "base": "all owned files new; no Git initialized",
+  "files": {
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\ProjectStore.h": "B0123C7CB95A3B9D4C06D8707BA13C56E69E341A01FFEAB599020E4287B4CCD7",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\ProjectStore.cpp": "C3BCDEFCE74F4946185307C80C8DABB2B3107D7D68BDD6BFF79F2997606B59B1",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\ProjectStoreCodec.h": "0253AF204E06AEE0D4995ADC96237AD08816D60ADB2A8A26FE182A3238FA757C",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\ProjectStoreCodec.cpp": "445795A3CD01977FE65178A3B807E443E9B3642CAA965A7976A520DEAB84E0AD",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\store\\StoreFixture.h": "908A3FEF0A24A7DF028ECE78BFC7C1ECC614D900F2258E11F3F1D5F6103D45AB",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\store\\StoreCodecTests.cpp": "FAD6A44135194091866C621FC8FBB5B600B1E33A182CB42EFE72AF938CE0B7A0",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\store\\StoreDriver.cpp": "3C1CA0A90693B3D4BE7AA22A608FF5B5EF2B18519C91DFF8015E59BBE419711A",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\store\\StoreCodecTests.vcxproj": "88976D0F68EE362B72C7EFAEFBB642E463B60F318FA45E030C2187227A2D6532",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\store\\StoreNativeCases.vcxproj": "3F2DCC73D432A0E531210977D0851E3B2D47EEC2B185FF8BA4C0D556BDF5A811",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\build_store.ps1": "71D4F12C6E7DB5FEBE6203BD5F428BCAFB58DF21A3384C3CBFDA2A56687646C1"
+  },
+  "diffSha256": "7AFB13D3D4B9F548C38C898B239C220DE56950A2A46A70748F1B990C21ABD0D0",
+  "codecReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\g2-20261101-191451-205-codec-view-members-green-c6c511a2\\receipt.json",
+  "nativeStubReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\g2-20261101-190803-196-sdk-stub-red-f11a2132\\receipt.json",
+  "nativeCandidateReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\g2-20261101-191456-099-sdk-view-members-final-873f6711\\receipt.json"
+}

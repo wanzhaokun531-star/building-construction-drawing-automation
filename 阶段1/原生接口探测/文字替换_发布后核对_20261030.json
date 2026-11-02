@@ -1,0 +1,276 @@
+{
+  "contract": "stage1.plain-text-postpublication-audit.v1",
+  "checks": [
+    {
+      "passed": true,
+      "name": "delivered hash 方案副本_单个文字转原生_保持原文.dwg"
+    },
+    {
+      "passed": true,
+      "name": "delivered hash 方案副本_单个文字改为C09235_试验.dwg"
+    },
+    {
+      "passed": true,
+      "name": "delivered hash 方案副本_单个文字改为待确认_试验.dwg"
+    },
+    {
+      "passed": true,
+      "name": "delivered hash 方案副本_原生文字恢复原文.dwg"
+    },
+    {
+      "passed": true,
+      "name": "delivered hash 天正文字转原生文字验证报告_20261030.md"
+    },
+    {
+      "passed": true,
+      "name": "delivered hash 天正文字替换_单项独立验收_20261030.json"
+    },
+    {
+      "passed": true,
+      "name": "delivered hash 文字替换_输入模块与退出终核_20261030.json"
+    },
+    {
+      "passed": true,
+      "name": "delivered hash plain-text-single-target-crop-20261030.json"
+    },
+    {
+      "passed": true,
+      "name": "delivered hash plain-text-final-offline-20261030.txt"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash 阶段1全需求验证结论.md"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash 全需求能力覆盖矩阵.md"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash 全需求证据独立复核_20261029.md"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash 全需求验证证据索引.json"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash 原生PDF纸幅验证.pdf"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash 全需求验证_只读调查后终核_20261029.json"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash 坡向剖切索引与QUIT_交付清单_20261029.json"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash 坡向剖切详图索引与正常退出验证报告_20261029.md"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash AutoCAD原生接口迁移与继续验证报告_20261029.md"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash AutoCAD宿主迁移_输入与模块终核_20261029.json"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash AutoCAD原生续测_交付清单_20261029.json"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash AutoCAD原生续测_独立复核记录_20261029.md"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash AutoCAD原生尺寸_线位试移_阶段1.dwg"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash AutoCAD原生尺寸_线位恢复_阶段1.dwg"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash 阶段1纯原生续测与阻断报告_20261030.md"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash 纯原生阶段1_输入模块与退出终核_20261030.json"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash 纯原生全量读取与字体分项_20261030.json"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash 纯原生阶段1续测_执行账本_20261030.json"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash pure-native-final-offline-20261030.txt"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash pure-boundary-green-20261030.txt"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash 阶段1纯原生续测_交付清单_20261030.json"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash 方案副本_单个文字转原生_保持原文.dwg"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash 方案副本_单个文字改为C09235_试验.dwg"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash 方案副本_单个文字改为待确认_试验.dwg"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash 方案副本_原生文字恢复原文.dwg"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash 天正文字转原生文字验证报告_20261030.md"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash 天正文字替换_单项独立验收_20261030.json"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash 文字替换_输入模块与退出终核_20261030.json"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash plain-text-single-target-crop-20261030.json"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash plain-text-final-offline-20261030.txt"
+    },
+    {
+      "passed": true,
+      "name": "updated master hash 文字替换验证_交付清单_20261030.json"
+    },
+    {
+      "passed": true,
+      "name": "original overall4FAIL retained"
+    },
+    {
+      "passed": true,
+      "name": "separate single21 passed"
+    },
+    {
+      "passed": true,
+      "name": "selected target image crop exact"
+    },
+    {
+      "passed": true,
+      "name": "311 offline tests log"
+    },
+    {
+      "passed": true,
+      "name": "own host exited isolated-autocad-20261030-103816"
+    },
+    {
+      "passed": true,
+      "name": "complete isolated window monitoring isolated-autocad-20261030-103816"
+    },
+    {
+      "passed": true,
+      "name": "staged exact module absent isolated-autocad-20261030-103816"
+    },
+    {
+      "passed": true,
+      "name": "own host exited isolated-autocad-20261030-104626"
+    },
+    {
+      "passed": true,
+      "name": "complete isolated window monitoring isolated-autocad-20261030-104626"
+    },
+    {
+      "passed": true,
+      "name": "staged exact module absent isolated-autocad-20261030-104626"
+    },
+    {
+      "passed": true,
+      "name": "own host exited isolated-autocad-20261030-105256"
+    },
+    {
+      "passed": true,
+      "name": "complete isolated window monitoring isolated-autocad-20261030-105256"
+    },
+    {
+      "passed": true,
+      "name": "staged exact module absent isolated-autocad-20261030-105256"
+    },
+    {
+      "passed": true,
+      "name": "own host exited isolated-autocad-20261030-111222"
+    },
+    {
+      "passed": true,
+      "name": "complete isolated window monitoring isolated-autocad-20261030-111222"
+    },
+    {
+      "passed": true,
+      "name": "staged exact module absent isolated-autocad-20261030-111222"
+    },
+    {
+      "passed": true,
+      "name": "own host exited isolated-autocad-20261030-112404"
+    },
+    {
+      "passed": true,
+      "name": "complete isolated window monitoring isolated-autocad-20261030-112404"
+    },
+    {
+      "passed": true,
+      "name": "staged exact module absent isolated-autocad-20261030-112404"
+    },
+    {
+      "passed": true,
+      "name": "frozen snapshot remains S01"
+    },
+    {
+      "passed": true,
+      "name": "frozen snapshot remains S02"
+    },
+    {
+      "passed": true,
+      "name": "frozen snapshot remains S03"
+    },
+    {
+      "passed": true,
+      "name": "frozen snapshot remains S04"
+    },
+    {
+      "passed": true,
+      "name": "frozen snapshot remains S05"
+    },
+    {
+      "passed": true,
+      "name": "frozen snapshot remains S06"
+    },
+    {
+      "passed": true,
+      "name": "v2 not dispatched before readiness"
+    },
+    {
+      "passed": true,
+      "name": "no full phase1 or phase2 claim"
+    }
+  ],
+  "passed": 67,
+  "failed": 0,
+  "scope": "single text passed; all failures retained; batch and normal quit unpassed"
+}

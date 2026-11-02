@@ -1,0 +1,25 @@
+.....F
+======================================================================
+FAIL: test_user_prohibition_blocks_real_backend_before_any_registry_open (test_startup_registration_lease.StartupRegistrationLease.test_user_prohibition_blocks_real_backend_before_any_registry_open)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Codex\建筑施工图自动化\阶段1\tests\test_startup_registration_lease.py", line 29, in test_user_prohibition_blocks_real_backend_before_any_registry_open
+    with self.assertRaises(PermissionError):RegistryBackend().write('CP_NET',0)
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Codex\建筑施工图自动化\阶段1\原生接口探测\startup_registration_lease.py", line 44, in write
+    with winreg.OpenKey(winreg.HKEY_CURRENT_USER,self.ROOT+'\\'+name,0,winreg.KEY_SET_VALUE) as key:winreg.SetValueEx(key,'LOADCTRLS',0,winreg.REG_DWORD,value)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\unittest\mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\unittest\mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\unittest\mock.py", line 1198, in _execute_mock_call
+    raise effect
+AssertionError: registry must not be opened for writes
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.002s
+
+FAILED (failures=1)

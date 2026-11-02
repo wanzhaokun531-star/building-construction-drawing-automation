@@ -1,0 +1,1569 @@
+--- /dev/null
++++ 立面插件/src/AnalysisCommands.h
+@@ -0,0 +1,5 @@
++#pragma once
++namespace bce::commands {
++bool initialize() noexcept;
++bool shutdown() noexcept;
++} // namespace bce::commands
+
+--- /dev/null
++++ 立面插件/src/AnalysisCommands.cpp
+@@ -0,0 +1,291 @@
++#ifndef NOMINMAX
++#define NOMINMAX
++#endif
++#include "AnalysisCommands.h"
++#include "AnalysisCommandAbi.h"
++#include "AnalysisReader.h"
++#include "ProjectStore.h"
++#include <Windows.h>
++#include <acdocman.h>
++#include <aced.h>
++#include <acutads.h>
++#include <cstring>
++#include <limits>
++#include <memory>
++#include <sstream>
++#include <stdexcept>
++namespace {
++constexpr auto group = L"BCE_ANALYSIS_PRODUCT_8D5BB4A2";
++bool analyzeOwned{}, infoOwned{};
++DWORD ownerThread{};
++std::unique_ptr<bce::NativeSceneContext> context;
++std::string lastReport;
++std::uint64_t sequence{}, lastRevision{};
++AcApDocument *reportDocument{};
++void invalidate() noexcept {
++  lastReport.clear();
++  lastRevision = 0;
++  reportDocument = nullptr;
++}
++// NativeSceneContext invalidates its SDK identity on switch/destroy. Never
++// delete another reactor during notification; release it at the next command or
++// unload.
++class Lifecycle final : public AcApDocManagerReactor {
++public:
++  void documentBecameCurrent(AcApDocument *doc) override {
++    if (doc != reportDocument)
++      invalidate();
++  }
++  void documentToBeDestroyed(AcApDocument *doc) override {
++    if (doc == reportDocument)
++      invalidate();
++  }
++};
++std::unique_ptr<Lifecycle> lifecycle;
++void say(const wchar_t *text) noexcept {
++  try {
++    acutPrintf(L"%ls", text);
++  } catch (...) {
++  }
++}
++std::string field(const std::string &value) {
++  std::string result;
++  for (const auto c : value) {
++    if (c == '\\')
++      result += "\\\\";
++    else if (c == '\t')
++      result += "\\t";
++    else if (c == '\n')
++      result += "\\n";
++    else if (c == '\r')
++      result += "\\r";
++    else
++      result += c;
++  }
++  return result;
++}
++void issueRow(std::ostream &out, const bce::Issue &i) {
++  out << "issue\t" << field(i.code) << '\t' << field(i.source.viewIdentity)
++      << '\t' << (i.source.entity ? field(i.source.entity->handle) : "") << '\t'
++      << field(i.message) << '\n';
++}
++void showIssues(const std::vector<bce::Issue> &issues) noexcept {
++  try {
++    std::size_t shown = 0;
++    for (const auto &i : issues) {
++      if (shown++ == 12)
++        break;
++      const auto location =
++          i.source.entity ? " [" + i.source.entity->handle + "]" : "";
++      const auto text =
++          bce::native_scene::utf16("\n" + i.code + location + "：" + i.message);
++      say(text.c_str());
++    }
++    if (issues.size() > 12)
++      say(L"\n其余问题已保留在本次只读分析报告中。");
++  } catch (...) {
++    say(L"\n部分诊断文字显示失败，分析资格仍未授予。");
++  }
++}
++void analyze() noexcept {
++  invalidate();
++  try {
++    if (sequence == (std::numeric_limits<std::uint64_t>::max)())
++      throw std::runtime_error("analysis sequence exhausted");
++    ++sequence;
++    if (!context || !context->currentDatabase())
++      context = std::make_unique<bce::NativeSceneContext>();
++    if (acedUsrBrk()) {
++      say(L"\n分析已取消，旧结果已清除。\n");
++      return;
++    }
++    const auto identity = context->documentIdentity();
++    const auto revision = context->revision();
++    auto archive = bce::readProjectStore(*context->currentDatabase());
++    bce::AnalysisReadOptions
++        options; // No project-specific assumptions or qualification inputs.
++    auto result = bce::readCurrentAnalysis(*context, options);
++    if (acedUsrBrk()) {
++      say(L"\n分析已取消，旧结果已清除。\n");
++      return;
++    }
++    if (!result.value) {
++      showIssues(result.issues);
++      say(L"\n分析未完成，旧结果已清除。\n");
++      return;
++    }
++    auto &analysis = *result.value;
++    if (analysis.scene.documentIdentity != identity ||
++        analysis.scene.revision != revision ||
++        analysis.scene.databaseIdentity.empty())
++      throw std::runtime_error("reader identity mismatch");
++    auto issues = analysis.recognition.issues;
++    for (const auto &view : analysis.recognition.views)
++      issues.insert(issues.end(), view.unconfirmed.begin(),
++                    view.unconfirmed.end());
++    const auto units = bce::resolveUnits(analysis.scene.units);
++    issues.insert(issues.end(), units.issues.begin(), units.issues.end());
++    if (archive.value)
++      issues.push_back({"PROJECT_HISTORY_UNBOUND",
++                        u8"已读取历史项目档案；未与本次内存完整绑定，单位、视图"
++                        u8"、轴及材料确认均未沿用。",
++                        {identity, {}, {}},
++                        true});
++    else
++      issues.insert(issues.end(), archive.issues.begin(), archive.issues.end());
++    if (!context->currentDatabase() || context->revision() != revision ||
++        context->documentIdentity() != identity)
++      throw std::runtime_error("analysis context changed");
++    std::size_t elevations{}, sections{};
++    std::ostringstream out;
++    out.imbue(std::locale::classic());
++    out << "contract\tbce.analysis-report.v1\nidentity\t" << identity
++        << "\ndatabaseIdentity\t" << field(analysis.scene.databaseIdentity)
++        << "\nrevision\t" << revision << "\nsequence\t" << sequence << "\n";
++    for (const auto &view : analysis.recognition.views) {
++      elevations += view.kind == bce::ViewKind::elevation;
++      sections += view.kind == bce::ViewKind::section;
++      out << "view\t" << field(view.identity) << '\t'
++          << field(view.titleKey.handle) << '\t' << static_cast<int>(view.kind)
++          << '\t' << view.members.size() << '\n';
++      for (const auto &member : view.members)
++        out << "member\t" << field(member.handle) << '\t'
++            << field(view.titleKey.handle) << '\n';
++    }
++    out << "elevations\t" << elevations << "\nsections\t" << sections
++        << "\nroots\t" << analysis.scene.primitives.size() << "\npreserved\t"
++        << analysis.recognition.preserved.size()
++        << "\ngenerationAuthorized\tfalse\n";
++    for (const auto &primitive : analysis.scene.primitives)
++      if (primitive.text)
++        out << "text\t" << field(primitive.key.handle) << '\t'
++            << field(*primitive.text) << '\n';
++    for (const auto &i : issues)
++      issueRow(out, i);
++    lastReport = out.str();
++    lastRevision = revision;
++    reportDocument = acDocManager->curDocument();
++    const auto summary = bce::native_scene::utf16(
++        u8"\n只读分析：" + std::to_string(analysis.recognition.views.size()) +
++        u8"个视图（立面" + std::to_string(elevations) + u8"、剖面" +
++        std::to_string(sections) + u8"），保留" +
++        std::to_string(analysis.recognition.preserved.size()) +
++        u8"个对象，问题" + std::to_string(issues.size()) +
++        u8"项。未生成施工图。");
++    say(summary.c_str());
++    showIssues(issues);
++    say(L"\n");
++  } catch (const std::exception &failure) {
++    invalidate();
++    say(L"\nBCE_ANALYZE分析失败，旧结果已清除。\n");
++    try {
++      const auto detail = bce::native_scene::utf16(failure.what());
++      say(detail.c_str());
++      say(L"\n");
++    } catch (...) {
++    }
++  } catch (...) {
++    invalidate();
++    say(L"\nBCE_ANALYZE分析失败，旧结果已清除。\n");
++  }
++}
++void info() noexcept {
++  say(L"\n立面插件开发候选：BCE_"
++      L"ANALYZE只读分析当前内存图纸；尚无施工图生成及交互配置功能。\n");
++}
++bool removeOwned(const wchar_t *name, bool &owned) {
++  if (!owned)
++    return true;
++  const bool removed = acedRegCmds->removeCmd(group, name) == Acad::eOk;
++  if (removed)
++    owned = false;
++  return removed;
++}
++} // namespace
++namespace bce::commands {
++bool shutdown() noexcept {
++  try {
++    invalidate();
++    if (lifecycle) {
++      acDocManager->removeReactor(lifecycle.get());
++      lifecycle.reset();
++    }
++    context.reset();
++    const bool infoRemoved = removeOwned(L"BCE_INFO", infoOwned);
++    const bool analyzeRemoved = removeOwned(L"BCE_ANALYZE", analyzeOwned);
++    return infoRemoved && analyzeRemoved;
++  } catch (...) {
++    return false;
++  }
++}
++bool initialize() noexcept {
++  try {
++    ownerThread = GetCurrentThreadId();
++    if (acedRegCmds->lookupGlobalCmd(L"BCE_ANALYZE") ||
++        acedRegCmds->lookupLocalCmd(L"BCE_ANALYZE") ||
++        acedRegCmds->lookupGlobalCmd(L"BCE_INFO") ||
++        acedRegCmds->lookupLocalCmd(L"BCE_INFO"))
++      return false;
++    analyzeOwned =
++        acedRegCmds->addCommand(group, L"BCE_ANALYZE", L"BCE_ANALYZE",
++                                ACRX_CMD_MODAL, analyze) == Acad::eOk;
++    if (!analyzeOwned)
++      return false;
++    infoOwned = acedRegCmds->addCommand(group, L"BCE_INFO", L"BCE_INFO",
++                                        ACRX_CMD_MODAL, info) == Acad::eOk;
++    if (!infoOwned) {
++      shutdown();
++      return false;
++    }
++    lifecycle = std::make_unique<Lifecycle>();
++    acDocManager->addReactor(lifecycle.get());
++    return true;
++  } catch (...) {
++    shutdown();
++    return false;
++  }
++}
++} // namespace bce::commands
++extern "C" __declspec(dllexport) int __cdecl BceCopyLastAnalysisV1(
++    BceAnalysisReportV1 *report, char *bytes, std::uint64_t capacity) noexcept {
++  try {
++    if (GetCurrentThreadId() != ownerThread)
++      return 3;
++    if (!report || report->size != sizeof(BceAnalysisReportV1) ||
++        report->version != 1 || (!bytes && capacity))
++      return 3;
++    if (!context || !context->currentDatabase() || lastReport.empty() ||
++        context->revision() != lastRevision) {
++      invalidate();
++      return 1;
++    }
++    if (report->sequence && report->sequence != sequence)
++      return 4;
++    const auto identity = context->documentIdentity();
++    if (identity.size() >= sizeof(report->documentIdentity))
++      return 3;
++    // Query (sequence=0) acquires a snapshot. A copy must echo its
++    // identity/revision.
++    if (bytes &&
++        (report->sequence != sequence || report->revision != lastRevision ||
++         std::memcmp(report->documentIdentity, identity.c_str(),
++                     identity.size() + 1) != 0))
++      return 4;
++    BceAnalysisReportV1 next{};
++    next.size = sizeof(next);
++    next.version = 1;
++    next.sequence = sequence;
++    next.revision = lastRevision;
++    next.requiredBytes = lastReport.size() + 1;
++    std::memcpy(next.documentIdentity, identity.c_str(), identity.size() + 1);
++    *report = next;
++    if (!bytes || capacity < next.requiredBytes)
++      return 2;
++    std::memcpy(bytes, lastReport.c_str(),
++                static_cast<std::size_t>(next.requiredBytes));
++    return 0;
++  } catch (...) {
++    invalidate();
++    return 1;
++  }
++}
+
+--- /dev/null
++++ 立面插件/src/AnalysisCommandAbi.h
+@@ -0,0 +1,21 @@
++#pragma once
++#include <cstdint>
++#include <type_traits>
++// AutoCAD owning thread only; worker-thread calls return invalid request.
++// Caller owns buffers. UTF-8 report has no SDK pointers or cross-module STL
++// objects. 0 success; 1 no current result; 2 insufficient buffer; 3 invalid
++// request; 4 stale sequence.
++struct BceAnalysisReportV1 {
++  std::uint32_t size;
++  std::uint32_t version;
++  std::uint64_t sequence;
++  std::uint64_t revision;
++  std::uint64_t requiredBytes;
++  char documentIdentity[80];
++};
++using BceCopyAnalysisV1 = int(__cdecl *)(BceAnalysisReportV1 *, char *,
++                                         std::uint64_t) noexcept;
++
++static_assert(std::is_standard_layout<BceAnalysisReportV1>::value &&
++                  std::is_trivially_copyable<BceAnalysisReportV1>::value,
++              "ABI metadata must remain POD");
+
+--- /dev/null
++++ 立面插件/src/ElevationArx.cpp
+@@ -0,0 +1,17 @@
++#include "AnalysisCommands.h"
++#include <rxregsvc.h>
++extern "C" __declspec(dllexport) AcRx::AppRetCode
++    acrxEntryPoint(AcRx::AppMsgCode message, void *id) noexcept {
++  try {
++    if (message == AcRx::kInitAppMsg) {
++      acrxDynamicLinker->unlockApplication(id);
++      acrxRegisterAppMDIAware(id);
++      return bce::commands::initialize() ? AcRx::kRetOK : AcRx::kRetError;
++    }
++    if (message == AcRx::kUnloadAppMsg)
++      return bce::commands::shutdown() ? AcRx::kRetOK : AcRx::kRetError;
++    return AcRx::kRetOK;
++  } catch (...) {
++    return AcRx::kRetError;
++  }
++}
+
+--- /dev/null
++++ 立面插件/src/BuildingElevation2020.vcxproj
+@@ -0,0 +1,15 @@
++<?xml version="1.0" encoding="utf-8"?>
++<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <ItemGroup Label="ProjectConfigurations"><ProjectConfiguration Include="Release|x64"><Configuration>Release</Configuration><Platform>x64</Platform></ProjectConfiguration></ItemGroup>
++  <PropertyGroup Label="Globals"><ProjectGuid>{FDE1B897-19BB-446A-9DD1-B81FACAF173A}</ProjectGuid><RootNamespace>BuildingElevation2020</RootNamespace><WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion></PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
++  <PropertyGroup Label="Configuration"><ConfigurationType>DynamicLibrary</ConfigurationType><UseDebugLibraries>false</UseDebugLibraries><PlatformToolset>v141</PlatformToolset><CharacterSet>Unicode</CharacterSet></PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
++  <PropertyGroup><OutDir>..\out\</OutDir><IntDir>..\product-obj\</IntDir><TargetName>BuildingElevation2020</TargetName><TargetExt>.arx</TargetExt><ObjectArxSdk Condition="'$(ObjectArxSdk)'==''">C:\Autodesk\ObjectARX_for_AutoCAD_2020_Win_64_bit</ObjectArxSdk></PropertyGroup>
++  <ItemDefinitionGroup>
++    <ClCompile><WarningLevel>Level4</WarningLevel><TreatWarningAsError>true</TreatWarningAsError><SDLCheck>true</SDLCheck><ConformanceMode>true</ConformanceMode><LanguageStandard>stdcpp17</LanguageStandard><RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary><DisableSpecificWarnings>4828;%(DisableSpecificWarnings)</DisableSpecificWarnings><AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions><ExceptionHandling>Sync</ExceptionHandling><PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;UNICODE;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions><AdditionalIncludeDirectories>$(ObjectArxSdk)\inc;$(ObjectArxSdk)\inc-x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories></ClCompile>
++    <Link><SubSystem>Windows</SubSystem><ModuleDefinitionFile>$(ObjectArxSdk)\inc\AcRxDefault.def</ModuleDefinitionFile><AdditionalLibraryDirectories>$(ObjectArxSdk)\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories><AdditionalDependencies>rxapi.lib;acdb23.lib;acge23.lib;accore.lib;ac1st23.lib;Advapi32.lib;User32.lib;%(AdditionalDependencies)</AdditionalDependencies></Link>
++  </ItemDefinitionGroup>
++  <ItemGroup><ClCompile Include="ElevationArx.cpp" /><ClCompile Include="AnalysisCommands.cpp" /><ClCompile Include="AnalysisReader.cpp" /><ClCompile Include="SceneReader.cpp" /><ClCompile Include="ElevationModel.cpp" /><ClCompile Include="Recognition.cpp" /><ClCompile Include="ProjectStore.cpp" /><ClCompile Include="ProjectStoreCodec.cpp" /><ClCompile Include="GenerationState.cpp" /></ItemGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
++</Project>
+
+--- /dev/null
++++ 立面插件/tests/native/command/CommandDriver.cpp
+@@ -0,0 +1,729 @@
++#include "AnalysisCommandAbi.h"
++#include "ExpectedMembership.h"
++#include "NativeEvidence.h"
++#include "ProductBinding.h"
++#include "SceneReader.h"
++#include <acdocman.h>
++#include <aced.h>
++#include <acedCmdNF.h>
++#include <acutads.h>
++#include <acutmem.h>
++#include <adscodes.h>
++#include <dbapserv.h>
++#include <dbdict.h>
++#include <dbents.h>
++#include <dbidmap.h>
++#include <dbsymtb.h>
++#include <dbsymutl.h>
++#include <memory>
++#include <rxregsvc.h>
++#include <set>
++#include <sstream>
++#include <stdexcept>
++#include <thread>
++namespace {
++HMODULE moduleHandle{};
++template <class T> class Open final {
++public:
++  Open(const Open &) = delete;
++  Open &operator=(const Open &) = delete;
++  explicit Open(AcDbObjectId id, AcDb::OpenMode mode = AcDb::kForRead) {
++    bce::native::require(acdbOpenObject(p, id, mode) == Acad::eOk,
++                         "open fixture");
++  }
++  ~Open() {
++    if (p)
++      p->close();
++  }
++  T *p{};
++};
++struct Monitor final : AcDbDatabaseReactor {
++  AcDbDatabase &db;
++  unsigned changes{};
++  explicit Monitor(AcDbDatabase &d) : db(d) {
++    bce::native::require(db.addReactor(this) == Acad::eOk, "monitor");
++  }
++  ~Monitor() { db.removeReactor(this); }
++  void objectAppended(const AcDbDatabase *, const AcDbObject *) override {
++    ++changes;
++  }
++  void objectModified(const AcDbDatabase *, const AcDbObject *) override {
++    ++changes;
++  }
++  void objectOpenedForModify(const AcDbDatabase *,
++                             const AcDbObject *) override {
++    ++changes;
++  }
++  void objectErased(const AcDbDatabase *, const AcDbObject *,
++                    Adesk::Boolean) override {
++    ++changes;
++  }
++  void headerSysVarChanged(const AcDbDatabase *, const ACHAR *,
++                           Adesk::Boolean ok) override {
++    if (ok)
++      ++changes;
++  }
++};
++AcDbObjectIdArray roots(AcDbDatabase &db) {
++  Open<AcDbBlockTableRecord> model(acdbSymUtil()->blockModelSpaceId(&db));
++  AcDbBlockTableRecordIterator *raw{};
++  bce::native::require(model.p->newIterator(raw) == Acad::eOk, "iterator");
++  std::unique_ptr<AcDbBlockTableRecordIterator> it(raw);
++  AcDbObjectIdArray ids;
++  for (; !it->done(); it->step()) {
++    AcDbObjectId id;
++    bce::native::require(it->getEntityId(id) == Acad::eOk, "id");
++    ids.append(id);
++  }
++  return ids;
++}
++std::string globals() {
++  std::ostringstream out;
++  for (auto name : {L"DBMOD", L"INSUNITS", L"LTSCALE", L"CELTSCALE",
++                    L"DIMSTYLE", L"TEXTSTYLE", L"FRAME", L"WIPEOUTFRAME",
++                    L"IMAGEFRAME", L"XCLIPFRAME", L"FONTALT", L"MIRRTEXT"}) {
++    resbuf value{};
++    bce::native::require(acedGetVar(name, &value) == RTNORM, "global");
++    out << bce::native::utf8(name) << ':' << value.restype << ':';
++    if (value.restype == RTSTR) {
++      out << bce::native::utf8(value.resval.rstring);
++      acutDelString(value.resval.rstring);
++    } else if (value.restype == RTSHORT)
++      out << value.resval.rint;
++    else if (value.restype == RTLONG)
++      out << value.resval.rlong;
++    else if (value.restype == RTREAL)
++      out.precision(17), out << value.resval.rreal;
++    else
++      throw std::runtime_error("global type");
++    out << '\n';
++  }
++  return out.str();
++}
++std::string resources(AcDbDatabase &db) {
++  std::ostringstream out;
++  for (const auto &r : bce::native_scene::readResources(db))
++    out << r.kind.size() << ':' << r.kind << r.name.size() << ':' << r.name
++        << r.definitionSignature.size() << ':' << r.definitionSignature;
++  return out.str();
++}
++std::string nod(AcDbDatabase &db) {
++  Open<AcDbDictionary> d(db.namedObjectsDictionaryId());
++  std::unique_ptr<AcDbDictionaryIterator> it(d.p->newIterator());
++  std::ostringstream out;
++  for (; !it->done(); it->next())
++    out << bce::native::utf8(it->name()) << ':'
++        << bce::native_scene::handle(it->objectId()) << '\n';
++  return out.str();
++}
++bool commandOwnedBy(const wchar_t *name, HMODULE module) {
++  auto *command = acedRegCmds->lookupGlobalCmd(name);
++  if (!command || !module)
++    return false;
++  MEMORY_BASIC_INFORMATION memory{};
++  return VirtualQuery(reinterpret_cast<const void *>(command->functionAddr()),
++                      &memory, sizeof(memory)) == sizeof(memory) &&
++         memory.AllocationBase == module;
++}
++std::string moduleState(const std::wstring &product) {
++  using namespace bce::native;
++  const auto module = GetModuleHandleW(product.c_str());
++  const auto boolean = [](bool value) { return value ? "true" : "false"; };
++  return object(
++      {{"win32ModulePresent", boolean(module != nullptr)},
++       {"sdkLocked", boolean(module && acrxDynamicLinker->isApplicationLocked(
++                                           product.c_str()))},
++       {"sdkBusy",
++        boolean(module && acrxDynamicLinker->isAppBusy(product.c_str()))},
++       {"analyzePresent",
++        boolean(acedRegCmds->lookupGlobalCmd(L"BCE_ANALYZE") != nullptr)},
++       {"infoPresent",
++        boolean(acedRegCmds->lookupGlobalCmd(L"BCE_INFO") != nullptr)},
++       {"testRunPresent",
++        boolean(acedRegCmds->lookupGlobalCmd(L"BCE_TEST_RUN") != nullptr)},
++       {"analyzeCallbackOwnedByProduct",
++        boolean(commandOwnedBy(L"BCE_ANALYZE", module))},
++       {"infoCallbackOwnedByProduct",
++        boolean(commandOwnedBy(L"BCE_INFO", module))}});
++}
++void foreignCommand() noexcept {}
++struct LifecycleRun {
++  bce::native::Config config;
++  std::unique_ptr<bce::native::Evidence> evidence;
++  std::wstring product;
++  BceCopyAnalysisV1 copy{};
++  AcApDocument *original{};
++  AcApDocument *temporary{};
++  std::string originalIdentity;
++  bool pass{true};
++  bool loaded{true};
++  std::set<AcApDocument *> existingDocuments;
++  std::set<AcDbDatabase *> existingDatabases;
++  AcDbDatabase *temporaryDatabase{};
++  std::unique_ptr<Monitor> newDocumentMonitor;
++  std::string newGlobals, newResources, newNod;
++};
++std::unique_ptr<LifecycleRun> lifecycleRun;
++void lifecycleExpect(const char *name, bool condition,
++                     const std::string &details) {
++  auto &r = *lifecycleRun;
++  r.evidence->step(name, condition ? "passed" : "failed", details);
++  r.pass = r.pass && condition;
++}
++BceAnalysisReportV1 query() {
++  BceAnalysisReportV1 r{};
++  r.size = sizeof(r);
++  r.version = 1;
++  return r;
++}
++void lifecycleFailure(const char *message) noexcept {
++  try {
++    if (lifecycleRun) {
++      auto &r = *lifecycleRun;
++      if (r.loaded) {
++        r.loaded = !acrxDynamicLinker->unloadModule(r.product.c_str(), true);
++      }
++      r.evidence->error(message);
++      r.evidence->finish(r.config, "failed");
++    }
++  } catch (...) {
++  }
++  // On failure leave owned documents in place for exact supervisor shutdown;
++  // never close a modified or uncertain document merely to complete a test.
++}
++void documentCreate() noexcept {
++  try {
++    using namespace bce::native;
++    require(lifecycleRun != nullptr, "lifecycle missing");
++    auto &r = *lifecycleRun;
++    require(acDocManager->isApplicationContext(),
++            "SDK application context required");
++    require(acDocManager->curDocument() == r.original,
++            "owned original mismatch");
++    resbuf sdi{};
++    require(acedGetVar(L"SDI", &sdi) == RTNORM && sdi.restype == RTSHORT &&
++                sdi.resval.rint == 0,
++            "MDI required; SDI is never changed");
++    std::unique_ptr<AcApDocumentIterator> documents(
++        acDocManager->newAcApDocumentIterator());
++    for (; !documents->done(); documents->step()) {
++      auto *existing = documents->document();
++      r.existingDocuments.insert(existing);
++      if (existing)
++        r.existingDatabases.insert(existing->database());
++    }
++    r.evidence->checkpoint("before-owned-sdk-new-document");
++    require(acDocManager->appContextNewDocument(
++                L"C:/Users/PC/AppData/Local/Autodesk/AutoCAD "
++                L"2020/R23.1/chs/Template/acadiso.dwt") == Acad::eOk,
++            "SDK new owned document");
++    r.temporary = acDocManager->curDocument();
++    require(r.temporary && r.temporary != r.original,
++            "new owned document identity");
++    r.temporaryDatabase = r.temporary->database();
++    require(r.temporaryDatabase &&
++                r.existingDocuments.count(r.temporary) == 0 &&
++                r.existingDatabases.count(r.temporaryDatabase) == 0 &&
++                acDocManager->document(r.temporaryDatabase) == r.temporary,
++            "fresh document and database absent from pre-create inventory");
++    resbuf clean{};
++    require(acedGetVar(L"DBMOD", &clean) == RTNORM &&
++                clean.restype == RTSHORT && clean.resval.rint == 0,
++            "created document initially unmodified");
++    r.newGlobals = globals();
++    r.newResources = resources(*r.temporaryDatabase);
++    r.newNod = nod(*r.temporaryDatabase);
++    r.newDocumentMonitor = std::make_unique<Monitor>(*r.temporaryDatabase);
++    lifecycleExpect("FreshOwnedDocumentVerifiedBeforeAnalyze", true,
++                    "SDK current document/DB absent from full startup "
++                    "inventory, DBMOD=0, SDI=0 read-only");
++    auto q = query();
++    lifecycleExpect(
++        "ActualDocumentSwitchInvalidatesOldReport", r.copy(&q, nullptr, 0) == 1,
++        "actual SDK-created current document differs from original");
++    require(acDocManager->sendStringToExecute(
++                r.temporary, L"BCE_ANALYZE\nBCE_COMMAND_AFTER_NEW\n", true,
++                false, false) == Acad::eOk,
++            "queue ordinary new-document command");
++  } catch (const std::exception &e) {
++    lifecycleFailure(e.what());
++  } catch (...) {
++    lifecycleFailure("create lifecycle exception");
++  }
++}
++void documentAfterNew() noexcept {
++  try {
++    using namespace bce::native;
++    require(lifecycleRun != nullptr, "lifecycle missing");
++    auto &r = *lifecycleRun;
++    require(acDocManager->curDocument() == r.temporary, "new document current");
++    auto q = query();
++    const int status = r.copy(&q, nullptr, 0);
++    lifecycleExpect("OrdinaryAnalyzeUsesNewDocumentIdentity",
++                    status == 2 && q.documentIdentity != r.originalIdentity,
++                    "actual ordinary command in owned newly created document");
++    lifecycleExpect("NewDocumentAnalyzeIsReadOnly",
++                    r.newDocumentMonitor &&
++                        r.newDocumentMonitor->changes == 0 &&
++                        r.newGlobals == globals() &&
++                        r.newResources == resources(*r.temporaryDatabase) &&
++                        r.newNod == nod(*r.temporaryDatabase),
++                    "new document events, DBMOD, global settings, resources "
++                    "and NOD unchanged");
++    r.newDocumentMonitor.reset();
++    resbuf v{};
++    require(acedGetVar(L"DBMOD", &v) == RTNORM && v.restype == RTSHORT,
++            "new doc DBMOD");
++    require(v.resval.rint == 0, "refuse close of modified document");
++    require(acDocManager->sendStringToExecute(r.temporary,
++                                              L"BCE_COMMAND_CLOSE_NEW\n", true,
++                                              false, false) == Acad::eOk,
++            "queue owned close session");
++  } catch (const std::exception &e) {
++    lifecycleFailure(e.what());
++  } catch (...) {
++    lifecycleFailure("new document lifecycle exception");
++  }
++}
++void documentClose() noexcept {
++  try {
++    using namespace bce::native;
++    require(lifecycleRun != nullptr, "lifecycle missing");
++    auto &r = *lifecycleRun;
++    require(acDocManager->isApplicationContext(),
++            "close requires SDK application context");
++    require(r.temporary && r.temporary != r.original &&
++                acDocManager->curDocument() == r.temporary,
++            "owned close identity");
++    require(r.temporary->database() == r.temporaryDatabase &&
++                r.existingDocuments.count(r.temporary) == 0 &&
++                r.existingDatabases.count(r.temporaryDatabase) == 0 &&
++                acDocManager->document(r.temporaryDatabase) == r.temporary,
++            "revalidate owned doc/database before close");
++    resbuf v{};
++    require(acedGetVar(L"DBMOD", &v) == RTNORM && v.restype == RTSHORT &&
++                v.resval.rint == 0,
++            "refuse modified owned close");
++    require(acDocManager->appContextCloseDocument(r.temporary) == Acad::eOk,
++            "SDK close owned zero-DBMOD document");
++    r.temporary = nullptr;
++    r.temporaryDatabase = nullptr;
++    require(acDocManager->curDocument() == r.original,
++            "original resumed after close");
++    auto q = query();
++    lifecycleExpect(
++        "ActualCloseAndReturnInvalidateReport", r.copy(&q, nullptr, 0) == 1,
++        "actual SDK close then original current; no cross-document cache");
++    require(acDocManager->sendStringToExecute(
++                r.original, L"BCE_ANALYZE\nBCE_COMMAND_FINISH\n", true, false,
++                false) == Acad::eOk,
++            "queue resumed ordinary analyze");
++  } catch (const std::exception &e) {
++    lifecycleFailure(e.what());
++  } catch (...) {
++    lifecycleFailure("close lifecycle exception");
++  }
++}
++void documentFinish() noexcept {
++  try {
++    using namespace bce::native;
++    require(lifecycleRun != nullptr, "lifecycle missing");
++    auto &r = *lifecycleRun;
++    require(acDocManager->curDocument() == r.original,
++            "finish original identity");
++    auto q = query();
++    const int status = r.copy(&q, nullptr, 0);
++    lifecycleExpect("OrdinaryAnalyzeAfterRealCloseWorks", status == 2,
++                    "fresh context after actual close and return");
++    if (status == 2) {
++      std::vector<char> data(static_cast<std::size_t>(q.requiredBytes));
++      require(r.copy(&q, data.data(), data.size()) == 0, "resumed report");
++      const std::string body(data.data());
++      lifecycleExpect("OriginalUnsavedMembersSurviveDocumentLifecycle",
++                      body.find("roots\t742\n") != std::string::npos &&
++                          body.find(u8"I1未保存中文内容") != std::string::npos,
++                      "742 owned roots and original unsaved text preserved");
++    }
++    r.evidence->capability(
++        object({{"phase", quote(std::string("before-final-lifecycle-unload"))},
++                {"state", moduleState(r.product)}}));
++    const bool finalUnloaded =
++        acrxDynamicLinker->unloadModule(r.product.c_str(), true);
++    r.evidence->capability(
++        object({{"phase", quote(std::string("after-final-lifecycle-unload"))},
++                {"sdkReturn", finalUnloaded ? "true" : "false"},
++                {"state", moduleState(r.product)}}));
++    require(finalUnloaded, "final lifecycle product unload");
++    r.loaded = false;
++    lifecycleExpect("LifecycleUnloadRemovesAllProductCommands",
++                    !acedRegCmds->lookupGlobalCmd(L"BCE_ANALYZE") &&
++                        !acedRegCmds->lookupGlobalCmd(L"BCE_INFO"),
++                    "normal SDK unload after real document close");
++    require(sha256(r.config.scheme) == r.config.schemeSHA256 &&
++                sha256(r.config.reference) == r.config.referenceSHA256,
++            "final frozen inputs");
++    r.evidence->finish(r.config, r.pass ? "passed" : "failed");
++    lifecycleRun.reset();
++  } catch (const std::exception &e) {
++    lifecycleFailure(e.what());
++  } catch (...) {
++    lifecycleFailure("finish lifecycle exception");
++  }
++}
++void run() noexcept {
++  bce::native::Config c;
++  std::unique_ptr<bce::native::Evidence> e;
++  std::wstring product;
++  bool loaded = false;
++  try {
++    using namespace bce::native;
++    c = load_config(moduleHandle);
++    e = std::make_unique<Evidence>(c);
++    validate_identity(c);
++    require(c.caseName == L"PublicAnalyzeCommandLifecycle", "case mismatch");
++    bool pass = true;
++    auto expect = [&](const char *name, bool ok, const std::string &details) {
++      e->step(name, ok ? "passed" : "failed", details);
++      pass = pass && ok;
++    };
++    product = c.modulePath.substr(0, c.modulePath.find_last_of(L"\\/") + 1) +
++              L"BuildingElevation2020.arx";
++    require(sha256(product) == BCE_PRODUCT_SHA256,
++            "formal product SHA mismatch");
++    e->capability(object(
++        {{"formalModulePath", quote(product)},
++         {"formalModuleSHA256", quote(std::string(BCE_PRODUCT_SHA256))}}));
++    require(!acedRegCmds->lookupGlobalCmd(L"BCE_ANALYZE") &&
++                !acedRegCmds->lookupGlobalCmd(L"BCE_INFO"),
++            "preexisting command");
++    loaded = acrxDynamicLinker->loadModule(product.c_str(), false, true);
++    e->capability(object({{"phase", quote(std::string("after-formal-load"))},
++                          {"sdkReturn", loaded ? "true" : "false"},
++                          {"state", moduleState(product)}}));
++    require(loaded, "formal module load");
++    expect("FormalCommandsRegistered",
++           acedRegCmds->lookupGlobalCmd(L"BCE_ANALYZE") &&
++               acedRegCmds->lookupGlobalCmd(L"BCE_INFO") &&
++               !acedRegCmds->lookupGlobalCmd(L"BCE_BUILD") &&
++               !acedRegCmds->lookupGlobalCmd(L"BCE_CONFIG"),
++           "only useful public commands");
++    expect("PublicCallbacksBelongToFrozenProduct",
++           commandOwnedBy(L"BCE_ANALYZE", GetModuleHandleW(product.c_str())) &&
++               commandOwnedBy(L"BCE_INFO", GetModuleHandleW(product.c_str())),
++           "VirtualQuery verifies both actual callback allocation bases");
++    auto copy = reinterpret_cast<BceCopyAnalysisV1>(GetProcAddress(
++        GetModuleHandleW(product.c_str()), "BceCopyLastAnalysisV1"));
++    require(copy != nullptr, "read-only ABI missing");
++    auto *doc = acDocManager->curDocument();
++    require(doc && doc->database(), "current doc");
++    auto &db = *doc->database();
++    AcDbDatabase source(false, true);
++    require(source.readDwgFile(c.scheme.c_str(),
++                               AcDbDatabase::kForReadAndReadShare,
++                               false) == Acad::eOk,
++            "scheme read");
++    source.closeInput(true);
++    auto sourceIds = roots(source);
++    require(sourceIds.length() == 741, "source root count");
++    AcDbIdMapping mapping;
++    require(source.wblockCloneObjects(sourceIds,
++                                      acdbSymUtil()->blockModelSpaceId(&db),
++                                      mapping, AcDb::kDrcIgnore) == Acad::eOk,
++            "current-memory scheme clone");
++    {
++      AcDbDatabase fixture(true, true);
++      struct WorkingScope {
++        AcDbDatabase *previous;
++        explicit WorkingScope(AcDbDatabase &target)
++            : previous(acdbHostApplicationServices()->workingDatabase()) {
++          acdbHostApplicationServices()->setWorkingDatabase(&target);
++        }
++        ~WorkingScope() {
++          acdbHostApplicationServices()->setWorkingDatabase(previous);
++        }
++      } workingFixture(fixture);
++      AcDbObjectId styleId;
++      {
++        Open<AcDbTextStyleTable> styles(fixture.textStyleTableId(),
++                                        AcDb::kForWrite);
++        auto style = std::make_unique<AcDbTextStyleTableRecord>();
++        require(style->setName(L"I1_ColdFont") == Acad::eOk &&
++                    style->setFileName(L"simhei.ttf") == Acad::eOk,
++                "cold fixture style");
++        require(styles.p->add(styleId, style.get()) == Acad::eOk,
++                "cold style append");
++        style.release()->close();
++      }
++      AcDbObjectId textId;
++      {
++        Open<AcDbBlockTableRecord> model(
++            acdbSymUtil()->blockModelSpaceId(&fixture), AcDb::kForWrite);
++        auto text = std::make_unique<AcDbText>(AcGePoint3d(-500000, -500000, 0),
++                                               L"I1未保存中文内容", styleId, 3);
++        require(model.p->appendAcDbEntity(textId, text.get()) == Acad::eOk,
++                "unsaved scratch text");
++        text.release()->close();
++      }
++      AcDbObjectIdArray ids;
++      ids.append(textId);
++      AcDbIdMapping textMapping;
++      require(fixture.wblockCloneObjects(
++                  ids, acdbSymUtil()->blockModelSpaceId(&db), textMapping,
++                  AcDb::kDrcIgnore) == Acad::eOk,
++              "raw clone cold text to actual current source");
++    }
++
++    const auto before = roots(db);
++    const auto beforeGlobals = globals(), beforeResources = resources(db),
++               beforeNod = nod(db);
++    auto *const working = acdbHostApplicationServices()->workingDatabase();
++    Monitor watch(db);
++    e->checkpoint("before-ordinary-public-command");
++    const auto commandStatus = acedCommandS(RTSTR, L"BCE_ANALYZE", RTNONE);
++    BceAnalysisReportV1 report{};
++    report.size = sizeof(report);
++    report.version = 1;
++    const auto result = copy(&report, nullptr, 0);
++    expect("OrdinaryPublicAnalyzeReturnsCurrentReport",
++           commandStatus == RTNORM && result == 2 && report.requiredBytes > 1,
++           "command=" + std::to_string(commandStatus) +
++               " ABI=" + std::to_string(result));
++    if (result == 2 && report.requiredBytes > 1) {
++      std::vector<char> bytes(static_cast<std::size_t>(report.requiredBytes));
++      require(copy(&report, bytes.data(), bytes.size()) == 0, "report copy");
++      const std::string body(bytes.data());
++      e->capability(object({{"publicReport", quote(body)}}));
++      expect("RealFourElevationsTwoSections",
++             body.find("elevations\t4\n") != std::string::npos &&
++                 body.find("sections\t2\n") != std::string::npos,
++             "ordinary command counts");
++      expect("MissingInputsRemainBlocked",
++             body.find("UNIT_REQUIRED") != std::string::npos &&
++                 body.find("PLAN_REQUIRED") != std::string::npos,
++             "no assumed unit or plan");
++      expect("UnsavedChineseRead",
++             body.find(u8"I1未保存中文内容") != std::string::npos,
++             "no disk save required");
++      bool members = true;
++      std::map<std::string, std::string> actual;
++      std::istringstream lines(body);
++      std::string line;
++      while (std::getline(lines, line)) {
++        if (line.rfind("member\t", 0) == 0) {
++          const auto split = line.find('\t', 7);
++          members =
++              split != std::string::npos &&
++              actual.emplace(line.substr(7, split - 7), line.substr(split + 1))
++                  .second &&
++              members;
++        }
++      }
++      for (const auto &item : expectedMembership()) {
++        auto translate = [&](const std::string &h) {
++          AcDbIdPair pair;
++          pair.setKey(bce::native_scene::objectId(source, h));
++          require(mapping.compute(pair) && pair.isCloned(),
++                  "membership mapping");
++          return bce::native_scene::handle(pair.value());
++        };
++        const auto root = translate(item.first), title = translate(item.second);
++        const auto found = actual.find(root);
++        members = members && found != actual.end() && found->second == title;
++      }
++      expect("All741SourceMembersMatchIndependentFixture",
++             members && actual.size() >= 741,
++             "source mapping checked individually");
++      const auto snapshot = report;
++      int workerStatus = -1;
++      std::thread abiWorker([&] {
++        auto metadata = query();
++        workerStatus = copy(&metadata, nullptr, 0);
++      });
++      abiWorker.join();
++      expect("WorkerAbiRejectedBeforeSdkAccess", workerStatus == 3,
++             "read-only ABI is main-thread-only");
++      expect("NullAbiRequestRejected", copy(nullptr, nullptr, 0) == 3,
++             "null metadata rejected");
++      auto wrongSize = snapshot;
++      wrongSize.size -= 1;
++      expect("WrongAbiSizeRejected", copy(&wrongSize, nullptr, 0) == 3,
++             "wrong metadata size rejected");
++      auto noBuffer = snapshot;
++      expect("NullBufferWithCapacityRejected", copy(&noBuffer, nullptr, 4) == 3,
++             "null output with nonzero capacity rejected");
++      BceAnalysisReportV1 bad{};
++      bad.size = sizeof(bad);
++      bad.version = 2;
++      expect("IllegalAbiVersionRejected", copy(&bad, nullptr, 0) == 3,
++             "version rejected");
++      bad = snapshot;
++      bad.sequence += 1;
++      expect("StaleAbiSequenceRejected",
++             copy(&bad, bytes.data(), bytes.size()) == 4,
++             "wrong sequence rejected");
++      bad = snapshot;
++      bad.documentIdentity[0] = 'X';
++      expect("ForeignAbiIdentityRejected",
++             copy(&bad, bytes.data(), bytes.size()) == 4,
++             "wrong identity rejected");
++      bad = snapshot;
++      char tinyBuffer[2] = {'x', 'y'};
++      expect("SmallAbiBufferRemainsUntouched",
++             copy(&bad, tinyBuffer, 2) == 2 && tinyBuffer[0] == 'x' &&
++                 tinyBuffer[1] == 'y',
++             "bounded copy");
++    }
++    expect("CommandDoesNotModifySource",
++           watch.changes == 0 && before == roots(db) &&
++               acDocManager->curDocument() == doc,
++           "database events=" + std::to_string(watch.changes));
++    expect("GlobalsResourcesNodAndDbmodUnchanged",
++           beforeGlobals == globals() && beforeResources == resources(db) &&
++               beforeNod == nod(db) &&
++               working == acdbHostApplicationServices()->workingDatabase(),
++           "12 global values including DBMOD, resources, NOD and working DB");
++    e->capability(object({{"phase", quote(std::string("before-formal-unload"))},
++                          {"state", moduleState(product)}}));
++    const bool unloaded =
++        acrxDynamicLinker->unloadModule(product.c_str(), true);
++    e->capability(object({{"phase", quote(std::string("after-formal-unload"))},
++                          {"sdkReturn", unloaded ? "true" : "false"},
++                          {"state", moduleState(product)}}));
++    loaded = !unloaded;
++    expect("FormalUnloadRemovesOnlyOwnCommands",
++           unloaded && !acedRegCmds->lookupGlobalCmd(L"BCE_ANALYZE") &&
++               !acedRegCmds->lookupGlobalCmd(L"BCE_INFO") &&
++               acedRegCmds->lookupGlobalCmd(L"BCE_TEST_RUN"),
++           "matched asCmd=true SDK unload; state recorded");
++    require(acedRegCmds->addCommand(L"BCE_COMMAND_FOREIGN", L"BCE_INFO",
++                                    L"BCE_INFO", ACRX_CMD_MODAL,
++                                    foreignCommand) == Acad::eOk,
++            "foreign fixture command");
++    auto *const foreign = acedRegCmds->lookupGlobalCmd(L"BCE_INFO");
++    const bool conflictLoad =
++        acrxDynamicLinker->loadModule(product.c_str(), false, true);
++    e->capability(
++        object({{"phase", quote(std::string("after-conflicting-load"))},
++                {"sdkReturn", conflictLoad ? "true" : "false"},
++                {"state", moduleState(product)}}));
++    expect("ConflictLoadPreservesForeignCommand",
++           !conflictLoad &&
++               acedRegCmds->lookupGlobalCmd(L"BCE_INFO") == foreign &&
++               !acedRegCmds->lookupGlobalCmd(L"BCE_ANALYZE"),
++           "foreign command preserved on rejected init");
++    if (conflictLoad) {
++      acrxDynamicLinker->unloadModule(product.c_str(), true);
++    }
++    require(acedRegCmds->removeCmd(L"BCE_COMMAND_FOREIGN", L"BCE_INFO") ==
++                Acad::eOk,
++            "remove owned conflict fixture");
++    loaded = acrxDynamicLinker->loadModule(product.c_str(), false, true);
++    require(loaded, "formal reload");
++    copy = reinterpret_cast<BceCopyAnalysisV1>(GetProcAddress(
++        GetModuleHandleW(product.c_str()), "BceCopyLastAnalysisV1"));
++    require(copy != nullptr, "reloaded ABI");
++    BceAnalysisReportV1 empty{};
++    empty.size = sizeof(empty);
++    empty.version = 1;
++    expect("ReloadHasNoOldResult", copy(&empty, nullptr, 0) == 1,
++           "old cache and callbacks discarded");
++    require(acedCommandS(RTSTR, L"BCE_ANALYZE", RTNONE) == RTNORM,
++            "reloaded ordinary command");
++    expect("ReloadedOrdinaryCommandWorks", copy(&empty, nullptr, 0) == 2,
++           "real reloaded command");
++    lifecycleRun = std::make_unique<LifecycleRun>();
++    lifecycleRun->config = c;
++    lifecycleRun->evidence = std::move(e);
++    lifecycleRun->product = product;
++    lifecycleRun->copy = copy;
++    lifecycleRun->original = doc;
++    lifecycleRun->originalIdentity = empty.documentIdentity;
++    lifecycleRun->pass = pass;
++    loaded = false;
++    require(acDocManager->sendStringToExecute(doc, L"BCE_COMMAND_CREATE_NEW\n",
++                                              true, false, false) == Acad::eOk,
++            "queue owned document lifecycle session");
++
++  } catch (const std::exception &x) {
++    if (!e && lifecycleRun)
++      lifecycleFailure(x.what());
++    try {
++      if (e) {
++        e->error(x.what());
++        e->finish(c, "failed");
++      }
++    } catch (...) {
++    }
++  } catch (...) {
++    try {
++      if (e) {
++        e->error("unknown ABI exception");
++        e->finish(c, "failed");
++      }
++    } catch (...) {
++    }
++  }
++  try {
++    auto *foreign = acedRegCmds->lookupGlobalCmd(L"BCE_INFO");
++    if (foreign && foreign->functionAddr() == foreignCommand)
++      acedRegCmds->removeCmd(L"BCE_COMMAND_FOREIGN", L"BCE_INFO");
++  } catch (...) {
++  }
++  if (loaded) {
++    try {
++      acrxDynamicLinker->unloadModule(product.c_str(), true);
++    } catch (...) {
++    }
++  }
++}
++} // namespace
++BOOL APIENTRY DllMain(HMODULE instance, DWORD reason, LPVOID) {
++  if (reason == DLL_PROCESS_ATTACH) {
++    moduleHandle = instance;
++    DisableThreadLibraryCalls(instance);
++  }
++  return TRUE;
++}
++extern "C" __declspec(dllexport) AcRx::AppRetCode
++    acrxEntryPoint(AcRx::AppMsgCode message, void *id) noexcept {
++  try {
++    if (message == AcRx::kInitAppMsg) {
++      acrxDynamicLinker->unlockApplication(id);
++      acrxRegisterAppMDIAware(id);
++      struct Entry {
++        const wchar_t *name;
++        Adesk::Int32 flags;
++        AcRxFunctionPtr callback;
++      };
++      const Entry entries[] = {
++          {L"BCE_TEST_RUN", ACRX_CMD_MODAL, run},
++          {L"BCE_COMMAND_CREATE_NEW", ACRX_CMD_SESSION, documentCreate},
++          {L"BCE_COMMAND_AFTER_NEW", ACRX_CMD_MODAL, documentAfterNew},
++          {L"BCE_COMMAND_CLOSE_NEW", ACRX_CMD_SESSION, documentClose},
++          {L"BCE_COMMAND_FINISH", ACRX_CMD_MODAL, documentFinish}};
++      for (const auto &entry : entries)
++        if (acedRegCmds->lookupGlobalCmd(entry.name))
++          return AcRx::kRetError;
++      for (const auto &entry : entries)
++        if (acedRegCmds->addCommand(L"BCE_COMMAND_CASES", entry.name,
++                                    entry.name, entry.flags,
++                                    entry.callback) != Acad::eOk) {
++          acedRegCmds->removeGroup(L"BCE_COMMAND_CASES");
++          return AcRx::kRetError;
++        }
++      return AcRx::kRetOK;
++    }
++    if (message == AcRx::kUnloadAppMsg) {
++      if (lifecycleRun) {
++        lifecycleFailure("driver unloading with pending lifecycle");
++        lifecycleRun.reset();
++      }
++      return acedRegCmds->removeGroup(L"BCE_COMMAND_CASES") == Acad::eOk
++                 ? AcRx::kRetOK
++                 : AcRx::kRetError;
++    }
++    return AcRx::kRetOK;
++  } catch (...) {
++    return AcRx::kRetError;
++  }
++}
+
+--- /dev/null
++++ 立面插件/tests/native/command/ElevationCommandCases.vcxproj
+@@ -0,0 +1,15 @@
++<?xml version="1.0" encoding="utf-8"?>
++<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <ItemGroup Label="ProjectConfigurations"><ProjectConfiguration Include="Release|x64"><Configuration>Release</Configuration><Platform>x64</Platform></ProjectConfiguration></ItemGroup>
++  <PropertyGroup Label="Globals"><ProjectGuid>{FDE1B897-19BB-446A-9DD1-B81FACAF173A}</ProjectGuid><RootNamespace>ElevationCommandCases</RootNamespace><WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion></PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
++  <PropertyGroup Label="Configuration"><ConfigurationType>DynamicLibrary</ConfigurationType><UseDebugLibraries>false</UseDebugLibraries><PlatformToolset>v141</PlatformToolset><CharacterSet>Unicode</CharacterSet></PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
++  <PropertyGroup><OutDir>..\out\</OutDir><IntDir>..\driver-obj\</IntDir><TargetName>ElevationCommandCases</TargetName><TargetExt>.arx</TargetExt><ObjectArxSdk Condition="'$(ObjectArxSdk)'==''">C:\Autodesk\ObjectARX_for_AutoCAD_2020_Win_64_bit</ObjectArxSdk></PropertyGroup>
++  <ItemDefinitionGroup>
++    <ClCompile><WarningLevel>Level4</WarningLevel><TreatWarningAsError>true</TreatWarningAsError><SDLCheck>true</SDLCheck><ConformanceMode>true</ConformanceMode><LanguageStandard>stdcpp17</LanguageStandard><RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary><DisableSpecificWarnings>4828;%(DisableSpecificWarnings)</DisableSpecificWarnings><AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions><ExceptionHandling>Sync</ExceptionHandling><PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;UNICODE;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions><AdditionalIncludeDirectories>$(ObjectArxSdk)\inc;$(ObjectArxSdk)\inc-x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories></ClCompile>
++    <Link><SubSystem>Windows</SubSystem><ModuleDefinitionFile>$(ObjectArxSdk)\inc\AcRxDefault.def</ModuleDefinitionFile><AdditionalLibraryDirectories>$(ObjectArxSdk)\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories><AdditionalDependencies>rxapi.lib;acdb23.lib;acge23.lib;accore.lib;ac1st23.lib;Advapi32.lib;User32.lib;%(AdditionalDependencies)</AdditionalDependencies></Link>
++  </ItemDefinitionGroup>
++  <ItemGroup><ClCompile Include="CommandDriver.cpp" /><ClCompile Include="NativeEvidence.cpp" /><ClCompile Include="SceneReader.cpp" /><ClCompile Include="AnalysisReader.cpp" /><ClCompile Include="Recognition.cpp" /><ClCompile Include="ElevationModel.cpp" /></ItemGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
++</Project>
+
+--- /dev/null
++++ 立面插件/tools/build_commands.ps1
+@@ -0,0 +1,93 @@
++param([string]$Label = 'red', [string]$ReaderReceipt = '', [string]$StoreReceipt = '', [string]$SceneReceipt = '')
++$ErrorActionPreference = 'Stop'
++$projectRoot = Split-Path $PSScriptRoot -Parent
++$buildName = 'i1-' + (Get-Date -Format 'yyyyMMdd-HHmmss-fff') + '-' + ($Label -replace '[^A-Za-z0-9_-]', '_') + '-' + [Guid]::NewGuid().ToString('N').Substring(0,8)
++$buildRoot = Join-Path (Join-Path $projectRoot 'build') $buildName
++$sourceRoot = Join-Path $buildRoot 'src'
++$null = New-Item -ItemType Directory -Path $sourceRoot
++$receipt = [ordered]@{ contract='bce.commands-build.v1'; label=$Label; startedUtc=[DateTime]::UtcNow.ToString('o'); compiledSourcesDirectory=$sourceRoot; sourceFiles=[ordered]@{}; inputOrigins=@(); dependencyReceipts=@(); binary=$null; binarySHA256=$null; productBinary=$null; productSHA256=$null; log=(Join-Path $buildRoot 'build.log'); exitCode=1; toolchain='AutoCAD2020 SDK23.1 / v141 14.16.27023 / x64 / C++17' }
++$exitResult = 1
++try {
++    $dependencySourceHashes = @{}
++    foreach ($dependencyPath in @($ReaderReceipt, $StoreReceipt, $SceneReceipt)) {
++        if ([string]::IsNullOrWhiteSpace($dependencyPath)) { continue }
++        $resolvedDependency = (Resolve-Path -LiteralPath $dependencyPath).Path
++        $dependency = Get-Content -LiteralPath $resolvedDependency -Raw -Encoding UTF8 | ConvertFrom-Json
++        if ($dependency.exitCode -ne 0) { throw 'Dependency receipt is not a successful frozen build' }
++        $verifiedCount = 0
++        $isStore = $dependency.contract -eq 'bce.store-build.v1'
++        $isScene = $dependency.contract -eq 'bce.inplace-build.v1'
++        if (!$isStore -and !$isScene -and $dependency.contract -ne 'bce.analysis-build.v1') { throw 'Unknown dependency contract' }
++        foreach ($origin in $dependency.inputOrigins) {
++            $leaf = Split-Path $origin.origin -Leaf
++            $owned = if ($isStore) { $leaf -in @('ProjectStore.h','ProjectStore.cpp','ProjectStoreCodec.h','ProjectStoreCodec.cpp') } elseif ($isScene) { $leaf -in @('SceneReader.h','SceneReader.cpp') } else { [string]::IsNullOrWhiteSpace($SceneReceipt) -or $leaf -notin @('SceneReader.h','SceneReader.cpp') }
++            if ((Split-Path $origin.origin -Parent) -eq (Join-Path $projectRoot 'src') -and $owned) {
++                $verifiedCount += 1
++                if ((Get-FileHash -LiteralPath $origin.origin).Hash -ne $origin.sha256 -or (Get-FileHash -LiteralPath $origin.compiledCopy).Hash -ne $origin.sha256) { throw ('Dependency source differs from frozen candidate: ' + $origin.origin) }
++                if ($dependencySourceHashes.ContainsKey($leaf) -and $dependencySourceHashes[$leaf] -ne $origin.sha256) { throw ('Conflicting dependency ownership: ' + $leaf) }
++                $dependencySourceHashes[$leaf] = $origin.sha256
++            }
++        }
++        $expectedCount = if ($isStore) { 4 } elseif ($isScene) { 2 } elseif ([string]::IsNullOrWhiteSpace($SceneReceipt)) { 9 } else { 7 }
++        if ($verifiedCount -ne $expectedCount) { throw ('Dependency source set incomplete: ' + $dependency.contract + ' count=' + $verifiedCount) }
++        $receipt.dependencyReceipts += [ordered]@{ path=$resolvedDependency; SHA256=(Get-FileHash -LiteralPath $resolvedDependency).Hash; verifiedOwnedSources=$verifiedCount }
++    }
++    $inputs = @('src/ElevationModel.h','src/ElevationModel.cpp','src/RuleModel.h','src/Recognition.h','src/Recognition.cpp','src/SceneReader.h','src/SceneReader.cpp','src/AnalysisReader.h','src/AnalysisReader.cpp','src/ProjectStore.h','src/ProjectStore.cpp','src/ProjectStoreCodec.h','src/ProjectStoreCodec.cpp','src/GenerationState.h','src/GenerationState.cpp','src/WriteContracts.h','src/AnalysisCommands.h','src/AnalysisCommands.cpp','src/AnalysisCommandAbi.h','src/ElevationArx.cpp','src/BuildingElevation2020.vcxproj','tests/native/NativeEvidence.h','tests/native/NativeEvidence.cpp','tests/native/command/CommandDriver.cpp','tests/native/command/ElevationCommandCases.vcxproj')
++    foreach ($relative in $inputs) {
++        $source = Join-Path $projectRoot $relative
++        $destination = Join-Path $sourceRoot (Split-Path $relative -Leaf)
++        Copy-Item -LiteralPath $source -Destination $destination
++        $digest = (Get-FileHash -LiteralPath $destination -Algorithm SHA256).Hash
++        $sourceLeaf = Split-Path $relative -Leaf
++        if ($dependencySourceHashes.ContainsKey($sourceLeaf) -and $dependencySourceHashes[$sourceLeaf] -ne $digest) { throw ('Dependency changed while freezing: ' + $sourceLeaf) }
++        $receipt.sourceFiles[$destination] = $digest
++        $receipt.inputOrigins += [ordered]@{ origin=$source; compiledCopy=$destination; sha256=$digest }
++    }
++    $expected = Join-Path $projectRoot 'tests/fixtures/scheme-expected.tsv'
++    $expectedCopy = Join-Path $buildRoot 'scheme-expected.tsv'
++    Copy-Item -LiteralPath $expected -Destination $expectedCopy
++    if ((Get-FileHash -LiteralPath $expectedCopy).Hash -ne 'E5D1C9E7D74909A2D7D95DE75D42F1DD7B2A3000B1AE6C051ED84551529723C2') { throw 'Expected fixture SHA mismatch' }
++    $rows = Import-Csv -LiteralPath $expectedCopy -Delimiter "`t"
++    $header = '#pragma once' + "`n" + '#include <map>' + "`n" + '#include <string>' + "`n" + 'inline std::map<std::string,std::string> expectedMembership() { return {' + "`n"
++    foreach ($row in $rows) { $header += '{"' + $row.handle + '","' + $row.titleHandle + '"},' + "`n" }
++    $header += '}; }'
++    $headerPath = Join-Path $sourceRoot 'ExpectedMembership.h'
++    Set-Content -LiteralPath $headerPath -Value $header -Encoding utf8
++    $receipt.sourceFiles[$headerPath] = (Get-FileHash -LiteralPath $headerPath).Hash
++    $receipt.sourceFiles[$expectedCopy] = (Get-FileHash -LiteralPath $expectedCopy).Hash
++    Copy-Item -LiteralPath $PSCommandPath -Destination (Join-Path $buildRoot 'build_commands.ps1')
++    $receipt.sourceFiles[(Join-Path $buildRoot 'build_commands.ps1')] = (Get-FileHash -LiteralPath (Join-Path $buildRoot 'build_commands.ps1') -Algorithm SHA256).Hash
++    $vcvars = 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat'
++    $msbuild = 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe'
++    if (!(Test-Path -LiteralPath $vcvars) -or !(Test-Path -LiteralPath $msbuild)) { throw 'v141 build tools missing' }
++    $command = '@echo off' + "`r`n" + 'call "' + $vcvars + '" -vcvars_ver=14.16' + "`r`n" + 'if errorlevel 1 exit /b %errorlevel%' + "`r`n" + '"' + $msbuild + '" BuildingElevation2020.vcxproj /t:Rebuild /p:Configuration=Release /p:Platform=x64 /p:VCToolsVersion=14.16.27023 /m:1 /nologo /verbosity:normal' + "`r`n" + 'exit /b %errorlevel%' + "`r`n"
++    Set-Content -LiteralPath (Join-Path $buildRoot 'build-command.cmd') -Value $command -Encoding ascii
++    Push-Location $sourceRoot
++    try { & $env:ComSpec /d /c '..\build-command.cmd' > $receipt.log 2>&1; $exitResult = $LASTEXITCODE } finally { Pop-Location }
++    if ($exitResult -ne 0) { throw 'Formal product compilation failed' }
++    $receipt.productBinary = Join-Path $buildRoot 'out/BuildingElevation2020.arx'
++    $receipt.productSHA256 = (Get-FileHash -LiteralPath $receipt.productBinary).Hash
++    $header = Join-Path $sourceRoot 'ProductBinding.h'
++    Set-Content -LiteralPath $header -Value ('#pragma once' + "`n" + '#define BCE_PRODUCT_SHA256 "' + $receipt.productSHA256 + '"') -Encoding ascii
++    $receipt.sourceFiles[$header] = (Get-FileHash -LiteralPath $header).Hash
++    $driverCommand = $command.Replace('BuildingElevation2020.vcxproj','ElevationCommandCases.vcxproj')
++    Set-Content -LiteralPath (Join-Path $buildRoot 'driver-command.cmd') -Value $driverCommand -Encoding ascii
++    Push-Location $sourceRoot
++    try { & $env:ComSpec /d /c '..\driver-command.cmd' >> $receipt.log 2>&1; $exitResult = $LASTEXITCODE } finally { Pop-Location }
++    if ($exitResult -eq 0) {
++        $receipt.binary = Join-Path $buildRoot 'out/ElevationCommandCases.arx'
++        $receipt.binarySHA256 = (Get-FileHash -LiteralPath $receipt.binary -Algorithm SHA256).Hash
++    }
++
++} catch {
++    $receipt.error = $_.Exception.Message
++    $exitResult = 1
++} finally {
++    $receipt.exitCode = $exitResult
++    $receipt.finishedUtc = [DateTime]::UtcNow.ToString('o')
++    $receipt | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath (Join-Path $buildRoot 'receipt.json') -Encoding utf8
++    Write-Output ('RECEIPT=' + (Join-Path $buildRoot 'receipt.json'))
++    Write-Output ('EXIT_CODE=' + $exitResult)
++}
++exit $exitResult
++
+
+--- /dev/null
++++ 立面插件/tools/command_case_host.py
+@@ -0,0 +1,162 @@
++"""Prepare nonce-bound native test hosts; never launches or stops CAD implicitly."""
++from pathlib import Path
++import argparse
++import datetime
++import hashlib
++import importlib.util
++import json
++import os
++import re
++import shutil
++import uuid
++
++ROOT = Path(__file__).resolve().parents[2]
++PLUGIN = ROOT / '立面插件'
++BRIDGE = ROOT / '阶段1/原生接口探测'
++
++
++def read(path):
++    return json.loads(Path(path).read_text(encoding='utf-8-sig'))
++
++
++def sha(path):
++    return hashlib.sha256(Path(path).read_bytes()).hexdigest().upper()
++
++
++def save_new(path, value):
++    with Path(path).open('x', encoding='utf-8') as stream:
++        json.dump(value, stream, ensure_ascii=False, indent=2)
++
++
++def checked_inputs():
++    frozen = read(ROOT / 'outputs/elevation-reading-20261101/reader-binding.json')['inputs']
++    assert len(frozen) == 2
++    for item in frozen:
++        assert sha(item['source']) == sha(item['snapshot']) == item['SHA256']
++    return frozen
++
++
++def prepare(receipt_path, case_name):
++    assert re.fullmatch(r'[A-Za-z][A-Za-z0-9_]{0,79}', case_name)
++    receipt_path = Path(receipt_path).resolve(strict=True)
++    candidate = read(receipt_path)
++    assert candidate['exitCode'] == 0
++    candidate_binary = Path(candidate['binary']).resolve(strict=True)
++    assert candidate_binary.is_relative_to((PLUGIN / 'build').resolve())
++    assert sha(candidate_binary) == candidate['binarySHA256']
++    product_binary = Path(candidate['productBinary']).resolve(strict=True)
++    assert product_binary.is_relative_to((PLUGIN / 'build').resolve())
++    assert sha(product_binary) == candidate['productSHA256']
++    for path, digest in candidate['sourceFiles'].items():
++        assert sha(path) == digest, ('source changed after build', path)
++    bridge_receipt_path = BRIDGE / 'evidence/build-product-bridge-v5-20261101.json'
++    bridge_receipt = read(bridge_receipt_path)
++    bridge_binary = BRIDGE / 'bin/NativeAccessProbe.arx'
++    assert sha(bridge_binary) == bridge_receipt['binarySHA256']
++    for name, digest in bridge_receipt['sourceFiles'].items():
++        assert sha(BRIDGE / 'src' / name) == digest, ('bridge source changed', name)
++    support_path = BRIDGE / 'evidence/autocad-support-profile-20261029.json'
++    support = read(support_path)
++    assert sha(support['componentPath']) == support['componentSHA256']
++    frozen = checked_inputs()
++    nonce = uuid.uuid4().hex
++    session = ROOT / '阶段1/runs' / ('elevation-native-' + datetime.datetime.now().strftime('%Y%m%d-%H%M%S') + '-' + nonce[:8])
++    session.mkdir()
++    (session / 'queue').mkdir()
++    output = session / 'case'
++    output.mkdir()
++    inputs = []
++    for item in frozen:
++        dest = session / (item['role'] + '-input.dwg')
++        shutil.copyfile(item['snapshot'], dest)
++        assert sha(dest) == item['SHA256']
++        inputs.append(dict(item, inspectionCopy=str(dest)))
++    # Dedicated command retirement helper verifies all five exact files.
++    staging = Path('C:/Program Files/Autodesk/ApplicationPlugins') / ('CodexElevationStage1_' + nonce)
++    staging.mkdir()
++    bridge = staging / ('S1Read_' + nonce[:8] + '.arx')
++    native = staging / ('BCECase_' + nonce[:8] + '.arx')
++    shutil.copyfile(bridge_binary, bridge)
++    shutil.copyfile(candidate_binary, native)
++    product = staging / 'BuildingElevation2020.arx'
++    shutil.copyfile(product_binary, product)
++    assert sha(product) == candidate['productSHA256']
++    bridge_ini, native_ini = bridge.with_suffix('.ini'), native.with_suffix('.ini')
++    bridge_ini.write_text(
++        f'[probe]\nroot={ROOT / "阶段1"}\nscheme={frozen[0]["snapshot"]}\nreference={frozen[1]["snapshot"]}\noutput={session}\n'
++        f'[worker]\nnonce={nonce}\nsession={session}\nexpectedProfile={support["profile"]}\n'
++        f'supportComponent={support["componentPath"]}\nearlyNativeAutoload=1\n', encoding='utf-16')
++    by_role = {i['role']: i for i in inputs}
++    native_ini.write_text(
++        f'[case]\nnonce={nonce}\nsession={session}\nscheme={by_role["scheme"]["inspectionCopy"]}\n'
++        f'reference={by_role["reference"]["inspectionCopy"]}\noutput={output}\ncaseName={case_name}\n'
++        f'expectedModuleSHA256={candidate["binarySHA256"]}\n', encoding='utf-16')
++    boot = session / 'boot.scr'
++    boot.write_bytes((f'_.ARX\r\n_L\r\n"{bridge.as_posix()}"\r\nS1QUIETSTART\r\n'
++                      f'_.ARX\r\n_L\r\n"{native.as_posix()}"\r\nBCE_TEST_RUN\r\n').encode('ascii'))
++    template = Path('C:/Users/PC/AppData/Local/Autodesk/AutoCAD 2020/R23.1/chs/Template/acadiso.dwt')
++    assert template.is_file()
++    cleanup = ROOT / '立面插件/tools/retire_command_staging.py'
++    binding = dict(contract='bce.native-case-host.v1', session=str(session), nonce=nonce,
++                   profile=support['profile'], template=str(template), earlyNativeAutoload=True,
++                   stagedARX=str(bridge), stagedINI=str(bridge_ini), stagingDirectory=str(staging),
++                   binarySHA256=sha(bridge), sourceFiles=bridge_receipt['sourceFiles'],
++                   readerARX=str(native), readerINI=str(native_ini), readerSHA256=sha(native),
++                   productARX=str(product), productSHA256=sha(product),
++                   stagedFiles=[dict(path=str(p), SHA256=sha(p)) for p in (bridge, bridge_ini, native, native_ini, product)],
++                   candidateARX=str(native), candidateINI=str(native_ini), candidateSHA256=sha(native),
++                   candidateSourceFiles=candidate['sourceFiles'], buildReceipt=str(receipt_path),
++                   buildReceiptSHA256=sha(receipt_path), bridgeBuildReceipt=str(bridge_receipt_path),
++                   bridgeBuildReceiptSHA256=sha(bridge_receipt_path), supportRecord=str(support_path),
++                   supportRecordSHA256=sha(support_path), inputs=inputs, boot=str(boot), bootSHA256=sha(boot),
++                   caseName=case_name, output=str(output), caseReport=str(output / 'native-case.json'),
++                   preparationTool=str(Path(__file__).resolve()), preparationToolSHA256=sha(__file__),
++                   retirementHelper=str(cleanup), retirementHelperSHA256=sha(cleanup),
++                   scope='New private native test host; no BCP business dispatch; source originals read-only; writes only owned case fixtures',
++                   legacyFieldAliases='reader fields alias driver; dedicated five-file retirement required')
++    save_new(session / 'worker-config.json', binding)
++    evidence = PLUGIN / 'evidence'
++    evidence.mkdir(exist_ok=True)
++    target = evidence / ('native-case-binding-' + nonce[:8] + '.json')
++    save_new(target, binding)
++    print(json.dumps(dict(binding=str(target), session=str(session), nonce=nonce)))
++
++
++def queue_exit(binding_path):
++    binding = read(binding_path)
++    session = Path(binding['session']).resolve(strict=True)
++    ready = read(session / 'quiet-worker-ready.json')
++    host = read(session / 'isolation-host-receipt.json')
++    assert ready['nonce'] == host['nonce'] == binding['nonce']
++    assert ready['processId'] == host['processId'] and ready['session'] == str(session)
++    assert ready['desktop'] == 'CodexS1_' + binding['nonce'] != ready['inputDesktop']
++    assert sha(binding['stagedARX']) == binding['binarySHA256'] and sha(binding['candidateARX']) == binding['candidateSHA256']
++    serial = uuid.uuid4().hex
++    pending = session / 'queue' / (serial + '.tmp')
++    pending.write_text(f'[job]\nnonce={binding["nonce"]}\nserial={serial}\ncommand=S1QUIETEXIT\nrun={session}\n', encoding='utf-16')
++    os.replace(pending, pending.with_suffix('.ini'))
++    print(json.dumps(dict(queued=True, serial=serial, scope='Owned quiet exit requested; process exit not yet proven')))
++
++
++def retire(binding_path):
++    binding = read(binding_path)
++    helper = Path(binding['retirementHelper'])
++    assert sha(helper) == binding['retirementHelperSHA256']
++    spec = importlib.util.spec_from_file_location('bce_exact_retirement', helper)
++    module = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(module)
++    module.main(binding_path)
++
++
++if __name__ == '__main__':
++    parser = argparse.ArgumentParser()
++    sub = parser.add_subparsers(dest='action', required=True)
++    p = sub.add_parser('prepare')
++    p.add_argument('receipt', type=Path)
++    p.add_argument('--case', default='PublicAnalyzeCommandLifecycle')
++    for name in ('queue-exit', 'retire'):
++        sub.add_parser(name).add_argument('binding', type=Path)
++    args = parser.parse_args()
++    if args.action == 'prepare': prepare(args.receipt, args.case)
++    elif args.action == 'queue-exit': queue_exit(args.binding)
++    else: retire(args.binding)
+
+--- /dev/null
++++ 立面插件/tools/retire_command_staging.py
+@@ -0,0 +1,69 @@
++"""Archive/remove exactly five owned staging files after supervisor-confirmed exit."""
++from pathlib import Path
++import datetime
++import hashlib
++import json
++import sys
++
++
++def read(path):
++    return json.loads(Path(path).read_text(encoding='utf-8-sig'))
++
++
++def sha(path):
++    return hashlib.sha256(Path(path).read_bytes()).hexdigest().upper()
++
++
++def main(binding_path):
++    binding_path = Path(binding_path).resolve(strict=True)
++    binding = read(binding_path)
++    session = Path(binding['session']).resolve(strict=True)
++    final_path = session / 'isolation-final.json'
++    final = read(final_path)
++    assert final['nonce'] == binding['nonce'] and final['session'] == str(session)
++    assert final['workerExited'] and not final['stillRunningOwnedWorker']
++    assert final['desktopClosed'] and final['processHandlesClosed']
++    staging = Path(binding['stagingDirectory']).resolve(strict=True)
++    expected = Path('C:/Program Files/Autodesk/ApplicationPlugins') / ('CodexElevationStage1_' + binding['nonce'])
++    assert staging == expected.resolve(strict=True) and not staging.is_symlink()
++    paths = [Path(binding[k]) for k in ('stagedARX', 'stagedINI', 'readerARX', 'readerINI', 'productARX')]
++    assert len({p.name for p in paths}) == 5
++    assert {p.resolve(strict=True) for p in staging.iterdir()} == {p.resolve(strict=True) for p in paths}
++    for p in paths:
++        assert not p.is_symlink() and p.resolve(strict=True).parent == staging and p.is_file()
++    assert sha(paths[0]) == binding['binarySHA256'] and sha(paths[2]) == binding['readerSHA256']
++    assert sha(paths[4]) == binding['productSHA256']
++    assert {str(p): sha(p) for p in paths} == {item['path']: item['SHA256'] for item in binding['stagedFiles']}
++    archive = session / 'retired-module-snapshot'
++    archive.mkdir()
++    retired = []
++    for p in paths:
++        digest = sha(p)
++        copied = archive / p.name
++        with copied.open('xb') as out:
++            out.write(p.read_bytes())
++        assert sha(copied) == digest == sha(p)
++        p.unlink()
++        retired.append(dict(path=str(p), SHA256=digest, archive=str(copied), removed=not p.exists()))
++    assert not any(staging.iterdir())
++    staging.rmdir()
++    inputs = []
++    for item in binding['inputs']:
++        for key in ('source', 'snapshot', 'inspectionCopy'):
++            p = Path(item[key])
++            assert sha(p) == item['SHA256']
++            inputs.append(dict(role=item['role'], kind=key, path=str(p), SHA256=sha(p)))
++    controls = []
++    for p in session.glob('view-*/control.dwg'):
++        expected_sha = next(i['SHA256'] for i in binding['inputs'] if i['role'] == 'reference')
++        assert sha(p) == expected_sha
++        controls.append(dict(path=str(p), SHA256=sha(p)))
++    report = dict(contract='bce.command-retirement.v1', recorded=datetime.datetime.now().astimezone().isoformat(), binding=str(binding_path), bindingSHA256=sha(binding_path), session=str(session), nonce=binding['nonce'], processId=final['processId'], supervisorFinal=str(final_path), supervisorFinalSHA256=sha(final_path), normalQuit=final['nativeQuitConfirmed'] and not final['forcedTermination'], forcedTermination=final['forcedTermination'], removedFiles=retired, stagingRemoved=not staging.exists(), coreInputChecks=inputs, previewControlChecks=controls, inputDesktopReadErrors=final['inputDesktopReadErrors'], ownedUserShows=final['workerUserDesktopShowEvents'], ownedForeground=final['workerForegroundEvents'], monitorError=final['monitorError'], relatedCadEventsNeedReview=final['relatedCadEventsNeedReview'], relatedCadShowEvents=final['relatedCadShowEvents'], relatedCadForegroundEvents=final['relatedCadForegroundEvents'], scope='Only own nonce staging removed after attested worker exit; originals, snapshots and controls retained unchanged; forced exit is not normal QUIT')
++    target = session / 'reader-retirement.json'
++    with target.open('x', encoding='utf-8') as out:
++        json.dump(report, out, ensure_ascii=False, indent=2)
++    print(json.dumps(dict(report=str(target), removed=len(retired), inputsChecked=len(inputs), controlsChecked=len(controls)), ensure_ascii=False))
++
++
++if __name__ == '__main__':
++    main(sys.argv[1])
+
+--- /dev/null
++++ 立面插件/tools/watch_command_case.py
+@@ -0,0 +1,108 @@
++"""Attest a completed owned test, then close only its nonce-bound host and staging."""
++from pathlib import Path
++import datetime
++import hashlib
++import json
++import subprocess
++import sys
++import time
++import command_case_host as host
++
++
++def main(binding_path):
++    binding_path = Path(binding_path).resolve(strict=True)
++    binding = host.read(binding_path)
++    session = Path(binding['session'])
++    deadline = time.monotonic() + 1600
++    report_path = Path(binding['caseReport'])
++    report = None
++    while report is None:
++        try:
++            report = host.read(report_path)
++        except (OSError, ValueError):
++            pass
++        if report is not None:
++            break
++        final_path = session / 'isolation-final.json'
++        if final_path.exists():
++            final = host.read(final_path)
++            if final.get('nonce') != binding['nonce']:
++                raise RuntimeError('Supervisor final identity differs; no cleanup attempted')
++            if final.get('workerExited'):
++                raise RuntimeError('Owned host exited before a closed native report; not a business test result. Explicit retirement is required.')
++        if time.monotonic() >= deadline:
++            raise TimeoutError('No closed readable native result; host retained for explicit diagnosis')
++        time.sleep(.3)
++    launch = host.read(session / 'isolation-host-receipt.json')
++    ready = host.read(session / 'quiet-worker-ready.json')
++    assert report['nonce'] == binding['nonce'] == launch['nonce'] == ready['nonce']
++    assert report['pid'] == launch['processId'] == ready['processId']
++    assert report['moduleSHA256'] == binding['candidateSHA256'] == host.sha(binding['candidateARX'])
++    assert host.sha(binding['productARX']) == binding['productSHA256']
++    assert len(binding['stagedFiles']) == 5
++    for staged in binding['stagedFiles']:
++        assert host.sha(staged['path']) == staged['SHA256']
++    assert report['desktop'] == 'CodexS1_' + binding['nonce'] != ready['inputDesktop']
++    assert not report['sourceDrawingWritten'] and report['status'] in ('passed', 'partial', 'failed')
++    for item in binding['inputs']:
++        for key in ('source', 'snapshot', 'inspectionCopy'):
++            assert host.sha(item[key]) == item['SHA256']
++    observed = dict(contract='bce.native-result-and-closure.v1', recorded=datetime.datetime.now().astimezone().isoformat(),
++                    binding=str(binding_path), bindingSHA256=host.sha(binding_path), nativeReport=str(report_path),
++                    nativeReportSHA256=host.sha(report_path), nativeStatus=report['status'],
++                    nonce=binding['nonce'], processId=report['pid'], binarySHA256=report['moduleSHA256'], productSHA256=binding['productSHA256'],
++                    sourceSHAsUnchanged=True, businessPassInferred=False,
++                    scope='Result identity and closure only; caller must evaluate behavior assertions separately')
++    print(json.dumps(dict(nativeStatus=report['status'], nativeReport=str(report_path), processId=report['pid'])), flush=True)
++    queue_before = {p.name for p in (session / 'queue').glob('*.ini')}
++    host.queue_exit(binding_path)
++    added = [p for p in (session / 'queue').glob('*.ini') if p.name not in queue_before]
++    assert len(added) == 1
++    serial = added[0].stem
++    quit_deadline = time.monotonic() + 120
++    stop_needed = False
++    while not (session / 'isolation-final.json').exists():
++        try:
++            state = host.read(session / 'worker-state.json')
++        except (OSError, ValueError):
++            state = {}
++        if state.get('serial') == serial and state.get('command') == 'S1QUIETEXIT' and state.get('phase') == 'idle' and state.get('cmdActive') == 0:
++            if state.get('error') == 'private worker final document is modified; QUIT withheld':
++                stop_needed = True
++                break
++            if state.get('error'):
++                raise RuntimeError('Owned exit failed unexpectedly; host retained: ' + state['error'])
++        if time.monotonic() >= quit_deadline:
++            stop_needed = True
++            break
++        time.sleep(.3)
++    if stop_needed:
++        stop_script = host.BRIDGE / '启动隔离桌面宿主.ps1'
++        command = ['powershell.exe', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', str(stop_script),
++                   '-RunDirectory', str(session), '-StopOwnedWorker', '-ExpectedNonce', binding['nonce']]
++        outcome = subprocess.run(command, capture_output=True, text=True, encoding='utf-8', errors='replace',
++                                 creationflags=subprocess.CREATE_NO_WINDOW)
++        observed['explicitStopHelperExitCode'] = outcome.returncode
++        assert outcome.returncode == 0, outcome.stdout + outcome.stderr
++    end = time.monotonic() + 20
++    while not (session / 'isolation-final.json').exists():
++        if time.monotonic() >= end:
++            raise TimeoutError('Supervisor final not yet closed; no staging removal attempted')
++        time.sleep(.2)
++    final = host.read(session / 'isolation-final.json')
++    assert final['nonce'] == binding['nonce'] and final['processId'] == report['pid']
++    assert final['workerExited'] and final['desktopClosed'] and final['processHandlesClosed']
++    observed.update(normalQuit=final['nativeQuitConfirmed'] and not final['forcedTermination'],
++                    forcedTermination=final['forcedTermination'], timedOut=final['timedOut'],
++                    supervisorFinalSHA256=host.sha(session / 'isolation-final.json'))
++    host.retire(binding_path)
++    observed['retirement'] = str(session / 'reader-retirement.json')
++    observed['retirementSHA256'] = host.sha(observed['retirement'])
++    observed['watcherSHA256'] = host.sha(__file__)
++    host.save_new(session / 'native-result-closure.json', observed)
++    print(json.dumps(dict(closure=str(session / 'native-result-closure.json'), nativeStatus=report['status'],
++                          normalQuit=observed['normalQuit'], stagedFilesRemoved=len(binding['stagedFiles']))), flush=True)
++
++
++if __name__ == '__main__':
++    main(sys.argv[1])
+

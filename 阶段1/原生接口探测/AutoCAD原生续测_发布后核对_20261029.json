@@ -1,0 +1,515 @@
+{
+  "contract": "stage1.autocad-native-post-publication-audit.v1",
+  "recorded": "2026-10-29T20:26:03.178667+08:00",
+  "checks": 125,
+  "passed": 125,
+  "failed": 0,
+  "phase1FullAcceptance": false,
+  "phase2Started": false,
+  "reportPublisher": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\publish_autocad_host_report.py",
+    "SHA256": "7755E8E9541BE23A4AF439CED64B07AEBC658DDAC1B50AFFE9E81EE98CAF202F"
+  },
+  "checksDetail": [
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\阶段1全需求验证结论.md"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\全需求能力覆盖矩阵.md"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\全需求证据独立复核_20261029.md"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\全需求验证证据索引.json"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\原生PDF纸幅验证.pdf"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\全需求验证_只读调查后终核_20261029.json"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\坡向剖切索引与QUIT_交付清单_20261029.json"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\坡向剖切详图索引与正常退出验证报告_20261029.md"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\AutoCAD原生接口迁移与继续验证报告_20261029.md"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\AutoCAD宿主迁移_输入与模块终核_20261029.json"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\AutoCAD原生续测_交付清单_20261029.json"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\AutoCAD原生续测_独立复核记录_20261029.md"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\AutoCAD原生尺寸_线位试移_阶段1.dwg"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\AutoCAD原生尺寸_线位恢复_阶段1.dwg"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\AutoCAD原生尺寸_线位试移_阶段1.dwg"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\AutoCAD原生尺寸_线位恢复_阶段1.dwg"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\AutoCAD原生接口迁移与继续验证报告_20261029.md"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\AutoCAD宿主迁移_输入与模块终核_20261029.json"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\AutoCAD原生续测_独立复核记录_20261029.md"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\evidence\\autocad-host-reviewed-with-rx-offline-regression-20261029.txt"
+    },
+    {
+      "passed": true,
+      "name": "staging absent 335c86ce1c28486f9c73a36ca1a7d4c8"
+    },
+    {
+      "passed": true,
+      "name": "own process exited 335c86ce1c28486f9c73a36ca1a7d4c8"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261029-173726\\staging-final-archive\\S1Acad_335c86ce.arx"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261029-173726\\staging-final-archive\\S1Acad_335c86ce.ini"
+    },
+    {
+      "passed": true,
+      "name": "staging absent 3d722576a01d4b5aa1eb3474657561c8"
+    },
+    {
+      "passed": true,
+      "name": "own process exited 3d722576a01d4b5aa1eb3474657561c8"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261029-185122\\staging-final-archive\\S1Acad_3d722576.arx"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261029-185122\\staging-final-archive\\S1Acad_3d722576.ini"
+    },
+    {
+      "passed": true,
+      "name": "staging absent bf3b0bcd203743d3bfb20b5c34b9a4d3"
+    },
+    {
+      "passed": true,
+      "name": "own process exited bf3b0bcd203743d3bfb20b5c34b9a4d3"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261029-190311\\staging-final-archive\\S1Acad_bf3b0bcd.arx"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261029-190311\\staging-final-archive\\S1Acad_bf3b0bcd.ini"
+    },
+    {
+      "passed": true,
+      "name": "staging absent ea35df6437bb4d30b62a6dfa24d2c80e"
+    },
+    {
+      "passed": true,
+      "name": "own process exited ea35df6437bb4d30b62a6dfa24d2c80e"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261029-190610\\staging-final-archive\\S1Acad_ea35df64.arx"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261029-190610\\staging-final-archive\\S1Acad_ea35df64.ini"
+    },
+    {
+      "passed": true,
+      "name": "staging absent 16fd57355e7c43a7b83c14529e50b718"
+    },
+    {
+      "passed": true,
+      "name": "own process exited 16fd57355e7c43a7b83c14529e50b718"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261029-192200\\staging-final-archive\\S1Acad_16fd5735.arx"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261029-192200\\staging-final-archive\\S1Acad_16fd5735.ini"
+    },
+    {
+      "passed": true,
+      "name": "staging absent 1095046c287943eeb9eecdbc9118451e"
+    },
+    {
+      "passed": true,
+      "name": "own process exited 1095046c287943eeb9eecdbc9118451e"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261029-192939\\staging-final-archive\\S1Acad_1095046c.arx"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261029-192939\\staging-final-archive\\S1Acad_1095046c.ini"
+    },
+    {
+      "passed": true,
+      "name": "staging absent a6bc888db3934eb2906328f8100bb72b"
+    },
+    {
+      "passed": true,
+      "name": "own process exited a6bc888db3934eb2906328f8100bb72b"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261029-194822\\staging-final-archive\\S1Acad_a6bc888d.arx"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261029-194822\\staging-final-archive\\S1Acad_a6bc888d.ini"
+    },
+    {
+      "passed": true,
+      "name": "staging absent 9f8b4e8360d046fe982d2fb39f6ec11e"
+    },
+    {
+      "passed": true,
+      "name": "own process exited 9f8b4e8360d046fe982d2fb39f6ec11e"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261029-195417\\staging-final-archive\\S1Acad_9f8b4e83.arx"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261029-195417\\staging-final-archive\\S1Acad_9f8b4e83.ini"
+    },
+    {
+      "passed": true,
+      "name": "staging absent 30847b586d614dfbae8b041f29134413"
+    },
+    {
+      "passed": true,
+      "name": "own process exited 30847b586d614dfbae8b041f29134413"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261029-200500\\staging-final-archive\\S1Acad_30847b58.arx"
+    },
+    {
+      "passed": true,
+      "name": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261029-200500\\staging-final-archive\\S1Acad_30847b58.ini"
+    },
+    {
+      "passed": true,
+      "name": "source latest observed hash S01"
+    },
+    {
+      "passed": true,
+      "name": "snapshot latest observed hash S01"
+    },
+    {
+      "passed": true,
+      "name": "source latest observed hash S02"
+    },
+    {
+      "passed": true,
+      "name": "snapshot latest observed hash S02"
+    },
+    {
+      "passed": true,
+      "name": "source latest observed hash S03"
+    },
+    {
+      "passed": true,
+      "name": "snapshot latest observed hash S03"
+    },
+    {
+      "passed": true,
+      "name": "source latest observed hash S04"
+    },
+    {
+      "passed": true,
+      "name": "snapshot latest observed hash S04"
+    },
+    {
+      "passed": true,
+      "name": "source latest observed hash S05"
+    },
+    {
+      "passed": true,
+      "name": "snapshot latest observed hash S05"
+    },
+    {
+      "passed": true,
+      "name": "source latest observed hash S06"
+    },
+    {
+      "passed": true,
+      "name": "snapshot latest observed hash S06"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeAccessProbe.cpp"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeAccessProbe.vcxproj"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeAutoCadHostProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeAxisContinuousNumberProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeAxisExplodeReadback.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeAxisMergeTwoProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeAxisOverlapPreview.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeAxisTemplateDeleteProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeAxisTemplatePruneProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeBusinessListProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeCandidateLifecycleProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeDimensionBridgeProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeDimensionMergeProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeElevationDialogProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeElevationInkPick.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeElevationRoundTripProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeElevationRoundTripUiProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeElevationUiBridge.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeFourAxisPreview.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeFourSideAxisProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeFourSideAxisSeedProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeFourSideAxisSingletonProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeHorizontalAxisProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeInputVersionAudit.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeModernAxisGripProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeObjectFamilyProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativePlotPreview.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativePlotProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeQuietWorker.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeQuitLifecycle.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeSafetyResourceProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeStandardGeometryProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeStyleAudit.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeSymbolBusinessProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeSymbolDiscoveryProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeSymbolObjectEdit.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeSymbolPreview.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeSymbolReadback.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeSymbolTextBridgeProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeSymbolUiBridge.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeTextBridgeProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native source NativeRxDiscoveryProbe.inc"
+    },
+    {
+      "passed": true,
+      "name": "native binary"
+    },
+    {
+      "passed": true,
+      "name": "E35-E47 unique"
+    },
+    {
+      "passed": true,
+      "name": "E35 report hash"
+    },
+    {
+      "passed": true,
+      "name": "E36 report hash"
+    },
+    {
+      "passed": true,
+      "name": "E37 report hash"
+    },
+    {
+      "passed": true,
+      "name": "E38 report hash"
+    },
+    {
+      "passed": true,
+      "name": "E39 report hash"
+    },
+    {
+      "passed": true,
+      "name": "E40 report hash"
+    },
+    {
+      "passed": true,
+      "name": "E41 report hash"
+    },
+    {
+      "passed": true,
+      "name": "E42 report hash"
+    },
+    {
+      "passed": true,
+      "name": "E43 report hash"
+    },
+    {
+      "passed": true,
+      "name": "E44 report hash"
+    },
+    {
+      "passed": true,
+      "name": "E45 report hash"
+    },
+    {
+      "passed": true,
+      "name": "E46 report hash"
+    },
+    {
+      "passed": true,
+      "name": "E47 report hash"
+    }
+  ]
+}

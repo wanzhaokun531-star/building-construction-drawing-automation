@@ -1,0 +1,50 @@
+{
+  "contract": "bcp.prestart-desktop-failure.v1",
+  "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-124620",
+  "nonce": "7b0fb2b4576149029ec376ecae2cfb82",
+  "error": "OpenInputDesktop before Worker.Launch/CreateProcess",
+  "cadCreated": false,
+  "readyAbsent": true,
+  "launchReceiptAbsent": true,
+  "stagedFiles": [
+    {
+      "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexStage1Probe_7b0fb2b4576149029ec376ecae2cfb82\\S1Acad_7b0fb2b4.arx",
+      "SHA256": "7DB32B15256AF44EE09223CFD105D947FAAD2CE0EEAC85348000103C3F237228",
+      "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-124620\\prestart-staging-archive\\S1Acad_7b0fb2b4.arx",
+      "removed": true
+    },
+    {
+      "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexStage1Probe_7b0fb2b4576149029ec376ecae2cfb82\\S1Acad_7b0fb2b4.ini",
+      "SHA256": "2CE094AE8245E09AA726EC5BFBBFD96F929FF913D85349DFC414ADA1541275AA",
+      "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-124620\\prestart-staging-archive\\S1Acad_7b0fb2b4.ini",
+      "removed": true
+    },
+    {
+      "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexStage1Probe_7b0fb2b4576149029ec376ecae2cfb82\\BCP2_7b0fb2b4.arx",
+      "SHA256": "835B9E0F67B65C0F3A43F06F0C443BFB2029B1CBFACEB751C24938B894631FEA",
+      "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-124620\\prestart-staging-archive\\BCP2_7b0fb2b4.arx",
+      "removed": true
+    },
+    {
+      "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexStage1Probe_7b0fb2b4576149029ec376ecae2cfb82\\BCP2_7b0fb2b4.ini",
+      "SHA256": "2B1233C5775999F71754E074A4FB404C464B9D8A946A0EA79324DC2021A77B67",
+      "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-124620\\prestart-staging-archive\\BCP2_7b0fb2b4.ini",
+      "removed": true
+    }
+  ],
+  "stagingRemoved": true,
+  "frozenSnapshotsUnchanged": true,
+  "sharedRegistrations": [
+    {
+      "name": "CP_ARX",
+      "LOADCTRLS": 2,
+      "action": "read only"
+    },
+    {
+      "name": "CP_NET",
+      "LOADCTRLS": 2,
+      "action": "read only"
+    }
+  ],
+  "finalCandidateNativeVerified": false
+}

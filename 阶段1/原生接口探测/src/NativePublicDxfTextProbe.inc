@@ -1,0 +1,10 @@
+void nativePublicDxfTextImpl(){
+ const auto p=paths();quietRequireIsolatedWorker();PureCommandTrace trace;std::string error="null",before="[]",after="[]",imported="[]",sourceText="null",importedText="null";int exported=-9999,read=-9999,importedCount=-1;std::wstring rootType;
+ try{
+  auto db=lifecycleRead(p.scheme);WorkingDatabaseScope work(*db);const auto ids=modelIds(*db);if(ids.length()!=213)throw std::runtime_error("public DXF requires scheme213");const auto handles=nsrHandles(ids);before=businessGeometryJson(ids);sourceText=symbolPublicReadback(nsrFind(*db,L"CDC0")).json;
+  const auto file=p.output+L"\\native-public-unchanged.dxf";requireNewFile(file);exported=db->dxfOut(file.c_str(),16,AcDb::kDHL_CURRENT,false);check(static_cast<Acad::ErrorStatus>(exported),"native public DXF export");after=businessGeometryJson(ids);
+  auto reader=std::make_unique<AcDbDatabase>(false,true);{WorkingDatabaseScope fresh(*reader);read=reader->dxfIn(file.c_str(),(p.output+L"\\native-public-dxf-import.log").c_str());check(static_cast<Acad::ErrorStatus>(read),"native public DXF import");importedCount=modelCount(*reader);imported=businessGeometryJson(nsrResolve(*reader,handles));const auto text=nsrFind(*reader,L"CDC0");{auto root=open<AcDbEntity>(text);rootType=root->isA()->name();}importedText=symbolPublicReadback(text).json;}
+ }catch(const std::exception& e){error=familyError(e);}catch(...){error=quote(L"unknown public DXF roundtrip failure");}
+ writeNewReport(p.output+L"\\native-public-dxf-text.json","{\"contract\":\"stage1.native-public-dxf-text.v1\",\"exportStatus\":"+std::to_string(exported)+",\"importStatus\":"+std::to_string(read)+",\"originalBefore\":"+before+",\"originalAfter\":"+after+",\"importedOriginals\":"+imported+",\"importedCount\":"+std::to_string(importedCount)+",\"sourceText\":"+sourceText+",\"importedText\":"+importedText+",\"importedTextRootType\":"+quote(rootType)+",\"commandTrace\":"+trace.json()+",\"COMUsed\":false,\"ComputerUseUsed\":false,\"TianzhengBusinessCommandsUsed\":false,\"sourceDrawingWritten\":false,\"error\":"+error+"}");
+}
+void nativePublicDxfText()noexcept{pureEntry(nativePublicDxfTextImpl);}

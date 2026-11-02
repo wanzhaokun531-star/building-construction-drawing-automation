@@ -1,0 +1,104 @@
+{
+  "phase": "requirements clarification only; no elevation plugin code written",
+  "confirmedUserRequirement": "Supports future different projects, reference drawing supplies drafting standard",
+  "inputs": [
+    {
+      "role": "scheme",
+      "source": "D:\\方案立面.dwg",
+      "snapshot": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\立面需求只读-fdb4cb22\\方案立面.dwg",
+      "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1",
+      "bytes": 70984
+    },
+    {
+      "role": "reference",
+      "source": "D:\\建筑施工图立面图.dwg",
+      "snapshot": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\立面需求只读-fdb4cb22\\建筑施工图立面图.dwg",
+      "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D",
+      "bytes": 1704526
+    }
+  ],
+  "nativePublicModelReadSucceeded": true,
+  "resourcesReadSucceeded": true,
+  "sources": [
+    {
+      "role": "frozen",
+      "modelCount": 741,
+      "types": {
+        "AcDbLine": 702,
+        "AcDbText": 18,
+        "AcDbAlignedDimension": 6,
+        "AcDbHatch": 2,
+        "AcDbPolyline": 13
+      },
+      "resourceCounts": {
+        "textStyles": 3,
+        "linetypes": 8,
+        "dimStyles": 2,
+        "layers": 82
+      }
+    },
+    {
+      "role": "currentCopy",
+      "modelCount": 29535,
+      "types": {
+        "AcDbPolyline": 246,
+        "TDbDrawingName": 6,
+        "AcDbLine": 28891,
+        "AcDbHatch": 52,
+        "TDbDimension2": 64,
+        "TDbSymbElevation": 94,
+        "TDbAxisLabelSet": 6,
+        "AcDbBlockReference": 95,
+        "TDbText": 52,
+        "AcDbText": 4,
+        "TDbSymbDrawingIndex": 12,
+        "TDbSymbArrow": 2,
+        "TDbSymbMultiLeader": 10,
+        "TDbSymbIndexPointer": 1
+      },
+      "resourceCounts": {
+        "textStyles": 10,
+        "linetypes": 8,
+        "dimStyles": 4,
+        "layers": 98
+      }
+    }
+  ],
+  "databaseProxyCounts": [
+    0,
+    0
+  ],
+  "databaseOpenFailures": [
+    0,
+    0
+  ],
+  "sourceFilesUnchanged": true,
+  "originalDWGsUnchanged": true,
+  "referenceMatchVerified": false,
+  "limitations": [
+    "ModelSpace public properties and symbol resources read; nested block interiors, paper-space entities and full visual/plot fidelity not exhaustively verified",
+    "One representative per TDb class publicly inspected; TDbDimension2 visible glyph readback incomplete",
+    "Material assignments, missing project semantics, exact generation scope and future inputs require user clarification"
+  ],
+  "readArtifacts": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-readonly-20261101-122344\\input-version-audit.json",
+      "SHA256": "8A9DE1E3742516A901DF61156E32DA6B6D6E6C1B2C86253D57BD0303CC1D7D8C"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-readonly-20261101-122344\\public-native-contract-audit.json",
+      "SHA256": "02A200DD2C409B33249001776DA33C6C50AD6C2681BA589510E23B09E813AE46"
+    }
+  ],
+  "ownedReaderClosure": {
+    "processId": 21700,
+    "workerExited": true,
+    "forcedTermination": true,
+    "reason": "Native QUIT withheld because its own startup Drawing1 was marked modified; exact owned process stopped without saving",
+    "userCadTouched": false,
+    "ownUserDesktopShows": 0,
+    "ownForegroundEvents": 0,
+    "stagedFilesArchivedAndRemoved": true
+  },
+  "nextQuestion": "Are the two section views included in this elevation automation plugin scope?"
+}

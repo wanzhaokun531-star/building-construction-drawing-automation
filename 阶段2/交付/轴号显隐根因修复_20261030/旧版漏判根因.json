@@ -1,0 +1,35 @@
+{
+  "contract": "bcp.axis-facade-root-cause.v1",
+  "sourceNativeRun": "native-run-v22.json",
+  "wallHalfThickness": 100,
+  "changes": [
+    {
+      "axis": "3",
+      "side": "bottom",
+      "reach": 20541.263551952827,
+      "firstOuterFace": 16441.263551952816,
+      "distance": 4100.000000000011
+    },
+    {
+      "axis": "C",
+      "side": "right",
+      "reach": 24111.890259172244,
+      "firstOuterFace": 32811.89025917224,
+      "distance": 8700.0
+    },
+    {
+      "axis": "H",
+      "side": "left",
+      "reach": 19111.890259172244,
+      "firstOuterFace": 15111.890259171949,
+      "distance": 4000.0000000002947
+    },
+    {
+      "axis": "H",
+      "side": "right",
+      "reach": 29111.890259172244,
+      "firstOuterFace": 32811.89025917224,
+      "distance": 3700.0
+    }
+  ]
+}

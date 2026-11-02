@@ -1,0 +1,16 @@
+{
+  "targetHandle": "CDC0",
+  "targetLiteral": "庭院",
+  "baseline": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-plotnative-20261030-111612-057365\\A3-1-100.pdf",
+  "replaced": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-plotnative-20261030-111621-293189\\A3-1-100.pdf",
+  "pixelBox": [
+    841,
+    309,
+    899,
+    354
+  ],
+  "scale": 2,
+  "differentBytes": 0,
+  "totalBytes": 7830,
+  "scope": "Selected target crop only; full page has unrelated raster differences documented separately"
+}

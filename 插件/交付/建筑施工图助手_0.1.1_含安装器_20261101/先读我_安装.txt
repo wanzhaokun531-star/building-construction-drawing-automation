@@ -1,0 +1,15 @@
+﻿建筑施工图助手0.1.1：安装说明
+
+1. 双击“安装程序.exe”，点击“开始安装”。
+2. 程序将完整.bundle安装到当前用户的 %APPDATA%\Autodesk\ApplicationPlugins\BuildingPlan2020.bundle，无需管理员权限。
+3. 安装完成后重新打开AutoCAD2020，输入 BCP_BUILD。使用范围、天正组件目录及待确认事项见原使用说明。
+
+安装器不启动CAD、不修改SECURELOAD、APPAUTOLOAD或天正公共启动登记。若目录已有相同文件，提示已安装；内容不同则拒绝覆盖。需更新不同版本时，请先关闭CAD并备份/移走旧.bundle后重试。
+当前默认组件目录为 C:\Tangent\TArchT20V8\SYS23x64；其他目录须按原使用说明配置，不会自动放宽CAD信任设置。若CAD禁用了自动发现，可按原使用说明从受信任位置APPLOAD包内ARX。
+卸载：关闭CAD后删除上述 BuildingPlan2020.bundle。本版不提供Windows控制面板注册或自动升级。
+
+此次新增安装入口，ARX、DWG和已确认功能与原0.1.1完全相同；5处门号布置和2处开向待确认仍保留，不是新增完整施工图功能。
+安装测试在工作区目录内进行，验证完整写入、重复安装、Unicode路径与不覆盖；没有向真实用户插件目录安装、启动CAD或实测GUI。
+
+安装目录依据Autodesk2020官方说明：
+https://help.autodesk.com/cloudhelp/2020/ENU/AutoCAD-Customization/files/GUID-5E50A846-C80B-4FFD-8DD3-C20B22098008.htm

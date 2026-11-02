@@ -1,0 +1,4003 @@
+{
+  "格式版本": 1,
+  "整理日期": "2026-10-28",
+  "证据范围": "复用现有两份对象属性JSON；仅分析已提取的模型空间顶层对象。块内、天正内部子对象、属性缺失和实际显示均未全面提取。",
+  "边界": "未启动或操作CAD，未修改源DWG、现有JSON，未编写插件代码或保存分析脚本。",
+  "输入来源": [
+    {
+      "图纸": "方案图",
+      "来源文件": "D:\\Codex\\建筑施工图自动化\\图纸读取\\方案图对象属性.json",
+      "原图路径": "D:\\cad插件\\方案平面图.dwg",
+      "来源文件SHA256": "33B3953F3366F97F6CF11C5B5CCAA35C4F76A5FB98C4834E0758DC5C96160DFD",
+      "提取方式": "AutoCAD ObjectDBX with loaded Tianzheng object support; getters only",
+      "模型空间顶层对象数": 213,
+      "图纸空间对象数": 0
+    },
+    {
+      "图纸": "参考图",
+      "来源文件": "D:\\Codex\\建筑施工图自动化\\图纸读取\\参考图对象属性.json",
+      "原图路径": "D:\\cad插件\\施工图平面参考图.dwg",
+      "来源文件SHA256": "7B5FFA455F700BEA353166D68910110798423B5054179FCECDD9644BF610B39E",
+      "提取方式": "AutoCAD ObjectDBX with loaded Tianzheng object support; getters only",
+      "模型空间顶层对象数": 618,
+      "图纸空间对象数": 0
+    }
+  ],
+  "字段说明": "外层为稳定中文键；原始属性字典完整保留来源JSON字段名、数值、空字符串与精度；未知派生值用null。",
+  "字体核对边界": "只核对来源已命名文件的候选路径；无扩展名仅列SHX候选。未解析字体元数据、未检查CAD字体搜索优先级、替代配置或实际加载，空FontFile绝不从样式名猜宋体或FY_FS字族。",
+  "字体目录核对": [
+    {
+      "核对根目录": "D:\\CAD2020\\AutoCAD 2020\\Fonts",
+      "目录存在": true,
+      "核对方式": "限定上述根目录内文件名；CAD和Windows字体目录及两处天正安装树；仅匹配来源命名的候选文件，不读字体内容",
+      "遍历目录数": 1,
+      "读取错误": [],
+      "匹配命名字体文件数": 6
+    },
+    {
+      "核对根目录": "C:\\Tangent\\TArchT20V8",
+      "目录存在": true,
+      "核对方式": "限定上述根目录内文件名；CAD和Windows字体目录及两处天正安装树；仅匹配来源命名的候选文件，不读字体内容",
+      "遍历目录数": 11,
+      "读取错误": [],
+      "匹配命名字体文件数": 2
+    },
+    {
+      "核对根目录": "D:\\天正2020",
+      "目录存在": true,
+      "核对方式": "限定上述根目录内文件名；CAD和Windows字体目录及两处天正安装树；仅匹配来源命名的候选文件，不读字体内容",
+      "遍历目录数": 69,
+      "读取错误": [],
+      "匹配命名字体文件数": 2
+    },
+    {
+      "核对根目录": "C:\\Windows\\Fonts",
+      "目录存在": true,
+      "核对方式": "限定上述根目录内文件名；CAD和Windows字体目录及两处天正安装树；仅匹配来源命名的候选文件，不读字体内容",
+      "遍历目录数": 1,
+      "读取错误": [],
+      "匹配命名字体文件数": 1
+    }
+  ],
+  "字体候选核对": [
+    {
+      "来源命名": "chineset.shx",
+      "候选文件名": [
+        "chineset.shx"
+      ],
+      "候选生成依据": "原字段已有扩展名，原名核对",
+      "找到的候选文件": [
+        "D:\\CAD2020\\AutoCAD 2020\\Fonts\\chineset.shx"
+      ],
+      "限定范围存在状态": "找到候选文件",
+      "实际加载路径": null,
+      "实际加载已验证": false,
+      "实际字族": null,
+      "结论边界": "文件存在不能证明CAD采用该文件、未发生替代或实际字族已验证；未找到不代表本机其他位置不存在"
+    },
+    {
+      "来源命名": "COMPLEX",
+      "候选文件名": [
+        "COMPLEX.shx"
+      ],
+      "候选生成依据": "原字段无扩展名，仅补.shx作候选，未改写原属性",
+      "找到的候选文件": [
+        "D:\\CAD2020\\AutoCAD 2020\\Fonts\\complex.shx"
+      ],
+      "限定范围存在状态": "找到候选文件",
+      "实际加载路径": null,
+      "实际加载已验证": false,
+      "实际字族": null,
+      "结论边界": "文件存在不能证明CAD采用该文件、未发生替代或实际字族已验证；未找到不代表本机其他位置不存在"
+    },
+    {
+      "来源命名": "GBCBIG",
+      "候选文件名": [
+        "GBCBIG.shx"
+      ],
+      "候选生成依据": "原字段无扩展名，仅补.shx作候选，未改写原属性",
+      "找到的候选文件": [
+        "D:\\CAD2020\\AutoCAD 2020\\Fonts\\gbcbig.shx"
+      ],
+      "限定范围存在状态": "找到候选文件",
+      "实际加载路径": null,
+      "实际加载已验证": false,
+      "实际字族": null,
+      "结论边界": "文件存在不能证明CAD采用该文件、未发生替代或实际字族已验证；未找到不代表本机其他位置不存在"
+    },
+    {
+      "来源命名": "GBCBIG.shx",
+      "候选文件名": [
+        "GBCBIG.shx"
+      ],
+      "候选生成依据": "原字段已有扩展名，原名核对",
+      "找到的候选文件": [
+        "D:\\CAD2020\\AutoCAD 2020\\Fonts\\gbcbig.shx"
+      ],
+      "限定范围存在状态": "找到候选文件",
+      "实际加载路径": null,
+      "实际加载已验证": false,
+      "实际字族": null,
+      "结论边界": "文件存在不能证明CAD采用该文件、未发生替代或实际字族已验证；未找到不代表本机其他位置不存在"
+    },
+    {
+      "来源命名": "gbcbig.shx",
+      "候选文件名": [
+        "gbcbig.shx"
+      ],
+      "候选生成依据": "原字段已有扩展名，原名核对",
+      "找到的候选文件": [
+        "D:\\CAD2020\\AutoCAD 2020\\Fonts\\gbcbig.shx"
+      ],
+      "限定范围存在状态": "找到候选文件",
+      "实际加载路径": null,
+      "实际加载已验证": false,
+      "实际字族": null,
+      "结论边界": "文件存在不能证明CAD采用该文件、未发生替代或实际字族已验证；未找到不代表本机其他位置不存在"
+    },
+    {
+      "来源命名": "gbenor.shx",
+      "候选文件名": [
+        "gbenor.shx"
+      ],
+      "候选生成依据": "原字段已有扩展名，原名核对",
+      "找到的候选文件": [
+        "C:\\Tangent\\TArchT20V8\\SYS\\gbenor.shx",
+        "D:\\CAD2020\\AutoCAD 2020\\Fonts\\gbenor.shx",
+        "D:\\天正2020\\SYS\\gbenor.shx"
+      ],
+      "限定范围存在状态": "找到候选文件",
+      "实际加载路径": null,
+      "实际加载已验证": false,
+      "实际字族": null,
+      "结论边界": "文件存在不能证明CAD采用该文件、未发生替代或实际字族已验证；未找到不代表本机其他位置不存在"
+    },
+    {
+      "来源命名": "hztxt.shx",
+      "候选文件名": [
+        "hztxt.shx"
+      ],
+      "候选生成依据": "原字段已有扩展名，原名核对",
+      "找到的候选文件": [
+        "C:\\Tangent\\TArchT20V8\\SYS\\HZTXT.SHX",
+        "D:\\天正2020\\SYS\\HZTXT.SHX"
+      ],
+      "限定范围存在状态": "找到候选文件",
+      "实际加载路径": null,
+      "实际加载已验证": false,
+      "实际字族": null,
+      "结论边界": "文件存在不能证明CAD采用该文件、未发生替代或实际字族已验证；未找到不代表本机其他位置不存在"
+    },
+    {
+      "来源命名": "simhei.ttf",
+      "候选文件名": [
+        "simhei.ttf"
+      ],
+      "候选生成依据": "原字段已有扩展名，原名核对",
+      "找到的候选文件": [
+        "C:\\Windows\\Fonts\\simhei.ttf"
+      ],
+      "限定范围存在状态": "找到候选文件",
+      "实际加载路径": null,
+      "实际加载已验证": false,
+      "实际字族": null,
+      "结论边界": "文件存在不能证明CAD采用该文件、未发生替代或实际字族已验证；未找到不代表本机其他位置不存在"
+    },
+    {
+      "来源命名": "SIMPLEX",
+      "候选文件名": [
+        "SIMPLEX.shx"
+      ],
+      "候选生成依据": "原字段无扩展名，仅补.shx作候选，未改写原属性",
+      "找到的候选文件": [
+        "D:\\CAD2020\\AutoCAD 2020\\Fonts\\simplex.shx"
+      ],
+      "限定范围存在状态": "找到候选文件",
+      "实际加载路径": null,
+      "实际加载已验证": false,
+      "实际字族": null,
+      "结论边界": "文件存在不能证明CAD采用该文件、未发生替代或实际字族已验证；未找到不代表本机其他位置不存在"
+    },
+    {
+      "来源命名": "SIMPLEX.shx",
+      "候选文件名": [
+        "SIMPLEX.shx"
+      ],
+      "候选生成依据": "原字段已有扩展名，原名核对",
+      "找到的候选文件": [
+        "D:\\CAD2020\\AutoCAD 2020\\Fonts\\simplex.shx"
+      ],
+      "限定范围存在状态": "找到候选文件",
+      "实际加载路径": null,
+      "实际加载已验证": false,
+      "实际字族": null,
+      "结论边界": "文件存在不能证明CAD采用该文件、未发生替代或实际字族已验证；未找到不代表本机其他位置不存在"
+    },
+    {
+      "来源命名": "tssdeng.shx",
+      "候选文件名": [
+        "tssdeng.shx"
+      ],
+      "候选生成依据": "原字段已有扩展名，原名核对",
+      "找到的候选文件": [],
+      "限定范围存在状态": "限定目录未找到候选文件",
+      "实际加载路径": null,
+      "实际加载已验证": false,
+      "实际字族": null,
+      "结论边界": "文件存在不能证明CAD采用该文件、未发生替代或实际字族已验证；未找到不代表本机其他位置不存在"
+    },
+    {
+      "来源命名": "txt.shx",
+      "候选文件名": [
+        "txt.shx"
+      ],
+      "候选生成依据": "原字段已有扩展名，原名核对",
+      "找到的候选文件": [
+        "D:\\CAD2020\\AutoCAD 2020\\Fonts\\txt.shx"
+      ],
+      "限定范围存在状态": "找到候选文件",
+      "实际加载路径": null,
+      "实际加载已验证": false,
+      "实际字族": null,
+      "结论边界": "文件存在不能证明CAD采用该文件、未发生替代或实际字族已验证；未找到不代表本机其他位置不存在"
+    }
+  ],
+  "图纸文字样式": [
+    {
+      "图纸": "方案图",
+      "来源文件": "D:\\Codex\\建筑施工图自动化\\图纸读取\\方案图对象属性.json",
+      "样式数量": 9,
+      "已提取样式字段": [
+        "Name",
+        "FontFile",
+        "BigFontFile",
+        "Height",
+        "Width",
+        "ObliqueAngle",
+        "TextGenerationFlag"
+      ],
+      "样式清单": [
+        {
+          "样式名称": "Standard",
+          "原始属性": {
+            "Name": "Standard",
+            "FontFile": "gbenor.shx",
+            "BigFontFile": "gbcbig.shx",
+            "Height": 0,
+            "Width": 1,
+            "ObliqueAngle": 0,
+            "TextGenerationFlag": 0
+          },
+          "引用次数": 63,
+          "引用实体数": 63,
+          "实体属性引用": [
+            {
+              "实体句柄": "CD83",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CD85",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CD87",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CD88",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CD8A",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CD8D",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CD8F",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CD91",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CD93",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CD95",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CD97",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CD98",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CD99",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CD9A",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CD9B",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CD9D",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CD9E",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CDA0",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CDA2",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CDA3",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CDA5",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CDA7",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CDA9",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CDAA",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CDAB",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CDAC",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CDAD",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CDAE",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CDB0",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CDB1",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CDB3",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CDB4",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CDB6",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CDB7",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CDB8",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CDBA",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CDBB",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CDBC",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CDBE",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CDE9",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CE31",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CE47",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CE94",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CE95",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CE96",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CF60",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CF61",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CF63",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CF64",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CF66",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CF67",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CF68",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CF6A",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CFB7",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CFB9",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CFBA",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CFBB",
+              "对象类型": "TDbWall",
+              "图层": "CURTWALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "D003",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "D004",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "D006",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "D009",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "D00B",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "D00C",
+              "对象类型": "TDbWall",
+              "图层": "WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            }
+          ],
+          "主字体状态": "已提取字体文件命名，实际加载待验证",
+          "大字体状态": "已提取大字体文件命名，实际加载待验证",
+          "实际字族": null,
+          "实际加载字体路径": null,
+          "实际加载已验证": false,
+          "完整性说明": "完整保留现有TextStyles条目的全部已提取属性；原DWG的GetFont/实际字族、字体替代及宿主加载结果未提取。空字段按原值保留，不依据样式名称猜字族。",
+          "使用解释": "实体字段有引用不等于文字当前可见；未在顶层找到引用不等于块内或天正内部未使用。"
+        },
+        {
+          "样式名称": "ASHADE",
+          "原始属性": {
+            "Name": "ASHADE",
+            "FontFile": "txt.shx",
+            "BigFontFile": "chineset.shx",
+            "Height": 0.2,
+            "Width": 1,
+            "ObliqueAngle": 0,
+            "TextGenerationFlag": 0
+          },
+          "引用次数": 0,
+          "引用实体数": 0,
+          "实体属性引用": [],
+          "主字体状态": "已提取字体文件命名，实际加载待验证",
+          "大字体状态": "已提取大字体文件命名，实际加载待验证",
+          "实际字族": null,
+          "实际加载字体路径": null,
+          "实际加载已验证": false,
+          "完整性说明": "完整保留现有TextStyles条目的全部已提取属性；原DWG的GetFont/实际字族、字体替代及宿主加载结果未提取。空字段按原值保留，不依据样式名称猜字族。",
+          "使用解释": "实体字段有引用不等于文字当前可见；未在顶层找到引用不等于块内或天正内部未使用。"
+        },
+        {
+          "样式名称": "_TCH_DIM",
+          "原始属性": {
+            "Name": "_TCH_DIM",
+            "FontFile": "SIMPLEX",
+            "BigFontFile": "GBCBIG",
+            "Height": 0,
+            "Width": 1,
+            "ObliqueAngle": 0,
+            "TextGenerationFlag": 0
+          },
+          "引用次数": 7,
+          "引用实体数": 7,
+          "实体属性引用": [
+            {
+              "实体句柄": "CE8F",
+              "对象类型": "TDbSymbElevation",
+              "图层": "DIM_ELEV",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CE90",
+              "对象类型": "TDbSymbElevation",
+              "图层": "DIM_ELEV",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CE91",
+              "对象类型": "TDbSymbElevation",
+              "图层": "DIM_ELEV",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CE92",
+              "对象类型": "TDbSymbElevation",
+              "图层": "DIM_ELEV",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CE93",
+              "对象类型": "TDbSymbElevation",
+              "图层": "DIM_ELEV",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CF5F",
+              "对象类型": "TDbRectCornerStair",
+              "图层": "STAIR",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "CFC4",
+              "对象类型": "TDbSymbElevation",
+              "图层": "DIM_ELEV",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            }
+          ],
+          "主字体状态": "已提取字体文件命名，实际加载待验证",
+          "大字体状态": "已提取大字体文件命名，实际加载待验证",
+          "实际字族": null,
+          "实际加载字体路径": null,
+          "实际加载已验证": false,
+          "完整性说明": "完整保留现有TextStyles条目的全部已提取属性；原DWG的GetFont/实际字族、字体替代及宿主加载结果未提取。空字段按原值保留，不依据样式名称猜字族。",
+          "使用解释": "实体字段有引用不等于文字当前可见；未在顶层找到引用不等于块内或天正内部未使用。"
+        },
+        {
+          "样式名称": "_TCH_WINDOW",
+          "原始属性": {
+            "Name": "_TCH_WINDOW",
+            "FontFile": "SIMPLEX",
+            "BigFontFile": "GBCBIG",
+            "Height": 3.5,
+            "Width": 1,
+            "ObliqueAngle": 0,
+            "TextGenerationFlag": 0
+          },
+          "引用次数": 30,
+          "引用实体数": 30,
+          "实体属性引用": [
+            {
+              "实体句柄": "CD84",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CD86",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CD89",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CD8B",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CD8C",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CD8E",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CD90",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CD92",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CD94",
+              "对象类型": "TDbGroupOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CD96",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CD9C",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CD9F",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CDA1",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CDA4",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CDA6",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CDA8",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CDAF",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CDB2",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CDB5",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CDB9",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CDBD",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CDBF",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CE48",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CF62",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CF65",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CF69",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "CFB8",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "D005",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "D007",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            },
+            {
+              "实体句柄": "D00A",
+              "对象类型": "TDbOpening",
+              "图层": "WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3.5
+              }
+            }
+          ],
+          "主字体状态": "已提取字体文件命名，实际加载待验证",
+          "大字体状态": "已提取大字体文件命名，实际加载待验证",
+          "实际字族": null,
+          "实际加载字体路径": null,
+          "实际加载已验证": false,
+          "完整性说明": "完整保留现有TextStyles条目的全部已提取属性；原DWG的GetFont/实际字族、字体替代及宿主加载结果未提取。空字段按原值保留，不依据样式名称猜字族。",
+          "使用解释": "实体字段有引用不等于文字当前可见；未在顶层找到引用不等于块内或天正内部未使用。"
+        },
+        {
+          "样式名称": "TranSketch-1",
+          "原始属性": {
+            "Name": "TranSketch-1",
+            "FontFile": "gbenor.shx",
+            "BigFontFile": "gbcbig.shx",
+            "Height": 0,
+            "Width": 0.7,
+            "ObliqueAngle": 0,
+            "TextGenerationFlag": 0
+          },
+          "引用次数": 0,
+          "引用实体数": 0,
+          "实体属性引用": [],
+          "主字体状态": "已提取字体文件命名，实际加载待验证",
+          "大字体状态": "已提取大字体文件命名，实际加载待验证",
+          "实际字族": null,
+          "实际加载字体路径": null,
+          "实际加载已验证": false,
+          "完整性说明": "完整保留现有TextStyles条目的全部已提取属性；原DWG的GetFont/实际字族、字体替代及宿主加载结果未提取。空字段按原值保留，不依据样式名称猜字族。",
+          "使用解释": "实体字段有引用不等于文字当前可见；未在顶层找到引用不等于块内或天正内部未使用。"
+        },
+        {
+          "样式名称": "_TCH_DIM_T3",
+          "原始属性": {
+            "Name": "_TCH_DIM_T3",
+            "FontFile": "SIMPLEX",
+            "BigFontFile": "GBCBIG",
+            "Height": 0,
+            "Width": 0.7058823529411765,
+            "ObliqueAngle": 0,
+            "TextGenerationFlag": 0
+          },
+          "引用次数": 0,
+          "引用实体数": 0,
+          "实体属性引用": [],
+          "主字体状态": "已提取字体文件命名，实际加载待验证",
+          "大字体状态": "已提取大字体文件命名，实际加载待验证",
+          "实际字族": null,
+          "实际加载字体路径": null,
+          "实际加载已验证": false,
+          "完整性说明": "完整保留现有TextStyles条目的全部已提取属性；原DWG的GetFont/实际字族、字体替代及宿主加载结果未提取。空字段按原值保留，不依据样式名称猜字族。",
+          "使用解释": "实体字段有引用不等于文字当前可见；未在顶层找到引用不等于块内或天正内部未使用。"
+        },
+        {
+          "样式名称": "-宋体",
+          "原始属性": {
+            "Name": "-宋体",
+            "FontFile": "",
+            "BigFontFile": "",
+            "Height": 0,
+            "Width": 1,
+            "ObliqueAngle": 0,
+            "TextGenerationFlag": 0
+          },
+          "引用次数": 0,
+          "引用实体数": 0,
+          "实体属性引用": [],
+          "主字体状态": "真实字体待提取",
+          "大字体状态": "源字段为空，是否适用大字体待确认",
+          "实际字族": null,
+          "实际加载字体路径": null,
+          "实际加载已验证": false,
+          "完整性说明": "完整保留现有TextStyles条目的全部已提取属性；原DWG的GetFont/实际字族、字体替代及宿主加载结果未提取。空字段按原值保留，不依据样式名称猜字族。",
+          "使用解释": "实体字段有引用不等于文字当前可见；未在顶层找到引用不等于块内或天正内部未使用。"
+        },
+        {
+          "样式名称": "黑体",
+          "原始属性": {
+            "Name": "黑体",
+            "FontFile": "simhei.ttf",
+            "BigFontFile": "",
+            "Height": 0,
+            "Width": 0.8,
+            "ObliqueAngle": 0,
+            "TextGenerationFlag": 0
+          },
+          "引用次数": 31,
+          "引用实体数": 30,
+          "实体属性引用": [
+            {
+              "实体句柄": "CDC0",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CDC1",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CDC2",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CDC3",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CDC4",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CDC5",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CDC6",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CDC7",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CDC8",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CDC9",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CDCA",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CDCB",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CE32",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CE49",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CE4A",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CF28",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CFB6",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CFBE",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CFC3",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CFCC",
+              "对象类型": "TDbText",
+              "图层": "图框开放字",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CFCD",
+              "对象类型": "TDbText",
+              "图层": "图框固定块",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CFCE",
+              "对象类型": "TDbDrawingName",
+              "图层": "DIM_SYMB",
+              "引用字段": "NameStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100,
+                "NameHeight": "7.0",
+                "ScaleHeight": "7.0"
+              }
+            },
+            {
+              "实体句柄": "CFCE",
+              "对象类型": "TDbDrawingName",
+              "图层": "DIM_SYMB",
+              "引用字段": "ScaleStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100,
+                "NameHeight": "7.0",
+                "ScaleHeight": "7.0"
+              }
+            },
+            {
+              "实体句柄": "CFD1",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CFD4",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CFD5",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CFD6",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CFD7",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CFD8",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CFD9",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "D008",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "黑体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            }
+          ],
+          "主字体状态": "已提取字体文件命名，实际加载待验证",
+          "大字体状态": "源字段为空，是否适用大字体待确认",
+          "实际字族": null,
+          "实际加载字体路径": null,
+          "实际加载已验证": false,
+          "完整性说明": "完整保留现有TextStyles条目的全部已提取属性；原DWG的GetFont/实际字族、字体替代及宿主加载结果未提取。空字段按原值保留，不依据样式名称猜字族。",
+          "使用解释": "实体字段有引用不等于文字当前可见；未在顶层找到引用不等于块内或天正内部未使用。"
+        },
+        {
+          "样式名称": "宋体",
+          "原始属性": {
+            "Name": "宋体",
+            "FontFile": "",
+            "BigFontFile": "",
+            "Height": 0,
+            "Width": 0.8,
+            "ObliqueAngle": 0,
+            "TextGenerationFlag": 0
+          },
+          "引用次数": 5,
+          "引用实体数": 5,
+          "实体属性引用": [
+            {
+              "实体句柄": "CFCF",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "宋体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CFDA",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "宋体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CFDB",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "宋体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CFDC",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "宋体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "CFDD",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "宋体",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            }
+          ],
+          "主字体状态": "真实字体待提取",
+          "大字体状态": "源字段为空，是否适用大字体待确认",
+          "实际字族": null,
+          "实际加载字体路径": null,
+          "实际加载已验证": false,
+          "完整性说明": "完整保留现有TextStyles条目的全部已提取属性；原DWG的GetFont/实际字族、字体替代及宿主加载结果未提取。空字段按原值保留，不依据样式名称猜字族。",
+          "使用解释": "实体字段有引用不等于文字当前可见；未在顶层找到引用不等于块内或天正内部未使用。"
+        }
+      ],
+      "未解析为已提取样式名称的引用": [],
+      "文字内嵌字体格式": []
+    },
+    {
+      "图纸": "参考图",
+      "来源文件": "D:\\Codex\\建筑施工图自动化\\图纸读取\\参考图对象属性.json",
+      "样式数量": 14,
+      "已提取样式字段": [
+        "Name",
+        "FontFile",
+        "BigFontFile",
+        "Height",
+        "Width",
+        "ObliqueAngle",
+        "TextGenerationFlag"
+      ],
+      "样式清单": [
+        {
+          "样式名称": "Standard",
+          "原始属性": {
+            "Name": "Standard",
+            "FontFile": "gbenor.shx",
+            "BigFontFile": "gbcbig.shx",
+            "Height": 0,
+            "Width": 1,
+            "ObliqueAngle": 0,
+            "TextGenerationFlag": 0
+          },
+          "引用次数": 43,
+          "引用实体数": 43,
+          "实体属性引用": [
+            {
+              "实体句柄": "17F6",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "17F7",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "17F8",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "17F9",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "17FA",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "17FB",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "17FC",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "17FD",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "17FE",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "17FF",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "1800",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "1801",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "1802",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "1803",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "1804",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "1805",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "1806",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "1807",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "1808",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "1809",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "180A",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "180B",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "180C",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "180D",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "180E",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "180F",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "1810",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "1811",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "1812",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "1813",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "1837",
+              "对象类型": "AcDbMText",
+              "图层": "A-家具",
+              "引用字段": "StyleName",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true
+              }
+            },
+            {
+              "实体句柄": "19AE",
+              "对象类型": "TDbColumn",
+              "图层": "A-COLUMN",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "19AF",
+              "对象类型": "TDbColumn",
+              "图层": "A-COLUMN",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "19BA",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "19BB",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "19BC",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "19BD",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "19BE",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "19D7",
+              "对象类型": "TDbColumn",
+              "图层": "A-COLUMN",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "19D8",
+              "对象类型": "TDbColumn",
+              "图层": "A-COLUMN",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "19E5",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "19E6",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "19E7",
+              "对象类型": "TDbWall",
+              "图层": "A-WALL",
+              "引用字段": "TextStyle",
+              "引用原值": "Standard",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "是",
+                "Scale": 100,
+                "TextHeight": "3.5"
+              }
+            }
+          ],
+          "主字体状态": "已提取字体文件命名，实际加载待验证",
+          "大字体状态": "已提取大字体文件命名，实际加载待验证",
+          "实际字族": null,
+          "实际加载字体路径": null,
+          "实际加载已验证": false,
+          "完整性说明": "完整保留现有TextStyles条目的全部已提取属性；原DWG的GetFont/实际字族、字体替代及宿主加载结果未提取。空字段按原值保留，不依据样式名称猜字族。",
+          "使用解释": "实体字段有引用不等于文字当前可见；未在顶层找到引用不等于块内或天正内部未使用。"
+        },
+        {
+          "样式名称": "ASHADE",
+          "原始属性": {
+            "Name": "ASHADE",
+            "FontFile": "txt.shx",
+            "BigFontFile": "chineset.shx",
+            "Height": 0.2,
+            "Width": 1,
+            "ObliqueAngle": 0,
+            "TextGenerationFlag": 0
+          },
+          "引用次数": 0,
+          "引用实体数": 0,
+          "实体属性引用": [],
+          "主字体状态": "已提取字体文件命名，实际加载待验证",
+          "大字体状态": "已提取大字体文件命名，实际加载待验证",
+          "实际字族": null,
+          "实际加载字体路径": null,
+          "实际加载已验证": false,
+          "完整性说明": "完整保留现有TextStyles条目的全部已提取属性；原DWG的GetFont/实际字族、字体替代及宿主加载结果未提取。空字段按原值保留，不依据样式名称猜字族。",
+          "使用解释": "实体字段有引用不等于文字当前可见；未在顶层找到引用不等于块内或天正内部未使用。"
+        },
+        {
+          "样式名称": "_TCH_DIM",
+          "原始属性": {
+            "Name": "_TCH_DIM",
+            "FontFile": "SIMPLEX",
+            "BigFontFile": "GBCBIG",
+            "Height": 0,
+            "Width": 1,
+            "ObliqueAngle": 0,
+            "TextGenerationFlag": 0
+          },
+          "引用次数": 25,
+          "引用实体数": 25,
+          "实体属性引用": [
+            {
+              "实体句柄": "199E",
+              "对象类型": "TDbSymbElevation",
+              "图层": "A-DIM_ELEV",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 80,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "19E9",
+              "对象类型": "TDbSymbMultiLeader",
+              "图层": "A-DIM_LEAD",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 80
+              }
+            },
+            {
+              "实体句柄": "19EA",
+              "对象类型": "TDbSymbArrow",
+              "图层": "DIM_SYMB",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 80
+              }
+            },
+            {
+              "实体句柄": "19EB",
+              "对象类型": "TDbSymbElevation",
+              "图层": "A-DIM_ELEV",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 80,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "19EC",
+              "对象类型": "TDbSymbElevation",
+              "图层": "A-DIM_ELEV",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 80,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "19ED",
+              "对象类型": "TDbSymbElevation",
+              "图层": "A-DIM_ELEV",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 80,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "19EF",
+              "对象类型": "TDbSymbElevation",
+              "图层": "A-DIM_ELEV",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 80,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "19F1",
+              "对象类型": "TDbSymbArrow",
+              "图层": "DIM_SYMB",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 80
+              }
+            },
+            {
+              "实体句柄": "19F2",
+              "对象类型": "TDbSymbElevation",
+              "图层": "A-DIM_ELEV",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 80,
+                "TextHeight": "3.5"
+              }
+            },
+            {
+              "实体句柄": "19FB",
+              "对象类型": "TDbSymbArrow",
+              "图层": "DIM_SYMB",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "1A0A",
+              "对象类型": "TDbSymbMultiLeader",
+              "图层": "DIM_LEAD",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "1A0B",
+              "对象类型": "TDbSymbMultiLeader",
+              "图层": "DIM_LEAD",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "1A15",
+              "对象类型": "TDbSymbArrow",
+              "图层": "DIM_SYMB",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "1A16",
+              "对象类型": "TDbSymbArrow",
+              "图层": "DIM_SYMB",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "1A19",
+              "对象类型": "TDbSymbArrow",
+              "图层": "DIM_SYMB",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "1A1A",
+              "对象类型": "TDbSymbArrow",
+              "图层": "DIM_SYMB",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "1A1B",
+              "对象类型": "TDbSymbArrow",
+              "图层": "DIM_SYMB",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "1A1C",
+              "对象类型": "TDbSymbArrow",
+              "图层": "DIM_SYMB",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "1A1E",
+              "对象类型": "TDbSymbComposing",
+              "图层": "J-PM-厨卫",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "1A21",
+              "对象类型": "TDbSymbComposing",
+              "图层": "J-PM-厨卫",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "1A23",
+              "对象类型": "TDbSymbComposing",
+              "图层": "J-PM-厨卫",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "1A25",
+              "对象类型": "TDbSymbComposing",
+              "图层": "J-PM-厨卫",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "1A35",
+              "对象类型": "TDbSymbComposing",
+              "图层": "J-空调机位",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 80
+              }
+            },
+            {
+              "实体句柄": "1A39",
+              "对象类型": "TDbSymbComposing",
+              "图层": "J-空调机位",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 80
+              }
+            },
+            {
+              "实体句柄": "1A3D",
+              "对象类型": "TDbSymbComposing",
+              "图层": "J-空调机位",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_DIM",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 80
+              }
+            }
+          ],
+          "主字体状态": "已提取字体文件命名，实际加载待验证",
+          "大字体状态": "已提取大字体文件命名，实际加载待验证",
+          "实际字族": null,
+          "实际加载字体路径": null,
+          "实际加载已验证": false,
+          "完整性说明": "完整保留现有TextStyles条目的全部已提取属性；原DWG的GetFont/实际字族、字体替代及宿主加载结果未提取。空字段按原值保留，不依据样式名称猜字族。",
+          "使用解释": "实体字段有引用不等于文字当前可见；未在顶层找到引用不等于块内或天正内部未使用。"
+        },
+        {
+          "样式名称": "_TCH_WINDOW",
+          "原始属性": {
+            "Name": "_TCH_WINDOW",
+            "FontFile": "SIMPLEX.shx",
+            "BigFontFile": "GBCBIG.shx",
+            "Height": 3.5,
+            "Width": 0.7,
+            "ObliqueAngle": 0,
+            "TextGenerationFlag": 0
+          },
+          "引用次数": 22,
+          "引用实体数": 22,
+          "实体属性引用": [
+            {
+              "实体句柄": "1814",
+              "对象类型": "TDbOpening",
+              "图层": "A-WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3
+              }
+            },
+            {
+              "实体句柄": "1815",
+              "对象类型": "TDbOpening",
+              "图层": "A-WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3
+              }
+            },
+            {
+              "实体句柄": "1816",
+              "对象类型": "TDbOpening",
+              "图层": "A-WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3
+              }
+            },
+            {
+              "实体句柄": "1817",
+              "对象类型": "TDbOpening",
+              "图层": "A-WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3
+              }
+            },
+            {
+              "实体句柄": "1818",
+              "对象类型": "TDbOpening",
+              "图层": "A-WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3
+              }
+            },
+            {
+              "实体句柄": "1819",
+              "对象类型": "TDbOpening",
+              "图层": "A-WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3
+              }
+            },
+            {
+              "实体句柄": "181A",
+              "对象类型": "TDbOpening",
+              "图层": "A-WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3
+              }
+            },
+            {
+              "实体句柄": "181B",
+              "对象类型": "TDbOpening",
+              "图层": "A-WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3
+              }
+            },
+            {
+              "实体句柄": "181C",
+              "对象类型": "TDbOpening",
+              "图层": "A-WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3
+              }
+            },
+            {
+              "实体句柄": "181D",
+              "对象类型": "TDbOpening",
+              "图层": "A-WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3
+              }
+            },
+            {
+              "实体句柄": "181E",
+              "对象类型": "TDbOpening",
+              "图层": "A-WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3
+              }
+            },
+            {
+              "实体句柄": "181F",
+              "对象类型": "TDbOpening",
+              "图层": "A-WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3
+              }
+            },
+            {
+              "实体句柄": "1820",
+              "对象类型": "TDbOpening",
+              "图层": "A-WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3
+              }
+            },
+            {
+              "实体句柄": "1821",
+              "对象类型": "TDbOpening",
+              "图层": "A-WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3
+              }
+            },
+            {
+              "实体句柄": "1822",
+              "对象类型": "TDbOpening",
+              "图层": "A-WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3
+              }
+            },
+            {
+              "实体句柄": "1823",
+              "对象类型": "TDbOpening",
+              "图层": "A-WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3
+              }
+            },
+            {
+              "实体句柄": "1824",
+              "对象类型": "TDbOpening",
+              "图层": "A-WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3
+              }
+            },
+            {
+              "实体句柄": "1825",
+              "对象类型": "TDbOpening",
+              "图层": "A-WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3
+              }
+            },
+            {
+              "实体句柄": "19BF",
+              "对象类型": "TDbOpening",
+              "图层": "A-WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3
+              }
+            },
+            {
+              "实体句柄": "19C0",
+              "对象类型": "TDbOpening",
+              "图层": "A-WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3
+              }
+            },
+            {
+              "实体句柄": "19D6",
+              "对象类型": "TDbOpening",
+              "图层": "A-WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3
+              }
+            },
+            {
+              "实体句柄": "19E8",
+              "对象类型": "TDbOpening",
+              "图层": "A-WINDOW",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_WINDOW",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideLabel": "否",
+                "Scale": 100,
+                "TextHeight": 3
+              }
+            }
+          ],
+          "主字体状态": "已提取字体文件命名，实际加载待验证",
+          "大字体状态": "已提取大字体文件命名，实际加载待验证",
+          "实际字族": null,
+          "实际加载字体路径": null,
+          "实际加载已验证": false,
+          "完整性说明": "完整保留现有TextStyles条目的全部已提取属性；原DWG的GetFont/实际字族、字体替代及宿主加载结果未提取。空字段按原值保留，不依据样式名称猜字族。",
+          "使用解释": "实体字段有引用不等于文字当前可见；未在顶层找到引用不等于块内或天正内部未使用。"
+        },
+        {
+          "样式名称": "_TCH_AXIS",
+          "原始属性": {
+            "Name": "_TCH_AXIS",
+            "FontFile": "COMPLEX",
+            "BigFontFile": "GBCBIG",
+            "Height": 0,
+            "Width": 1,
+            "ObliqueAngle": 0,
+            "TextGenerationFlag": 0
+          },
+          "引用次数": 2,
+          "引用实体数": 2,
+          "实体属性引用": [
+            {
+              "实体句柄": "199F",
+              "对象类型": "TDbAxisLabelSet",
+              "图层": "AXIS",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_AXIS",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideAxisText": "是",
+                "Scale": 100,
+                "TextRatio": "0.7"
+              }
+            },
+            {
+              "实体句柄": "19A3",
+              "对象类型": "TDbAxisLabelSet",
+              "图层": "AXIS",
+              "引用字段": "TextStyle",
+              "引用原值": "_TCH_AXIS",
+              "显示相关原属性": {
+                "Visible": true,
+                "HideAxisText": "是",
+                "Scale": 100,
+                "TextRatio": "0.7"
+              }
+            }
+          ],
+          "主字体状态": "已提取字体文件命名，实际加载待验证",
+          "大字体状态": "已提取大字体文件命名，实际加载待验证",
+          "实际字族": null,
+          "实际加载字体路径": null,
+          "实际加载已验证": false,
+          "完整性说明": "完整保留现有TextStyles条目的全部已提取属性；原DWG的GetFont/实际字族、字体替代及宿主加载结果未提取。空字段按原值保留，不依据样式名称猜字族。",
+          "使用解释": "实体字段有引用不等于文字当前可见；未在顶层找到引用不等于块内或天正内部未使用。"
+        },
+        {
+          "样式名称": "FY_FS",
+          "原始属性": {
+            "Name": "FY_FS",
+            "FontFile": "",
+            "BigFontFile": "",
+            "Height": 0,
+            "Width": 0.7,
+            "ObliqueAngle": 0,
+            "TextGenerationFlag": 0
+          },
+          "引用次数": 2,
+          "引用实体数": 1,
+          "实体属性引用": [
+            {
+              "实体句柄": "19F3",
+              "对象类型": "TDbDrawingName",
+              "图层": "DIM_SYMB",
+              "引用字段": "NameStyle",
+              "引用原值": "FY_FS",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100,
+                "NameHeight": "7.0",
+                "ScaleHeight": "5.0"
+              }
+            },
+            {
+              "实体句柄": "19F3",
+              "对象类型": "TDbDrawingName",
+              "图层": "DIM_SYMB",
+              "引用字段": "ScaleStyle",
+              "引用原值": "FY_FS",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100,
+                "NameHeight": "7.0",
+                "ScaleHeight": "5.0"
+              }
+            }
+          ],
+          "主字体状态": "真实字体待提取",
+          "大字体状态": "源字段为空，是否适用大字体待确认",
+          "实际字族": null,
+          "实际加载字体路径": null,
+          "实际加载已验证": false,
+          "完整性说明": "完整保留现有TextStyles条目的全部已提取属性；原DWG的GetFont/实际字族、字体替代及宿主加载结果未提取。空字段按原值保留，不依据样式名称猜字族。",
+          "使用解释": "实体字段有引用不等于文字当前可见；未在顶层找到引用不等于块内或天正内部未使用。"
+        },
+        {
+          "样式名称": "FY_HZ",
+          "原始属性": {
+            "Name": "FY_HZ",
+            "FontFile": "tssdeng.shx",
+            "BigFontFile": "hztxt.shx",
+            "Height": 0,
+            "Width": 0.7,
+            "ObliqueAngle": 0,
+            "TextGenerationFlag": 0
+          },
+          "引用次数": 14,
+          "引用实体数": 14,
+          "实体属性引用": [
+            {
+              "实体句柄": "19B0",
+              "对象类型": "TDbText",
+              "图层": "A-房间名称",
+              "引用字段": "TextStyle",
+              "引用原值": "FY_HZ",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 80
+              }
+            },
+            {
+              "实体句柄": "19B1",
+              "对象类型": "TDbText",
+              "图层": "A-房间名称",
+              "引用字段": "TextStyle",
+              "引用原值": "FY_HZ",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 80
+              }
+            },
+            {
+              "实体句柄": "19B2",
+              "对象类型": "TDbText",
+              "图层": "A-房间名称",
+              "引用字段": "TextStyle",
+              "引用原值": "FY_HZ",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 80
+              }
+            },
+            {
+              "实体句柄": "19B3",
+              "对象类型": "TDbText",
+              "图层": "A-房间名称",
+              "引用字段": "TextStyle",
+              "引用原值": "FY_HZ",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 80
+              }
+            },
+            {
+              "实体句柄": "19B4",
+              "对象类型": "TDbText",
+              "图层": "A-房间名称",
+              "引用字段": "TextStyle",
+              "引用原值": "FY_HZ",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 80
+              }
+            },
+            {
+              "实体句柄": "19B5",
+              "对象类型": "TDbText",
+              "图层": "A-房间名称",
+              "引用字段": "TextStyle",
+              "引用原值": "FY_HZ",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 80
+              }
+            },
+            {
+              "实体句柄": "19B6",
+              "对象类型": "TDbText",
+              "图层": "A-房间名称",
+              "引用字段": "TextStyle",
+              "引用原值": "FY_HZ",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 80
+              }
+            },
+            {
+              "实体句柄": "19B7",
+              "对象类型": "TDbText",
+              "图层": "A-房间名称",
+              "引用字段": "TextStyle",
+              "引用原值": "FY_HZ",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 80
+              }
+            },
+            {
+              "实体句柄": "19B8",
+              "对象类型": "TDbText",
+              "图层": "A-房间名称",
+              "引用字段": "TextStyle",
+              "引用原值": "FY_HZ",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 80
+              }
+            },
+            {
+              "实体句柄": "19B9",
+              "对象类型": "TDbText",
+              "图层": "A-房间名称",
+              "引用字段": "TextStyle",
+              "引用原值": "FY_HZ",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 80
+              }
+            },
+            {
+              "实体句柄": "19EE",
+              "对象类型": "TDbText",
+              "图层": "A-房间名称",
+              "引用字段": "TextStyle",
+              "引用原值": "FY_HZ",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 80
+              }
+            },
+            {
+              "实体句柄": "19F0",
+              "对象类型": "TDbText",
+              "图层": "A-房间名称",
+              "引用字段": "TextStyle",
+              "引用原值": "FY_HZ",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 80
+              }
+            },
+            {
+              "实体句柄": "1A41",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "FY_HZ",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            },
+            {
+              "实体句柄": "1A42",
+              "对象类型": "TDbText",
+              "图层": "PUB_TEXT",
+              "引用字段": "TextStyle",
+              "引用原值": "FY_HZ",
+              "显示相关原属性": {
+                "Visible": true,
+                "Scale": 100
+              }
+            }
+          ],
+          "主字体状态": "已提取字体文件命名，实际加载待验证",
+          "大字体状态": "已提取大字体文件命名，实际加载待验证",
+          "实际字族": null,
+          "实际加载字体路径": null,
+          "实际加载已验证": false,
+          "完整性说明": "完整保留现有TextStyles条目的全部已提取属性；原DWG的GetFont/实际字族、字体替代及宿主加载结果未提取。空字段按原值保留，不依据样式名称猜字族。",
+          "使用解释": "实体字段有引用不等于文字当前可见；未在顶层找到引用不等于块内或天正内部未使用。"
+        },
+        {
+          "样式名称": "-宋体",
+          "原始属性": {
+            "Name": "-宋体",
+            "FontFile": "",
+            "BigFontFile": "",
+            "Height": 0,
+            "Width": 0.8,
+            "ObliqueAngle": 0,
+            "TextGenerationFlag": 0
+          },
+          "引用次数": 0,
+          "引用实体数": 0,
+          "实体属性引用": [],
+          "主字体状态": "真实字体待提取",
+          "大字体状态": "源字段为空，是否适用大字体待确认",
+          "实际字族": null,
+          "实际加载字体路径": null,
+          "实际加载已验证": false,
+          "完整性说明": "完整保留现有TextStyles条目的全部已提取属性；原DWG的GetFont/实际字族、字体替代及宿主加载结果未提取。空字段按原值保留，不依据样式名称猜字族。",
+          "使用解释": "实体字段有引用不等于文字当前可见；未在顶层找到引用不等于块内或天正内部未使用。"
+        },
+        {
+          "样式名称": "宋体",
+          "原始属性": {
+            "Name": "宋体",
+            "FontFile": "",
+            "BigFontFile": "",
+            "Height": 0,
+            "Width": 0.8,
+            "ObliqueAngle": 0,
+            "TextGenerationFlag": 0
+          },
+          "引用次数": 2,
+          "引用实体数": 2,
+          "实体属性引用": [
+            {
+              "实体句柄": "17E1",
+              "对象类型": "AcDbText",
+              "图层": "图框开放字",
+              "引用字段": "StyleName",
+              "引用原值": "宋体",
+              "显示相关原属性": {
+                "Visible": true
+              }
+            },
+            {
+              "实体句柄": "17E2",
+              "对象类型": "AcDbText",
+              "图层": "图框开放字",
+              "引用字段": "StyleName",
+              "引用原值": "宋体",
+              "显示相关原属性": {
+                "Visible": true
+              }
+            }
+          ],
+          "主字体状态": "真实字体待提取",
+          "大字体状态": "源字段为空，是否适用大字体待确认",
+          "实际字族": null,
+          "实际加载字体路径": null,
+          "实际加载已验证": false,
+          "完整性说明": "完整保留现有TextStyles条目的全部已提取属性；原DWG的GetFont/实际字族、字体替代及宿主加载结果未提取。空字段按原值保留，不依据样式名称猜字族。",
+          "使用解释": "实体字段有引用不等于文字当前可见；未在顶层找到引用不等于块内或天正内部未使用。"
+        },
+        {
+          "样式名称": "_TCH_SPACE",
+          "原始属性": {
+            "Name": "_TCH_SPACE",
+            "FontFile": "SIMPLEX",
+            "BigFontFile": "GBCBIG",
+            "Height": 5,
+            "Width": 1,
+            "ObliqueAngle": 0,
+            "TextGenerationFlag": 0
+          },
+          "引用次数": 0,
+          "引用实体数": 0,
+          "实体属性引用": [],
+          "主字体状态": "已提取字体文件命名，实际加载待验证",
+          "大字体状态": "已提取大字体文件命名，实际加载待验证",
+          "实际字族": null,
+          "实际加载字体路径": null,
+          "实际加载已验证": false,
+          "完整性说明": "完整保留现有TextStyles条目的全部已提取属性；原DWG的GetFont/实际字族、字体替代及宿主加载结果未提取。空字段按原值保留，不依据样式名称猜字族。",
+          "使用解释": "实体字段有引用不等于文字当前可见；未在顶层找到引用不等于块内或天正内部未使用。"
+        },
+        {
+          "样式名称": "_TCH_DIM_T3",
+          "原始属性": {
+            "Name": "_TCH_DIM_T3",
+            "FontFile": "SIMPLEX",
+            "BigFontFile": "GBCBIG",
+            "Height": 0,
+            "Width": 0.7058823529411765,
+            "ObliqueAngle": 0,
+            "TextGenerationFlag": 0
+          },
+          "引用次数": 0,
+          "引用实体数": 0,
+          "实体属性引用": [],
+          "主字体状态": "已提取字体文件命名，实际加载待验证",
+          "大字体状态": "已提取大字体文件命名，实际加载待验证",
+          "实际字族": null,
+          "实际加载字体路径": null,
+          "实际加载已验证": false,
+          "完整性说明": "完整保留现有TextStyles条目的全部已提取属性；原DWG的GetFont/实际字族、字体替代及宿主加载结果未提取。空字段按原值保留，不依据样式名称猜字族。",
+          "使用解释": "实体字段有引用不等于文字当前可见；未在顶层找到引用不等于块内或天正内部未使用。"
+        },
+        {
+          "样式名称": "_TCH_LABEL",
+          "原始属性": {
+            "Name": "_TCH_LABEL",
+            "FontFile": "COMPLEX",
+            "BigFontFile": "GBCBIG",
+            "Height": 0,
+            "Width": 1,
+            "ObliqueAngle": 0,
+            "TextGenerationFlag": 0
+          },
+          "引用次数": 1,
+          "引用实体数": 1,
+          "实体属性引用": [
+            {
+              "实体句柄": "1A05",
+              "对象类型": "TDbSymbSection",
+              "图层": "DIM_SYMB",
+              "引用字段": "FontStyle",
+              "引用原值": "_TCH_LABEL",
+              "显示相关原属性": {
+                "Visible": true,
+                "DrawText": "1",
+                "Scale": 100
+              }
+            }
+          ],
+          "主字体状态": "已提取字体文件命名，实际加载待验证",
+          "大字体状态": "已提取大字体文件命名，实际加载待验证",
+          "实际字族": null,
+          "实际加载字体路径": null,
+          "实际加载已验证": false,
+          "完整性说明": "完整保留现有TextStyles条目的全部已提取属性；原DWG的GetFont/实际字族、字体替代及宿主加载结果未提取。空字段按原值保留，不依据样式名称猜字族。",
+          "使用解释": "实体字段有引用不等于文字当前可见；未在顶层找到引用不等于块内或天正内部未使用。"
+        },
+        {
+          "样式名称": "黑体",
+          "原始属性": {
+            "Name": "黑体",
+            "FontFile": "simhei.ttf",
+            "BigFontFile": "",
+            "Height": 0,
+            "Width": 0.7,
+            "ObliqueAngle": 0,
+            "TextGenerationFlag": 0
+          },
+          "引用次数": 0,
+          "引用实体数": 0,
+          "实体属性引用": [],
+          "主字体状态": "已提取字体文件命名，实际加载待验证",
+          "大字体状态": "源字段为空，是否适用大字体待确认",
+          "实际字族": null,
+          "实际加载字体路径": null,
+          "实际加载已验证": false,
+          "完整性说明": "完整保留现有TextStyles条目的全部已提取属性；原DWG的GetFont/实际字族、字体替代及宿主加载结果未提取。空字段按原值保留，不依据样式名称猜字族。",
+          "使用解释": "实体字段有引用不等于文字当前可见；未在顶层找到引用不等于块内或天正内部未使用。"
+        },
+        {
+          "样式名称": "图框字体",
+          "原始属性": {
+            "Name": "图框字体",
+            "FontFile": "",
+            "BigFontFile": "",
+            "Height": 0,
+            "Width": 0.8,
+            "ObliqueAngle": 0,
+            "TextGenerationFlag": 0
+          },
+          "引用次数": 1,
+          "引用实体数": 1,
+          "实体属性引用": [
+            {
+              "实体句柄": "17E3",
+              "对象类型": "AcDbText",
+              "图层": "图框开放字",
+              "引用字段": "StyleName",
+              "引用原值": "图框字体",
+              "显示相关原属性": {
+                "Visible": true
+              }
+            }
+          ],
+          "主字体状态": "真实字体待提取",
+          "大字体状态": "源字段为空，是否适用大字体待确认",
+          "实际字族": null,
+          "实际加载字体路径": null,
+          "实际加载已验证": false,
+          "完整性说明": "完整保留现有TextStyles条目的全部已提取属性；原DWG的GetFont/实际字族、字体替代及宿主加载结果未提取。空字段按原值保留，不依据样式名称猜字族。",
+          "使用解释": "实体字段有引用不等于文字当前可见；未在顶层找到引用不等于块内或天正内部未使用。"
+        }
+      ],
+      "未解析为已提取样式名称的引用": [
+        {
+          "实体句柄": "199F",
+          "对象类型": "TDbAxisLabelSet",
+          "图层": "AXIS",
+          "引用字段": "CircleTextStyle",
+          "引用原值": "随“基本设定”",
+          "显示相关原属性": {
+            "Visible": true,
+            "HideAxisText": "是",
+            "Scale": 100,
+            "TextRatio": "0.7"
+          }
+        },
+        {
+          "实体句柄": "19A3",
+          "对象类型": "TDbAxisLabelSet",
+          "图层": "AXIS",
+          "引用字段": "CircleTextStyle",
+          "引用原值": "随“基本设定”",
+          "显示相关原属性": {
+            "Visible": true,
+            "HideAxisText": "是",
+            "Scale": 100,
+            "TextRatio": "0.7"
+          }
+        },
+        {
+          "实体句柄": "1A26",
+          "对象类型": "TDbPipe",
+          "图层": "VPIPE-污水",
+          "引用字段": "TextStyle",
+          "引用原值": "未初始化",
+          "显示相关原属性": {
+            "Visible": true,
+            "TextHeight": 3
+          }
+        },
+        {
+          "实体句柄": "1A27",
+          "对象类型": "TDbPipe",
+          "图层": "VPIPE-给水",
+          "引用字段": "TextStyle",
+          "引用原值": "未初始化",
+          "显示相关原属性": {
+            "Visible": true,
+            "TextHeight": 3
+          }
+        },
+        {
+          "实体句柄": "1A2D",
+          "对象类型": "TDbPipe",
+          "图层": "VPIPE-污水",
+          "引用字段": "TextStyle",
+          "引用原值": "未初始化",
+          "显示相关原属性": {
+            "Visible": true,
+            "TextHeight": 3
+          }
+        },
+        {
+          "实体句柄": "1A2E",
+          "对象类型": "TDbPipe",
+          "图层": "VPIPE-给水",
+          "引用字段": "TextStyle",
+          "引用原值": "未初始化",
+          "显示相关原属性": {
+            "Visible": true,
+            "TextHeight": 3
+          }
+        }
+      ],
+      "文字内嵌字体格式": [
+        {
+          "实体句柄": "1837",
+          "对象类型": "AcDbMText",
+          "原属性字段": "TextString",
+          "原属性值": "{\\fFZLanTingHeiS-UL-GB|b0|i0|c134|p2;家先位}",
+          "文本内字体格式提示": [
+            "FZLanTingHeiS-UL-GB|b0|i0|c134|p2"
+          ],
+          "实际字族": null,
+          "实际加载已验证": false,
+          "说明": "保留文本内嵌格式提示，不能将命名字族与本机实际加载字体等同；不能只按StyleName确认最终字形。"
+        }
+      ]
+    }
+  ],
+  "跨图同名样式差异": [
+    {
+      "同名样式": "-宋体",
+      "差异": [
+        {
+          "原字段": "Width",
+          "方案图原值": 1,
+          "参考图原值": 0.8
+        }
+      ],
+      "处理": "同名不能视作同一定义；生成前按对应参考类别确认目标定义。"
+    },
+    {
+      "同名样式": "_TCH_WINDOW",
+      "差异": [
+        {
+          "原字段": "FontFile",
+          "方案图原值": "SIMPLEX",
+          "参考图原值": "SIMPLEX.shx"
+        },
+        {
+          "原字段": "BigFontFile",
+          "方案图原值": "GBCBIG",
+          "参考图原值": "GBCBIG.shx"
+        },
+        {
+          "原字段": "Width",
+          "方案图原值": 1,
+          "参考图原值": 0.7
+        }
+      ],
+      "处理": "同名不能视作同一定义；生成前按对应参考类别确认目标定义。"
+    },
+    {
+      "同名样式": "黑体",
+      "差异": [
+        {
+          "原字段": "Width",
+          "方案图原值": 0.8,
+          "参考图原值": 0.7
+        }
+      ],
+      "处理": "同名不能视作同一定义；生成前按对应参考类别确认目标定义。"
+    }
+  ],
+  "待补项": [
+    "提取FontFile为空样式的GetFont或等效真实字族/字型与字体文件映射",
+    "核实tssdeng.shx及字体替代情况；限定目录未找到不认定全机缺失",
+    "核实参考1837文本内嵌格式FZLanTingHeiS-UL-GB的实际字体与显示",
+    "核实轴号CircleTextStyle随基本设定及TDbPipe未初始化等宿主设置依赖",
+    "补齐块内、天正内部文字使用与实际可见范围"
+  ]
+}

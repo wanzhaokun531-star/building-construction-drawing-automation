@@ -1,0 +1,20 @@
+{
+  "rules": 100,
+  "failed": 0,
+  "frozenRegression": 14,
+  "regressionFailed": 0,
+  "initialFailure": "new supported-range API called before implementation; LNK2019 observed",
+  "rejections": [
+    {
+      "case": "old-v32",
+      "rejected": true,
+      "reason": "unsupported gap display contract missing"
+    },
+    {
+      "case": "old-v32-forged-mode",
+      "rejected": true,
+      "reason": "actual axis text-clear interval differs"
+    }
+  ],
+  "newNativeRunPending": true
+}

@@ -1,0 +1,90 @@
+--- L1-reviewed/src/Layout.cpp
++++ L1-fix1/src/Layout.cpp
+@@ -88,16 +88,30 @@
+ }
+ bool separated(const Bounds2& a, const Bounds2& b, double gap, bool touchingCollides = false) {
+     return axisSeparated(a.maximum.x,b.minimum.x,gap,touchingCollides) ||
+         axisSeparated(b.maximum.x,a.minimum.x,gap,touchingCollides) ||
+         axisSeparated(a.maximum.y,b.minimum.y,gap,touchingCollides) ||
+         axisSeparated(b.maximum.y,a.minimum.y,gap,touchingCollides);
+ }
+ bool gapFinite(const Bounds2& b, double gap) { return finite(b.maximum.x+gap) && finite(b.maximum.y+gap); }
++std::pair<double,double> exactSpan(double minimum, double maximum) {
++    // Error-free TwoDiff expansion of finite endpoint differences. Comparing
++    // only the rounded high part can hide a nonzero change (1e16-1 == 1e16).
++    // validBounds has already excluded nonfinite/overflowing differences.
++    const double high = maximum-minimum;
++    const double virtualMinimum = maximum-high;
++    const double virtualMaximum = high+virtualMinimum;
++    const double low = (maximum-virtualMaximum)+(virtualMinimum-minimum);
++    return {high,low};
++}
++bool sameExtents(const Bounds2& before, const Bounds2& after) {
++    return exactSpan(before.minimum.x,before.maximum.x) == exactSpan(after.minimum.x,after.maximum.x) &&
++        exactSpan(before.minimum.y,before.maximum.y) == exactSpan(after.minimum.y,after.maximum.y);
++}
+ void uniqueSorted(std::vector<double>& values) {
+     std::sort(values.begin(),values.end()); values.erase(std::unique(values.begin(),values.end()),values.end());
+ }
+ struct Search {
+     const std::vector<ViewEnvelope>& views;
+     const LayoutRequest& request;
+     const std::vector<Bounds2>& originals;
+     std::vector<Bounds2> occupied;
+@@ -130,18 +144,17 @@
+                 p.context = views[i].context; p.source = views[i].source; p.occupancies = views[i].occupancies;
+                 p.requiredParts = views[i].requiredParts; p.complete = views[i].complete;
+                 if (!finite(p.displacement.x) || !finite(p.displacement.y)) { invalid = true; return false; }
+                 for (auto& item : p.occupancies) {
+                     const auto old = item.bounds;
+                     item.bounds = {{old.minimum.x+p.displacement.x,old.minimum.y+p.displacement.y},
+                         {old.maximum.x+p.displacement.x,old.maximum.y+p.displacement.y}};
+                     if (!validBounds(item.bounds) || !inside(item.bounds,request.available) ||
+-                        (old.minimum.x < old.maximum.x && item.bounds.minimum.x == item.bounds.maximum.x) ||
+-                        (old.minimum.y < old.maximum.y && item.bounds.minimum.y == item.bounds.maximum.y)) { invalid = true; return false; }
++                        !sameExtents(old,item.bounds)) { invalid = true; return false; }
+                 }
+                 p.occupiedBounds = merged(p.occupancies);
+                 // Re-read the actual translated parts; never rely on a rounded,
+                 // ideal candidate box when checking final clearance.
+                 if (std::any_of(occupied.begin(),occupied.end(),[&](const Bounds2& b) {return !separated(p.occupiedBounds,b,request.clearance);})) { continue; }
+                 for (const auto& key : views[i].targets) { p.plan.translations.push_back({key,p.displacement}); }
+                 placed[i] = std::move(p); occupied.push_back(placed[i]->occupiedBounds);
+                 if (place(depth+1)) { return true; }
+--- L1-reviewed/tests/LayoutTests.cpp
++++ L1-fix1/tests/LayoutTests.cpp
+@@ -87,16 +87,34 @@
+ void malformedOrOverflowingGeometryRejected() {
+     auto v=view();auto r=request({v});r.clearance=-1;rejects({v},r,"INVALID_LAYOUT_GEOMETRY");
+     r=request({v});r.available.maximum.x=std::numeric_limits<double>::infinity();rejects({v},r,"INVALID_LAYOUT_GEOMETRY");
+     v.occupancies[0].bounds.minimum.x=201;rejects({v},request({v}),"INVALID_LAYOUT_GEOMETRY");
+     v=view();v.occupancies[0].bounds={{-1e308,0},{1e308,100}};rejects({v},request({v}),"INVALID_LAYOUT_GEOMETRY");
+     v=view();r=request({v});r.available={{-1e308,0},{1e308,220}};rejects({v},r,"INVALID_LAYOUT_GEOMETRY");
+     v=view();v.context.scaleDenominator=std::numeric_limits<double>::quiet_NaN();rejects({v},request({v}),"INVALID_LAYOUT_GEOMETRY");
+     v=view();v.occupancies[0].bounds={{-1e308,0},{-1e308,100}};r=request({v});r.available={{1e308,0},{1e308,220}};rejects({v},r,"INVALID_LAYOUT_GEOMETRY");
++    // Rounded subtraction alone is insufficient: (1e16-1) rounds to 1e16,
++    // hiding a one-unit shrink when the min moves by 1 but the max cannot.
++    v=view("east","A1",1e16,2);r=request({v});r.available={{1,0},{1e16+10,10}};r.clearance=0;
++    rejects({v},r,"INVALID_LAYOUT_GEOMETRY");
++    // Nonzero extents can be distorted without collapsing: 1e16+3 rounds to
++    // 1e16+4. The declared rigid translation must reject that width change.
++    v=view("east","A1",3,2);r=request({v});r.available={{1e16,0},{1e16+10,10}};r.clearance=0;
++    rejects({v},r,"INVALID_LAYOUT_GEOMETRY");
++    require(v.occupancies[0].bounds.minimum.x==0&&v.occupancies[0].bounds.maximum.x==3,"unrepresentable translation does not alter source architecture");
++    v=view("east","A1",5,2);rejects({v},r,"INVALID_LAYOUT_GEOMETRY"); // 5 rounds down to 4.
++    v=view("east","A1",2,3);r=request({v});r.available={{0,1e16},{10,1e16+10}};r.clearance=0;
++    rejects({v},r,"INVALID_LAYOUT_GEOMETRY");
++    v=view("east","A1",10,10);addPart(v,part("note",OccupancyKind::textGlyph,{{0,0},{3,2}}));
++    r=request({v});r.available={{1e16,0},{1e16+10,10}};r.clearance=0;
++    rejects({v},r,"INVALID_LAYOUT_GEOMETRY"); // The union stays 10; its inner glyph still distorts.
++    v=view("east","A1",4,2);r=request({v});r.available={{1e16,0},{1e16+10,10}};r.clearance=0;
++    const auto exact=arrange({v},r);syntheticResult(exact);
++    require(exact.value->views[0].occupiedBounds.maximum.x-exact.value->views[0].occupiedBounds.minimum.x==4,"exactly representable rigid displacement remains supported");
+ }
+ void searchLimitIsNotNoSpace() {
+     const std::vector<ViewEnvelope> v{view(),view("west","A2")};auto r=request(v);r.searchBudget=1;
+     const auto result=arrange(v,r);require(!result.value&&hasCode(result,"LAYOUT_SEARCH_LIMIT")&&!hasCode(result,"NO_LAYOUT_SPACE"),"budget exhaustion never claims no mathematical space");
+     r.searchBudget=10000;syntheticResult(arrange(v,r));
+ }
+ void duplicateLayoutIdentityAndKeysRejected() {
+     auto a=view(),b=view("west","A2");auto r=request({a,b});b.viewIdentity="east";rejects({a,b},r,"INVALID_LAYOUT_IDENTITY");

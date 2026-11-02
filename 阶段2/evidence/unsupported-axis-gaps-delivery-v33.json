@@ -1,0 +1,16 @@
+{
+  "contract": "bcp.unsupported-axis-gaps.delivery.v1",
+  "directory": "D:\\Codex\\建筑施工图自动化\\阶段2\\交付\\轴线取消跨空段_20261031",
+  "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\交付\\轴线取消跨空段_20261031\\方案施工图_轴线空档断开.dwg",
+  "DWGSHA256": "5E8AD848D9ACDE5A278D32547423D303683D86B8471634D3608E35EBAE510287",
+  "ARXSHA256": "BA3785650683BB7DDB704F2BEBEE84570975B750EA0A12582ECA9BA09BD23787",
+  "gate": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\unsupported-axis-gaps-release-v33-final.json",
+  "gateSHA256": "D2A4E205F1803C9EC75545F6A7B92C520114AF55A09E285B2675E9CEBE487E4F",
+  "gateScriptSHA256": "EF292C9F6450FD89AE4F2456F4641F6C5A4AD54052B5E1BD9D443E6229D8BEE5",
+  "closureSHA256": "3FC790D6C1E0960BB243D42E18C91E722F842CE3F0ADBB301C045AFBDF39E44B",
+  "userDeliveryFiles": [
+    "方案施工图_轴线空档断开.dwg"
+  ],
+  "PDFDelivered": false,
+  "constructionDrawingComplete": false
+}

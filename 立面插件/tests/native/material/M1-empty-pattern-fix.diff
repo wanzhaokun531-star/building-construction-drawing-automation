@@ -1,0 +1,143 @@
+--- acceptance-red/NativeMaterials.cpp
++++ empty-output-guard/NativeMaterials.cpp
+@@ -178,7 +178,16 @@
+                 check(h->setOriginPoint({mappedOrigin.x,mappedOrigin.y}),"set mapped native pattern origin metadata");
+                 while(h->numLoops())check(h->removeLoopAt(h->numLoops()-1),"remove clone old loop");
+                 check(h->setHatchStyle(AcDbHatch::kNormal),"holes normal style");appendRing(*h,region.geometry.outer,true);for(const auto& hole:region.geometry.holes)appendRing(*h,hole,false);
+-                h->setLineGenerationEnabled(true);check(h->evaluateHatch(),"evaluate native material");double area{};check(h->getArea(area),"native material area");
++                h->setLineGenerationEnabled(true);check(h->evaluateHatch(),"evaluate native material");
++                if(!h->isSolidFill()) {
++                    // eOk alone is not output evidence: AutoCAD 2020 can return eOk with an empty pattern.
++                    AcGePoint2dArray starts,ends;check(h->getHatchLinesData(starts,ends),"native material pattern output");
++                    need(h->numHatchLines()>0&&starts.length()>0&&starts.length()==ends.length()&&starts.length()==h->numHatchLines(),"EMPTY_NATIVE_PATTERN_OUTPUT: BLOCKED_CAPABILITY; no committable material batch");
++                }
++            }
++            {
++                // Close and reopen after changing loops. A previously queried area may be cached on an open Hatch.
++                Open<AcDbHatch> h(targetId);double area{};check(h->getArea(area),"reopened native material area");
+                 const auto expected=region.areaSquareMm/(plan.mmPerInputUnit*plan.mmPerInputUnit);need(std::isfinite(area)&&std::abs(area-expected)<=1e-8*(std::max)(1.0,expected),"NATIVE_MATERIAL_AREA_MISMATCH");
+             }
+             state->roots.append(targetId);
+@@ -191,3 +200,4 @@
+ 
+ 
+ 
++
+--- acceptance-red/MaterialDriver.cpp
++++ empty-output-guard/MaterialDriver.cpp
+@@ -29,16 +29,22 @@
+         bool passed=true;std::vector<std::string> observations;
+         auto expect=[&](const std::string& name,bool pass,const std::string& detail){evidence->step(name,pass?"passed":"failed",detail);passed=passed&&pass;observations.push_back(object({{"name",quote(name)},{"passed",pass?"true":"false"},{"detail",quote(detail)}}));};
+         evidence->checkpoint("prepare-bound-native-reference-material");
++        auto wholeWall=prepareMaterials(plan,{seed},options);
++        const bool wholeBlocked=!wholeWall.canCommit()&&!wholeWall.value&&!wholeWall.issues.empty()&&wholeWall.issues.front().message.find("EMPTY_NATIVE_PATTERN_OUTPUT")!=std::string::npos;
++        expect("EmptyPatternCannotAuthorizeCommittableBatch",wholeBlocked,wholeWall.issues.empty()?"REGRESSION: whole-wall blank preparation was accepted":wholeWall.issues.front().message);
++        evidence->capability(object({{"wholeWallCapability",quote(std::string("BLOCKED_CAPABILITY"))},{"requestedNetAreaSquareMm","58200000"},{"supportedWholeWall","false"},{"reason",quote(std::string(wholeBlocked?"actual requested full-wall pattern output is empty; no committable batch returned":"whole-wall rejection contract FAILED; inspect assertions"))}}));
++        // A separate, explicitly named 2 square metre fixture does not replace the full-wall requirement.
++        plan.regions[0].identity="small-panel";options.placements[0].regionIdentity="small-panel";
++        plan.regions[0].geometry.outer={{{0,0},{2000,0},{2000,1000},{0,1000}},true};plan.regions[0].geometry.holes.clear();plan.regions[0].areaSquareMm=2000000;
+         auto result=prepareMaterials(plan,{seed},options);
+-        expect("PrepareActualReferenceHatch",result.canCommit(),result.issues.empty()?"actual native material batch":result.issues.front().message);
++        expect("PrepareSeparateSmallPanelHatch",result.canCommit(),result.issues.empty()?"actual native material batch":result.issues.front().message);
+         if(result.canCommit()) {
+-            auto& batch=*result.value;diagnoseSizePosition(source,sourceId,config,*evidence);expect("ImmutableBatchInitiallyIntact",batch.intact(),"actual Hatch loops, patterns, appearance/resources and permanent mutation guard");
++            auto& batch=*result.value;expect("ImmutableBatchInitiallyIntact",batch.intact(),"actual Hatch loops, patterns, appearance/resources and permanent mutation guard");
+             {std::vector<std::string> properties;{Open<AcDbHatch> sourceHatch(sourceId);properties.push_back(displayProperties(*sourceHatch.p,source,"reference-original-read-only"));}{Working work(batch.database());Open<AcDbHatch> targetHatch(batch.roots()[0]);properties.push_back(displayProperties(*targetHatch.p,batch.database(),"prepared-target-read-only"));}auto diagnostic=create_new(config.output+L"/material-visibility-diagnostic.json");const auto diagnosticJson=object({{"properties",array(properties)},{"ambientReadOnlyGlobals",displayGlobals()},{"scope",quote(std::string("read-only actual entity/layer/database flags; no visibility/global overrides"))}});write_flushed(diagnostic.get(),diagnosticJson);evidence->capability(diagnosticJson);}            expect("TargetRootListIsOnlyHatch",batch.roots().length()==1&&modelRoots(batch.database()).length()==1,"no cloned old boundary or reference building root");
+             {
+                 Working work(batch.database());Open<AcDbHatch> h(batch.roots()[0]);double area{};ok(h->getArea(area),"SDK getArea");
+-                expect("NativeAreaAndExactTwoLoops",nearValue(area,58200000)&&loops(*h.p),"nativeArea="+number(area));
+-                expect("EmptyPatternCannotAuthorizeCommittableBatch",h->isSolidFill()||h->numHatchLines()>0||!result.canCommit(),"REGRESSION: production returned canCommit="+std::string(result.canCommit()?"true":"false")+" native cached segments="+std::to_string(h->numHatchLines())+"; prior same whole-wall fixture naturally plotted blank");                int lines{};expect("EvaluatedPatternSegmentsExcludeWindow",voidLines(*h.p,lines),"native evaluated segments="+std::to_string(lines)+"; zero cached lines keeps natural host drawing QA pending, not proof that Hatch is unfilled");
+-                expect("ReferencePatternPhysicalExpression",nearValue(h->patternScale(),sourceScale)&&nearValue(h->patternAngle(),sourceAngle)&&nearValue(spacing(*h.p),sourceSpacing)&&h->patternDouble()==sourceDouble&&h->numPatternDefinitions()==sourceDefinitions&&h->color().color()==sourceColor&&layer(*h.p).find(sourceLayer)!=std::wstring::npos&&linetype(*h.p).find(sourceLinetype)!=std::wstring::npos,"scale="+number(h->patternScale())+" angle="+number(h->patternAngle())+" spacing="+number(spacing(*h.p))+" sourceSpacing="+number(sourceSpacing)+" definitions="+std::to_string(h->numPatternDefinitions()));
++                expect("SmallPanelNativeAreaAndExactLoop",nearValue(area,2000000)&&panelLoops(*h.p),"nativeArea="+number(area));
++                expect("SmallPanelHasActualNativePatternOutput",h->numHatchLines()>0,"native generated segments="+std::to_string(h->numHatchLines()));                expect("ReferencePatternPhysicalExpression",nearValue(h->patternScale(),sourceScale)&&nearValue(h->patternAngle(),sourceAngle)&&nearValue(spacing(*h.p),sourceSpacing)&&h->patternDouble()==sourceDouble&&h->numPatternDefinitions()==sourceDefinitions&&h->color().color()==sourceColor&&layer(*h.p).find(sourceLayer)!=std::wstring::npos&&linetype(*h.p).find(sourceLinetype)!=std::wstring::npos,"scale="+number(h->patternScale())+" angle="+number(h->patternAngle())+" spacing="+number(spacing(*h.p))+" sourceSpacing="+number(sourceSpacing)+" definitions="+std::to_string(h->numPatternDefinitions()));
+                 expect("ExplicitPatternPhaseMapping",nearValue(h->originPoint().x,12.25)&&nearValue(h->originPoint().y,37.5),"origin="+number(h->originPoint().x)+","+number(h->originPoint().y));
+             }
+             AcDbDatabase output(true,true);auto cloned=batch.cloneToEmpty(output);expect("OnlyPreparedHatchClonesToEmpty",cloned.canCommit()&&modelRoots(output).length()==1,"root-list cloning excludes old source geometry");
+@@ -46,24 +52,26 @@
+                 const auto savedId=cloned.value->front();const auto outputPath=config.output+L"/material-roundtrip.dwg";require(GetFileAttributesW(outputPath.c_str())==INVALID_FILE_ATTRIBUTES,"exclusive material DWG");
+                 {Working work(output);ok(output.saveAs(outputPath.c_str(),false,AcDb::kDHL_CURRENT),"save test-only material DWG");}
+                 AcDbDatabase reopened(false,true);ok(reopened.readDwgFile(outputPath.c_str(),AcDbDatabase::kForReadAndReadShare,false),"independent material reopen");reopened.closeInput(true);AcDbObjectId reopenedId;ok(reopened.getAcDbObjectId(reopenedId,false,savedId.handle()),"reopen hatch handle");
+-                {Working work(reopened);Open<AcDbHatch> h(reopenedId);double area{};ok(h->getArea(area),"reopened area");expect("IndependentDwgReopen",modelRoots(reopened).length()==1&&loops(*h.p)&&nearValue(area,58200000)&&nearValue(h->patternScale(),sourceScale)&&h->color().color()==sourceColor&&nearValue(h->originPoint().x,12.25)&&nearValue(h->originPoint().y,37.5),"roots="+std::to_string(modelRoots(reopened).length())+" loops="+(loops(*h.p)?"true":"false")+" area="+number(area)+" scale="+number(h->patternScale())+" color="+std::to_string(h->color().color())+" origin="+number(h->originPoint().x)+","+number(h->originPoint().y));}
++                {Working work(reopened);Open<AcDbHatch> h(reopenedId);double area{};ok(h->getArea(area),"reopened area");expect("SmallPanelIndependentDwgReopen",modelRoots(reopened).length()==1&&panelLoops(*h.p)&&nearValue(area,2000000)&&nearValue(h->patternScale(),sourceScale)&&h->color().color()==sourceColor&&nearValue(h->originPoint().x,12.25)&&nearValue(h->originPoint().y,37.5),"roots="+std::to_string(modelRoots(reopened).length())+" loops="+(panelLoops(*h.p)?"true":"false")+" area="+number(area)+" scale="+number(h->patternScale())+" color="+std::to_string(h->color().color())+" origin="+number(h->originPoint().x)+","+number(h->originPoint().y));}
+             }
+             // A translated noninteger region must retain each actual input coordinate.
+             auto shiftedPlan=plan;for(auto& p:shiftedPlan.regions[0].geometry.outer.vertices){p.x+=100.125;p.y-=20.375;}for(auto& hole:shiftedPlan.regions[0].geometry.holes)for(auto& p:hole.vertices){p.x+=100.125;p.y-=20.375;}
+             auto shiftedOptions=options;shiftedOptions.placements[0].targetAnchor={112.375,17.125};auto shifted=prepareMaterials(shiftedPlan,{seed},shiftedOptions);
+-            std::string shiftedDetail;bool shiftedOk=false;if(shifted.canCommit()){Open<AcDbHatch> h(shifted.value->roots()[0]);shiftedOk=loops(*h.p,100.125,-20.375)&&nearValue(h->originPoint().x,112.375)&&nearValue(h->originPoint().y,17.125);shiftedDetail="loops="+std::string(loops(*h.p,100.125,-20.375)?"true":"false")+" origin="+number(h->originPoint().x)+","+number(h->originPoint().y);}
++            std::string shiftedDetail;bool shiftedOk=false;if(shifted.canCommit()){Open<AcDbHatch> h(shifted.value->roots()[0]);shiftedOk=panelLoops(*h.p,100.125,-20.375)&&nearValue(h->originPoint().x,112.375)&&nearValue(h->originPoint().y,17.125);shiftedDetail="loops="+std::string(panelLoops(*h.p,100.125,-20.375)?"true":"false")+" origin="+number(h->originPoint().x)+","+number(h->originPoint().y);}
+             expect("NonintegerCoordinatesAndTranslation",shiftedOk,shifted.issues.empty()?shiftedDetail:shifted.issues.front().message);
+             auto halfOptions=options;halfOptions.placements[0].targetPaperScale=50;auto half=prepareMaterials(plan,{seed},halfOptions);bool halfOk=false;
+-            if(half.canCommit()){Open<AcDbHatch> h(half.value->roots()[0]);halfOk=loops(*h.p)&&nearValue(h->patternScale(),sourceScale*.5)&&nearValue(spacing(*h.p),sourceSpacing*.5);}
++            if(half.canCommit()){Open<AcDbHatch> h(half.value->roots()[0]);halfOk=panelLoops(*h.p)&&nearValue(h->patternScale(),sourceScale*.5)&&nearValue(spacing(*h.p),sourceSpacing*.5);}
+             expect("PaperScale50ChangesPatternOnly",halfOk,half.issues.empty()?"1:100 to 1:50 halves physical pattern spacing; building loops unchanged":half.issues.front().message);
+             auto metersPlan=plan;metersPlan.mmPerInputUnit=1000;metersPlan.unitDeclaration.confirmedMmPerInputUnit=1000;for(auto& p:metersPlan.regions[0].geometry.outer.vertices){p.x/=1000;p.y/=1000;}for(auto& hole:metersPlan.regions[0].geometry.holes)for(auto& p:hole.vertices){p.x/=1000;p.y/=1000;}
+             auto metersOptions=halfOptions;metersOptions.placements[0].targetAnchor={.01225,.0375};auto meters=prepareMaterials(metersPlan,{seed},metersOptions);bool metersOk=false;
+-            if(meters.canCommit()){Open<AcDbHatch> h(meters.value->roots()[0]);double area{};ok(h->getArea(area),"meters area");Adesk::Int32 type{};AcGePoint2dArray points;AcGeDoubleArray bulges;ok(h->getLoopAt(0,type,points,bulges),"meters loop");metersOk=nearValue(area,58.2)&&nearValue(points[1].x,10)&&nearValue(points[2].y,6)&&nearValue(h->patternScale(),sourceScale*.0005)&&nearValue(spacing(*h.p),sourceSpacing*.0005);}
+-            expect("NonMmUnitsPreservePhysicalSpacing",metersOk,meters.issues.empty()?"target vertices 10 x 6 metres, native area58.2, paper50 physical spacing":meters.issues.front().message);
+-            auto rejected=[&](const std::string& name,const MaterialPlan& p,const std::vector<ReferenceMaterialSeed>& ss,const MaterialPreparationOptions& o){auto r=prepareMaterials(p,ss,o);expect(name,!r.canCommit()&&!r.value,r.issues.empty()?"no diagnosis":r.issues.front().message);};
++            if(meters.canCommit()){Open<AcDbHatch> h(meters.value->roots()[0]);double area{};ok(h->getArea(area),"meters area");Adesk::Int32 type{};AcGePoint2dArray points;AcGeDoubleArray bulges;ok(h->getLoopAt(0,type,points,bulges),"meters loop");metersOk=nearValue(area,2)&&nearValue(points[1].x,2)&&nearValue(points[2].y,1)&&nearValue(h->patternScale(),sourceScale*.0005)&&nearValue(spacing(*h.p),sourceSpacing*.0005);}
++            expect("NonMmUnitsPreservePhysicalSpacing",metersOk,meters.issues.empty()?"separate small panel vertices 2 x 1 metres, native area2, paper50 physical spacing":meters.issues.front().message);
++            auto holePlan=plan;holePlan.regions[0].geometry.holes={{{{200,200},{600,200},{600,600},{200,600}},true}};holePlan.regions[0].areaSquareMm=1840000;auto holeResult=prepareMaterials(holePlan,{seed},options);bool holeOk=false;std::string holeDetail=holeResult.issues.empty()?"":holeResult.issues.front().message;
++            if(holeResult.canCommit()){Working work(holeResult.value->database());Open<AcDbHatch> h(holeResult.value->roots()[0]);double area{};ok(h->getArea(area),"small-hole area");int segments{};holeOk=panelLoops(*h.p,0,0,true)&&nearValue(area,1840000)&&smallWindowVoid(*h.p,segments);holeDetail="small-panel nativeArea="+number(area)+" loops="+std::to_string(h->numLoops())+" generatedSegments="+std::to_string(segments);}
++            expect("SeparateSmallHoleAreaAndNativeVoid",holeOk,holeDetail);            auto rejected=[&](const std::string& name,const MaterialPlan& p,const std::vector<ReferenceMaterialSeed>& ss,const MaterialPreparationOptions& o){auto r=prepareMaterials(p,ss,o);expect(name,!r.canCommit()&&!r.value,r.issues.empty()?"no diagnosis":r.issues.front().message);};
+             auto wrongKind=plan;wrongKind.regions[0].expression.kind=MaterialExpressionKind::lineDrawing;rejected("LineDrawingExplicitlyUnsupported",wrongKind,{seed},options);wrongKind.regions[0].expression.kind=MaterialExpressionKind::glassBlock;rejected("GlassBlockExplicitlyUnsupported",wrongKind,{seed},options);
+             auto missing=seed;missing.unitConfirmationSource.clear();rejected("MissingSourceUnitFactRejected",plan,{missing},options);missing=seed;missing.referenceSha256=std::string(64,'0');rejected("WrongReferenceShaRejected",plan,{missing},options);
+-            auto invalid=plan;invalid.regions[0].geometry.outer.closed=false;rejected("OpenRegionRejected",invalid,{seed},options);invalid=plan;std::swap(invalid.regions[0].geometry.outer.vertices[1],invalid.regions[0].geometry.outer.vertices[2]);rejected("SelfIntersectingRegionRejected",invalid,{seed},options);invalid=plan;invalid.regions[0].geometry.holes[0].vertices[0]={-1,900};rejected("InvalidHoleRejected",invalid,{seed},options);invalid=plan;invalid.regions[0].expression.scale=0;rejected("ZeroPatternScaleRejected",invalid,{seed},options);
++            auto invalid=plan;invalid.regions[0].geometry.outer.closed=false;rejected("OpenRegionRejected",invalid,{seed},options);invalid=plan;std::swap(invalid.regions[0].geometry.outer.vertices[1],invalid.regions[0].geometry.outer.vertices[2]);rejected("SelfIntersectingRegionRejected",invalid,{seed},options);invalid=plan;invalid.regions[0].geometry.holes={{{{-1,200},{600,200},{600,600},{200,600}},true}};rejected("InvalidHoleRejected",invalid,{seed},options);invalid=plan;invalid.regions[0].expression.scale=0;rejected("ZeroPatternScaleRejected",invalid,{seed},options);
+             missing=seed;missing.handle="1F";{AcDbObjectId nonEntityId;ok(source.getAcDbObjectId(nonEntityId,false,AcDbHandle(L"1F")),"nonentity known fixture");Open<AcDbObject> record(nonEntityId);require(record->isA()==AcDbBlockTableRecord::desc(),"1F must be verified BlockTableRecord, not a wrong entity-class example");}rejected("NonEntityBlockRecordRejectedAtOpen",plan,{missing},options);
+             {
+                 AcDbDatabase gradientDb(true,true);AcDbObjectId gradientId;
+@@ -73,10 +81,10 @@
+                 auto gradientResult=prepareMaterials(gradientPlan,{gradientSeed},options);expect("GradientExplicitlyUnsupported",!gradientResult.canCommit()&&!gradientResult.value&&!gradientResult.issues.empty()&&gradientResult.issues.front().message.find("UNSUPPORTED_MATERIAL_NATIVE_TYPE")!=std::string::npos,gradientResult.issues.empty()?"missing gradient diagnostic":gradientResult.issues.front().message);expect("GradientSourceUntouched",gradientMonitor.changes==0,"unsupported expression read only");
+             }
+             auto rotatedPlan=plan;rotatedPlan.regions[0].expression.direction={0,1};auto rotated=prepareMaterials(rotatedPlan,{seed},options);std::string rotatedDetail;bool rotatedOk=false;
+-            if(rotated.canCommit()){Open<AcDbHatch> h(rotated.value->roots()[0]);rotatedOk=loops(*h.p)&&nearValue(std::sin(h->patternAngle()-sourceAngle),1)&&nearValue(spacing(*h.p),sourceSpacing)&&nearValue(h->originPoint().x,12.25)&&nearValue(h->originPoint().y,37.5);rotatedDetail="loops="+std::string(loops(*h.p)?"true":"false")+" angle="+number(h->patternAngle())+" spacing="+number(spacing(*h.p))+" origin="+number(h->originPoint().x)+","+number(h->originPoint().y);}
++            if(rotated.canCommit()){Open<AcDbHatch> h(rotated.value->roots()[0]);rotatedOk=panelLoops(*h.p)&&nearValue(std::sin(h->patternAngle()-sourceAngle),1)&&nearValue(spacing(*h.p),sourceSpacing)&&nearValue(h->originPoint().x,12.25)&&nearValue(h->originPoint().y,37.5);rotatedDetail="loops="+std::string(panelLoops(*h.p)?"true":"false")+" angle="+number(h->patternAngle())+" spacing="+number(spacing(*h.p))+" origin="+number(h->originPoint().x)+","+number(h->originPoint().y);}
+             expect("ExplicitDirectionRotatesPatternOnly",rotatedOk,rotated.issues.empty()?rotatedDetail:rotated.issues.front().message);            for(const auto mutation:{0,1,2,3}) {
+                 auto altered=prepareMaterials(plan,{seed},options);require(altered.canCommit(),"mutation fixture prepare");
+-                {Open<AcDbHatch> h(altered.value->roots()[0],AcDb::kForWrite);if(mutation==0)ok(h->setPatternScale(h->patternScale()*2),"mutate pattern");else if(mutation==1)ok(h->removeLoopAt(1),"mutate loop");else if(mutation==2)ok(h->setColorIndex(1),"mutate appearance");else{const auto id=h->layerId();h.p->close();h.p=nullptr;Open<AcDbLayerTableRecord> layerRecord(id,AcDb::kForWrite);layerRecord->setIsOff(true);}}
++                {Open<AcDbHatch> h(altered.value->roots()[0],AcDb::kForWrite);if(mutation==0)ok(h->setPatternScale(h->patternScale()*2),"mutate pattern");else if(mutation==1)ok(h->removeLoopAt(0),"mutate loop");else if(mutation==2)ok(h->setColorIndex(1),"mutate appearance");else{const auto id=h->layerId();h.p->close();h.p=nullptr;Open<AcDbLayerTableRecord> layerRecord(id,AcDb::kForWrite);layerRecord->setIsOff(true);}}
+                 AcDbDatabase rejectedTarget(true,true);auto copied=altered.value->cloneToEmpty(rejectedTarget);
+                 expect("ModifiedPreparationRejected"+std::to_string(mutation),!altered.value->intact()&&!copied.canCommit()&&modelRoots(rejectedTarget).isEmpty(),"loop/pattern/entity/layer mutation invalidates immutable native batch before copying");
+             }
+@@ -85,9 +93,9 @@
+         {Open<AcDbText> text(textId);expect("CurrentUnsavedChineseUnchanged",std::wstring(text->textString())==L"M1 未保存中文材料源保持"&&text->position()==AcGePoint3d(12.25,77.125,0),"current-memory Chinese fixture remains without saving current document");}
+         expect("SourceAndAmbientZeroMutation",sourceMonitor.changes==0&&ambientMonitor.changes==0,"source events="+std::to_string(sourceMonitor.changes)+" ambient events="+std::to_string(ambientMonitor.changes));
+         expect("GlobalsAndWorkingDatabaseRestored",globals()==beforeGlobals&&acdbHostApplicationServices()->workingDatabase()==workingBefore&&acDocManager->curDocument()==documentBefore,"system variables, working DB pointer and current document restored after success/rejection");
+-        write_flushed(report.get(),object({{"passed",passed?"true":"false"},{"assertions",array(observations)},{"scope",quote(std::string("M1 adapter fixture only; no project region inference; natural rendering not visually verified; no InPlaceWriter commit"))}}));
++        write_flushed(report.get(),object({{"status",quote(std::string(passed?"partial":"failed"))},{"safetyAndSmallPanelAssertionsPassed",passed?"true":"false"},{"wholeWallCapability",quote(std::string("BLOCKED_CAPABILITY"))},{"wholeWallRejected",wholeBlocked?"true":"false"},{"assertions",array(observations)},{"scope",quote(std::string("PARTIAL M1: 58.2M whole-wall remains BLOCKED_CAPABILITY; separate 2M panel only; no project region inference; no InPlaceWriter commit"))}}));
+         require(sha256(config.reference)==config.referenceSHA256&&sha256(config.scheme)==config.schemeSHA256,"source changed");
+-        evidence->finish(config,passed?"passed":"failed");    } catch(const std::exception& e) {try{if(evidence){evidence->error(e.what());evidence->finish(config,"failed");}}catch(...) {}}
++        evidence->finish(config,passed?"partial":"failed");    } catch(const std::exception& e) {try{if(evidence){evidence->error(e.what());evidence->finish(config,"failed");}}catch(...) {}}
+     catch(...) {try{if(evidence){evidence->error("unknown ABI failure");evidence->finish(config,"failed");}}catch(...) {}}
+ }
+ }
+@@ -101,3 +109,5 @@
+ 
+ 
+ 
++
++
+--- acceptance-red/MaterialFixtures.h
++++ empty-output-guard/MaterialFixtures.h
+@@ -107,9 +107,20 @@
+         cases.push_back(native::object({{"positionCase",position==0?"\"origin\"":"\"reference-near\""},{"sizeCase",size==0?"\"2000x1000\"":"\"10000x6000\""},{"x",number(ox)},{"y",number(oy)},{"width",number(width)},{"height",number(height)},{"sourceAreaStatus",std::to_string(sourceAreaStatus)},{"sourceNativeArea",number(sourceArea)},{"before",before},{"evaluateFalseStatus",std::to_string(status)},{"immediate",evaluated},{"areaStatus",std::to_string(areaStatus)},{"nativeArea",number(area)},{"afterArea",displayProperties(*h.p,target,"after-area")}}));
+     }
+     auto file=native::create_new(config.output+L"/material-size-position-diagnostic.json");const auto json=native::object({{"cases",native::array(cases)},{"globalsReadOnly",displayGlobals()},{"scope",native::quote(std::string("four independent native clones; only rectangle dimensions and position differ; no origin/scale/style/global/PAT changes; not the whole-wall acceptance test"))}});native::write_flushed(file.get(),json);evidence.capability(json);
++}inline bool panelLoops(AcDbHatch& h,double ox=0,double oy=0,bool withHole=false){
++    if(h.isA()!=AcDbHatch::desc()||h.associative()||h.numLoops()!=(withHole?2:1))return false;AcDbObjectIdArray assoc;ok(h.getAssocObjIds(assoc),"small-panel associations");if(!assoc.isEmpty())return false;
++    const double coords[2][4][2]={{{0,0},{2000,0},{2000,1000},{0,1000}},{{200,200},{600,200},{600,600},{200,600}}};
++    for(int i=0;i<h.numLoops();++i){Adesk::Int32 type{};AcGePoint2dArray p;AcGeDoubleArray b;ok(h.getLoopAt(i,type,p,b),"small-panel loops");if(!(type&AcDbHatch::kPolyline)||p.length()!=5)return false;for(int j=0;j<4;++j)if(!nearValue(p[j].x,coords[i][j][0]+ox)||!nearValue(p[j].y,coords[i][j][1]+oy))return false;if(p.first()!=p.last())return false;for(int j=0;j<b.length();++j)if(b[j]!=0)return false;}return true;
++}
++inline bool smallWindowVoid(AcDbHatch& h,int& count){
++    count=h.numHatchLines();if(count<=0)return false;
++    for(int i=0;i<count;++i){AcGePoint2d a,b;ok(h.getHatchLineDataAt(i,a,b),"small window native line");double lo=0,hi=1;bool intersects=true;const double av[2]={a.x,a.y},dv[2]={b.x-a.x,b.y-a.y};
++        for(int k=0;k<2;++k){if(std::abs(dv[k])<1e-14){if(av[k]<=200.00001||av[k]>=599.99999){intersects=false;break;}}else{auto t1=(200.00001-av[k])/dv[k],t2=(599.99999-av[k])/dv[k];if(t1>t2)std::swap(t1,t2);lo=(std::max)(lo,t1);hi=(std::min)(hi,t2);if(lo>=hi){intersects=false;break;}}}if(intersects&&hi>lo)return false;
++    }return true;
+ }}
+ 
+ 
+ 
+ 
+ 
++

@@ -1,0 +1,21 @@
+FAIL: native API and infrastructure completion
+FAIL: native generation commands and declared geometry completed
+FAIL: two final native collections plus original213 after merge/save/reopen
+FAIL: allSingleStationFitsCompleted
+FAIL: allNativeMergesCompleted
+FAIL: numberingCommandsCompleted
+FAIL: all22 native single-station fits executed
+FAIL: fit0: completed
+FAIL: fit0: exact entire external stretch/control/circle point set
+FAIL: fit0: all four source endpoint roles audited
+FAIL: all candidates fitted exactly once in distinct collections
+FAIL: complete actual pre-merge addition cohort
+FAIL: one native merge per orientation
+FAIL: both native numbering commands executed
+FAIL: two final orientation collections
+FAIL: addedAfterMerge: exactly two proprietary new annotations; no substitute blocks/text or full-length lines
+FAIL: added: exactly two proprietary new annotations; no substitute blocks/text or full-length lines
+FAIL: savedAdded: exactly two proprietary new annotations; no substitute blocks/text or full-length lines
+assertions=207 passed=189 failed=18 result=FAIL
+number_semantics=UNVERIFIED
+Scope: complete10X/12Y geometric candidate carrier only; source wall usage/offset decisions and circle collisions remain pending; literal labels need independent observation.

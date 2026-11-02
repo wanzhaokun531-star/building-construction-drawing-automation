@@ -1,0 +1,1641 @@
+{
+  "contract": "bcp.opening-category-numbering-sample.v1",
+  "pluginCodeChanged": false,
+  "pluginBinarySHA256": "835B9E0F67B65C0F3A43F06F0C443BFB2029B1CBFACEB751C24938B894631FEA",
+  "sourceFiles": {
+    "阶段2\\src\\AnalyseMain.cpp": "47F14CE44BF12B4BCB78A5D43148ACA4A1C20015CAD893F814E687DE02640CB6",
+    "阶段2\\src\\ApronGeometry.cpp": "00B43EE9A154C5ECCCB7DD48EA21826906BB691974729960629612D11B503F03",
+    "阶段2\\src\\ApronGeometry.h": "D9DCFA9E991D2B4FF4A31EDEAC19B59393041897C95E45A0D992BED7D80F0898",
+    "阶段2\\src\\BuildingPlan2020.vcxproj": "1E12D0AD767D3C12CCF2155405ECE825AD24F7D5163352619A472255BBB3B69C",
+    "阶段2\\src\\DoorCaptionLayout.h": "331A975DDBDF5BAA219008EF37807204F05CE10F3987990B47A8F17FE3EEDA72",
+    "阶段2\\src\\GroupEndpoints.cpp": "613FED53D58E3C90892D1B9D4F6136856E8D6375B836AEA8555A8C8D5A85F2CC",
+    "阶段2\\src\\NativeAllDimensionEditing.inc": "BFDBDB2F909B6D82AFAFAB9B9639AB3FABC9CF627FD772977E7D19356945BD50",
+    "阶段2\\src\\NativeAnnotationFactory.inc": "7B2CB61DC36BB54358EF73C6301DA9C876B93BE5338B61F425208A4B00FAEB20",
+    "阶段2\\src\\NativeApronGeometry.inc": "9AE148194E4DE3E529EAB5BD12B9E7606E4A7F7B3EAC93261AAF2EB9F02A9E8E",
+    "阶段2\\src\\NativeAxisReferenceStudy.inc": "A5F3D6EC1D5E70901E69423E9146F17F4C7B4F22F405B4038A4EBEC5C021FEF1",
+    "阶段2\\src\\NativeAxisSideLayout.inc": "693B2E789224D9950FE0B3905A06FD5C46F0D14777C46719E5C4963194255352",
+    "阶段2\\src\\NativeChainProbe.inc": "2BB3ADA9E687DE269542E8CB3281A490E9D26E8BD5273184ECD427B27FDBEB19",
+    "阶段2\\src\\NativeDimensionGapLayout.inc": "D9B57E7F496AF63E582386C4CB78E761D84E4B651357DDD0A4F64FCD32CD6B41",
+    "阶段2\\src\\NativeDirectOpeningDimensions.inc": "D67D7EA595C43C5CE8C9FF18EE5462CBEEEEFBD0C16E6FC95609CD157D8CD92E",
+    "阶段2\\src\\NativeDoorCaptionClearance.inc": "B3C94A27DDF4F11333B4477F3F938AA59A0DB70DD75A9E7D5ECC03F1700AF240",
+    "阶段2\\src\\NativeDoorCaptionFurniture.inc": "08964F59109EB18198000970F65C205A318E02174E0DB53A25C910CE40765FC3",
+    "阶段2\\src\\NativeFullAxisLines.inc": "24D063D75B623895C96D71AE391B89AC8FF8247E4DAF0C0DB0DE1E02574CFECF",
+    "阶段2\\src\\NativeGroupEndpoints.inc": "69B15442F07E403D2E27C3344025F1FFC60FFE355BFDEFE56891668C93D7E561",
+    "阶段2\\src\\NativeInteriorDoorCaptions.inc": "9E98570AF583BE7728A9304CDF9B643106812DB6DDD9A0EBFB3C93C79C0C3FAA",
+    "阶段2\\src\\NativeLayerStandardStudy.inc": "E2F394BD7E6D461CE79F68B5FCA67C01294417291578261E900145E982ADDF7E",
+    "阶段2\\src\\NativeOpeningAnnotations.inc": "8F49CCF382803E66E4B64E4C86CA03C7938154FAA9D2E95BDBA4D61ED53C8525",
+    "阶段2\\src\\NativePerimeterSpacingTrial.inc": "31763039B02E3811C69CE671689A9631C0A74FCF05805E0DE500F17E386A132F",
+    "阶段2\\src\\NativeUnifiedLayers.inc": "DEB7B7A8689C230656891B838BC1A632E35FCEE77D8958A771D548F26106EEF3",
+    "阶段2\\src\\NativeWholeDimensionChains.inc": "DE52196E4C848E13F7358518813B3C49891F89444D5E5A688395E8BFD27DBB6F",
+    "阶段2\\src\\PlanRules.cpp": "D80E0FECF73EAAB200AF5ED896DE80E7AEF5BE4F8875AD4B07C8DF48C6906D4E",
+    "阶段2\\src\\PlanRules.h": "CD71F135FFB4B90B05D3AB212323A16482BA65667BD0EB763A32FEE056D2DE91",
+    "阶段2\\src\\Stage2Arx.cpp": "991DE5B1812B124C637D6A5C0B34D7305FD700A6F1D40DDA18F8BEA7C76820AC",
+    "阶段2\\src\\UniqueRawParts.h": "8AA12E52DC0C0D0B6CBC06AFB2A91808268E88B930B4B61FC3DA874ED3B17536",
+    "阶段2\\src\\WallTopology.cpp": "5456A09C7DD059D8907A19CE9F19BB905054EE2D320B3DAEDC59BCA683FA19EA",
+    "插件\\src\\BuildingPlanPlugin2020.cpp": "74F8074DECC5AE61C69ED7B55337A4F67860AE95145E19CE41EF022AA8A239A5",
+    "插件\\src\\BuildingPlanPlugin2020.vcxproj": "D9A00EB218AEEB73A00F565B3C3B2B8012A65373BDF241F4283EFCACADE4D046",
+    "插件\\src\\NativeInputProperties.inc": "91C5DA20F49A674D4DEDE320CCD875AE2B4F30B211A0586553B5BF3601C6B5C9",
+    "插件\\src\\PluginPolicy.cpp": "6D1B63C26E7C76FE9BA54AB475BB4B8F3BF774C97908510BFF6467DC1DC692EB",
+    "插件\\src\\PluginPolicy.h": "90270C8559E70289212D951B20B5D54D674F80781E196F9EE33A574302E39C26",
+    "插件\\src\\ProductAudit.inc": "73F970AB7D38EAE2923E02D36E7574D1C59DA787A0C4623EEC3D9D480D483E43",
+    "插件\\src\\ProductDiagnostics.cpp": "691E5A6188242FFF2B5C66AEE15D44B037E7547744BB509A8CE1B3A578391FD5",
+    "插件\\src\\ProductDiagnostics.h": "FFFB5D4A8B90593E453B5AE4EDDF6D95C58678F965B6BB230BF0FB4115A5184C",
+    "插件\\src\\ProductDynamicInput.inc": "8CF109FD3D63BA1C9E9F25BE08D7FA9A68091FDD82F70E64D9F45C6614A3CA72",
+    "插件\\src\\ProductInput.inc": "C16E53C31BD96061B5D8EFEEA980050855AE41D175D0702793C43F22A7422375",
+    "插件\\src\\ProductRuntime.inc": "59CDF47B1D0DCDA2B9D220E7C7DCF0E5DC352BCDCA5AF72444E4D638431627B8",
+    "插件\\src\\ProjectInput.h": "C2C491EF1DF10F3738B5354073EA9E77F10AA475E0FD308D5B424C99102D5709",
+    "插件\\src\\PublicProperties.h": "CA0A4372B737240C13E32B23D883383AFCC239C2F5115280B101F0E2A9881B05"
+  },
+  "userRules": {
+    "M": "室内门，卧室/厨房/卫生间入口优先且不因位于外墙而改号",
+    "DK": "室内门洞",
+    "FMD": "其余外立面平开门按本次防盗门编号类别试排",
+    "LC": "外立面窗户",
+    "LM": "外立面推拉门"
+  },
+  "roomPriorityConfirmed": "User: 卧室、厨房、卫生间入口统一用 M",
+  "numericEncoding": "Keep existing confirmed width/height digit suffix; unresolved 1780mm suffix remains pending",
+  "floors": [
+    {
+      "floor": 1,
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门窗编号取消额外成组_20261102\\方案施工图_一层_天正编号取消额外成组_v9.dwg",
+      "sourceSHA256": "8853D1AF817159604E168137DE922E464D3490E26676E3080B6EC88A6967C4B7",
+      "displayedSource": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门窗编号取消额外成组_20261102\\方案施工图_一层_天正编号取消额外成组_v9.dwg",
+      "sourcePreview": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-123332-091387-floor1\\stage2-preview-native.json",
+      "sourceAudit": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-123332-091387-floor1\\product-axis-document-audit.json",
+      "sourcePublicRead": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门窗内部编号_20261102\\sdk-read-v148-floor1.json",
+      "expectedModelCount": 259,
+      "wallAnalysis": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\foundation\\analysis.json",
+      "wallAnalysisSHA256": "4AEEF204F69DA2F18F35C02C6986B28346EFD54282E86E64ACDDD969B3D5DCAA",
+      "graphicEvidence": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-graphic-probe.json",
+      "graphicEvidenceSHA256": "721402E26B02FAB1A1FF53B656AA49EF32F7051E86A6062FD3A623F3C3A77A85",
+      "numberedCounts": {
+        "LC": 10,
+        "FMD": 2,
+        "M": 7,
+        "LM": 1,
+        "DK": 1
+      },
+      "openings": [
+        {
+          "opening": "7F31",
+          "oldNumber": "C1815",
+          "newNumber": "LC1815",
+          "prefix": "LC",
+          "reason": "公开类型窗，外墙宿主",
+          "observedKind": "窗",
+          "width": 1800.0,
+          "height": 1500.0,
+          "host": "7F30",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F1-R05",
+              "name": "堂屋",
+              "shared": [
+                "客厅"
+              ]
+            }
+          ],
+          "specialRoomPriority": false,
+          "slidingGraphic": false,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 0,
+          "labelGripBefore": [
+            40661.701528206235,
+            36555.21380195627,
+            0
+          ],
+          "labelTarget": [
+            40661.701528206235,
+            36555.21380195627,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "7F34",
+          "oldNumber": "C2415",
+          "newNumber": "LC2415",
+          "prefix": "LC",
+          "reason": "公开类型窗，外墙宿主",
+          "observedKind": "窗",
+          "width": 2400.0,
+          "height": 1500.0,
+          "host": "7F33",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F1-R08",
+              "name": "卧室",
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": true,
+          "slidingGraphic": false,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 0,
+          "labelGripBefore": [
+            48901.7015282074,
+            25195.213801956786,
+            0
+          ],
+          "labelTarget": [
+            48901.7015282074,
+            25195.213801956786,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "7F36",
+          "oldNumber": "M2221",
+          "newNumber": "FMD2221",
+          "prefix": "FMD",
+          "reason": "其余外墙平开门，按本次外立面防盗门编号类别试排",
+          "observedKind": "门",
+          "width": 2200.0,
+          "height": 2100.0,
+          "host": "7F35",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F1-R05",
+              "name": "堂屋",
+              "shared": [
+                "客厅"
+              ]
+            }
+          ],
+          "specialRoomPriority": false,
+          "slidingGraphic": false,
+          "graphicArcCount": 2,
+          "graphicLeafLineCount": 8,
+          "labelGripBefore": [
+            44851.7015282074,
+            25255.213801956095,
+            0
+          ],
+          "labelTarget": [
+            44851.7015282074,
+            25255.213801956095,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "7F37",
+          "oldNumber": "C2415",
+          "newNumber": "LC2415",
+          "prefix": "LC",
+          "reason": "公开类型窗，外墙宿主",
+          "observedKind": "窗",
+          "width": 2400.0,
+          "height": 1500.0,
+          "host": "7F35",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F1-R05",
+              "name": "堂屋",
+              "shared": [
+                "客厅"
+              ]
+            }
+          ],
+          "specialRoomPriority": false,
+          "slidingGraphic": false,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 0,
+          "labelGripBefore": [
+            40901.701528207166,
+            25195.213801956263,
+            0
+          ],
+          "labelTarget": [
+            40901.701528207166,
+            25195.213801956263,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "7F39",
+          "oldNumber": "M0927",
+          "newNumber": "FMD0927",
+          "prefix": "FMD",
+          "reason": "其余外墙平开门，按本次外立面防盗门编号类别试排",
+          "observedKind": "门",
+          "width": 900.0,
+          "height": 2700.0,
+          "host": "7F38",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F1-R05",
+              "name": "堂屋",
+              "shared": [
+                "客厅"
+              ]
+            }
+          ],
+          "specialRoomPriority": false,
+          "slidingGraphic": false,
+          "graphicArcCount": 1,
+          "graphicLeafLineCount": 4,
+          "labelGripBefore": [
+            38861.70152820693,
+            31535.213801995444,
+            0
+          ],
+          "labelTarget": [
+            38861.70152820693,
+            31535.213801995444,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "7F3B",
+          "oldNumber": "M0927",
+          "newNumber": "M0927",
+          "prefix": "M",
+          "reason": "室内墙宿主门，含室内推拉门",
+          "observedKind": "门",
+          "width": 900.0,
+          "height": 2700.0,
+          "host": "7F3A",
+          "hostRole": "major-boundary",
+          "adjacentRooms": [
+            {
+              "id": "F1-R05",
+              "name": "堂屋",
+              "shared": [
+                "客厅"
+              ]
+            },
+            {
+              "id": "F1-R06",
+              "name": "棋牌室",
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": false,
+          "slidingGraphic": false,
+          "graphicArcCount": 1,
+          "graphicLeafLineCount": 4,
+          "labelGripBefore": [
+            42461.70152820693,
+            32775.21380199498,
+            0
+          ],
+          "labelTarget": [
+            42461.70152820693,
+            32775.21380199498,
+            0
+          ],
+          "changed": false
+        },
+        {
+          "opening": "7F3E",
+          "oldNumber": "C1815",
+          "newNumber": "LC1815",
+          "prefix": "LC",
+          "reason": "公开类型窗，外墙宿主",
+          "observedKind": "窗",
+          "width": 1800.0,
+          "height": 1500.0,
+          "host": "7F3D",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F1-R06",
+              "name": "棋牌室",
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": false,
+          "slidingGraphic": false,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 0,
+          "labelGripBefore": [
+            44809.70098656602,
+            36555.21380195661,
+            0
+          ],
+          "labelTarget": [
+            44809.70098656602,
+            36555.21380195661,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "7F40",
+          "oldNumber": "C1815",
+          "newNumber": "LC1815",
+          "prefix": "LC",
+          "reason": "公开类型窗，外墙宿主",
+          "observedKind": "窗",
+          "width": 1800.0,
+          "height": 1500.0,
+          "host": "7F3F",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F1-R07",
+              "name": "卧室",
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": true,
+          "slidingGraphic": false,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 0,
+          "labelGripBefore": [
+            48909.70098656603,
+            36555.2138019569,
+            0
+          ],
+          "labelTarget": [
+            48909.70098656603,
+            36555.2138019569,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "7F43",
+          "oldNumber": "M0927",
+          "newNumber": "M0927",
+          "prefix": "M",
+          "reason": "卧室/厨房/卫生间入口优先，含外墙入口",
+          "observedKind": "门",
+          "width": 900.0,
+          "height": 2700.0,
+          "host": "8183",
+          "hostRole": "major-boundary",
+          "adjacentRooms": [
+            {
+              "id": "F1-R08",
+              "name": "卧室",
+              "shared": []
+            },
+            {
+              "id": "F1-R05",
+              "name": "堂屋",
+              "shared": [
+                "客厅"
+              ]
+            }
+          ],
+          "specialRoomPriority": true,
+          "slidingGraphic": false,
+          "graphicArcCount": 1,
+          "graphicLeafLineCount": 4,
+          "labelGripBefore": [
+            47521.70152804465,
+            30595.213801956794,
+            0
+          ],
+          "labelTarget": [
+            47521.70152804465,
+            30595.213801956794,
+            0
+          ],
+          "changed": false
+        },
+        {
+          "opening": "7F44",
+          "oldNumber": "C1215",
+          "newNumber": "LC1215",
+          "prefix": "LC",
+          "reason": "公开类型窗，外墙宿主",
+          "observedKind": "窗",
+          "width": 1200.0,
+          "height": 1500.0,
+          "host": "8257",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F1-R10",
+              "name": null,
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": false,
+          "slidingGraphic": false,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 0,
+          "labelGripBefore": [
+            51681.7015282075,
+            31255.213801957027,
+            0
+          ],
+          "labelTarget": [
+            51681.7015282075,
+            31255.213801957027,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "7F45",
+          "oldNumber": "M0927",
+          "newNumber": "M0927",
+          "prefix": "M",
+          "reason": "卧室/厨房/卫生间入口优先，含外墙入口",
+          "observedKind": "门",
+          "width": 900.0,
+          "height": 2700.0,
+          "host": "8187",
+          "hostRole": "unknown",
+          "adjacentRooms": [
+            {
+              "id": "F1-R05",
+              "name": "堂屋",
+              "shared": [
+                "客厅"
+              ]
+            },
+            {
+              "id": "F1-R07",
+              "name": "卧室",
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": true,
+          "slidingGraphic": false,
+          "graphicArcCount": 1,
+          "graphicLeafLineCount": 4,
+          "labelGripBefore": [
+            47521.701528036494,
+            31715.21380195074,
+            0
+          ],
+          "labelTarget": [
+            47521.701528036494,
+            31715.21380195074,
+            0
+          ],
+          "changed": false
+        },
+        {
+          "opening": "7FE0",
+          "oldNumber": "M0927",
+          "newNumber": "M0927",
+          "prefix": "M",
+          "reason": "室内墙宿主门，含室内推拉门",
+          "observedKind": "门",
+          "width": 900.0,
+          "height": 2700.0,
+          "host": "7FDF",
+          "hostRole": "major-boundary",
+          "adjacentRooms": [
+            {
+              "id": "F1-R02",
+              "name": "餐厅",
+              "shared": []
+            },
+            {
+              "id": "F1-R01",
+              "name": "杂物间",
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": false,
+          "slidingGraphic": false,
+          "graphicArcCount": 1,
+          "graphicLeafLineCount": 4,
+          "labelGripBefore": [
+            32721.701528206933,
+            32715.21380195598,
+            0
+          ],
+          "labelTarget": [
+            32721.701528206933,
+            32715.21380195598,
+            0
+          ],
+          "changed": false
+        },
+        {
+          "opening": "7FE2",
+          "oldNumber": "M2227",
+          "newNumber": "M2227",
+          "prefix": "M",
+          "reason": "卧室/厨房/卫生间入口优先，含外墙入口",
+          "observedKind": "门",
+          "width": 2200.0,
+          "height": 2700.0,
+          "host": "7FE1",
+          "hostRole": "major-boundary",
+          "adjacentRooms": [
+            {
+              "id": "F1-R03",
+              "name": "厨房",
+              "shared": []
+            },
+            {
+              "id": "F1-R02",
+              "name": "餐厅",
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": true,
+          "slidingGraphic": true,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 14,
+          "labelGripBefore": [
+            34131.70152820693,
+            29335.21380195598,
+            0
+          ],
+          "labelTarget": [
+            34131.70152820693,
+            29335.21380195598,
+            0
+          ],
+          "changed": false
+        },
+        {
+          "opening": "7FE5",
+          "oldNumber": "M0927",
+          "newNumber": "M0927",
+          "prefix": "M",
+          "reason": "卧室/厨房/卫生间入口优先，含外墙入口",
+          "observedKind": "门",
+          "width": 900.0,
+          "height": 2700.0,
+          "host": "7FE4",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F1-R03",
+              "name": "厨房",
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": true,
+          "slidingGraphic": false,
+          "graphicArcCount": 1,
+          "graphicLeafLineCount": 4,
+          "labelGripBefore": [
+            36621.70152820693,
+            28275.21380195598,
+            0
+          ],
+          "labelTarget": [
+            36621.70152820693,
+            28275.21380195598,
+            0
+          ],
+          "changed": false
+        },
+        {
+          "opening": "7FFA",
+          "oldNumber": "M2227",
+          "newNumber": "LM2227",
+          "prefix": "LM",
+          "reason": "外墙宿主，双扇重叠平行门扇及相反方向箭头判图为推拉门",
+          "observedKind": "门",
+          "width": 2200.0,
+          "height": 2700.0,
+          "host": "826C",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F1-R02",
+              "name": "餐厅",
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": false,
+          "slidingGraphic": true,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 14,
+          "labelGripBefore": [
+            36621.70152820693,
+            31067.55057494616,
+            0
+          ],
+          "labelTarget": [
+            36621.70152820693,
+            31067.55057494616,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "7FFC",
+          "oldNumber": "C2115",
+          "newNumber": "LC2115",
+          "prefix": "LC",
+          "reason": "公开类型窗，外墙宿主",
+          "observedKind": "窗",
+          "width": 2100.0,
+          "height": 1500.0,
+          "host": "7FFB",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F1-R03",
+              "name": "厨房",
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": true,
+          "slidingGraphic": false,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 0,
+          "labelGripBefore": [
+            34131.70152820693,
+            25195.21380195598,
+            0
+          ],
+          "labelTarget": [
+            34131.70152820693,
+            25195.21380195598,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "8107",
+          "oldNumber": "M0827",
+          "newNumber": "M0827",
+          "prefix": "M",
+          "reason": "卧室/厨房/卫生间入口优先，含外墙入口",
+          "observedKind": "门",
+          "width": 800.0,
+          "height": 2700.0,
+          "host": "8106",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F1-R04",
+              "name": null,
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": true,
+          "slidingGraphic": false,
+          "graphicArcCount": 1,
+          "graphicLeafLineCount": 4,
+          "labelGripBefore": [
+            36621.70152820693,
+            33625.213801956095,
+            0
+          ],
+          "labelTarget": [
+            36621.70152820693,
+            33625.213801956095,
+            0
+          ],
+          "changed": false
+        },
+        {
+          "opening": "8109",
+          "oldNumber": "C1215",
+          "newNumber": "LC1215",
+          "prefix": "LC",
+          "reason": "公开类型窗，外墙宿主",
+          "observedKind": "窗",
+          "width": 1200.0,
+          "height": 1500.0,
+          "host": "8108",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F1-R01",
+              "name": "杂物间",
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": false,
+          "slidingGraphic": false,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 0,
+          "labelGripBefore": [
+            31581.701528206933,
+            34955.21380195598,
+            0
+          ],
+          "labelTarget": [
+            31581.701528206933,
+            34955.21380195598,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "810B",
+          "oldNumber": "C1215",
+          "newNumber": "LC1215",
+          "prefix": "LC",
+          "reason": "公开类型窗，外墙宿主",
+          "observedKind": "窗",
+          "width": 1200.0,
+          "height": 1500.0,
+          "host": "810A",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F1-R04",
+              "name": null,
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": true,
+          "slidingGraphic": false,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 0,
+          "labelGripBefore": [
+            35331.70152820693,
+            36555.21380195598,
+            0
+          ],
+          "labelTarget": [
+            35331.70152820693,
+            36555.21380195598,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "81E4",
+          "oldNumber": "C0918",
+          "newNumber": "DK0918",
+          "prefix": "DK",
+          "reason": "公开类型墙洞，内部隔墙",
+          "observedKind": "墙洞",
+          "width": 900.0,
+          "height": 1800.0,
+          "host": "81E6",
+          "hostRole": "interior-partition",
+          "adjacentRooms": [
+            {
+              "id": "F1-R05",
+              "name": "堂屋",
+              "shared": [
+                "客厅"
+              ]
+            },
+            {
+              "id": "F1-R09",
+              "name": "公卫",
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": true,
+          "slidingGraphic": false,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 0,
+          "labelGripBefore": [
+            48581.701528207865,
+            30445.213801950504,
+            0
+          ],
+          "labelTarget": [
+            48581.701528207865,
+            30345.213801950504,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "824B",
+          "oldNumber": "",
+          "newNumber": null,
+          "prefix": "M",
+          "reason": "卧室/厨房/卫生间入口优先，含外墙入口",
+          "observedKind": "门",
+          "width": 1780.0,
+          "height": 2100.0,
+          "host": "8256",
+          "hostRole": "interior-partition",
+          "adjacentRooms": [
+            {
+              "id": "F1-R09",
+              "name": "公卫",
+              "shared": []
+            },
+            {
+              "id": "F1-R10",
+              "name": null,
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": true,
+          "slidingGraphic": false,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 0,
+          "labelGripBefore": null,
+          "labelTarget": null,
+          "changed": false
+        },
+        {
+          "opening": "826B",
+          "oldNumber": "C2415",
+          "newNumber": "LC2415",
+          "prefix": "LC",
+          "reason": "公开类型窗，外墙宿主",
+          "observedKind": "窗",
+          "width": 2400.0,
+          "height": 1500.0,
+          "host": "826A",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F1-R02",
+              "name": "餐厅",
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": false,
+          "slidingGraphic": false,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 0,
+          "labelGripBefore": [
+            31581.701528206933,
+            31125.21380195598,
+            0
+          ],
+          "labelTarget": [
+            31581.701528206933,
+            31125.21380195598,
+            0
+          ],
+          "changed": true
+        }
+      ],
+      "control": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-145427\\renumber-floor-1\\control.dwg",
+      "log": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-145427\\renumber-floor-1\\drawing-edit.log",
+      "groupsLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-145427\\renumber-floor-1\\reopened-groups.log"
+    },
+    {
+      "floor": 2,
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-144522\\inspection-input.dwg",
+      "sourceSHA256": "C7C4FD65AF4E2208BDDE3D4C5588481B634192B02B941D4F517CD3E821A48285",
+      "displayedSource": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门窗编号取消额外成组_20261102\\方案施工图_二层_天正编号取消额外成组_v9.dwg",
+      "sourcePreview": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-144818-325905-floor2\\stage2-preview-native.json",
+      "sourceAudit": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-144818-325905-floor2\\product-axis-document-audit.json",
+      "sourcePublicRead": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门窗内部编号_20261102\\sdk-read-v149-saved-v9-floor2.json",
+      "expectedModelCount": 250,
+      "wallAnalysis": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层_生成记录_9752_499508390\\过程\\foundation\\analysis.json",
+      "wallAnalysisSHA256": "A41636C02171F1D479191610631EA259B8B2577D87B7AAD6EE27A41CAD100014",
+      "graphicEvidence": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层_生成记录_9752_499508390\\过程\\caption\\door-graphic-probe.json",
+      "graphicEvidenceSHA256": "DFC04C32B543F5036493D8D54C0600D17D84F744B625A6743580F61EB62E8A7F",
+      "numberedCounts": {
+        "LC": 9,
+        "LM": 1,
+        "M": 6,
+        "FMD": 2,
+        "DK": 1
+      },
+      "openings": [
+        {
+          "opening": "8015",
+          "oldNumber": "C1815",
+          "newNumber": "LC1815",
+          "prefix": "LC",
+          "reason": "公开类型窗，外墙宿主",
+          "observedKind": "窗",
+          "width": 1800.0,
+          "height": 1500.0,
+          "host": "8014",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F2-R03",
+              "name": null,
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": false,
+          "slidingGraphic": false,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 0,
+          "labelGripBefore": [
+            87083.70152820693,
+            36555.21380195627,
+            0
+          ],
+          "labelTarget": [
+            87083.70152820693,
+            36555.21380195627,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "8018",
+          "oldNumber": "C2415",
+          "newNumber": "LC2415",
+          "prefix": "LC",
+          "reason": "公开类型窗，外墙宿主",
+          "observedKind": "窗",
+          "width": 2400.0,
+          "height": 1500.0,
+          "host": "8017",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F2-R08",
+              "name": "卧室",
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": true,
+          "slidingGraphic": false,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 0,
+          "labelGripBefore": [
+            95323.70152820738,
+            25195.213801956786,
+            0
+          ],
+          "labelTarget": [
+            95323.70152820738,
+            25195.213801956786,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "801A",
+          "oldNumber": "M2121",
+          "newNumber": "LM2121",
+          "prefix": "LM",
+          "reason": "外墙宿主，双扇重叠平行门扇及相反方向箭头判图为推拉门",
+          "observedKind": "门",
+          "width": 2100.0,
+          "height": 2100.0,
+          "host": "8019",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F2-R04",
+              "name": "水吧",
+              "shared": [
+                "起居厅"
+              ]
+            }
+          ],
+          "specialRoomPriority": false,
+          "slidingGraphic": true,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 14,
+          "labelGripBefore": [
+            91273.70152820786,
+            26035.213801956677,
+            0
+          ],
+          "labelTarget": [
+            91273.70152820786,
+            26035.213801956677,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "801D",
+          "oldNumber": "C2415",
+          "newNumber": "LC2415",
+          "prefix": "LC",
+          "reason": "公开类型窗，外墙宿主",
+          "observedKind": "窗",
+          "width": 2400.0,
+          "height": 1500.0,
+          "host": "801C",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F2-R05",
+              "name": "卧室",
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": true,
+          "slidingGraphic": false,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 0,
+          "labelGripBefore": [
+            86843.701528206,
+            25195.213801956197,
+            0
+          ],
+          "labelTarget": [
+            86843.701528206,
+            25195.213801956197,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "8021",
+          "oldNumber": "C1815",
+          "newNumber": "LC1815",
+          "prefix": "LC",
+          "reason": "公开类型窗，外墙宿主",
+          "observedKind": "窗",
+          "width": 1800.0,
+          "height": 1500.0,
+          "host": "8020",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F2-R06",
+              "name": "书房",
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": false,
+          "slidingGraphic": false,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 0,
+          "labelGripBefore": [
+            91231.70098656604,
+            36555.21380195661,
+            0
+          ],
+          "labelTarget": [
+            91231.70098656604,
+            36555.21380195661,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "8024",
+          "oldNumber": "C1815",
+          "newNumber": "LC1815",
+          "prefix": "LC",
+          "reason": "公开类型窗，外墙宿主",
+          "observedKind": "窗",
+          "width": 1800.0,
+          "height": 1500.0,
+          "host": "8023",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F2-R07",
+              "name": "卧室",
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": true,
+          "slidingGraphic": false,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 0,
+          "labelGripBefore": [
+            95331.70098656602,
+            36555.2138019569,
+            0
+          ],
+          "labelTarget": [
+            95331.70098656602,
+            36555.2138019569,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "8025",
+          "oldNumber": "M0927",
+          "newNumber": "M0927",
+          "prefix": "M",
+          "reason": "卧室/厨房/卫生间入口优先，含外墙入口",
+          "observedKind": "门",
+          "width": 900.0,
+          "height": 2700.0,
+          "host": "818B",
+          "hostRole": "major-boundary",
+          "adjacentRooms": [
+            {
+              "id": "F2-R08",
+              "name": "卧室",
+              "shared": []
+            },
+            {
+              "id": "F2-R04",
+              "name": "水吧",
+              "shared": [
+                "起居厅"
+              ]
+            }
+          ],
+          "specialRoomPriority": true,
+          "slidingGraphic": false,
+          "graphicArcCount": 1,
+          "graphicLeafLineCount": 4,
+          "labelGripBefore": [
+            93943.70152804488,
+            30595.213801956794,
+            0
+          ],
+          "labelTarget": [
+            93943.70152804488,
+            30595.213801956794,
+            0
+          ],
+          "changed": false
+        },
+        {
+          "opening": "8078",
+          "oldNumber": "M0927",
+          "newNumber": "M0927",
+          "prefix": "M",
+          "reason": "卧室/厨房/卫生间入口优先，含外墙入口",
+          "observedKind": "门",
+          "width": 900.0,
+          "height": 2700.0,
+          "host": "815F",
+          "hostRole": "major-boundary",
+          "adjacentRooms": [
+            {
+              "id": "F2-R05",
+              "name": "卧室",
+              "shared": []
+            },
+            {
+              "id": "F2-R04",
+              "name": "水吧",
+              "shared": [
+                "起居厅"
+              ]
+            }
+          ],
+          "specialRoomPriority": true,
+          "slidingGraphic": false,
+          "graphicArcCount": 1,
+          "graphicLeafLineCount": 4,
+          "labelGripBefore": [
+            88603.70152816131,
+            30595.213801956445,
+            0
+          ],
+          "labelTarget": [
+            88603.70152816131,
+            30595.213801956445,
+            0
+          ],
+          "changed": false
+        },
+        {
+          "opening": "807A",
+          "oldNumber": "C0715",
+          "newNumber": "LC0715",
+          "prefix": "LC",
+          "reason": "公开类型窗，外墙宿主",
+          "observedKind": "窗",
+          "width": 700.0,
+          "height": 1500.0,
+          "host": "8079",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F2-R04",
+              "name": "水吧",
+              "shared": [
+                "起居厅"
+              ]
+            }
+          ],
+          "specialRoomPriority": false,
+          "slidingGraphic": false,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 0,
+          "labelGripBefore": [
+            84443.70152820693,
+            30855.213802001497,
+            0
+          ],
+          "labelTarget": [
+            84443.70152820693,
+            30855.213802001497,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "8103",
+          "oldNumber": "M0927",
+          "newNumber": "M0927",
+          "prefix": "M",
+          "reason": "室内墙宿主门，含室内推拉门",
+          "observedKind": "门",
+          "width": 900.0,
+          "height": 2700.0,
+          "host": "81BF",
+          "hostRole": "major-boundary",
+          "adjacentRooms": [
+            {
+              "id": "F2-R04",
+              "name": "水吧",
+              "shared": [
+                "起居厅"
+              ]
+            },
+            {
+              "id": "F2-R06",
+              "name": "书房",
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": false,
+          "slidingGraphic": false,
+          "graphicArcCount": 1,
+          "graphicLeafLineCount": 4,
+          "labelGripBefore": [
+            92603.70152836898,
+            31715.213801956445,
+            0
+          ],
+          "labelTarget": [
+            92603.70152836898,
+            31715.213801956445,
+            0
+          ],
+          "changed": false
+        },
+        {
+          "opening": "8147",
+          "oldNumber": "M1227",
+          "newNumber": "M1227",
+          "prefix": "M",
+          "reason": "室内墙宿主门，含室内推拉门",
+          "observedKind": "门",
+          "width": 1200.0,
+          "height": 2700.0,
+          "host": "8146",
+          "hostRole": "major-boundary",
+          "adjacentRooms": [
+            {
+              "id": "F2-R04",
+              "name": "水吧",
+              "shared": [
+                "起居厅"
+              ]
+            },
+            {
+              "id": "F2-R03",
+              "name": null,
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": false,
+          "slidingGraphic": false,
+          "graphicArcCount": 2,
+          "graphicLeafLineCount": 8,
+          "labelGripBefore": [
+            88393.70152820228,
+            32495.213801956445,
+            0
+          ],
+          "labelTarget": [
+            88393.70152820228,
+            32495.213801956445,
+            0
+          ],
+          "changed": false
+        },
+        {
+          "opening": "8148",
+          "oldNumber": "C1215",
+          "newNumber": "LC1215",
+          "prefix": "LC",
+          "reason": "公开类型窗，外墙宿主",
+          "observedKind": "窗",
+          "width": 1200.0,
+          "height": 1500.0,
+          "host": "821D",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F2-R10",
+              "name": null,
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": false,
+          "slidingGraphic": false,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 0,
+          "labelGripBefore": [
+            98103.70152820765,
+            31125.213801959355,
+            0
+          ],
+          "labelTarget": [
+            98103.70152820765,
+            31125.213801959355,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "81C1",
+          "oldNumber": "M0927",
+          "newNumber": "FMD0927",
+          "prefix": "FMD",
+          "reason": "其余外墙平开门，按本次外立面防盗门编号类别试排",
+          "observedKind": "门",
+          "width": 900.0,
+          "height": 2700.0,
+          "host": "81C0",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F2-R03",
+              "name": null,
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": false,
+          "slidingGraphic": false,
+          "graphicArcCount": 1,
+          "graphicLeafLineCount": 4,
+          "labelGripBefore": [
+            85283.70152820693,
+            32795.21380149078,
+            0
+          ],
+          "labelTarget": [
+            85283.70152820693,
+            32795.21380149078,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "81EA",
+          "oldNumber": "M0927",
+          "newNumber": "M0927",
+          "prefix": "M",
+          "reason": "卧室/厨房/卫生间入口优先，含外墙入口",
+          "observedKind": "门",
+          "width": 900.0,
+          "height": 2700.0,
+          "host": "81EB",
+          "hostRole": "unknown",
+          "adjacentRooms": [
+            {
+              "id": "F2-R04",
+              "name": "水吧",
+              "shared": [
+                "起居厅"
+              ]
+            },
+            {
+              "id": "F2-R07",
+              "name": "卧室",
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": true,
+          "slidingGraphic": false,
+          "graphicArcCount": 1,
+          "graphicLeafLineCount": 4,
+          "labelGripBefore": [
+            93943.7015280365,
+            31715.213801958074,
+            0
+          ],
+          "labelTarget": [
+            93943.7015280365,
+            31715.213801958074,
+            0
+          ],
+          "changed": false
+        },
+        {
+          "opening": "81EC",
+          "oldNumber": "C0918",
+          "newNumber": "DK0918",
+          "prefix": "DK",
+          "reason": "公开类型墙洞，内部隔墙",
+          "observedKind": "墙洞",
+          "width": 900.0,
+          "height": 1800.0,
+          "host": "821B",
+          "hostRole": "interior-partition",
+          "adjacentRooms": [
+            {
+              "id": "F2-R04",
+              "name": "水吧",
+              "shared": [
+                "起居厅"
+              ]
+            },
+            {
+              "id": "F2-R09",
+              "name": "公卫",
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": true,
+          "slidingGraphic": false,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 0,
+          "labelGripBefore": [
+            95003.70152820786,
+            30445.213801957725,
+            0
+          ],
+          "labelTarget": [
+            95003.70152820786,
+            30345.213801957725,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "8218",
+          "oldNumber": "",
+          "newNumber": null,
+          "prefix": "M",
+          "reason": "卧室/厨房/卫生间入口优先，含外墙入口",
+          "observedKind": "门",
+          "width": 1780.0,
+          "height": 2100.0,
+          "host": "821C",
+          "hostRole": "interior-partition",
+          "adjacentRooms": [
+            {
+              "id": "F2-R09",
+              "name": "公卫",
+              "shared": []
+            },
+            {
+              "id": "F2-R10",
+              "name": null,
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": true,
+          "slidingGraphic": false,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 0,
+          "labelGripBefore": null,
+          "labelTarget": null,
+          "changed": false
+        },
+        {
+          "opening": "82B0",
+          "oldNumber": "M0927",
+          "newNumber": "FMD0927",
+          "prefix": "FMD",
+          "reason": "其余外墙平开门，按本次外立面防盗门编号类别试排",
+          "observedKind": "门",
+          "width": 900.0,
+          "height": 2700.0,
+          "host": "82AF",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F2-R01",
+              "name": "杂物间",
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": false,
+          "slidingGraphic": false,
+          "graphicArcCount": 1,
+          "graphicLeafLineCount": 4,
+          "labelGripBefore": [
+            79143.70152820693,
+            32715.21380195598,
+            0
+          ],
+          "labelTarget": [
+            79143.70152820693,
+            32715.21380195598,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "82B2",
+          "oldNumber": "M0827",
+          "newNumber": "M0827",
+          "prefix": "M",
+          "reason": "卧室/厨房/卫生间入口优先，含外墙入口",
+          "observedKind": "门",
+          "width": 800.0,
+          "height": 2700.0,
+          "host": "82B1",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F2-R02",
+              "name": null,
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": true,
+          "slidingGraphic": false,
+          "graphicArcCount": 1,
+          "graphicLeafLineCount": 4,
+          "labelGripBefore": [
+            83043.70152820693,
+            33625.213801956095,
+            0
+          ],
+          "labelTarget": [
+            83043.70152820693,
+            33625.213801956095,
+            0
+          ],
+          "changed": false
+        },
+        {
+          "opening": "82B4",
+          "oldNumber": "C1215",
+          "newNumber": "LC1215",
+          "prefix": "LC",
+          "reason": "公开类型窗，外墙宿主",
+          "observedKind": "窗",
+          "width": 1200.0,
+          "height": 1500.0,
+          "host": "82B3",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F2-R01",
+              "name": "杂物间",
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": false,
+          "slidingGraphic": false,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 0,
+          "labelGripBefore": [
+            78003.70152820693,
+            34955.21380195598,
+            0
+          ],
+          "labelTarget": [
+            78003.70152820693,
+            34955.21380195598,
+            0
+          ],
+          "changed": true
+        },
+        {
+          "opening": "82B6",
+          "oldNumber": "C1215",
+          "newNumber": "LC1215",
+          "prefix": "LC",
+          "reason": "公开类型窗，外墙宿主",
+          "observedKind": "窗",
+          "width": 1200.0,
+          "height": 1500.0,
+          "host": "82B5",
+          "hostRole": "exterior",
+          "adjacentRooms": [
+            {
+              "id": "F2-R02",
+              "name": null,
+              "shared": []
+            }
+          ],
+          "specialRoomPriority": true,
+          "slidingGraphic": false,
+          "graphicArcCount": 0,
+          "graphicLeafLineCount": 0,
+          "labelGripBefore": [
+            81753.70152820693,
+            36555.21380195598,
+            0
+          ],
+          "labelTarget": [
+            81753.70152820693,
+            36555.21380195598,
+            0
+          ],
+          "changed": true
+        }
+      ],
+      "control": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-145427\\renumber-floor-2\\control.dwg",
+      "log": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-145427\\renumber-floor-2\\drawing-edit.log",
+      "groupsLog": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-145427\\renumber-floor-2\\reopened-groups.log"
+    }
+  ],
+  "totals": {
+    "LC": 19,
+    "FMD": 4,
+    "M": 13,
+    "LM": 2,
+    "DK": 2
+  },
+  "knownNumberedOpenings": 40,
+  "pending1780Openings": 2,
+  "changedNumbers": 27,
+  "version": "v150",
+  "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-145427",
+  "nonce": "e82243bd0c534dd7aa98fad293e01cd7",
+  "authorization": "DWG sample copies only; explicitly allowed public TChWinLab numbering and native STRETCH; no COM/CUA/plugin changes",
+  "bootSHA256": "2E06656906A1AA4DA90147E290AC0149D956CF8C7578C2E556691915EB22CFA2"
+}

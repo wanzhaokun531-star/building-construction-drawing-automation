@@ -1,0 +1,11 @@
+{
+  "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-singletons-20261029-111721-958785\\four-side-singletons-generated.dwg",
+  "sourceSHA256": "77C1DB9B4632E45A52CF4C9D848D0B0888C8283AF46F7AACCB2946BFF094D686",
+  "donorReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-singletons-20261029-111721-958785\\four-side-singletons-native.json",
+  "donorReportSHA256": "3A1F566C53F78EB0D415B8D74C17DDDE89435E00B472532A8486D689B9D6EE1A",
+  "library": "D:\\Codex\\建筑施工图自动化\\阶段2\\resources\\native-axis-number-templates.dwg",
+  "librarySHA256": "77C1DB9B4632E45A52CF4C9D848D0B0888C8283AF46F7AACCB2946BFF094D686",
+  "index": "D:\\Codex\\建筑施工图自动化\\阶段2\\resources\\native-axis-number-templates.tsv",
+  "indexSHA256": "ADACC8526A118A31A815CBAA8A9F5CD8107A00F638790A3109898D33B720E9A1",
+  "scope": "prebuilt native TCH number materials for this sample:1..10 and A..M skipping I;no arbitrary-number setter claim;runtime never invokes historical business commands"
+}

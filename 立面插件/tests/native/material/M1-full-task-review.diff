@@ -1,0 +1,492 @@
+--- initial-stub/src/NativeMaterials.cpp
++++ e7508e99/src/NativeMaterials.cpp
+@@ -1,13 +1,203 @@
+ #include "NativeMaterials.h"
++#include "MaterialRules.h"
++#include <Windows.h>
++#include <wincrypt.h>
++#include <dbHatch.h>
++#include <dbapserv.h>
++#include <dbidmap.h>
++#include <dbsymtb.h>
++#include <dbsymutl.h>
++#include <acstring.h>
++#include <cmath>
++#include <iomanip>
++#include <locale>
++#include <set>
++#include <sstream>
++#include <stdexcept>
+ namespace bce {
+-struct PreparedMaterialBatch::State { std::unique_ptr<AcDbDatabase> database; AcDbObjectIdArray roots; };
++namespace {
++void need(bool v,const std::string& m){if(!v)throw std::runtime_error(m);}
++void check(Acad::ErrorStatus s,const char* m){need(s==Acad::eOk,std::string(m)+":"+std::to_string(s));}
++template<class T> class Open final {
++public:
++    explicit Open(AcDbObjectId id,AcDb::OpenMode mode=AcDb::kForRead){check(acdbOpenObject(p_,id,mode),"open");}
++    ~Open(){if(p_)p_->close();}
++    Open(const Open&)=delete;Open& operator=(const Open&)=delete;
++    T* operator->() const{return p_;} T& operator*() const{return *p_;}
++private:T* p_{};
++};
++class Working final {
++public:
++    explicit Working(AcDbDatabase& db):services_(acdbHostApplicationServices()),old_(services_->workingDatabase()){services_->setWorkingDatabase(&db);}
++    ~Working() noexcept {services_->setWorkingDatabase(old_);}
++    Working(const Working&)=delete;Working& operator=(const Working&)=delete;
++private:AcDbHostApplicationServices* services_;AcDbDatabase* old_;
++};
++bool finite(Point2 p){return std::isfinite(p.x)&&std::isfinite(p.y);}
++bool positive(double n){return std::isfinite(n)&&n>0;}
++std::string fileSha(AcDbDatabase& db){
++    const ACHAR* path{};check(db.getFilename(path),"reference filename");need(path&&*path,"REFERENCE_FILE_REQUIRED");
++    struct File {HANDLE h;~File(){if(h!=INVALID_HANDLE_VALUE)CloseHandle(h);}} f{CreateFileW(path,GENERIC_READ,FILE_SHARE_READ,nullptr,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,nullptr)};
++    need(f.h!=INVALID_HANDLE_VALUE,"reference hash open");
++    struct Crypto {HCRYPTPROV provider{};HCRYPTHASH hash{};~Crypto(){if(hash)CryptDestroyHash(hash);if(provider)CryptReleaseContext(provider,0);}} c;
++    need(CryptAcquireContextW(&c.provider,nullptr,nullptr,PROV_RSA_AES,CRYPT_VERIFYCONTEXT)!=FALSE,"hash provider");
++    need(CryptCreateHash(c.provider,CALG_SHA_256,0,0,&c.hash)!=FALSE,"hash create");
++    BYTE buffer[65536];DWORD size{};
++    do{need(ReadFile(f.h,buffer,sizeof(buffer),&size,nullptr)!=FALSE,"reference hash read");if(size)need(CryptHashData(c.hash,buffer,size,0)!=FALSE,"hash data");}while(size);
++    BYTE digest[32];size=sizeof(digest);need(CryptGetHashParam(c.hash,HP_HASHVAL,digest,&size,0)!=FALSE&&size==32,"hash result");
++    const char* hex="0123456789ABCDEF";std::string result;for(auto b:digest){result+=hex[b>>4];result+=hex[b&15];}return result;
++}
++std::string upper(std::string s){for(auto& c:s)if(c>='a'&&c<='f')c=static_cast<char>(c-'a'+'A');return s;}
++std::wstring wide(const std::string& s){
++    need(!s.empty()&&s.find('\0')==std::string::npos,"invalid UTF8 token");
++    const int n=MultiByteToWideChar(CP_UTF8,MB_ERR_INVALID_CHARS,s.c_str(),-1,nullptr,0);need(n>1,"invalid UTF8");
++    std::wstring out(static_cast<std::size_t>(n),L'\0');need(MultiByteToWideChar(CP_UTF8,MB_ERR_INVALID_CHARS,s.c_str(),-1,&out[0],n)==n,"UTF8 decode");out.pop_back();return out;
++}
++AcDbObjectId objectId(const ReferenceMaterialSeed& seed){
++    need(!seed.handle.empty()&&seed.handle.size()<=16&&std::all_of(seed.handle.begin(),seed.handle.end(),[](char c){return (c>='0'&&c<='9')||(c>='A'&&c<='F')||(c>='a'&&c<='f');}),"invalid prototype handle");
++    AcDbObjectId id;check(seed.database->getAcDbObjectId(id,false,AcDbHandle(wide(seed.handle).c_str())),"prototype handle");return id;
++}
++AcDbObjectIdArray roots(AcDbDatabase& db){
++    Open<AcDbBlockTableRecord> model(acdbSymUtil()->blockModelSpaceId(&db));AcDbBlockTableRecordIterator* raw{};check(model->newIterator(raw),"roots iterator");std::unique_ptr<AcDbBlockTableRecordIterator> it(raw);AcDbObjectIdArray ids;
++    for(;!it->done();it->step()){AcDbObjectId id;check(it->getEntityId(id),"root id");ids.append(id);}return ids;
++}
++AcDbObjectId clone(AcDbDatabase& from,AcDbObjectId id,AcDbDatabase& to){
++    AcDbObjectIdArray ids;ids.append(id);AcDbIdMapping map;check(from.wblockCloneObjects(ids,acdbSymUtil()->blockModelSpaceId(&to),map,AcDb::kDrcMangleName),"clone hatch dependencies");
++    AcDbIdPair pair;pair.setKey(id);need(map.compute(pair)&&pair.isCloned()&&!pair.value().isNull(),"clone mapping");return pair.value();
++}
++struct Canonical {
++    std::ostringstream out;
++    Canonical(){out.imbue(std::locale::classic());out<<std::hexfloat;}
++    void number(double v){need(std::isfinite(v),"nonfinite native expression");out<<v<<';';}
++    void text(const ACHAR* s){need(s!=nullptr,"null native string");out<<'[';while(*s)out<<static_cast<unsigned>(*s++)<<',';out<<']';}
++    void id(AcDbObjectId v){if(v.isNull()){out<<"null;";return;}AcDbHandle h=v.handle();ACHAR chars[32]{};h.getIntoAsciiBuffer(chars);text(chars);}
++    void point(AcGePoint2d p){number(p.x);number(p.y);}
++    void vector(AcGeVector3d p){number(p.x);number(p.y);number(p.z);}
++};
++void linetype(Canonical& c,AcDbObjectId id){
++    c.id(id);Open<AcDbLinetypeTableRecord> r(id);AcString name;check(r->getName(name),"linetype name");c.text(name.kACharPtr());c.number(r->patternLength());c.number(r->numDashes());
++    for(int i=0;i<r->numDashes();++i){c.number(r->dashLengthAt(i));c.id(r->shapeStyleAt(i));need(r->shapeStyleAt(i).isNull(),"UNSUPPORTED_COMPLEX_LINETYPE");c.number(r->shapeNumberAt(i));c.number(r->shapeScaleAt(i));c.number(r->shapeRotationAt(i));const auto offset=r->shapeOffsetAt(i);c.number(offset.x);c.number(offset.y);c.number(r->shapeIsUcsOrientedAt(i));c.number(r->shapeIsUprightAt(i));AcString text;check(r->textAt(i,text),"dash text");c.text(text.kACharPtr());}
++}
++void appearance(Canonical& c,AcDbHatch& h){
++    c.id(h.layerId());c.number(h.color().color());c.number(h.color().colorMethod());c.number(h.transparency().serializeOut());c.number(h.lineWeight());c.number(h.linetypeScale());c.number(h.visibility());c.id(h.materialId());AcDbObjectId plotStyle;c.number(h.getPlotStyleNameId(plotStyle));c.id(plotStyle);
++    linetype(c,h.linetypeId());Open<AcDbLayerTableRecord> layer(h.layerId());AcString name;check(layer->getName(name),"layer name");c.text(name.kACharPtr());c.number(layer->color().color());c.number(layer->color().colorMethod());c.number(layer->transparency().serializeOut());c.number(layer->lineWeight());c.number(layer->isOff());c.number(layer->isFrozen());c.number(layer->isLocked());c.number(layer->isPlottable());c.id(layer->materialId());c.id(layer->plotStyleNameId());linetype(c,layer->linetypeObjectId());
++}
++void pattern(Canonical& c,AcDbHatch& h){
++    need(h.isA()==AcDbHatch::desc()&&!h.isGradient()&&h.isHatch(),"UNSUPPORTED_MATERIAL_NATIVE_TYPE");
++    need(h.normal()==AcGeVector3d::kZAxis&&h.elevation()==0,"UNSUPPORTED_HATCH_PLANE");
++    need(h.patternType()==AcDbHatch::kUserDefined||h.patternType()==AcDbHatch::kPreDefined||h.patternType()==AcDbHatch::kCustomDefined,"UNKNOWN_PATTERN_TYPE");
++    c.vector(h.normal());c.number(h.elevation());c.text(h.patternName());c.number(h.patternType());c.number(h.patternAngle());c.number(h.patternScale());c.number(h.patternSpace());c.number(h.patternDouble());c.number(h.backgroundColor().color());c.number(h.backgroundColor().colorMethod());c.point(h.originPoint());c.number(h.hatchStyle());c.number(h.isSolidFill());c.number(h.numPatternDefinitions());
++    need(positive(h.patternScale())&&(h.isSolidFill()||h.numPatternDefinitions()>0),"MISSING_PATTERN_DEFINITION");
++    need(h.numPatternDefinitions()<=4096,"PATTERN_BUDGET");
++    for(int i=0;i<h.numPatternDefinitions();++i){double a{},x{},y{},dx{},dy{};AcGeDoubleArray d;check(h.getPatternDefinitionAt(i,a,x,y,dx,dy,d),"read pattern");c.number(a);c.number(x);c.number(y);c.number(dx);c.number(dy);need(d.length()<=4096,"DASH_BUDGET");c.number(d.length());for(int j=0;j<d.length();++j)c.number(d[j]);}
++}
++std::string snapshot(AcDbDatabase& db,const AcDbObjectIdArray& ids){
++    const auto actual=roots(db);need(actual.length()==ids.length(),"PREPARED_ROOT_SET_CHANGED");Canonical c;
++    for(int n=0;n<ids.length();++n){need(actual.contains(ids[n])&&!ids[n].isErased(),"PREPARED_ROOT_CHANGED");Open<AcDbHatch> h(ids[n]);pattern(c,*h);appearance(c,*h);c.id(ids[n]);c.id(h->ownerId());c.id(h->extensionDictionary());need(h->extensionDictionary().isNull(),"UNSUPPORTED_HATCH_EXTENSION");c.number(h->associative());need(!h->associative(),"OLD_ASSOCIATION");AcDbObjectIdArray assoc;check(h->getAssocObjIds(assoc),"read associations");need(assoc.isEmpty(),"OLD_BOUNDARY_ASSOCIATION");c.number(h->numLoops());
++        for(int j=0;j<h->numLoops();++j){Adesk::Int32 type=h->loopTypeAt(j);need((type&AcDbHatch::kPolyline)!=0,"PREPARED_LOOP_TYPE_CHANGED");AcGePoint2dArray p;AcGeDoubleArray b;check(h->getLoopAt(j,type,p,b),"read prepared loops");c.number(type);c.number(p.length());c.number(b.length());for(int k=0;k<p.length();++k)c.point(p[k]);for(int k=0;k<b.length();++k)c.number(b[k]);}
++    }return c.out.str();
++}
++void validateRegion(const MaterialPlan& plan,const MaterialRegionPlan& region){
++    need(!region.confirmationSource.empty()&&!region.prototypeApprovalSource.empty()&&!region.familyId.empty()&&!region.sources.empty(),"MATERIAL_CONFIRMATION_REQUIRED");
++    FeatureModel model;SemanticFeature f;f.identity=region.identity;f.viewIdentity=region.viewIdentity;f.role=SemanticRole::materialRegion;f.confirmed=true;f.confirmationSource=region.confirmationSource;f.region=region.geometry;f.sources=region.sources;f.tableViewIdentity=region.tableViewIdentity;f.sharedTableIdentity=region.sharedTableIdentity;f.materialKey="adapter-explicit";f.materialPrototypeId=region.expression.prototypeId;model.rules.semanticFeatures.push_back(f);
++    RuleView view;view.viewIdentity=region.viewIdentity;view.familyId=region.familyId;model.rules.views.push_back(view);model.rules.materialOverrides.push_back({"adapter-explicit",region.materialNumber,region.materialName,region.expression.prototypeId});
++    ReferenceStandard standard;standard.referenceSha256=plan.referenceSha256;ReferenceFamily family;family.identity=region.familyId;family.approved=true;family.approvalSource=region.prototypeApprovalSource;family.roles={SemanticRole::materialRegion};standard.families.push_back(family);standard.materialPrototypes.push_back({region.expression,true,region.prototypeApprovalSource});
++    ProjectConfig config;config.databaseIdentity=region.sources.front().databaseIdentity;config.units=plan.unitDeclaration;config.unitConfirmationSource=plan.unitConfirmationSource;
++    auto validated=planMaterials(model,standard,config);need(validated.canCommit()&&validated.value->regions.size()==1,validated.issues.empty()?"INVALID_MATERIAL_PLAN":validated.issues.front().code);
++    need(validated.value->mmPerInputUnit==plan.mmPerInputUnit&&std::abs(validated.value->regions[0].areaSquareMm-region.areaSquareMm)<=1e-8*(std::max)(1.0,region.areaSquareMm),"MATERIAL_PLAN_FACTS_CHANGED");
++}
++void appendRing(AcDbHatch& hatch,const ClosedRing& ring,bool outer){
++    AcGePoint2dArray points;AcGeDoubleArray bulges;
++    for(const auto p:ring.vertices){points.append({p.x,p.y});bulges.append(0);}
++    if(points.first()!=points.last()){points.append(points.first());bulges.append(0);}
++    check(hatch.appendLoop(AcDbHatch::kPolyline|(outer?AcDbHatch::kExternal:AcDbHatch::kDefault),points,bulges),"append closed material loop");
++}
++}
++struct PreparedMaterialBatch::State : AcDbDatabaseReactor {
++    std::unique_ptr<AcDbDatabase> database;
++    AcDbObjectIdArray roots;
++    std::string baseline;
++    std::set<AcDbDatabase*> sources;
++    bool armed{}, changed{};
++    ~State(){if(armed&&database)database->removeReactor(this);}
++    void objectAppended(const AcDbDatabase*,const AcDbObject*) override {changed=true;}
++    void objectUnAppended(const AcDbDatabase*,const AcDbObject*) override {changed=true;}
++    void objectReAppended(const AcDbDatabase*,const AcDbObject*) override {changed=true;}
++    void objectOpenedForModify(const AcDbDatabase*,const AcDbObject*) override {changed=true;}
++    void objectModified(const AcDbDatabase*,const AcDbObject*) override {changed=true;}
++    void objectErased(const AcDbDatabase*,const AcDbObject*,Adesk::Boolean) override {changed=true;}
++    void headerSysVarWillChange(const AcDbDatabase*,const ACHAR*) override {changed=true;}
++};
+ PreparedMaterialBatch::PreparedMaterialBatch(std::unique_ptr<State> s):state_(std::move(s)){}
+ PreparedMaterialBatch::~PreparedMaterialBatch()=default;
+ PreparedMaterialBatch::PreparedMaterialBatch(PreparedMaterialBatch&&) noexcept=default;
+ PreparedMaterialBatch& PreparedMaterialBatch::operator=(PreparedMaterialBatch&&) noexcept=default;
+-AcDbDatabase& PreparedMaterialBatch::database() const { return *state_->database; }
+-const AcDbObjectIdArray& PreparedMaterialBatch::roots() const { return state_->roots; }
+-bool PreparedMaterialBatch::intact() const noexcept { return false; }
+-Result<std::vector<AcDbObjectId>> PreparedMaterialBatch::cloneToEmpty(AcDbDatabase&) const { return {std::nullopt, {{"NOT_IMPLEMENTED", "M1 stub", {}, true}}}; }
+-Result<PreparedMaterialBatch> prepareMaterials(const MaterialPlan&,const std::vector<ReferenceMaterialSeed>&,const MaterialPreparationOptions&) { return {std::nullopt, {{"NOT_IMPLEMENTED", "M1 stub", {}, true}}}; }
+-}
++AcDbDatabase& PreparedMaterialBatch::database() const {need(state_!=nullptr,"moved material batch");return *state_->database;}
++const AcDbObjectIdArray& PreparedMaterialBatch::roots() const {need(state_!=nullptr,"moved material batch");return state_->roots;}
++bool PreparedMaterialBatch::intact() const noexcept {try{if(!state_||state_->changed)return false;Working work(*state_->database);return snapshot(*state_->database,state_->roots)==state_->baseline;}catch(...){return false;}}
++Result<std::vector<AcDbObjectId>> PreparedMaterialBatch::cloneToEmpty(AcDbDatabase& target) const {
++    try{
++        need(state_&&&target!=state_->database.get()&&state_->sources.count(&target)==0&&&target!=acdbHostApplicationServices()->workingDatabase(),"INDEPENDENT_TARGET_REQUIRED");
++        need(intact(),"PREPARED_MATERIAL_CHANGED");Working work(target);need(::bce::roots(target).isEmpty(),"EMPTY_TARGET_REQUIRED");
++        AcDbIdMapping mapping;check(state_->database->wblockCloneObjects(state_->roots,acdbSymUtil()->blockModelSpaceId(&target),mapping,AcDb::kDrcMangleName),"clone prepared roots");
++        std::vector<AcDbObjectId> ids;for(int i=0;i<state_->roots.length();++i){AcDbIdPair pair;pair.setKey(state_->roots[i]);need(mapping.compute(pair)&&pair.isCloned(),"output mapping");ids.push_back(pair.value());}
++        need(::bce::roots(target).length()==static_cast<int>(ids.size()),"OLD_REFERENCE_ROOT_LEAK");return {std::move(ids),{}};
++    }catch(const std::exception& e){return {std::nullopt,{{"MATERIAL_CLONE_REJECTED",e.what(),{},true}}};}
++}
++Result<PreparedMaterialBatch> prepareMaterials(const MaterialPlan& plan,const std::vector<ReferenceMaterialSeed>& seeds,const MaterialPreparationOptions& options){
++    std::string location;
++    try {
++        need(positive(plan.mmPerInputUnit)&&!plan.unitConfirmationSource.empty()&&!plan.regions.empty(),"MATERIAL_FACTS_REQUIRED");
++        need(options.placements.size()==plan.regions.size(),"EXPLICIT_MATERIAL_PLACEMENT_REQUIRED");
++        auto state=std::make_unique<PreparedMaterialBatch::State>();state->database=std::make_unique<AcDbDatabase>(true,true);Working work(*state->database);
++        std::set<std::pair<std::string,std::string>> seen;
++        for(const auto& region:plan.regions){
++            location=region.viewIdentity+"/"+region.identity;need(seen.emplace(region.viewIdentity,region.identity).second,"DUPLICATE_MATERIAL_REGION");
++            need(region.expression.kind==MaterialExpressionKind::hatch,"UNSUPPORTED_MATERIAL_EXPRESSION");validateRegion(plan,region);
++            const ReferenceMaterialSeed* seed{};for(const auto& s:seeds)if(s.prototypeId==region.expression.prototypeId){need(!seed,"DUPLICATE_MATERIAL_PROTOTYPE");seed=&s;}
++            need(seed&&seed->database&&!seed->prototypeConfirmationSource.empty()&&!seed->unitConfirmationSource.empty()&&!seed->scaleConfirmationSource.empty()&&!seed->phaseConfirmationSource.empty(),"REFERENCE_MATERIAL_FACTS_REQUIRED");
++            need(positive(seed->mmPerSourceUnit)&&positive(seed->sourcePaperScale)&&finite(seed->referenceAnchor),"INVALID_REFERENCE_UNITS_SCALE_PHASE");
++            need(upper(seed->referenceSha256)==upper(plan.referenceSha256)&&fileSha(*seed->database)==upper(plan.referenceSha256),"REFERENCE_SHA_MISMATCH");
++            const MaterialPlacement* placement{};for(const auto& p:options.placements)if(p.regionIdentity==region.identity&&p.viewIdentity==region.viewIdentity){need(!placement,"DUPLICATE_PLACEMENT");placement=&p;}
++            need(placement&&positive(placement->targetPaperScale)&&finite(placement->targetAnchor)&&!placement->scaleConfirmationSource.empty()&&!placement->phaseConfirmationSource.empty(),"TARGET_PLACEMENT_REQUIRED");
++            const auto sourceId=objectId(*seed);state->sources.insert(seed->database);
++            {Open<AcDbEntity> e(sourceId);need(e->isA()==AcDbHatch::desc(),"UNSUPPORTED_MATERIAL_NATIVE_TYPE");}
++            const auto targetId=clone(*seed->database,sourceId,*state->database);
++            {
++                Open<AcDbHatch> h(targetId,AcDb::kForWrite);Canonical original;pattern(original,*h);appearance(original,*h);
++                need(region.expression.patternName.empty()||wide(region.expression.patternName)==h->patternName(),"PROTOTYPE_PATTERN_MISMATCH");
++                const auto factor=seed->mmPerSourceUnit/plan.mmPerInputUnit*placement->targetPaperScale/seed->sourcePaperScale*region.expression.scale;
++                need(positive(factor),"INVALID_MATERIAL_PATTERN_SCALE");const auto angle=std::atan2(region.expression.direction.y,region.expression.direction.x);
++                const auto matrix=AcGeMatrix3d::translation({placement->targetAnchor.x,placement->targetAnchor.y,0})*AcGeMatrix3d::rotation(angle,AcGeVector3d::kZAxis)*AcGeMatrix3d::scaling(factor)*AcGeMatrix3d::translation({-seed->referenceAnchor.x,-seed->referenceAnchor.y,0});
++                check(h->setAssociative(false),"detach clone association");check(h->removeAssocObjIds(),"remove clone boundary association");
++                // AutoCAD 2020 transforms embedded pattern definitions but leaves originPoint metadata unchanged.
++                // The explicit public setter updates that WCS metadata without reloading any external PAT.
++                const auto oldOrigin=h->originPoint();
++                const auto mappedOrigin=matrix*AcGePoint3d(oldOrigin.x,oldOrigin.y,0);
++                check(h->transformBy(matrix),"map native pattern units scale and phase");
++                check(h->setOriginPoint({mappedOrigin.x,mappedOrigin.y}),"set mapped native pattern origin metadata");
++                while(h->numLoops())check(h->removeLoopAt(h->numLoops()-1),"remove clone old loop");
++                check(h->setHatchStyle(AcDbHatch::kNormal),"holes normal style");appendRing(*h,region.geometry.outer,true);for(const auto& hole:region.geometry.holes)appendRing(*h,hole,false);
++                h->setLineGenerationEnabled(true);check(h->evaluateHatch(),"evaluate native material");
++                if(!h->isSolidFill()) {
++                    // eOk alone is not output evidence: AutoCAD 2020 can return eOk with an empty pattern.
++                    AcGePoint2dArray starts,ends;check(h->getHatchLinesData(starts,ends),"native material pattern output");
++                    need(h->numHatchLines()>0&&starts.length()>0&&starts.length()==ends.length()&&starts.length()==h->numHatchLines(),"EMPTY_NATIVE_PATTERN_OUTPUT: BLOCKED_CAPABILITY; no committable material batch");
++                }
++            }
++            {
++                // Close and reopen after changing loops. A previously queried area may be cached on an open Hatch.
++                Open<AcDbHatch> h(targetId);double area{};check(h->getArea(area),"reopened native material area");
++                const auto expected=region.areaSquareMm/(plan.mmPerInputUnit*plan.mmPerInputUnit);need(std::isfinite(area)&&std::abs(area-expected)<=1e-8*(std::max)(1.0,expected),"NATIVE_MATERIAL_AREA_MISMATCH");
++            }
++            state->roots.append(targetId);
++        }
++        const auto all=::bce::roots(*state->database);for(int i=0;i<all.length();++i)if(!state->roots.contains(all[i])){Open<AcDbEntity> old(all[i],AcDb::kForWrite);check(old->erase(),"remove reference association auxiliary root");}
++        state->baseline=snapshot(*state->database,state->roots);check(state->database->addReactor(state.get()),"arm immutable batch");state->armed=true;return {PreparedMaterialBatch(std::move(state)),{}};
++    }catch(const std::exception& e){return {std::nullopt,{{"MATERIAL_PREPARATION_REJECTED",location+": "+e.what(),{"",location,std::nullopt},true}}};}
++}
++}
++
++
++
++
+--- initial-stub/tests/native/material/MaterialDriver.cpp
++++ e7508e99/tests/native/material/MaterialDriver.cpp
+@@ -1,4 +1,4 @@
+-#include "NativeMaterials.h"
++#include "MaterialFixtures.h"
+ #include "NativeEvidence.h"
+ #include <aced.h>
+ #include <acutads.h>
+@@ -9,7 +9,7 @@
+ void runCase() noexcept {
+     bce::native::Config config; std::unique_ptr<bce::native::Evidence> evidence;
+     try {
+-        using namespace bce; using namespace bce::native;
++        using namespace bce; using namespace bce::native; using namespace bce::material_test;
+         config=load_config(moduleHandle); evidence=std::make_unique<Evidence>(config); validate_identity(config);
+         require(config.caseName==L"NativeMaterialPreparation", "unsupported case");
+         auto report=create_new(config.output+L"/material-case.json");
+@@ -19,14 +19,95 @@
+         region.geometry.outer={{{0,0},{10000,0},{10000,6000},{0,6000}},true};region.geometry.holes={{{{1200,900},{2400,900},{2400,2400},{1200,2400}},true}};region.areaSquareMm=58200000;region.expression.prototypeId="reference-114CF";region.expression.patternName=u8"大理石";plan.regions.push_back(region);
+         ReferenceMaterialSeed seed; seed.database=&source;seed.referenceSha256=config.referenceSHA256;seed.prototypeId="reference-114CF";seed.handle="114CF";seed.mmPerSourceUnit=1;seed.sourcePaperScale=100;seed.unitConfirmationSource="test explicit mm";seed.scaleConfirmationSource="test explicit 1:100";seed.prototypeConfirmationSource=region.prototypeApprovalSource;seed.phaseConfirmationSource="test source origin anchor policy";
+         MaterialPreparationOptions options; options.placements.push_back({"wall","fixture-front",100,{0,0},"test 1:100","test phase mapping"});
++        // Explicit test phase: the existing prototype origin is the reference anchor, target origin 12.25, 37.5.
++        AcDbObjectId sourceId;ok(source.getAcDbObjectId(sourceId,false,AcDbHandle(L"114CF")),"known reference prototype");
++        double sourceScale{},sourceAngle{},sourceSpacing{};Adesk::UInt32 sourceColor{};std::wstring sourceLayer,sourceLinetype;bool sourceDouble{};int sourceDefinitions{};
++        {Open<AcDbHatch> h(sourceId);seed.referenceAnchor={h->originPoint().x,h->originPoint().y};sourceScale=h->patternScale();sourceAngle=h->patternAngle();sourceSpacing=spacing(*h.p);sourceColor=h->color().color();sourceLayer=layer(*h.p);sourceLinetype=linetype(*h.p);sourceDouble=h->patternDouble();sourceDefinitions=h->numPatternDefinitions();}
++        options.placements[0].targetAnchor={12.25,37.5};
++        auto* ambient=acDocManager->curDocument()->database();const auto textId=appendText(*ambient);
++        Monitor ambientMonitor(*ambient),sourceMonitor(source);const auto beforeGlobals=globals();const auto workingBefore=acdbHostApplicationServices()->workingDatabase();const auto documentBefore=acDocManager->curDocument();
++        bool passed=true;std::vector<std::string> observations;
++        auto expect=[&](const std::string& name,bool pass,const std::string& detail){evidence->step(name,pass?"passed":"failed",detail);passed=passed&&pass;observations.push_back(object({{"name",quote(name)},{"passed",pass?"true":"false"},{"detail",quote(detail)}}));};
++        evidence->checkpoint("prepare-bound-native-reference-material");
++        auto wholeWall=prepareMaterials(plan,{seed},options);
++        const bool wholeBlocked=!wholeWall.canCommit()&&!wholeWall.value&&!wholeWall.issues.empty()&&wholeWall.issues.front().message.find("EMPTY_NATIVE_PATTERN_OUTPUT")!=std::string::npos;
++        expect("EmptyPatternCannotAuthorizeCommittableBatch",wholeBlocked,wholeWall.issues.empty()?"REGRESSION: whole-wall blank preparation was accepted":wholeWall.issues.front().message);
++        evidence->capability(object({{"wholeWallCapability",quote(std::string("BLOCKED_CAPABILITY"))},{"requestedNetAreaSquareMm","58200000"},{"supportedWholeWall","false"},{"reason",quote(std::string(wholeBlocked?"actual requested full-wall pattern output is empty; no committable batch returned":"whole-wall rejection contract FAILED; inspect assertions"))}}));
++        // A separate, explicitly named 2 square metre fixture does not replace the full-wall requirement.
++        plan.regions[0].identity="small-panel";options.placements[0].regionIdentity="small-panel";
++        plan.regions[0].geometry.outer={{{0,0},{2000,0},{2000,1000},{0,1000}},true};plan.regions[0].geometry.holes.clear();plan.regions[0].areaSquareMm=2000000;
+         auto result=prepareMaterials(plan,{seed},options);
+-        evidence->step("PrepareActualReferenceHatch",result.canCommit()?"passed":"failed",result.issues.empty()?"actual native material batch":result.issues.front().code);
+-        write_flushed(report.get(),object({{"passed",result.canCommit()?"true":"false"},{"scope",quote(std::string("M1 adapter fixture; no project material assignment"))}}));
++        expect("PrepareSeparateSmallPanelHatch",result.canCommit(),result.issues.empty()?"actual native material batch":result.issues.front().message);
++        if(result.canCommit()) {
++            auto& batch=*result.value;expect("ImmutableBatchInitiallyIntact",batch.intact(),"actual Hatch loops, patterns, appearance/resources and permanent mutation guard");
++            {std::vector<std::string> properties;{Open<AcDbHatch> sourceHatch(sourceId);properties.push_back(displayProperties(*sourceHatch.p,source,"reference-original-read-only"));}{Working work(batch.database());Open<AcDbHatch> targetHatch(batch.roots()[0]);properties.push_back(displayProperties(*targetHatch.p,batch.database(),"prepared-target-read-only"));}auto diagnostic=create_new(config.output+L"/material-visibility-diagnostic.json");const auto diagnosticJson=object({{"properties",array(properties)},{"ambientReadOnlyGlobals",displayGlobals()},{"scope",quote(std::string("read-only actual entity/layer/database flags; no visibility/global overrides"))}});write_flushed(diagnostic.get(),diagnosticJson);evidence->capability(diagnosticJson);}            expect("TargetRootListIsOnlyHatch",batch.roots().length()==1&&modelRoots(batch.database()).length()==1,"no cloned old boundary or reference building root");
++            {
++                Working work(batch.database());Open<AcDbHatch> h(batch.roots()[0]);double area{};ok(h->getArea(area),"SDK getArea");
++                expect("SmallPanelNativeAreaAndExactLoop",nearValue(area,2000000)&&panelLoops(*h.p),"nativeArea="+number(area));
++                expect("SmallPanelHasActualNativePatternOutput",h->numHatchLines()>0,"native generated segments="+std::to_string(h->numHatchLines()));                expect("ReferencePatternPhysicalExpression",nearValue(h->patternScale(),sourceScale)&&nearValue(h->patternAngle(),sourceAngle)&&nearValue(spacing(*h.p),sourceSpacing)&&h->patternDouble()==sourceDouble&&h->numPatternDefinitions()==sourceDefinitions&&h->color().color()==sourceColor&&layer(*h.p).find(sourceLayer)!=std::wstring::npos&&linetype(*h.p).find(sourceLinetype)!=std::wstring::npos,"scale="+number(h->patternScale())+" angle="+number(h->patternAngle())+" spacing="+number(spacing(*h.p))+" sourceSpacing="+number(sourceSpacing)+" definitions="+std::to_string(h->numPatternDefinitions()));
++                expect("ExplicitPatternPhaseMapping",nearValue(h->originPoint().x,12.25)&&nearValue(h->originPoint().y,37.5),"origin="+number(h->originPoint().x)+","+number(h->originPoint().y));
++            }
++            AcDbDatabase output(true,true);auto cloned=batch.cloneToEmpty(output);expect("OnlyPreparedHatchClonesToEmpty",cloned.canCommit()&&modelRoots(output).length()==1,"root-list cloning excludes old source geometry");
++            if(cloned.canCommit()) {
++                const auto savedId=cloned.value->front();const auto outputPath=config.output+L"/material-roundtrip.dwg";require(GetFileAttributesW(outputPath.c_str())==INVALID_FILE_ATTRIBUTES,"exclusive material DWG");
++                {Working work(output);ok(output.saveAs(outputPath.c_str(),false,AcDb::kDHL_CURRENT),"save test-only material DWG");}
++                AcDbDatabase reopened(false,true);ok(reopened.readDwgFile(outputPath.c_str(),AcDbDatabase::kForReadAndReadShare,false),"independent material reopen");reopened.closeInput(true);AcDbObjectId reopenedId;ok(reopened.getAcDbObjectId(reopenedId,false,savedId.handle()),"reopen hatch handle");
++                {Working work(reopened);Open<AcDbHatch> h(reopenedId);double area{};ok(h->getArea(area),"reopened area");expect("SmallPanelIndependentDwgReopen",modelRoots(reopened).length()==1&&panelLoops(*h.p)&&nearValue(area,2000000)&&nearValue(h->patternScale(),sourceScale)&&h->color().color()==sourceColor&&nearValue(h->originPoint().x,12.25)&&nearValue(h->originPoint().y,37.5),"roots="+std::to_string(modelRoots(reopened).length())+" loops="+(panelLoops(*h.p)?"true":"false")+" area="+number(area)+" scale="+number(h->patternScale())+" color="+std::to_string(h->color().color())+" origin="+number(h->originPoint().x)+","+number(h->originPoint().y));}
++            }
++            // A translated noninteger region must retain each actual input coordinate.
++            auto shiftedPlan=plan;for(auto& p:shiftedPlan.regions[0].geometry.outer.vertices){p.x+=100.125;p.y-=20.375;}for(auto& hole:shiftedPlan.regions[0].geometry.holes)for(auto& p:hole.vertices){p.x+=100.125;p.y-=20.375;}
++            auto shiftedOptions=options;shiftedOptions.placements[0].targetAnchor={112.375,17.125};auto shifted=prepareMaterials(shiftedPlan,{seed},shiftedOptions);
++            std::string shiftedDetail;bool shiftedOk=false;if(shifted.canCommit()){Open<AcDbHatch> h(shifted.value->roots()[0]);shiftedOk=panelLoops(*h.p,100.125,-20.375)&&nearValue(h->originPoint().x,112.375)&&nearValue(h->originPoint().y,17.125);shiftedDetail="loops="+std::string(panelLoops(*h.p,100.125,-20.375)?"true":"false")+" origin="+number(h->originPoint().x)+","+number(h->originPoint().y);}
++            expect("NonintegerCoordinatesAndTranslation",shiftedOk,shifted.issues.empty()?shiftedDetail:shifted.issues.front().message);
++            auto halfOptions=options;halfOptions.placements[0].targetPaperScale=50;auto half=prepareMaterials(plan,{seed},halfOptions);bool halfOk=false;
++            if(half.canCommit()){Open<AcDbHatch> h(half.value->roots()[0]);halfOk=panelLoops(*h.p)&&nearValue(h->patternScale(),sourceScale*.5)&&nearValue(spacing(*h.p),sourceSpacing*.5);}
++            expect("PaperScale50ChangesPatternOnly",halfOk,half.issues.empty()?"1:100 to 1:50 halves physical pattern spacing; building loops unchanged":half.issues.front().message);
++            auto metersPlan=plan;metersPlan.mmPerInputUnit=1000;metersPlan.unitDeclaration.confirmedMmPerInputUnit=1000;for(auto& p:metersPlan.regions[0].geometry.outer.vertices){p.x/=1000;p.y/=1000;}for(auto& hole:metersPlan.regions[0].geometry.holes)for(auto& p:hole.vertices){p.x/=1000;p.y/=1000;}
++            auto metersOptions=halfOptions;metersOptions.placements[0].targetAnchor={.01225,.0375};auto meters=prepareMaterials(metersPlan,{seed},metersOptions);bool metersOk=false;
++            if(meters.canCommit()){Open<AcDbHatch> h(meters.value->roots()[0]);double area{};ok(h->getArea(area),"meters area");Adesk::Int32 type{};AcGePoint2dArray points;AcGeDoubleArray bulges;ok(h->getLoopAt(0,type,points,bulges),"meters loop");metersOk=nearValue(area,2)&&nearValue(points[1].x,2)&&nearValue(points[2].y,1)&&nearValue(h->patternScale(),sourceScale*.0005)&&nearValue(spacing(*h.p),sourceSpacing*.0005);}
++            expect("NonMmUnitsPreservePhysicalSpacing",metersOk,meters.issues.empty()?"separate small panel vertices 2 x 1 metres, native area2, paper50 physical spacing":meters.issues.front().message);
++            auto holePlan=plan;holePlan.regions[0].geometry.holes={{{{200,200},{600,200},{600,600},{200,600}},true}};holePlan.regions[0].areaSquareMm=1840000;auto holeResult=prepareMaterials(holePlan,{seed},options);bool holeOk=false;std::string holeDetail=holeResult.issues.empty()?"":holeResult.issues.front().message;
++            if(holeResult.canCommit()){Working work(holeResult.value->database());Open<AcDbHatch> h(holeResult.value->roots()[0]);double area{};ok(h->getArea(area),"small-hole area");int segments{};holeOk=panelLoops(*h.p,0,0,true)&&nearValue(area,1840000)&&smallWindowVoid(*h.p,segments);holeDetail="small-panel nativeArea="+number(area)+" loops="+std::to_string(h->numLoops())+" generatedSegments="+std::to_string(segments);}
++            expect("SeparateSmallHoleAreaAndNativeVoid",holeOk,holeDetail);            auto rejected=[&](const std::string& name,const MaterialPlan& p,const std::vector<ReferenceMaterialSeed>& ss,const MaterialPreparationOptions& o){auto r=prepareMaterials(p,ss,o);expect(name,!r.canCommit()&&!r.value,r.issues.empty()?"no diagnosis":r.issues.front().message);};
++            auto wrongKind=plan;wrongKind.regions[0].expression.kind=MaterialExpressionKind::lineDrawing;rejected("LineDrawingExplicitlyUnsupported",wrongKind,{seed},options);wrongKind.regions[0].expression.kind=MaterialExpressionKind::glassBlock;rejected("GlassBlockExplicitlyUnsupported",wrongKind,{seed},options);
++            auto missing=seed;missing.unitConfirmationSource.clear();rejected("MissingSourceUnitFactRejected",plan,{missing},options);missing=seed;missing.referenceSha256=std::string(64,'0');rejected("WrongReferenceShaRejected",plan,{missing},options);
++            auto invalid=plan;invalid.regions[0].geometry.outer.closed=false;rejected("OpenRegionRejected",invalid,{seed},options);invalid=plan;std::swap(invalid.regions[0].geometry.outer.vertices[1],invalid.regions[0].geometry.outer.vertices[2]);rejected("SelfIntersectingRegionRejected",invalid,{seed},options);invalid=plan;invalid.regions[0].geometry.holes={{{{-1,200},{600,200},{600,600},{200,600}},true}};rejected("InvalidHoleRejected",invalid,{seed},options);invalid=plan;invalid.regions[0].expression.scale=0;rejected("ZeroPatternScaleRejected",invalid,{seed},options);
++            missing=seed;missing.handle="1F";{AcDbObjectId nonEntityId;ok(source.getAcDbObjectId(nonEntityId,false,AcDbHandle(L"1F")),"nonentity known fixture");Open<AcDbObject> record(nonEntityId);require(record->isA()==AcDbBlockTableRecord::desc(),"1F must be verified BlockTableRecord, not a wrong entity-class example");}rejected("NonEntityBlockRecordRejectedAtOpen",plan,{missing},options);
++            {
++                AcDbDatabase gradientDb(true,true);AcDbObjectId gradientId;
++                {Working work(gradientDb);Open<AcDbBlockTableRecord> model(acdbSymUtil()->blockModelSpaceId(&gradientDb),AcDb::kForWrite);auto gradient=std::make_unique<AcDbHatch>();gradient->setDatabaseDefaults(&gradientDb);ok(gradient->setHatchObjectType(AcDbHatch::kGradientObject),"gradient object fixture");ok(gradient->setGradient(AcDbHatch::kPreDefinedGradient,L"LINEAR"),"gradient style fixture");AcGePoint2dArray points;AcGeDoubleArray bulges;for(const auto p:{AcGePoint2d(0,0),AcGePoint2d(100,0),AcGePoint2d(100,100),AcGePoint2d(0,100),AcGePoint2d(0,0)}){points.append(p);bulges.append(0);}ok(gradient->appendLoop(AcDbHatch::kExternal|AcDbHatch::kPolyline,points,bulges),"gradient loop");ok(model->appendAcDbEntity(gradientId,gradient.get()),"gradient append");gradient.release()->close();}
++                const auto gradientPath=config.output+L"/gradient-rejection-fixture.dwg";require(GetFileAttributesW(gradientPath.c_str())==INVALID_FILE_ATTRIBUTES,"exclusive gradient fixture");{Working work(gradientDb);ok(gradientDb.saveAs(gradientPath.c_str(),false,AcDb::kDHL_CURRENT),"save gradient fixture");}
++                AcDbDatabase gradientRead(false,true);ok(gradientRead.readDwgFile(gradientPath.c_str(),AcDbDatabase::kForReadAndReadShare,false),"reopen gradient fixture provenance");gradientRead.closeInput(true);auto gradientSeed=seed;gradientSeed.database=&gradientRead;gradientSeed.referenceSha256=sha256(gradientPath);ACHAR handle[32]{};gradientId.handle().getIntoAsciiBuffer(handle);gradientSeed.handle=utf8(handle);auto gradientPlan=plan;gradientPlan.referenceSha256=gradientSeed.referenceSha256;Monitor gradientMonitor(gradientRead);
++                auto gradientResult=prepareMaterials(gradientPlan,{gradientSeed},options);expect("GradientExplicitlyUnsupported",!gradientResult.canCommit()&&!gradientResult.value&&!gradientResult.issues.empty()&&gradientResult.issues.front().message.find("UNSUPPORTED_MATERIAL_NATIVE_TYPE")!=std::string::npos,gradientResult.issues.empty()?"missing gradient diagnostic":gradientResult.issues.front().message);expect("GradientSourceUntouched",gradientMonitor.changes==0,"unsupported expression read only");
++            }
++            auto rotatedPlan=plan;rotatedPlan.regions[0].expression.direction={0,1};auto rotated=prepareMaterials(rotatedPlan,{seed},options);std::string rotatedDetail;bool rotatedOk=false;
++            if(rotated.canCommit()){Open<AcDbHatch> h(rotated.value->roots()[0]);rotatedOk=panelLoops(*h.p)&&nearValue(std::sin(h->patternAngle()-sourceAngle),1)&&nearValue(spacing(*h.p),sourceSpacing)&&nearValue(h->originPoint().x,12.25)&&nearValue(h->originPoint().y,37.5);rotatedDetail="loops="+std::string(panelLoops(*h.p)?"true":"false")+" angle="+number(h->patternAngle())+" spacing="+number(spacing(*h.p))+" origin="+number(h->originPoint().x)+","+number(h->originPoint().y);}
++            expect("ExplicitDirectionRotatesPatternOnly",rotatedOk,rotated.issues.empty()?rotatedDetail:rotated.issues.front().message);            for(const auto mutation:{0,1,2,3}) {
++                auto altered=prepareMaterials(plan,{seed},options);require(altered.canCommit(),"mutation fixture prepare");
++                {Open<AcDbHatch> h(altered.value->roots()[0],AcDb::kForWrite);if(mutation==0)ok(h->setPatternScale(h->patternScale()*2),"mutate pattern");else if(mutation==1)ok(h->removeLoopAt(0),"mutate loop");else if(mutation==2)ok(h->setColorIndex(1),"mutate appearance");else{const auto id=h->layerId();h.p->close();h.p=nullptr;Open<AcDbLayerTableRecord> layerRecord(id,AcDb::kForWrite);layerRecord->setIsOff(true);}}
++                AcDbDatabase rejectedTarget(true,true);auto copied=altered.value->cloneToEmpty(rejectedTarget);
++                expect("ModifiedPreparationRejected"+std::to_string(mutation),!altered.value->intact()&&!copied.canCommit()&&modelRoots(rejectedTarget).isEmpty(),"loop/pattern/entity/layer mutation invalidates immutable native batch before copying");
++            }
++            expect("OriginalBatchStillIntact",batch.intact(),"read and clone leave immutable original prepared expression unchanged");
++        }
++        {Open<AcDbText> text(textId);expect("CurrentUnsavedChineseUnchanged",std::wstring(text->textString())==L"M1 未保存中文材料源保持"&&text->position()==AcGePoint3d(12.25,77.125,0),"current-memory Chinese fixture remains without saving current document");}
++        expect("SourceAndAmbientZeroMutation",sourceMonitor.changes==0&&ambientMonitor.changes==0,"source events="+std::to_string(sourceMonitor.changes)+" ambient events="+std::to_string(ambientMonitor.changes));
++        expect("GlobalsAndWorkingDatabaseRestored",globals()==beforeGlobals&&acdbHostApplicationServices()->workingDatabase()==workingBefore&&acDocManager->curDocument()==documentBefore,"system variables, working DB pointer and current document restored after success/rejection");
++        write_flushed(report.get(),object({{"status",quote(std::string(passed?"partial":"failed"))},{"safetyAndSmallPanelAssertionsPassed",passed?"true":"false"},{"wholeWallCapability",quote(std::string("BLOCKED_CAPABILITY"))},{"wholeWallRejected",wholeBlocked?"true":"false"},{"assertions",array(observations)},{"scope",quote(std::string("PARTIAL M1: 58.2M whole-wall remains BLOCKED_CAPABILITY; separate 2M panel only; no project region inference; no InPlaceWriter commit"))}}));
+         require(sha256(config.reference)==config.referenceSHA256&&sha256(config.scheme)==config.schemeSHA256,"source changed");
+-        evidence->finish(config,result.canCommit()?"passed":"failed");
+-    } catch(const std::exception& e) {try{if(evidence){evidence->error(e.what());evidence->finish(config,"failed");}}catch(...) {}}
++        evidence->finish(config,passed?"partial":"failed");    } catch(const std::exception& e) {try{if(evidence){evidence->error(e.what());evidence->finish(config,"failed");}}catch(...) {}}
+     catch(...) {try{if(evidence){evidence->error("unknown ABI failure");evidence->finish(config,"failed");}}catch(...) {}}
+ }
+ }
+ BOOL APIENTRY DllMain(HMODULE h,DWORD reason,LPVOID){if(reason==DLL_PROCESS_ATTACH){moduleHandle=h;DisableThreadLibraryCalls(h);}return TRUE;}
+ extern "C" __declspec(dllexport) AcRx::AppRetCode acrxEntryPoint(AcRx::AppMsgCode message,void* id){try{if(message==AcRx::kInitAppMsg){acrxDynamicLinker->unlockApplication(id);acrxRegisterAppMDIAware(id);return acedRegCmds->addCommand(L"BCE_MATERIAL_CASES",L"BCE_TEST_RUN",L"BCE_TEST_RUN",ACRX_CMD_MODAL,runCase)==Acad::eOk?AcRx::kRetOK:AcRx::kRetError;}if(message==AcRx::kUnloadAppMsg)return acedRegCmds->removeGroup(L"BCE_MATERIAL_CASES")==Acad::eOk?AcRx::kRetOK:AcRx::kRetError;return AcRx::kRetOK;}catch(...){return AcRx::kRetError;}}
++
++
++
++
++
++
++
++
++
++
+--- initial-stub/tests/native/material/MaterialFixtures.h
++++ e7508e99/tests/native/material/MaterialFixtures.h
+@@ -0,0 +1,126 @@
++#pragma once
++#include "NativeMaterials.h"
++#include "NativeEvidence.h"
++#include <acdocman.h>
++#include <aced.h>
++#include <acutmem.h>
++#include <adscodes.h>
++#include <dbHatch.h>
++#include <dbapserv.h>
++#include <dbents.h>
++#include <dbidmap.h>
++#include <dbsymtb.h>
++#include <dbsymutl.h>
++#include <cmath>
++#include <functional>
++#include <iomanip>
++#include <sstream>
++namespace bce::material_test {
++inline void ok(Acad::ErrorStatus s,const char* m){native::require(s==Acad::eOk,std::string(m)+":"+std::to_string(s));}
++template<class T> class Open final {public:explicit Open(AcDbObjectId id,AcDb::OpenMode mode=AcDb::kForRead){ok(acdbOpenObject(p,id,mode),"test open");}~Open(){if(p)p->close();}Open(const Open&)=delete;Open& operator=(const Open&)=delete;T* operator->()const{return p;}T* p{};};
++class Working final {public:explicit Working(AcDbDatabase& db):old(acdbHostApplicationServices()->workingDatabase()){acdbHostApplicationServices()->setWorkingDatabase(&db);}~Working(){acdbHostApplicationServices()->setWorkingDatabase(old);}Working(const Working&)=delete;Working& operator=(const Working&)=delete;AcDbDatabase* old;};
++struct Monitor final:AcDbDatabaseReactor {explicit Monitor(AcDbDatabase& d):db(d){ok(db.addReactor(this),"monitor add");}~Monitor(){db.removeReactor(this);}void objectOpenedForModify(const AcDbDatabase*,const AcDbObject*)override{++changes;}void objectModified(const AcDbDatabase*,const AcDbObject*)override{++changes;}void objectAppended(const AcDbDatabase*,const AcDbObject*)override{++changes;}void objectErased(const AcDbDatabase*,const AcDbObject*,Adesk::Boolean)override{++changes;}void headerSysVarWillChange(const AcDbDatabase*,const ACHAR*)override{++changes;}AcDbDatabase& db;unsigned changes{};};
++inline bool nearValue(double a,double b){return std::abs(a-b)<=1e-8*(std::max)(1.0,std::abs(b));}
++inline std::string number(double v){std::ostringstream out;out<<std::setprecision(17)<<v;return out.str();}
++inline std::string globals(){std::string out;for(const auto name:{L"INSUNITS",L"LTSCALE",L"CELTSCALE",L"DIMSTYLE",L"TEXTSTYLE",L"FRAME",L"WIPEOUTFRAME",L"IMAGEFRAME",L"XCLIPFRAME",L"FONTALT",L"MIRRTEXT"}){resbuf v{};native::require(acedGetVar(name,&v)==RTNORM,"read globals");if(v.restype==RTSHORT)out+=std::to_string(v.resval.rint);else if(v.restype==RTLONG)out+=std::to_string(v.resval.rlong);else if(v.restype==RTREAL)out+=number(v.resval.rreal);else if(v.restype==RTSTR){out+=native::utf8(v.resval.rstring);acutDelString(v.resval.rstring);}else throw std::runtime_error("unsupported global");out+=';';}return out;}
++inline AcDbObjectIdArray modelRoots(AcDbDatabase& db){Open<AcDbBlockTableRecord> b(acdbSymUtil()->blockModelSpaceId(&db));AcDbBlockTableRecordIterator* raw{};ok(b->newIterator(raw),"iterator");std::unique_ptr<AcDbBlockTableRecordIterator> it(raw);AcDbObjectIdArray ids;for(;!it->done();it->step()){AcDbObjectId id;ok(it->getEntityId(id),"entity id");ids.append(id);}return ids;}
++inline AcDbObjectId appendText(AcDbDatabase& db){Working work(db);Open<AcDbBlockTableRecord> b(acdbSymUtil()->blockModelSpaceId(&db),AcDb::kForWrite);auto text=std::make_unique<AcDbText>();text->setDatabaseDefaults(&db);ok(text->setTextString(L"M1 未保存中文材料源保持"),"current Chinese fixture");ok(text->setPosition({12.25,77.125,0}),"text position");ok(text->setHeight(250),"text height");AcDbObjectId id;ok(b->appendAcDbEntity(id,text.get()),"current append fixture");text.release()->close();return id;}
++inline bool loops(AcDbHatch& h,double ox=0,double oy=0){if(h.isA()!=AcDbHatch::desc()||h.numLoops()!=2||h.associative())return false;AcDbObjectIdArray assoc;ok(h.getAssocObjIds(assoc),"assoc");if(!assoc.isEmpty())return false;
++    const double coordinates[2][4][2]={{{0,0},{10000,0},{10000,6000},{0,6000}},{{1200,900},{2400,900},{2400,2400},{1200,2400}}};
++    for(int i=0;i<2;++i){Adesk::Int32 type{};AcGePoint2dArray p;AcGeDoubleArray bulges;ok(h.getLoopAt(i,type,p,bulges),"loop read");if(!(type&AcDbHatch::kPolyline)||(i==0&&!(type&AcDbHatch::kExternal))||p.length()<4||p.length()>5)return false;for(int j=0;j<4;++j)if(!nearValue(p[j].x,coordinates[i][j][0]+ox)||!nearValue(p[j].y,coordinates[i][j][1]+oy))return false;if(p.length()==5&&p.first()!=p.last())return false;for(int j=0;j<bulges.length();++j)if(bulges[j]!=0)return false;}return true;}
++// Independent line/rectangle clip: an evaluated pattern segment must not enter the open window.
++inline bool crossesWindow(AcGePoint2d a,AcGePoint2d b){double lo=0,hi=1;const double av[2]={a.x,a.y},dv[2]={b.x-a.x,b.y-a.y},mn[2]={1200.00001,900.00001},mx[2]={2399.99999,2399.99999};for(int k=0;k<2;++k){if(std::abs(dv[k])<1e-14){if(av[k]<=mn[k]||av[k]>=mx[k])return false;}else{auto t1=(mn[k]-av[k])/dv[k],t2=(mx[k]-av[k])/dv[k];if(t1>t2)std::swap(t1,t2);lo=(std::max)(lo,t1);hi=(std::min)(hi,t2);if(lo>=hi)return false;}}return hi>lo;}
++inline bool voidLines(AcDbHatch& h,int& count){count=h.numHatchLines();if(count<=0)return false;for(int i=0;i<count;++i){AcGePoint2d a,b;ok(h.getHatchLineDataAt(i,a,b),"evaluated pattern segment");if(crossesWindow(a,b))return false;}return true;}
++inline std::wstring layer(AcDbHatch& h){Open<AcDbLayerTableRecord> l(h.layerId());AcString name;ok(l->getName(name),"layer name");return name.kACharPtr();}
++inline std::wstring linetype(AcDbHatch& h){Open<AcDbLinetypeTableRecord> l(h.linetypeId());AcString name;ok(l->getName(name),"linetype name");return name.kACharPtr();}
++inline double spacing(AcDbHatch& h){double a{},x{},y{},dx{},dy{};AcGeDoubleArray dash;ok(h.getPatternDefinitionAt(0,a,x,y,dx,dy,dash),"pattern definition");return std::hypot(dx,dy);}
++inline std::string hatchState(AcDbHatch& h,const std::string& stage) {
++    native::Fields fields={{"stage",native::quote(stage)},{"originX",number(h.originPoint().x)},{"originY",number(h.originPoint().y)},{"scale",number(h.patternScale())},{"angle",number(h.patternAngle())},{"pattern",native::quote(std::wstring(h.patternName()))},{"patternType",std::to_string(h.patternType())},{"solid",h.isSolidFill()?"true":"false"},{"lineGeneration",h.lineGenerationEnabled()?"true":"false"},{"numHatchLines",std::to_string(h.numHatchLines())},{"patternDefinitions",std::to_string(h.numPatternDefinitions())}};
++    AcGePoint2dArray starts,ends;const auto lineStatus=h.getHatchLinesData(starts,ends);fields.push_back({"getLinesStatus",std::to_string(lineStatus)});fields.push_back({"returnedSegments",std::to_string(starts.length())});
++    if(h.numPatternDefinitions()>0){double a{},x{},y{},dx{},dy{};AcGeDoubleArray d;ok(h.getPatternDefinitionAt(0,a,x,y,dx,dy,d),"diagnostic first pattern");fields.push_back({"definitionAngle",number(a)});fields.push_back({"baseX",number(x)});fields.push_back({"baseY",number(y)});fields.push_back({"offsetX",number(dx)});fields.push_back({"offsetY",number(dy)});}
++    return native::object(fields);
++}
++inline void diagnosePattern(const PreparedMaterialBatch& batch,const native::Config& config,native::Evidence& evidence) {
++    std::vector<std::string> states;
++    for(int experiment=0;experiment<3;++experiment) {
++        AcDbDatabase target(true,true);auto copied=batch.cloneToEmpty(target);native::require(copied.canCommit(),"diagnostic independent clone");Working work(target);const auto id=copied.value->front();
++        {Open<AcDbHatch> h(id,AcDb::kForWrite);const auto prefix=std::string("experiment-")+std::to_string(experiment);states.push_back(hatchState(*h.p,prefix+"-initial"));
++            if(experiment==1){const auto status=h->setOriginPoint({12.25,37.5});states.push_back(native::object({{"operation",native::quote(std::string("setOriginPoint"))},{"status",std::to_string(status)}}));states.push_back(hatchState(*h.p,prefix+"-after-origin"));}
++            if(experiment==2){const auto type=h->patternType();const std::wstring name=h->patternName();const auto status=h->setPattern(type,name.c_str());states.push_back(native::object({{"operation",native::quote(std::string("setPattern-same-name-independent-probe-only"))},{"status",std::to_string(status)}}));states.push_back(hatchState(*h.p,prefix+"-after-setPattern"));}
++            h->setLineGenerationEnabled(true);const auto evaluated=h->evaluateHatch();states.push_back(native::object({{"operation",native::quote(prefix+"-evaluateHatch")},{"status",std::to_string(evaluated)}}));states.push_back(hatchState(*h.p,prefix+"-immediately-evaluated"));
++            int count{};const bool voidOk=voidLines(*h.p,count);states.push_back(native::object({{"operation",native::quote(prefix+"-direct-native-void-check")},{"segments",std::to_string(count)},{"voidOk",voidOk?"true":"false"}}));
++            double area{};const auto status=h->getArea(area);states.push_back(native::object({{"operation",native::quote(prefix+"-getArea")},{"status",std::to_string(status)},{"area",number(area)}}));states.push_back(hatchState(*h.p,prefix+"-after-area"));
++        }
++        {Open<AcDbHatch> h(id);states.push_back(hatchState(*h.p,std::string("experiment-")+std::to_string(experiment)+"-closed-reopened"));}
++    }
++    auto report=native::create_new(config.output+L"/material-diagnostic.json");native::write_flushed(report.get(),native::object({{"experiments",native::array(states)}}));
++    evidence.capability(native::object({{"diagnostic",native::quote(std::string("M1 pattern cache/origin independent experiments"))},{"states",native::array(states)}}));
++}inline std::string displayProperties(AcDbHatch& h,AcDbDatabase& db,const std::string& stage) {
++    Open<AcDbLayerTableRecord> l(h.layerId());AcString name,plot;ok(l->getName(name),"diagnostic layer name");ok(l->plotStyleName(plot),"diagnostic layer plotstyle");
++    native::Fields values={{"stage",native::quote(stage)},{"hatch",hatchState(h,stage)},{"entityVisibility",std::to_string(h.visibility())},{"entityColorIndex",std::to_string(h.colorIndex())},{"entityColorValue",std::to_string(h.color().color())},{"entityColorMethod",std::to_string(h.color().colorMethod())},{"entityTransparency",std::to_string(h.transparency().serializeOut())},{"entityAlpha",std::to_string(h.transparency().alpha())},{"entityTransparencyClear",h.transparency().isClear()?"true":"false"},{"entityLineWeight",std::to_string(h.lineWeight())},{"entityLineTypeScale",number(h.linetypeScale())},{"layerName",native::quote(std::wstring(name.kACharPtr()))},{"layerOff",l->isOff()?"true":"false"},{"layerFrozen",l->isFrozen()?"true":"false"},{"layerLocked",l->isLocked()?"true":"false"},{"layerPlottable",l->isPlottable()?"true":"false"},{"layerViewportDefaultFrozen",l->VPDFLT()?"true":"false"},{"layerColorIndex",std::to_string(l->color().colorIndex())},{"layerColorValue",std::to_string(l->color().color())},{"layerColorMethod",std::to_string(l->color().colorMethod())},{"layerTransparency",std::to_string(l->transparency().serializeOut())},{"layerAlpha",std::to_string(l->transparency().alpha())},{"layerLineWeight",std::to_string(l->lineWeight())},{"layerPlotStyle",native::quote(std::wstring(plot.kACharPtr()))},{"databaseFillMode",db.fillmode()?"true":"false"},{"databaseInsunits",std::to_string(db.insunits())},{"databaseLtscale",number(db.ltscale())},{"hatchStyle",std::to_string(h.hatchStyle())},{"hatchAssociative",h.associative()?"true":"false"},{"hatchElevation",number(h.elevation())},{"hatchNormal",native::array({number(h.normal().x),number(h.normal().y),number(h.normal().z)})},{"backgroundColorValue",std::to_string(h.backgroundColor().color())},{"backgroundColorMethod",std::to_string(h.backgroundColor().colorMethod())}};
++    std::vector<std::string> loops;for(int i=0;i<h.numLoops();++i){Adesk::Int32 type=h.loopTypeAt(i);native::Fields f={{"type",std::to_string(type)}};if(type&AcDbHatch::kPolyline){AcGePoint2dArray p;AcGeDoubleArray b;ok(h.getLoopAt(i,type,p,b),"diagnostic loop");std::vector<std::string> coords,bulges;for(int j=0;j<p.length();++j)coords.push_back(native::array({number(p[j].x),number(p[j].y)}));for(int j=0;j<b.length();++j)bulges.push_back(number(b[j]));f.push_back({"points",native::array(coords)});f.push_back({"bulges",native::array(bulges)});}loops.push_back(native::object(f));}values.push_back({"loops",native::array(loops)});
++    return native::object(values);
++}
++inline std::string displayGlobals() {
++    native::Fields fields;for(const auto name:{L"FILLMODE",L"HPMAXLINES",L"HPQUICKPREVIEW",L"HPLINETYPE",L"HPASSOC"}){resbuf value{};const auto status=acedGetVar(name,&value);native::Fields item={{"getStatus",std::to_string(status)},{"restype",std::to_string(value.restype)}};if(status==RTNORM){if(value.restype==RTSHORT)item.push_back({"value",std::to_string(value.resval.rint)});else if(value.restype==RTLONG)item.push_back({"value",std::to_string(value.resval.rlong)});else if(value.restype==RTREAL)item.push_back({"value",number(value.resval.rreal)});else if(value.restype==RTSTR){item.push_back({"value",native::quote(std::wstring(value.resval.rstring))});acutDelString(value.resval.rstring);}}fields.push_back({native::utf8(name),native::object(item)});}return native::object(fields);
++}inline void diagnoseLoopRebuild(AcDbDatabase& source,AcDbObjectId sourceId,const native::Config& config,native::Evidence& evidence) {
++    struct Ring {Adesk::Int32 type;AcGePoint2dArray points;AcGeDoubleArray bulges;};
++    std::vector<Ring> original;
++    {Open<AcDbHatch> h(sourceId);for(int i=0;i<h->numLoops();++i){Ring r;r.type=h->loopTypeAt(i);native::require((r.type&AcDbHatch::kPolyline)!=0,"known source loops must be public polylines");ok(h->getLoopAt(i,r.type,r.points,r.bulges),"original loop values");original.push_back(r);}}
++    std::vector<std::string> steps;
++    auto rectangle=[](bool hole,bool reverse,bool zeros){Ring r;r.type=hole?AcDbHatch::kDefault:AcDbHatch::kExternal;const std::vector<AcGePoint2d> p=hole?std::vector<AcGePoint2d>{{1200,900},{2400,900},{2400,2400},{1200,2400},{1200,900}}:std::vector<AcGePoint2d>{{0,0},{10000,0},{10000,6000},{0,6000},{0,0}};for(std::size_t i=0;i<p.size();++i){r.points.append(p[reverse?p.size()-1-i:i]);if(zeros)r.bulges.append(0);}return r;};
++    for(int track=0;track<2;++track){
++        AcDbDatabase target(true,true);Working work(target);AcDbObjectIdArray input;input.append(sourceId);AcDbIdMapping map;ok(source.wblockCloneObjects(input,acdbSymUtil()->blockModelSpaceId(&target),map,AcDb::kDrcMangleName),"diagnostic source clone");AcDbIdPair pair;pair.setKey(sourceId);native::require(map.compute(pair)&&pair.isCloned(),"source clone mapping");
++        Open<AcDbHatch> h(pair.value(),AcDb::kForWrite);const auto prefix=std::string("track-")+std::to_string(track)+"/";
++        auto capture=[&](const std::string& stage){const auto status=h->evaluateHatch();steps.push_back(native::object({{"stage",native::quote(prefix+stage)},{"evaluateStatus",std::to_string(status)},{"display",displayProperties(*h.p,target,stage)}}));};
++        steps.push_back(native::object({{"stage",native::quote(prefix+"clone-before-evaluate")},{"display",displayProperties(*h.p,target,"clone-before-evaluate")}}));capture("unchanged-evaluate");
++        ok(h->setAssociative(false),"diagnostic detach");ok(h->removeAssocObjIds(),"diagnostic detach ids");capture("detached-original-loops");
++        if(track==0){
++            ok(h->transformBy(AcGeMatrix3d::translation({12.25,37.5,0})),"diagnostic translation");capture("translation-original-loops");
++            // Restore the known original geometry after translation, then replace its loops by exactly read values.
++            ok(h->transformBy(AcGeMatrix3d::translation({-12.25,-37.5,0})),"diagnostic reverse translation");capture("restored-original-loops");
++            while(h->numLoops())ok(h->removeLoopAt(h->numLoops()-1),"remove original loops");
++            for(const auto& r:original)ok(h->appendLoop(r.type,r.points,r.bulges),"reappend identical source loop values");capture("recreated-identical-eight-loops");
++            ok(h->setHatchStyle(AcDbHatch::kNormal),"diagnostic normal style");capture("identical-eight-loops-normal-style");
++        }else{
++            while(h->numLoops())ok(h->removeLoopAt(h->numLoops()-1),"remove for new rectangle");const auto outer=rectangle(false,false,false);ok(h->appendLoop(outer.type,outer.points,outer.bulges),"new outer documented kExternal empty bulges");capture("new-outer-only-empty-bulges-original-style");
++            ok(h->setHatchStyle(AcDbHatch::kNormal),"new normal style");capture("new-outer-only-normal-style");
++            auto hole=rectangle(true,false,false);ok(h->appendLoop(hole.type,hole.points,hole.bulges),"add hole empty bulges");capture("new-outer-and-ccw-hole-empty-bulges");
++            ok(h->removeLoopAt(1),"remove ccw hole");hole=rectangle(true,true,false);ok(h->appendLoop(hole.type,hole.points,hole.bulges),"add reversed hole");capture("new-outer-and-cw-hole-empty-bulges");
++            h->recordGraphicsModified(true);capture("public-recordGraphicsModified-true");
++        }
++    }
++    auto file=native::create_new(config.output+L"/material-loop-diagnostic.json");const auto json=native::object({{"steps",native::array(steps)},{"scope",native::quote(std::string("two isolated source clones; stepwise public API only; no PAT/global changes or fabricated lines"))}});native::write_flushed(file.get(),json);evidence.capability(json);
++}inline void diagnoseSizePosition(AcDbDatabase& source,AcDbObjectId sourceId,const native::Config& config,native::Evidence& evidence) {
++    std::vector<std::string> cases;
++    for(int position=0;position<2;++position)for(int size=0;size<2;++size){
++        // Fixed coordinates are bound test facts from the actual reference 114CF, never production defaults.
++        const double ox=position==0?0.0:70833.754221590847;
++        const double oy=position==0?0.0:135497.16500728054;
++        const double width=size==0?2000.0:10000.0,height=size==0?1000.0:6000.0;
++        AcDbDatabase target(true,true);Working work(target);AcDbObjectIdArray ids;ids.append(sourceId);AcDbIdMapping map;
++        ok(source.wblockCloneObjects(ids,acdbSymUtil()->blockModelSpaceId(&target),map,AcDb::kDrcMangleName),"2x2 source clone");AcDbIdPair pair;pair.setKey(sourceId);native::require(map.compute(pair)&&pair.isCloned(),"2x2 clone mapping");
++        Open<AcDbHatch> h(pair.value(),AcDb::kForWrite);const auto before=hatchState(*h.p,"fresh-clone");double sourceArea{};const auto sourceAreaStatus=h->getArea(sourceArea);
++        ok(h->setAssociative(false),"2x2 detach");ok(h->removeAssocObjIds(),"2x2 remove assoc");while(h->numLoops())ok(h->removeLoopAt(h->numLoops()-1),"2x2 remove old loops");
++        AcGePoint2dArray points;AcGeDoubleArray bulges;for(const auto point:{AcGePoint2d(ox,oy),AcGePoint2d(ox+width,oy),AcGePoint2d(ox+width,oy+height),AcGePoint2d(ox,oy+height),AcGePoint2d(ox,oy)})points.append(point);
++        ok(h->appendLoop(AcDbHatch::kExternal,points,bulges),"2x2 append rectangle");const auto status=h->evaluateHatch(false);const auto evaluated=hatchState(*h.p,"immediate-evaluate-false");double area{};const auto areaStatus=h->getArea(area);
++        cases.push_back(native::object({{"positionCase",position==0?"\"origin\"":"\"reference-near\""},{"sizeCase",size==0?"\"2000x1000\"":"\"10000x6000\""},{"x",number(ox)},{"y",number(oy)},{"width",number(width)},{"height",number(height)},{"sourceAreaStatus",std::to_string(sourceAreaStatus)},{"sourceNativeArea",number(sourceArea)},{"before",before},{"evaluateFalseStatus",std::to_string(status)},{"immediate",evaluated},{"areaStatus",std::to_string(areaStatus)},{"nativeArea",number(area)},{"afterArea",displayProperties(*h.p,target,"after-area")}}));
++    }
++    auto file=native::create_new(config.output+L"/material-size-position-diagnostic.json");const auto json=native::object({{"cases",native::array(cases)},{"globalsReadOnly",displayGlobals()},{"scope",native::quote(std::string("four independent native clones; only rectangle dimensions and position differ; no origin/scale/style/global/PAT changes; not the whole-wall acceptance test"))}});native::write_flushed(file.get(),json);evidence.capability(json);
++}inline bool panelLoops(AcDbHatch& h,double ox=0,double oy=0,bool withHole=false){
++    if(h.isA()!=AcDbHatch::desc()||h.associative()||h.numLoops()!=(withHole?2:1))return false;AcDbObjectIdArray assoc;ok(h.getAssocObjIds(assoc),"small-panel associations");if(!assoc.isEmpty())return false;
++    const double coords[2][4][2]={{{0,0},{2000,0},{2000,1000},{0,1000}},{{200,200},{600,200},{600,600},{200,600}}};
++    for(int i=0;i<h.numLoops();++i){Adesk::Int32 type{};AcGePoint2dArray p;AcGeDoubleArray b;ok(h.getLoopAt(i,type,p,b),"small-panel loops");if(!(type&AcDbHatch::kPolyline)||p.length()!=5)return false;for(int j=0;j<4;++j)if(!nearValue(p[j].x,coords[i][j][0]+ox)||!nearValue(p[j].y,coords[i][j][1]+oy))return false;if(p.first()!=p.last())return false;for(int j=0;j<b.length();++j)if(b[j]!=0)return false;}return true;
++}
++inline bool smallWindowVoid(AcDbHatch& h,int& count){
++    count=h.numHatchLines();if(count<=0)return false;
++    for(int i=0;i<count;++i){AcGePoint2d a,b;ok(h.getHatchLineDataAt(i,a,b),"small window native line");double lo=0,hi=1;bool intersects=true;const double av[2]={a.x,a.y},dv[2]={b.x-a.x,b.y-a.y};
++        for(int k=0;k<2;++k){if(std::abs(dv[k])<1e-14){if(av[k]<=200.00001||av[k]>=599.99999){intersects=false;break;}}else{auto t1=(200.00001-av[k])/dv[k],t2=(599.99999-av[k])/dv[k];if(t1>t2)std::swap(t1,t2);lo=(std::max)(lo,t1);hi=(std::min)(hi,t2);if(lo>=hi){intersects=false;break;}}}if(intersects&&hi>lo)return false;
++    }return true;
++}}
++
++
++
++
++
++
+--- initial-stub/tools/build_material.ps1
++++ e7508e99/tools/build_material.ps1
+@@ -5,10 +5,10 @@
+ $buildRoot = Join-Path (Join-Path $projectRoot 'build') $buildName
+ $sourceRoot = Join-Path $buildRoot 'src'
+ $null = New-Item -ItemType Directory -Path $sourceRoot
+-$receipt = [ordered]@{ contract='bce.material-build.v1'; label=$Label; startedUtc=[DateTime]::UtcNow.ToString('o'); compiledSourcesDirectory=$sourceRoot; sourceFiles=[ordered]@{}; inputOrigins=@(); binary=$null; binarySHA256=$null; log=(Join-Path $buildRoot 'build.log'); exitCode=1; toolchain='AutoCAD2020 SDK23.1 / v141 14.16.27023 / x64 / C++17' }
++$receipt = [ordered]@{ contract='bce.material-build.v1'; label=$Label; startedUtc=[DateTime]::UtcNow.ToString('o'); compiledSourcesDirectory=$sourceRoot; sourceFiles=[ordered]@{}; inputOrigins=@(); binary=$null; binarySHA256=$null; log=(Join-Path $buildRoot 'build.log'); exitCode=1; nativeExecuted=$false;toolchain='AutoCAD2020 SDK23.1 / v141 14.16.27023 / x64 / C++17' }
+ $exitResult = 1
+ try {
+-    $inputs = @('src/ElevationModel.h','src/ElevationModel.cpp','src/RuleModel.h','src/Recognition.h','src/MaterialRules.h','src/MaterialRules.cpp','src/NativeMaterials.h','src/NativeMaterials.cpp','tests/native/NativeEvidence.h','tests/native/NativeEvidence.cpp','tests/native/material/MaterialDriver.cpp','tests/native/material/ElevationMaterialCases.vcxproj')
++    $inputs = @('src/ElevationModel.h','src/ElevationModel.cpp','src/RuleModel.h','src/Recognition.h','src/MaterialRules.h','src/MaterialRules.cpp','src/NativeMaterials.h','src/NativeMaterials.cpp','tests/native/NativeEvidence.h','tests/native/NativeEvidence.cpp','tests/native/material/MaterialDriver.cpp','tests/native/material/MaterialFixtures.h','tests/native/material/ElevationMaterialCases.vcxproj')
+     foreach ($relative in $inputs) {
+         $source = Join-Path $projectRoot $relative
+         $destination = Join-Path $sourceRoot (Split-Path $relative -Leaf)
+@@ -24,8 +24,11 @@
+     if (!(Test-Path -LiteralPath $vcvars) -or !(Test-Path -LiteralPath $msbuild)) { throw 'v141 build tools missing' }
+     $command = '@echo off' + "`r`n" + 'call "' + $vcvars + '" -vcvars_ver=14.16' + "`r`n" + 'if errorlevel 1 exit /b %errorlevel%' + "`r`n" + '"' + $msbuild + '" ElevationMaterialCases.vcxproj /t:Rebuild /p:Configuration=Release /p:Platform=x64 /p:VCToolsVersion=14.16.27023 /m:1 /nologo /verbosity:normal' + "`r`n" + 'exit /b %errorlevel%' + "`r`n"
+     Set-Content -LiteralPath (Join-Path $buildRoot 'build-command.cmd') -Value $command -Encoding ascii
++    $receipt.commandFile = Join-Path $buildRoot 'build-command.cmd'
++    $receipt.commandSHA256 = (Get-FileHash -LiteralPath $receipt.commandFile).Hash
+     Push-Location $sourceRoot
+     try { & $env:ComSpec /d /c '..\build-command.cmd' > $receipt.log 2>&1; $exitResult = $LASTEXITCODE } finally { Pop-Location }
++    foreach ($entry in $receipt.inputOrigins) { if ((Get-FileHash -LiteralPath $entry.origin).Hash -ne $entry.sha256) { throw 'Live input changed during build' } }
+     if ($exitResult -eq 0) {
+         $receipt.binary = Join-Path $buildRoot 'out/ElevationMaterialCases.arx'
+         $receipt.binarySHA256 = (Get-FileHash -LiteralPath $receipt.binary -Algorithm SHA256).Hash
+@@ -43,3 +46,5 @@
+ exit $exitResult
+ 
+ 
++
++

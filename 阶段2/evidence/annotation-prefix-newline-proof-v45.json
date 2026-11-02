@@ -1,0 +1,9 @@
+{
+  "sourceSHA256": "00302EA1A41E56BF719FD2BF099ACF694F461C21F58418E1C62150B328D15B45",
+  "nativeCopySHA256": "05F5EF1163EF4EA13EBB1C1B73FA5961CEA31EA8F391A3F8A9230BD04E040A13",
+  "sourceLineEnding": "CRLF",
+  "nativeCopyLineEnding": "LF",
+  "decodedLinesExactlyEqual": true,
+  "reason": "C++ text-mode ifstream normalises CRLF; business data unchanged",
+  "firstPublicationBlockedBeforeDirectoryCreation": true
+}

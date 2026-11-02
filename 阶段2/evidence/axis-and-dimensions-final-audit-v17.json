@@ -1,0 +1,17 @@
+{
+  "contract": "bcp.axis-dimension-final-audit.v1",
+  "deliveryManifestFilesVerified": 12,
+  "sourceFilesVerified": 11,
+  "moduleSHA256": "D69E4A31D2535E5572415006252860FCB62292B66A88D34619D658928360BE47",
+  "snapshotsUnchanged": 6,
+  "sharedRegistrationValues": [
+    2,
+    2
+  ],
+  "hostGone": true,
+  "exactStagingRemoved": true,
+  "dimensions": 24,
+  "axisEnds": 28,
+  "normalQuitPassed": false,
+  "stage2Complete": false
+}

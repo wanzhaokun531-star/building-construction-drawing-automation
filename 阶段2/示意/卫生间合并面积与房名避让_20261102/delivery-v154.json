@@ -1,0 +1,48 @@
+{
+  "contract": "bcp.bathroom-area-and-dimension-layer-delivery.v1",
+  "recorded": "2026-11-02T15:45:22.027698+08:00",
+  "version": "v154",
+  "DWGVersion": "v11",
+  "DWGs": [
+    {
+      "floor": 1,
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\卫生间合并面积与房名避让_20261102\\方案施工图_一层_卫生间面积及尺寸图层确认样张_v11.dwg",
+      "SHA256": "3B8CC0BD633F8CB30C459F0720FD1F9C6AC10528B845F0CF74E7AE05A5A25A7D"
+    },
+    {
+      "floor": 2,
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\卫生间合并面积与房名避让_20261102\\方案施工图_二层_卫生间面积及尺寸图层确认样张_v11.dwg",
+      "SHA256": "DB1BA4F2175C276209CAF7054B2B46092245BD768DAAD18CCF5A1047C6AFC4B0"
+    }
+  ],
+  "bathroomCount": 2,
+  "bathroomAreaM2": [
+    5.197600000104484,
+    5.19760000010526
+  ],
+  "display": "5.20m² once per public bathroom",
+  "functionalRoomAreaLabels": 18,
+  "removedDuplicateAreaLabels": 2,
+  "movedRoomNames": 2,
+  "areaBelowName": true,
+  "openingNumbersAndAllOpeningGeometryUnchanged": true,
+  "dimensionLayer": "PUB_DIM",
+  "layerColor": 3,
+  "layerLinetype": "Continuous",
+  "layerLineweight": -3,
+  "wholeDimensionsRelayered": 36,
+  "wholeDimensionsRetained": 52,
+  "dimensionValuesAndGripsUnchanged": true,
+  "buildingGrossAreaUnchanged": true,
+  "pluginCodeChanged": false,
+  "pluginBinarySHA256": "835B9E0F67B65C0F3A43F06F0C443BFB2029B1CBFACEB751C24938B894631FEA",
+  "COMUsed": false,
+  "ComputerUseUsed": false,
+  "TCHBusinessCommandUsed": false,
+  "normalQUITPassed": false,
+  "stage2Complete": false,
+  "qaSHA256": "70109E44639B92728792A32F03F2F92AE1CEE6E8C11A12BB155E243BD7FC0F98",
+  "manifestSHA256": "4CC05B6A1770A940F1A824EBF0EB1B6436EF7F5C034D7E977DACE90B4503E9B3",
+  "visualSHA256": "7EDDBD4117CF1873EA329C72FB292D658C52CBB7FA147F770AA2BC4D71B64A35",
+  "closureSHA256": "62B15BB7030C3AC732C5940B377B53176396115D6497A9F81A3C0A8799553EB0"
+}

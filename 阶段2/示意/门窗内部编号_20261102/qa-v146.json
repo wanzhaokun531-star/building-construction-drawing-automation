@@ -1,0 +1,1078 @@
+{
+  "contract": "bcp.native-opening-number-final-qa.v1",
+  "version": "v146",
+  "pluginCodeChanged": false,
+  "pluginBinarySHA256": "835B9E0F67B65C0F3A43F06F0C443BFB2029B1CBFACEB751C24938B894631FEA",
+  "geometryPassed": true,
+  "actualStoredNumbersMatched": 40,
+  "floors": [
+    {
+      "floor": 1,
+      "control": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-115517\\number-floor-1\\control.dwg",
+      "SHA256": "4C8B006DA7D4BEC69EC9E5E3DC571770F1F4DE690C5576CA23587DCA009A3B60",
+      "previewJob": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-115904-770357-floor1",
+      "PDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-115904-770357-floor1\\stage2-A2-1-100.pdf",
+      "steps": [
+        {
+          "serial": "e5533f150c2b4c14a5be9dd106ca734c",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-115517\\dispatch_e5533f150c2b4c14a5be9dd106ca734c.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "3c87170b8cd34159aff7c0dfb0c16d28",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-115517",
+            "processId": 42444,
+            "desktop": "CodexS1_3c87170b8cd34159aff7c0dfb0c16d28",
+            "inputDesktop": "Default",
+            "serial": "e5533f150c2b4c14a5be9dd106ca734c",
+            "command": "S1OPENPROBECONTROL",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-115904-770357-floor1",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-115904-770357-floor1\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "08b33accb68b4eae8a08f71bdba260f7",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-115517\\dispatch_08b33accb68b4eae8a08f71bdba260f7.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "3c87170b8cd34159aff7c0dfb0c16d28",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-115517",
+            "processId": 42444,
+            "desktop": "CodexS1_3c87170b8cd34159aff7c0dfb0c16d28",
+            "inputDesktop": "Default",
+            "serial": "08b33accb68b4eae8a08f71bdba260f7",
+            "command": "S1PHASE2EXECUTE",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-115904-770357-floor1",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-115904-770357-floor1\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "ad5eb851f03b407ea0bcbcdc008b6541",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-115517\\dispatch_ad5eb851f03b407ea0bcbcdc008b6541.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "3c87170b8cd34159aff7c0dfb0c16d28",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-115517",
+            "processId": 42444,
+            "desktop": "CodexS1_3c87170b8cd34159aff7c0dfb0c16d28",
+            "inputDesktop": "Default",
+            "serial": "ad5eb851f03b407ea0bcbcdc008b6541",
+            "command": "S1PHASE2PREVIEW",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-115904-770357-floor1",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-115904-770357-floor1\\control.dwg",
+            "error": null
+          }
+        }
+      ],
+      "actualStoredNumbersMatched": 21,
+      "nativeOpeningLabelsAtConfirmedCenters": true,
+      "duplicateStandaloneTextRemoved": 21,
+      "rebuiltDoorLabelGroups": 10,
+      "roomAreaGroupsPreserved": 10,
+      "allRoomAndTotalAreaTextAndAllOtherNativeAnnotationsUnchanged": true,
+      "allOriginalOpeningGeometryGripsAndStretchPointsPreserved": true,
+      "allPublicOpeningPropertiesPreservedFromAssignment": true,
+      "wholeTCHDimensionChains": 25,
+      "modelRoots": 259,
+      "numberReadback": [
+        {
+          "opening": "7F31",
+          "caption": "84A4",
+          "number": "C1815",
+          "captionRotation": 0,
+          "width": 1800.0,
+          "height": 1500.0,
+          "elevation": 900.0,
+          "angle": 0.0,
+          "actualInternalNumber": "C1815"
+        },
+        {
+          "opening": "7F34",
+          "caption": "84A5",
+          "number": "C2415",
+          "captionRotation": 0,
+          "width": 2400.0,
+          "height": 1500.0,
+          "elevation": 900.0,
+          "angle": 180.0,
+          "actualInternalNumber": "C2415"
+        },
+        {
+          "opening": "7F36",
+          "caption": "84A6",
+          "number": "M2221",
+          "captionRotation": 0,
+          "width": 2200.0,
+          "height": 2100.0,
+          "elevation": 0.0,
+          "angle": 180.0,
+          "actualInternalNumber": "M2221"
+        },
+        {
+          "opening": "7F37",
+          "caption": "84A7",
+          "number": "C2415",
+          "captionRotation": 0,
+          "width": 2400.0,
+          "height": 1500.0,
+          "elevation": 900.0,
+          "angle": 180.0,
+          "actualInternalNumber": "C2415"
+        },
+        {
+          "opening": "7F39",
+          "caption": "84A8",
+          "number": "M0927",
+          "captionRotation": 1.5707963267948966,
+          "width": 900.0,
+          "height": 2700.0,
+          "elevation": 0.0,
+          "angle": 90.0,
+          "actualInternalNumber": "M0927"
+        },
+        {
+          "opening": "7F3B",
+          "caption": "84A9",
+          "number": "M0927",
+          "captionRotation": 1.5707963267948966,
+          "width": 900.0,
+          "height": 2700.0,
+          "elevation": 0.0,
+          "angle": 90.0,
+          "actualInternalNumber": "M0927"
+        },
+        {
+          "opening": "7F3E",
+          "caption": "84AA",
+          "number": "C1815",
+          "captionRotation": 0,
+          "width": 1800.0,
+          "height": 1500.0,
+          "elevation": 900.0,
+          "angle": 0.0,
+          "actualInternalNumber": "C1815"
+        },
+        {
+          "opening": "7F40",
+          "caption": "84AB",
+          "number": "C1815",
+          "captionRotation": 0,
+          "width": 1800.0,
+          "height": 1500.0,
+          "elevation": 900.0,
+          "angle": 0.0,
+          "actualInternalNumber": "C1815"
+        },
+        {
+          "opening": "7F43",
+          "caption": "84AC",
+          "number": "M0927",
+          "captionRotation": 0,
+          "width": 900.0,
+          "height": 2700.0,
+          "elevation": 0.0,
+          "angle": 0.0,
+          "actualInternalNumber": "M0927"
+        },
+        {
+          "opening": "7F44",
+          "caption": "84AD",
+          "number": "C1215",
+          "captionRotation": 1.5707963267948966,
+          "width": 1200.0,
+          "height": 1500.0,
+          "elevation": 900.0,
+          "angle": 270.0,
+          "actualInternalNumber": "C1215"
+        },
+        {
+          "opening": "7F45",
+          "caption": "84AE",
+          "number": "M0927",
+          "captionRotation": 0,
+          "width": 900.0,
+          "height": 2700.0,
+          "elevation": 0.0,
+          "angle": 0.0,
+          "actualInternalNumber": "M0927"
+        },
+        {
+          "opening": "7FE0",
+          "caption": "84AF",
+          "number": "M0927",
+          "captionRotation": 0,
+          "width": 900.0,
+          "height": 2700.0,
+          "elevation": 0.0,
+          "angle": 0.0,
+          "actualInternalNumber": "M0927"
+        },
+        {
+          "opening": "7FE2",
+          "caption": "84B0",
+          "number": "M2227",
+          "captionRotation": 0,
+          "width": 2200.0,
+          "height": 2700.0,
+          "elevation": 0.0,
+          "angle": 0.0,
+          "actualInternalNumber": "M2227"
+        },
+        {
+          "opening": "7FE5",
+          "caption": "84B1",
+          "number": "M0927",
+          "captionRotation": 1.5707963267948966,
+          "width": 900.0,
+          "height": 2700.0,
+          "elevation": 0.0,
+          "angle": 90.0,
+          "actualInternalNumber": "M0927"
+        },
+        {
+          "opening": "7FFA",
+          "caption": "84B2",
+          "number": "M2227",
+          "captionRotation": 1.5707963267948966,
+          "width": 2200.0,
+          "height": 2700.0,
+          "elevation": 0.0,
+          "angle": 90.0,
+          "actualInternalNumber": "M2227"
+        },
+        {
+          "opening": "7FFC",
+          "caption": "84B3",
+          "number": "C2115",
+          "captionRotation": 0,
+          "width": 2100.0,
+          "height": 1500.0,
+          "elevation": 900.0,
+          "angle": 0.0,
+          "actualInternalNumber": "C2115"
+        },
+        {
+          "opening": "8107",
+          "caption": "84B4",
+          "number": "M0827",
+          "captionRotation": 1.5707963267948966,
+          "width": 800.0,
+          "height": 2700.0,
+          "elevation": 0.0,
+          "angle": 270.0,
+          "actualInternalNumber": "M0827"
+        },
+        {
+          "opening": "8109",
+          "caption": "84B5",
+          "number": "C1215",
+          "captionRotation": 1.5707963267948966,
+          "width": 1200.0,
+          "height": 1500.0,
+          "elevation": 900.0,
+          "angle": 270.0,
+          "actualInternalNumber": "C1215"
+        },
+        {
+          "opening": "810B",
+          "caption": "84B6",
+          "number": "C1215",
+          "captionRotation": 0,
+          "width": 1200.0,
+          "height": 1500.0,
+          "elevation": 900.0,
+          "angle": 180.0,
+          "actualInternalNumber": "C1215"
+        },
+        {
+          "opening": "81E4",
+          "caption": "84B7",
+          "number": "C0918",
+          "captionRotation": 1.5707963267948966,
+          "width": 900.0,
+          "height": 1800.0,
+          "elevation": 0.0,
+          "angle": 270.0,
+          "actualInternalNumber": "C0918"
+        },
+        {
+          "opening": "826B",
+          "caption": "84B8",
+          "number": "C2415",
+          "captionRotation": 1.5707963267948966,
+          "width": 2400.0,
+          "height": 1500.0,
+          "elevation": 900.0,
+          "angle": 90.0,
+          "actualInternalNumber": "C2415"
+        }
+      ],
+      "allCurrentOpeningNumbers": {
+        "7F31": "C1815",
+        "7F34": "C2415",
+        "7F36": "M2221",
+        "7F37": "C2415",
+        "7F39": "M0927",
+        "7F3B": "M0927",
+        "7F3E": "C1815",
+        "7F40": "C1815",
+        "7F43": "M0927",
+        "7F44": "C1215",
+        "7F45": "M0927",
+        "7FE0": "M0927",
+        "7FE2": "M2227",
+        "7FE5": "M0927",
+        "7FFA": "M2227",
+        "7FFC": "C2115",
+        "8107": "M0827",
+        "8109": "C1215",
+        "810B": "C1215",
+        "81E4": "C0918",
+        "824B": "",
+        "826B": "C2415"
+      },
+      "groups": {
+        "BCP_DOOR_LABEL_F1_7F36": [
+          [
+            "86E3",
+            "INSERT"
+          ],
+          [
+            "7F36",
+            "TCH_OPENING"
+          ]
+        ],
+        "BCP_DOOR_LABEL_F1_7F39": [
+          [
+            "86E5",
+            "INSERT"
+          ],
+          [
+            "7F39",
+            "TCH_OPENING"
+          ]
+        ],
+        "BCP_DOOR_LABEL_F1_7F3B": [
+          [
+            "86E7",
+            "INSERT"
+          ],
+          [
+            "7F3B",
+            "TCH_OPENING"
+          ]
+        ],
+        "BCP_DOOR_LABEL_F1_7F43": [
+          [
+            "86E9",
+            "INSERT"
+          ],
+          [
+            "7F43",
+            "TCH_OPENING"
+          ]
+        ],
+        "BCP_DOOR_LABEL_F1_7F45": [
+          [
+            "86EB",
+            "INSERT"
+          ],
+          [
+            "7F45",
+            "TCH_OPENING"
+          ]
+        ],
+        "BCP_DOOR_LABEL_F1_7FE0": [
+          [
+            "86ED",
+            "INSERT"
+          ],
+          [
+            "7FE0",
+            "TCH_OPENING"
+          ]
+        ],
+        "BCP_DOOR_LABEL_F1_7FE2": [
+          [
+            "86EF",
+            "INSERT"
+          ],
+          [
+            "7FE2",
+            "TCH_OPENING"
+          ]
+        ],
+        "BCP_DOOR_LABEL_F1_7FE5": [
+          [
+            "86F1",
+            "INSERT"
+          ],
+          [
+            "7FE5",
+            "TCH_OPENING"
+          ]
+        ],
+        "BCP_DOOR_LABEL_F1_7FFA": [
+          [
+            "86F3",
+            "INSERT"
+          ],
+          [
+            "7FFA",
+            "TCH_OPENING"
+          ]
+        ],
+        "BCP_DOOR_LABEL_F1_8107": [
+          [
+            "86F5",
+            "INSERT"
+          ],
+          [
+            "8107",
+            "TCH_OPENING"
+          ]
+        ],
+        "BCP_AREA_F1_R01": [
+          [
+            "8623",
+            "TEXT"
+          ],
+          [
+            "86A5",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R02": [
+          [
+            "8625",
+            "TEXT"
+          ],
+          [
+            "86A7",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R03": [
+          [
+            "8627",
+            "TEXT"
+          ],
+          [
+            "86A9",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R04": [
+          [
+            "8629",
+            "TEXT"
+          ],
+          [
+            "86AB",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R05": [
+          [
+            "862B",
+            "TEXT"
+          ],
+          [
+            "86AD",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R06": [
+          [
+            "862D",
+            "TEXT"
+          ],
+          [
+            "86AF",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R07": [
+          [
+            "862F",
+            "TEXT"
+          ],
+          [
+            "86B1",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R08": [
+          [
+            "8631",
+            "TEXT"
+          ],
+          [
+            "86B3",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R09": [
+          [
+            "8633",
+            "TEXT"
+          ],
+          [
+            "86B5",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F1_R10": [
+          [
+            "8635",
+            "TEXT"
+          ],
+          [
+            "86B7",
+            "TEXT"
+          ]
+        ]
+      }
+    },
+    {
+      "floor": 2,
+      "control": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-115517\\number-floor-2\\control.dwg",
+      "SHA256": "355470E8DABD784EEA41812DC62CF2F07457DC58559C4749CFDE88219C34112C",
+      "previewJob": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-115907-522508-floor2",
+      "PDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-115907-522508-floor2\\stage2-A2-1-100.pdf",
+      "steps": [
+        {
+          "serial": "dc28016b45b440fe84f5121b3953645e",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-115517\\dispatch_dc28016b45b440fe84f5121b3953645e.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "3c87170b8cd34159aff7c0dfb0c16d28",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-115517",
+            "processId": 42444,
+            "desktop": "CodexS1_3c87170b8cd34159aff7c0dfb0c16d28",
+            "inputDesktop": "Default",
+            "serial": "dc28016b45b440fe84f5121b3953645e",
+            "command": "S1OPENPROBECONTROL",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-115907-522508-floor2",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-115907-522508-floor2\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "3d270f4516b04889ba4fbd8e1039401c",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-115517\\dispatch_3d270f4516b04889ba4fbd8e1039401c.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "3c87170b8cd34159aff7c0dfb0c16d28",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-115517",
+            "processId": 42444,
+            "desktop": "CodexS1_3c87170b8cd34159aff7c0dfb0c16d28",
+            "inputDesktop": "Default",
+            "serial": "3d270f4516b04889ba4fbd8e1039401c",
+            "command": "S1PHASE2EXECUTE",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-115907-522508-floor2",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-115907-522508-floor2\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "da9cf07f8867408dab9fa1ebf331c0f8",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-115517\\dispatch_da9cf07f8867408dab9fa1ebf331c0f8.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "3c87170b8cd34159aff7c0dfb0c16d28",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-115517",
+            "processId": 42444,
+            "desktop": "CodexS1_3c87170b8cd34159aff7c0dfb0c16d28",
+            "inputDesktop": "Default",
+            "serial": "da9cf07f8867408dab9fa1ebf331c0f8",
+            "command": "S1PHASE2PREVIEW",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-115907-522508-floor2",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-115907-522508-floor2\\control.dwg",
+            "error": null
+          }
+        }
+      ],
+      "actualStoredNumbersMatched": 19,
+      "nativeOpeningLabelsAtConfirmedCenters": true,
+      "duplicateStandaloneTextRemoved": 19,
+      "rebuiltDoorLabelGroups": 9,
+      "roomAreaGroupsPreserved": 10,
+      "allRoomAndTotalAreaTextAndAllOtherNativeAnnotationsUnchanged": true,
+      "allOriginalOpeningGeometryGripsAndStretchPointsPreserved": true,
+      "allPublicOpeningPropertiesPreservedFromAssignment": true,
+      "wholeTCHDimensionChains": 27,
+      "modelRoots": 250,
+      "numberReadback": [
+        {
+          "opening": "8015",
+          "caption": "849E",
+          "number": "C1815",
+          "captionRotation": 0,
+          "width": 1800.0,
+          "height": 1500.0,
+          "elevation": 900.0,
+          "angle": 0.0,
+          "actualInternalNumber": "C1815"
+        },
+        {
+          "opening": "8018",
+          "caption": "849F",
+          "number": "C2415",
+          "captionRotation": 0,
+          "width": 2400.0,
+          "height": 1500.0,
+          "elevation": 900.0,
+          "angle": 180.0,
+          "actualInternalNumber": "C2415"
+        },
+        {
+          "opening": "801A",
+          "caption": "84A0",
+          "number": "M2121",
+          "captionRotation": 0,
+          "width": 2100.0,
+          "height": 2100.0,
+          "elevation": 0.0,
+          "angle": 180.0,
+          "actualInternalNumber": "M2121"
+        },
+        {
+          "opening": "801D",
+          "caption": "84A1",
+          "number": "C2415",
+          "captionRotation": 0,
+          "width": 2400.0,
+          "height": 1500.0,
+          "elevation": 900.0,
+          "angle": 180.0,
+          "actualInternalNumber": "C2415"
+        },
+        {
+          "opening": "8021",
+          "caption": "84A2",
+          "number": "C1815",
+          "captionRotation": 0,
+          "width": 1800.0,
+          "height": 1500.0,
+          "elevation": 900.0,
+          "angle": 0.0,
+          "actualInternalNumber": "C1815"
+        },
+        {
+          "opening": "8024",
+          "caption": "84A3",
+          "number": "C1815",
+          "captionRotation": 0,
+          "width": 1800.0,
+          "height": 1500.0,
+          "elevation": 900.0,
+          "angle": 0.0,
+          "actualInternalNumber": "C1815"
+        },
+        {
+          "opening": "8025",
+          "caption": "84A4",
+          "number": "M0927",
+          "captionRotation": 0,
+          "width": 900.0,
+          "height": 2700.0,
+          "elevation": 0.0,
+          "angle": 0.0,
+          "actualInternalNumber": "M0927"
+        },
+        {
+          "opening": "8078",
+          "caption": "84A5",
+          "number": "M0927",
+          "captionRotation": 0,
+          "width": 900.0,
+          "height": 2700.0,
+          "elevation": 0.0,
+          "angle": 0.0,
+          "actualInternalNumber": "M0927"
+        },
+        {
+          "opening": "807A",
+          "caption": "84A6",
+          "number": "C0715",
+          "captionRotation": 1.5707963267948966,
+          "width": 700.0,
+          "height": 1500.0,
+          "elevation": 900.0,
+          "angle": 90.0,
+          "actualInternalNumber": "C0715"
+        },
+        {
+          "opening": "8103",
+          "caption": "84A7",
+          "number": "M0927",
+          "captionRotation": 0,
+          "width": 900.0,
+          "height": 2700.0,
+          "elevation": 0.0,
+          "angle": 0.0,
+          "actualInternalNumber": "M0927"
+        },
+        {
+          "opening": "8147",
+          "caption": "84A8",
+          "number": "M1227",
+          "captionRotation": 0,
+          "width": 1200.0,
+          "height": 2700.0,
+          "elevation": 0.0,
+          "angle": 0.0,
+          "actualInternalNumber": "M1227"
+        },
+        {
+          "opening": "8148",
+          "caption": "84A9",
+          "number": "C1215",
+          "captionRotation": 1.5707963267948966,
+          "width": 1200.0,
+          "height": 1500.0,
+          "elevation": 900.0,
+          "angle": 270.0,
+          "actualInternalNumber": "C1215"
+        },
+        {
+          "opening": "81C1",
+          "caption": "84AA",
+          "number": "M0927",
+          "captionRotation": 1.5707963267948966,
+          "width": 900.0,
+          "height": 2700.0,
+          "elevation": 0.0,
+          "angle": 90.0,
+          "actualInternalNumber": "M0927"
+        },
+        {
+          "opening": "81EA",
+          "caption": "84AB",
+          "number": "M0927",
+          "captionRotation": 0,
+          "width": 900.0,
+          "height": 2700.0,
+          "elevation": 0.0,
+          "angle": 0.0,
+          "actualInternalNumber": "M0927"
+        },
+        {
+          "opening": "81EC",
+          "caption": "84AC",
+          "number": "C0918",
+          "captionRotation": 1.5707963267948966,
+          "width": 900.0,
+          "height": 1800.0,
+          "elevation": 0.0,
+          "angle": 270.0,
+          "actualInternalNumber": "C0918"
+        },
+        {
+          "opening": "82B0",
+          "caption": "84AD",
+          "number": "M0927",
+          "captionRotation": 0,
+          "width": 900.0,
+          "height": 2700.0,
+          "elevation": 0.0,
+          "angle": 0.0,
+          "actualInternalNumber": "M0927"
+        },
+        {
+          "opening": "82B2",
+          "caption": "84AE",
+          "number": "M0827",
+          "captionRotation": 1.5707963267948966,
+          "width": 800.0,
+          "height": 2700.0,
+          "elevation": 0.0,
+          "angle": 270.0,
+          "actualInternalNumber": "M0827"
+        },
+        {
+          "opening": "82B4",
+          "caption": "84AF",
+          "number": "C1215",
+          "captionRotation": 1.5707963267948966,
+          "width": 1200.0,
+          "height": 1500.0,
+          "elevation": 900.0,
+          "angle": 270.0,
+          "actualInternalNumber": "C1215"
+        },
+        {
+          "opening": "82B6",
+          "caption": "84B0",
+          "number": "C1215",
+          "captionRotation": 0,
+          "width": 1200.0,
+          "height": 1500.0,
+          "elevation": 900.0,
+          "angle": 180.0,
+          "actualInternalNumber": "C1215"
+        }
+      ],
+      "allCurrentOpeningNumbers": {
+        "8015": "C1815",
+        "8018": "C2415",
+        "801A": "M2121",
+        "801D": "C2415",
+        "8021": "C1815",
+        "8024": "C1815",
+        "8025": "M0927",
+        "8078": "M0927",
+        "807A": "C0715",
+        "8103": "M0927",
+        "8147": "M1227",
+        "8148": "C1215",
+        "81C1": "M0927",
+        "81EA": "M0927",
+        "81EC": "C0918",
+        "8218": "",
+        "82B0": "M0927",
+        "82B2": "M0827",
+        "82B4": "C1215",
+        "82B6": "C1215"
+      },
+      "groups": {
+        "BCP_DOOR_LABEL_F2_801A": [
+          [
+            "86D8",
+            "INSERT"
+          ],
+          [
+            "801A",
+            "TCH_OPENING"
+          ]
+        ],
+        "BCP_DOOR_LABEL_F2_8025": [
+          [
+            "86DA",
+            "INSERT"
+          ],
+          [
+            "8025",
+            "TCH_OPENING"
+          ]
+        ],
+        "BCP_DOOR_LABEL_F2_8078": [
+          [
+            "86DC",
+            "INSERT"
+          ],
+          [
+            "8078",
+            "TCH_OPENING"
+          ]
+        ],
+        "BCP_DOOR_LABEL_F2_8103": [
+          [
+            "86DE",
+            "INSERT"
+          ],
+          [
+            "8103",
+            "TCH_OPENING"
+          ]
+        ],
+        "BCP_DOOR_LABEL_F2_8147": [
+          [
+            "86E0",
+            "INSERT"
+          ],
+          [
+            "8147",
+            "TCH_OPENING"
+          ]
+        ],
+        "BCP_DOOR_LABEL_F2_81C1": [
+          [
+            "86E2",
+            "INSERT"
+          ],
+          [
+            "81C1",
+            "TCH_OPENING"
+          ]
+        ],
+        "BCP_DOOR_LABEL_F2_81EA": [
+          [
+            "86E4",
+            "INSERT"
+          ],
+          [
+            "81EA",
+            "TCH_OPENING"
+          ]
+        ],
+        "BCP_DOOR_LABEL_F2_82B0": [
+          [
+            "86E6",
+            "INSERT"
+          ],
+          [
+            "82B0",
+            "TCH_OPENING"
+          ]
+        ],
+        "BCP_DOOR_LABEL_F2_82B2": [
+          [
+            "86E8",
+            "INSERT"
+          ],
+          [
+            "82B2",
+            "TCH_OPENING"
+          ]
+        ],
+        "BCP_AREA_F2_R01": [
+          [
+            "8619",
+            "TEXT"
+          ],
+          [
+            "869A",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R02": [
+          [
+            "861B",
+            "TEXT"
+          ],
+          [
+            "869C",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R03": [
+          [
+            "861D",
+            "TEXT"
+          ],
+          [
+            "869E",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R04": [
+          [
+            "861F",
+            "TEXT"
+          ],
+          [
+            "86A0",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R05": [
+          [
+            "8621",
+            "TEXT"
+          ],
+          [
+            "86A2",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R06": [
+          [
+            "8623",
+            "TEXT"
+          ],
+          [
+            "86A4",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R07": [
+          [
+            "8625",
+            "TEXT"
+          ],
+          [
+            "86A6",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R08": [
+          [
+            "8627",
+            "TEXT"
+          ],
+          [
+            "86A8",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R09": [
+          [
+            "8629",
+            "TEXT"
+          ],
+          [
+            "86AA",
+            "TEXT"
+          ]
+        ],
+        "BCP_AREA_F2_R10": [
+          [
+            "862B",
+            "TEXT"
+          ],
+          [
+            "86AC",
+            "TEXT"
+          ]
+        ]
+      }
+    }
+  ],
+  "fontScope": "Native embedded TCH numbering uses the opening native style (_TCH_WINDOW). Scratch EXPLODE evidence shows 3.5 paper-mm TDbText rather than former 300 model-mm standalone Text. Not asserted identical glyph metrics.",
+  "scope": "DWG samples only; not a BCP_BUILD implementation or complete construction drawing acceptance."
+}

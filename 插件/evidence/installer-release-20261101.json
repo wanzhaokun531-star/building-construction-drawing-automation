@@ -1,0 +1,39 @@
+{
+  "contract": "bcp.installer-release.v1",
+  "recorded": "2026-11-01T09:50:56.284081",
+  "installer": "D:\\Codex\\建筑施工图自动化\\插件\\交付\\建筑施工图助手_0.1.1_安装程序.exe",
+  "installerSHA256": "8E5AB0F56EB690804F34F308D7BD00DC93809113E8B3A12A45E934BC85EF07FA",
+  "archive": "D:\\Codex\\建筑施工图自动化\\插件\\交付\\建筑施工图助手_0.1.1_含安装器_20261101.zip",
+  "archiveSHA256": "82641F06422651CE2BA2E993BC3CE1CE786E5C76E4770A4DBD5961FB4E465087",
+  "payloadFiles": 15,
+  "filesVerified": 63,
+  "pluginSHA256": "A13736594EB546C57FC7D5F7051AB2E917AC1BE67E5557C6E22FCADA800EB1C6",
+  "DWGSHA256": "DE5293DEB586923012F66C504AA115A13757D2231EE04F16538CE3DCC7F73A9C",
+  "oldReleaseUnchanged": true,
+  "PE": "Windows x64 native GUI, no CLR",
+  "staticCRT": true,
+  "realUserInstallationPerformed": false,
+  "GUIVisualTested": false,
+  "CADLaunched": false,
+  "registrySettingsModified": false,
+  "tests": 4,
+  "freshReview": {
+    "agent": "/root/installer_final_review",
+    "findings": [],
+    "scope": "source, build, 15 resources and PE/manifest inspection",
+    "declined": [
+      "GUI and real AppData/CAD discovery not run",
+      "fault injection/concurrency/reparse not tested",
+      "test rerun performed by author",
+      "final ZIP checked by author",
+      "unchanged plugin business evidence reused"
+    ]
+  },
+  "sourceFiles": {
+    "build_payload.py": "819FD1E99ECD2CC910B0B3BFDD282D1E04F63D5AA2CB4DBF0F2EDD6B5E711ACB",
+    "build\\payload.json": "F103B24BAD0345358CF971F953488BADB053A484AA8F4B89DA3EEEF8698C2CD3",
+    "src\\BuildingPlanSetup.vcxproj": "8777D689569270E2DF2A109BA060DCEA87F7B69A3251C7F939B1F5D4C8A289F8",
+    "src\\Setup.cpp": "F5A325397203AA0FC4D887E71CD9EE4D6DBE2D567D4A65A94F31253695B738FC",
+    "tests\\test_setup.py": "D3120DF8B27563D7037970C880B07472D8A47B1B269A4718D68324A973B282E5"
+  }
+}

@@ -1,0 +1,3 @@
+FAIL: wall-axis evidence missing
+assertions=1 passed=0 failed=1 result=FAIL
+Scope: three actual wall-baseline axes through documented command, not full axis design or annotation.

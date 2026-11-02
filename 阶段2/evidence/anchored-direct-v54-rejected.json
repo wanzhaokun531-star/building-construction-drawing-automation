@@ -1,0 +1,6 @@
+{
+  "candidate": "v54",
+  "nativeError": "failure: native mask state owner=target-model frame=1 show=1",
+  "DWGProduced": false,
+  "scope": "mask is target model, show1 but frame1; initialise published stock WIPEOUTVARIABLES in side DB via Rx factory"
+}

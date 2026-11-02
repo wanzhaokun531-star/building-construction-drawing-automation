@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>AcDbEntity::explode</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+<link rel="stylesheet" type="text/css" href="default_plus.css" media="screen, projection, tv " />
+<script language=javascript src="arxref.js"></script>
+<script language=javascript src="ac_common.js"></script>
+<script language=javascript src="ac.acad_ak.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="ObjectARX_Reference_Guide.html">ObjectARX Reference Guide</a> &gt; <a href="AcDb_Classes.html">AcDb Classes</a> &gt; <a href="AcDbEntity.html">AcDbEntity Class</a> &gt; <a href="!!MEMBERTYPE_Methods_AcDbEntity.html">AcDbEntity Methods</a> &gt; <a href="AcDbEntity__explode@AcDbVoidPtrArray_@const.html">explode Method</a></div>
+<div class="Element92">
+<div class="Element5">
+AcDbEntity::explode<span class="Element61">&nbsp;&nbsp;&nbsp; </span></div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<div class="Element58">
+<a name="432B2B"></a><div class="Element99">
+C++</div>
+<div class="Element101"><div class="Element100"><pre class="Element100">ACDBCORE2D_PORT ADESK_SEALED_VIRTUAL Acad::ErrorStatus <strong><span style="color: #660000">explode</span></strong>(
+    AcDbVoidPtrArray&amp; <strong><span style="color: #660000">entitySet</span></strong>
+) <strong><span style="color: #871F78">const</span></strong>;</pre></div></div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element252">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element240" valign="top" width="50%">
+<div class="Element241">
+Parameters&nbsp;</div></td><td class="Element244" valign="top" width="50%">
+<div class="Element245">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+entitySet&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input array to contain pointers to new entities; this array may already contain pointers from other entities' <span class="Element146">explode()</span> methods; output with all entities that result from exploding this entity, appended to the array&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="4465736372697074696F6E"></a><div class="Element14">
+Description</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element15">
+Function Usage</div>
+<p class="Element10">
+This function is primarily intended for AutoCAD to call as part of an explode operation that includes this entity. However, this function can be used by ObjectARX applications to obtain an array of pointers to non-database-resident entity objects that are what the entity considers to be its exploded parts.&nbsp;</p>
+<p class="Element10">
+When calling this function, the <span class="Element146">entitySet</span> array does not need to be empty. This function will append to it, and pointers to entities that it creates to be used in its place as the &quot;exploded&quot; result.&nbsp;</p>
+<p class="Element10">
+If this function is successful, it will return <span class="Element146">Acad::eOk</span>. Other return values may vary depending on how it has been implemented.</p><div class="Element15">
+Function Implementation in Derived Classes</div>
+<p class="Element10">
+This function should dynamically create (using the <span class="Element146">new</span> operator) whatever entity objects are appropriate to be used to replace the entity after an explode operation has taken place. Pointers to these entities are then appended to the <span class="Element146">entitySet</span> array. Once the pointers have been appended, the function should return with a status of <span class="Element146">Acad::eOk</span>.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><div class="Element15">
+Note</div>
+<p class="Element10">
+This function must not add the new entities to the database, nor should it erase the entity it is a part of. Both of these steps will be taken care of by AutoCAD (or whatever other application calls this function).&nbsp;</p>
+<p class="Element10">
+This also means that if an ObjectARX application calls the explode method of an object, the calling application is responsible for the resulting entities (that is, either appending them to a database or deleting them when they are no longer needed) and for erasing the original entity (if appropriate).</p><div class="Element15">
+Default Implementation</div>
+<p class="Element10">
+Immediately returns <span class="Element146">Acad::eNotApplicable</span>.</p><div class="Element15">
+Custom Entities</div>
+<p class="Element10">
+When using a custom entity, you must define an explode method in order for the AutoCAD commands BHATCH and EXPLODE to work. Your explode method should break your entity down into less complicated entities.</p></div>
+</div>
+<a name="4C696E6B73"></a><div class="Element14">
+Links</div>
+<div class="Element11">
+<div class="Element10">
+<a href="AcDbEntity.html">AcDbEntity</a></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<table class=FooterTable width=100%><tr valign=top>
+<td>&nbsp;</td>
+<td align=right>&nbsp;<span class="CommentsLink" onclick="doComments();" title="Click here to send a comment about this topic.">Comments?</span>&nbsp;</td>
+</tr></table>
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

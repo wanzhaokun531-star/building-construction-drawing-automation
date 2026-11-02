@@ -1,0 +1,17 @@
+{
+  "baseline": "\u7acb\u9762\u63d2\u4ef6\\build\\m1-20261101-210123-305-diagnostic-origin-cache-f17c8897",
+  "candidate": "\u7acb\u9762\u63d2\u4ef6\\build\\m1-20261101-210629-715-origin-metadata-fix-0fa84e48",
+  "files": [
+    {
+      "name": "NativeMaterials.cpp",
+      "before": "6A59277C57768535A85A09A559577DA3879376B93F2EC30F5F358AD50AB866DA",
+      "after": "31AEF9D88439E19B20334899F05A7008C8F6729553F145B27D91CCE101EC3E8E"
+    },
+    {
+      "name": "MaterialDriver.cpp",
+      "before": "EC6AC01E8E675C56B503766EBB69E1C5ED5D097755F62BDD181A661E0C975ABD",
+      "after": "1BD654E46312BD917F7EDEBDC8E33C250F1FE40C5CB24739F3CE2DC199DBBDEA"
+    }
+  ],
+  "nativeStatus": "awaiting-controller"
+}

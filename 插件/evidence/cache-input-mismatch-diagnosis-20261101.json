@@ -1,0 +1,52 @@
+{
+  "contract": "bcp.readonly-input-cache-diagnosis.v1",
+  "recorded": "2026-11-01T10:42:09.290460",
+  "userRequested": "先查找此类原因",
+  "changes": {
+    "pluginCode": false,
+    "installedFiles": false,
+    "CADInput": false,
+    "drawingWrite": false
+  },
+  "reportedText": "慣档⁥浯瑩整⽤摡敤⁤潳牵散漠橢捥獴＀",
+  "decodedError": "cache omitted/added source objects",
+  "errorSource": "阶段2/src/Stage2Arx.cpp:70",
+  "condition": "count == plan.sourceObjectCount + added && walls == plan.walls.size() && openings == plan.openings.size()",
+  "preflightAdded": 0,
+  "expected": {
+    "modelSpaceRootObjects": 213,
+    "TDbWall": 63,
+    "TDbOpeningOrGroupOpening": 30
+  },
+  "actualFailingDrawingCounts": null,
+  "known": "At least one of the three equality conditions failed; exact values are not logged",
+  "phase": "productStart saved-input preflight, before productJob allocation/output-directory creation/drawing generation",
+  "installed": {
+    "moduleSHA256": "A13736594EB546C57FC7D5F7051AB2E917AC1BE67E5557C6E22FCADA800EB1C6",
+    "resourceManifestValid": true,
+    "cacheHeader": "S2READCACHE2 5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E 213 mm"
+  },
+  "findings": [
+    {
+      "kind": "fixed-project-binding",
+      "evidence": "productPlan reads bundled scheme.tsv instead of deriving Plan from current source; subsequent handle/geometry/room bbox and fixed output coverage also apply"
+    },
+    {
+      "kind": "insufficient-diagnostics",
+      "evidence": "three counts share one exception message; no actual values; productFailure returns without file log when productJob is null"
+    },
+    {
+      "kind": "error-output-character-mismatch",
+      "evidence": "acutPrintf %hs receives narrow char*; reported Unicode UTF16 bytes reconstruct ASCII message"
+    }
+  ],
+  "knownOutputExample": {
+    "name": "v98 generated drawing, not current failed drawing",
+    "objects": 308,
+    "walls": 63,
+    "openings": 30,
+    "passesInputCache": false
+  },
+  "currentCADTitleObservation": "01-石门宴府建施.dwg - 只读; title does not prove input used at failure time",
+  "nextNeededForExactDifference": "actual failing input path or read-only count diagnostic; prior path question remains pending"
+}

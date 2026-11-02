@@ -1,0 +1,15 @@
+{
+  "contract": "bcp.axis-presentation.offline-tests.v1",
+  "rules": {
+    "checks": 84,
+    "failed": 0
+  },
+  "frozenRegression": {
+    "checks": 14,
+    "failed": 0
+  },
+  "testsInitiallyFailed": "AxisTextBox/axisDisplayIntervals missing API, C2065/C3861",
+  "oldV25Rejected": "RuntimeError: axis presentation missing: unsorted text-crossing baseline",
+  "nativeV28Passed": false,
+  "reason": "input desktop unavailable; not launched"
+}

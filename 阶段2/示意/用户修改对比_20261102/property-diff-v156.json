@@ -1,0 +1,139 @@
+{
+  "contract": "bcp.user-drawing-public-property-diff.v1",
+  "version": "v156",
+  "readOnly": true,
+  "drawingSaved": false,
+  "changes": {
+    "LAYER": {
+      "PUB_DIM": {
+        "before": [
+          "3",
+          "-1",
+          "-3",
+          "Continuous",
+          "0",
+          "1"
+        ],
+        "after": [
+          "25",
+          "-1",
+          "-3",
+          "Continuous",
+          "0",
+          "1"
+        ]
+      }
+    },
+    "STYLE": {},
+    "ENTITY": {
+      "849C": {
+        "before": [
+          "TCH_DIMENSION2",
+          "PUB_DIM",
+          "256",
+          "-1",
+          "-1",
+          "BYLAYER",
+          "0"
+        ],
+        "after": null
+      },
+      "847B": {
+        "before": [
+          "TCH_DIMENSION2",
+          "PUB_DIM",
+          "256",
+          "-1",
+          "-1",
+          "BYLAYER",
+          "0"
+        ],
+        "after": null
+      },
+      "8484": {
+        "before": [
+          "TCH_DIMENSION2",
+          "PUB_DIM",
+          "256",
+          "-1",
+          "-1",
+          "BYLAYER",
+          "0"
+        ],
+        "after": null
+      },
+      "8497": {
+        "before": [
+          "TCH_DIMENSION2",
+          "PUB_DIM",
+          "256",
+          "-1",
+          "-1",
+          "BYLAYER",
+          "0"
+        ],
+        "after": null
+      },
+      "849B": {
+        "before": [
+          "TCH_DIMENSION2",
+          "PUB_DIM",
+          "256",
+          "-1",
+          "-1",
+          "BYLAYER",
+          "0"
+        ],
+        "after": null
+      },
+      "848A": {
+        "before": [
+          "TCH_DIMENSION2",
+          "PUB_DIM",
+          "256",
+          "-1",
+          "-1",
+          "BYLAYER",
+          "0"
+        ],
+        "after": null
+      },
+      "8499": {
+        "before": [
+          "TCH_DIMENSION2",
+          "PUB_DIM",
+          "256",
+          "-1",
+          "-1",
+          "BYLAYER",
+          "0"
+        ],
+        "after": null
+      },
+      "8495": {
+        "before": [
+          "TCH_DIMENSION2",
+          "PUB_DIM",
+          "256",
+          "-1",
+          "-1",
+          "BYLAYER",
+          "0"
+        ],
+        "after": null
+      }
+    }
+  },
+  "records": {
+    "baseline": {
+      "ENTITY": 249,
+      "LAYER": 182,
+      "STYLE": 14
+    },
+    "modified": {
+      "ENTITY": 241,
+      "LAYER": 182,
+      "STYLE": 14
+    }
+  }
+}

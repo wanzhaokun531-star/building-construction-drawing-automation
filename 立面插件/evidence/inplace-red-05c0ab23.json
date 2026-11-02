@@ -1,0 +1,14 @@
+{
+  "contract": "bce.inplace-red-observed.v1",
+  "binding": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-05c0ab23.json",
+  "bindingSHA256": "ECD33AD314E406C2FE2A2FAB59281EF32AB5E7863676C0C6CD039789685D2F03",
+  "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-175257-05c0ab23\\case\\inplace-case.json",
+  "nativeReportSHA256": "52638FEA7BEFA451922FFC7C79BB360DFF47A7AA0660EE9488FE085A796DD30D",
+  "binarySHA256": "FE196406A17A9F656FCFCEE556195FBDAB06DE8AE55939F06FFCEC8ABC68975C",
+  "nonce": "05c0ab23f9d14b86aa4d7c441cac54e5",
+  "pid": 34888,
+  "expectedFailuresObserved": true,
+  "unsavedFixtureVerified": true,
+  "sourceSHAsUnchanged": true,
+  "DWGCreated": false
+}

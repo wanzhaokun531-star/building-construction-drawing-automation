@@ -1,0 +1,1203 @@
+{
+  "contextCount": 2668,
+  "contextSamples": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "contextRounds": [
+    0,
+    1
+  ],
+  "allNonzeroAndTargetDb": true,
+  "viewportContexts": [
+    {
+      "rawLine": 5459,
+      "kind": "hostDrawContext",
+      "sample": 7,
+      "round": 0,
+      "viewportDraw": true,
+      "contextAddress": 2242107526384,
+      "contextDatabaseMatchesTarget": true,
+      "regenType": 2,
+      "dragging": false,
+      "secondaryCall": false,
+      "annotationScale": null,
+      "camera": [
+        2476.0350862207606,
+        1199.7602611292882,
+        1
+      ],
+      "target": [
+        2476.0350862207606,
+        1199.7602611292882,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "worldToEye": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "dcCorners": [
+        2466.746998700501,
+        1195.1180983103332,
+        2485.32317374102,
+        1204.4024239482433
+      ],
+      "pixelsPerUnit": [
+        132.96601666448254,
+        133.01989268420323
+      ],
+      "viewportId": 0,
+      "viewportObject": "",
+      "sequence": 0,
+      "perspective": false,
+      "linetypeScaleMultiplier": 1
+    },
+    {
+      "rawLine": 5483,
+      "kind": "hostDrawContext",
+      "sample": 8,
+      "round": 0,
+      "viewportDraw": true,
+      "contextAddress": 2242107526384,
+      "contextDatabaseMatchesTarget": true,
+      "regenType": 2,
+      "dragging": false,
+      "secondaryCall": false,
+      "annotationScale": null,
+      "camera": [
+        2476.0350862207606,
+        1199.7602611292882,
+        1
+      ],
+      "target": [
+        2476.0350862207606,
+        1199.7602611292882,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "worldToEye": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "dcCorners": [
+        2466.746998700501,
+        1195.1180983103332,
+        2485.32317374102,
+        1204.4024239482433
+      ],
+      "pixelsPerUnit": [
+        132.96601666448254,
+        133.01989268420323
+      ],
+      "viewportId": 0,
+      "viewportObject": "",
+      "sequence": 0,
+      "perspective": false,
+      "linetypeScaleMultiplier": 1
+    },
+    {
+      "rawLine": 5518,
+      "kind": "hostDrawContext",
+      "sample": 9,
+      "round": 0,
+      "viewportDraw": true,
+      "contextAddress": 2242107526384,
+      "contextDatabaseMatchesTarget": true,
+      "regenType": 2,
+      "dragging": false,
+      "secondaryCall": false,
+      "annotationScale": null,
+      "camera": [
+        2476.0350862207606,
+        1199.7602611292882,
+        1
+      ],
+      "target": [
+        2476.0350862207606,
+        1199.7602611292882,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "worldToEye": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "dcCorners": [
+        2466.746998700501,
+        1195.1180983103332,
+        2485.32317374102,
+        1204.4024239482433
+      ],
+      "pixelsPerUnit": [
+        132.96601666448254,
+        133.01989268420323
+      ],
+      "viewportId": 0,
+      "viewportObject": "",
+      "sequence": 0,
+      "perspective": false,
+      "linetypeScaleMultiplier": 1
+    },
+    {
+      "rawLine": 5597,
+      "kind": "hostDrawContext",
+      "sample": 10,
+      "round": 0,
+      "viewportDraw": true,
+      "contextAddress": 2242107526384,
+      "contextDatabaseMatchesTarget": true,
+      "regenType": 2,
+      "dragging": false,
+      "secondaryCall": false,
+      "annotationScale": null,
+      "camera": [
+        2476.0350862207606,
+        1199.7602611292882,
+        1
+      ],
+      "target": [
+        2476.0350862207606,
+        1199.7602611292882,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "worldToEye": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "dcCorners": [
+        2466.746998700501,
+        1195.1180983103332,
+        2485.32317374102,
+        1204.4024239482433
+      ],
+      "pixelsPerUnit": [
+        132.96601666448254,
+        133.01989268420323
+      ],
+      "viewportId": 0,
+      "viewportObject": "",
+      "sequence": 0,
+      "perspective": false,
+      "linetypeScaleMultiplier": 1
+    },
+    {
+      "rawLine": 9458,
+      "kind": "hostDrawContext",
+      "sample": 11,
+      "round": 0,
+      "viewportDraw": true,
+      "contextAddress": 2242107526384,
+      "contextDatabaseMatchesTarget": true,
+      "regenType": 2,
+      "dragging": false,
+      "secondaryCall": false,
+      "annotationScale": null,
+      "camera": [
+        2476.0350862207606,
+        1199.7602611292882,
+        1
+      ],
+      "target": [
+        2476.0350862207606,
+        1199.7602611292882,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "worldToEye": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "dcCorners": [
+        2466.746998700501,
+        1195.1180983103332,
+        2485.32317374102,
+        1204.4024239482433
+      ],
+      "pixelsPerUnit": [
+        132.96601666448254,
+        133.01989268420323
+      ],
+      "viewportId": 0,
+      "viewportObject": "",
+      "sequence": 0,
+      "perspective": false,
+      "linetypeScaleMultiplier": 1
+    },
+    {
+      "rawLine": 9505,
+      "kind": "hostDrawContext",
+      "sample": 11,
+      "round": 0,
+      "viewportDraw": true,
+      "contextAddress": 2242107526384,
+      "contextDatabaseMatchesTarget": true,
+      "regenType": 2,
+      "dragging": false,
+      "secondaryCall": false,
+      "annotationScale": null,
+      "camera": [
+        2476.0350862207606,
+        1199.7602611292882,
+        1
+      ],
+      "target": [
+        2476.0350862207606,
+        1199.7602611292882,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "worldToEye": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "dcCorners": [
+        2466.746998700501,
+        1195.1180983103332,
+        2485.32317374102,
+        1204.4024239482433
+      ],
+      "pixelsPerUnit": [
+        132.96601666448254,
+        133.01989268420323
+      ],
+      "viewportId": 0,
+      "viewportObject": "",
+      "sequence": 0,
+      "perspective": false,
+      "linetypeScaleMultiplier": 1
+    },
+    {
+      "rawLine": 9541,
+      "kind": "hostDrawContext",
+      "sample": 11,
+      "round": 0,
+      "viewportDraw": true,
+      "contextAddress": 2242107526384,
+      "contextDatabaseMatchesTarget": true,
+      "regenType": 2,
+      "dragging": false,
+      "secondaryCall": false,
+      "annotationScale": null,
+      "camera": [
+        2476.0350862207606,
+        1199.7602611292882,
+        1
+      ],
+      "target": [
+        2476.0350862207606,
+        1199.7602611292882,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "worldToEye": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "dcCorners": [
+        2466.746998700501,
+        1195.1180983103332,
+        2485.32317374102,
+        1204.4024239482433
+      ],
+      "pixelsPerUnit": [
+        132.96601666448254,
+        133.01989268420323
+      ],
+      "viewportId": 0,
+      "viewportObject": "",
+      "sequence": 0,
+      "perspective": false,
+      "linetypeScaleMultiplier": 1
+    },
+    {
+      "rawLine": 9610,
+      "kind": "hostDrawContext",
+      "sample": 7,
+      "round": 1,
+      "viewportDraw": true,
+      "contextAddress": 2242107526384,
+      "contextDatabaseMatchesTarget": true,
+      "regenType": 2,
+      "dragging": false,
+      "secondaryCall": false,
+      "annotationScale": null,
+      "camera": [
+        2476.0350862207606,
+        1199.7602611292882,
+        1
+      ],
+      "target": [
+        2476.0350862207606,
+        1199.7602611292882,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "worldToEye": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "dcCorners": [
+        2466.746998700501,
+        1195.1180983103332,
+        2485.32317374102,
+        1204.4024239482433
+      ],
+      "pixelsPerUnit": [
+        132.96601666448254,
+        133.01989268420323
+      ],
+      "viewportId": 0,
+      "viewportObject": "",
+      "sequence": 0,
+      "perspective": false,
+      "linetypeScaleMultiplier": 1
+    },
+    {
+      "rawLine": 9634,
+      "kind": "hostDrawContext",
+      "sample": 8,
+      "round": 1,
+      "viewportDraw": true,
+      "contextAddress": 2242107526384,
+      "contextDatabaseMatchesTarget": true,
+      "regenType": 2,
+      "dragging": false,
+      "secondaryCall": false,
+      "annotationScale": null,
+      "camera": [
+        2476.0350862207606,
+        1199.7602611292882,
+        1
+      ],
+      "target": [
+        2476.0350862207606,
+        1199.7602611292882,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "worldToEye": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "dcCorners": [
+        2466.746998700501,
+        1195.1180983103332,
+        2485.32317374102,
+        1204.4024239482433
+      ],
+      "pixelsPerUnit": [
+        132.96601666448254,
+        133.01989268420323
+      ],
+      "viewportId": 0,
+      "viewportObject": "",
+      "sequence": 0,
+      "perspective": false,
+      "linetypeScaleMultiplier": 1
+    },
+    {
+      "rawLine": 9669,
+      "kind": "hostDrawContext",
+      "sample": 9,
+      "round": 1,
+      "viewportDraw": true,
+      "contextAddress": 2242107526384,
+      "contextDatabaseMatchesTarget": true,
+      "regenType": 2,
+      "dragging": false,
+      "secondaryCall": false,
+      "annotationScale": null,
+      "camera": [
+        2476.0350862207606,
+        1199.7602611292882,
+        1
+      ],
+      "target": [
+        2476.0350862207606,
+        1199.7602611292882,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "worldToEye": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "dcCorners": [
+        2466.746998700501,
+        1195.1180983103332,
+        2485.32317374102,
+        1204.4024239482433
+      ],
+      "pixelsPerUnit": [
+        132.96601666448254,
+        133.01989268420323
+      ],
+      "viewportId": 0,
+      "viewportObject": "",
+      "sequence": 0,
+      "perspective": false,
+      "linetypeScaleMultiplier": 1
+    },
+    {
+      "rawLine": 9748,
+      "kind": "hostDrawContext",
+      "sample": 10,
+      "round": 1,
+      "viewportDraw": true,
+      "contextAddress": 2242107526384,
+      "contextDatabaseMatchesTarget": true,
+      "regenType": 2,
+      "dragging": false,
+      "secondaryCall": false,
+      "annotationScale": null,
+      "camera": [
+        2476.0350862207606,
+        1199.7602611292882,
+        1
+      ],
+      "target": [
+        2476.0350862207606,
+        1199.7602611292882,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "worldToEye": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "dcCorners": [
+        2466.746998700501,
+        1195.1180983103332,
+        2485.32317374102,
+        1204.4024239482433
+      ],
+      "pixelsPerUnit": [
+        132.96601666448254,
+        133.01989268420323
+      ],
+      "viewportId": 0,
+      "viewportObject": "",
+      "sequence": 0,
+      "perspective": false,
+      "linetypeScaleMultiplier": 1
+    },
+    {
+      "rawLine": 13609,
+      "kind": "hostDrawContext",
+      "sample": 11,
+      "round": 1,
+      "viewportDraw": true,
+      "contextAddress": 2242107526384,
+      "contextDatabaseMatchesTarget": true,
+      "regenType": 2,
+      "dragging": false,
+      "secondaryCall": false,
+      "annotationScale": null,
+      "camera": [
+        2476.0350862207606,
+        1199.7602611292882,
+        1
+      ],
+      "target": [
+        2476.0350862207606,
+        1199.7602611292882,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "worldToEye": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "dcCorners": [
+        2466.746998700501,
+        1195.1180983103332,
+        2485.32317374102,
+        1204.4024239482433
+      ],
+      "pixelsPerUnit": [
+        132.96601666448254,
+        133.01989268420323
+      ],
+      "viewportId": 0,
+      "viewportObject": "",
+      "sequence": 0,
+      "perspective": false,
+      "linetypeScaleMultiplier": 1
+    },
+    {
+      "rawLine": 13656,
+      "kind": "hostDrawContext",
+      "sample": 11,
+      "round": 1,
+      "viewportDraw": true,
+      "contextAddress": 2242107526384,
+      "contextDatabaseMatchesTarget": true,
+      "regenType": 2,
+      "dragging": false,
+      "secondaryCall": false,
+      "annotationScale": null,
+      "camera": [
+        2476.0350862207606,
+        1199.7602611292882,
+        1
+      ],
+      "target": [
+        2476.0350862207606,
+        1199.7602611292882,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "worldToEye": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "dcCorners": [
+        2466.746998700501,
+        1195.1180983103332,
+        2485.32317374102,
+        1204.4024239482433
+      ],
+      "pixelsPerUnit": [
+        132.96601666448254,
+        133.01989268420323
+      ],
+      "viewportId": 0,
+      "viewportObject": "",
+      "sequence": 0,
+      "perspective": false,
+      "linetypeScaleMultiplier": 1
+    },
+    {
+      "rawLine": 13692,
+      "kind": "hostDrawContext",
+      "sample": 11,
+      "round": 1,
+      "viewportDraw": true,
+      "contextAddress": 2242107526384,
+      "contextDatabaseMatchesTarget": true,
+      "regenType": 2,
+      "dragging": false,
+      "secondaryCall": false,
+      "annotationScale": null,
+      "camera": [
+        2476.0350862207606,
+        1199.7602611292882,
+        1
+      ],
+      "target": [
+        2476.0350862207606,
+        1199.7602611292882,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "worldToEye": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "dcCorners": [
+        2466.746998700501,
+        1195.1180983103332,
+        2485.32317374102,
+        1204.4024239482433
+      ],
+      "pixelsPerUnit": [
+        132.96601666448254,
+        133.01989268420323
+      ],
+      "viewportId": 0,
+      "viewportObject": "",
+      "sequence": 0,
+      "perspective": false,
+      "linetypeScaleMultiplier": 1
+    }
+  ],
+  "commandFileObservations": [
+    {
+      "existingSession": false,
+      "existingOverrule": false,
+      "contract": "bce.viewport-command-trace.v1",
+      "event": "prepare.implementation.enter",
+      "sequence": 13,
+      "tickMs": 527035578,
+      "pid": 5568,
+      "threadId": 34888,
+      "nonce": "2b412dba9e074a6eb9bb0277f0fbcf6f",
+      "currentDocAddress": 2205388291904,
+      "currentDbAddress": 2205397011648,
+      "currentDocPath": "C:\\Users\\PC\\AppData\\Local\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\Template\\acadiso.dwt",
+      "workingDbAddress": 2205397011648,
+      "workingDbPath": "C:\\Users\\PC\\AppData\\Local\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\Template\\acadiso.dwt"
+    },
+    {
+      "contract": "bce.viewport-command-trace.v1",
+      "event": "prepare.readyPublished",
+      "sequence": 20,
+      "tickMs": 527046953,
+      "pid": 5568,
+      "threadId": 34888,
+      "nonce": "2b412dba9e074a6eb9bb0277f0fbcf6f",
+      "currentDocAddress": 2205388291904,
+      "currentDbAddress": 2205397011648,
+      "currentDocPath": "C:\\Users\\PC\\AppData\\Local\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\Template\\acadiso.dwt",
+      "workingDbAddress": 2205397011648,
+      "workingDbPath": "C:\\Users\\PC\\AppData\\Local\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\Template\\acadiso.dwt"
+    },
+    {
+      "command": "BCE_VIEWPORT_CAPTURE\n",
+      "openCommandEnded": true,
+      "documentQuiescent": true,
+      "inputPending": 0,
+      "contract": "bce.viewport-command-trace.v1",
+      "event": "idle.captureQueue.before",
+      "sequence": 671,
+      "tickMs": 527050578,
+      "pid": 5568,
+      "threadId": 34888,
+      "nonce": "2b412dba9e074a6eb9bb0277f0fbcf6f",
+      "currentDocAddress": 2205400845024,
+      "currentDbAddress": 2204953363568,
+      "currentDocPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg",
+      "workingDbAddress": 2204953363568,
+      "workingDbPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg"
+    },
+    {
+      "status": 0,
+      "contract": "bce.viewport-command-trace.v1",
+      "event": "idle.captureQueue.after",
+      "sequence": 672,
+      "tickMs": 527050578,
+      "pid": 5568,
+      "threadId": 34888,
+      "nonce": "2b412dba9e074a6eb9bb0277f0fbcf6f",
+      "currentDocAddress": 2205400845024,
+      "currentDbAddress": 2204953363568,
+      "currentDocPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg",
+      "workingDbAddress": 2204953363568,
+      "workingDbPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg"
+    },
+    {
+      "existingSession": true,
+      "contract": "bce.viewport-command-trace.v1",
+      "event": "capture.implementation.enter",
+      "sequence": 692,
+      "tickMs": 527051187,
+      "pid": 5568,
+      "threadId": 34888,
+      "nonce": "2b412dba9e074a6eb9bb0277f0fbcf6f",
+      "currentDocAddress": 2205400845024,
+      "currentDbAddress": 2204953363568,
+      "currentDocPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg",
+      "workingDbAddress": 2204953363568,
+      "workingDbPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg",
+      "success": false,
+      "error": 32,
+      "access": 2147483648,
+      "share": 1,
+      "contract": "bce.viewport-command-trace.v1",
+      "event": "ownedFile.strictOpenObservation",
+      "sequence": 693,
+      "tickMs": 527051187,
+      "pid": 5568,
+      "threadId": 34888,
+      "nonce": "2b412dba9e074a6eb9bb0277f0fbcf6f",
+      "currentDocAddress": 2205400845024,
+      "currentDbAddress": 2204953363568,
+      "currentDocPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg",
+      "workingDbAddress": 2204953363568,
+      "workingDbPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg",
+      "success": true,
+      "error": 0,
+      "access": 2147483648,
+      "share": 3,
+      "contract": "bce.viewport-command-trace.v1",
+      "event": "ownedFile.open",
+      "sequence": 694,
+      "tickMs": 527051203,
+      "pid": 5568,
+      "threadId": 34888,
+      "nonce": "2b412dba9e074a6eb9bb0277f0fbcf6f",
+      "currentDocAddress": 2205400845024,
+      "currentDbAddress": 2204953363568,
+      "currentDocPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg",
+      "workingDbAddress": 2204953363568,
+      "workingDbPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg",
+      "metadata": {
+        "volume": 3103509084,
+        "fileIndex": 281474976897018,
+        "bytes": 56836,
+        "created": 134380161863878995,
+        "lastWrite": 134380161863878995,
+        "lastAccess": 134380161874455311,
+        "attributes": 32
+      },
+      "contract": "bce.viewport-command-trace.v1",
+      "event": "ownedFile.beforeRead",
+      "sequence": 695,
+      "tickMs": 527051203,
+      "pid": 5568,
+      "threadId": 34888,
+      "nonce": "2b412dba9e074a6eb9bb0277f0fbcf6f",
+      "currentDocAddress": 2205400845024,
+      "currentDbAddress": 2204953363568,
+      "currentDocPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg",
+      "workingDbAddress": 2204953363568,
+      "workingDbPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg"
+    },
+    {
+      "readBytes": 56836,
+      "readCalls": 2,
+      "contract": "bce.viewport-command-trace.v1",
+      "event": "ownedFile.beforeAfterSnapshot",
+      "sequence": 696,
+      "tickMs": 527051203,
+      "pid": 5568,
+      "threadId": 34888,
+      "nonce": "2b412dba9e074a6eb9bb0277f0fbcf6f",
+      "currentDocAddress": 2205400845024,
+      "currentDbAddress": 2204953363568,
+      "currentDocPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg",
+      "workingDbAddress": 2204953363568,
+      "workingDbPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg"
+    },
+    {
+      "observation": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg",
+        "before": {
+          "volume": 3103509084,
+          "fileIndex": 281474976897018,
+          "bytes": 56836,
+          "created": 134380161863878995,
+          "lastWrite": 134380161863878995,
+          "lastAccess": 134380161874455311,
+          "attributes": 32
+        },
+        "after": {
+          "volume": 3103509084,
+          "fileIndex": 281474976897018,
+          "bytes": 56836,
+          "created": 134380161863878995,
+          "lastWrite": 134380161863878995,
+          "lastAccess": 134380161905462233,
+          "attributes": 32
+        },
+        "readBytes": 56836,
+        "readCalls": 2,
+        "sha256": "2E4874D3F982F47DDEC83F7A5619327F704E9DBF432F0C109B13BAD33780B2D6",
+        "stableIdentitySizeCreationWriteTime": true,
+        "accessTimeCompared": false,
+        "matchesPreparedSHA": true
+      },
+      "contract": "bce.viewport-command-trace.v1",
+      "event": "ownedFile.result",
+      "sequence": 697,
+      "tickMs": 527051203,
+      "pid": 5568,
+      "threadId": 34888,
+      "nonce": "2b412dba9e074a6eb9bb0277f0fbcf6f",
+      "currentDocAddress": 2205400845024,
+      "currentDbAddress": 2204953363568,
+      "currentDocPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg",
+      "workingDbAddress": 2204953363568,
+      "workingDbPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg",
+      "success": false,
+      "error": 32,
+      "access": 2147483648,
+      "share": 1,
+      "contract": "bce.viewport-command-trace.v1",
+      "event": "ownedFile.strictOpenObservation",
+      "sequence": 706,
+      "tickMs": 527068156,
+      "pid": 5568,
+      "threadId": 34888,
+      "nonce": "2b412dba9e074a6eb9bb0277f0fbcf6f",
+      "currentDocAddress": 2205400845024,
+      "currentDbAddress": 2204953363568,
+      "currentDocPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg",
+      "workingDbAddress": 2204953363568,
+      "workingDbPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg",
+      "success": true,
+      "error": 0,
+      "access": 2147483648,
+      "share": 3,
+      "contract": "bce.viewport-command-trace.v1",
+      "event": "ownedFile.open",
+      "sequence": 707,
+      "tickMs": 527068156,
+      "pid": 5568,
+      "threadId": 34888,
+      "nonce": "2b412dba9e074a6eb9bb0277f0fbcf6f",
+      "currentDocAddress": 2205400845024,
+      "currentDbAddress": 2204953363568,
+      "currentDocPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg",
+      "workingDbAddress": 2204953363568,
+      "workingDbPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg",
+      "metadata": {
+        "volume": 3103509084,
+        "fileIndex": 281474976897018,
+        "bytes": 56836,
+        "created": 134380161863878995,
+        "lastWrite": 134380161863878995,
+        "lastAccess": 134380161905462233,
+        "attributes": 32
+      },
+      "contract": "bce.viewport-command-trace.v1",
+      "event": "ownedFile.beforeRead",
+      "sequence": 708,
+      "tickMs": 527068156,
+      "pid": 5568,
+      "threadId": 34888,
+      "nonce": "2b412dba9e074a6eb9bb0277f0fbcf6f",
+      "currentDocAddress": 2205400845024,
+      "currentDbAddress": 2204953363568,
+      "currentDocPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg",
+      "workingDbAddress": 2204953363568,
+      "workingDbPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg"
+    },
+    {
+      "readBytes": 56836,
+      "readCalls": 2,
+      "contract": "bce.viewport-command-trace.v1",
+      "event": "ownedFile.beforeAfterSnapshot",
+      "sequence": 709,
+      "tickMs": 527068171,
+      "pid": 5568,
+      "threadId": 34888,
+      "nonce": "2b412dba9e074a6eb9bb0277f0fbcf6f",
+      "currentDocAddress": 2205400845024,
+      "currentDbAddress": 2204953363568,
+      "currentDocPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg",
+      "workingDbAddress": 2204953363568,
+      "workingDbPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg"
+    },
+    {
+      "observation": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg",
+        "before": {
+          "volume": 3103509084,
+          "fileIndex": 281474976897018,
+          "bytes": 56836,
+          "created": 134380161863878995,
+          "lastWrite": 134380161863878995,
+          "lastAccess": 134380161905462233,
+          "attributes": 32
+        },
+        "after": {
+          "volume": 3103509084,
+          "fileIndex": 281474976897018,
+          "bytes": 56836,
+          "created": 134380161863878995,
+          "lastWrite": 134380161863878995,
+          "lastAccess": 134380162075119972,
+          "attributes": 32
+        },
+        "readBytes": 56836,
+        "readCalls": 2,
+        "sha256": "2E4874D3F982F47DDEC83F7A5619327F704E9DBF432F0C109B13BAD33780B2D6",
+        "stableIdentitySizeCreationWriteTime": true,
+        "accessTimeCompared": false,
+        "matchesPreparedSHA": true
+      },
+      "contract": "bce.viewport-command-trace.v1",
+      "event": "ownedFile.result",
+      "sequence": 710,
+      "tickMs": 527068171,
+      "pid": 5568,
+      "threadId": 34888,
+      "nonce": "2b412dba9e074a6eb9bb0277f0fbcf6f",
+      "currentDocAddress": 2205400845024,
+      "currentDbAddress": 2204953363568,
+      "currentDocPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg",
+      "workingDbAddress": 2204953363568,
+      "workingDbPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\viewport-native-job\\control.dwg"
+    }
+  ],
+  "callbackKindCounts": {
+    "protectedDbGuard": 27,
+    "protectedDbPhaseBegin": 1,
+    "protectedDbEvent": 5408,
+    "hostDrawContext": 2668,
+    "request": 5628
+  }
+}

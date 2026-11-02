@@ -1,0 +1,21 @@
+{
+  "contract": "bce.native-startup-failure.v1",
+  "nonce": "bf0050383ba54bfe81bfe2cee6071294",
+  "processId": 6000,
+  "readyMarkerExists": false,
+  "nativeReportExists": false,
+  "businessREDConfirmed": false,
+  "observedOwnedDialog": "AutoCAD 消息",
+  "dialogOwnerPid": 6000,
+  "diagnosis": "Startup blocked before ready/native report; no drawing behavior executed or inferred. Unchanged candidate will be retried in a new owned session.",
+  "forcedTermination": true,
+  "timedOut": false,
+  "supervisorFinalSHA256": "577B45A7E90734E3AD936DDCF06B0BFE478924009FFD30C441F09EE8C35EA4DA",
+  "retirementSHA256": "F0027513A49FF622245612C8012C54233DFD986E4BF1DDD1A4C124CE2164A3A5",
+  "ownedWatcherStopped": {
+    "pid": 4028,
+    "parent": 16060,
+    "commandLine": "\"C:\\Program Files\\Python313\\python.exe\" 立面插件\\tools\\watch_native_case.py 立面插件\\evidence\\native-case-binding-bf005038.json",
+    "creation": "2026-11-01T19:10:43.129484+08:00"
+  }
+}

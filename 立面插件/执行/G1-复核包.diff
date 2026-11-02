@@ -1,0 +1,773 @@
+--- L1-final/src/GenerationState.h
++++ G1-final/src/GenerationState.h
+@@ -0,0 +1,115 @@
++#ifndef BCE_GENERATION_STATE_H
++#define BCE_GENERATION_STATE_H
++#include "Recognition.h"
++
++namespace bce {
++// Opaque, complete reader signatures. Use an explicit nonempty sentinel for absent
++// text/resources; an empty signature means the reader has not checked that part.
++struct EntityFingerprint {
++    EntityKey key;
++    std::string geometry;
++    std::string text;
++    std::string resources;
++    std::string nativeClass;
++};
++struct ObservedScene {
++    SceneSnapshot scene;
++    std::vector<EntityFingerprint> fingerprints;
++};
++// A caller-supplied qualification, bound to this exact command context. The core
++// checks the contract; only a real adapter can establish the stated native facts.
++struct CommandQualification {
++    std::string documentIdentity;
++    std::string databaseIdentity;
++    std::uint64_t revision{0};
++    std::string viewIdentity;
++    std::string sourceSignature;
++    std::string configSignature;
++    std::string evidenceSource;
++    bool verified{false};
++};
++struct CommandReadiness {
++    CommandQualification rules;
++    CommandQualification nativePreparation;
++    CommandQualification glyphs;
++    CommandQualification layout;
++};
++struct GenerationRequest {
++    std::string moduleIdentity;
++    std::string moduleVersion;
++    std::string viewIdentity;
++    std::string sourceSignature;
++    std::vector<EntityKey> targets;
++    CommandReadiness readiness;
++};
++struct GenerationCommandPlan {
++    std::string documentIdentity;
++    std::string databaseIdentity;
++    std::uint64_t revision{0};
++    std::string moduleIdentity;
++    std::string moduleVersion;
++    std::string viewIdentity;
++    std::string sourceSignature;
++    std::string configSignature;
++    std::vector<EntityFingerprint> targets;
++    std::vector<EntityFingerprint> preserved;
++    CommandReadiness readiness;
++};
++struct GeneratedViewState {
++    std::string viewIdentity;
++    std::string moduleIdentity;
++    std::string moduleVersion;
++    std::string generationId;
++    std::string sourceSignature;
++    std::string configSignature;
++    std::uint64_t committedRevision{0};
++    std::vector<EntityFingerprint> sourceEntities;
++    std::vector<EntityFingerprint> outputs;
++    bool requiresReconfirmation{false};
++    std::string commitEvidence;
++    std::string postCommitEvidence;
++};
++struct GenerationState {
++    std::string documentIdentity;
++    std::string databaseIdentity;
++    std::vector<GeneratedViewState> views;
++};
++enum class GenerationAction { generate, alreadyExists, reconfirmAndPrepare, manualChange };
++struct GenerationDecision { GenerationAction action{GenerationAction::generate}; };
++struct GenerationCheckEvidence { bool verified{false}; std::string source; };
++// No SDK receipt is fabricated here. These are explicit adapter assertions with
++// provenance, checked against a fresh snapshot; not a substitute for SDK tests.
++struct ValidatedGenerationEvidence {
++    std::string documentIdentity;
++    std::string databaseIdentity;
++    std::uint64_t plannedRevision{0};
++    std::uint64_t committedRevision{0};
++    std::string generationId;
++    bool committed{false};
++    bool cancelled{false};
++    std::string commitEvidence;
++    std::string postCommitEvidence;
++    GenerationCheckEvidence measurementsEvidence;
++    GenerationCheckEvidence nativeClassesEvidence;
++    GenerationCheckEvidence resourcesEvidence;
++    GenerationCheckEvidence glyphsEvidence;
++    GenerationCheckEvidence preservedEvidence;
++    std::vector<EntityFingerprint> targetsAfter;
++    std::vector<EntityFingerprint> outputs;
++};
++struct InvalidatedGenerationState { ProjectConfig config; GenerationState state; };
++
++[[nodiscard]] std::string generationConfigSignature(const ProjectConfig&, const std::string& viewIdentity);
++[[nodiscard]] Result<GenerationCommandPlan> planGenerationCommand(
++    const ObservedScene&, const ProjectConfig&, const GenerationRequest&);
++[[nodiscard]] Result<GenerationCommandPlan> revalidateGenerationCommand(
++    const GenerationCommandPlan&, const ObservedScene&, const ProjectConfig&);
++[[nodiscard]] Result<GenerationDecision> decideGeneration(
++    const GenerationState&, const ObservedScene&, const ProjectConfig&, const GenerationRequest&);
++[[nodiscard]] Result<GenerationState> registerGeneration(
++    const GenerationState&, const GenerationCommandPlan&, const ObservedScene&,
++    const ValidatedGenerationEvidence&);
++[[nodiscard]] InvalidatedGenerationState invalidateChangedGenerationViews(
++    const GenerationState&, const ProjectConfig&, const std::vector<View>& currentViews);
++}
++#endif
+--- L1-final/src/GenerationState.cpp
++++ G1-final/src/GenerationState.cpp
+@@ -0,0 +1,297 @@
++#include "GenerationState.h"
++#include <cmath>
++#include <iomanip>
++#include <locale>
++#include <sstream>
++
++namespace bce {
++namespace {
++bool nonempty(const std::string& s) { return !s.empty() && s.find('\0') == std::string::npos; }
++bool validKey(const EntityKey& key) { return nonempty(key.databaseIdentity) && key == key; }
++bool sameEntity(EntityKey left, EntityKey right) {
++    left.revision = 0; right.revision = 0;
++    return left == right;
++}
++bool complete(const EntityFingerprint& f) {
++    return validKey(f.key) && nonempty(f.geometry) && nonempty(f.text) &&
++        nonempty(f.resources) && nonempty(f.nativeClass);
++}
++bool sameFingerprint(const EntityFingerprint& a, const EntityFingerprint& b) {
++    return sameEntity(a.key, b.key) && a.geometry == b.geometry && a.text == b.text &&
++        a.resources == b.resources && a.nativeClass == b.nativeClass;
++}
++const EntityFingerprint* fingerprint(const ObservedScene& o, const EntityKey& key) {
++    const auto i = std::find_if(o.fingerprints.begin(), o.fingerprints.end(),
++        [&key](const EntityFingerprint& f) { return sameEntity(f.key, key); });
++    return i == o.fingerprints.end() ? nullptr : &*i;
++}
++const SceneEntity* target(const ObservedScene& o, const EntityKey& key) {
++    const auto i = std::find_if(o.scene.targets.begin(), o.scene.targets.end(),
++        [&key](const SceneEntity& e) { return sameEntity(e.key, key); });
++    return i == o.scene.targets.end() ? nullptr : &*i;
++}
++Issue issue(const ObservedScene& o, const std::string& view, const char* code,
++    const char* message, std::optional<EntityKey> entity = std::nullopt) {
++    return {code, message, {o.scene.documentIdentity, view, std::move(entity)}, true};
++}
++template<class T>
++Result<T> failed(const ObservedScene& o, const std::string& view, const char* code, const char* message) {
++    return {std::nullopt, {issue(o, view, code, message)}};
++}
++bool validObservation(const ObservedScene& o) {
++    const auto& s = o.scene;
++    if (!nonempty(s.documentIdentity) || !nonempty(s.databaseIdentity)) { return false; }
++    std::vector<EntityKey> seen;
++    for (const auto* entities : {&s.targets, &s.preserved}) {
++        for (const auto& e : *entities) {
++            if (!validKey(e.key) || e.key.databaseIdentity != s.databaseIdentity || e.key.revision != s.revision ||
++                !std::isfinite(e.bounds.minimum.x) || !std::isfinite(e.bounds.minimum.y) ||
++                !std::isfinite(e.bounds.maximum.x) || !std::isfinite(e.bounds.maximum.y) ||
++                e.bounds.minimum.x > e.bounds.maximum.x || e.bounds.minimum.y > e.bounds.maximum.y ||
++                std::any_of(seen.begin(), seen.end(), [&e](const EntityKey& k) { return sameEntity(k, e.key); })) { return false; }
++            seen.push_back(e.key);
++            const auto f = fingerprint(o, e.key);
++            if (!f || !complete(*f) || !(f->key == e.key)) { return false; }
++        }
++    }
++    if (seen.size() != o.fingerprints.size()) { return false; }
++    for (std::size_t i = 0; i < o.fingerprints.size(); ++i) {
++        for (std::size_t j = 0; j < i; ++j) {
++            if (sameEntity(o.fingerprints[i].key, o.fingerprints[j].key)) { return false; }
++        }
++    }
++    return true;
++}
++bool validState(const GenerationState& state, const ObservedScene& o) {
++    if (state.documentIdentity != o.scene.documentIdentity || state.databaseIdentity != o.scene.databaseIdentity) { return false; }
++    std::vector<EntityKey> owned;
++    for (std::size_t i = 0; i < state.views.size(); ++i) {
++        const auto& v = state.views[i];
++        if (!nonempty(v.viewIdentity) || !nonempty(v.moduleIdentity) || !nonempty(v.moduleVersion) ||
++            !nonempty(v.generationId) || !nonempty(v.sourceSignature) || !nonempty(v.configSignature) ||
++            !nonempty(v.commitEvidence) || !nonempty(v.postCommitEvidence) || v.outputs.empty() || v.sourceEntities.empty()) { return false; }
++        for (std::size_t j = 0; j < i; ++j) {
++            if (v.viewIdentity == state.views[j].viewIdentity || v.generationId == state.views[j].generationId) { return false; }
++        }
++        for (const auto& f : v.sourceEntities) {
++            if (!complete(f) || f.key.databaseIdentity != state.databaseIdentity) { return false; }
++        }
++        for (const auto& f : v.outputs) {
++            if (!complete(f) || f.key.databaseIdentity != state.databaseIdentity ||
++                std::any_of(owned.begin(), owned.end(), [&f](const EntityKey& k) { return sameEntity(k, f.key); }) ||
++                std::any_of(v.sourceEntities.begin(), v.sourceEntities.end(), [&f](const EntityFingerprint& s) { return sameEntity(s.key, f.key); })) { return false; }
++            owned.push_back(f.key);
++        }
++    }
++    return true;
++}
++bool qualified(const CommandQualification& q, const GenerationCommandPlan& p) {
++    return q.verified && nonempty(q.evidenceSource) && q.documentIdentity == p.documentIdentity &&
++        q.databaseIdentity == p.databaseIdentity && q.revision == p.revision && q.viewIdentity == p.viewIdentity &&
++        q.sourceSignature == p.sourceSignature && q.configSignature == p.configSignature;
++}
++bool ready(const GenerationCommandPlan& p) {
++    return qualified(p.readiness.rules, p) && qualified(p.readiness.nativePreparation, p) &&
++        qualified(p.readiness.glyphs, p) && qualified(p.readiness.layout, p);
++}
++void append(std::ostringstream& out, const std::string& text) { out << text.size() << ':' << text << ';'; }
++void append(std::ostringstream& out, const Confirmation& c) {
++    append(out, c.value); append(out, c.source); out << c.confirmed << ';';
++}
++bool confirmed(const Confirmation& c) { return c.confirmed && nonempty(c.value) && nonempty(c.source); }
++bool verified(const GenerationCheckEvidence& e) { return e.verified && nonempty(e.source); }
++bool matchesObserved(const EntityFingerprint& expected, const ObservedScene& o) {
++    const auto actual = fingerprint(o, expected.key);
++    return actual && sameFingerprint(expected, *actual);
++}
++}
++
++std::string generationConfigSignature(const ProjectConfig& c, const std::string& viewIdentity) {
++    const auto v = std::find_if(c.views.begin(), c.views.end(), [&viewIdentity](const ViewConfig& view) { return view.viewIdentity == viewIdentity; });
++    if (v == c.views.end() || std::count_if(c.views.begin(), c.views.end(), [&viewIdentity](const ViewConfig& view) { return view.viewIdentity == viewIdentity; }) != 1) { return {}; }
++    std::ostringstream out;
++    out.imbue(std::locale::classic()); out << std::setprecision(17);
++    append(out, c.databaseIdentity); append(out, c.unitConfirmationSource); append(out, c.zeroLevel);
++    out << c.units.insunits << ';' << c.units.trustedInsunits << ';' << c.units.confirmedMmPerInputUnit.has_value() << ';';
++    if (c.units.confirmedMmPerInputUnit) { out << *c.units.confirmedMmPerInputUnit << ';'; }
++    append(out, c.units.labelHint); append(out, v->viewIdentity); append(out, v->geometrySignature);
++    append(out, v->material); append(out, v->axisMapping);
++    out << v->axisDirection.has_value() << ';';
++    if (v->axisDirection) { out << v->axisDirection->x << ';' << v->axisDirection->y << ';'; }
++    return out.str();
++}
++
++Result<GenerationCommandPlan> planGenerationCommand(const ObservedScene& o, const ProjectConfig& c, const GenerationRequest& r) {
++    GenerationCommandPlan p;
++    p.documentIdentity = o.scene.documentIdentity; p.databaseIdentity = o.scene.databaseIdentity; p.revision = o.scene.revision;
++    p.moduleIdentity = r.moduleIdentity; p.moduleVersion = r.moduleVersion; p.viewIdentity = r.viewIdentity;
++    p.sourceSignature = r.sourceSignature; p.configSignature = generationConfigSignature(c, r.viewIdentity); p.readiness = r.readiness;
++    Result<GenerationCommandPlan> result;
++    const auto add = [&](const char* code, const char* message, std::optional<EntityKey> key = std::nullopt) {
++        result.issues.push_back(issue(o, r.viewIdentity, code, message, std::move(key)));
++    };
++    if (!validObservation(o)) { add("INVALID_SNAPSHOT", u8"场景身份、句柄、实体清单或完整指纹无效，请重新采集。"); }
++    if (o.scene.targets.empty()) { add("INPUT_EMPTY", u8"没有可分析的目标立面，禁止写图。"); }
++    const auto view = std::find_if(c.views.begin(), c.views.end(), [&r](const ViewConfig& v) { return v.viewIdentity == r.viewIdentity; });
++    if (c.databaseIdentity != o.scene.databaseIdentity || !nonempty(p.configSignature) ||
++        !nonempty(r.moduleIdentity) || !nonempty(r.moduleVersion) || !nonempty(r.viewIdentity) ||
++        view == c.views.end() || !confirmed(view->material)) { add("CONFIG_REQUIRED", u8"缺少当前库、立面、模块版本或已确认材料配置。"); }
++    const auto sceneUnits = resolveUnits(o.scene.units); const auto configUnits = resolveUnits(c.units);
++    if (!sceneUnits.canCommit() || !configUnits.canCommit() || !nonempty(c.unitConfirmationSource)) {
++        add("UNIT_REQUIRED", u8"场景与项目均须有已核实单位及确认来源。");
++    } else if (sceneUnits.value->mmPerInputUnit != configUnits.value->mmPerInputUnit) {
++        add("UNIT_CONFLICT", u8"项目和当前图单位不一致，禁止复用准备结果。");
++    }
++    if (!confirmed(c.zeroLevel)) { add("DATUM_REQUIRED", u8"缺少已确认的实际楼层零点及核准来源。"); }
++    if (view == c.views.end() || !confirmed(view->axisMapping) || !view->axisDirection ||
++        !std::isfinite(view->axisDirection->x) || !std::isfinite(view->axisDirection->y) ||
++        (view->axisDirection->x == 0 && view->axisDirection->y == 0)) { add("PLAN_REQUIRED", u8"缺少配套平面轴关联、方向或确认来源。"); }
++    if (!nonempty(r.sourceSignature) || view == c.views.end() || view->geometrySignature != r.sourceSignature) {
++        add("SOURCE_CHANGED", u8"源几何签名缺失或与已确认配置不符，须重新确认。");
++    }
++    if (!qualified(r.readiness.rules, p)) { add("RULES_REQUIRED", u8"缺少绑定当前文档、修订、源及配置的完整规则资格。"); }
++    if (!qualified(r.readiness.nativePreparation, p)) { add("NATIVE_PREPARATION_REQUIRED", u8"缺少本轮真实原生准备资格。"); }
++    if (!qualified(r.readiness.glyphs, p)) { add("GLYPHS_REQUIRED", u8"缺少本轮完整真实字形资格。"); }
++    if (!qualified(r.readiness.layout, p)) { add("LAYOUT_REQUIRED", u8"缺少本轮完整排版资格。"); }
++    if (r.targets.empty()) { add("TARGET_REQUIRED", u8"没有明确选择目标实体，禁止写图。"); }
++    for (const auto& key : r.targets) {
++        const auto actual = target(o, key); const auto f = fingerprint(o, key);
++        if (!validKey(key) || key.databaseIdentity != o.scene.databaseIdentity || key.revision != o.scene.revision ||
++            !actual || !(actual->key == key) || actual->viewIdentity != r.viewIdentity || !f ||
++            std::any_of(p.targets.begin(), p.targets.end(), [&key](const EntityFingerprint& existing) { return sameEntity(key, existing.key); })) {
++            add("OUTSIDE_WRITE_SCOPE", u8"目标句柄无效、重复、已过期或不属于选定立面。", key);
++        } else { p.targets.push_back(*f); }
++    }
++    for (const auto& f : o.fingerprints) {
++        if (std::none_of(p.targets.begin(), p.targets.end(), [&f](const EntityFingerprint& selected) { return sameEntity(f.key, selected.key); })) { p.preserved.push_back(f); }
++    }
++    if (result.issues.empty()) { result.value = std::move(p); }
++    return result;
++}
++
++Result<GenerationCommandPlan> revalidateGenerationCommand(const GenerationCommandPlan& p, const ObservedScene& o, const ProjectConfig& c) {
++    if (p.documentIdentity != o.scene.documentIdentity || p.databaseIdentity != o.scene.databaseIdentity ||
++        p.revision != o.scene.revision || !nonempty(o.scene.documentIdentity)) {
++        return failed<GenerationCommandPlan>(o, p.viewIdentity, "STALE_DOCUMENT", u8"活动文档已切换、销毁或修订已变化，请重新分析及准备。");
++    }
++    if (p.configSignature != generationConfigSignature(c, p.viewIdentity)) {
++        return failed<GenerationCommandPlan>(o, p.viewIdentity, "CONFIG_CHANGED", u8"立面配置已变化，旧计划不可提交。");
++    }
++    for (const auto& f : p.targets) {
++        if (!matchesObserved(f, o)) { return failed<GenerationCommandPlan>(o, p.viewIdentity, "SOURCE_CHANGED", u8"目标源实体已变化，旧计划不可提交。"); }
++    }
++    for (const auto& f : p.preserved) {
++        if (!matchesObserved(f, o)) { return failed<GenerationCommandPlan>(o, p.viewIdentity, "PRESERVED_CHANGED", u8"保留实体已变化，须重新读取范围。"); }
++    }
++    GenerationRequest r{p.moduleIdentity, p.moduleVersion, p.viewIdentity, p.sourceSignature, {}, p.readiness};
++    for (const auto& f : p.targets) { r.targets.push_back(f.key); }
++    auto result = planGenerationCommand(o, c, r);
++    if (result.value && result.value->preserved.size() != p.preserved.size()) {
++        return failed<GenerationCommandPlan>(o, p.viewIdentity, "SOURCE_CHANGED", u8"场景实体清单变化，须重新制定计划。");
++    }
++    return result;
++}
++
++Result<GenerationDecision> decideGeneration(const GenerationState& state, const ObservedScene& o, const ProjectConfig& c, const GenerationRequest& r) {
++    if (!validObservation(o) || !validState(state, o)) { return failed<GenerationDecision>(o, r.viewIdentity, "STATE_INVALID", u8"归属记录或当前完整观测无效，不得据此写图。"); }
++    const auto old = std::find_if(state.views.begin(), state.views.end(), [&r](const GeneratedViewState& v) { return v.viewIdentity == r.viewIdentity; });
++    if (old != state.views.end()) {
++        for (const auto& f : old->outputs) {
++            if (!matchesObserved(f, o)) { return {GenerationDecision{GenerationAction::manualChange}, {issue(o, r.viewIdentity, "MANUAL_CHANGE", u8"既有输出已被编辑、移动、删除或同句柄重用；保留记录并停止覆盖。", f.key)}}; }
++        }
++        const bool sourceChanged = std::any_of(old->sourceEntities.begin(), old->sourceEntities.end(), [&o](const EntityFingerprint& f) { return !matchesObserved(f, o); });
++        const bool targetSetChanged = r.targets.size() != old->sourceEntities.size() ||
++            std::any_of(old->sourceEntities.begin(), old->sourceEntities.end(), [&r](const EntityFingerprint& f) {
++                return std::count_if(r.targets.begin(), r.targets.end(), [&f](const EntityKey& k) { return sameEntity(k, f.key); }) != 1;
++            });
++        if (old->requiresReconfirmation || sourceChanged || targetSetChanged || old->sourceSignature != r.sourceSignature ||
++            old->configSignature != generationConfigSignature(c, r.viewIdentity) || old->moduleIdentity != r.moduleIdentity || old->moduleVersion != r.moduleVersion) {
++            return {GenerationDecision{GenerationAction::reconfirmAndPrepare}, {issue(o, r.viewIdentity, "RECONFIRM_AND_PREPARE", u8"源、配置或版本已变化，须重新确认及准备；不自动擦除旧输出。")}};
++        }
++        return {GenerationDecision{GenerationAction::alreadyExists}, {issue(o, r.viewIdentity, "ALREADY_EXISTS", u8"本视图的源、配置及实际输出未变化，无需再生成。")}};
++    }
++    const auto planned = planGenerationCommand(o, c, r);
++    if (!planned.canCommit()) { return {std::nullopt, planned.issues}; }
++    return {GenerationDecision{GenerationAction::generate}, {}};
++}
++
++Result<GenerationState> registerGeneration(const GenerationState& state, const GenerationCommandPlan& p, const ObservedScene& o, const ValidatedGenerationEvidence& e) {
++    const auto reject = [&](const char* code, const char* message) { return failed<GenerationState>(o, p.viewIdentity, code, message); };
++    if (!validObservation(o) || !validState(state, o)) { return reject("STATE_INVALID", u8"归属或提交后观测无效，禁止登记成功。"); }
++    if (!e.committed || e.cancelled || !nonempty(e.commitEvidence) || !nonempty(e.postCommitEvidence) ||
++        !verified(e.measurementsEvidence) || !verified(e.nativeClassesEvidence) || !verified(e.resourcesEvidence) ||
++        !verified(e.glyphsEvidence) || !verified(e.preservedEvidence)) {
++        return reject("COMMIT_EVIDENCE_REQUIRED", u8"缺少实际提交与提交后全项核准状态/来源，禁止登记成功。");
++    }
++    if (e.documentIdentity != p.documentIdentity || e.databaseIdentity != p.databaseIdentity ||
++        o.scene.documentIdentity != p.documentIdentity || o.scene.databaseIdentity != p.databaseIdentity ||
++        e.plannedRevision != p.revision || e.committedRevision != o.scene.revision || e.committedRevision <= p.revision) {
++        return reject("STALE_DOCUMENT", u8"提交证据与计划、文档、库或新修订不一致。");
++    }
++    if (!nonempty(e.generationId) || !nonempty(p.viewIdentity) || !nonempty(p.moduleIdentity) || !nonempty(p.moduleVersion) ||
++        !nonempty(p.sourceSignature) || !nonempty(p.configSignature) || p.targets.empty() || !ready(p)) {
++        return reject("COMMIT_EVIDENCE_REQUIRED", u8"缺少生成身份、完整计划或本轮准备资格。");
++    }
++    if (std::any_of(state.views.begin(), state.views.end(), [&e, &p](const GeneratedViewState& v) { return v.generationId == e.generationId || v.viewIdentity == p.viewIdentity; })) {
++        return reject("DUPLICATE_GENERATION", u8"生成身份或视图已有记录；不得重复登记或覆盖历史记录。");
++    }
++    std::vector<EntityKey> expected;
++    for (const auto* group : {&p.targets, &p.preserved}) {
++        for (const auto& f : *group) {
++            if (!complete(f) || f.key.databaseIdentity != p.databaseIdentity || f.key.revision != p.revision ||
++                std::any_of(expected.begin(), expected.end(), [&f](const EntityKey& k) { return sameEntity(k, f.key); })) {
++                return reject("INVALID_PLAN", u8"原计划实体清单不完整、交叠或句柄无效。");
++            }
++            expected.push_back(f.key);
++        }
++    }
++    if (e.targetsAfter.size() != p.targets.size() || e.outputs.empty() ||
++        expected.size() + e.outputs.size() != o.fingerprints.size()) { return reject("OUTPUT_MISMATCH", u8"提交后目标、输出或保留集合数量与计划不符。"); }
++    std::vector<EntityKey> seen;
++    for (const auto& f : e.targetsAfter) {
++        const auto t = target(o, f.key);
++        if (!complete(f) || f.key.revision != o.scene.revision || !matchesObserved(f, o) || !t || t->viewIdentity != p.viewIdentity ||
++            std::none_of(p.targets.begin(), p.targets.end(), [&f](const EntityFingerprint& original) { return sameEntity(original.key, f.key); }) ||
++            std::any_of(seen.begin(), seen.end(), [&f](const EntityKey& k) { return sameEntity(k, f.key); })) {
++            return reject("TARGET_MISMATCH", u8"提交后目标不属于原选择范围或完整指纹不匹配。");
++        }
++        seen.push_back(f.key);
++    }
++    for (const auto& f : p.preserved) {
++        if (!matchesObserved(f, o)) { return reject("PRESERVED_CHANGED", u8"提交后保留实体缺失或改变，不能登记成功。"); }
++    }
++    for (const auto& f : e.outputs) {
++        const auto t = target(o, f.key);
++        if (!complete(f) || f.key.databaseIdentity != p.databaseIdentity || f.key.revision != o.scene.revision ||
++            !matchesObserved(f, o) || !t || t->viewIdentity != p.viewIdentity ||
++            std::any_of(expected.begin(), expected.end(), [&f](const EntityKey& k) { return sameEntity(k, f.key); }) ||
++            std::any_of(seen.begin(), seen.end(), [&f](const EntityKey& k) { return sameEntity(k, f.key); })) {
++            return reject("OUTPUT_MISMATCH", u8"输出句柄无效、重复、跨库、缺失、重用源对象或指纹不符。");
++        }
++        for (const auto& v : state.views) {
++            if (std::any_of(v.outputs.begin(), v.outputs.end(), [&f](const EntityFingerprint& old) { return sameEntity(old.key, f.key); })) { return reject("DUPLICATE_GENERATION", u8"输出已属于其他生成记录。"); }
++        }
++        seen.push_back(f.key);
++    }
++    GenerationState updated = state;
++    updated.views.push_back({p.viewIdentity, p.moduleIdentity, p.moduleVersion, e.generationId,
++        p.sourceSignature, p.configSignature, e.committedRevision, e.targetsAfter, e.outputs, false,
++        e.commitEvidence, e.postCommitEvidence});
++    return {std::move(updated), {}};
++}
++
++InvalidatedGenerationState invalidateChangedGenerationViews(const GenerationState& state, const ProjectConfig& config, const std::vector<View>& currentViews) {
++    InvalidatedGenerationState result{config, state};
++    const auto unchanged = [&currentViews](const std::string& id, const std::string& signature) {
++        const auto count = std::count_if(currentViews.begin(), currentViews.end(), [&id](const View& v) { return v.identity == id; });
++        return count == 1 && std::any_of(currentViews.begin(), currentViews.end(), [&id, &signature](const View& v) { return v.identity == id && nonempty(v.geometrySignature) && v.geometrySignature == signature; });
++    };
++    for (auto& v : result.config.views) {
++        if (!unchanged(v.viewIdentity, v.geometrySignature)) { v.material.confirmed = false; v.axisMapping.confirmed = false; }
++    }
++    for (auto& v : result.state.views) {
++        if (!unchanged(v.viewIdentity, v.sourceSignature)) { v.requiresReconfirmation = true; }
++    }
++    return result;
++}
++}
+--- L1-final/tests/CommandStateTests.cpp
++++ G1-final/tests/CommandStateTests.cpp
+@@ -0,0 +1,255 @@
++#include "TestSupport.h"
++#include "../src/GenerationState.h"
++
++namespace bce::test {
++namespace {
++EntityFingerprint fp(const EntityKey& key, const std::string& geometry = "geometry-1") {
++    return {key, geometry, "no-text", "resource-1", "AcDbLine"};
++}
++ObservedScene observed() {
++    auto snapshot = scene();
++    return {snapshot, {fp(snapshot.targets[0].key), fp(snapshot.preserved[0].key)}};
++}
++ProjectConfig config() {
++    ProjectConfig c;
++    c.databaseIdentity = "database-1";
++    c.units = {4, true, std::nullopt, "mm"};
++    c.unitConfirmationSource = "drawing-insunits";
++    c.zeroLevel = {"0", "confirmed-datum-point", true};
++    c.views = {{"elevation-E", "source-1", {"paint", "material-confirmation", true},
++        {"A-B", "confirmed-plan", true}, Point2{1, 0}}};
++    return c;
++}
++GenerationRequest generationRequest(const ProjectConfig& c) {
++    GenerationRequest r;
++    r.moduleIdentity = "BuildingElevation";
++    r.moduleVersion = "core-development";
++    r.viewIdentity = "elevation-E";
++    r.sourceSignature = "source-1";
++    r.targets = {{"database-1", "E1", 7}};
++    const CommandQualification q{"document-1", "database-1", 7, r.viewIdentity,
++        "source-1", generationConfigSignature(c, r.viewIdentity), "synthetic-test-facts-explicit", true};
++    r.readiness = {q, q, q, q};
++    return r;
++}
++GenerationState emptyState() { return {"document-1", "database-1", {}}; }
++GenerationCommandPlan plan() {
++    const auto c = config();
++    const auto result = planGenerationCommand(observed(), c, generationRequest(c));
++    require(result.canCommit(), "explicit complete facts should yield plan");
++    return *result.value;
++}
++ObservedScene postScene() {
++    auto o = observed();
++    o.scene.revision = 8;
++    for (auto* entities : {&o.scene.targets, &o.scene.preserved}) {
++        for (auto& e : *entities) { e.key.revision = 8; }
++    }
++    for (auto& f : o.fingerprints) { f.key.revision = 8; }
++    o.scene.targets.push_back({{"database-1", "F1", 8}, "shared", {{0, 0}, {10, 10}}, "elevation-E"});
++    o.fingerprints.push_back(fp({"database-1", "F1", 8}, "output-1"));
++    return o;
++}
++ValidatedGenerationEvidence evidence() {
++    ValidatedGenerationEvidence e;
++    e.documentIdentity = "document-1"; e.databaseIdentity = "database-1";
++    e.plannedRevision = 7; e.committedRevision = 8; e.generationId = "unique-generation-1";
++    e.committed = true;
++    e.commitEvidence = "test-adapter-commit"; e.postCommitEvidence = "test-adapter-readback";
++    e.measurementsEvidence = {true, "complete-measurements"}; e.nativeClassesEvidence = {true, "actual-classes"};
++    e.resourcesEvidence = {true, "actual-resources"}; e.glyphsEvidence = {true, "actual-glyphs"};
++    e.preservedEvidence = {true, "preserved-readback"};
++    e.targetsAfter = {fp({"database-1", "E1", 8})};
++    e.outputs = {fp({"database-1", "F1", 8}, "output-1")};
++    return e;
++}
++GenerationState registered() {
++    GeneratedViewState view;
++    view.viewIdentity = "elevation-E"; view.moduleIdentity = "BuildingElevation";
++    view.moduleVersion = "core-development"; view.generationId = "unique-generation-1";
++    view.sourceSignature = "source-1";
++    view.configSignature = generationConfigSignature(config(), "elevation-E");
++    view.committedRevision = 8;
++    view.sourceEntities = {fp({"database-1", "E1", 8})};
++    view.outputs = {fp({"database-1", "F1", 8}, "output-1")};
++    view.commitEvidence = "historical-adapter-commit"; view.postCommitEvidence = "historical-adapter-readback";
++    return {"document-1", "database-1", {view}};
++}
++}
++// Removing any missing prerequisite check would authorize an incomplete command.
++void missingConfigDoesNotWriteDrawing() {
++    auto o = observed();
++    o.scene.units = {};
++    ProjectConfig c;
++    GenerationRequest r;
++    const auto result = planGenerationCommand(o, c, r);
++    require(!result.canCommit() && !result.value, "missing facts cannot authorize write");
++    for (const auto* code : {"CONFIG_REQUIRED", "UNIT_REQUIRED", "DATUM_REQUIRED", "PLAN_REQUIRED",
++        "RULES_REQUIRED", "NATIVE_PREPARATION_REQUIRED", "GLYPHS_REQUIRED", "LAYOUT_REQUIRED", "TARGET_REQUIRED"}) {
++        require(hasCode(result, code), "each missing prerequisite needs explicit diagnostic");
++    }
++    require(o.scene.targets.size() == 1 && o.scene.revision == 7, "pure planning must retain input");
++    for (const auto& i : result.issues) { require(i.source.documentIdentity == "document-1", "diagnostic locates document"); }
++    o.scene.targets.clear(); o.scene.preserved.clear(); o.fingerprints.clear();
++    require(hasCode(planGenerationCommand(o, c, r), "INPUT_EMPTY"), "empty input needs an explicit diagnostic");
++}
++void documentSwitchRejectsStaleCommit() {
++    const auto p = plan();
++    auto o = observed();
++    o.scene.documentIdentity = "other-document";
++    require(hasCode(revalidateGenerationCommand(p, o, config()), "STALE_DOCUMENT"), "document switch rejects");
++    o = observed(); o.scene.documentIdentity.clear();
++    require(hasCode(revalidateGenerationCommand(p, o, config()), "STALE_DOCUMENT"), "destroyed document rejects");
++    o = observed(); o.scene.revision = 9;
++    require(hasCode(revalidateGenerationCommand(p, o, config()), "STALE_DOCUMENT"), "revision change rejects");
++    o = observed(); o.fingerprints[0].geometry = "edited-source";
++    require(hasCode(revalidateGenerationCommand(p, o, config()), "SOURCE_CHANGED"), "source fingerprint change rejects");
++}
++void repeatedBuildDoesNotDuplicate() {
++    const auto state = registered();
++    const auto c = config();
++    const auto decision = decideGeneration(state, postScene(), c, generationRequest(c));
++    require(decision.value && decision.value->action == GenerationAction::alreadyExists, "unchanged output must not duplicate");
++    require(!decision.canCommit(), "already exists does not grant new write permission");
++    require(state.views.size() == 1, "decision preserves old record");
++    require(hasCode(registerGeneration(state, plan(), postScene(), evidence()), "DUPLICATE_GENERATION"), "duplicate registration rejects");
++    auto otherSelection = generationRequest(c); otherSelection.targets[0].handle = "E2";
++    auto o = postScene();
++    o.scene.targets.push_back({{"database-1", "E2", 8}, "shared", {{0, 0}, {20, 20}}, "elevation-E"});
++    o.fingerprints.push_back(fp({"database-1", "E2", 8}, "other-source"));
++    const auto changedTargets = decideGeneration(state, o, c, otherSelection);
++    require(changedTargets.value && changedTargets.value->action == GenerationAction::reconfirmAndPrepare,
++        "a different target set cannot reuse historical generation");
++}
++void manualChangesAreNotSilentlyReplaced() {
++    const auto state = registered(); const auto c = config(); const auto r = generationRequest(c);
++    for (int mutation = 0; mutation < 4; ++mutation) {
++        auto o = postScene();
++        if (mutation == 0) { o.fingerprints.back().geometry = "user-moved"; }
++        if (mutation == 1) { o.fingerprints.back().text = "user-text"; }
++        if (mutation == 2) { o.fingerprints.back().resources = "user-resource"; }
++        if (mutation == 3) { o.scene.targets.pop_back(); o.fingerprints.pop_back(); }
++        const auto d = decideGeneration(state, o, c, r);
++        require(d.value && d.value->action == GenerationAction::manualChange && !d.canCommit(), "manual changes must block replacement");
++        require(hasCode(d, "MANUAL_CHANGE"), "manual change diagnostic required");
++    }
++    require(state.views[0].generationId == "unique-generation-1", "manual change cannot erase history");
++}
++void uncommittedEvidenceCannotRegister() {
++    auto e = evidence(); e.committed = false;
++    require(hasCode(registerGeneration(emptyState(), plan(), postScene(), e), "COMMIT_EVIDENCE_REQUIRED"), "uncommitted cannot register");
++    e = evidence(); e.cancelled = true;
++    require(!registerGeneration(emptyState(), plan(), postScene(), e).canCommit(), "cancelled cannot register");
++    for (int missing = 0; missing < 7; ++missing) {
++        e = evidence();
++        std::string* fields[] = {&e.commitEvidence, &e.postCommitEvidence, &e.measurementsEvidence.source,
++            &e.nativeClassesEvidence.source, &e.resourcesEvidence.source, &e.glyphsEvidence.source, &e.preservedEvidence.source};
++        fields[missing]->clear();
++        require(!registerGeneration(emptyState(), plan(), postScene(), e).canCommit(), "boolean committed alone is insufficient");
++    }
++    for (int failed = 0; failed < 5; ++failed) {
++        e = evidence();
++        GenerationCheckEvidence* checks[] = {&e.measurementsEvidence, &e.nativeClassesEvidence,
++            &e.resourcesEvidence, &e.glyphsEvidence, &e.preservedEvidence};
++        checks[failed]->verified = false;
++        require(!registerGeneration(emptyState(), plan(), postScene(), e).canCommit(), "failed post-commit check cannot register");
++    }
++}
++void changedViewInvalidatesOnlyItsState() {
++    auto state = registered(); auto c = config();
++    auto second = state.views.front(); second.viewIdentity = "elevation-W"; second.generationId = "unique-W";
++    second.sourceEntities[0].key.handle = "E2"; second.outputs[0].key.handle = "F2";
++    state.views.push_back(second);
++    auto vc = c.views.front(); vc.viewIdentity = "elevation-W"; c.views.push_back(vc);
++    View east; east.identity = "elevation-E"; east.geometrySignature = "changed";
++    View west; west.identity = "elevation-W"; west.geometrySignature = "source-1";
++    const auto updated = invalidateChangedGenerationViews(state, c, {east, west});
++    require(updated.state.views.size() == 2 && updated.state.views[0].requiresReconfirmation, "changed record retained and invalidated");
++    require(!updated.state.views[1].requiresReconfirmation, "other view generation remains");
++    require(!updated.config.views[0].material.confirmed && !updated.config.views[0].axisMapping.confirmed, "changed confirmation invalidated");
++    require(updated.config.views[1].material.confirmed && updated.config.views[1].axisMapping.confirmed, "other confirmations retained");
++    auto o = postScene(); o.fingerprints[0].geometry = "new-source";
++    const auto d = decideGeneration(state, o, c, generationRequest(c));
++    require(d.value && d.value->action == GenerationAction::reconfirmAndPrepare && !d.canCommit(), "source changes require fresh preparation");
++}
++void sameLayerDoesNotConferOwnership() {
++    const auto c = config(); const auto d = decideGeneration(emptyState(), observed(), c, generationRequest(c));
++    require(d.canCommit() && d.value->action == GenerationAction::generate, "shared layer without record is not ownership");
++    auto o = postScene();
++    o.scene.targets.push_back({{"database-1", "A2", 8}, "shared", {{5, 5}, {6, 6}}, "elevation-E"});
++    o.fingerprints.push_back(fp({"database-1", "A2", 8}, "unrelated-on-same-layer"));
++    const auto repeated = decideGeneration(registered(), o, c, generationRequest(c));
++    require(repeated.value && repeated.value->action == GenerationAction::alreadyExists, "unrelated same-layer entity ignored");
++}
++void foreignOrMissingOutputCannotRegister() {
++    for (int mutation = 0; mutation < 8; ++mutation) {
++        auto e = evidence(); auto o = postScene();
++        if (mutation == 0) { e.outputs[0].key.databaseIdentity = "foreign"; }
++        if (mutation == 1) { o.scene.targets.pop_back(); o.fingerprints.pop_back(); }
++        if (mutation == 2) { e.outputs[0].geometry = "wrong-readback"; }
++        if (mutation == 3) { e.outputs[0].key.handle = "0"; }
++        if (mutation == 4) { e.outputs[0].text.clear(); }
++        if (mutation == 5) { e.outputs.push_back(e.outputs[0]); e.outputs.back().key.handle = "000f1"; }
++        if (mutation == 6) { e.committedRevision = 7; }
++        if (mutation == 7) { o.fingerprints[1].geometry = "damaged-preserved"; }
++        require(!registerGeneration(emptyState(), plan(), o, e).canCommit(), "foreign/missing/invalid output or preservation mismatch rejects");
++    }
++    auto e = evidence(); e.outputs[0].key.handle = "000f1";
++    require(registerGeneration(emptyState(), plan(), postScene(), e).canCommit(), "valid handle spellings share identity");
++}
++void staleReadinessAndChangedConfigCannotAuthorize() {
++    const auto c = config(); auto r = generationRequest(c);
++    r.readiness.nativePreparation.revision = 6;
++    require(hasCode(planGenerationCommand(observed(), c, r), "NATIVE_PREPARATION_REQUIRED"), "stale preparation rejects");
++    auto changed = c; changed.views[0].material.value = "changed-material";
++    require(!revalidateGenerationCommand(plan(), observed(), changed).canCommit(), "changed config must not reuse plan");
++    auto o = observed(); o.scene.targets.clear(); o.fingerprints.erase(o.fingerprints.begin());
++    require(!planGenerationCommand(o, c, generationRequest(c)).canCommit(), "missing actual target rejects");
++}
++void registrationRequiresExactTargetAndPreservedInventory() {
++    for (int mutation = 0; mutation < 6; ++mutation) {
++        auto e = evidence(); auto o = postScene();
++        if (mutation == 0) { e.targetsAfter.clear(); }
++        if (mutation == 1) { e.targetsAfter[0].key.handle = "B1"; }
++        if (mutation == 2) { e.outputs[0] = e.targetsAfter[0]; }
++        if (mutation == 3) { o.scene.targets.push_back({{"database-1", "AA", 8}, "shared", {{0, 0}, {1, 1}}, "elevation-E"}); o.fingerprints.push_back(fp({"database-1", "AA", 8})); }
++        if (mutation == 4) { e.documentIdentity = "wrong-document"; }
++        if (mutation == 5) { e.generationId.clear(); }
++        require(!registerGeneration(emptyState(), plan(), o, e).canCommit(), "registration requires exact scoped inventory and identity");
++    }
++}
++void manualChangeTakesPriorityOverSourceInvalidation() {
++    const auto state = registered(); auto c = config();
++    c.views[0].geometrySignature = "changed";
++    auto r = generationRequest(c); r.sourceSignature = "changed";
++    auto o = postScene(); o.fingerprints[0].geometry = "changed"; o.fingerprints.back().geometry = "user-changed-output";
++    const auto d = decideGeneration(state, o, c, r);
++    require(d.value && d.value->action == GenerationAction::manualChange && !d.canCommit(), "source invalidation cannot hide manual edits");
++}
++void unrelatedRevisionKeepsHistoricalOwnershipButStalesPreparation() {
++    const auto state = registered(); const auto c = config(); auto o = postScene();
++    o.scene.revision = 12;
++    for (auto* entities : {&o.scene.targets, &o.scene.preserved}) {
++        for (auto& entity : *entities) { entity.key.revision = 12; }
++    }
++    for (auto& f : o.fingerprints) { f.key.revision = 12; }
++    o.fingerprints[1].geometry = "unrelated-section-edited";
++    const auto d = decideGeneration(state, o, c, generationRequest(c));
++    require(d.value && d.value->action == GenerationAction::alreadyExists, "unrelated revision must not imply manual output edit");
++    require(c.views[0].material.confirmed && c.views[0].axisMapping.confirmed, "unrelated edit retains view confirmation");
++    require(hasCode(revalidateGenerationCommand(plan(), o, c), "STALE_DOCUMENT"), "old command preparation still stale");
++}
++void malformedOwnershipCannotAuthorizeAnotherWrite() {
++    const auto c = config();
++    for (int mutation = 0; mutation < 5; ++mutation) {
++        auto state = registered();
++        if (mutation == 0) { state.databaseIdentity = "foreign"; }
++        if (mutation == 1) { state.views[0].outputs[0].key.handle = "FFFFFFFFFFFFFFFFF"; }
++        if (mutation == 2) { state.views[0].outputs.push_back(state.views[0].outputs[0]); }
++        if (mutation == 3) { auto other = state.views[0]; other.viewIdentity = "other-view"; state.views.push_back(other); }
++        if (mutation == 4) { state.views[0].outputs[0].nativeClass.clear(); }
++        require(!decideGeneration(state, postScene(), c, generationRequest(c)).canCommit(), "malformed ownership cannot authorize");
++        require(!registerGeneration(state, plan(), postScene(), evidence()).canCommit(), "malformed ownership cannot be extended");
++    }
++}
++}
+--- L1-final/tests/CoreTests.cpp
++++ G1-final/tests/CoreTests.cpp
+@@ -1,10 +1,23 @@
+ #include "TestSupport.h"
+ #include <array>
+ #include <iostream>
+ #include <string>
+ namespace bce::test {
++void missingConfigDoesNotWriteDrawing();
++void documentSwitchRejectsStaleCommit();
++void repeatedBuildDoesNotDuplicate();
++void manualChangesAreNotSilentlyReplaced();
++void uncommittedEvidenceCannotRegister();
++void changedViewInvalidatesOnlyItsState();
++void sameLayerDoesNotConferOwnership();
++void foreignOrMissingOutputCannotRegister();
++void staleReadinessAndChangedConfigCannotAuthorize();
++void registrationRequiresExactTargetAndPreservedInventory();
++void manualChangeTakesPriorityOverSourceInvalidation();
++void unrelatedRevisionKeepsHistoricalOwnershipButStalesPreparation();
++void malformedOwnershipCannotAuthorizeAnotherWrite();
+ void rowsDependOnAvailableArea();
+ void noFitDoesNotScaleArchitecture();
+ void protectedSectionIsFixedObstacle();
+ void collisionIncludesDimensionGlyphAndBaseline();
+ void paperSizeTracksSelectedScale();
+@@ -52,11 +65,24 @@
+ void mirroredTextPreservesBothBasisDirections();
+ }
+ 
+ namespace {
+ struct TestCase { const char* name; void (*run)(); };
+-const std::array<TestCase, 60> cases{{
++const std::array<TestCase, 73> cases{{
++    {"MissingConfigDoesNotWriteDrawing", bce::test::missingConfigDoesNotWriteDrawing},
++    {"DocumentSwitchRejectsStaleCommit", bce::test::documentSwitchRejectsStaleCommit},
++    {"RepeatedBuildDoesNotDuplicate", bce::test::repeatedBuildDoesNotDuplicate},
++    {"ManualChangesAreNotSilentlyReplaced", bce::test::manualChangesAreNotSilentlyReplaced},
++    {"UncommittedEvidenceCannotRegister", bce::test::uncommittedEvidenceCannotRegister},
++    {"ChangedViewInvalidatesOnlyItsState", bce::test::changedViewInvalidatesOnlyItsState},
++    {"SameLayerDoesNotConferOwnership", bce::test::sameLayerDoesNotConferOwnership},
++    {"ForeignOrMissingOutputCannotRegister", bce::test::foreignOrMissingOutputCannotRegister},
++    {"StaleReadinessAndChangedConfigCannotAuthorize", bce::test::staleReadinessAndChangedConfigCannotAuthorize},
++    {"RegistrationRequiresExactTargetAndPreservedInventory", bce::test::registrationRequiresExactTargetAndPreservedInventory},
++    {"ManualChangeTakesPriorityOverSourceInvalidation", bce::test::manualChangeTakesPriorityOverSourceInvalidation},
++    {"UnrelatedRevisionKeepsHistoricalOwnershipButStalesPreparation", bce::test::unrelatedRevisionKeepsHistoricalOwnershipButStalesPreparation},
++    {"MalformedOwnershipCannotAuthorizeAnotherWrite", bce::test::malformedOwnershipCannotAuthorizeAnotherWrite},
+     {"RowsDependOnAvailableArea", bce::test::rowsDependOnAvailableArea},
+     {"NoFitDoesNotScaleArchitecture", bce::test::noFitDoesNotScaleArchitecture},
+     {"ProtectedSectionIsFixedObstacle", bce::test::protectedSectionIsFixedObstacle},
+     {"CollisionIncludesDimensionGlyphAndBaseline", bce::test::collisionIncludesDimensionGlyphAndBaseline},
+     {"PaperSizeTracksSelectedScale", bce::test::paperSizeTracksSelectedScale},
+@@ -132,5 +158,6 @@
+     if (executed == 0) { std::cerr << "unknown case: " << argv[2] << '\n'; return 2; }
+     std::cout << "Executed " << executed << ", failed " << failures << '\n';
+     return failures == 0 ? 0 : 1;
+ }
+ 
++
+--- L1-final/tests/ElevationCoreTests.vcxproj
++++ G1-final/tests/ElevationCoreTests.vcxproj
+@@ -5,11 +5,12 @@
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+   <PropertyGroup Label="Configuration"><ConfigurationType>Application</ConfigurationType><UseDebugLibraries>false</UseDebugLibraries><PlatformToolset>v141</PlatformToolset><CharacterSet>Unicode</CharacterSet></PropertyGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+   <PropertyGroup><OutDir>..\..\out\</OutDir><IntDir>..\..\obj\</IntDir><TargetName>ElevationCoreTests</TargetName></PropertyGroup>
+   <ItemDefinitionGroup><ClCompile><WarningLevel>Level4</WarningLevel><TreatWarningAsError>true</TreatWarningAsError><SDLCheck>true</SDLCheck><ConformanceMode>true</ConformanceMode><LanguageStandard>stdcpp17</LanguageStandard><RuntimeLibrary>MultiThreaded</RuntimeLibrary><AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions><ExceptionHandling>Sync</ExceptionHandling></ClCompile><Link><SubSystem>Console</SubSystem></Link></ItemDefinitionGroup>
+-  <ItemGroup><ClCompile Include="..\src\ElevationModel.cpp" /><ClCompile Include="..\src\Recognition.cpp" /><ClCompile Include="..\src\AnnotationRules.cpp" /><ClCompile Include="..\src\MaterialRules.cpp" /><ClCompile Include="AnnotationRulesTests.cpp" /><ClCompile Include="MaterialRulesTests.cpp" /><ClCompile Include="RecognitionTests.cpp" /><ClCompile Include="CoreTests.cpp" /><ClCompile Include="LayoutTests.cpp" /><ClCompile Include="..\src\Layout.cpp" /><ClCompile Include="ReferenceTests.cpp" /><ClCompile Include="ScopeTests.cpp" /></ItemGroup>
++  <ItemGroup><ClCompile Include="..\src\ElevationModel.cpp" /><ClCompile Include="..\src\Recognition.cpp" /><ClCompile Include="..\src\AnnotationRules.cpp" /><ClCompile Include="..\src\MaterialRules.cpp" /><ClCompile Include="AnnotationRulesTests.cpp" /><ClCompile Include="MaterialRulesTests.cpp" /><ClCompile Include="RecognitionTests.cpp" /><ClCompile Include="CoreTests.cpp" /><ClCompile Include="CommandStateTests.cpp" /><ClCompile Include="..\src\GenerationState.cpp" /><ClCompile Include="LayoutTests.cpp" /><ClCompile Include="..\src\Layout.cpp" /><ClCompile Include="ReferenceTests.cpp" /><ClCompile Include="ScopeTests.cpp" /></ItemGroup>
+   <ItemGroup><ClInclude Include="..\src\ElevationModel.h" /><ClInclude Include="TestSupport.h" /></ItemGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+ </Project>
+ 
+ 
++
+--- L1-final/tools/build.ps1
++++ G1-final/tools/build.ps1
+@@ -9,11 +9,11 @@
+ $buildRoot = Join-Path (Join-Path $projectRoot 'build') $buildName
+ $null = New-Item -ItemType Directory -Path $buildRoot
+ $receipt = [ordered]@{ target=$Target; label=$Label; startedUtc=[DateTime]::UtcNow.ToString('o'); buildRoot=$buildRoot; inputs=@(); commands=@(); outputs=@(); buildExitCode=$null; testExitCode=$null; unknownCaseExitCode=$null; exitCode=1 }
+ $finalExit = 1
+ try {
+-    $inputs = @('src/ElevationModel.h','src/ElevationModel.cpp','src/Recognition.h','src/Recognition.cpp','src/RuleModel.h','src/AnnotationRules.h','src/AnnotationRules.cpp','src/MaterialRules.h','src/MaterialRules.cpp','tests/AnnotationRulesTests.cpp','tests/MaterialRulesTests.cpp','src/WriteContracts.h','src/Layout.h','src/Layout.cpp','tests/LayoutTests.cpp','tests/CoreTests.cpp','tests/RecognitionTests.cpp','tests/ReferenceTests.cpp','tests/ScopeTests.cpp','tests/TestSupport.h','tests/ElevationCoreTests.vcxproj','tools/build.ps1','tests/fixtures/scheme-scene.tsv','tests/fixtures/scheme-expected.tsv','tests/fixtures/scheme-scene-manifest.json')
++    $inputs = @('src/GenerationState.h','src/GenerationState.cpp','tests/CommandStateTests.cpp','src/ElevationModel.h','src/ElevationModel.cpp','src/Recognition.h','src/Recognition.cpp','src/RuleModel.h','src/AnnotationRules.h','src/AnnotationRules.cpp','src/MaterialRules.h','src/MaterialRules.cpp','tests/AnnotationRulesTests.cpp','tests/MaterialRulesTests.cpp','src/WriteContracts.h','src/Layout.h','src/Layout.cpp','tests/LayoutTests.cpp','tests/CoreTests.cpp','tests/RecognitionTests.cpp','tests/ReferenceTests.cpp','tests/ScopeTests.cpp','tests/TestSupport.h','tests/ElevationCoreTests.vcxproj','tools/build.ps1','tests/fixtures/scheme-scene.tsv','tests/fixtures/scheme-expected.tsv','tests/fixtures/scheme-scene-manifest.json')
+     foreach ($relative in $inputs) {
+         $source = Join-Path $projectRoot $relative
+         $destination = Join-Path (Join-Path $buildRoot 'input') $relative
+         $null = New-Item -ItemType Directory -Force -Path (Split-Path $destination -Parent)
+         Copy-Item -LiteralPath $source -Destination $destination
+@@ -72,5 +72,6 @@
+     Write-Output ('RECEIPT=' + (Join-Path $buildRoot 'receipt.json'))
+     Write-Output ('EXIT_CODE=' + $finalExit)
+ }
+ exit $finalExit
+ 
++

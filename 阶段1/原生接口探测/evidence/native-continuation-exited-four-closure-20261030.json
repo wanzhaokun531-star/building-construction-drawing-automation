@@ -1,0 +1,372 @@
+{
+  "contract": "stage1.native-continuation-closure.v1",
+  "recorded": "2026-10-30T13:33:08.635955+08:00",
+  "sessions": [
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-121837",
+      "process": {
+        "ownProcessAlive": false,
+        "currentProcessSignaled": true
+      },
+      "finalPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-121837\\isolation-final.json",
+      "final": {
+        "contract": "stage1.isolated-host-final.v1",
+        "recorded": "2026-10-30T12:32:37.0128056+08:00",
+        "nonce": "e3254bb17a1f432a8c2e0a3d98db7438",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-121837",
+        "workerCreated": true,
+        "processId": 12184,
+        "workerExited": true,
+        "workerExitCode": 70,
+        "readyIdentityConfirmed": true,
+        "nativeQuitConfirmed": false,
+        "forcedTermination": true,
+        "timedOut": false,
+        "desktopName": "CodexS1_e3254bb17a1f432a8c2e0a3d98db7438",
+        "inputDesktopBefore": "Default",
+        "inputDesktopChanged": false,
+        "inputDesktopReadErrors": 0,
+        "monitorStartedBeforeWorker": true,
+        "monitorStarted": true,
+        "monitorStopped": true,
+        "monitorError": null,
+        "droppedEvents": 0,
+        "eventFileWritten": true,
+        "sampleCount": 1619,
+        "workerForegroundEvents": 0,
+        "workerUserDesktopShowEvents": 0,
+        "workerForegroundSamples": 0,
+        "relatedCadEvents": 1425,
+        "relatedCadShowEvents": 118,
+        "relatedCadForegroundEvents": 32,
+        "relatedCadEventsNeedReview": true,
+        "desktopClosed": true,
+        "processHandlesClosed": true,
+        "switchDesktopCalled": false,
+        "userCadTouched": false,
+        "supervisorErrors": [],
+        "stillRunningOwnedWorker": false,
+        "closeOwnStartupTipsEnabled": true,
+        "startupTipActions": 1,
+        "startupTipPosts": 1,
+        "scope": "Observed supervisor/owned worker only; existing related CAD events retained for attribution review, not blamed automatically; drawing business correctness requires separate native evidence"
+      },
+      "windowIsolationPassed": true,
+      "normalQuitPassed": false,
+      "files": [
+        {
+          "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexStage1Probe_e3254bb17a1f432a8c2e0a3d98db7438\\S1Acad_e3254bb1.arx",
+          "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-121837\\staging-final-archive\\S1Acad_e3254bb1.arx",
+          "SHA256": "EE2A7A06FD9D3B66AAE8F06988C01A0A98327BB4AE6A135FB68370C93D5DF8F9",
+          "removed": true
+        },
+        {
+          "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexStage1Probe_e3254bb17a1f432a8c2e0a3d98db7438\\S1Acad_e3254bb1.ini",
+          "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-121837\\staging-final-archive\\S1Acad_e3254bb1.ini",
+          "SHA256": "F52F5A0F11DBF79272256F8E91EBAFC4831AC2DDF9A27E389F0499279270AF46",
+          "removed": true
+        }
+      ],
+      "stagingDirectoryRemoved": true
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-123535",
+      "process": {
+        "ownProcessAlive": false,
+        "currentProcessSignaled": true
+      },
+      "finalPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-123535\\isolation-final.json",
+      "final": {
+        "contract": "stage1.isolated-host-final.v1",
+        "recorded": "2026-10-30T12:50:19.0516516+08:00",
+        "nonce": "76c9c37624644f3d8e0c9183b5c9cf64",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-123535",
+        "workerCreated": true,
+        "processId": 35828,
+        "workerExited": true,
+        "workerExitCode": 70,
+        "readyIdentityConfirmed": true,
+        "nativeQuitConfirmed": true,
+        "forcedTermination": true,
+        "timedOut": false,
+        "desktopName": "CodexS1_76c9c37624644f3d8e0c9183b5c9cf64",
+        "inputDesktopBefore": "Default",
+        "inputDesktopChanged": false,
+        "inputDesktopReadErrors": 0,
+        "monitorStartedBeforeWorker": true,
+        "monitorStarted": true,
+        "monitorStopped": true,
+        "monitorError": null,
+        "droppedEvents": 0,
+        "eventFileWritten": true,
+        "sampleCount": 1684,
+        "workerForegroundEvents": 0,
+        "workerUserDesktopShowEvents": 0,
+        "workerForegroundSamples": 0,
+        "relatedCadEvents": 0,
+        "relatedCadShowEvents": 0,
+        "relatedCadForegroundEvents": 0,
+        "relatedCadEventsNeedReview": false,
+        "desktopClosed": true,
+        "processHandlesClosed": true,
+        "switchDesktopCalled": false,
+        "userCadTouched": false,
+        "supervisorErrors": [
+          "WindowSnapshot: Exception calling \"Windows\" with \"0\" argument(s): \"EnumDesktopWindows private desktop\""
+        ],
+        "stillRunningOwnedWorker": false,
+        "closeOwnStartupTipsEnabled": true,
+        "startupTipActions": 1,
+        "startupTipPosts": 1,
+        "scope": "Observed supervisor/owned worker only; existing related CAD events retained for attribution review, not blamed automatically; drawing business correctness requires separate native evidence"
+      },
+      "windowIsolationPassed": true,
+      "normalQuitPassed": false,
+      "files": [
+        {
+          "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexStage1Probe_76c9c37624644f3d8e0c9183b5c9cf64\\S1Acad_76c9c376.arx",
+          "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-123535\\staging-final-archive\\S1Acad_76c9c376.arx",
+          "SHA256": "00D1A508D39FA6B54725DF56685B8078AA50F32C4894F7418ED4F8649F12A402",
+          "removed": true
+        },
+        {
+          "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexStage1Probe_76c9c37624644f3d8e0c9183b5c9cf64\\S1Acad_76c9c376.ini",
+          "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-123535\\staging-final-archive\\S1Acad_76c9c376.ini",
+          "SHA256": "34BBCCCEC0FB158956D5C923F0EE2B21C8097838480B2AE3725439A181EF0E20",
+          "removed": true
+        }
+      ],
+      "stagingDirectoryRemoved": true
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-125019",
+      "process": {
+        "ownProcessAlive": false,
+        "openError": 87
+      },
+      "finalPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-125019\\isolation-final.json",
+      "final": {
+        "contract": "stage1.isolated-host-final.v1",
+        "recorded": "2026-10-30T12:59:33.0008635+08:00",
+        "nonce": "355d075812fd4280b1f85b10f69d8f68",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-125019",
+        "workerCreated": true,
+        "processId": 25192,
+        "workerExited": true,
+        "workerExitCode": 70,
+        "readyIdentityConfirmed": false,
+        "nativeQuitConfirmed": false,
+        "forcedTermination": true,
+        "timedOut": false,
+        "desktopName": "CodexS1_355d075812fd4280b1f85b10f69d8f68",
+        "inputDesktopBefore": "Default",
+        "inputDesktopChanged": false,
+        "inputDesktopReadErrors": 0,
+        "monitorStartedBeforeWorker": true,
+        "monitorStarted": true,
+        "monitorStopped": true,
+        "monitorError": null,
+        "droppedEvents": 0,
+        "eventFileWritten": true,
+        "sampleCount": 1060,
+        "workerForegroundEvents": 0,
+        "workerUserDesktopShowEvents": 0,
+        "workerForegroundSamples": 0,
+        "relatedCadEvents": 0,
+        "relatedCadShowEvents": 0,
+        "relatedCadForegroundEvents": 0,
+        "relatedCadEventsNeedReview": false,
+        "desktopClosed": true,
+        "processHandlesClosed": true,
+        "switchDesktopCalled": false,
+        "userCadTouched": false,
+        "supervisorErrors": [],
+        "stillRunningOwnedWorker": false,
+        "closeOwnStartupTipsEnabled": true,
+        "startupTipActions": 1,
+        "startupTipPosts": 1,
+        "scope": "Observed supervisor/owned worker only; existing related CAD events retained for attribution review, not blamed automatically; drawing business correctness requires separate native evidence"
+      },
+      "windowIsolationPassed": true,
+      "normalQuitPassed": false,
+      "files": [
+        {
+          "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexStage1Probe_355d075812fd4280b1f85b10f69d8f68\\S1Acad_355d0758.arx",
+          "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-125019\\staging-final-archive\\S1Acad_355d0758.arx",
+          "SHA256": "C3E89B39271C07355E9475085C4F43F40F68A40C8A98777BC5534A639A644FEF",
+          "removed": true
+        },
+        {
+          "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexStage1Probe_355d075812fd4280b1f85b10f69d8f68\\S1Acad_355d0758.ini",
+          "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-125019\\staging-final-archive\\S1Acad_355d0758.ini",
+          "SHA256": "39B3B5B4F26E19CD2CFBC0F1E0620C8963ECF3FF2CDC11048ABFF059E828C910",
+          "removed": true
+        }
+      ],
+      "stagingDirectoryRemoved": true
+    },
+    {
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-131436",
+      "process": {
+        "ownProcessAlive": false,
+        "currentProcessSignaled": true
+      },
+      "finalPath": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-131436\\isolation-final.json",
+      "final": {
+        "contract": "stage1.isolated-host-final.v1",
+        "recorded": "2026-10-30T13:16:26.9069303+08:00",
+        "nonce": "32bb3850ca394cff9866e614c1c3b1ec",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-131436",
+        "workerCreated": true,
+        "processId": 31892,
+        "workerExited": true,
+        "workerExitCode": 3221226356,
+        "readyIdentityConfirmed": false,
+        "nativeQuitConfirmed": false,
+        "forcedTermination": false,
+        "timedOut": false,
+        "desktopName": "CodexS1_32bb3850ca394cff9866e614c1c3b1ec",
+        "inputDesktopBefore": "Default",
+        "inputDesktopChanged": false,
+        "inputDesktopReadErrors": 0,
+        "monitorStartedBeforeWorker": true,
+        "monitorStarted": true,
+        "monitorStopped": true,
+        "monitorError": null,
+        "droppedEvents": 0,
+        "eventFileWritten": true,
+        "sampleCount": 159,
+        "workerForegroundEvents": 0,
+        "workerUserDesktopShowEvents": 0,
+        "workerForegroundSamples": 0,
+        "relatedCadEvents": 0,
+        "relatedCadShowEvents": 0,
+        "relatedCadForegroundEvents": 0,
+        "relatedCadEventsNeedReview": false,
+        "desktopClosed": true,
+        "processHandlesClosed": true,
+        "switchDesktopCalled": false,
+        "userCadTouched": false,
+        "supervisorErrors": [],
+        "stillRunningOwnedWorker": false,
+        "closeOwnStartupTipsEnabled": true,
+        "startupTipActions": 1,
+        "startupTipPosts": 1,
+        "scope": "Observed supervisor/owned worker only; existing related CAD events retained for attribution review, not blamed automatically; drawing business correctness requires separate native evidence"
+      },
+      "windowIsolationPassed": true,
+      "normalQuitPassed": false,
+      "files": [
+        {
+          "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexStage1Probe_32bb3850ca394cff9866e614c1c3b1ec\\S1Acad_32bb3850.arx",
+          "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-131436\\staging-final-archive\\S1Acad_32bb3850.arx",
+          "SHA256": "1EBC667ECDCFEF6162D4131C93568DB525377E41D6A85DB1F1EF534807BEAA37",
+          "removed": true
+        },
+        {
+          "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexStage1Probe_32bb3850ca394cff9866e614c1c3b1ec\\S1Acad_32bb3850.ini",
+          "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-131436\\staging-final-archive\\S1Acad_32bb3850.ini",
+          "SHA256": "F1F9BC041130B2530DAA831685438A5E9DB1942111EEDFC27EB8474ED0F2FFD1",
+          "removed": true
+        }
+      ],
+      "stagingDirectoryRemoved": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": "S01",
+      "snapshot": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\方案平面图.dwg",
+        "SHA256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E"
+      },
+      "snapshotUnchanged": true,
+      "source": {
+        "path": "D:\\cad插件\\方案平面图.dwg",
+        "SHA256": "D92251DF0797EB9338FF9A1E94121FB24D81D72B597E8931413B7974712BE54F"
+      },
+      "sourceEqualsPriorObservation": true
+    },
+    {
+      "id": "S02",
+      "snapshot": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\施工图平面参考图.dwg",
+        "SHA256": "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27"
+      },
+      "snapshotUnchanged": true,
+      "source": {
+        "path": "D:\\cad插件\\施工图平面参考图.dwg",
+        "SHA256": "245CB01E3955ABB6CB9581436E0313C93B5A771C1983E318B0E2A61DD9C6E273"
+      },
+      "sourceEqualsPriorObservation": true
+    },
+    {
+      "id": "S03",
+      "snapshot": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\方案图对象属性.json",
+        "SHA256": "33B3953F3366F97F6CF11C5B5CCAA35C4F76A5FB98C4834E0758DC5C96160DFD"
+      },
+      "snapshotUnchanged": true,
+      "source": {
+        "path": "D:\\Codex\\建筑施工图自动化\\图纸读取\\方案图对象属性.json",
+        "SHA256": "33B3953F3366F97F6CF11C5B5CCAA35C4F76A5FB98C4834E0758DC5C96160DFD"
+      },
+      "sourceEqualsPriorObservation": true
+    },
+    {
+      "id": "S04",
+      "snapshot": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\参考图对象属性.json",
+        "SHA256": "7B5FFA455F700BEA353166D68910110798423B5054179FCECDD9644BF610B39E"
+      },
+      "snapshotUnchanged": true,
+      "source": {
+        "path": "D:\\Codex\\建筑施工图自动化\\图纸读取\\参考图对象属性.json",
+        "SHA256": "7B5FFA455F700BEA353166D68910110798423B5054179FCECDD9644BF610B39E"
+      },
+      "sourceEqualsPriorObservation": true
+    },
+    {
+      "id": "S05",
+      "snapshot": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\2026-10-28-建筑施工图平面自动化需求基线.md",
+        "SHA256": "5A8732C11344E18B9D5547AEDE9573E8C5FC638483411AECF7BD84B46A013517"
+      },
+      "snapshotUnchanged": true,
+      "source": {
+        "path": "D:\\Codex\\建筑施工图自动化\\docs\\superpowers\\specs\\2026-10-28-建筑施工图平面自动化需求基线.md",
+        "SHA256": "EF67AF76870F90EE132BEAAA26D41F9D227D32344CCB7A95A7C8FEB47EB71AD1"
+      },
+      "sourceEqualsPriorObservation": false
+    },
+    {
+      "id": "S06",
+      "snapshot": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\2026-10-28-建筑施工图平面自动化分阶段实施方案.md",
+        "SHA256": "19871DAC839B57C05F7667CEAC266117EA6A7E6AE888FB3E8923B6671D5EFE74"
+      },
+      "snapshotUnchanged": true,
+      "source": {
+        "path": "D:\\Codex\\建筑施工图自动化\\docs\\superpowers\\plans\\2026-10-28-建筑施工图平面自动化分阶段实施方案.md",
+        "SHA256": "19871DAC839B57C05F7667CEAC266117EA6A7E6AE888FB3E8923B6671D5EFE74"
+      },
+      "sourceEqualsPriorObservation": true
+    }
+  ],
+  "sharedRegistrations": [
+    {
+      "name": "CP_ARX",
+      "LOADCTRLS": 2,
+      "registryType": 4,
+      "action": "read only; shared registration changes prohibited"
+    },
+    {
+      "name": "CP_NET",
+      "LOADCTRLS": 2,
+      "registryType": 4,
+      "action": "read only; shared registration changes prohibited"
+    }
+  ],
+  "phase1FullAcceptance": false,
+  "phase2Started": false
+}

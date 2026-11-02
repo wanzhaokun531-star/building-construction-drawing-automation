@@ -1,0 +1,20 @@
+{
+  "contract": "stage1.native-plain-text-single-audit.v1",
+  "rawReport": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-plaintextreplacementnative-20261030-111342-541993\\native-plain-text-replacement.json",
+    "SHA256": "822F85A82AC86F2A31C41F082F69A54FAEE406F9D676AC9B9A1D48BECB25245B"
+  },
+  "rawOverallErrorPreserved": "replacement refuses multiple or nontext components",
+  "rawOverallRunPassed": false,
+  "singleOnlyPassed": true,
+  "checks": 21,
+  "validator": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_plain_text_single.py",
+    "SHA256": "094D462275B70E0A7AFECC0AAE9FB11716BBD5E407B994851FCC5785B15FEB50"
+  },
+  "validationLog": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\evidence\\plain-text-single-independent-validation-20261030.txt",
+    "SHA256": "F99579C7E12C17A9AFFE1D3782CB838B9B2958929CC08A70513CED17C2FD3D22"
+  },
+  "scope": "Only CDC0 TDbText to AcDbText; four literal states, identity, typography and protected212 public states. No whole batch or private field write claim."
+}

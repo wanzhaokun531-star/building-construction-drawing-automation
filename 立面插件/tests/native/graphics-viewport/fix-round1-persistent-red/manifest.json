@@ -1,0 +1,114 @@
+{
+  "contract": "bce.n7-fix-round1-persistent-red.v1",
+  "base": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-221056-470-owned-file-idle-frozen-b293e40a",
+  "candidate": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6",
+  "candidateSHA256": "D5D64414898C5733DE00AC9556C0785FE1A75A78FEA9A7506AEF1CE61BC7161A",
+  "status": "compiled-awaiting-actual-native-red",
+  "assertionCount": 78,
+  "newChecks": 7,
+  "newControlCountGate": 1,
+  "sourceRenderingInNegativeControl": false,
+  "productionPredicateUnfixed": true,
+  "files": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6\\receipt.json",
+      "sha256": "FBD64FBEEC726B5AF10BF0A31AE3427B601A241C5A7897C6D9679DF742A016CF"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6\\build.log",
+      "sha256": "FA93F1B6CF702A09A2C0F06B1A0F9F9975671F095C1124587D530DB029034AB1"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6\\build-command.cmd",
+      "sha256": "040AD31C924C826200579889E0A0F4AF8DE7B80E39DF2442E392CAB07F07D1B5"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6\\build_graphics_viewport.ps1",
+      "sha256": "C473487B3C06DC307BBF3327E5EBD0DE9C3F017BD7DD58E396B3D6380760262E"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6\\out\\ElevationViewportCases.arx",
+      "sha256": "D5D64414898C5733DE00AC9556C0785FE1A75A78FEA9A7506AEF1CE61BC7161A"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\fix-round1-persistent-red\\b293-to-red.diff",
+      "sha256": "9D97EDA0593D123E88A2980A5E3B8968100CEF53310807E553C773726B2E8C04"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6\\src\\NativeEvidence.h",
+      "sha256": "C6B083EE0346AA7CDB51090274CCCADCB2C6DE0AA92A196AD846E11C41C9EBB6"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6\\src\\NativeEvidence.cpp",
+      "sha256": "1B3CA34A61CC2C2DB2C42A7FDFD01C029DE7BE82EAE6CE96D9DE1C3B363A8FE2"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6\\src\\provenance.json",
+      "sha256": "A2531EE4A9FEE04726946732A3172D8756C3A68B41DF949D1C382821B4E5B450"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6\\src\\prepare-ready.schema.json",
+      "sha256": "D0406984B5867225CECB1B1034DAD1EFB384D38A7884E997194CFB0F430399FF"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6\\src\\ViewportFixtures.h",
+      "sha256": "69B13CB727BFB2B7A07C956A847568783DDE38381C192AD5FB3B1E0EE341F2D6"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6\\src\\ViewportForward.h",
+      "sha256": "368B70B5C29155910C5E68412F20114A31DE3C68CA2FFB11C1A94CDD15E64E56"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6\\src\\ViewportOwnershipTests.h",
+      "sha256": "BECFCEA3AEE9ABC074BF4F857C753FAE147D941E4C37A64405E004F50EAABD3E"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6\\src\\OwnedControlPublicContracts.md",
+      "sha256": "EE2965250B4C5CD4BD466D732EE2703809DD2105145FAEC5E454A79667A11FAA"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6\\src\\OwnedControlFile.h",
+      "sha256": "F71FCF1B15684F9EA464A084E68487A1A3FB002C831FA5244B22BC3D68FAEEEF"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6\\src\\OwnedControlFile.cpp",
+      "sha256": "B03635A275CDD17711F12D78328EF98EE2FBF56184ECCCAC330CE17EDDA55646"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6\\src\\OwnedControlFileTests.cpp",
+      "sha256": "4F94DC59716637427191B18E23161A3FD0B9775644DE29755917477F2C400B15"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6\\src\\ViewportTrace.h",
+      "sha256": "F3FE5D7B47A95D4C931A7058D962820D5F99B05C6E0D43A5A4EFD4C4016A9BBC"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6\\src\\ViewportTrace.cpp",
+      "sha256": "268E9871E2FF1037AF3D943A1892FA0E50AEBE186619B93F55DB72076F30E550"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6\\src\\ViewportProbe.h",
+      "sha256": "1FFA3897CE2C7B73E27020FC35D66CF4616812FE46F29BC7853F2EEAE4A94C4B"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6\\src\\ViewportProbe.cpp",
+      "sha256": "27D035DB9B71FCDC942F33396DDDB985E6CC02A8942C88299CDC38EB0FC981A2"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6\\src\\ViewportCapture.cpp",
+      "sha256": "CBDA32C2A97A1EBF8B7F696B2C46281C91A59762D6B60A8365B285BDF7A0F6CC"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6\\src\\GraphicsPolicy.h",
+      "sha256": "9F4DD6AF7C950BDA3A5D78444EE4EDFA63381DCFFCA96A39B6BA92B0D4A9DB97"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6\\src\\GraphicsControlPolicy.h",
+      "sha256": "4A6AA82F67E722D29934D30184538B46DA7BB727305E7DAC32D809F5DFD95B1E"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6\\src\\ElevationViewportCases.vcxproj",
+      "sha256": "324447DEE0D6A83D57AB8F55A523FF498F09372DC2C3D2D46DF18DAA80AB480F"
+    }
+  ]
+}

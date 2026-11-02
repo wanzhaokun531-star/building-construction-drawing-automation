@@ -1,0 +1,21 @@
+{
+  "sourceSHA256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+  "path": "D:\\Codex\\建筑施工图自动化\\阶段2\\inputs\\user-opening-prefixes-v1.tsv",
+  "SHA256": "00302EA1A41E56BF719FD2BF099ACF694F461C21F58418E1C62150B328D15B45",
+  "userRule": "原13待确认门窗全部C前缀，包含组合洞口；实体类别不改",
+  "openings": [
+    "CD84",
+    "CD86",
+    "CD8C",
+    "CD8E",
+    "CD90",
+    "CD92",
+    "CD94",
+    "CDAF",
+    "CDB2",
+    "CDB5",
+    "CE48",
+    "CF62",
+    "D005"
+  ]
+}

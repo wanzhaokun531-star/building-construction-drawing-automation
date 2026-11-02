@@ -1,0 +1,1647 @@
+{
+  "contract": "stage1.pure-native-data-analysis.v1",
+  "recorded": "2026-10-30T09:57:43.854483+08:00",
+  "catalogs": [
+    {
+      "role": "scheme",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-schemecatalognative-20261030-093625-625530\\native-semantic-catalog.json",
+      "nativeReportSHA256": "1CFB6096273886CBB7EF2A009115A602A02B15F842B858B2BC6817F8E5A0B1CE",
+      "log": "D:\\codex\\建筑施工图自动化\\阶段1\\runs\\quiet-schemecatalognative-20261030-093625-625530\\control_1dd0a8765.log",
+      "logSHA256": "49D1264BE8DE280D5E7BC83E40A94B206182DED865F6054DAE06CC2BAE152BF0",
+      "modelCount": 213,
+      "listedTchCount": 143,
+      "fieldCount": 2083,
+      "nativeTypes": {
+        "TDbWall": 63,
+        "TDbOpening": 29,
+        "TDbGroupOpening": 1,
+        "TDbText": 34,
+        "TDbDimension2": 8,
+        "TDbSymbElevation": 6,
+        "TDbRectCornerStair": 1,
+        "TDbDrawingName": 1
+      },
+      "actualOpeningLabels": {
+        "门窗类型:窗": 12,
+        "门窗类型:门": 17,
+        "门窗类型:组合门": 1
+      },
+      "subtypeInferencePerformed": false,
+      "scope": "All native TCH entity list blocks; duplicate/blank raw fields retained. No LC/FDM/segments inferred from overall dimensions, class or bbox."
+    },
+    {
+      "role": "reference",
+      "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-referencecatalognative-20261030-093630-252326\\native-semantic-catalog.json",
+      "nativeReportSHA256": "E95C7A2E10A5369B6847F828600A6B40FDA2A8F4A4B0E752A9D37B8A3A278A3C",
+      "log": "D:\\codex\\建筑施工图自动化\\阶段1\\runs\\quiet-referencecatalognative-20261030-093630-252326\\control_136fdeee6.log",
+      "logSHA256": "B83F6D5B0A7585EEECA04F218B6A5E0AA5F3FFE792920C6FD9C377127A21E457",
+      "modelCount": 618,
+      "listedTchCount": 143,
+      "fieldCount": 1824,
+      "nativeTypes": {
+        "TDbWall": 38,
+        "TDbOpening": 22,
+        "TDbSymbElevation": 6,
+        "TDbAxisLabelSet": 2,
+        "TDbDimension2": 24,
+        "TDbColumn": 4,
+        "TDbText": 14,
+        "TDbSymbMultiLeader": 3,
+        "TDbSymbArrow": 9,
+        "TDbDrawingName": 1,
+        "TDbSymbSection": 1,
+        "TDbSymbComposing": 7,
+        "TDbPipe": 4,
+        "TDbPipeFitting": 8
+      },
+      "actualOpeningLabels": {
+        "门窗类型:窗": 12,
+        "门窗类型:门": 10
+      },
+      "subtypeInferencePerformed": false,
+      "scope": "All native TCH entity list blocks; duplicate/blank raw fields retained. No LC/FDM/segments inferred from overall dimensions, class or bbox."
+    }
+  ],
+  "fonts": [
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\方案平面图.dwg",
+      "style": "Standard",
+      "loadBits": 1,
+      "declaredTypeface": "",
+      "gsTypeface": "",
+      "exactFileVerified": true,
+      "resolvedFiles": [
+        {
+          "requested": "gbenor.shx",
+          "status": 0,
+          "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbenor.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 3103509084,
+            "indexHigh": 65536,
+            "indexLow": 8737,
+            "bytes": 5186,
+            "writeHigh": 29764932,
+            "writeLow": 972336128
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbenor.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbenor.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbenor.shx",
+              "fileExists": true
+            }
+          ]
+        },
+        {
+          "requested": "gbcbig.shx",
+          "status": 0,
+          "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 3103509084,
+            "indexHigh": 65536,
+            "indexLow": 8735,
+            "bytes": 902841,
+            "writeHigh": 29245317,
+            "writeLow": 3003847168
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            }
+          ]
+        }
+      ],
+      "status": "exact dependency verified"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\方案平面图.dwg",
+      "style": "ASHADE",
+      "loadBits": 1,
+      "declaredTypeface": "",
+      "gsTypeface": "",
+      "exactFileVerified": true,
+      "resolvedFiles": [
+        {
+          "requested": "txt.shx",
+          "status": 0,
+          "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\txt.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 3103509084,
+            "indexHigh": 65536,
+            "indexLow": 10293,
+            "bytes": 8489,
+            "writeHigh": 30535527,
+            "writeLow": 198875008
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\txt.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\txt.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\txt.shx",
+              "fileExists": true
+            }
+          ]
+        },
+        {
+          "requested": "chineset.shx",
+          "status": 0,
+          "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\chineset.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 3103509084,
+            "indexHigh": 65536,
+            "indexLow": 8404,
+            "bytes": 665117,
+            "writeHigh": 29160570,
+            "writeLow": 3357281280
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\chineset.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\chineset.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\chineset.shx",
+              "fileExists": true
+            }
+          ]
+        }
+      ],
+      "status": "exact dependency verified"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\方案平面图.dwg",
+      "style": "_TCH_DIM",
+      "loadBits": 25,
+      "declaredTypeface": "",
+      "gsTypeface": "",
+      "exactFileVerified": true,
+      "resolvedFiles": [
+        {
+          "requested": "SIMPLEX.shx",
+          "status": 0,
+          "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 145596357,
+            "indexHigh": 65536,
+            "indexLow": 140772,
+            "bytes": 17816,
+            "writeHigh": 30562258,
+            "writeLow": 3398085632
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+              "fileExists": true
+            }
+          ]
+        },
+        {
+          "requested": "gbcbig.shx",
+          "status": 0,
+          "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 3103509084,
+            "indexHigh": 65536,
+            "indexLow": 8735,
+            "bytes": 902841,
+            "writeHigh": 29245317,
+            "writeLow": 3003847168
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            }
+          ]
+        }
+      ],
+      "status": "exact dependency verified"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\方案平面图.dwg",
+      "style": "_TCH_WINDOW",
+      "loadBits": 25,
+      "declaredTypeface": "",
+      "gsTypeface": "",
+      "exactFileVerified": true,
+      "resolvedFiles": [
+        {
+          "requested": "SIMPLEX.shx",
+          "status": 0,
+          "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 145596357,
+            "indexHigh": 65536,
+            "indexLow": 140772,
+            "bytes": 17816,
+            "writeHigh": 30562258,
+            "writeLow": 3398085632
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+              "fileExists": true
+            }
+          ]
+        },
+        {
+          "requested": "gbcbig.shx",
+          "status": 0,
+          "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 3103509084,
+            "indexHigh": 65536,
+            "indexLow": 8735,
+            "bytes": 902841,
+            "writeHigh": 29245317,
+            "writeLow": 3003847168
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            }
+          ]
+        }
+      ],
+      "status": "exact dependency verified"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\方案平面图.dwg",
+      "style": "TranSketch-1",
+      "loadBits": 1,
+      "declaredTypeface": "",
+      "gsTypeface": "",
+      "exactFileVerified": true,
+      "resolvedFiles": [
+        {
+          "requested": "gbenor.shx",
+          "status": 0,
+          "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbenor.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 3103509084,
+            "indexHigh": 65536,
+            "indexLow": 8737,
+            "bytes": 5186,
+            "writeHigh": 29764932,
+            "writeLow": 972336128
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbenor.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbenor.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbenor.shx",
+              "fileExists": true
+            }
+          ]
+        },
+        {
+          "requested": "gbcbig.shx",
+          "status": 0,
+          "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 3103509084,
+            "indexHigh": 65536,
+            "indexLow": 8735,
+            "bytes": 902841,
+            "writeHigh": 29245317,
+            "writeLow": 3003847168
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            }
+          ]
+        }
+      ],
+      "status": "exact dependency verified"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\方案平面图.dwg",
+      "style": "_TCH_DIM_T3",
+      "loadBits": 25,
+      "declaredTypeface": "",
+      "gsTypeface": "",
+      "exactFileVerified": true,
+      "resolvedFiles": [
+        {
+          "requested": "SIMPLEX.shx",
+          "status": 0,
+          "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 145596357,
+            "indexHigh": 65536,
+            "indexLow": 140772,
+            "bytes": 17816,
+            "writeHigh": 30562258,
+            "writeLow": 3398085632
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+              "fileExists": true
+            }
+          ]
+        },
+        {
+          "requested": "gbcbig.shx",
+          "status": 0,
+          "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 3103509084,
+            "indexHigh": 65536,
+            "indexLow": 8735,
+            "bytes": 902841,
+            "writeHigh": 29245317,
+            "writeLow": 3003847168
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            }
+          ]
+        }
+      ],
+      "status": "exact dependency verified"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\方案平面图.dwg",
+      "style": "-宋体",
+      "loadBits": 1,
+      "declaredTypeface": "宋体",
+      "gsTypeface": "宋体",
+      "exactFileVerified": false,
+      "resolvedFiles": [
+        {
+          "requested": "simplex.shx",
+          "status": 0,
+          "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\simplex.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 145596357,
+            "indexHigh": 65536,
+            "indexLow": 140772,
+            "bytes": 17816,
+            "writeHigh": 30562258,
+            "writeLow": 3398085632
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\simplex.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\simplex.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\simplex.shx",
+              "fileExists": true
+            }
+          ]
+        }
+      ],
+      "status": "actual TTF file path not established; descriptor is not missing-font proof"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\方案平面图.dwg",
+      "style": "黑体",
+      "loadBits": 1,
+      "declaredTypeface": "黑体",
+      "gsTypeface": "黑体",
+      "exactFileVerified": true,
+      "resolvedFiles": [
+        {
+          "requested": "simhei.ttf",
+          "status": 0,
+          "path": "C:\\windows\\Fonts\\simhei.ttf",
+          "fileExists": true,
+          "resolutionApi": "Windows Fonts literal filename; not AutoCAD findFile success",
+          "fileIdentity": {
+            "volume": 145596357,
+            "indexHigh": 65536,
+            "indexLow": 98945,
+            "bytes": 9753388,
+            "writeHigh": 30770014,
+            "writeLow": 3772537856
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 53,
+              "path": null,
+              "fileExists": false
+            },
+            {
+              "hint": 2,
+              "status": 53,
+              "path": null,
+              "fileExists": false
+            },
+            {
+              "hint": 3,
+              "status": 53,
+              "path": null,
+              "fileExists": false
+            }
+          ]
+        }
+      ],
+      "status": "exact dependency verified"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\方案平面图.dwg",
+      "style": "宋体",
+      "loadBits": 1,
+      "declaredTypeface": "宋体",
+      "gsTypeface": "宋体",
+      "exactFileVerified": false,
+      "resolvedFiles": [
+        {
+          "requested": "simplex.shx",
+          "status": 0,
+          "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\simplex.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 145596357,
+            "indexHigh": 65536,
+            "indexLow": 140772,
+            "bytes": 17816,
+            "writeHigh": 30562258,
+            "writeLow": 3398085632
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\simplex.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\simplex.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\simplex.shx",
+              "fileExists": true
+            }
+          ]
+        }
+      ],
+      "status": "actual TTF file path not established; descriptor is not missing-font proof"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\施工图平面参考图.dwg",
+      "style": "Standard",
+      "loadBits": 1,
+      "declaredTypeface": "",
+      "gsTypeface": "",
+      "exactFileVerified": true,
+      "resolvedFiles": [
+        {
+          "requested": "gbenor.shx",
+          "status": 0,
+          "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbenor.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 3103509084,
+            "indexHigh": 65536,
+            "indexLow": 8737,
+            "bytes": 5186,
+            "writeHigh": 29764932,
+            "writeLow": 972336128
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbenor.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbenor.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbenor.shx",
+              "fileExists": true
+            }
+          ]
+        },
+        {
+          "requested": "gbcbig.shx",
+          "status": 0,
+          "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 3103509084,
+            "indexHigh": 65536,
+            "indexLow": 8735,
+            "bytes": 902841,
+            "writeHigh": 29245317,
+            "writeLow": 3003847168
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            }
+          ]
+        }
+      ],
+      "status": "exact dependency verified"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\施工图平面参考图.dwg",
+      "style": "ASHADE",
+      "loadBits": 1,
+      "declaredTypeface": "",
+      "gsTypeface": "",
+      "exactFileVerified": true,
+      "resolvedFiles": [
+        {
+          "requested": "txt.shx",
+          "status": 0,
+          "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\txt.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 3103509084,
+            "indexHigh": 65536,
+            "indexLow": 10293,
+            "bytes": 8489,
+            "writeHigh": 30535527,
+            "writeLow": 198875008
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\txt.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\txt.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\txt.shx",
+              "fileExists": true
+            }
+          ]
+        },
+        {
+          "requested": "chineset.shx",
+          "status": 0,
+          "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\chineset.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 3103509084,
+            "indexHigh": 65536,
+            "indexLow": 8404,
+            "bytes": 665117,
+            "writeHigh": 29160570,
+            "writeLow": 3357281280
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\chineset.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\chineset.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\chineset.shx",
+              "fileExists": true
+            }
+          ]
+        }
+      ],
+      "status": "exact dependency verified"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\施工图平面参考图.dwg",
+      "style": "_TCH_DIM",
+      "loadBits": 25,
+      "declaredTypeface": "",
+      "gsTypeface": "",
+      "exactFileVerified": true,
+      "resolvedFiles": [
+        {
+          "requested": "SIMPLEX.shx",
+          "status": 0,
+          "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 145596357,
+            "indexHigh": 65536,
+            "indexLow": 140772,
+            "bytes": 17816,
+            "writeHigh": 30562258,
+            "writeLow": 3398085632
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+              "fileExists": true
+            }
+          ]
+        },
+        {
+          "requested": "gbcbig.shx",
+          "status": 0,
+          "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 3103509084,
+            "indexHigh": 65536,
+            "indexLow": 8735,
+            "bytes": 902841,
+            "writeHigh": 29245317,
+            "writeLow": 3003847168
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            }
+          ]
+        }
+      ],
+      "status": "exact dependency verified"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\施工图平面参考图.dwg",
+      "style": "_TCH_WINDOW",
+      "loadBits": 17,
+      "declaredTypeface": "",
+      "gsTypeface": "",
+      "exactFileVerified": true,
+      "resolvedFiles": [
+        {
+          "requested": "SIMPLEX.shx",
+          "status": 0,
+          "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 145596357,
+            "indexHigh": 65536,
+            "indexLow": 140772,
+            "bytes": 17816,
+            "writeHigh": 30562258,
+            "writeLow": 3398085632
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+              "fileExists": true
+            }
+          ]
+        },
+        {
+          "requested": "gbcbig.shx",
+          "status": 0,
+          "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 3103509084,
+            "indexHigh": 65536,
+            "indexLow": 8735,
+            "bytes": 902841,
+            "writeHigh": 29245317,
+            "writeLow": 3003847168
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            }
+          ]
+        }
+      ],
+      "status": "exact dependency verified"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\施工图平面参考图.dwg",
+      "style": "_TCH_AXIS",
+      "loadBits": 25,
+      "declaredTypeface": "",
+      "gsTypeface": "",
+      "exactFileVerified": true,
+      "resolvedFiles": [
+        {
+          "requested": "COMPLEX.shx",
+          "status": 0,
+          "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\COMPLEX.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 3103509084,
+            "indexHigh": 65536,
+            "indexLow": 8437,
+            "bytes": 30486,
+            "writeHigh": 29234612,
+            "writeLow": 1848750848
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\COMPLEX.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\COMPLEX.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\COMPLEX.shx",
+              "fileExists": true
+            }
+          ]
+        },
+        {
+          "requested": "gbcbig.shx",
+          "status": 0,
+          "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 3103509084,
+            "indexHigh": 65536,
+            "indexLow": 8735,
+            "bytes": 902841,
+            "writeHigh": 29245317,
+            "writeLow": 3003847168
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            }
+          ]
+        }
+      ],
+      "status": "exact dependency verified"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\施工图平面参考图.dwg",
+      "style": "FY_FS",
+      "loadBits": 1,
+      "declaredTypeface": "新宋体",
+      "gsTypeface": "新宋体",
+      "exactFileVerified": false,
+      "resolvedFiles": [
+        {
+          "requested": "simplex.shx",
+          "status": 0,
+          "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\simplex.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 145596357,
+            "indexHigh": 65536,
+            "indexLow": 140772,
+            "bytes": 17816,
+            "writeHigh": 30562258,
+            "writeLow": 3398085632
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\simplex.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\simplex.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\simplex.shx",
+              "fileExists": true
+            }
+          ]
+        }
+      ],
+      "status": "actual TTF file path not established; descriptor is not missing-font proof"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\施工图平面参考图.dwg",
+      "style": "FY_HZ",
+      "loadBits": 12,
+      "declaredTypeface": "",
+      "gsTypeface": "",
+      "exactFileVerified": false,
+      "resolvedFiles": [
+        {
+          "requested": "SIMPLEX.shx",
+          "status": 0,
+          "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 145596357,
+            "indexHigh": 65536,
+            "indexLow": 140772,
+            "bytes": 17816,
+            "writeHigh": 30562258,
+            "writeLow": 3398085632
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+              "fileExists": true
+            }
+          ]
+        },
+        {
+          "requested": "hztxt.shx",
+          "status": -9999,
+          "path": null,
+          "fileExists": false,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": null,
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 53,
+              "path": null,
+              "fileExists": false
+            },
+            {
+              "hint": 2,
+              "status": 53,
+              "path": null,
+              "fileExists": false
+            },
+            {
+              "hint": 3,
+              "status": 53,
+              "path": null,
+              "fileExists": false
+            }
+          ]
+        }
+      ],
+      "status": "font/bigfont load failure recorded"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\施工图平面参考图.dwg",
+      "style": "-宋体",
+      "loadBits": 1,
+      "declaredTypeface": "宋体",
+      "gsTypeface": "宋体",
+      "exactFileVerified": false,
+      "resolvedFiles": [
+        {
+          "requested": "simplex.shx",
+          "status": 0,
+          "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\simplex.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 145596357,
+            "indexHigh": 65536,
+            "indexLow": 140772,
+            "bytes": 17816,
+            "writeHigh": 30562258,
+            "writeLow": 3398085632
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\simplex.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\simplex.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\simplex.shx",
+              "fileExists": true
+            }
+          ]
+        }
+      ],
+      "status": "actual TTF file path not established; descriptor is not missing-font proof"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\施工图平面参考图.dwg",
+      "style": "宋体",
+      "loadBits": 1,
+      "declaredTypeface": "宋体",
+      "gsTypeface": "宋体",
+      "exactFileVerified": false,
+      "resolvedFiles": [
+        {
+          "requested": "simplex.shx",
+          "status": 0,
+          "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\simplex.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 145596357,
+            "indexHigh": 65536,
+            "indexLow": 140772,
+            "bytes": 17816,
+            "writeHigh": 30562258,
+            "writeLow": 3398085632
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\simplex.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\simplex.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\simplex.shx",
+              "fileExists": true
+            }
+          ]
+        }
+      ],
+      "status": "actual TTF file path not established; descriptor is not missing-font proof"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\施工图平面参考图.dwg",
+      "style": "_TCH_SPACE",
+      "loadBits": 25,
+      "declaredTypeface": "",
+      "gsTypeface": "",
+      "exactFileVerified": true,
+      "resolvedFiles": [
+        {
+          "requested": "SIMPLEX.shx",
+          "status": 0,
+          "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 145596357,
+            "indexHigh": 65536,
+            "indexLow": 140772,
+            "bytes": 17816,
+            "writeHigh": 30562258,
+            "writeLow": 3398085632
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+              "fileExists": true
+            }
+          ]
+        },
+        {
+          "requested": "gbcbig.shx",
+          "status": 0,
+          "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 3103509084,
+            "indexHigh": 65536,
+            "indexLow": 8735,
+            "bytes": 902841,
+            "writeHigh": 29245317,
+            "writeLow": 3003847168
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            }
+          ]
+        }
+      ],
+      "status": "exact dependency verified"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\施工图平面参考图.dwg",
+      "style": "_TCH_DIM_T3",
+      "loadBits": 25,
+      "declaredTypeface": "",
+      "gsTypeface": "",
+      "exactFileVerified": true,
+      "resolvedFiles": [
+        {
+          "requested": "SIMPLEX.shx",
+          "status": 0,
+          "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 145596357,
+            "indexHigh": 65536,
+            "indexLow": 140772,
+            "bytes": 17816,
+            "writeHigh": 30562258,
+            "writeLow": 3398085632
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\SIMPLEX.shx",
+              "fileExists": true
+            }
+          ]
+        },
+        {
+          "requested": "gbcbig.shx",
+          "status": 0,
+          "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 3103509084,
+            "indexHigh": 65536,
+            "indexLow": 8735,
+            "bytes": 902841,
+            "writeHigh": 29245317,
+            "writeLow": 3003847168
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            }
+          ]
+        }
+      ],
+      "status": "exact dependency verified"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\施工图平面参考图.dwg",
+      "style": "_TCH_LABEL",
+      "loadBits": 25,
+      "declaredTypeface": "",
+      "gsTypeface": "",
+      "exactFileVerified": true,
+      "resolvedFiles": [
+        {
+          "requested": "COMPLEX.shx",
+          "status": 0,
+          "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\COMPLEX.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 3103509084,
+            "indexHigh": 65536,
+            "indexLow": 8437,
+            "bytes": 30486,
+            "writeHigh": 29234612,
+            "writeLow": 1848750848
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\COMPLEX.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\COMPLEX.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\COMPLEX.shx",
+              "fileExists": true
+            }
+          ]
+        },
+        {
+          "requested": "gbcbig.shx",
+          "status": 0,
+          "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 3103509084,
+            "indexHigh": 65536,
+            "indexLow": 8735,
+            "bytes": 902841,
+            "writeHigh": 29245317,
+            "writeLow": 3003847168
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "D:\\CAD2020\\AutoCAD 2020\\fonts\\gbcbig.shx",
+              "fileExists": true
+            }
+          ]
+        }
+      ],
+      "status": "exact dependency verified"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\施工图平面参考图.dwg",
+      "style": "黑体",
+      "loadBits": 1,
+      "declaredTypeface": "黑体",
+      "gsTypeface": "黑体",
+      "exactFileVerified": true,
+      "resolvedFiles": [
+        {
+          "requested": "simhei.ttf",
+          "status": 0,
+          "path": "C:\\windows\\Fonts\\simhei.ttf",
+          "fileExists": true,
+          "resolutionApi": "Windows Fonts literal filename; not AutoCAD findFile success",
+          "fileIdentity": {
+            "volume": 145596357,
+            "indexHigh": 65536,
+            "indexLow": 98945,
+            "bytes": 9753388,
+            "writeHigh": 30770014,
+            "writeLow": 3772537856
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 53,
+              "path": null,
+              "fileExists": false
+            },
+            {
+              "hint": 2,
+              "status": 53,
+              "path": null,
+              "fileExists": false
+            },
+            {
+              "hint": 3,
+              "status": 53,
+              "path": null,
+              "fileExists": false
+            }
+          ]
+        }
+      ],
+      "status": "exact dependency verified"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\施工图平面参考图.dwg",
+      "style": "图框字体",
+      "loadBits": 1,
+      "declaredTypeface": "宋体",
+      "gsTypeface": "宋体",
+      "exactFileVerified": false,
+      "resolvedFiles": [
+        {
+          "requested": "simplex.shx",
+          "status": 0,
+          "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\simplex.shx",
+          "fileExists": true,
+          "resolutionApi": "AutoCAD findFile",
+          "fileIdentity": {
+            "volume": 145596357,
+            "indexHigh": 65536,
+            "indexLow": 140772,
+            "bytes": 17816,
+            "writeHigh": 30562258,
+            "writeLow": 3398085632
+          },
+          "attempts": [
+            {
+              "hint": 1,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\simplex.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 2,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\simplex.shx",
+              "fileExists": true
+            },
+            {
+              "hint": 3,
+              "status": 0,
+              "path": "C:\\Users\\PC\\AppData\\Roaming\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\support\\simplex.shx",
+              "fileExists": true
+            }
+          ]
+        }
+      ],
+      "status": "actual TTF file path not established; descriptor is not missing-font proof"
+    }
+  ],
+  "phase1FullAcceptance": false,
+  "phase2Started": false,
+  "fontExactCount": 16,
+  "fontUnverifiedCount": 7
+}

@@ -1,0 +1,70 @@
+{
+  "request": "继续测试，直到阶段1完成",
+  "phase": 1,
+  "phase2Started": false,
+  "route": "AutoCAD SDK native only, no COM/CUA/TCH business commands or panels; independent text may migrate to native Text/MText",
+  "frozenSchemeSHA256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+  "started": "2026-10-30T12:09:46.176175+08:00",
+  "tasks": [
+    {
+      "id": "R01",
+      "task": "startup isolation and normal QUIT",
+      "status": "startup/runtime-data fix verified;all six hosts exited,normal QUIT failures retained;shared registration unchanged"
+    },
+    {
+      "id": "R02",
+      "task": "guarded plain-text batch and complex text",
+      "status": "two sessions:32 safe Text replacements,2 complex original TCH retained,54 checks; native MText create/edit/rotate/restore/save19 checks"
+    },
+    {
+      "id": "R03",
+      "task": "four-side axes and continuous numbering SDK-only",
+      "status": "native-only gap remains"
+    },
+    {
+      "id": "R04",
+      "task": "dimensions and actual associations SDK-only",
+      "status": "scope audit pending"
+    },
+    {
+      "id": "R05",
+      "task": "elevation slope section indices SDK-only",
+      "status": "whole DB public field audit31; elevation heap exception after pre-call checkpoint (exact API/readback/free location unknown),no saved output; unsafe path disabled;section write not executed"
+    },
+    {
+      "id": "R06",
+      "task": "resource/font/overrides and native multi-page PDF",
+      "status": "remaining font and style contracts pending"
+    },
+    {
+      "id": "R07",
+      "task": "rollback, source protection, exact staging cleanup and review",
+      "status": "six hosts exited and exact modules archived/cleaned;six snapshots unchanged;339 offline tests pass;one fresh-context read-only review no findings"
+    }
+  ],
+  "rulings": [
+    "The user asks completion, not relaxed acceptance. Preserve failures and do not count historical business command/panel results as pure native field writes.",
+    "No global application-startup registry changes; only task dedicated test profile is authorized.",
+    "Explicit prohibition: do not change shared CP_ARX/CP_NET registrations; pending lease canceled, only owned profile/process controls and other tests continue."
+  ],
+  "rootCauseEvidence": {
+    "ownerCandidate": "CP.CAD.dll SOW.CP.CAD.Forms.SelectProjectForm",
+    "binarySHA256": "AE3C22FEC9971FC6FA71D7829D120859E20DC0F49E176D1B3801F1A758BA6A30",
+    "literal": "选择项目 ",
+    "REATypeToken": "0x0200008e",
+    "registrationLoadCtrls": 2,
+    "registrationLastWrite": "2026-10-30T10:49:57+08:00",
+    "finding": "Installed managed form has exact title including trailing blank; native test binary contains no such form. Startup invocation path and safe per-test opt-out still being traced."
+  },
+  "runs": [
+    "isolated-autocad-20261030-121837",
+    "quiet-plaintextreplacementnative-20261030-122139-704037",
+    "quiet-publiccontractauditnative-20261030-130228-246843",
+    "quiet-nativeelevationpatch-20261030-131625-235208",
+    "quiet-mtextnative-20261030-132447-494281"
+  ],
+  "latestAuthorization": "User declines shared application registration edits; continue other verification. No startup lease applied.",
+  "latestReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生续测与能力边界报告_20261030.md",
+  "finalEvidence": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\evidence\\native-continuation-all-six-closure-20261030.json",
+  "phase1FullAcceptance": false
+}

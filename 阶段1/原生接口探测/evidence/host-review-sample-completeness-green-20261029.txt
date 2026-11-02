@@ -1,0 +1,15 @@
+test_actual_supported_baseline (__main__.AutoCadHostAcceptance.test_actual_supported_baseline) ... ok
+test_loaded_vendor_module_invalidates_no_component_claim (__main__.AutoCadHostAcceptance.test_loaded_vendor_module_invalidates_no_component_claim) ... ok
+test_proxy_original_name_cannot_be_claimed_live_native_type (__main__.AutoCadHostAcceptance.test_proxy_original_name_cannot_be_claimed_live_native_type) ... ok
+test_real_baseline (__main__.AutoCadHostAcceptance.test_real_baseline) ... ok
+test_saved_native_geometry_must_be_read_back (__main__.AutoCadHostAcceptance.test_saved_native_geometry_must_be_read_back) ... ok
+test_security_reduction_is_rejected (__main__.AutoCadHostAcceptance.test_security_reduction_is_rejected) ... ok
+test_supported_mode_rejects_duplicate_sample_handle (__main__.AutoCadHostAcceptance.test_supported_mode_rejects_duplicate_sample_handle) ... ok
+test_supported_mode_rejects_unknown_sample_handle (__main__.AutoCadHostAcceptance.test_supported_mode_rejects_unknown_sample_handle) ... ok
+test_supported_mode_requires_complete_sample_set (__main__.AutoCadHostAcceptance.test_supported_mode_requires_complete_sample_set) ... ok
+test_unrestored_demand_loading_is_rejected (__main__.AutoCadHostAcceptance.test_unrestored_demand_loading_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.006s
+
+OK

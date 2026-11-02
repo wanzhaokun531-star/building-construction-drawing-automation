@@ -1,0 +1,68 @@
+{
+  "sourceNativeRun": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\native-run-v17.json",
+  "sourceNativeRunSHA256": "F5F79911B6C1722182BA66BA1B9AD39B3B7311CD11B95C023E4086FAAC827C9D",
+  "contract": "bcp.stage2.preview-run.v1",
+  "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-180351",
+  "nonce": "eb614339596543baab7f2c45aee8ffab",
+  "processId": 12728,
+  "job": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-20261030-180511",
+  "source": "D:\\Codex\\建筑施工图自动化\\阶段2\\runs\\native-2026-10-30-18-4-31-12728-339131703\\方案施工图_阶段2中间图.dwg",
+  "sourceSHA256": "8F2D0D37A69034AED4D87FD79B85AAAF2C865BC903DCA892CED4C9B3E931E590",
+  "controlSHA256": "8F2D0D37A69034AED4D87FD79B85AAAF2C865BC903DCA892CED4C9B3E931E590",
+  "indexSHA256": "875F6DA9810D4CE46D7BA07FA36E9F43AB1095294E475D3C5D176856EE526D29",
+  "steps": [
+    {
+      "serial": "aa9d1eadab6741c3a0c2577136271d8d",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-180351\\dispatch_aa9d1eadab6741c3a0c2577136271d8d.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "eb614339596543baab7f2c45aee8ffab",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-180351",
+        "processId": 12728,
+        "desktop": "CodexS1_eb614339596543baab7f2c45aee8ffab",
+        "inputDesktop": "Default",
+        "serial": "aa9d1eadab6741c3a0c2577136271d8d",
+        "command": "S1OPENPROBECONTROL",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-20261030-180511",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-20261030-180511\\control.dwg",
+        "error": null
+      }
+    },
+    {
+      "serial": "c8383f0a9abd42b187e0687f79170989",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-180351\\dispatch_c8383f0a9abd42b187e0687f79170989.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "eb614339596543baab7f2c45aee8ffab",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261030-180351",
+        "processId": 12728,
+        "desktop": "CodexS1_eb614339596543baab7f2c45aee8ffab",
+        "inputDesktop": "Default",
+        "serial": "c8383f0a9abd42b187e0687f79170989",
+        "command": "S1PHASE2PREVIEW",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-20261030-180511",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-20261030-180511\\control.dwg",
+        "error": null
+      }
+    }
+  ],
+  "error": null,
+  "PDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-20261030-180511\\stage2-A3-1-100.pdf",
+  "PDFSHA256": "84090C0D40C39A9838F70F71144B4FF87EE63FE60762C6F0E68048D9B6753E93",
+  "nativeReportSHA256": "B24C1A2B5980BFA810F914F09B57A02C11E6DA9BD88EB1F89DC5508EBDD8184C",
+  "formattedDimensionsVerified": 24
+}

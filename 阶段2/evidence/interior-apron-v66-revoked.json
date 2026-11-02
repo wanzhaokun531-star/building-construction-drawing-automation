@@ -1,0 +1,9 @@
+{
+  "version": "v66",
+  "nativeSaved": true,
+  "oldGatePassed": true,
+  "releaseRevoked": true,
+  "reason": "New note bbox overlaps original elevation CE91; prior gate missed note-vs-original while checking subsequent dimensions/captions. Strengthened gate now actually rejects66.",
+  "fix": "Only note placement shifts to minX+500/maxY-250, width2600 and font/content unchanged",
+  "previousGateReceiptRetained": "interior-apron-release-v66-final.json"
+}

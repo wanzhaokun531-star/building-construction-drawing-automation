@@ -1,0 +1,57 @@
+{
+  "contract": "bcp.opening-category-sample-delivery.v1",
+  "recorded": "2026-11-02T15:26:15.273235+08:00",
+  "version": "v152",
+  "DWGVersion": "v10",
+  "DWGs": [
+    {
+      "floor": 1,
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门窗分类编号新规则_20261102\\方案施工图_一层_门窗分类编号确认样张_v10.dwg",
+      "SHA256": "B74F91E174B1778C513FA98BF2537E50595B25DF3BCD0A94BA7A86A482721147"
+    },
+    {
+      "floor": 2,
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门窗分类编号新规则_20261102\\方案施工图_二层_门窗分类编号确认样张_v10.dwg",
+      "SHA256": "EA584FD9A7BC2F1B6D4D23800851028E87F050E5A95961FA325F2FB8FCA73E11"
+    }
+  ],
+  "numberedCounts": {
+    "LC": 19,
+    "FMD": 4,
+    "M": 13,
+    "LM": 2,
+    "DK": 2
+  },
+  "nativeInternalNumbers": 40,
+  "changedNumbers": 27,
+  "allNumberedOpeningsDirectTDbOpening": true,
+  "noOpeningInAnyCADGroup": true,
+  "wholeTCHDimensionChains": 52,
+  "allSourcePhysicalGeometryDimensionsAreasAndNamesPreserved": true,
+  "floor2LatestSavedDimensionEditsPreserved": true,
+  "notesAdded": 2,
+  "pendingPositions": [
+    "F1:81E4/DK0918",
+    "F2:81EC/DK0918"
+  ],
+  "pendingNumericEncoding": [
+    "F1:824B/1780",
+    "F2:8218/1780"
+  ],
+  "pluginCodeChanged": false,
+  "pluginBinarySHA256": "835B9E0F67B65C0F3A43F06F0C443BFB2029B1CBFACEB751C24938B894631FEA",
+  "COMUsed": false,
+  "ComputerUseUsed": false,
+  "TCHCommand": "TChWinLab (public numbering only)",
+  "normalQUITPassed": false,
+  "stage2Complete": false,
+  "manifestSHA256": "5A38452D2421690DD10632A142FD6054936DAAF03E11EAB9711CFCB3332AC3F3",
+  "qaSHA256": "1BEEC751F5C8A426177D28AAB2601F5DC08A85B2CBD5146755F245AC5AFD8715",
+  "visualSHA256": "240E089196A36D04625AF8CAEF7310A2B4185509632ADCD05579C4D7C0453D1D",
+  "closureSHA256": "DF19CA999A24E42F2885C061862443059923A16E06DCAE6E77F5EDD0B47B1527",
+  "visualPendingPositions": [
+    "F1:81E4/DK0918",
+    "F2:81EC/DK0918",
+    "F2:81C1/FMD0927 stair landing proximity"
+  ]
+}

@@ -1,0 +1,201 @@
+{
+  "contract": "bcp.door-clearance-native-qa.v1",
+  "version": "v130",
+  "pluginCodeChanged": false,
+  "floors": [
+    {
+      "floor": 1,
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门号轴线与面积_20261101\\方案施工图_一层_面积符号确认样张_v4.dwg",
+      "sourceSHA256": "1484F1C4E2E721FD9671F275B47B1A1574A412342037E3F8CF15A0E89781D2B6",
+      "control": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-171631\\clearance-floor-1\\control.dwg",
+      "SHA256": "91FAF871B87AB1B22883D63FF4A277855CDE0AAABAF15B1EAAB380083580A785",
+      "roomsAndAreasUnchanged": true,
+      "doors": 10,
+      "movedDoors": 10,
+      "dimensions": 27,
+      "textMoves": 4,
+      "baselineMoves": 0,
+      "nodesAndValuesUnchanged": true,
+      "doorDimensionContacts": [],
+      "numberBackgrounds": 10,
+      "modelRoots": 282,
+      "previewJob": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-door-clearance-20261101-171756-floor1",
+      "PDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-door-clearance-20261101-171756-floor1\\stage2-A2-1-100.pdf",
+      "steps": [
+        {
+          "serial": "3fdf2ed8d3204dfd887ebc31e20db846",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-171631\\dispatch_3fdf2ed8d3204dfd887ebc31e20db846.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "0e7d921ea8e14d4d9a77563e03536e5d",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-171631",
+            "processId": 31264,
+            "desktop": "CodexS1_0e7d921ea8e14d4d9a77563e03536e5d",
+            "inputDesktop": "Default",
+            "serial": "3fdf2ed8d3204dfd887ebc31e20db846",
+            "command": "S1OPENPROBECONTROL",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-door-clearance-20261101-171756-floor1",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-door-clearance-20261101-171756-floor1\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "4fb32c4ba2454846993b7486c4ee9bfe",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-171631\\dispatch_4fb32c4ba2454846993b7486c4ee9bfe.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "0e7d921ea8e14d4d9a77563e03536e5d",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-171631",
+            "processId": 31264,
+            "desktop": "CodexS1_0e7d921ea8e14d4d9a77563e03536e5d",
+            "inputDesktop": "Default",
+            "serial": "4fb32c4ba2454846993b7486c4ee9bfe",
+            "command": "S1PHASE2EXECUTE",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-door-clearance-20261101-171756-floor1",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-door-clearance-20261101-171756-floor1\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "a3732bdabd1a40d3ab1dcba1c784b292",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-171631\\dispatch_a3732bdabd1a40d3ab1dcba1c784b292.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "0e7d921ea8e14d4d9a77563e03536e5d",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-171631",
+            "processId": 31264,
+            "desktop": "CodexS1_0e7d921ea8e14d4d9a77563e03536e5d",
+            "inputDesktop": "Default",
+            "serial": "a3732bdabd1a40d3ab1dcba1c784b292",
+            "command": "S1PHASE2PREVIEW",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-door-clearance-20261101-171756-floor1",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-door-clearance-20261101-171756-floor1\\control.dwg",
+            "error": null
+          }
+        }
+      ],
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门号沿洞口与尺寸避让_20261101\\rejected-v130\\方案施工图_一层_门编号与尺寸避让确认样张_v5.dwg",
+      "DWGSHA256": "91FAF871B87AB1B22883D63FF4A277855CDE0AAABAF15B1EAAB380083580A785"
+    },
+    {
+      "floor": 2,
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门号轴线与面积_20261101\\方案施工图_二层_面积符号确认样张_v4.dwg",
+      "sourceSHA256": "868F77608B8A9CB8D96E15C699DBE3B54FBCBD77F9EB9E0842956C8DEAB8976B",
+      "control": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-171631\\clearance-floor-2\\control.dwg",
+      "SHA256": "D84BFFA71A51AC9B951B90C72B976440D9A980CA7507A4439745D62E681E578C",
+      "roomsAndAreasUnchanged": true,
+      "doors": 9,
+      "movedDoors": 9,
+      "dimensions": 27,
+      "textMoves": 6,
+      "baselineMoves": 1,
+      "nodesAndValuesUnchanged": true,
+      "doorDimensionContacts": [],
+      "numberBackgrounds": 9,
+      "modelRoots": 269,
+      "previewJob": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-door-clearance-20261101-171758-floor2",
+      "PDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-door-clearance-20261101-171758-floor2\\stage2-A2-1-100.pdf",
+      "steps": [
+        {
+          "serial": "5018767fc6a34e90810fb203789439ee",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-171631\\dispatch_5018767fc6a34e90810fb203789439ee.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "0e7d921ea8e14d4d9a77563e03536e5d",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-171631",
+            "processId": 31264,
+            "desktop": "CodexS1_0e7d921ea8e14d4d9a77563e03536e5d",
+            "inputDesktop": "Default",
+            "serial": "5018767fc6a34e90810fb203789439ee",
+            "command": "S1OPENPROBECONTROL",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-door-clearance-20261101-171758-floor2",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-door-clearance-20261101-171758-floor2\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "5a590f9f072a4810b3d7d81bf7a07de8",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-171631\\dispatch_5a590f9f072a4810b3d7d81bf7a07de8.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "0e7d921ea8e14d4d9a77563e03536e5d",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-171631",
+            "processId": 31264,
+            "desktop": "CodexS1_0e7d921ea8e14d4d9a77563e03536e5d",
+            "inputDesktop": "Default",
+            "serial": "5a590f9f072a4810b3d7d81bf7a07de8",
+            "command": "S1PHASE2EXECUTE",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-door-clearance-20261101-171758-floor2",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-door-clearance-20261101-171758-floor2\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "67f8b2e03da5463eb2a6ffe7f20a1a9e",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-171631\\dispatch_67f8b2e03da5463eb2a6ffe7f20a1a9e.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "0e7d921ea8e14d4d9a77563e03536e5d",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-171631",
+            "processId": 31264,
+            "desktop": "CodexS1_0e7d921ea8e14d4d9a77563e03536e5d",
+            "inputDesktop": "Default",
+            "serial": "67f8b2e03da5463eb2a6ffe7f20a1a9e",
+            "command": "S1PHASE2PREVIEW",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-door-clearance-20261101-171758-floor2",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-door-clearance-20261101-171758-floor2\\control.dwg",
+            "error": null
+          }
+        }
+      ],
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门号沿洞口与尺寸避让_20261101\\rejected-v130\\方案施工图_二层_门编号与尺寸避让确认样张_v5.dwg",
+      "DWGSHA256": "D84BFFA71A51AC9B951B90C72B976440D9A980CA7507A4439745D62E681E578C"
+    }
+  ],
+  "visualReview": {
+    "accepted": false,
+    "reason": "Global Back sorting of all 27 dimensions was unnecessary and superseded. Two observed obscured digits also occur in v125; do not attribute their existing collision to v130 sorting."
+  }
+}

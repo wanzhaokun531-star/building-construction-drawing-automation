@@ -1,0 +1,107 @@
+{
+  "contract": "bcp.native-opening-number-delivery.v1",
+  "recorded": "2026-11-02T12:07:00.212021+08:00",
+  "version": "v147",
+  "DWGVersion": "v8",
+  "pluginCodeChanged": false,
+  "pluginBinarySHA256": "835B9E0F67B65C0F3A43F06F0C443BFB2029B1CBFACEB751C24938B894631FEA",
+  "actualStoredNumbersMatched": 40,
+  "duplicateStandaloneTextRemoved": 40,
+  "nativeDoorGroupsRebound": 19,
+  "wholeTCHDimensionsPreserved": 52,
+  "areasAndTotalAreaUnchanged": true,
+  "pendingUnnumberedOpenings": [
+    {
+      "floor": 1,
+      "opening": "824B",
+      "status": "原编号待确认，保持空值"
+    },
+    {
+      "floor": 2,
+      "opening": "8218",
+      "status": "原编号待确认，保持空值"
+    }
+  ],
+  "authorizedTCHCommand": "TChWinLab (MCBH)",
+  "COMUsed": false,
+  "ComputerUseUsed": false,
+  "normalQUITPassed": false,
+  "stage2Complete": false,
+  "DWGs": [
+    {
+      "floor": 1,
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门窗内部编号_20261102\\方案施工图_一层_门窗内部编号确认样张_v8.dwg",
+      "SHA256": "79702615B724ACAEF52D0C0517B9C8252B6D7CAD3B3983BCD280010089AB017A"
+    },
+    {
+      "floor": 2,
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门窗内部编号_20261102\\方案施工图_二层_门窗内部编号确认样张_v8.dwg",
+      "SHA256": "C8B8E5A58514C62B3B0F31ED9FCD9554E0E4ED6ADDD962ECFEB4BCFA4BF61BB0"
+    }
+  ],
+  "qaSHA256": "EE7B18B916439644A1F184999DF30B5985BA52A1D4512126DD98D012ED48AC1C",
+  "manifestSHA256": "3F37486EA774AB5DAE4519DAB0BE8B584999BFFF991B55407D15AB31BDCFD169",
+  "closures": [
+    {
+      "version": "v142",
+      "file": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\host-closure-v142.json",
+      "SHA256": "44ABF6516AFAF0CAB5F4C006CDDF6F273A6283F9AED697DF4B1618D5195EE2D0",
+      "ownSHOW": 0,
+      "ownForeground": 0,
+      "normalQUITPassed": false,
+      "relatedCadEventsNeedReview": true
+    },
+    {
+      "version": "v143",
+      "file": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\host-closure-v143.json",
+      "SHA256": "761006284E06F4F8F96AA1F7C2E4ABC283268EAB4249D3C9AF529902C2B671D8",
+      "ownSHOW": 0,
+      "ownForeground": 0,
+      "normalQUITPassed": false,
+      "relatedCadEventsNeedReview": true
+    },
+    {
+      "version": "v144",
+      "file": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\host-closure-v144.json",
+      "SHA256": "45AAEAFEF5537514C73FBC9CE77A7FE6D68DB397D5CB3FFB304886D6FBFFBC91",
+      "ownSHOW": 0,
+      "ownForeground": 0,
+      "normalQUITPassed": false,
+      "relatedCadEventsNeedReview": true
+    },
+    {
+      "version": "v145",
+      "file": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\host-closure-v145.json",
+      "SHA256": "3DE303BEC351749582591BA04C7282AE78307E1D5E709D9C8A04947C6CB580FD",
+      "ownSHOW": 0,
+      "ownForeground": 0,
+      "normalQUITPassed": false,
+      "relatedCadEventsNeedReview": true
+    },
+    {
+      "version": "v146",
+      "file": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\host-closure-v146.json",
+      "SHA256": "7D322E59473810DBEB1AE9A753AE203B714A844FC8A7835AA1CEB460A58F1B89",
+      "ownSHOW": 0,
+      "ownForeground": 0,
+      "normalQUITPassed": false,
+      "relatedCadEventsNeedReview": true
+    },
+    {
+      "version": "v147",
+      "file": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\host-closure-v147.json",
+      "SHA256": "6C610006812D1F6F213E52DC5669DA977D7FE64DB24D775454FF2570F879251A",
+      "ownSHOW": 0,
+      "ownForeground": 0,
+      "normalQUITPassed": false,
+      "relatedCadEventsNeedReview": true
+    }
+  ],
+  "helpers": {
+    "prepare_label_placement.py": "9121A94D15EE5CCFA54A3AC64F68D3F813AA20D0FF1FDD3453F8CA96F23C9F22",
+    "prepare_numbers.py": "4E4B3F98D9EEEE8F028E1A3A88E581B445C497678B9C789BA6414524460FCDF7",
+    "public_fields.py": "F2F302C0AC10C8A543DBC150CD70921AEF8D7CD341041ABD0BF3E1CFE006AC8D",
+    "read_sdk.py": "97DB082A56CB156F50396D2F33616757AD05A1E6CAADC7247946FE4FAEF91850",
+    "verify_labels.py": "F320C423D7B575929F4716E8E0F0B16C3DCB7DFAACC62AF30B8070384D7A8DA2"
+  }
+}

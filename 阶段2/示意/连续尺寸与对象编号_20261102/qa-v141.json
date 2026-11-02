@@ -1,0 +1,361 @@
+{
+  "contract": "bcp.continuous-chain-native-qa.v1",
+  "version": "v141",
+  "manifest": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\连续尺寸与对象编号_20261102\\manifest-v141.json",
+  "manifestSHA256": "192BD405B901340B57215B60F6740E6ACDBC387CF260E96D6D695832226092A0",
+  "pluginCodeChanged": false,
+  "pluginBinarySHA256": "835B9E0F67B65C0F3A43F06F0C443BFB2029B1CBFACEB751C24938B894631FEA",
+  "geometryPassed": true,
+  "internalOpeningNumberWritten": false,
+  "internalOpeningNumberStatus": "Unavailable in exposed native properties; no TCH numbering command authorized",
+  "floors": [
+    {
+      "floor": 1,
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\房间面积随房名_20261101\\方案施工图_一层_房名下方面积确认样张_v6.dwg",
+      "sourceSHA256": "7C680A013A384C4C4344727EB8FFFDA2E7FB6552EC8CA43DEB3038B4A3BF0692",
+      "control": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-111440\\continuous-floor-1\\control.dwg",
+      "SHA256": "2481BA2D32CC1789A5B54B0B2BF5B9D8B39315066B1ADF8144EE5E1A7AC0F755",
+      "previewJob": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-111553-139834-floor1",
+      "PDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-111553-139834-floor1\\stage2-A2-1-100.pdf",
+      "steps": [
+        {
+          "serial": "62e19ab3622c4974b7d136df2a695fb7",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-111440\\dispatch_62e19ab3622c4974b7d136df2a695fb7.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "6477dba30e674dfe81d2746c4d47898b",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-111440",
+            "processId": 15540,
+            "desktop": "CodexS1_6477dba30e674dfe81d2746c4d47898b",
+            "inputDesktop": "Default",
+            "serial": "62e19ab3622c4974b7d136df2a695fb7",
+            "command": "S1OPENPROBECONTROL",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-111553-139834-floor1",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-111553-139834-floor1\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "c814b6ac40244c7c824fa2655b6e52d4",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-111440\\dispatch_c814b6ac40244c7c824fa2655b6e52d4.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "6477dba30e674dfe81d2746c4d47898b",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-111440",
+            "processId": 15540,
+            "desktop": "CodexS1_6477dba30e674dfe81d2746c4d47898b",
+            "inputDesktop": "Default",
+            "serial": "c814b6ac40244c7c824fa2655b6e52d4",
+            "command": "S1PHASE2EXECUTE",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-111553-139834-floor1",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-111553-139834-floor1\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "0451fb40310a49dd824ed66b988a18a2",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-111440\\dispatch_0451fb40310a49dd824ed66b988a18a2.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "6477dba30e674dfe81d2746c4d47898b",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-111440",
+            "processId": 15540,
+            "desktop": "CodexS1_6477dba30e674dfe81d2746c4d47898b",
+            "inputDesktop": "Default",
+            "serial": "0451fb40310a49dd824ed66b988a18a2",
+            "command": "S1PHASE2PREVIEW",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-111553-139834-floor1",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-111553-139834-floor1\\control.dwg",
+            "error": null
+          }
+        }
+      ],
+      "modelRoots": 280,
+      "wholeTCHDimensionChains": 25,
+      "unlistedRootGeometryAndNativeAnnotationsUnchanged": true,
+      "joinedSources": [
+        "847E",
+        "8498",
+        "8485"
+      ],
+      "resultHandle": "847E",
+      "singleDirectNativeTCHChain": true,
+      "segments": 10,
+      "sharedNodes": 9,
+      "measurementNodes": [
+        [
+          36231.70152820693,
+          25765.21380195598,
+          0
+        ],
+        [
+          36231.70152820693,
+          27825.21380195598,
+          0
+        ],
+        [
+          36231.70152820693,
+          28725.213801955982,
+          0
+        ],
+        [
+          36231.70152820693,
+          28825.213801955982,
+          0
+        ],
+        [
+          36231.70152820693,
+          29065.213801955982,
+          0
+        ],
+        [
+          36231.70152820693,
+          29967.550574946166,
+          0
+        ],
+        [
+          36231.70152820693,
+          32167.550574946166,
+          0
+        ],
+        [
+          36231.70152820693,
+          32985.21380195598,
+          0
+        ],
+        [
+          36231.70152820693,
+          33225.213801956095,
+          0
+        ],
+        [
+          36231.70152820693,
+          34025.213801956095,
+          0
+        ],
+        [
+          36231.70152820693,
+          35985.213801955986,
+          0
+        ]
+      ],
+      "values": [
+        2060,
+        900,
+        100,
+        240,
+        902.3367729901875,
+        2199.9999999999964,
+        817.6632270098162,
+        240.00000000011642,
+        800,
+        1959.9999999998909
+      ],
+      "baseline": [
+        [
+          37001.70152820693,
+          25765.21380195598,
+          0
+        ],
+        [
+          37001.70152820693,
+          35985.213801955986,
+          0
+        ]
+      ],
+      "glyphs": [
+        [
+          37142.70152820693,
+          26335.880468622647,
+          37460.70152820693,
+          27254.547135289315
+        ],
+        [
+          37142.70152820693,
+          27929.21380195598,
+          37460.70152820693,
+          28621.21380195598
+        ],
+        [
+          37962.70152820693,
+          28451.88046862265,
+          38280.70152820693,
+          29098.54713528932
+        ],
+        [
+          37592.70152820693,
+          28599.213801955982,
+          37910.70152820693,
+          29291.213801955982
+        ],
+        [
+          37142.70152820693,
+          29170.382188451076,
+          37460.70152820693,
+          29862.382188451076
+        ],
+        [
+          37142.70152820693,
+          30608.217241612834,
+          37460.70152820693,
+          31526.883908279502
+        ],
+        [
+          37142.70152820693,
+          32253.04885511774,
+          37460.70152820693,
+          32899.71552178441
+        ],
+        [
+          37592.70152820693,
+          32759.213801956037,
+          37910.70152820693,
+          33451.21380195604
+        ],
+        [
+          37142.70152820693,
+          33279.213801956095,
+          37460.70152820693,
+          33971.213801956095
+        ],
+        [
+          37142.70152820693,
+          34568.54713528937,
+          37460.70152820693,
+          35441.88046862271
+        ]
+      ],
+      "allNumericTextsRemainAtOwnIntervalMidpoint": true,
+      "newGlyphContactsWithTextWallsOpeningsAndEachOther": 0,
+      "fontEvidence": "Transferred actual source font extents of unchanged styles; 240 rotated from same-height native dimension witness",
+      "newEditingExercisePerformed": false
+    },
+    {
+      "floor": 2,
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\房间面积随房名_20261101\\方案施工图_二层_房名下方面积确认样张_v6.dwg",
+      "sourceSHA256": "09FC0B46B3E5303CE3C49DAE5C45EBE513C517A14D9524D3410666B78E0DDC0C",
+      "control": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-111440\\continuous-floor-2\\control.dwg",
+      "SHA256": "A92DA0B309AA309D56D833439917F1CB626C5DAC572B60CBD9F584937322C419",
+      "previewJob": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-111555-280648-floor2",
+      "PDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-111555-280648-floor2\\stage2-A2-1-100.pdf",
+      "steps": [
+        {
+          "serial": "90780adfcb4747f59cbc436b7282d458",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-111440\\dispatch_90780adfcb4747f59cbc436b7282d458.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "6477dba30e674dfe81d2746c4d47898b",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-111440",
+            "processId": 15540,
+            "desktop": "CodexS1_6477dba30e674dfe81d2746c4d47898b",
+            "inputDesktop": "Default",
+            "serial": "90780adfcb4747f59cbc436b7282d458",
+            "command": "S1OPENPROBECONTROL",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-111555-280648-floor2",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-111555-280648-floor2\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "9a86300e2d304fd6b057f5d329f6fc39",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-111440\\dispatch_9a86300e2d304fd6b057f5d329f6fc39.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "6477dba30e674dfe81d2746c4d47898b",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-111440",
+            "processId": 15540,
+            "desktop": "CodexS1_6477dba30e674dfe81d2746c4d47898b",
+            "inputDesktop": "Default",
+            "serial": "9a86300e2d304fd6b057f5d329f6fc39",
+            "command": "S1PHASE2EXECUTE",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-111555-280648-floor2",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-111555-280648-floor2\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "9ac0c8b11654428bbc6ce3f52ec18db5",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-111440\\dispatch_9ac0c8b11654428bbc6ce3f52ec18db5.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "6477dba30e674dfe81d2746c4d47898b",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-111440",
+            "processId": 15540,
+            "desktop": "CodexS1_6477dba30e674dfe81d2746c4d47898b",
+            "inputDesktop": "Default",
+            "serial": "9ac0c8b11654428bbc6ce3f52ec18db5",
+            "command": "S1PHASE2PREVIEW",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-111555-280648-floor2",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261102-111555-280648-floor2\\control.dwg",
+            "error": null
+          }
+        }
+      ],
+      "modelRoots": 269,
+      "wholeTCHDimensionChains": 27,
+      "unlistedRootGeometryAndNativeAnnotationsUnchanged": true,
+      "drawingGeometryFullyUnchanged": true
+    }
+  ],
+  "note": "Dimensions only; internal door/window number remains pending native write capability or explicit TCH-number-command authorization. Native output is a DWG sample, not updated BCP_BUILD.",
+  "visualReview": {
+    "corridorNativePNG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\连续尺寸与对象编号_20261102\\corridor-v141.png",
+    "wholeFloor1PNG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\连续尺寸与对象编号_20261102\\floor-1-v141.png",
+    "reviewed": true,
+    "note": "Chain baseline continuous; number text staggered to right; 100 and 240 remain at own intervals; original door numbers preserved. Floor2 geometry unchanged; old waterbar contact remains."
+  },
+  "DWGs": [
+    {
+      "floor": 1,
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\连续尺寸与对象编号_20261102\\方案施工图_一层_连续尺寸确认样张_v7.dwg",
+      "SHA256": "2481BA2D32CC1789A5B54B0B2BF5B9D8B39315066B1ADF8144EE5E1A7AC0F755"
+    },
+    {
+      "floor": 2,
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\连续尺寸与对象编号_20261102\\方案施工图_二层_连续尺寸确认样张_v7.dwg",
+      "SHA256": "A92DA0B309AA309D56D833439917F1CB626C5DAC572B60CBD9F584937322C419"
+    }
+  ]
+}

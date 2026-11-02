@@ -1,0 +1,155 @@
+--- D:\Codex\建筑施工图自动化\立面插件\build\i1-20261101-210949-709-fix1-critical-output-paged-issues-green-772efe6e\src\AnalysisCommands.cpp
++++ D:\Codex\建筑施工图自动化\立面插件\build\i2-20261101-222304-757-green-unit-only-current-dwg-54e52bbb\src\AnalysisCommands.cpp
+@@ -2,6 +2,8 @@
+ #define NOMINMAX
+ #endif
+ #include "AnalysisCommands.h"
++#include "ConfigCommands.h"
++#include "UnitConfig.h"
+ #include "AnalysisCommandAbi.h"
+ #include "AnalysisReader.h"
+ #include "ProjectStore.h"
+@@ -10,6 +12,7 @@
+ #include <aced.h>
+ #include <acutads.h>
+ #include <cstring>
++#include <iomanip>
+ #include <limits>
+ #include <memory>
+ #include <set>
+@@ -17,7 +20,7 @@
+ #include <stdexcept>
+ namespace {
+ constexpr auto group = L"BCE_ANALYSIS_PRODUCT_8D5BB4A2";
+-bool analyzeOwned{}, infoOwned{}, issuesOwned{};
++bool analyzeOwned{}, infoOwned{}, issuesOwned{}, configOwned{};
+ DWORD ownerThread{};
+ std::unique_ptr<bce::NativeSceneContext> context;
+ std::string lastReport;
+@@ -178,6 +181,15 @@
+     auto archive = bce::readProjectStore(*context->currentDatabase());
+     bce::AnalysisReadOptions
+         options; // No project-specific assumptions or qualification inputs.
++    const bool unitOnly = archive.readable() && archive.issues.empty() &&
++                          bce::isUnitOnlyProject(archive.value->project);
++    std::string unitSource;
++    if (unitOnly && archive.value->project.config.units.confirmedMmPerInputUnit) {
++      options.confirmedMmPerInputUnit =
++          archive.value->project.config.units.confirmedMmPerInputUnit;
++      unitSource = archive.value->project.config.unitConfirmationSource;
++    }
++    // No historic ProjectConfig, plan, views, zero, axes or materials are passed.
+     auto result = bce::readCurrentAnalysis(*context, options);
+     if (acedUsrBrk()) {
+       say(L"\n分析已取消，旧结果已清除。\n");
+@@ -197,15 +209,19 @@
+     for (const auto &view : analysis.recognition.views)
+       issues.insert(issues.end(), view.unconfirmed.begin(),
+                     view.unconfirmed.end());
+-    const auto units = bce::resolveUnits(analysis.scene.units);
++    auto unitDeclaration = analysis.scene.units;
++    if (options.confirmedMmPerInputUnit &&
++        (unitDeclaration.insunits == 4 || unitDeclaration.insunits == 6))
++      unitDeclaration.trustedInsunits = true;
++    const auto units = bce::resolveUnits(unitDeclaration);
+     issues.insert(issues.end(), units.issues.begin(), units.issues.end());
+-    if (archive.value)
++    if (archive.value && !unitOnly)
+       issues.push_back({"PROJECT_HISTORY_UNBOUND",
+                         u8"已读取历史项目档案；未与本次内存完整绑定，单位、视图"
+                         u8"、轴及材料确认均未沿用。",
+                         {identity, {}, {}},
+                         true});
+-    else
++    else if (!archive.value)
+       issues.insert(issues.end(), archive.issues.begin(), archive.issues.end());
+     if (!context->currentDatabase() || context->revision() != revision ||
+         context->documentIdentity() != identity)
+@@ -216,6 +232,12 @@
+     out << "contract\tbce.analysis-report.v1\nidentity\t" << identity
+         << "\ndatabaseIdentity\t" << field(analysis.scene.databaseIdentity)
+         << "\nrevision\t" << revision << "\nsequence\t" << sequence << "\n";
++    if (options.confirmedMmPerInputUnit)
++      out << "unitMmPerInputUnit\t"
++          << std::setprecision(std::numeric_limits<double>::max_digits10)
++          << *options.confirmedMmPerInputUnit << "\nunitSource\t"
++          << field(unitSource) << "\nunitResolved\t"
++          << (units.canCommit() ? "true" : "false") << "\n";
+     for (const auto &view : analysis.recognition.views) {
+       elevations += view.kind == bce::ViewKind::elevation;
+       sections += view.kind == bce::ViewKind::section;
+@@ -248,6 +270,14 @@
+         u8"个对象，问题" + std::to_string(issues.size()) +
+         u8"项。未生成施工图。");
+     say(summary.c_str());
++    if (options.confirmedMmPerInputUnit) {
++      std::ostringstream unitSummary;
++      unitSummary.imbue(std::locale::classic());
++      unitSummary << u8"\n本图明确单位：1模型单位="
++                  << std::setprecision(std::numeric_limits<double>::max_digits10)
++                  << *options.confirmedMmPerInputUnit << u8"毫米；来源：" << unitSource;
++      say(bce::native_scene::utf16(unitSummary.str()).c_str());
++    }
+     showIssues(issues);
+     say(L"\n");
+   } catch (const std::exception &failure) {
+@@ -264,10 +294,14 @@
+     say(L"\nBCE_ANALYZE分析失败，旧结果已清除。\n");
+   }
+ }
++void configCommand() noexcept {
++  invalidate();
++  bce::commands::configureUnits();
++}
+ void info() noexcept {
+   say(L"\n立面插件开发候选：BCE_"
+       L"ANALYZE只读分析当前内存图纸；BCE_"
+-      L"ISSUES分页查看本次全部定位问题；尚无施工图生成及交互配置功能。\n");
++      L"ISSUES分页查看本次全部定位问题；BCE_CONFIG仅配置本图单位；尚无施工图生成、零点、轴及材料交互配置功能。\n");
+ }
+ bool removeOwned(const wchar_t *name, bool &owned) {
+   if (!owned)
+@@ -287,10 +321,11 @@
+       lifecycle.reset();
+     }
+     context.reset();
++    const bool configRemoved = removeOwned(L"BCE_CONFIG", configOwned);
+     const bool issuesRemoved = removeOwned(L"BCE_ISSUES", issuesOwned);
+     const bool infoRemoved = removeOwned(L"BCE_INFO", infoOwned);
+     const bool analyzeRemoved = removeOwned(L"BCE_ANALYZE", analyzeOwned);
+-    return issuesRemoved && infoRemoved && analyzeRemoved;
++    return configRemoved && issuesRemoved && infoRemoved && analyzeRemoved;
+   } catch (...) {
+     return false;
+   }
+@@ -303,7 +338,9 @@
+         acedRegCmds->lookupGlobalCmd(L"BCE_INFO") ||
+         acedRegCmds->lookupLocalCmd(L"BCE_INFO") ||
+         acedRegCmds->lookupGlobalCmd(L"BCE_ISSUES") ||
+-        acedRegCmds->lookupLocalCmd(L"BCE_ISSUES"))
++        acedRegCmds->lookupLocalCmd(L"BCE_ISSUES") ||
++        acedRegCmds->lookupGlobalCmd(L"BCE_CONFIG") ||
++        acedRegCmds->lookupLocalCmd(L"BCE_CONFIG"))
+       return false;
+     analyzeOwned =
+         acedRegCmds->addCommand(group, L"BCE_ANALYZE", L"BCE_ANALYZE",
+@@ -323,6 +360,9 @@
+       shutdown();
+       return false;
+     }
++    configOwned = acedRegCmds->addCommand(group, L"BCE_CONFIG", L"BCE_CONFIG",
++        ACRX_CMD_MODAL, configCommand) == Acad::eOk;
++    if (!configOwned) { shutdown(); return false; }
+     lifecycle = std::make_unique<Lifecycle>();
+     acDocManager->addReactor(lifecycle.get());
+     return true;
+--- D:\Codex\建筑施工图自动化\立面插件\build\i1-20261101-210949-709-fix1-critical-output-paged-issues-green-772efe6e\src\BuildingElevation2020.vcxproj
++++ D:\Codex\建筑施工图自动化\立面插件\build\i2-20261101-222304-757-green-unit-only-current-dwg-54e52bbb\src\BuildingElevation2020.vcxproj
+@@ -10,6 +10,6 @@
+     <ClCompile><WarningLevel>Level4</WarningLevel><TreatWarningAsError>true</TreatWarningAsError><SDLCheck>true</SDLCheck><ConformanceMode>true</ConformanceMode><LanguageStandard>stdcpp17</LanguageStandard><RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary><DisableSpecificWarnings>4828;%(DisableSpecificWarnings)</DisableSpecificWarnings><AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions><ExceptionHandling>Sync</ExceptionHandling><PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;UNICODE;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions><AdditionalIncludeDirectories>$(ObjectArxSdk)\inc;$(ObjectArxSdk)\inc-x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories></ClCompile>
+     <Link><SubSystem>Windows</SubSystem><ModuleDefinitionFile>$(ObjectArxSdk)\inc\AcRxDefault.def</ModuleDefinitionFile><AdditionalLibraryDirectories>$(ObjectArxSdk)\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories><AdditionalDependencies>rxapi.lib;acdb23.lib;acge23.lib;accore.lib;ac1st23.lib;Advapi32.lib;User32.lib;%(AdditionalDependencies)</AdditionalDependencies></Link>
+   </ItemDefinitionGroup>
+-  <ItemGroup><ClCompile Include="ElevationArx.cpp" /><ClCompile Include="AnalysisCommands.cpp" /><ClCompile Include="AnalysisReader.cpp" /><ClCompile Include="SceneReader.cpp" /><ClCompile Include="ElevationModel.cpp" /><ClCompile Include="Recognition.cpp" /><ClCompile Include="ProjectStore.cpp" /><ClCompile Include="ProjectStoreCodec.cpp" /><ClCompile Include="GenerationState.cpp" /></ItemGroup>
++  <ItemGroup><ClCompile Include="ElevationArx.cpp" /><ClCompile Include="AnalysisCommands.cpp" /><ClCompile Include="UnitConfig.cpp" /><ClCompile Include="ConfigCommands.cpp" /><ClCompile Include="AnalysisReader.cpp" /><ClCompile Include="SceneReader.cpp" /><ClCompile Include="ElevationModel.cpp" /><ClCompile Include="Recognition.cpp" /><ClCompile Include="ProjectStore.cpp" /><ClCompile Include="ProjectStoreCodec.cpp" /><ClCompile Include="GenerationState.cpp" /></ItemGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+ </Project>

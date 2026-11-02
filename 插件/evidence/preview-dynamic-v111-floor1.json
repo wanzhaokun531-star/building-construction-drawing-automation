@@ -1,0 +1,914 @@
+{
+  "contract": "bcp.dynamic-native-preview.v1",
+  "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-121538",
+  "nonce": "5d0f3d1814c44af98c167efefa4cfce9",
+  "job": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-dynamic-20261101-121740",
+  "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-121538\\插件生成施工图_一层.dwg",
+  "sourceSHA256": "268924A343AB0F75701069F2965EAE77CDABA7283FC01515B34828C59568D53A",
+  "steps": [
+    {
+      "serial": "4ea91fa76ac1473eae8f334fde13eea2",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-121538\\dispatch_4ea91fa76ac1473eae8f334fde13eea2.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "5d0f3d1814c44af98c167efefa4cfce9",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-121538",
+        "processId": 11976,
+        "desktop": "CodexS1_5d0f3d1814c44af98c167efefa4cfce9",
+        "inputDesktop": "Default",
+        "serial": "4ea91fa76ac1473eae8f334fde13eea2",
+        "command": "S1OPENPROBECONTROL",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-dynamic-20261101-121740",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-dynamic-20261101-121740\\control.dwg",
+        "error": null
+      }
+    },
+    {
+      "serial": "143da8869e3e4c50aa6487decae86808",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-121538\\dispatch_143da8869e3e4c50aa6487decae86808.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "5d0f3d1814c44af98c167efefa4cfce9",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-121538",
+        "processId": 11976,
+        "desktop": "CodexS1_5d0f3d1814c44af98c167efefa4cfce9",
+        "inputDesktop": "Default",
+        "serial": "143da8869e3e4c50aa6487decae86808",
+        "command": "S1PHASE2EXECUTE",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-dynamic-20261101-121740",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-dynamic-20261101-121740\\control.dwg",
+        "error": null
+      }
+    },
+    {
+      "serial": "e3130d0aaf51403bbf18012cf90fe957",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-121538\\dispatch_e3130d0aaf51403bbf18012cf90fe957.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "5d0f3d1814c44af98c167efefa4cfce9",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-121538",
+        "processId": 11976,
+        "desktop": "CodexS1_5d0f3d1814c44af98c167efefa4cfce9",
+        "inputDesktop": "Default",
+        "serial": "e3130d0aaf51403bbf18012cf90fe957",
+        "command": "S1PHASE2PREVIEW",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-dynamic-20261101-121740",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-dynamic-20261101-121740\\control.dwg",
+        "error": null
+      }
+    }
+  ],
+  "error": null,
+  "axisAudit": {
+    "contract": "bcp.product-opened-axes.v1",
+    "axes": [
+      {
+        "name": "BCP_AXIS_V_1",
+        "nativeHandle": "83AC",
+        "container": "83CA",
+        "inverted": true,
+        "min": [
+          31630.70152820641,
+          24525.21380195598
+        ],
+        "max": [
+          32432.701528206955,
+          37225.213801957034
+        ],
+        "circles": [
+          {
+            "centre": [
+              [
+                32031.70152820641,
+                20925.213801955982,
+                0
+              ]
+            ],
+            "radius": 400
+          },
+          {
+            "centre": [
+              [
+                32031.701528206955,
+                40825.213801957034,
+                0
+              ]
+            ],
+            "radius": 400
+          }
+        ]
+      },
+      {
+        "name": "BCP_AXIS_V_2",
+        "nativeHandle": "83B5",
+        "container": "83D1",
+        "inverted": false,
+        "min": [
+          34030.70152820641,
+          37225.213801957034
+        ],
+        "max": [
+          34832.701528206955,
+          41226.213801957034
+        ],
+        "circles": [
+          {
+            "centre": [
+              [
+                34431.70152820641,
+                20925.213801955982,
+                0
+              ]
+            ],
+            "radius": 400
+          },
+          {
+            "centre": [
+              [
+                34431.701528206955,
+                40825.213801957034,
+                0
+              ]
+            ],
+            "radius": 400
+          }
+        ]
+      },
+      {
+        "name": "BCP_AXIS_V_3",
+        "nativeHandle": "83B6",
+        "container": "83D8",
+        "inverted": true,
+        "min": [
+          35830.70152820641,
+          24525.21380195598
+        ],
+        "max": [
+          36632.701528206955,
+          37225.213801957034
+        ],
+        "circles": [
+          {
+            "centre": [
+              [
+                36231.70152820641,
+                20925.213801955982,
+                0
+              ]
+            ],
+            "radius": 400
+          },
+          {
+            "centre": [
+              [
+                36231.701528206955,
+                40825.213801957034,
+                0
+              ]
+            ],
+            "radius": 400
+          }
+        ]
+      },
+      {
+        "name": "BCP_AXIS_V_4",
+        "nativeHandle": "83B7",
+        "container": "83DF",
+        "inverted": true,
+        "min": [
+          38070.70152820641,
+          24525.21380195598
+        ],
+        "max": [
+          38872.701528206955,
+          37225.213801957034
+        ],
+        "circles": [
+          {
+            "centre": [
+              [
+                38471.70152820641,
+                20925.213801955982,
+                0
+              ]
+            ],
+            "radius": 400
+          },
+          {
+            "centre": [
+              [
+                38471.701528206955,
+                40825.213801957034,
+                0
+              ]
+            ],
+            "radius": 400
+          }
+        ]
+      },
+      {
+        "name": "BCP_AXIS_V_5",
+        "nativeHandle": "83B8",
+        "container": "83E6",
+        "inverted": false,
+        "min": [
+          42450.70152820641,
+          37225.213801957034
+        ],
+        "max": [
+          43252.701528206955,
+          41226.213801957034
+        ],
+        "circles": [
+          {
+            "centre": [
+              [
+                42851.70152820641,
+                20925.213801955982,
+                0
+              ]
+            ],
+            "radius": 400
+          },
+          {
+            "centre": [
+              [
+                42851.701528206955,
+                40825.213801957034,
+                0
+              ]
+            ],
+            "radius": 400
+          }
+        ]
+      },
+      {
+        "name": "BCP_AXIS_V_6",
+        "nativeHandle": "83B9",
+        "container": "83ED",
+        "inverted": true,
+        "min": [
+          46450.70152820641,
+          24525.21380195598
+        ],
+        "max": [
+          47252.701528206955,
+          37225.213801957034
+        ],
+        "circles": [
+          {
+            "centre": [
+              [
+                46851.70152820641,
+                20925.213801955982,
+                0
+              ]
+            ],
+            "radius": 400
+          },
+          {
+            "centre": [
+              [
+                46851.701528206955,
+                40825.213801957034,
+                0
+              ]
+            ],
+            "radius": 400
+          }
+        ]
+      },
+      {
+        "name": "BCP_AXIS_V_9",
+        "nativeHandle": "83BA",
+        "container": "83F4",
+        "inverted": true,
+        "min": [
+          50830.70152820641,
+          24525.21380195598
+        ],
+        "max": [
+          51632.701528206955,
+          37225.213801957034
+        ],
+        "circles": [
+          {
+            "centre": [
+              [
+                51231.70152820641,
+                20925.213801955982,
+                0
+              ]
+            ],
+            "radius": 400
+          },
+          {
+            "centre": [
+              [
+                51231.701528206955,
+                40825.213801957034,
+                0
+              ]
+            ],
+            "radius": 400
+          }
+        ]
+      },
+      {
+        "name": "BCP_AXIS_H_A",
+        "nativeHandle": "83BB",
+        "container": "83FB",
+        "inverted": true,
+        "min": [
+          30911.701528206933,
+          25244.21380195598
+        ],
+        "max": [
+          52351.70152820787,
+          26046.21380195598
+        ],
+        "circles": [
+          {
+            "centre": [
+              [
+                27311.701528206933,
+                25645.21380195598,
+                0
+              ]
+            ],
+            "radius": 400
+          },
+          {
+            "centre": [
+              [
+                55951.70152820787,
+                25645.21380195598,
+                0
+              ]
+            ],
+            "radius": 400
+          }
+        ]
+      },
+      {
+        "name": "BCP_AXIS_H_B",
+        "nativeHandle": "83C3",
+        "container": "8402",
+        "inverted": false,
+        "min": [
+          26910.701528206933,
+          28544.21380195598
+        ],
+        "max": [
+          30911.701528206933,
+          29346.21380195598
+        ],
+        "circles": [
+          {
+            "centre": [
+              [
+                27311.701528206933,
+                28945.21380195598,
+                0
+              ]
+            ],
+            "radius": 400
+          },
+          {
+            "centre": [
+              [
+                55951.70152820787,
+                28945.21380195598,
+                0
+              ]
+            ],
+            "radius": 400
+          }
+        ]
+      },
+      {
+        "name": "BCP_AXIS_H_C",
+        "nativeHandle": "83C4",
+        "container": "8409",
+        "inverted": false,
+        "min": [
+          52351.70152820787,
+          29804.213801956677
+        ],
+        "max": [
+          56352.70152820787,
+          30606.213801956677
+        ],
+        "circles": [
+          {
+            "centre": [
+              [
+                27311.701528206933,
+                30205.213801956677,
+                0
+              ]
+            ],
+            "radius": 400
+          },
+          {
+            "centre": [
+              [
+                55951.70152820787,
+                30205.213801956677,
+                0
+              ]
+            ],
+            "radius": 400
+          }
+        ]
+      },
+      {
+        "name": "BCP_AXIS_H_F",
+        "nativeHandle": "83C5",
+        "container": "8410",
+        "inverted": false,
+        "min": [
+          26910.701528206933,
+          32704.21380195598
+        ],
+        "max": [
+          30911.701528206933,
+          33506.21380195598
+        ],
+        "circles": [
+          {
+            "centre": [
+              [
+                27311.701528206933,
+                33105.21380195598,
+                0
+              ]
+            ],
+            "radius": 400
+          },
+          {
+            "centre": [
+              [
+                55951.70152820787,
+                33105.21380195598,
+                0
+              ]
+            ],
+            "radius": 400
+          }
+        ]
+      },
+      {
+        "name": "BCP_AXIS_H_G",
+        "nativeHandle": "83C6",
+        "container": "8417",
+        "inverted": true,
+        "min": [
+          30911.701528206933,
+          35704.21380195598
+        ],
+        "max": [
+          52351.70152820787,
+          36506.21380195598
+        ],
+        "circles": [
+          {
+            "centre": [
+              [
+                27311.701528206933,
+                36105.21380195598,
+                0
+              ]
+            ],
+            "radius": 400
+          },
+          {
+            "centre": [
+              [
+                55951.70152820787,
+                36105.21380195598,
+                0
+              ]
+            ],
+            "radius": 400
+          }
+        ]
+      }
+    ],
+    "groups": [
+      {
+        "name": "BCP_GRID_H_A",
+        "lines": [
+          {
+            "handle": "8431",
+            "curve": [
+              [
+                30911.701528206933,
+                25645.21380195598,
+                0
+              ],
+              [
+                36231.70152820693,
+                25645.21380195598,
+                0
+              ]
+            ],
+            "linetype": "DOTE"
+          },
+          {
+            "handle": "8432",
+            "curve": [
+              [
+                38471.70152820693,
+                25645.21380195598,
+                0
+              ],
+              [
+                52351.70152820787,
+                25645.21380195598,
+                0
+              ]
+            ],
+            "linetype": "DOTE"
+          }
+        ]
+      },
+      {
+        "name": "BCP_GRID_H_B",
+        "lines": [
+          {
+            "handle": "8434",
+            "curve": [
+              [
+                30911.701528206933,
+                28945.21380195598,
+                0
+              ],
+              [
+                36231.70152820693,
+                28945.21380195598,
+                0
+              ]
+            ],
+            "linetype": "DOTE"
+          }
+        ]
+      },
+      {
+        "name": "BCP_GRID_H_C",
+        "lines": [
+          {
+            "handle": "8436",
+            "curve": [
+              [
+                46851.70152820693,
+                30205.213801956677,
+                0
+              ],
+              [
+                52351.70152820787,
+                30205.213801956677,
+                0
+              ]
+            ],
+            "linetype": "DOTE"
+          }
+        ]
+      },
+      {
+        "name": "BCP_GRID_H_D",
+        "lines": [
+          {
+            "handle": "8438",
+            "curve": [
+              [
+                42851.701528207166,
+                32105.21380195074,
+                0
+              ],
+              [
+                46851.70152820693,
+                32105.21380195074,
+                0
+              ]
+            ],
+            "linetype": "DOTE"
+          }
+        ]
+      },
+      {
+        "name": "BCP_GRID_H_E",
+        "lines": [
+          {
+            "handle": "843A",
+            "curve": [
+              [
+                48191.70152820615,
+                32165.213801975653,
+                0
+              ],
+              [
+                51231.701528205216,
+                32165.213801975653,
+                0
+              ]
+            ],
+            "linetype": "DOTE"
+          }
+        ]
+      },
+      {
+        "name": "BCP_GRID_H_F",
+        "lines": [
+          {
+            "handle": "843C",
+            "curve": [
+              [
+                30911.701528206933,
+                33105.21380195598,
+                0
+              ],
+              [
+                36231.70152820693,
+                33105.21380195598,
+                0
+              ]
+            ],
+            "linetype": "DOTE"
+          }
+        ]
+      },
+      {
+        "name": "BCP_GRID_H_G",
+        "lines": [
+          {
+            "handle": "843E",
+            "curve": [
+              [
+                30911.701528206933,
+                36105.21380195598,
+                0
+              ],
+              [
+                36231.70152820693,
+                36105.21380195598,
+                0
+              ]
+            ],
+            "linetype": "DOTE"
+          },
+          {
+            "handle": "843F",
+            "curve": [
+              [
+                38471.70152820693,
+                36105.21380195598,
+                0
+              ],
+              [
+                52351.70152820787,
+                36105.21380195598,
+                0
+              ]
+            ],
+            "linetype": "DOTE"
+          }
+        ]
+      },
+      {
+        "name": "BCP_GRID_V_1",
+        "lines": [
+          {
+            "handle": "841B",
+            "curve": [
+              [
+                32031.701528206933,
+                24525.21380195598,
+                0
+              ],
+              [
+                32031.701528206933,
+                37225.213801957034,
+                0
+              ]
+            ],
+            "linetype": "DOTE"
+          }
+        ]
+      },
+      {
+        "name": "BCP_GRID_V_2",
+        "lines": [
+          {
+            "handle": "8420",
+            "curve": [
+              [
+                34431.70152820693,
+                33105.21380195598,
+                0
+              ],
+              [
+                34431.70152820693,
+                37225.213801957034,
+                0
+              ]
+            ],
+            "linetype": "DOTE"
+          }
+        ]
+      },
+      {
+        "name": "BCP_GRID_V_3",
+        "lines": [
+          {
+            "handle": "8422",
+            "curve": [
+              [
+                36231.70152820693,
+                24525.21380195598,
+                0
+              ],
+              [
+                36231.70152820693,
+                37225.213801957034,
+                0
+              ]
+            ],
+            "linetype": "DOTE"
+          }
+        ]
+      },
+      {
+        "name": "BCP_GRID_V_4",
+        "lines": [
+          {
+            "handle": "8424",
+            "curve": [
+              [
+                38471.70152820693,
+                24525.21380195598,
+                0
+              ],
+              [
+                38471.70152820693,
+                37225.213801957034,
+                0
+              ]
+            ],
+            "linetype": "DOTE"
+          }
+        ]
+      },
+      {
+        "name": "BCP_GRID_V_5",
+        "lines": [
+          {
+            "handle": "8426",
+            "curve": [
+              [
+                42851.70152820693,
+                32105.213801956095,
+                0
+              ],
+              [
+                42851.70152820693,
+                37225.213801957034,
+                0
+              ]
+            ],
+            "linetype": "DOTE"
+          }
+        ]
+      },
+      {
+        "name": "BCP_GRID_V_6",
+        "lines": [
+          {
+            "handle": "8428",
+            "curve": [
+              [
+                46851.70152820693,
+                24525.21380195598,
+                0
+              ],
+              [
+                46851.70152820693,
+                30205.213801956677,
+                0
+              ]
+            ],
+            "linetype": "DOTE"
+          },
+          {
+            "handle": "8429",
+            "curve": [
+              [
+                46851.70152820693,
+                32105.213801956095,
+                0
+              ],
+              [
+                46851.70152820693,
+                37225.213801957034,
+                0
+              ]
+            ],
+            "linetype": "DOTE"
+          }
+        ]
+      },
+      {
+        "name": "BCP_GRID_V_7",
+        "lines": [
+          {
+            "handle": "842B",
+            "curve": [
+              [
+                48131.701528207865,
+                30205.21380195109,
+                0
+              ],
+              [
+                48131.701528207865,
+                32105.21380196832,
+                0
+              ]
+            ],
+            "linetype": "DOTE"
+          }
+        ]
+      },
+      {
+        "name": "BCP_GRID_V_8",
+        "lines": [
+          {
+            "handle": "842D",
+            "curve": [
+              [
+                49251.70152820693,
+                30205.213801958656,
+                0
+              ],
+              [
+                49251.70152820693,
+                32105.21380199032,
+                0
+              ]
+            ],
+            "linetype": "DOTE"
+          }
+        ]
+      },
+      {
+        "name": "BCP_GRID_V_9",
+        "lines": [
+          {
+            "handle": "842F",
+            "curve": [
+              [
+                51231.70152820693,
+                24525.21380195598,
+                0
+              ],
+              [
+                51231.70152820693,
+                37225.213801957034,
+                0
+              ]
+            ],
+            "linetype": "DOTE"
+          }
+        ]
+      }
+    ],
+    "carriers": 12,
+    "logicalGroups": 16,
+    "axisLines": 19,
+    "readOnly": true,
+    "error": null
+  },
+  "PDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-dynamic-20261101-121740\\stage2-A2-1-100.pdf",
+  "PDFSHA256": "C4BB2802024B4DA8A5182F9F996D405CE127B5FA836BD9D04034178300841D86",
+  "controlSHA256": "268924A343AB0F75701069F2965EAE77CDABA7283FC01515B34828C59568D53A"
+}

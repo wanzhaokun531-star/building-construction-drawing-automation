@@ -1,0 +1,107 @@
+{
+  "Date": "2026-10-28",
+  "Run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\native-access-schemeaxis-20261028-184302-829",
+  "Scope": "Scheme input: native axis template transfer and two outside axis controls only",
+  "Assertions": 2248,
+  "Passed": 2248,
+  "Failed": 0,
+  "FullAxisGenerationAccepted": false,
+  "NumberingAccepted": false,
+  "SourceSHA256": "2B94E84A8079DD0BC2560287531A4DA25AC0D69B53EF5C6D703106DCF2F1104C",
+  "ArxSHA256": "AB638BB2F16435ADB4BE55B182FCA67CBBC746D46B64013E4A227B829222A998",
+  "ProjectSHA256": "FAE79BDFEBA39F7BE16A9BB5EA2E332A2901A8B9A8CFBB88770EA7A93A4B62C4",
+  "ValidatorDependencies": {
+    "verify_scheme_axis.py": "8079CAB3620E172002FB8BAED88788FB5911205CE5B7C3BA372B399B4DE03A9B",
+    "verify_scheme_native.py": "E8006C5B7E58BA8B0C9DE7817E7E8D3620FF89C57EB4538BDE688A632AEBCE0C"
+  },
+  "ProtectedInputs": [
+    {
+      "Id": "S01",
+      "Source": "D:\\cad插件\\方案平面图.dwg",
+      "Snapshot": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\方案平面图.dwg",
+      "SourceSHA256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+      "SnapshotSHA256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+      "ExpectedSourceSHA256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+      "ExpectedSnapshotSHA256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+      "SourceUnchanged": true,
+      "SnapshotUnchanged": true
+    },
+    {
+      "Id": "S02",
+      "Source": "D:\\cad插件\\施工图平面参考图.dwg",
+      "Snapshot": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\施工图平面参考图.dwg",
+      "SourceSHA256": "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27",
+      "SnapshotSHA256": "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27",
+      "ExpectedSourceSHA256": "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27",
+      "ExpectedSnapshotSHA256": "8C3F87274CCE16373DF7B2AD4BDD5090F1EE7ADA8DE97F0E3814D179F1F5AB27",
+      "SourceUnchanged": true,
+      "SnapshotUnchanged": true
+    },
+    {
+      "Id": "S03",
+      "Source": "D:\\Codex\\建筑施工图自动化\\图纸读取\\方案图对象属性.json",
+      "Snapshot": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\方案图对象属性.json",
+      "SourceSHA256": "33B3953F3366F97F6CF11C5B5CCAA35C4F76A5FB98C4834E0758DC5C96160DFD",
+      "SnapshotSHA256": "33B3953F3366F97F6CF11C5B5CCAA35C4F76A5FB98C4834E0758DC5C96160DFD",
+      "ExpectedSourceSHA256": "33B3953F3366F97F6CF11C5B5CCAA35C4F76A5FB98C4834E0758DC5C96160DFD",
+      "ExpectedSnapshotSHA256": "33B3953F3366F97F6CF11C5B5CCAA35C4F76A5FB98C4834E0758DC5C96160DFD",
+      "SourceUnchanged": true,
+      "SnapshotUnchanged": true
+    },
+    {
+      "Id": "S04",
+      "Source": "D:\\Codex\\建筑施工图自动化\\图纸读取\\参考图对象属性.json",
+      "Snapshot": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\参考图对象属性.json",
+      "SourceSHA256": "7B5FFA455F700BEA353166D68910110798423B5054179FCECDD9644BF610B39E",
+      "SnapshotSHA256": "7B5FFA455F700BEA353166D68910110798423B5054179FCECDD9644BF610B39E",
+      "ExpectedSourceSHA256": "7B5FFA455F700BEA353166D68910110798423B5054179FCECDD9644BF610B39E",
+      "ExpectedSnapshotSHA256": "7B5FFA455F700BEA353166D68910110798423B5054179FCECDD9644BF610B39E",
+      "SourceUnchanged": true,
+      "SnapshotUnchanged": true
+    },
+    {
+      "Id": "S05",
+      "Source": "D:\\Codex\\建筑施工图自动化\\docs\\superpowers\\specs\\2026-10-28-建筑施工图平面自动化需求基线.md",
+      "Snapshot": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\2026-10-28-建筑施工图平面自动化需求基线.md",
+      "SourceSHA256": "5A8732C11344E18B9D5547AEDE9573E8C5FC638483411AECF7BD84B46A013517",
+      "SnapshotSHA256": "5A8732C11344E18B9D5547AEDE9573E8C5FC638483411AECF7BD84B46A013517",
+      "ExpectedSourceSHA256": "5A8732C11344E18B9D5547AEDE9573E8C5FC638483411AECF7BD84B46A013517",
+      "ExpectedSnapshotSHA256": "5A8732C11344E18B9D5547AEDE9573E8C5FC638483411AECF7BD84B46A013517",
+      "SourceUnchanged": true,
+      "SnapshotUnchanged": true
+    },
+    {
+      "Id": "S06",
+      "Source": "D:\\Codex\\建筑施工图自动化\\docs\\superpowers\\plans\\2026-10-28-建筑施工图平面自动化分阶段实施方案.md",
+      "Snapshot": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\2026-10-28-建筑施工图平面自动化分阶段实施方案.md",
+      "SourceSHA256": "19871DAC839B57C05F7667CEAC266117EA6A7E6AE888FB3E8923B6671D5EFE74",
+      "SnapshotSHA256": "19871DAC839B57C05F7667CEAC266117EA6A7E6AE888FB3E8923B6671D5EFE74",
+      "ExpectedSourceSHA256": "19871DAC839B57C05F7667CEAC266117EA6A7E6AE888FB3E8923B6671D5EFE74",
+      "ExpectedSnapshotSHA256": "19871DAC839B57C05F7667CEAC266117EA6A7E6AE888FB3E8923B6671D5EFE74",
+      "SourceUnchanged": true,
+      "SnapshotUnchanged": true
+    }
+  ],
+  "Artifacts": [
+    {
+      "Path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\方案图_轴号模板移入验证.dwg",
+      "SHA256": "D17E60235700C895359AE18C48E643E1579B28512745C45217A6F757A3927B3C",
+      "Bytes": 3234114
+    },
+    {
+      "Path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\方案图_外侧轴位调整验证.dwg",
+      "SHA256": "D8E92AE3AA956616401E0C58079AAA6CFCC3D2497277576D90F1A7198109B2D2",
+      "Bytes": 3233250
+    },
+    {
+      "Path": "D:\\Codex\\建筑施工图自动化\\阶段1\\交付\\方案图_轴网原生验证.pdf",
+      "SHA256": "20780A754CAB02BEA2D8086EE826C998EBC7CF3FFF9B0D445AE46D3DD6E5C0B9",
+      "Bytes": 855857
+    }
+  ],
+  "PlotReceipt": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\native-access-schemeaxis-20261028-184302-829\\scheme-axis-plot-receipt.json",
+  "PDFCheck": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\native-access-schemeaxis-20261028-184302-829\\scheme-axis-final-pdf-check.json",
+  "IndependentReview": "PASS; no required fixes; limited scope",
+  "RuntimeCleanup": "exact temporary ARX and INI removed after unload",
+  "SecuritySettingsChanged": false
+}

@@ -1,0 +1,1375 @@
+{
+  "contract": "bcp.area-under-name-native-qa.v1",
+  "version": "v136",
+  "manifest": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\房间面积随房名_20261101\\area-name-manifest-v136.json",
+  "manifestSHA256": "C71C6157E83B99EC31DF61D3964684AC8E40DCBD3B8912DCEEEDAB43323CD5C4",
+  "pluginCodeChanged": false,
+  "sampleOnly": true,
+  "PDFDelivery": false,
+  "geometryPassed": true,
+  "floors": [
+    {
+      "areas": [
+        {
+          "id": "F1-R01",
+          "group": "BCP_AREA_F1_R01",
+          "members": [
+            "8623",
+            "86A5"
+          ],
+          "actualBounds": [
+            33022.795224261754,
+            33681.17780177621,
+            33758.22379569033,
+            33960.06048334046
+          ],
+          "center": [
+            33390.50950997604,
+            33820.61914255834
+          ],
+          "nameHandle": "8141",
+          "nameBounds": [
+            32872.028497317806,
+            34110.06048334046,
+            33908.99052263426,
+            34515.123774479696
+          ],
+          "actualGap": 150.0
+        },
+        {
+          "id": "F1-R02",
+          "group": "BCP_AREA_F1_R02",
+          "members": [
+            "8625",
+            "86A7"
+          ],
+          "actualBounds": [
+            35232.85714285714,
+            31968.934186644037,
+            36087.142857142855,
+            32247.816868208283
+          ],
+          "center": [
+            35660.0,
+            32108.37552742616
+          ],
+          "nameHandle": "8005",
+          "nameBounds": [
+            35314.345991561175,
+            32347.816868208283,
+            36005.65400843881,
+            32741.065813355963
+          ],
+          "actualGap": 100.0
+        },
+        {
+          "id": "F1-R03",
+          "group": "BCP_AREA_F1_R03",
+          "members": [
+            "8627",
+            "86A9"
+          ],
+          "actualBounds": [
+            34089.89591450219,
+            26997.24643138713,
+            34914.467343073615,
+            27276.129112951377
+          ],
+          "center": [
+            34502.181628787905,
+            27136.687772169254
+          ],
+          "nameHandle": "7FF9",
+          "nameBounds": [
+            34156.52762034908,
+            27426.129112951377,
+            34847.835637226715,
+            27831.19240409062
+          ],
+          "actualGap": 150.0
+        },
+        {
+          "id": "F1-R04",
+          "group": "BCP_AREA_F1_R04",
+          "members": [
+            "8629",
+            "86AB"
+          ],
+          "actualBounds": [
+            35235.357142857145,
+            34195.418994413405,
+            35764.64285714286,
+            34404.58100558659
+          ],
+          "center": [
+            35500.0,
+            34300.0
+          ],
+          "nameHandle": null,
+          "placement": "approved room-middle target; no mathematical centroid requirement"
+        },
+        {
+          "id": "F1-R05",
+          "group": "BCP_AREA_F1_R05",
+          "members": [
+            "862B",
+            "86AD"
+          ],
+          "actualBounds": [
+            44414.4563318838,
+            28416.444875705947,
+            45298.4563318838,
+            28695.327557270193
+          ],
+          "center": [
+            44856.4563318838,
+            28555.88621648807
+          ],
+          "nameHandle": "7F47",
+          "nameBounds": [
+            44510.80232344498,
+            28845.327557270193,
+            45202.110340322615,
+            29231.825447565552
+          ],
+          "actualGap": 150.0
+        },
+        {
+          "id": "F1-R06",
+          "group": "BCP_AREA_F1_R06",
+          "members": [
+            "862D",
+            "86AF"
+          ],
+          "actualBounds": [
+            45187.71428571428,
+            32685.55865921788,
+            46012.28571428571,
+            32964.44134078213
+          ],
+          "center": [
+            45600.0,
+            32825.0
+          ],
+          "nameHandle": "7F8B",
+          "nameBounds": [
+            45081.51898734177,
+            33114.44134078213,
+            46118.48101265822,
+            33514.44134078213
+          ],
+          "actualGap": 150.0
+        },
+        {
+          "id": "F1-R07",
+          "group": "BCP_AREA_F1_R07",
+          "members": [
+            "862F",
+            "86B1"
+          ],
+          "actualBounds": [
+            49072.85714285714,
+            33706.89985383916,
+            49927.142857142855,
+            33985.78253540341
+          ],
+          "center": [
+            49500.0,
+            33846.34119462129
+          ],
+          "nameHandle": "7FCB",
+          "nameBounds": [
+            49154.345991561175,
+            34135.78253540341,
+            49845.65400843881,
+            34523.96818941185
+          ],
+          "actualGap": 150.0
+        },
+        {
+          "id": "F1-R08",
+          "group": "BCP_AREA_F1_R08",
+          "members": [
+            "8631",
+            "86B3"
+          ],
+          "actualBounds": [
+            49044.04761904762,
+            27426.38201201344,
+            49755.95238095238,
+            27658.784246650313
+          ],
+          "center": [
+            49400.0,
+            27542.583129331877
+          ],
+          "nameHandle": "7F6E",
+          "nameBounds": [
+            49054.34599156118,
+            27808.784246650313,
+            49745.65400843882,
+            28196.969900658754
+          ],
+          "actualGap": 150.0
+        },
+        {
+          "id": "F1-R09",
+          "group": "BCP_AREA_F1_R09",
+          "members": [
+            "8633",
+            "86B5"
+          ],
+          "actualBounds": [
+            48488.319822357706,
+            30932.912453150413,
+            48929.39125092913,
+            31107.214129128068
+          ],
+          "center": [
+            48708.855536643416,
+            31020.06329113924
+          ],
+          "nameHandle": "8242",
+          "nameBounds": [
+            48363.201528204605,
+            31137.214129128068,
+            49054.50954508224,
+            31527.087546849587
+          ],
+          "actualGap": 30.0
+        },
+        {
+          "id": "F1-R10",
+          "group": "BCP_AREA_F1_R10",
+          "members": [
+            "8635",
+            "86B7"
+          ],
+          "actualBounds": [
+            49843.987242492345,
+            31060.558659217877,
+            50579.41581392092,
+            31339.441340782123
+          ],
+          "center": [
+            50211.70152820663,
+            31200.0
+          ],
+          "nameHandle": null,
+          "placement": "approved room-middle target; no mathematical centroid requirement"
+        }
+      ],
+      "areaGroups": 10,
+      "areaTextMembers": 20,
+      "movedNames": 5,
+      "wholeTCHDimensions": 27,
+      "allOriginalDimensionAnnotationsUnchanged": true,
+      "modelRoots": 282,
+      "originalWipeoutRootsUnchanged": [
+        "84B9",
+        "84BA",
+        "84BB",
+        "84BC"
+      ],
+      "allUnlistedRootsUnchanged": true,
+      "areaContentRotationAndGlyphBoundsPreserved": true,
+      "superscriptRelativePlacementPreserved": true,
+      "totalAreaMembersUnchanged": [
+        "8639",
+        "86B9"
+      ],
+      "oldNativeAnnotations": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-door-clearance-20261101-174239-floor1\\product-axis-document-audit.json",
+      "oldNativeAnnotationsSHA256": "9D07ED38589A695411D6642F443477963FBD2ACF381E9301B3604A42FE5F4E98",
+      "groups": {
+        "F1-R01": {
+          "name": "BCP_AREA_F1_R01",
+          "members": [
+            [
+              "8623",
+              "TEXT"
+            ],
+            [
+              "86A5",
+              "TEXT"
+            ]
+          ]
+        },
+        "F1-R02": {
+          "name": "BCP_AREA_F1_R02",
+          "members": [
+            [
+              "8625",
+              "TEXT"
+            ],
+            [
+              "86A7",
+              "TEXT"
+            ]
+          ]
+        },
+        "F1-R03": {
+          "name": "BCP_AREA_F1_R03",
+          "members": [
+            [
+              "8627",
+              "TEXT"
+            ],
+            [
+              "86A9",
+              "TEXT"
+            ]
+          ]
+        },
+        "F1-R04": {
+          "name": "BCP_AREA_F1_R04",
+          "members": [
+            [
+              "8629",
+              "TEXT"
+            ],
+            [
+              "86AB",
+              "TEXT"
+            ]
+          ]
+        },
+        "F1-R05": {
+          "name": "BCP_AREA_F1_R05",
+          "members": [
+            [
+              "862B",
+              "TEXT"
+            ],
+            [
+              "86AD",
+              "TEXT"
+            ]
+          ]
+        },
+        "F1-R06": {
+          "name": "BCP_AREA_F1_R06",
+          "members": [
+            [
+              "862D",
+              "TEXT"
+            ],
+            [
+              "86AF",
+              "TEXT"
+            ]
+          ]
+        },
+        "F1-R07": {
+          "name": "BCP_AREA_F1_R07",
+          "members": [
+            [
+              "862F",
+              "TEXT"
+            ],
+            [
+              "86B1",
+              "TEXT"
+            ]
+          ]
+        },
+        "F1-R08": {
+          "name": "BCP_AREA_F1_R08",
+          "members": [
+            [
+              "8631",
+              "TEXT"
+            ],
+            [
+              "86B3",
+              "TEXT"
+            ]
+          ]
+        },
+        "F1-R09": {
+          "name": "BCP_AREA_F1_R09",
+          "members": [
+            [
+              "8633",
+              "TEXT"
+            ],
+            [
+              "86B5",
+              "TEXT"
+            ]
+          ]
+        },
+        "F1-R10": {
+          "name": "BCP_AREA_F1_R10",
+          "members": [
+            [
+              "8635",
+              "TEXT"
+            ],
+            [
+              "86B7",
+              "TEXT"
+            ]
+          ]
+        }
+      },
+      "areaTextMetadata": {
+        "8623": {
+          "handle": "8623",
+          "text": "5.96m",
+          "style": "_TCH_WINDOW",
+          "height": 240.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "86A5": {
+          "handle": "86A5",
+          "text": "2",
+          "style": "_TCH_WINDOW",
+          "height": 120.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "8625": {
+          "handle": "8625",
+          "text": "15.52m",
+          "style": "_TCH_WINDOW",
+          "height": 240.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "86A7": {
+          "handle": "86A7",
+          "text": "2",
+          "style": "_TCH_WINDOW",
+          "height": 120.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "8627": {
+          "handle": "8627",
+          "text": "12.12m",
+          "style": "_TCH_WINDOW",
+          "height": 240.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "86A9": {
+          "handle": "86A9",
+          "text": "2",
+          "style": "_TCH_WINDOW",
+          "height": 120.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "8629": {
+          "handle": "8629",
+          "text": "4.31m",
+          "style": "_TCH_WINDOW",
+          "height": 180.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "86AB": {
+          "handle": "86AB",
+          "text": "2",
+          "style": "_TCH_WINDOW",
+          "height": 90.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "862B": {
+          "handle": "862B",
+          "text": "69.42m",
+          "style": "_TCH_WINDOW",
+          "height": 240.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "86AD": {
+          "handle": "86AD",
+          "text": "2",
+          "style": "_TCH_WINDOW",
+          "height": 120.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "862D": {
+          "handle": "862D",
+          "text": "14.14m",
+          "style": "_TCH_WINDOW",
+          "height": 240.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "86AF": {
+          "handle": "86AF",
+          "text": "2",
+          "style": "_TCH_WINDOW",
+          "height": 120.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "862F": {
+          "handle": "862F",
+          "text": "15.57m",
+          "style": "_TCH_WINDOW",
+          "height": 240.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "86B1": {
+          "handle": "86B1",
+          "text": "2",
+          "style": "_TCH_WINDOW",
+          "height": 120.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "8631": {
+          "handle": "8631",
+          "text": "17.88m",
+          "style": "_TCH_WINDOW",
+          "height": 200.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "86B3": {
+          "handle": "86B3",
+          "text": "2",
+          "style": "_TCH_WINDOW",
+          "height": 100.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "8633": {
+          "handle": "8633",
+          "text": "1.78m",
+          "style": "_TCH_WINDOW",
+          "height": 150.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "86B5": {
+          "handle": "86B5",
+          "text": "2",
+          "style": "_TCH_WINDOW",
+          "height": 75.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "8635": {
+          "handle": "8635",
+          "text": "3.20m",
+          "style": "_TCH_WINDOW",
+          "height": 240.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "86B7": {
+          "handle": "86B7",
+          "text": "2",
+          "style": "_TCH_WINDOW",
+          "height": 120.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        }
+      },
+      "floor": 1,
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门号沿洞口与尺寸避让_20261101\\方案施工图_一层_门编号与尺寸避让确认样张_v5.dwg",
+      "sourceSHA256": "8477F0CADA78F89D7FD90FA7E43AEA6A0D667C8F765BF8B0EE903206287F8C2A",
+      "control": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-191321\\area-name-floor-1\\control.dwg",
+      "SHA256": "7C680A013A384C4C4344727EB8FFFDA2E7FB6552EC8CA43DEB3038B4A3BF0692",
+      "sourcePreview": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-door-clearance-20261101-174239-floor1\\stage2-preview-native.json",
+      "sourcePreviewSHA256": "BAC80087453067E771AC549B68F75B4261910E0F63F29F9FD5ACF225AE3F92A9",
+      "previewJob": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261101-191558-317640-floor1",
+      "PDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261101-191558-317640-floor1\\stage2-A2-1-100.pdf",
+      "steps": [
+        {
+          "serial": "183458e91e2e461aa49c34701aef9ad7",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-191321\\dispatch_183458e91e2e461aa49c34701aef9ad7.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "47471663f0a846e49f033ef8148a659f",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-191321",
+            "processId": 35664,
+            "desktop": "CodexS1_47471663f0a846e49f033ef8148a659f",
+            "inputDesktop": "Default",
+            "serial": "183458e91e2e461aa49c34701aef9ad7",
+            "command": "S1OPENPROBECONTROL",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261101-191558-317640-floor1",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261101-191558-317640-floor1\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "820b566b23ae47a39efd0a6c52d5eb46",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-191321\\dispatch_820b566b23ae47a39efd0a6c52d5eb46.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "47471663f0a846e49f033ef8148a659f",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-191321",
+            "processId": 35664,
+            "desktop": "CodexS1_47471663f0a846e49f033ef8148a659f",
+            "inputDesktop": "Default",
+            "serial": "820b566b23ae47a39efd0a6c52d5eb46",
+            "command": "S1PHASE2EXECUTE",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261101-191558-317640-floor1",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261101-191558-317640-floor1\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "19b7a78a47544b8998667311c48f6c3a",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-191321\\dispatch_19b7a78a47544b8998667311c48f6c3a.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "47471663f0a846e49f033ef8148a659f",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-191321",
+            "processId": 35664,
+            "desktop": "CodexS1_47471663f0a846e49f033ef8148a659f",
+            "inputDesktop": "Default",
+            "serial": "19b7a78a47544b8998667311c48f6c3a",
+            "command": "S1PHASE2PREVIEW",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261101-191558-317640-floor1",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261101-191558-317640-floor1\\control.dwg",
+            "error": null
+          }
+        }
+      ],
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\房间面积随房名_20261101\\方案施工图_一层_房名下方面积确认样张_v6.dwg",
+      "DWGSHA256": "7C680A013A384C4C4344727EB8FFFDA2E7FB6552EC8CA43DEB3038B4A3BF0692"
+    },
+    {
+      "areas": [
+        {
+          "id": "F2-R01",
+          "group": "BCP_AREA_F2_R01",
+          "members": [
+            "8619",
+            "869A"
+          ],
+          "actualBounds": [
+            79444.79522426175,
+            33681.17780177621,
+            80180.22379569031,
+            33960.06048334046
+          ],
+          "center": [
+            79812.50950997602,
+            33820.61914255834
+          ],
+          "nameHandle": "82EC",
+          "nameBounds": [
+            79294.0284973178,
+            34110.06048334046,
+            80330.99052263427,
+            34515.123774479696
+          ],
+          "actualGap": 150.0
+        },
+        {
+          "id": "F2-R02",
+          "group": "BCP_AREA_F2_R02",
+          "members": [
+            "861B",
+            "869C"
+          ],
+          "actualBounds": [
+            81835.35714285714,
+            34500.632796368955,
+            82364.64285714286,
+            34709.79480754214
+          ],
+          "center": [
+            82100.0,
+            34605.21380195554
+          ],
+          "nameHandle": null,
+          "placement": "approved room-middle target; no mathematical centroid requirement"
+        },
+        {
+          "id": "F2-R03",
+          "group": "BCP_AREA_F2_R03",
+          "members": [
+            "861D",
+            "869E"
+          ],
+          "actualBounds": [
+            86656.55867106431,
+            34060.55865921788,
+            87510.84438535002,
+            34339.44134078213
+          ],
+          "center": [
+            87083.70152820717,
+            34200.0
+          ],
+          "nameHandle": null,
+          "placement": "approved room-middle target; no mathematical centroid requirement"
+        },
+        {
+          "id": "F2-R04",
+          "group": "BCP_AREA_F2_R04",
+          "members": [
+            "861F",
+            "86A0"
+          ],
+          "actualBounds": [
+            85590.18317020964,
+            30374.031321892526,
+            86474.18317020964,
+            30652.91400345677
+          ],
+          "center": [
+            86032.18317020964,
+            30513.47266267465
+          ],
+          "nameHandle": "8160",
+          "nameBounds": [
+            85686.52916177083,
+            30802.91400345677,
+            86377.83717864846,
+            31197.850712317533
+          ],
+          "actualGap": 150.0
+        },
+        {
+          "id": "F2-R05",
+          "group": "BCP_AREA_F2_R05",
+          "members": [
+            "8621",
+            "86A2"
+          ],
+          "actualBounds": [
+            86344.04761904762,
+            27247.38201201449,
+            87055.95238095238,
+            27479.78424665136
+          ],
+          "center": [
+            86700.0,
+            27363.583129332925
+          ],
+          "nameHandle": "80EF",
+          "nameBounds": [
+            86354.34599156119,
+            27629.78424665136,
+            87045.65400843883,
+            28017.969900659802
+          ],
+          "actualGap": 150.0
+        },
+        {
+          "id": "F2-R06",
+          "group": "BCP_AREA_F2_R06",
+          "members": [
+            "8623",
+            "86A4"
+          ],
+          "actualBounds": [
+            91787.71428571429,
+            33863.39774413452,
+            92612.28571428572,
+            34142.280425698766
+          ],
+          "center": [
+            92200.0,
+            34002.839084916646
+          ],
+          "nameHandle": "8104",
+          "nameBounds": [
+            91854.34599156119,
+            34292.280425698766,
+            92545.65400843883,
+            34697.343716838004
+          ],
+          "actualGap": 150.0
+        },
+        {
+          "id": "F2-R07",
+          "group": "BCP_AREA_F2_R07",
+          "members": [
+            "8625",
+            "86A6"
+          ],
+          "actualBounds": [
+            95472.85714285714,
+            33763.89985383916,
+            96327.14285714286,
+            34042.78253540341
+          ],
+          "center": [
+            95900.0,
+            33903.34119462129
+          ],
+          "nameHandle": "806F",
+          "nameBounds": [
+            95554.34599156119,
+            34192.78253540341,
+            96245.65400843883,
+            34580.96818941185
+          ],
+          "actualGap": 150.0
+        },
+        {
+          "id": "F2-R08",
+          "group": "BCP_AREA_F2_R08",
+          "members": [
+            "8627",
+            "86A8"
+          ],
+          "actualBounds": [
+            95544.04761904762,
+            27214.706055677343,
+            96255.95238095238,
+            27447.108290314216
+          ],
+          "center": [
+            95900.0,
+            27330.90717299578
+          ],
+          "nameHandle": "8042",
+          "nameBounds": [
+            95554.34599156119,
+            27597.108290314216,
+            96245.65400843883,
+            27985.293944322657
+          ],
+          "actualGap": 150.0
+        },
+        {
+          "id": "F2-R09",
+          "group": "BCP_AREA_F2_R09",
+          "members": [
+            "8629",
+            "86AA"
+          ],
+          "actualBounds": [
+            94910.31982235864,
+            30932.912453150413,
+            95351.39125093007,
+            31107.214129128068
+          ],
+          "center": [
+            95130.85553664435,
+            31020.06329113924
+          ],
+          "nameHandle": "820F",
+          "nameBounds": [
+            94785.20152820554,
+            31137.214129128068,
+            95476.50954508317,
+            31527.087546849587
+          ],
+          "actualGap": 30.0
+        },
+        {
+          "id": "F2-R10",
+          "group": "BCP_AREA_F2_R10",
+          "members": [
+            "862B",
+            "86AC"
+          ],
+          "actualBounds": [
+            96265.9872424917,
+            31075.77246119213,
+            97001.41581392026,
+            31354.655142756375
+          ],
+          "center": [
+            96633.70152820597,
+            31215.213801974252
+          ],
+          "nameHandle": null,
+          "placement": "approved room-middle target; no mathematical centroid requirement"
+        }
+      ],
+      "areaGroups": 10,
+      "areaTextMembers": 20,
+      "movedNames": 5,
+      "wholeTCHDimensions": 27,
+      "allOriginalDimensionAnnotationsUnchanged": true,
+      "modelRoots": 269,
+      "originalWipeoutRootsUnchanged": [
+        "84B1",
+        "84B2",
+        "84B3",
+        "84B4"
+      ],
+      "allUnlistedRootsUnchanged": true,
+      "areaContentRotationAndGlyphBoundsPreserved": true,
+      "superscriptRelativePlacementPreserved": true,
+      "totalAreaMembersUnchanged": [
+        "862E",
+        "86AE"
+      ],
+      "oldNativeAnnotations": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-door-clearance-20261101-174242-floor2\\product-axis-document-audit.json",
+      "oldNativeAnnotationsSHA256": "FF5ED8F3F87CAEC43D8D72D82D77587555745BF4131A13B770EE63EE91186791",
+      "groups": {
+        "F2-R01": {
+          "name": "BCP_AREA_F2_R01",
+          "members": [
+            [
+              "8619",
+              "TEXT"
+            ],
+            [
+              "869A",
+              "TEXT"
+            ]
+          ]
+        },
+        "F2-R02": {
+          "name": "BCP_AREA_F2_R02",
+          "members": [
+            [
+              "861B",
+              "TEXT"
+            ],
+            [
+              "869C",
+              "TEXT"
+            ]
+          ]
+        },
+        "F2-R03": {
+          "name": "BCP_AREA_F2_R03",
+          "members": [
+            [
+              "861D",
+              "TEXT"
+            ],
+            [
+              "869E",
+              "TEXT"
+            ]
+          ]
+        },
+        "F2-R04": {
+          "name": "BCP_AREA_F2_R04",
+          "members": [
+            [
+              "861F",
+              "TEXT"
+            ],
+            [
+              "86A0",
+              "TEXT"
+            ]
+          ]
+        },
+        "F2-R05": {
+          "name": "BCP_AREA_F2_R05",
+          "members": [
+            [
+              "8621",
+              "TEXT"
+            ],
+            [
+              "86A2",
+              "TEXT"
+            ]
+          ]
+        },
+        "F2-R06": {
+          "name": "BCP_AREA_F2_R06",
+          "members": [
+            [
+              "8623",
+              "TEXT"
+            ],
+            [
+              "86A4",
+              "TEXT"
+            ]
+          ]
+        },
+        "F2-R07": {
+          "name": "BCP_AREA_F2_R07",
+          "members": [
+            [
+              "8625",
+              "TEXT"
+            ],
+            [
+              "86A6",
+              "TEXT"
+            ]
+          ]
+        },
+        "F2-R08": {
+          "name": "BCP_AREA_F2_R08",
+          "members": [
+            [
+              "8627",
+              "TEXT"
+            ],
+            [
+              "86A8",
+              "TEXT"
+            ]
+          ]
+        },
+        "F2-R09": {
+          "name": "BCP_AREA_F2_R09",
+          "members": [
+            [
+              "8629",
+              "TEXT"
+            ],
+            [
+              "86AA",
+              "TEXT"
+            ]
+          ]
+        },
+        "F2-R10": {
+          "name": "BCP_AREA_F2_R10",
+          "members": [
+            [
+              "862B",
+              "TEXT"
+            ],
+            [
+              "86AC",
+              "TEXT"
+            ]
+          ]
+        }
+      },
+      "areaTextMetadata": {
+        "8619": {
+          "handle": "8619",
+          "text": "5.96m",
+          "style": "_TCH_WINDOW",
+          "height": 240.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "869A": {
+          "handle": "869A",
+          "text": "2",
+          "style": "_TCH_WINDOW",
+          "height": 120.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "861B": {
+          "handle": "861B",
+          "text": "4.31m",
+          "style": "_TCH_WINDOW",
+          "height": 180.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "869C": {
+          "handle": "869C",
+          "text": "2",
+          "style": "_TCH_WINDOW",
+          "height": 90.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "861D": {
+          "handle": "861D",
+          "text": "15.57m",
+          "style": "_TCH_WINDOW",
+          "height": 240.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "869E": {
+          "handle": "869E",
+          "text": "2",
+          "style": "_TCH_WINDOW",
+          "height": 120.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "861F": {
+          "handle": "861F",
+          "text": "32.88m",
+          "style": "_TCH_WINDOW",
+          "height": 240.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "86A0": {
+          "handle": "86A0",
+          "text": "2",
+          "style": "_TCH_WINDOW",
+          "height": 120.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "8621": {
+          "handle": "8621",
+          "text": "17.88m",
+          "style": "_TCH_WINDOW",
+          "height": 200.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "86A2": {
+          "handle": "86A2",
+          "text": "2",
+          "style": "_TCH_WINDOW",
+          "height": 100.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "8623": {
+          "handle": "8623",
+          "text": "14.14m",
+          "style": "_TCH_WINDOW",
+          "height": 240.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "86A4": {
+          "handle": "86A4",
+          "text": "2",
+          "style": "_TCH_WINDOW",
+          "height": 120.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "8625": {
+          "handle": "8625",
+          "text": "15.57m",
+          "style": "_TCH_WINDOW",
+          "height": 240.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "86A6": {
+          "handle": "86A6",
+          "text": "2",
+          "style": "_TCH_WINDOW",
+          "height": 120.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "8627": {
+          "handle": "8627",
+          "text": "17.88m",
+          "style": "_TCH_WINDOW",
+          "height": 200.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "86A8": {
+          "handle": "86A8",
+          "text": "2",
+          "style": "_TCH_WINDOW",
+          "height": 100.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "8629": {
+          "handle": "8629",
+          "text": "1.78m",
+          "style": "_TCH_WINDOW",
+          "height": 150.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "86AA": {
+          "handle": "86AA",
+          "text": "2",
+          "style": "_TCH_WINDOW",
+          "height": 75.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "862B": {
+          "handle": "862B",
+          "text": "3.20m",
+          "style": "_TCH_WINDOW",
+          "height": 240.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        },
+        "86AC": {
+          "handle": "86AC",
+          "text": "2",
+          "style": "_TCH_WINDOW",
+          "height": 120.0,
+          "width": 0.65,
+          "rotation": 0.0,
+          "oblique": 0.0
+        }
+      },
+      "floor": 2,
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门号沿洞口与尺寸避让_20261101\\方案施工图_二层_门编号与尺寸避让确认样张_v5.dwg",
+      "sourceSHA256": "8CF1ACED9E856777A64EA3859D32EFC7A6F6E3927689FAA9F4DA5D1B11BBAB5C",
+      "control": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-191321\\area-name-floor-2\\control.dwg",
+      "SHA256": "09FC0B46B3E5303CE3C49DAE5C45EBE513C517A14D9524D3410666B78E0DDC0C",
+      "sourcePreview": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-door-clearance-20261101-174242-floor2\\stage2-preview-native.json",
+      "sourcePreviewSHA256": "6F97B356A236D57656531E9F52B2CD75C6E5056A22D04BF5AD27AAC8950195A6",
+      "previewJob": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261101-191600-454990-floor2",
+      "PDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261101-191600-454990-floor2\\stage2-A2-1-100.pdf",
+      "steps": [
+        {
+          "serial": "ed96d8fe83374ca1bfb39969dfcc9926",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-191321\\dispatch_ed96d8fe83374ca1bfb39969dfcc9926.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "47471663f0a846e49f033ef8148a659f",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-191321",
+            "processId": 35664,
+            "desktop": "CodexS1_47471663f0a846e49f033ef8148a659f",
+            "inputDesktop": "Default",
+            "serial": "ed96d8fe83374ca1bfb39969dfcc9926",
+            "command": "S1OPENPROBECONTROL",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261101-191600-454990-floor2",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261101-191600-454990-floor2\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "e088f142eb8344468240817cac5f81cf",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-191321\\dispatch_e088f142eb8344468240817cac5f81cf.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "47471663f0a846e49f033ef8148a659f",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-191321",
+            "processId": 35664,
+            "desktop": "CodexS1_47471663f0a846e49f033ef8148a659f",
+            "inputDesktop": "Default",
+            "serial": "e088f142eb8344468240817cac5f81cf",
+            "command": "S1PHASE2EXECUTE",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261101-191600-454990-floor2",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261101-191600-454990-floor2\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "f8f61adbe60d45a0b62059770f48a4b1",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-191321\\dispatch_f8f61adbe60d45a0b62059770f48a4b1.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "47471663f0a846e49f033ef8148a659f",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-191321",
+            "processId": 35664,
+            "desktop": "CodexS1_47471663f0a846e49f033ef8148a659f",
+            "inputDesktop": "Default",
+            "serial": "f8f61adbe60d45a0b62059770f48a4b1",
+            "command": "S1PHASE2PREVIEW",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261101-191600-454990-floor2",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-name-20261101-191600-454990-floor2\\control.dwg",
+            "error": null
+          }
+        }
+      ],
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\房间面积随房名_20261101\\方案施工图_二层_房名下方面积确认样张_v6.dwg",
+      "DWGSHA256": "09FC0B46B3E5303CE3C49DAE5C45EBE513C517A14D9524D3410666B78E0DDC0C"
+    }
+  ],
+  "evidenceLimits": [
+    "Native annotation audit exposes AcDbText content/rotation; root bounds/grip/stretch prove rigid translation.",
+    "TDbText room-name content/font is not exposed by the native audit; its complete root is checked for rigid translation only.",
+    "AREA-TEXT reopen records prove AcDbText content/style/height against source memberDetails; width/oblique are recorded without an unavailable source-value comparison."
+  ],
+  "published": true,
+  "visualReview": {
+    "requestedLayoutAccepted": true,
+    "namedAreas": 15,
+    "unnamedAreas": 5,
+    "sharedRegionsKeepOneArea": true,
+    "images": [
+      {
+        "floor": 1,
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\房间面积随房名_20261101\\building-v136-floor-1.png",
+        "SHA256": "AEDFF6D6B7A12D85A22B283A67ACF7A2057ADFC92DB829405C822C5F5474E72B"
+      },
+      {
+        "floor": 2,
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\房间面积随房名_20261101\\building-v136-floor-2.png",
+        "SHA256": "C237246ACD1FA72904A945B30C05846E31E9FE19B4295A8A127DA80422C57B7E"
+      }
+    ],
+    "scope": "Room area placement only. Original water-bar name/furniture or dimension contact remains; no whole-drawing beauty acceptance."
+  }
+}

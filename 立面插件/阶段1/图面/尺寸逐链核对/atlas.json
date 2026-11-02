@@ -1,0 +1,1587 @@
+{
+  "contract": "bce.stage1.dimension-visual-atlas.v1",
+  "raw": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-stage1-20261101-162251-d748fbf0\\capture\\reference-inspection.json",
+  "rawSHA256": "358EB4D54AA0C9E54CDFC291152B95B741FFB57656BE483E9072B6ADE54C0280",
+  "previewManifest": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-stage1-20261101-162251-d748fbf0\\stage1-preview-run.json",
+  "previewManifestSHA256": "DDCE2C54971DDDC4243488F96274FA058A87727827B17F5E9B134E5337E23B69",
+  "count": 64,
+  "entries": [
+    {
+      "handle": "AC83",
+      "frame": "ABC1",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\AC83.png",
+      "cropSHA256": "59BBA15E6F98D8548AE61A3E091BF8177A9386FD0C6146E7EAF93AC564CD5D56",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\ABC1.png",
+      "sourcePNGSHA256": "7F7BED16F4299D7D46D825E7A67560613C351DD34EFDAD7AA17BCF61491FEC93",
+      "pixelCrop": [
+        2809,
+        763,
+        3077,
+        1900
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "2860",
+        "400",
+        "3600",
+        "3500",
+        "3900",
+        "450"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "AC84",
+      "frame": "ABC1",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\AC84.png",
+      "cropSHA256": "77B5C6588C43F5B37558CA03340C9CAA83E34EE625661E57A8554EFE6EEEE1BF",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\ABC1.png",
+      "sourcePNGSHA256": "7F7BED16F4299D7D46D825E7A67560613C351DD34EFDAD7AA17BCF61491FEC93",
+      "pixelCrop": [
+        2809,
+        763,
+        3134,
+        1868
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "3260",
+        "11000"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "ACA0",
+      "frame": "ABC1",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\ACA0.png",
+      "cropSHA256": "D931CA3922E2C2C7AA48CE5B6F82FA6889CB8CF5CD50C519DFE32FE05C0187CE",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\ABC1.png",
+      "sourcePNGSHA256": "7F7BED16F4299D7D46D825E7A67560613C351DD34EFDAD7AA17BCF61491FEC93",
+      "pixelCrop": [
+        907,
+        763,
+        1176,
+        1900
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "3260",
+        "3600",
+        "3500",
+        "3900",
+        "450"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "ACA1",
+      "frame": "ABC1",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\ACA1.png",
+      "cropSHA256": "BA0A7C08985FDF0E5F1D9EA3699CBBCBA164AB06EE5E924BFEAF58C71788CB42",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\ABC1.png",
+      "sourcePNGSHA256": "7F7BED16F4299D7D46D825E7A67560613C351DD34EFDAD7AA17BCF61491FEC93",
+      "pixelCrop": [
+        851,
+        763,
+        1176,
+        1868
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "3260",
+        "11000"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "ACAE",
+      "frame": "ABC1",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\ACAE.png",
+      "cropSHA256": "8CE174D4B9FEC82E71E1B51C8DB88531AF6EDE9E9FAA5AF9FC1D7CF0BE3F226B",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\ABC1.png",
+      "sourcePNGSHA256": "7F7BED16F4299D7D46D825E7A67560613C351DD34EFDAD7AA17BCF61491FEC93",
+      "pixelCrop": [
+        964,
+        763,
+        1176,
+        1868
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "2860",
+        "400",
+        "1000",
+        "1800",
+        "800",
+        "1200",
+        "1500",
+        "800",
+        "1500",
+        "1500",
+        "900"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "ACB0",
+      "frame": "ABC1",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\ACB0.png",
+      "cropSHA256": "438ADE6B1279C71452D40C086E672614391C62B1CA3D6F640BF174A8EFD87F0D",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\ABC1.png",
+      "sourcePNGSHA256": "7F7BED16F4299D7D46D825E7A67560613C351DD34EFDAD7AA17BCF61491FEC93",
+      "pixelCrop": [
+        1245,
+        1881,
+        2739,
+        2113
+      ],
+      "rotatedClockwise": false,
+      "formattedValues": [
+        "19760"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "ACB1",
+      "frame": "ABC1",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\ACB1.png",
+      "cropSHA256": "63E443331DF94CF29443EAA75C9456093FDD76010A076FF8DA07DC24976D0ED2",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\ABC1.png",
+      "sourcePNGSHA256": "7F7BED16F4299D7D46D825E7A67560613C351DD34EFDAD7AA17BCF61491FEC93",
+      "pixelCrop": [
+        1245,
+        1881,
+        2739,
+        2057
+      ],
+      "rotatedClockwise": false,
+      "formattedValues": [
+        "13760",
+        "1800",
+        "4200"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "BFCE",
+      "frame": "ABC1",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\BFCE.png",
+      "cropSHA256": "8EA1E947BE5C05612800C655D2027B68A7FE9BEF4AC1C534396EAC53FA8DA895",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\ABC1.png",
+      "sourcePNGSHA256": "7F7BED16F4299D7D46D825E7A67560613C351DD34EFDAD7AA17BCF61491FEC93",
+      "pixelCrop": [
+        2809,
+        995,
+        3021,
+        1868
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "1000",
+        "1800",
+        "800",
+        "600",
+        "2100",
+        "800",
+        "900",
+        "2050",
+        "950"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "C5A2",
+      "frame": "C429",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\C5A2.png",
+      "cropSHA256": "AB1C08368F50731DFE10FF3CADF1C82C5F2EF8566DD52FFC7D2CCAC6B14C7937",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C429.png",
+      "sourcePNGSHA256": "33F6ED1316B83F5FFE3C6CEC36FB1C6FADAD7647419F8EFDCF12A35BAD991E97",
+      "pixelCrop": [
+        1170,
+        1138,
+        1438,
+        2275
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "3260",
+        "3600",
+        "3500",
+        "3900",
+        "450"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "C5A3",
+      "frame": "C429",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\C5A3.png",
+      "cropSHA256": "EAD2B1DCF14B8C02BD566F9E07E04BD3E9A40519878965D30A0B3067A8A76728",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C429.png",
+      "sourcePNGSHA256": "33F6ED1316B83F5FFE3C6CEC36FB1C6FADAD7647419F8EFDCF12A35BAD991E97",
+      "pixelCrop": [
+        1113,
+        1138,
+        1438,
+        2243
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "3260",
+        "11000"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "C5B0",
+      "frame": "C429",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\C5B0.png",
+      "cropSHA256": "DFBD344C7358AC668501E214ECCED028E2FCA7AC0B897490E2B4317A9957814F",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C429.png",
+      "sourcePNGSHA256": "33F6ED1316B83F5FFE3C6CEC36FB1C6FADAD7647419F8EFDCF12A35BAD991E97",
+      "pixelCrop": [
+        1226,
+        1138,
+        1438,
+        2243
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "2860",
+        "400",
+        "900",
+        "1900",
+        "800",
+        "600",
+        "2100",
+        "800",
+        "900",
+        "2050",
+        "950"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "CAE5",
+      "frame": "C429",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\CAE5.png",
+      "cropSHA256": "6FFC4948B55B53F933F620257A4F15C98E035A06D184BAF1DE58D18CB91E19B1",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C429.png",
+      "sourcePNGSHA256": "33F6ED1316B83F5FFE3C6CEC36FB1C6FADAD7647419F8EFDCF12A35BAD991E97",
+      "pixelCrop": [
+        2892,
+        1138,
+        3161,
+        2275
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "3260",
+        "3600",
+        "3500",
+        "3900",
+        "450"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "CAE6",
+      "frame": "C429",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\CAE6.png",
+      "cropSHA256": "B71A830C949C1C77777BF9ED7B545F3A431CA90FD65E0C0EB7A59EF88027155A",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C429.png",
+      "sourcePNGSHA256": "33F6ED1316B83F5FFE3C6CEC36FB1C6FADAD7647419F8EFDCF12A35BAD991E97",
+      "pixelCrop": [
+        2892,
+        1138,
+        3217,
+        2243
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "3260",
+        "11000"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "CAF3",
+      "frame": "C429",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\CAF3.png",
+      "cropSHA256": "2B200DF36EB62F498918E4068CB84B5DE288873FB435306F20C376D56C99EECF",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C429.png",
+      "sourcePNGSHA256": "33F6ED1316B83F5FFE3C6CEC36FB1C6FADAD7647419F8EFDCF12A35BAD991E97",
+      "pixelCrop": [
+        2892,
+        1138,
+        3104,
+        2243
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "955",
+        "1205",
+        "1100",
+        "600",
+        "2100",
+        "900",
+        "500",
+        "2100",
+        "900",
+        "550",
+        "2400",
+        "950"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "CAF5",
+      "frame": "C429",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\CAF5.png",
+      "cropSHA256": "F840862EFF5CC887044A8A7EDA085F11883F9FE29E8B0983358C6310A37A2E03",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C429.png",
+      "sourcePNGSHA256": "33F6ED1316B83F5FFE3C6CEC36FB1C6FADAD7647419F8EFDCF12A35BAD991E97",
+      "pixelCrop": [
+        1561,
+        2251,
+        2760,
+        2504
+      ],
+      "rotatedClockwise": false,
+      "formattedValues": [
+        "15600"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "CAF6",
+      "frame": "C429",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\CAF6.png",
+      "cropSHA256": "01E228E88D21AAB9FA4E834F0E5E73097B566891CD0B93BE7B9E01A12D24C745",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C429.png",
+      "sourcePNGSHA256": "33F6ED1316B83F5FFE3C6CEC36FB1C6FADAD7647419F8EFDCF12A35BAD991E97",
+      "pixelCrop": [
+        1561,
+        2251,
+        2760,
+        2447
+      ],
+      "rotatedClockwise": false,
+      "formattedValues": [
+        "2800",
+        "1600",
+        "11200"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "CE20",
+      "frame": "C4E3",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\CE20.png",
+      "cropSHA256": "47D02E79D7177CE195C3873E8B45255C98C939F6C85C2A08CE83659EB2494A84",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C4E3.png",
+      "sourcePNGSHA256": "EBA79C9F9269F6366F3E5E73D420CDD79E8C9441E88599DD9C939CE95F35FCB8",
+      "pixelCrop": [
+        2931,
+        1150,
+        3199,
+        2286
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "3260",
+        "3600",
+        "3500",
+        "3900",
+        "450"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "CE21",
+      "frame": "C4E3",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\CE21.png",
+      "cropSHA256": "C14E4E1CA81D234C77CA8F36510C7EAE2D5293D1C6DEB59C89DA4D4AD39A8E39",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C4E3.png",
+      "sourcePNGSHA256": "EBA79C9F9269F6366F3E5E73D420CDD79E8C9441E88599DD9C939CE95F35FCB8",
+      "pixelCrop": [
+        2931,
+        1150,
+        3256,
+        2254
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "3260",
+        "11000"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "CE2E",
+      "frame": "C4E3",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\CE2E.png",
+      "cropSHA256": "E9E506FA497ED5B3F8FEEAA421E1E60DC88EFB13016121AA2C2B3E73C9415850",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C4E3.png",
+      "sourcePNGSHA256": "EBA79C9F9269F6366F3E5E73D420CDD79E8C9441E88599DD9C939CE95F35FCB8",
+      "pixelCrop": [
+        2931,
+        1150,
+        3143,
+        2254
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "2860",
+        "400",
+        "1300",
+        "1500",
+        "800",
+        "600",
+        "2100",
+        "800",
+        "1500",
+        "700",
+        "1700"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "D445",
+      "frame": "C4E3",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\D445.png",
+      "cropSHA256": "E25C66804B90CF1D81AE1BA7C06E6435E1E828B5F219D1D2474B456AA5B8FE12",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C4E3.png",
+      "sourcePNGSHA256": "EBA79C9F9269F6366F3E5E73D420CDD79E8C9441E88599DD9C939CE95F35FCB8",
+      "pixelCrop": [
+        1208,
+        1150,
+        1477,
+        2286
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "3260",
+        "3600",
+        "3500",
+        "3900",
+        "450"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "D446",
+      "frame": "C4E3",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\D446.png",
+      "cropSHA256": "27838D7A92BDF75959657595F163FB5EF1DF7407D8445BE43C77675D4918B7A1",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C4E3.png",
+      "sourcePNGSHA256": "EBA79C9F9269F6366F3E5E73D420CDD79E8C9441E88599DD9C939CE95F35FCB8",
+      "pixelCrop": [
+        1152,
+        1150,
+        1477,
+        2254
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "3260",
+        "11000"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "D453",
+      "frame": "C4E3",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\D453.png",
+      "cropSHA256": "711B9148B766C1649DB58341F47413D44179817021849782AD9EF7136940FDC1",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C4E3.png",
+      "sourcePNGSHA256": "EBA79C9F9269F6366F3E5E73D420CDD79E8C9441E88599DD9C939CE95F35FCB8",
+      "pixelCrop": [
+        1265,
+        1150,
+        1477,
+        2254
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "955",
+        "1205",
+        "1100",
+        "1300",
+        "1500",
+        "800",
+        "1200",
+        "1500",
+        "800",
+        "1500",
+        "1500",
+        "900"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "D455",
+      "frame": "C4E3",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\D455.png",
+      "cropSHA256": "318ABCE546B59323E2D19E8C49DBBB65121110AC0CB380EDA049F59AB5D937D1",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C4E3.png",
+      "sourcePNGSHA256": "EBA79C9F9269F6366F3E5E73D420CDD79E8C9441E88599DD9C939CE95F35FCB8",
+      "pixelCrop": [
+        1609,
+        2263,
+        2808,
+        2516
+      ],
+      "rotatedClockwise": false,
+      "formattedValues": [
+        "15600"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "D456",
+      "frame": "C4E3",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\D456.png",
+      "cropSHA256": "3B95548F05A86F2A299245681491D73A8EA5ADED3205280E78273C3C437C21EA",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C4E3.png",
+      "sourcePNGSHA256": "EBA79C9F9269F6366F3E5E73D420CDD79E8C9441E88599DD9C939CE95F35FCB8",
+      "pixelCrop": [
+        1609,
+        2263,
+        2808,
+        2459
+      ],
+      "rotatedClockwise": false,
+      "formattedValues": [
+        "2800",
+        "1600",
+        "11200"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "E3B1",
+      "frame": "AB0B",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\E3B1.png",
+      "cropSHA256": "6FD12D44EAF07591A48778B1448B50E40091DC8ADCBD7756DE1C1E43D91FAA51",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\AB0B.png",
+      "sourcePNGSHA256": "703B88D8C47DA84050AAD984AF0FB78D41E2E9F4385EF0D703EC33966C99F8FE",
+      "pixelCrop": [
+        911,
+        689,
+        1179,
+        1825
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "955",
+        "2305",
+        "3600",
+        "3500",
+        "3900",
+        "450"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "E3B2",
+      "frame": "AB0B",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\E3B2.png",
+      "cropSHA256": "86A57C815887444BE7B59940C279EC9798DE5576F9DDB81270D5A7547C484C9F",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\AB0B.png",
+      "sourcePNGSHA256": "703B88D8C47DA84050AAD984AF0FB78D41E2E9F4385EF0D703EC33966C99F8FE",
+      "pixelCrop": [
+        854,
+        689,
+        1179,
+        1793
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "3260",
+        "11000"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FE49",
+      "frame": "AB0B",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FE49.png",
+      "cropSHA256": "D47CB86818B31D6BCE4550C2C51A0427CB65E5277947D8840ADB790DECE13107",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\AB0B.png",
+      "sourcePNGSHA256": "703B88D8C47DA84050AAD984AF0FB78D41E2E9F4385EF0D703EC33966C99F8FE",
+      "pixelCrop": [
+        968,
+        757,
+        1179,
+        1793
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "1205",
+        "850",
+        "250",
+        "700",
+        "2900",
+        "900",
+        "5900",
+        "300",
+        "300"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FE4A",
+      "frame": "AB0B",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FE4A.png",
+      "cropSHA256": "AA9F36A87DB7C1375F7C02EF8A7EDA52852F209B0446C0B92BC81F212B3049FC",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\AB0B.png",
+      "sourcePNGSHA256": "703B88D8C47DA84050AAD984AF0FB78D41E2E9F4385EF0D703EC33966C99F8FE",
+      "pixelCrop": [
+        2813,
+        689,
+        3081,
+        1825
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "955",
+        "2305",
+        "3600",
+        "3500",
+        "3900",
+        "450"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FE4B",
+      "frame": "AB0B",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FE4B.png",
+      "cropSHA256": "A5EB270577E455F54B784724832AA1F30973CC84AB4BDB7BD80A6F6D93318702",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\AB0B.png",
+      "sourcePNGSHA256": "703B88D8C47DA84050AAD984AF0FB78D41E2E9F4385EF0D703EC33966C99F8FE",
+      "pixelCrop": [
+        2813,
+        689,
+        3138,
+        1793
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "3260",
+        "11000"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FE5A",
+      "frame": "AB0B",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FE5A.png",
+      "cropSHA256": "4950FC6F9820172AC5D87126909A496FD77DFBAEF237DFA4157839FDE92C5E71",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\AB0B.png",
+      "sourcePNGSHA256": "703B88D8C47DA84050AAD984AF0FB78D41E2E9F4385EF0D703EC33966C99F8FE",
+      "pixelCrop": [
+        2813,
+        757,
+        3024,
+        1793
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "1205",
+        "850",
+        "250",
+        "700",
+        "2900",
+        "900",
+        "2000",
+        "600",
+        "900",
+        "2050",
+        "950"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FE5C",
+      "frame": "AB0B",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FE5C.png",
+      "cropSHA256": "DB76EDCFA1CE79641828E6AF89F58ADF20194747FAC4C84D6B6370AD44E15013",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\AB0B.png",
+      "sourcePNGSHA256": "703B88D8C47DA84050AAD984AF0FB78D41E2E9F4385EF0D703EC33966C99F8FE",
+      "pixelCrop": [
+        1249,
+        1806,
+        2743,
+        2039
+      ],
+      "rotatedClockwise": false,
+      "formattedValues": [
+        "19760"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FE5D",
+      "frame": "AB0B",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FE5D.png",
+      "cropSHA256": "147540F9B6FA2D137BA559067F37FD3BD8FF08B7DE63AFB04F1AEE54303F3DBE",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\AB0B.png",
+      "sourcePNGSHA256": "703B88D8C47DA84050AAD984AF0FB78D41E2E9F4385EF0D703EC33966C99F8FE",
+      "pixelCrop": [
+        1249,
+        1806,
+        2743,
+        1982
+      ],
+      "rotatedClockwise": false,
+      "formattedValues": [
+        "4980",
+        "4580",
+        "4200",
+        "1800",
+        "4200"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FE92",
+      "frame": "C429",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FE92.png",
+      "cropSHA256": "C0B556BF870937D7B78AA778B1E67A9708A8C7DC14950167FA99F9C0AE0911C5",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C429.png",
+      "sourcePNGSHA256": "33F6ED1316B83F5FFE3C6CEC36FB1C6FADAD7647419F8EFDCF12A35BAD991E97",
+      "pixelCrop": [
+        1958,
+        1076,
+        2633,
+        1230
+      ],
+      "rotatedClockwise": false,
+      "formattedValues": [
+        "1910",
+        "3000",
+        "2290",
+        "120",
+        "900"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FF04",
+      "frame": "C4E3",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FF04.png",
+      "cropSHA256": "EB3FB65EE9B606C48F29A02804A33A3638654F39E86D8AB0A53143CFBE101FF5",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C4E3.png",
+      "sourcePNGSHA256": "EBA79C9F9269F6366F3E5E73D420CDD79E8C9441E88599DD9C939CE95F35FCB8",
+      "pixelCrop": [
+        1736,
+        1068,
+        2411,
+        1222
+      ],
+      "rotatedClockwise": false,
+      "formattedValues": [
+        "1910",
+        "3000",
+        "2290",
+        "120",
+        "900"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FF08",
+      "frame": "ABC1",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FF08.png",
+      "cropSHA256": "8216B111BE36CE00322014643139B0EA790266FBBB05C5B257FA4C6D850638FB",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\ABC1.png",
+      "sourcePNGSHA256": "7F7BED16F4299D7D46D825E7A67560613C351DD34EFDAD7AA17BCF61491FEC93",
+      "pixelCrop": [
+        1274,
+        1576,
+        1407,
+        1868
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "400",
+        "2400"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FF09",
+      "frame": "ABC1",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FF09.png",
+      "cropSHA256": "9638519C92CEBA6FC65F902CCF41CE68B0319C8E8854BF7897BC897FE5E1318C",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\ABC1.png",
+      "sourcePNGSHA256": "7F7BED16F4299D7D46D825E7A67560613C351DD34EFDAD7AA17BCF61491FEC93",
+      "pixelCrop": [
+        2048,
+        995,
+        2184,
+        1591
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "600",
+        "800",
+        "1350",
+        "1800",
+        "2550"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FF0A",
+      "frame": "AB0B",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FF0A.png",
+      "cropSHA256": "F503ACE1A5DCBCB090BA7689C65A788B7662512FC6CA680691B4579264615D21",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\AB0B.png",
+      "sourcePNGSHA256": "703B88D8C47DA84050AAD984AF0FB78D41E2E9F4385EF0D703EC33966C99F8FE",
+      "pixelCrop": [
+        2255,
+        1175,
+        2400,
+        1793
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "1000",
+        "1900",
+        "600",
+        "900",
+        "2400",
+        "600"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FF0C",
+      "frame": "C4E3",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FF0C.png",
+      "cropSHA256": "6BFAB4FA378982A65E2708976C14D8A704086BF26EA631F8F6B28DEB02013548",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C4E3.png",
+      "sourcePNGSHA256": "EBA79C9F9269F6366F3E5E73D420CDD79E8C9441E88599DD9C939CE95F35FCB8",
+      "pixelCrop": [
+        2394,
+        1991,
+        2519,
+        2254
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "2400"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FF0D",
+      "frame": "C429",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FF0D.png",
+      "cropSHA256": "3C59490F75F3F3A95DE9953C6253EFABD730A83EA7BDFB442AF3237C3BAB4D40",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C429.png",
+      "sourcePNGSHA256": "33F6ED1316B83F5FFE3C6CEC36FB1C6FADAD7647419F8EFDCF12A35BAD991E97",
+      "pixelCrop": [
+        1477,
+        2128,
+        1617,
+        2243
+      ],
+      "rotatedClockwise": false,
+      "formattedValues": [
+        "300"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FF0E",
+      "frame": "ABC1",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FF0E.png",
+      "cropSHA256": "CE1704F340263161F92FA078225D6B0A69C653F1E9705DF845CB7FF86E86A4EB",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\ABC1.png",
+      "sourcePNGSHA256": "7F7BED16F4299D7D46D825E7A67560613C351DD34EFDAD7AA17BCF61491FEC93",
+      "pixelCrop": [
+        1587,
+        1753,
+        1727,
+        1868
+      ],
+      "rotatedClockwise": false,
+      "formattedValues": [
+        "300"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FF0F",
+      "frame": "C4E3",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FF0F.png",
+      "cropSHA256": "B884724A56A9D314EFE133A40967E490B09EBB86566AA9BAC3FE65695C465B02",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C4E3.png",
+      "sourcePNGSHA256": "EBA79C9F9269F6366F3E5E73D420CDD79E8C9441E88599DD9C939CE95F35FCB8",
+      "pixelCrop": [
+        1721,
+        2140,
+        1861,
+        2254
+      ],
+      "rotatedClockwise": false,
+      "formattedValues": [
+        "300"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FF1E",
+      "frame": "C429",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FF1E.png",
+      "cropSHA256": "72B725D0F812190970B0C24B544A90F90D9CFE6717356DD2BB6563F8CB060359",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C429.png",
+      "sourcePNGSHA256": "33F6ED1316B83F5FFE3C6CEC36FB1C6FADAD7647419F8EFDCF12A35BAD991E97",
+      "pixelCrop": [
+        1961,
+        855,
+        2834,
+        998
+      ],
+      "rotatedClockwise": false,
+      "formattedValues": [
+        "11000"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FF25",
+      "frame": "C429",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FF25.png",
+      "cropSHA256": "3CADFB6DAF23869F1C2EC5C709B3432669B394AA944E117275FFF3BE8E97CEE9",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C429.png",
+      "sourcePNGSHA256": "33F6ED1316B83F5FFE3C6CEC36FB1C6FADAD7647419F8EFDCF12A35BAD991E97",
+      "pixelCrop": [
+        1770,
+        458,
+        1936,
+        847
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "200",
+        "60",
+        "900",
+        "2050",
+        "950"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FF26",
+      "frame": "C429",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FF26.png",
+      "cropSHA256": "EB67049617049F2C1699636F428178C606239A28F6E08E14628C0FF44BA92360",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C429.png",
+      "sourcePNGSHA256": "33F6ED1316B83F5FFE3C6CEC36FB1C6FADAD7647419F8EFDCF12A35BAD991E97",
+      "pixelCrop": [
+        1711,
+        458,
+        1936,
+        878
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "260",
+        "3900",
+        "450"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FF2D",
+      "frame": "C429",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FF2D.png",
+      "cropSHA256": "AF7FF723F1B3D9C12076E8403784E3B8AD5F34DEE12E7A3D1662A9399727986B",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C429.png",
+      "sourcePNGSHA256": "33F6ED1316B83F5FFE3C6CEC36FB1C6FADAD7647419F8EFDCF12A35BAD991E97",
+      "pixelCrop": [
+        2957,
+        458,
+        3123,
+        847
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "160",
+        "100",
+        "900",
+        "2050",
+        "950"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FF2E",
+      "frame": "C429",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FF2E.png",
+      "cropSHA256": "700FDC0861E4BFE4DAA997649666603C792EB158DC52461A54A1E39EE288C176",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C429.png",
+      "sourcePNGSHA256": "33F6ED1316B83F5FFE3C6CEC36FB1C6FADAD7647419F8EFDCF12A35BAD991E97",
+      "pixelCrop": [
+        2957,
+        458,
+        3182,
+        878
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "260",
+        "3900",
+        "450"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FF47",
+      "frame": "C4E3",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FF47.png",
+      "cropSHA256": "56D4F41F5A58DDF09A52625728BA2B61FDC9076E0AA909CFABA0B76B9F76CD44",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C4E3.png",
+      "sourcePNGSHA256": "EBA79C9F9269F6366F3E5E73D420CDD79E8C9441E88599DD9C939CE95F35FCB8",
+      "pixelCrop": [
+        1957,
+        889,
+        2830,
+        1031
+      ],
+      "rotatedClockwise": false,
+      "formattedValues": [
+        "11000"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FF4E",
+      "frame": "C4E3",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FF4E.png",
+      "cropSHA256": "4C40CFE06DC01802FF737C3A3CA2E9EC141C226D71D17B92F26A0B673C6419E1",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C4E3.png",
+      "sourcePNGSHA256": "EBA79C9F9269F6366F3E5E73D420CDD79E8C9441E88599DD9C939CE95F35FCB8",
+      "pixelCrop": [
+        1690,
+        492,
+        1856,
+        880
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "200",
+        "60",
+        "1500",
+        "2400"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FF4F",
+      "frame": "C4E3",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FF4F.png",
+      "cropSHA256": "5C5406CC554649301C37937DAB81395E6A19A2A12A59AD273611CBB4796E99A8",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C4E3.png",
+      "sourcePNGSHA256": "EBA79C9F9269F6366F3E5E73D420CDD79E8C9441E88599DD9C939CE95F35FCB8",
+      "pixelCrop": [
+        1631,
+        492,
+        1856,
+        912
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "260",
+        "3900",
+        "450"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FF56",
+      "frame": "C4E3",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FF56.png",
+      "cropSHA256": "706018AD056F111A58DF56D0930DA0A031563CE4C8AAD7A165129FBD5DD4CE18",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C4E3.png",
+      "sourcePNGSHA256": "EBA79C9F9269F6366F3E5E73D420CDD79E8C9441E88599DD9C939CE95F35FCB8",
+      "pixelCrop": [
+        2953,
+        492,
+        3119,
+        880
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "200",
+        "60",
+        "1500",
+        "2400"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "FF57",
+      "frame": "C4E3",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\FF57.png",
+      "cropSHA256": "8AB82688FE5DA36185DD06E40C6E376CC45675C9F49DA2F48CCE04351E5EB13E",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C4E3.png",
+      "sourcePNGSHA256": "EBA79C9F9269F6366F3E5E73D420CDD79E8C9441E88599DD9C939CE95F35FCB8",
+      "pixelCrop": [
+        2953,
+        492,
+        3178,
+        912
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "260",
+        "3900",
+        "450"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "10837",
+      "frame": "ABC1",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\10837.png",
+      "cropSHA256": "9E166257285781D126E45801F42B45B7DDB7173E9F00C679D66B66C8612666E7",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\ABC1.png",
+      "sourcePNGSHA256": "7F7BED16F4299D7D46D825E7A67560613C351DD34EFDAD7AA17BCF61491FEC93",
+      "pixelCrop": [
+        2022,
+        1576,
+        2148,
+        1868
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "400",
+        "2400"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "10845",
+      "frame": "AB0B",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\10845.png",
+      "cropSHA256": "201D7B264C83778ED7765249F53A1C9C1F666EBAA61DA306BD0DE95147DC275F",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\AB0B.png",
+      "sourcePNGSHA256": "703B88D8C47DA84050AAD984AF0FB78D41E2E9F4385EF0D703EC33966C99F8FE",
+      "pixelCrop": [
+        1411,
+        920,
+        1522,
+        1035
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "300"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "114D9",
+      "frame": "AB0B",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\114D9.png",
+      "cropSHA256": "C40A501FE631757FB4F2FC6BE1C975249E7290950DCB026F673D0C99D8BB3F39",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\AB0B.png",
+      "sourcePNGSHA256": "703B88D8C47DA84050AAD984AF0FB78D41E2E9F4385EF0D703EC33966C99F8FE",
+      "pixelCrop": [
+        2650,
+        1449,
+        2780,
+        1590
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "400",
+        "120"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "114DA",
+      "frame": "AB0B",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\114DA.png",
+      "cropSHA256": "B05020EAF3810BE04D1CA2DCBDDCF3A3272078DFC0232DF56C052F54843746C1",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\AB0B.png",
+      "sourcePNGSHA256": "703B88D8C47DA84050AAD984AF0FB78D41E2E9F4385EF0D703EC33966C99F8FE",
+      "pixelCrop": [
+        2315,
+        1449,
+        2445,
+        1590
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "400",
+        "120"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "120B7",
+      "frame": "ABC1",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\120B7.png",
+      "cropSHA256": "8EF60F4EDA7A2ECB53A1A7073B2F05664232FF0D5C7469DCCE0963E91C8E08CF",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\ABC1.png",
+      "sourcePNGSHA256": "7F7BED16F4299D7D46D825E7A67560613C351DD34EFDAD7AA17BCF61491FEC93",
+      "pixelCrop": [
+        1789,
+        995,
+        1926,
+        1868
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "1000",
+        "1800",
+        "800",
+        "600",
+        "2100",
+        "800",
+        "900",
+        "2050",
+        "950"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "120C0",
+      "frame": "ABC1",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\120C0.png",
+      "cropSHA256": "90DAFEB236A5AAE1765F39FC4F46FE6E3C0669F558233BC997E8AAA4B0C5828E",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\ABC1.png",
+      "sourcePNGSHA256": "7F7BED16F4299D7D46D825E7A67560613C351DD34EFDAD7AA17BCF61491FEC93",
+      "pixelCrop": [
+        1166,
+        1480,
+        1309,
+        1591
+      ],
+      "rotatedClockwise": false,
+      "formattedValues": [
+        "260"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "120C1",
+      "frame": "AB0B",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\120C1.png",
+      "cropSHA256": "B1035154EA312AB1D5C3F26C1C57E811D9A39B86F5CF43BAA31ACBDB5EE42DD0",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\AB0B.png",
+      "sourcePNGSHA256": "703B88D8C47DA84050AAD984AF0FB78D41E2E9F4385EF0D703EC33966C99F8FE",
+      "pixelCrop": [
+        2708,
+        1405,
+        2851,
+        1517
+      ],
+      "rotatedClockwise": false,
+      "formattedValues": [
+        "260"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "120C6",
+      "frame": "ABC1",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\120C6.png",
+      "cropSHA256": "EF3DA8A8042EF38B034D128DD7F9B5766382F6762870D862B0E10C31C9BFB043",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\ABC1.png",
+      "sourcePNGSHA256": "7F7BED16F4299D7D46D825E7A67560613C351DD34EFDAD7AA17BCF61491FEC93",
+      "pixelCrop": [
+        1209,
+        1524,
+        1339,
+        1662
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "520"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "120C7",
+      "frame": "ABC1",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\120C7.png",
+      "cropSHA256": "5EEA5936DE0D7C0AF4D3B4EE1DFA4DA5949134064630A86B42916424605CCCCE",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\ABC1.png",
+      "sourcePNGSHA256": "7F7BED16F4299D7D46D825E7A67560613C351DD34EFDAD7AA17BCF61491FEC93",
+      "pixelCrop": [
+        1543,
+        1524,
+        1673,
+        1662
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "520"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "120C8",
+      "frame": "C429",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\120C8.png",
+      "cropSHA256": "97ED21E43671F50D2CC42C8263AB671D893737ED3DF62A51F5F37F0D226D6B5E",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C429.png",
+      "sourcePNGSHA256": "33F6ED1316B83F5FFE3C6CEC36FB1C6FADAD7647419F8EFDCF12A35BAD991E97",
+      "pixelCrop": [
+        2741,
+        496,
+        2871,
+        635
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "520"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "120C9",
+      "frame": "C429",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\120C9.png",
+      "cropSHA256": "4932B549D15EF487019FC146ACC9D5FED543741EBD7C3EA50E45E01A76B991C4",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C429.png",
+      "sourcePNGSHA256": "33F6ED1316B83F5FFE3C6CEC36FB1C6FADAD7647419F8EFDCF12A35BAD991E97",
+      "pixelCrop": [
+        1925,
+        496,
+        2054,
+        635
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "520"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "120CA",
+      "frame": "C4E3",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\120CA.png",
+      "cropSHA256": "03C6B0778B160441E47770ED9B6C82577078E8E882CEF2B89398D2374676B39B",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C4E3.png",
+      "sourcePNGSHA256": "EBA79C9F9269F6366F3E5E73D420CDD79E8C9441E88599DD9C939CE95F35FCB8",
+      "pixelCrop": [
+        1920,
+        535,
+        2050,
+        674
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "520"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    },
+    {
+      "handle": "120CB",
+      "frame": "C4E3",
+      "crop": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\120CB.png",
+      "cropSHA256": "FAEE3277A2FA0F80394FDD28BC0DA017A96294F4C338342BB9785729C3134543",
+      "sourcePNG": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\C4E3.png",
+      "sourcePNGSHA256": "EBA79C9F9269F6366F3E5E73D420CDD79E8C9441E88599DD9C939CE95F35FCB8",
+      "pixelCrop": [
+        2737,
+        535,
+        2867,
+        674
+      ],
+      "rotatedClockwise": true,
+      "formattedValues": [
+        "520"
+      ],
+      "labelIsActualGlyphRead": false,
+      "visualStatus": "pending"
+    }
+  ],
+  "sheets": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\sheet-01.png",
+      "SHA256": "286A8C38D807EDC268BBA31694CABEA5B08B371246FF781709592577321FBB5F",
+      "handles": [
+        "AC83",
+        "AC84",
+        "ACA0",
+        "ACA1",
+        "ACAE",
+        "ACB0",
+        "ACB1",
+        "BFCE"
+      ]
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\sheet-02.png",
+      "SHA256": "076129462BCD64038DDA95CEA1AB4740DE7F53749181F1DAFA47664FEB210AA3",
+      "handles": [
+        "C5A2",
+        "C5A3",
+        "C5B0",
+        "CAE5",
+        "CAE6",
+        "CAF3",
+        "CAF5",
+        "CAF6"
+      ]
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\sheet-03.png",
+      "SHA256": "E4D4388CD478CA4DD342CD7509D791561DE490428A88A2E843A6C4C07155522F",
+      "handles": [
+        "CE20",
+        "CE21",
+        "CE2E",
+        "D445",
+        "D446",
+        "D453",
+        "D455",
+        "D456"
+      ]
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\sheet-04.png",
+      "SHA256": "51DAC1B680AC892ECD54D4A741306AEBD6DA99D20D1B03BE3FC2AF8AF88B31F8",
+      "handles": [
+        "E3B1",
+        "E3B2",
+        "FE49",
+        "FE4A",
+        "FE4B",
+        "FE5A",
+        "FE5C",
+        "FE5D"
+      ]
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\sheet-05.png",
+      "SHA256": "7804B6B73BDEF506700E2DD689C2CB1321ACBF7A93EE9DAD7AD1C120854BA4A3",
+      "handles": [
+        "FE92",
+        "FF04",
+        "FF08",
+        "FF09",
+        "FF0A",
+        "FF0C",
+        "FF0D",
+        "FF0E"
+      ]
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\sheet-06.png",
+      "SHA256": "26A062B04D40F22D5AF74150F2696CA390D99A25B318B00046BA33C0FF96BDEC",
+      "handles": [
+        "FF0F",
+        "FF1E",
+        "FF25",
+        "FF26",
+        "FF2D",
+        "FF2E",
+        "FF47",
+        "FF4E"
+      ]
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\sheet-07.png",
+      "SHA256": "4B264CEA1E8E4EC0E52F7A9E4D7422C6EED884588C8A11D17BF51786584BE351",
+      "handles": [
+        "FF4F",
+        "FF56",
+        "FF57",
+        "10837",
+        "10845",
+        "114D9",
+        "114DA",
+        "120B7"
+      ]
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\尺寸逐链核对\\sheet-08.png",
+      "SHA256": "50589EF34722066E6DC2329EB9F804C1A4769241192A8428C3B06CE556841344",
+      "handles": [
+        "120C0",
+        "120C1",
+        "120C6",
+        "120C7",
+        "120C8",
+        "120C9",
+        "120CA",
+        "120CB"
+      ]
+    }
+  ],
+  "method": "Crops from actual source-native 1:100 plots; centred-A2 mapping; API labels require visual comparison and are not OCR"
+}

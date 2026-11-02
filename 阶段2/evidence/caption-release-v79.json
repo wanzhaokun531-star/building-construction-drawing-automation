@@ -1,0 +1,20 @@
+{
+  "contract": "bcp.door-caption-release-QA.v1",
+  "nonce": "78d19a5704024b118db3a3453d0fb4e2",
+  "DWGSHA256": "D547386AC92768B0895EC67D07CA4E8E2FE30F7480EE07038DC88356C3BB533D",
+  "reportSHA256": "E5192225C721EF98CC8FD8184F229D1B70A681729E561F01FE586BE02D95EC15",
+  "previewReportSHA256": "C941AC53135198CCB85327A4CB2251431AF0FC65FED83083A17C3475D89822BF",
+  "visualReviewed": true,
+  "visualFile": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\door-caption-v79-visual.png",
+  "visualSHA256": "682389DBC11CFAA228FB77AEFFF58E8F7EA1F33DD208C18F5AAE5B69061FAB5B",
+  "rasterIdenticalToReviewedV78": true,
+  "verification": {
+    "doorNumbers": 14,
+    "doorGraphicsOverlaps": 0,
+    "protectedRoots": 308,
+    "wholeDimensionsUnchanged": true
+  },
+  "dimensionGlyphsVerified": 106,
+  "wholeDimensionsUnchanged": true,
+  "apronWorkStopped": true
+}

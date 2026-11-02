@@ -1,0 +1,35 @@
+{
+  "contract": "bcp.axis-side-delivery.v1",
+  "nativeRun": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\native-run-v13.json",
+  "nativeRunSHA256": "15441C634B67FAA682BDC496D6D13251C1050FC29A9FB01A138CC4C67CEF3263",
+  "previewRun": "D:\\Codex\\建筑施工图自动化\\阶段2\\evidence\\native-preview-run-v15.json",
+  "previewRunSHA256": "EA2BD01B0657A29F804804A9CB32311956B15E6119D2F4D7D44C02DAAFD05431",
+  "axes": 20,
+  "visibleEnds": 29,
+  "hiddenEnds": 11,
+  "nativeClipContainers": 11,
+  "directTchEditingValidated": false,
+  "rootStructureUnchanged": false,
+  "stage2Complete": false,
+  "visualReview": {
+    "reviewed": true,
+    "axisCirclesOverlap": false,
+    "originalTableFragmentInPDF": false,
+    "ACasePassed": true,
+    "BCasePassed": true,
+    "dimensionTextAvoidanceComplete": false
+  },
+  "files": {
+    "analysis.json": "82D555C9BDCE839B2C29CD84A92CCE70DA00EA041EED0D02378D69181C579F06",
+    "native-annotations.json": "75F99FC4DD94BC5B4E1DD60EC87B4FAFD33053C3BE25D2F1924A8CCCA0FB7114",
+    "native-foundation.json": "82AE1C65D5AD8D0631F96D54C60F3E93EEF22A6D4F714CA0A6C20FF55304D830",
+    "已确认轴线排除.json": "C921027EEC11C9B29A5C553E8641DB3D88329B70F4F582ED2CE2EBE3BA6EA8E6",
+    "待确认清单.csv": "D65871C6DB8F788214950E3C09E59F982F26AEDE4DD6EE9F8764C1149B6F80A5",
+    "方案施工图_阶段2轴号显隐版.dwg": "FF29E660EC5A96400460F7F90F6F5CCBDE03B634FDE0BC86334ABD5AF0C51B4A",
+    "轴号分侧显隐与避让_A3.pdf": "83B8E63C041B42252BB94DC0B0645BB310F1D5384D9DDEE88353523B07EFB765",
+    "轴号分侧显隐与避让预览.png": "B6D3899F4F18CBDDAB192B81126A52A3789A723948F0DAC9F9BB0C75F67001AC",
+    "轴号显隐核对.json": "40B50BB27384582B31CBA25F94F7A61BE528E8068120D7770E858080A05E09A3",
+    "逐轴显隐对照.csv": "84714FC8EE974185C9B5A326826E79AA91BA75D8FBE7D9D71DB71CA1BF753584",
+    "阅读说明.md": "890F3D9AD1A4926760A5CFCD4111DCF7CBDD1E60C639A4B5AD582F886F0C0528"
+  }
+}

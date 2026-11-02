@@ -1,0 +1,11 @@
+FAIL: all native fixture operations completed safely
+FAIL: all22 fits/numbers and no merge substitution
+FAIL: all22 targets/fits/number commands/final/saved native collections
+FAIL: axis12/number: no native error
+FAIL: axis12/number: actual command selected only the requested collection
+FAIL: axis12/number: native completion classification
+FAIL: 22 distinct native new axis sets
+FAIL: added: exactly22 independent native additions
+FAIL: savedAdded: exactly22 independent native additions
+assertions=2247 passed=2238 failed=9 result=FAIL
+Scope: complete10X/12Y candidate geometry,22 true native collections, public numbering commands and persistence; all44 printed numbers remain pending native PDF inspection.

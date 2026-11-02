@@ -1,0 +1,35 @@
+{
+  "purpose": "Preserve Singleton v2 and independent modern55 native success before integration; earlier v2 failure remains in its own archive",
+  "files": [
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\src\\NativeFourSideAxisSingletonProbe.inc",
+      "file": "NativeFourSideAxisSingletonProbe.inc",
+      "SHA256": "1B8F27EF08359F2102441C92CB07E858A0EC383C24C75266BABE0DFACA057898"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\verify_four_side_singletons_native.py",
+      "file": "verify_four_side_singletons_native.py",
+      "SHA256": "9B0EB4D0D6D2BD18BF0E2288F71A8F0FBF4F45C774E0E2FC58CFC5940A775827"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\tests\\test_four_side_singletons_contract.py",
+      "file": "test_four_side_singletons_contract.py",
+      "SHA256": "DA77EC991D3FEF367E698A2575BD4FF6495DFED2FCACA66BBC571009BC1F3A29"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-moderngrip-20261029-105252-668492\\modern-axis-grip-native.json",
+      "file": "modern-axis-grip-native.json",
+      "SHA256": "9CDB3AA67720B6A90A01E835FD3FF090C892476276CAAB05F51CA5CDFE4336CA"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-moderngrip-20261029-105252-668492\\verify-result.txt",
+      "file": "verify-result.txt",
+      "SHA256": "7690A6D3702852269A6F3F5A53C566FFDB5DFF0018BA4A1A1B7035B1AF058789"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\quiet-moderngrip-20261029-105252-668492\\quiet-job-receipt.json",
+      "file": "quiet-job-receipt.json",
+      "SHA256": "723D77BC568BB6A324308FEC206D197495C601D9925CF10B9905313CF156467D"
+    }
+  ]
+}

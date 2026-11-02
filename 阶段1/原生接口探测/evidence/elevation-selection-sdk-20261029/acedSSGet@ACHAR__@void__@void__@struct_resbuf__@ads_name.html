@@ -1,0 +1,578 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>acedSSGet</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+<link rel="stylesheet" type="text/css" href="default_plus.css" media="screen, projection, tv " />
+<script language=javascript src="arxref.js"></script>
+<script language=javascript src="ac_common.js"></script>
+<script language=javascript src="ac.acad_ak.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="ObjectARX_Reference_Guide.html">ObjectARX Reference Guide</a> &gt; <a href="Global_Functions.html">Global Functions</a> &gt; <a href="AcEd_Global_Functions.html">AcEd Global Functions</a> &gt; <a href="acedSSGet@ACHAR__@void__@void__@struct_resbuf__@ads_name.html">acedSSGet Function</a></div>
+<div class="Element92">
+<div class="Element5">
+acedSSGet<span class="Element61">&nbsp;&nbsp;&nbsp; </span></div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<div class="Element58">
+<a name="432B2B"></a><div class="Element99">
+C++</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #871F78">int</span></strong> <strong><span style="color: #660000">acedSSGet</span></strong>(
+    <strong><span style="color: #871F78">const</span></strong> ACHAR * <strong><span style="color: #660000">str</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> <strong><span style="color: #871F78">void</span></strong> * <strong><span style="color: #660000">pt1</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> <strong><span style="color: #871F78">void</span></strong> * <strong><span style="color: #660000">pt2</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> <strong><span style="color: #871F78">struct</span></strong> resbuf * <strong><span style="color: #660000">filter</span></strong>, 
+    ads_name <strong><span style="color: #660000">ss</span></strong>
+);</pre></div></div>
+<a name="46696C65"></a><div class="Element14">
+File</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+acedads.h</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element252">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element240" valign="top" width="50%">
+<div class="Element241">
+Parameters&nbsp;</div></td><td class="Element244" valign="top" width="50%">
+<div class="Element245">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+str&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Optional string that specifies the entity selection mode to use&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+pt1&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Optional point relevant to some selection modes; or a result-buffer list that contains multiple points for the polygon or fence selection options; or an array of two strings that are replacement prompts for a :$ mode option&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+pt2&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Optional point relevant to some selection modes&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+filter&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Optional result-buffer list that enables acedSSGet() to filter the drawing to select entities of certain types or that have certain properties&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+ss&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Name of the selection set&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="4465736372697074696F6E"></a><div class="Element14">
+Description</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+Returns a selection set obtained by specifying one of the AutoCAD selection modes. A selection mode is specified either by prompting the AutoCAD user or by filtering the drawing database.&nbsp;</p>
+<p class="Element10">
+You must release the allocated selection set after you are finished with processing the selection. If you fail to do this the selection set will be kept on the stack until AutoCAD terminates. Since AutoCAD can only hold 128 application-based selection sets per session, the unreleased selection sets can result in failed object selections through ObjectARX.</p><div class="Element15">
+Note</div>
+<p class="Element10">
+Only a selection set consisting of entities from the current drawing's model space and paper space (not non-graphical objects or entities in other block definitions) can be returned by this function.&nbsp;</p>
+<p class="Element10">
+The <span class="Element146">pt1</span> variable cannot contain points that define zero-length segments.&nbsp;</p>
+<p class="Element10">
+For the <span class="Element146">str</span> argument, use one of the strings listed in the following table. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table5">
+<tr>
+<td class="Element65" valign="top" width="16%">
+<div class="Element66">
+Value of str argument&nbsp;</div></td><td class="Element65" valign="top" width="84%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+NULL&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+Single-point selection (if pt1 is specified) or user selection (if pt1 is also NULL)<br>&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;I&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+The PICKFIRST set&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;C&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+Crossing selection&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;CL&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+Object classification class&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;CP&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+Crossing polygon selection&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;F&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+Fence (open polygon) selection&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;L&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+Last created entity&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;P&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+Previous selection set&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;W&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+Window selection&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;WP&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+Window polygon selection&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;X&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+Filter selection <i>only</i>&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;G&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+Groups&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;:$&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+Prompts supplied&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;:?&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+&quot;Other&quot; callbacks&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;:D&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+Duplicates OK&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;:E&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+Everything in aperature&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;:K&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+Keyword callbacks&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;:N&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+Nested&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;:S&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+Force single object selection only&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;:U&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+Enables subentity selection&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;:V&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+Forces subentity selection&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;:r&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+Enables entities in long transactions to be selected&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;.&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+User pick&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;#&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+Nongeometric (all, last, previous)&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;A&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+All&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;B&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+BOX&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="16%">
+<div class="Element68">
+&quot;M&quot;&nbsp;</div></td><td class="Element67" valign="top" width="84%">
+<div class="Element68">
+Multiple&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+<strong>Selection Method Mode Options</strong></p><div class="Element15">
+NULL</div>
+<p class="Element10">
+If <span class="Element146">str</span>, <span class="Element146">pt1</span>, <span class="Element146">pt2</span>, and <span class="Element146">filter</span> are <i>all </i><span class="Element146">NULL</span>, <span class="Element146">acedSSGet()</span> checks to see if there is a current PICKFIRST set. If there is, <span class="Element146">acedSSGet()</span> returns it; otherwise, it prompts the user with AutoCAD's general Select objects prompt and waits until the user has chosen a selection set. During interactive selection, entities are highlighted on the screen, but <span class="Element146">acedSSGet()</span> does <i>not</i> highlight entities that are obtained directly or with the <span class="Element146">filter</span> argument. The <span class="Element146">acedSSGet()</span> function does not return information about how the user chose the selection set. (The <span class="Element146">acedEntSel()</span> and <span class="Element146">acedNEntSelP()</span> functions obtain both an entity and a user-selected point.) If both <span class="Element146">str</span> and <span class="Element146">pt2</span> are <span class="Element146">NULL</span> but <span class="Element146">pt1</span> is a point, the effect is the same as a user selecting an entity by specifying a single point with the AutoCAD pointing device.</p><div class="Element15">
+&quot;I&quot;</div>
+<p class="Element10">
+Gets the current PICKFIRST set, if there is one. If there isn't, <span class="Element146">acedSSGet()</span> returns <span class="Element146">RTERROR</span>. (<span class="Element146">&quot;I&quot;</span> stands for &quot;implied.&quot;) Note that the <span class="Element146">addCommand()</span> optional flags <span class="Element146">ACRX_CMD_USEPICKSET</span> and <span class="Element146">ACRX_CMD_REDRAW </span><i>must</i> be used in order for <span class="Element146">acedSSGet(&quot;I&quot;, ...)</span> to work.</p><div class="Element15">
+&quot;C&quot;</div>
+<p class="Element10">
+The AutoCAD Crossing selection mode. <span class="Element146">pt1</span> and <span class="Element146">pt2</span> must be points that specify the corners of the crossing window.</p><div class="Element15">
+&quot;CL&quot;</div>
+<p class="Element10">
+Causes AutoCAD to prompt the user to enter an object classification class name. There is no way for a program to feed a group name to <span class="Element146">acedSSGet()</span>.</p><div class="Element15">
+&quot;CP&quot;</div>
+<p class="Element10">
+The AutoCAD Crossing Polygon selection mode. <span class="Element146">pt1</span> is a list of points that define the crossing polygon. <span class="Element146">pt2</span> must be <span class="Element146">NULL</span>.</p><div class="Element15">
+&quot;F&quot;</div>
+<p class="Element10">
+The AutoCAD Fence selection mode. <span class="Element146">pt1</span> is a list of points that define the fence. <span class="Element146">pt2</span> must be <span class="Element146">NULL</span>.</p><div class="Element15">
+&quot;L&quot;</div>
+<p class="Element10">
+The AutoCAD Last selection mode. Selects the last entity that was created. Both <span class="Element146">pt1</span> and <span class="Element146">pt2</span> must be <span class="Element146">NULL</span>.</p><div class="Element15">
+&quot;P&quot;</div>
+<p class="Element10">
+The AutoCAD Previous selection mode. Selects the previous selection set. Both <span class="Element146">pt1</span> and <span class="Element146">pt2</span> must be <span class="Element146">NULL</span>.</p><div class="Element15">
+&quot;W&quot;</div>
+<p class="Element10">
+The AutoCAD Window selection mode. <span class="Element146">pt1</span> and <span class="Element146">pt2</span> must be points that specify the corners of the window.</p><div class="Element15">
+&quot;WP&quot;</div>
+<p class="Element10">
+The AutoCAD Window Polygon selection mode. <span class="Element146">pt1</span> is a list of points that define the window polygon. <span class="Element146">pt2</span> must be <span class="Element146">NULL</span>.</p><div class="Element15">
+&quot;X&quot;</div>
+<p class="Element10">
+Filter selection <i>only</i>.</p><div class="Element15">
+&quot;G&quot;</div>
+<p class="Element10">
+Causes AutoCAD to prompt the user to enter a group name. There is no way for a program to feed a group name to <span class="Element146">acedSSGet()</span>.</p><div class="Element15">
+Colon Mode Options</div>
+<p class="Element10">
+&nbsp;</p>
+<div class="Element15">
+&quot;:$&quot;</div>
+<p class="Element10">
+This mode option indicates that the caller has supplied new prompts as the <i>pt1</i> argument. These prompts will replace AutoCAD's select objects and remove objects prompts. The new prompt strings are passed to <span class="Element146">acedSSGet()</span> as an array of two pointers to character strings (<span class="Element146">char* prompts[2]</span>). The string found at index 0 replaces the select objects prompt, and the string at index 1 replaces the remove objects prompt.<strong>&quot;:?&quot;</strong>This mode option will cause the callback function set with <span class="Element146">acedSSSetOtherCallbackPtr()</span> to be called whenever <span class="Element146">acedSSGet()</span> receives any text input that it cannot understand.</p><div class="Element15">
+&quot;:A&quot;</div>
+<p class="Element10">
+This mode option causes <span class="Element146">acedSSGet()</span> to perform single pick selection in space on entities that implement a subselection filter.</p><div class="Element15">
+&quot;:D&quot;</div>
+<p class="Element10">
+This mode option causes <span class="Element146">acedSSGet()</span> to allow duplication of entities within the selection set. So, each time an entity is selected it will be added to the selection set regardless of whether or not it is already in the selection set. <strong>Warning </strong>Prior to the introduction of this mode option, all entries in selection sets were unique. Since the <span class="Element146">:D</span> option does not guarantee that each entry will be unique, code that relies on this uniqueness should not use selection sets created with <span class="Element146">:D</span> or else unexpected behaviour might result.<strong>&quot;:E&quot;</strong>This mode option will cause <span class="Element146">acedSSGet()</span> to select everything within the cursor's object selection pickbox when the user makes a selection.</p><div class="Element15">
+&quot;:K&quot;</div>
+<p class="Element10">
+This mode option will add custom keywords to the keyword list used by acedSSGet. In addition, if there is a keyword callback function pointer set in AutoCAD (set via <span class="Element146">acedSSSetKwordCallbackPtr()</span>) then that callback function will be called whenever <span class="Element146">acedSSGet()</span> receives any text input that is a custom keyword. When this mode option is used, the <span class="Element146">pt2</span> argument to <span class="Element146">acedSSGet()</span> must point to a string of keywords formatted in the same fashion as for <span class="Element146">acedInitGet()</span>. <span class="Element146">acedSSGet()</span> will use a copy of the keyword list string passed in. The <span class="Element146">&quot;:K&quot;</span> keyword mechanism supports globalization in the same way that <span class="Element146">acedInitGet()</span> does. The only difference is that in this instance you are appending your keywords to an already existing keyword list supplied by AutoCAD and the existing list has local and global keyword pairs, so you <i>must</i> either provide only global keywords (that is, the first character in your keyword list string is an underscore), or your keyword list must be local/global keyword pairs (that is, all of your local keywords followed by an underscore followed by all the matching global keywords).</p><div class="Element15">
+&quot;:N&quot;</div>
+<p class="Element10">
+This mode option will cause a subsequent call to <span class="Element146">acedSSNameX()</span> to provide additional information about container blocks and transformation matrices for any entities selected during the <span class="Element146">acedSSGet()</span> operation. The additional information will only be available for entities selected via graphical selection methods such as Window, Crossing, point pick, etc.</p><div class="Element15">
+&quot;:S&quot;</div>
+<p class="Element10">
+This mode option causes <span class="Element146">acedSSGet()</span> to allow one selection only. <strong>Note</strong> When using this mode option, the &quot;Multiple&quot; keyword should be removed using the <span class="Element146">&quot;-M&quot; </span>mode option or undesirable behavior may result if the user activates the &quot;Multiple&quot; keyword option.</p><div class="Element15">
+&quot;:U&quot;</div>
+<p class="Element10">
+This mode option enables subentity selection. It cannot be combined with the duplicate (&quot;:D&quot;) or nested (&quot;:N&quot;) selection modes. In this mode, top-level entities are selected by default, but the user can attempt to select subentities by pressing the CTRL key while making the selection. This option is supported only with interactive selections, such as window, crossing, and polygon. It is not supported for all, filtered, or group selections.</p><div class="Element15">
+&quot;:V&quot;</div>
+<p class="Element10">
+This mode option forces subentity selection. It treats all interactive, graphic selections performed by the user as subentity selections. The returned selection set contains subentities only. This option cannot be combined with the duplicate (&quot;:D&quot;) or nested (&quot;:N&quot;) selection modes. This option is supported only with interactive selections, such as window and crossing. It is not supported for all, filtered, or group selections.</p><div class="Element15">
+Keyword Filter Mode Options</div>
+<p class="Element10">
+&nbsp;</p>
+<div class="Element15">
+&quot;#&quot;</div>
+<p class="Element10">
+When used in a <span class="Element146">'-</span>' list, this option removes the keywords &quot;Last&quot;, &quot;All&quot;, &quot;Group&quot;, and &quot;Previous&quot; from the keyword list. When used in a <span class="Element146">'+</span>' list, this option adds the keywords &quot;Last&quot;, &quot;All&quot;, and &quot;Previous&quot;. Controls the addition/removal of the &quot;Last&quot;, &quot;All&quot;, &quot;Group&quot;, and &quot;Previous&quot; keywords in the <span class="Element146">acedSSGet()</span> keyword list.<strong>&quot;.&quot;</strong>This option uses the keyword manipulation syntax, but it controls the addition/removal of the ability of the user to &quot;pick&quot; with the pointing device or coordinate entry for selection. This is not an explicit keyword, but rather an implied keyword.</p><div class="Element15">
+&quot;A&quot;</div>
+<p class="Element10">
+Controls the addition/removal of the &quot;All&quot; keyword in the <span class="Element146">acedSSGet()</span> keyword list.</p><div class="Element15">
+&quot;B&quot;</div>
+<p class="Element10">
+When used in a '-' list, this option removes &quot;Box&quot; and &quot;Auto&quot; from the keyword list. When used in a '+' list, this option adds &quot;Window&quot;, Crossing&quot;, &quot;BOX&quot;, &quot;WPolygon&quot;, and &quot;CPolygon&quot; to the keyword list.</p><div class="Element15">
+&quot;D&quot;</div>
+<p class="Element10">
+When used in a '-' list, this option removes the &quot;Add&quot; and &quot;Remove&quot; keywords. This option is for a '-' list only - it does nothing in a '+' list.</p><div class="Element15">
+&quot;M&quot;</div>
+<p class="Element10">
+Controls the addition/removal of the &quot;Multiple&quot; keyword in the <span class="Element146">acedSSGet()</span> keyword list. The keyword filter mode options must be grouped together and must come first in the mode string. The list takes one of these two forms:
+<ul class="Element630">
+<li class="Element600">A list of forbidden keywords (a '-' must precede each keyword filter mode option in the list)</li>
+<li class="Element600">A list containing all of the keywords that should be allowed (a '+' must precede each keyword filter mode option in the list).</li>
+</ul>It is not possible to use both a '+' and a '-' list in the same <span class="Element146">acedSSGet()</span> call.&nbsp;</p>
+<p class="Element10">
+If the mode string str begins with a &quot;-&quot; the keywords specified by the keyword filter mode options which follow will be removed from the following full list:&nbsp;</p>
+<p class="Element10">
+<span class="Element146">&quot;Window/Last/Crossing/BOX/ALL/Fence/WPolygon/CPolygon/Group/Add/Remove/Multiple/Previous/Undo/AUto/Single&quot;</span>&nbsp;</p>
+<p class="Element10">
+If the mode string <span class="Element146">str</span> starts with a &quot;+&quot; the keywords specified by the keyword filter mode options which follow will be added to the following base list:&nbsp;</p>
+<p class="Element10">
+<span class="Element146">&quot;Add/Remove/Undo/Single&quot;</span>&nbsp;</p>
+<p class="Element10">
+<strong>Note </strong>When using the '+' filter mode, the option to allow the user to &quot;pick&quot; entities on screen is not available unless the '+' keyword list includes the &quot;.&quot; mode option. If the &quot;.&quot; mode option is not added, then the user must enter a keyword in order to activate a selection method with which to select entities.&nbsp;</p>
+<p class="Element10">
+In addition to the &quot;#&quot;, &quot;.&quot;, &quot;A&quot;, &quot;B&quot;, and &quot;M&quot; keyword filter mode options, the letters &quot;C&quot;, &quot;F&quot;, &quot;L&quot;, &quot;P&quot;, and &quot;W&quot; may also be used to control their corresponding keywords as follows: </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table5">
+<tr>
+<td class="Element67" valign="top" width="12%">
+<div class="Element68">
+&quot;C&quot;&nbsp;</div></td><td class="Element67" valign="top" width="88%">
+<div class="Element68">
+&quot;Crossing&quot; and &quot;CPolygon&quot; keywords&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="12%">
+<div class="Element68">
+&quot;F&quot;&nbsp;</div></td><td class="Element67" valign="top" width="88%">
+<div class="Element68">
+&quot;Fence&quot; keyword&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="12%">
+<div class="Element68">
+&quot;L&quot;&nbsp;</div></td><td class="Element67" valign="top" width="88%">
+<div class="Element68">
+&quot;Last&quot; keyword&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="12%">
+<div class="Element68">
+&quot;P&quot;&nbsp;</div></td><td class="Element67" valign="top" width="88%">
+<div class="Element68">
+&quot;Previous&quot; keyword&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="12%">
+<div class="Element68">
+&quot;W&quot;&nbsp;</div></td><td class="Element67" valign="top" width="88%">
+<div class="Element68">
+&quot;Window&quot; and &quot;WPolygon&quot; keywords&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="12%">
+<div class="Element68">
+&quot;G&quot;&nbsp;</div></td><td class="Element67" valign="top" width="88%">
+<div class="Element68">
+&quot;Group&quot; keyword&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+In most cases, selection method mode options cannot be used in a mode string which contains keyword filter mode options or colon mode options. The only exceptions are the &quot;:U&quot; and &quot;:V&quot; colon mode options, which may be combined with selection method mode options. Colon mode options and keyword filter mode options may be used together in the same mode string (for example: <span class="Element146">&quot;-#-W:$:?:K:N&quot;).</span>&nbsp;</p>
+<p class="Element10">
+<strong>Note </strong>For the polygon options <span class="Element146">&quot;CP&quot;</span> and <span class="Element146">&quot;WP&quot;</span> (but not for <span class="Element146">&quot;F&quot;</span>), <span class="Element146">acedSSGet()</span> automatically closes the list of points. You don't need to build a list that specifies a final point that is identical to the first.&nbsp;</p>
+<p class="Element10">
+If <span class="Element146">str</span> equals <span class="Element146">&quot;X&quot;</span> but <span class="Element146">filter</span> is <span class="Element146">NULL</span>, <span class="Element146">acedSSGet()</span> selects <i>all</i> entities in the drawing database.&nbsp;</p>
+<p class="Element10">
+The <span class="Element146">filter</span> is a linked list of result buffers that specify DXF group code. You can use an <span class="Element146">filter</span> filter list in conjunction with any of the preceding selection modes.&nbsp;</p>
+<p class="Element10">
+Entity names in selection sets obtained with <span class="Element146">acedSSGet()</span> are always the names of main entities. The <span class="Element146">acedSSGet()</span> function cannot obtain the names of subentities (block attributes and polyline vertices). For a means of obtaining subentity names, see the description of the <span class="Element146">acdbEntNext()</span> function.&nbsp;</p>
+<p class="Element10">
+A selection set returned by <span class="Element146">acedSSGet()</span> can be passed to AutoCAD with <span class="Element146">acedCmd()</span> or <span class="Element146">acedCommand()</span> in response to any Select objects prompt at which a selection by Last would also be valid. AutoCAD does not require the objects to be visible on the screen or to be selected by specifying a point.&nbsp;</p>
+<p class="Element10">
+If <span class="Element146">acedSSGet()</span> returns an error status code, no selection set is created.&nbsp;</p>
+<p class="Element10">
+If <span class="Element146">acedSSGet()</span> succeeds, it returns <span class="Element146">RTNORM</span>; it returns <span class="Element146">RTERROR</span> if no entities in the database match the specified criteria, or if the <span class="Element146">filter</span> list contains invalid group codes. If <span class="Element146">acedSSGet()</span> prompts the user to select entities, it can also return <span class="Element146">RTCAN</span> to indicate that the user canceled the request by pressing [Ctrl]+[C]. When <span class="Element146">acedSSGet()</span> fails, it sets the system variable ERRNO to a value that indicates the reason for the failure.&nbsp;</p>
+<p class="Element10">
+<strong>Note </strong>If you wish for your function to be correctly displayed in every localized version, use an underscore (&quot;_&quot;) as a prefix, e.g. &quot;_P&quot;. If you have multiple tags, place the underscore before the hyphen, as such: &quot;_-M&quot;&nbsp;</p>
+<p class="Element10">
+<strong>Selection Set Filter Lists</strong>&nbsp;</p>
+<p class="Element10">
+When <span class="Element146">acedSSGet()</span> filters a drawing, it scans the entire database and compares the fields of each main entity against the <span class="Element146">filter</span> filtering list. If an entity's properties match the codes specified by <span class="Element146">filter</span>, it is included in the returned selection set; otherwise, it is not included. Each result buffer in <span class="Element146">filter</span> specifies a DXF group code and associated value. Unless <span class="Element146">filter</span> includes relational or conditional codes as described in the sections 'Relational Tests' and 'Conditional Filtering' later in this topic, <span class="Element146">acedSSGet()</span> includes an entity in the selection set only if it matches <i>all</i> codes specified by <span class="Element146">filter</span>.&nbsp;</p>
+<p class="Element10">
+Name types--for example, 0 (entity type), 2 (block reference), 6 (linetype), and 8 (layer name)--can include wild cards. If the name matches the wild-card pattern, it is included in the selection set.&nbsp;</p>
+<p class="Element10">
+The <span class="Element146">resval</span> specified in each buffer must be the appropriate type. For example, name types are strings, such as <span class="Element146">resval.rstring</span>; thicknesses are double-precision floating-point values, such as <span class="Element146">resval.rreal</span>; color and attributes-follow values are <span class="Element146">short</span> integers, such as <span class="Element146">resval.rint</span>; and extrusion vectors are three-dimensional points <span class="Element146">resval.rpoint</span>.&nbsp;</p>
+<p class="Element10">
+<strong>Note </strong>The meaning of certain group codes can differ from entity to entity, and not all group codes are present in all entities. If a particular group code is specified in <span class="Element146">filter</span>, entities that don't include that code are excluded from the selection set that <span class="Element146">acedSSGet()</span> returns.&nbsp;</p>
+<p class="Element10">
+<strong>Filterable Entities</strong>&nbsp;</p>
+<p class="Element10">
+Entity filter lists recognize all DXF group codes except for handles (group 5), names (the &quot;pseudo&quot; group code -1), and extended entity data codes (in the range 1,000-2,000). To retrieve extended entity data, a filter list must specify the data's registered application name.&nbsp;</p>
+<p class="Element10">
+The <span class="Element146">acedSSGet()</span> call fails if the <span class="Element146">filter</span> includes invalid group codes. The number of group codes that <span class="Element146">acedSSGet()</span> filters recognize was increased in AutoCAD Release 12.&nbsp;</p>
+<p class="Element10">
+When it filters a drawing, <span class="Element146">acedSSGet()</span> retrieves entities on the filter list criteria alone; the selection set it retrieves may include entities from both paper space and model space. However, when the selection set is passed to an AutoCAD command, only entities from the space that is currently in effect are used (the space to which an entity belongs is specified by the value of its 67 group).&nbsp;</p>
+<p class="Element10">
+<strong>Wildcard Patterns in Filter Lists</strong>&nbsp;</p>
+<p class="Element10">
+Symbol names specified in filter lists--the entity type (0), block name (2), DIMSTYLE name (3), linetype (6), text style (7), and layer name (8)--can include wild-card patterns. The wildcard patterns recognized by <span class="Element146">acedSSGet()</span> are the same as those recognized by the function <span class="Element146">acutWcMatch()</span>.&nbsp;</p>
+<p class="Element10">
+The wildcard character, or asterisk (<span class="Element146">*), </span>also appears in the name of anonymous blocks. So if you try to retrieve an anonymous block, you must escape this character by preceding it with a reverse quote (<span class="Element146">'</span>).&nbsp;</p>
+<p class="Element10">
+<strong>Filtering for Extended Entity Data</strong>&nbsp;</p>
+<p class="Element10">
+You can filter for extended entity data that belongs to a particular application or set of applications by specifying the -3 group code in <span class="Element146">filter</span>. Separate multiple application names by commas. Wild cards are allowed in the string.&nbsp;</p>
+<p class="Element10">
+<strong>Relational Tests</strong>&nbsp;</p>
+<p class="Element10">
+By default, <span class="Element146">acedSSGet()</span> selects entities that match all the criteria in the filter list. The implied relation between each item in <span class="Element146">filter</span> is &quot;equals.&quot; For numeric groups (integers, reals, points, and vectors) you can specify other relationships by including a special -4 result buffer that specifies a relational operator. The applies to the result buffer that immediately follows it. Relational operators are specified by strings. The following table shows the possible operators.&nbsp;</p>
+<p class="Element10">
+Relational operators for selection set filter lists: </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table5">
+<tr>
+<td class="Element65" valign="top" width="21%">
+<div class="Element66">
+Operator&nbsp;</div></td><td class="Element65" valign="top" width="79%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="21%">
+<div class="Element68">
+&quot;*&quot;&nbsp;</div></td><td class="Element67" valign="top" width="79%">
+<div class="Element68">
+Anything goes (always true)&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="21%">
+<div class="Element68">
+&quot;=&quot;&nbsp;</div></td><td class="Element67" valign="top" width="79%">
+<div class="Element68">
+Equals&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="21%">
+<div class="Element68">
+&quot;!=&quot;&nbsp;</div></td><td class="Element67" valign="top" width="79%">
+<div class="Element68">
+Not equal to&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="21%">
+<div class="Element68">
+&quot;/=&quot;&nbsp;</div></td><td class="Element67" valign="top" width="79%">
+<div class="Element68">
+Not equal to&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="21%">
+<div class="Element68">
+&quot;&lt;&gt;&quot;&nbsp;</div></td><td class="Element67" valign="top" width="79%">
+<div class="Element68">
+Not equal to&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="21%">
+<div class="Element68">
+&quot;&lt;&quot;&nbsp;</div></td><td class="Element67" valign="top" width="79%">
+<div class="Element68">
+Less than&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="21%">
+<div class="Element68">
+&quot;&lt;=&quot;&nbsp;</div></td><td class="Element67" valign="top" width="79%">
+<div class="Element68">
+Less than or equal to&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="21%">
+<div class="Element68">
+&quot;&gt;&quot;&nbsp;</div></td><td class="Element67" valign="top" width="79%">
+<div class="Element68">
+Greater than&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="21%">
+<div class="Element68">
+&quot;&gt;=&quot;&nbsp;</div></td><td class="Element67" valign="top" width="79%">
+<div class="Element68">
+Greater than or equal to&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="21%">
+<div class="Element68">
+&quot;&amp;&quot;&nbsp;</div></td><td class="Element67" valign="top" width="79%">
+<div class="Element68">
+Bitwise AND (integer groups only)&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="21%">
+<div class="Element68">
+&quot;&amp;=&quot;&nbsp;</div></td><td class="Element67" valign="top" width="79%">
+<div class="Element68">
+Bitwise masked equals (integer groups only)&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+The relational operators can be used in any of the following ways, depending on the group you are testing.&nbsp;</p>
+<p class="Element10">
+
+<ul class="Element630">
+<li class="Element600">All relational operators except for the bitwise operators <span class="Element146">&quot;&amp;&quot;</span> and <span class="Element146">&quot;&amp;=&quot;</span> are valid for both real- and integer-valued groups.</li>
+<li class="Element600">The bitwise operators <span class="Element146">&quot;&amp;&quot;</span> and <span class="Element146">&quot;&amp;=&quot;</span> are valid only for integer-valued groups. The result buffer that follows the bitwise must be of type <span class="Element146">RTSHORT</span>, which is used as a mask for the integer group. The bitwise AND <span class="Element146">&quot;&amp;&quot;</span> is true if the bits set in the mask are set also in the integer group (<span class="Element146">(integer_group &amp; mask) != 0</span>). The bitwise masked equals <span class="Element146">&quot;&amp;=&quot;</span> is true if the mask is identical to the integer group (<span class="Element146">(integer-group ^ mask) == 0</span>).</li>
+<li class="Element600">For point groups, the <i>X, Y,</i> and <i>Z</i> tests can be combined into a single string, with each separated by commas--for example, <span class="Element146">&quot;&gt;,&gt;,*&quot;</span>. If you omit an from the string (for example, <span class="Element146">&quot;=,&lt;&gt;&quot;</span> leaves out the <i>Z </i>test), the &quot;anything goes&quot; <span class="Element146">&quot;*&quot;</span> is assumed.</li>
+<li class="Element600">Direction vectors (group type 210) can be compared only with the operators <span class="Element146">&quot;*&quot;</span>, <span class="Element146">&quot;=&quot;</span>, and <span class="Element146">&quot;!=&quot;</span> (or one of the equivalent &quot;not equals&quot; strings).</li>
+<li class="Element600">You cannot use the relational operators with string groups. Use wild-card tests instead.</li>
+</ul>&nbsp;</p>
+<p class="Element10">
+<strong>Conditional Filtering</strong>&nbsp;</p>
+<p class="Element10">
+The relational operators are binary operators. You can also test groups by creating nested Boolean expressions that use the conditional operators shown in the following table. The conditional operators are specified by -4 groups, like the relational operators. They are paired and must be balanced correctly in the filter list or the <span class="Element146">acedSSGet()</span> call fails. The number of operands that these operators can enclose depends on the operation, as shown in the table.&nbsp;</p>
+<p class="Element10">
+Conditional operators for selection set filter lists: </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table5">
+<tr>
+<td class="Element65" valign="top" width="28%">
+<div class="Element66">
+Starting operator&nbsp;</div></td><td class="Element65" valign="top" width="45%">
+<div class="Element66">
+Encloses&nbsp;</div></td><td class="Element65" valign="top" width="27%">
+<div class="Element66">
+Ending operator&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="28%">
+<div class="Element68">
+&quot;&lt;AND&quot;&nbsp;</div></td><td class="Element67" valign="top" width="45%">
+<div class="Element68">
+One or more operands&nbsp;</div></td><td class="Element67" valign="top" width="27%">
+<div class="Element68">
+&quot;AND&gt;&quot;&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="28%">
+<div class="Element68">
+&quot;&lt;OR&quot;&nbsp;</div></td><td class="Element67" valign="top" width="45%">
+<div class="Element68">
+One or more operands&nbsp;</div></td><td class="Element67" valign="top" width="27%">
+<div class="Element68">
+&quot;OR&gt;&quot;&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="28%">
+<div class="Element68">
+&quot;&lt;XOR&quot;&nbsp;</div></td><td class="Element67" valign="top" width="45%">
+<div class="Element68">
+Two operands&nbsp;</div></td><td class="Element67" valign="top" width="27%">
+<div class="Element68">
+&quot;XOR&gt;&quot;&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="28%">
+<div class="Element68">
+&quot;&lt;NOT&quot;&nbsp;</div></td><td class="Element67" valign="top" width="45%">
+<div class="Element68">
+One operand&nbsp;</div></td><td class="Element67" valign="top" width="27%">
+<div class="Element68">
+&quot;NOT&gt;&quot;&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+With the conditional operators, an <i>operand</i> is an entity field group, a relational followed by an entity field group, or a nested expression created by these operators.&nbsp;</p>
+<p class="Element10">
+Conditional expressions that test for extended entity data (using the -3 group) can contain <i>only</i> -3 groups.&nbsp;</p>
+<p class="Element10">
+The conditional operators are not case sensitive; you can also use their lowercase equivalents including <span class="Element146">, and&gt;</span>, <span class="Element146">, or&gt;</span>, <span class="Element146">, xor&gt;</span>, <span class="Element146">, and not&gt;</span>.</p></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<table class=FooterTable width=100%><tr valign=top>
+<td>&nbsp;</td>
+<td align=right>&nbsp;<span class="CommentsLink" onclick="doComments();" title="Click here to send a comment about this topic.">Comments?</span>&nbsp;</td>
+</tr></table>
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

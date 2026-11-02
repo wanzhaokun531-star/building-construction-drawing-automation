@@ -1,0 +1,534 @@
+{
+  "contract": "bce.i1-fix1.v1",
+  "round": 1,
+  "status": "native-green-awaiting-scoped-review",
+  "openFinding": "P2: critical input omissions hidden after first 12 issues and no ordinary user report entry",
+  "baseReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i1-20261101-203305-773-current-memory-green-n4-n6-store-bound-3baf1146\\receipt.json",
+  "baseReceiptSHA256": "759D9CDA6B9D29B78E24EF365642BE442230BA5E799991043260AA8B252DF477",
+  "redReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i1-20261101-210351-328-fix1-output-red-0d5d73aa\\receipt.json",
+  "redReceiptSHA256": "0187084D6E495C320157C9279C6E1E441141F9F2FB474C5DA2F9D77FA7722B62",
+  "greenReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i1-20261101-210949-709-fix1-critical-output-paged-issues-green-772efe6e\\receipt.json",
+  "greenReceiptSHA256": "0DB124C421CF5F492ACEA8AB9426CC26F8917777F0512D06B05B38051B4582C5",
+  "fixdiff": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\command\\I1-fix1.diff",
+  "fixdiffSHA256": "EA395F704206728EF829C2E300256336E36B272FDCCB2D8B9037C8E0CCC0EC58",
+  "changedFiles": {
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\AnalysisCommands.cpp": "0A95B8A45AC1A23D09AA95C88074D0F7083B0FC0361BF3822478CFE29152E2A0",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\command\\CommandDriver.cpp": "E2D4C1719E89BB19D1EC263997488B6321167A3ADA0AD5FAF77FBD51E791CAFF",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\command\\CommandTranscript.h": "47AA9FFDA759104BC6D9904DA47B93FD545D12ABA60512474BB845978A66048D",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\build_commands.ps1": "B84ABA45CB13FD8B8855B34CB6D8C02E872264D968C4217AF98F033B2882AF01"
+  },
+  "coveringTestFiles": [
+    "tests/native/command/CommandDriver.cpp",
+    "tests/native/command/CommandTranscript.h"
+  ],
+  "priorGreenEvidence": {
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-203451-64dfab45\\case\\native-case.json": "91F029715DE23FFA5565D11F988EA58C3FDEA64B8A4E556BE07883BC1C72EDE4",
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-203451-64dfab45\\reader-retirement.json": "C67D442471BB5997182B762275BA99358BEA3C587EDBDB2609BF4FCDBCFF69A0",
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-203451-64dfab45\\isolation-final.json": "9BBFE29D41E34DAAA8632D3E8B74D1B0853A1F27FDAB12F4DD69C3C1D02ACC59",
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-203451-64dfab45\\native-result-closure.json": "8C051E682E03912608D714ABBAB54FD7CFB2757CBDEF8B47814CCB383E6BBD8C"
+  },
+  "actualRedEvidence": {
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-210705-1951fca2\\case\\native-case.json": "A45607FB1A99535B03B4F665EFD9176EA4EE8506D910D73C54CE143BCB1A3E09",
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-210705-1951fca2\\case\\analyze-output\\Drawing1_13bd447d5.log": "7C52493124D0460B90868EBDBB3E68DEA205C22433B0BF17FEBFEF59B25FE934",
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-210705-1951fca2\\reader-retirement.json": "8EFE7B3775F3E7CC6BF24A57A82CC99999CEAD873FA7236B2FDD5C6DD55D456F",
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-210705-1951fca2\\isolation-final.json": "B27491E1915DD003B5857177EC3CB4D2990F774B99BB6637B7CFF25CE0EA7310",
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-210705-1951fca2\\native-result-closure.json": "8F3BB3ACAF8C841A844F9FC39F656AE5B0E8A9269C8961C25779BBB1BF07B027"
+  },
+  "unexecutedCoverage": [
+    "Explicit Esc injection during user issue paging",
+    "Ordinary analysis read-failure injection"
+  ],
+  "actualGreenEvidence": {
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\case\\native-case.json": "84A15A8565E114BD8AC219EB13DB8611B206C17B4CECAA113ECB5A7B2367B994",
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\reader-retirement.json": "1AC618F08122CDB98DF12E01B836A482172FFD049C194F459E641011B4F7C72C",
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\isolation-final.json": "B6C3EB3120E7020AF60D49E3DEE9C6C31330608AA886422092175989709832AB",
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\native-result-closure.json": "11A015373373A46C797C55A034A30133716C5F07F975537E9899CECB8C3E8E67",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-cf072e7a.json": "033C3B70DCDCAF97DD43A7885C8642F35ABBD8B743A8ECF91419DEAEF2FCF9C5"
+  },
+  "actualGreenResult": {
+    "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a",
+    "pid": 34108,
+    "nonce": "cf072e7a347244a69f3ed17d568cdcbc",
+    "status": "passed",
+    "passed": 42,
+    "failed": 0,
+    "errors": [],
+    "steps": [
+      {
+        "name": "FormalCommandsRegistered",
+        "status": "passed",
+        "details": "only useful public commands"
+      },
+      {
+        "name": "PublicCallbacksBelongToFrozenProduct",
+        "status": "passed",
+        "details": "VirtualQuery verifies all three public callback allocation bases"
+      },
+      {
+        "name": "OrdinaryPublicAnalyzeReturnsCurrentReport",
+        "status": "passed",
+        "details": "command=5100 ABI=2"
+      },
+      {
+        "name": "RealFourElevationsTwoSections",
+        "status": "passed",
+        "details": "ordinary command counts"
+      },
+      {
+        "name": "MissingInputsRemainBlocked",
+        "status": "passed",
+        "details": "no assumed unit or plan"
+      },
+      {
+        "name": "UnsavedChineseRead",
+        "status": "passed",
+        "details": "no disk save required"
+      },
+      {
+        "name": "All741SourceMembersMatchIndependentFixture",
+        "status": "passed",
+        "details": "source mapping checked individually"
+      },
+      {
+        "name": "WorkerAbiRejectedBeforeSdkAccess",
+        "status": "passed",
+        "details": "read-only ABI is main-thread-only"
+      },
+      {
+        "name": "NullAbiRequestRejected",
+        "status": "passed",
+        "details": "null metadata rejected"
+      },
+      {
+        "name": "WrongAbiSizeRejected",
+        "status": "passed",
+        "details": "wrong metadata size rejected"
+      },
+      {
+        "name": "NullBufferWithCapacityRejected",
+        "status": "passed",
+        "details": "null output with nonzero capacity rejected"
+      },
+      {
+        "name": "IllegalAbiVersionRejected",
+        "status": "passed",
+        "details": "version rejected"
+      },
+      {
+        "name": "StaleAbiSequenceRejected",
+        "status": "passed",
+        "details": "wrong sequence rejected"
+      },
+      {
+        "name": "ForeignAbiIdentityRejected",
+        "status": "passed",
+        "details": "wrong identity rejected"
+      },
+      {
+        "name": "SmallAbiBufferRemainsUntouched",
+        "status": "passed",
+        "details": "bounded copy"
+      },
+      {
+        "name": "CommandDoesNotModifySource",
+        "status": "passed",
+        "details": "database events=0"
+      },
+      {
+        "name": "GlobalsResourcesNodAndDbmodUnchanged",
+        "status": "passed",
+        "details": "12 global values including DBMOD, resources, NOD and working DB"
+      },
+      {
+        "name": "AnalyzePreservesActiveTranscriptSettings",
+        "status": "passed",
+        "details": "logging remains exactly at owned capture state throughout ordinary analysis"
+      },
+      {
+        "name": "OrdinaryAnalyzePrintsAllCriticalMissingInputs",
+        "status": "passed",
+        "details": "actual native command transcript includes all three critical missing codes"
+      },
+      {
+        "name": "OrdinaryAnalyzeShowsUserIssueEntry",
+        "status": "passed",
+        "details": "actual command output and ordinary public command, not QA ABI"
+      },
+      {
+        "name": "TranscriptRestoresActualLoggingGlobals",
+        "status": "passed",
+        "details": "original logging mode and path restored after real command capture"
+      },
+      {
+        "name": "OrdinaryInfoExplainsIssueEntry",
+        "status": "passed",
+        "details": "actual INFO output and full source/global guards"
+      },
+      {
+        "name": "OrdinaryIssuePagesDisplayEveryLocatedIssueOnce",
+        "status": "passed",
+        "details": "actual printed ordinal/code/entity/view for 67 issues across 6 ordinary calls"
+      },
+      {
+        "name": "OrdinaryIssuesPreserveDrawingAndLoggingGlobals",
+        "status": "passed",
+        "details": "each actual page independently checks DB events/roots/resources/NOD/global/working DB and restores logging"
+      },
+      {
+        "name": "CompletedIssuePagingRestartsAtFirstIssue",
+        "status": "passed",
+        "details": "ordinary command wraps after final page"
+      },
+      {
+        "name": "SourceEditImmediatelyInvalidatesOrdinaryIssuePages",
+        "status": "passed",
+        "details": "only owned marker edited before command gate; no stale issue locations displayed"
+      },
+      {
+        "name": "FormalUnloadRemovesOnlyOwnCommands",
+        "status": "passed",
+        "details": "matched asCmd=true SDK unload; state recorded"
+      },
+      {
+        "name": "ConflictLoadPreservesForeignCommand",
+        "status": "passed",
+        "details": "foreign command preserved on rejected init"
+      },
+      {
+        "name": "IssuesConflictLoadPreservesForeignCommand",
+        "status": "passed",
+        "details": "foreign command preserved on rejected init"
+      },
+      {
+        "name": "ReloadHasNoOldResult",
+        "status": "passed",
+        "details": "old cache and callbacks discarded"
+      },
+      {
+        "name": "ReloadHasNoOrdinaryIssuePages",
+        "status": "passed",
+        "details": "actual command after unload/reload rejects old page state"
+      },
+      {
+        "name": "ReloadedOrdinaryCommandWorks",
+        "status": "passed",
+        "details": "real reloaded command"
+      },
+      {
+        "name": "FreshOwnedDocumentVerifiedBeforeAnalyze",
+        "status": "passed",
+        "details": "SDK current document/DB absent from full startup inventory, DBMOD=0, SDI=0 read-only"
+      },
+      {
+        "name": "ActualDocumentSwitchInvalidatesOldReport",
+        "status": "passed",
+        "details": "actual SDK-created current document differs from original"
+      },
+      {
+        "name": "RealDocumentSwitchInvalidatesOrdinaryIssuePages",
+        "status": "passed",
+        "details": "actual ordinary user command cannot display previous document's locations"
+      },
+      {
+        "name": "OrdinaryAnalyzeUsesNewDocumentIdentity",
+        "status": "passed",
+        "details": "actual ordinary command in owned newly created document"
+      },
+      {
+        "name": "NewDocumentAnalyzeIsReadOnly",
+        "status": "passed",
+        "details": "new document events, DBMOD, global settings, resources and NOD unchanged"
+      },
+      {
+        "name": "ActualCloseAndReturnInvalidateReport",
+        "status": "passed",
+        "details": "actual SDK close then original current; no cross-document cache"
+      },
+      {
+        "name": "RealCloseInvalidatesOrdinaryIssuePages",
+        "status": "passed",
+        "details": "actual close/return cannot display locations of closed document or prior analysis"
+      },
+      {
+        "name": "OrdinaryAnalyzeAfterRealCloseWorks",
+        "status": "passed",
+        "details": "fresh context after actual close and return"
+      },
+      {
+        "name": "OriginalUnsavedMembersSurviveDocumentLifecycle",
+        "status": "passed",
+        "details": "742 owned roots and original unsaved text preserved"
+      },
+      {
+        "name": "LifecycleUnloadRemovesAllProductCommands",
+        "status": "passed",
+        "details": "normal SDK unload after real document close"
+      }
+    ],
+    "normalQuit": false,
+    "forcedTermination": true,
+    "workerExitCode": 70,
+    "timedOut": false,
+    "retiredFiles": [
+      {
+        "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexElevationStage1_cf072e7a347244a69f3ed17d568cdcbc\\S1Read_cf072e7a.arx",
+        "SHA256": "7DB32B15256AF44EE09223CFD105D947FAAD2CE0EEAC85348000103C3F237228",
+        "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\retired-module-snapshot\\S1Read_cf072e7a.arx",
+        "removed": true
+      },
+      {
+        "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexElevationStage1_cf072e7a347244a69f3ed17d568cdcbc\\S1Read_cf072e7a.ini",
+        "SHA256": "2392CB0CECA144A4F8C6C749D950CE8934A52E32C53E6ACA365E9DF2902F84E5",
+        "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\retired-module-snapshot\\S1Read_cf072e7a.ini",
+        "removed": true
+      },
+      {
+        "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexElevationStage1_cf072e7a347244a69f3ed17d568cdcbc\\BCECase_cf072e7a.arx",
+        "SHA256": "6C1FEDC5B0CFDF61F43E22ECB6A12AA565F902B8E23AE863CE50BBC8011B0C2E",
+        "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\retired-module-snapshot\\BCECase_cf072e7a.arx",
+        "removed": true
+      },
+      {
+        "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexElevationStage1_cf072e7a347244a69f3ed17d568cdcbc\\BCECase_cf072e7a.ini",
+        "SHA256": "700B431C682F254349B6D043083985E35D1C26A6DBD1E0529EAE7A7F1365C643",
+        "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\retired-module-snapshot\\BCECase_cf072e7a.ini",
+        "removed": true
+      },
+      {
+        "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexElevationStage1_cf072e7a347244a69f3ed17d568cdcbc\\BuildingElevation2020.arx",
+        "SHA256": "7DAEC260D5021143A29E27A38CC95AA87070965986E4AA97AA166B37E9BC3E81",
+        "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\retired-module-snapshot\\BuildingElevation2020.arx",
+        "removed": true
+      }
+    ],
+    "inputChecks": [
+      {
+        "role": "scheme",
+        "kind": "source",
+        "path": "D:\\方案立面.dwg",
+        "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+      },
+      {
+        "role": "scheme",
+        "kind": "snapshot",
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\立面需求只读-fdb4cb22\\方案立面.dwg",
+        "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+      },
+      {
+        "role": "scheme",
+        "kind": "inspectionCopy",
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\scheme-input.dwg",
+        "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+      },
+      {
+        "role": "reference",
+        "kind": "source",
+        "path": "D:\\建筑施工图立面图.dwg",
+        "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+      },
+      {
+        "role": "reference",
+        "kind": "snapshot",
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\立面需求只读-fdb4cb22\\建筑施工图立面图.dwg",
+        "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+      },
+      {
+        "role": "reference",
+        "kind": "inspectionCopy",
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\reference-input.dwg",
+        "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+      }
+    ],
+    "sourceFilesRemainFrozen": true
+  },
+  "ordinaryCommandOutputs": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\case\\analyze-output\\Drawing1_12fb09a9c.log",
+      "bytes": 1260,
+      "SHA256": "C6F93D7A0FE3F87C8543E1B79DACE26802F266685C27BAFE9199D5CC70FA1280",
+      "printedIssueOrdinals": []
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\case\\info-output\\Drawing1_1ee0f29ab.log",
+      "bytes": 211,
+      "SHA256": "C114B2899B62515FD7CFE091683C8609A9BEF45DA12BF818D5F31C3933230741",
+      "printedIssueOrdinals": []
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\case\\issues-after-owned-edit\\Drawing1_17518e8ae.log",
+      "bytes": 142,
+      "SHA256": "54CBB47EA7665C8E0C8B917503EC9DB188AC5A6225087CC3AE8F67267BBFB501",
+      "printedIssueOrdinals": []
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\case\\issues-after-real-close\\Drawing1_1e869ea24.log",
+      "bytes": 142,
+      "SHA256": "CE324D60D2F74FE7EDBA247A52F82C0D20D9A26711CFDC3A4776548149DE651A",
+      "printedIssueOrdinals": []
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\case\\issues-after-real-switch\\Drawing1_143cb596c.log",
+      "bytes": 81,
+      "SHA256": "3172B3601E194A59805C64E92E8925BE4A7974C194016931F58074472409B9FE",
+      "printedIssueOrdinals": []
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\case\\issues-after-real-switch\\Drawing2_1a53df8c1.log",
+      "bytes": 142,
+      "SHA256": "CE324D60D2F74FE7EDBA247A52F82C0D20D9A26711CFDC3A4776548149DE651A",
+      "printedIssueOrdinals": []
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\case\\issues-after-reload\\Drawing1_19dc1740f.log",
+      "bytes": 142,
+      "SHA256": "54CBB47EA7665C8E0C8B917503EC9DB188AC5A6225087CC3AE8F67267BBFB501",
+      "printedIssueOrdinals": []
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\case\\issues-page-1\\Drawing1_17c444547.log",
+      "bytes": 1307,
+      "SHA256": "F787D7DD03A311663E8EA6CE2EB469780533878D72EAE8F8840D7AD53306E1BB",
+      "printedIssueOrdinals": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\case\\issues-page-2\\Drawing1_138c7c2cb.log",
+      "bytes": 1316,
+      "SHA256": "8CF4BD7D2B6E457134161FD5716795501D30B4CCA155C707DCE0CF793E8CD1B5",
+      "printedIssueOrdinals": [
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24
+      ]
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\case\\issues-page-3\\Drawing1_1266a8b2f.log",
+      "bytes": 1316,
+      "SHA256": "C2387EFCA24B86A9093AAA863492AB5C547A6A98B43EB19342E2E0855D779B43",
+      "printedIssueOrdinals": [
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36
+      ]
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\case\\issues-page-4\\Drawing1_18283370e.log",
+      "bytes": 1265,
+      "SHA256": "980C7D2ED8E00078106E4611FBB3B167313F863F67A06CD5CEE85805381021BA",
+      "printedIssueOrdinals": [
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\case\\issues-page-5\\Drawing1_133cb85f4.log",
+      "bytes": 1220,
+      "SHA256": "7A61710C6BD051B53227906A122F71A8543AF1387D83466BA3B054EC8DC80D4A",
+      "printedIssueOrdinals": [
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60
+      ]
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\case\\issues-page-6\\Drawing1_1e2fee55a.log",
+      "bytes": 714,
+      "SHA256": "6728267B47B1B36C330CB84B1725E8C135056C5CAF39900D4A82CB357F31B74E",
+      "printedIssueOrdinals": [
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67
+      ]
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-211227-cf072e7a\\case\\issues-restart\\Drawing1_10b651b65.log",
+      "bytes": 1307,
+      "SHA256": "27309375967299588AA1ED0C0A96AB8A4A01CDD46143D8B9C44186CA65CFBBD5",
+      "printedIssueOrdinals": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    }
+  ],
+  "nativeCommands": {
+    "driver": "BCE_TEST_RUN PublicAnalyzeCommandLifecycle (seven-key strict INI)",
+    "product": [
+      "BCE_ANALYZE",
+      "BCE_INFO",
+      "BCE_ISSUES"
+    ],
+    "issuePagingCalls": 6,
+    "issuesChecked": 67,
+    "additionalIssueCalls": [
+      "restart",
+      "after owned marker edit",
+      "after reload",
+      "after actual SDK document switch",
+      "after actual SDK close and return"
+    ],
+    "output": "42/42 passed; errors=[]; actual raw command logs individually hashed above"
+  }
+}

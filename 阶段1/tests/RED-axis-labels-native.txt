@@ -1,0 +1,3 @@
+FAIL: axis-label creation evidence missing
+assertions=1 passed=0 failed=1 result=FAIL
+Scope: new labels from real 2/3 LINE axes with current Tianzheng settings; final settings/style/layout remain separate.

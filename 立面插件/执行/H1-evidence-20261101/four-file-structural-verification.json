@@ -1,0 +1,30 @@
+[
+  {
+    "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\watch_native_case.py",
+    "beforeSHA256": "45C732B7507552A91B60E3E33072E1CA449B98AA797AAE2C329C1007FCA462BC",
+    "afterSHA256": "528992ED8D3FC6ACCC10856B01FDE9F3FBB0D867F54BE3E9824B8E7B682DFAA9",
+    "syntaxValid": true,
+    "onlyNormalQuitAndNewEvidenceFieldsChanged": true
+  },
+  {
+    "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\watch_command_case.py",
+    "beforeSHA256": "EEA26E6283C1E82E2D7F2E73DA0E3BDC4D6B493A35EC077CB50149161BD5574A",
+    "afterSHA256": "2C578A79C7D51E1FCD1C425E1FE9693C69053AEACAC474B87C1B47F9847A3AC1",
+    "syntaxValid": true,
+    "onlyNormalQuitAndNewEvidenceFieldsChanged": true
+  },
+  {
+    "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\工具\\retire_reader_staging.py",
+    "beforeSHA256": "C30BA1E9E27B2FF134F2FE46D3B990731295C65A8EFB92F2350E587B11371CE9",
+    "afterSHA256": "58034494244B4D8911A52231FE2F8415798AC8FF38D39B50171BEE4B141C93D7",
+    "syntaxValid": true,
+    "onlyNormalQuitAndNewEvidenceFieldsChanged": true
+  },
+  {
+    "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\retire_command_staging.py",
+    "beforeSHA256": "45649A10E3AD42180BD6C501D62D77B5B1B99C2655A5B76B050B32AFA830C7C8",
+    "afterSHA256": "8EAC15F4362C439B83CE1A8EFC32BB37CE403FB008B8328B061C2E0DC5C99894",
+    "syntaxValid": true,
+    "onlyNormalQuitAndNewEvidenceFieldsChanged": true
+  }
+]

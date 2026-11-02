@@ -1,0 +1,306 @@
+Scoped review: two prior P2 findings plus read-only Hatch pattern definitions.
+SHA256 F70CF6D4558C06D34AD230FBA578476F6707D4096978981FE72C876D755BC8F0 ReferenceInspect.cpp
+--- ReferenceInspect.cpp@old
++++ ReferenceInspect.cpp@new
+@@ -24,20 +24,21 @@
+ #include <iomanip>
+ #include <locale>
+ #include <map>
+ #include <memory>
+ #include <set>
+ #include <sstream>
+ #include <stdexcept>
+ #include <string>
+ #include <utility>
+ #include <vector>
++#include "ReferenceCapturePolicy.h"
+ #pragma comment(lib, "Advapi32.lib")
+ 
+ namespace {
+ HMODULE module_handle{};
+ constexpr int maximum_depth = 8;
+ constexpr std::size_t maximum_nodes = 4096;
+ constexpr std::size_t maximum_roots = 100000;
+ constexpr int maximum_vertices = 65536;
+ using Fields = std::vector<std::pair<std::string, std::string>>;
+ using Errors = std::vector<std::string>;
+@@ -318,68 +319,92 @@
+     if (const auto* block = AcDbBlockReference::cast(&entity)) {
+         std::vector<std::string> rows;
+         const auto matrix = block->blockTransform();
+         for (int i = 0; i < 4; ++i) { std::vector<std::string> row; for (int j = 0; j < 4; ++j) row.push_back(number(matrix(i, j))); rows.push_back(array(row)); }
+         return {{"kind", "\"block\""}, {"block", symbol_reference(block->blockTableRecord(), errors)},
+             {"transform", array(rows)}, {"position", point(block->position())},
+             {"explodedCoordinates", "\"Public explode result is already transformed; no second transform is applied\""}};
+     }
+     if (const auto* hatch = AcDbHatch::cast(&entity)) {
+         require(hatch->numLoops() <= maximum_vertices, "hatch loop budget exceeded");
++        bce_capture::LeafBudget hatch_budget(static_cast<std::size_t>(maximum_vertices));
++        const int pattern_definition_count = hatch->numPatternDefinitions();
++        require(pattern_definition_count >= 0 && hatch_budget.try_consume(static_cast<std::size_t>(pattern_definition_count)),
++            "hatch whole-leaf pattern-definition budget exceeded");
++        std::vector<std::string> pattern_definitions;
++        for (int i = 0; i < pattern_definition_count; ++i) {
++            double angle{}, base_x{}, base_y{}, offset_x{}, offset_y{};
++            AcGeDoubleArray dashes;
++            const auto status = hatch->getPatternDefinitionAt(i, angle, base_x, base_y, offset_x, offset_y, dashes);
++            status_error(errors, "hatch pattern definition", status);
++            require(hatch_budget.try_consume(static_cast<std::size_t>(dashes.length())), "hatch whole-leaf pattern-dash budget exceeded");
++            std::vector<std::string> dash_values;
++            if (status == Acad::eOk) for (int j = 0; j < dashes.length(); ++j) dash_values.push_back(number(dashes[j]));
++            pattern_definitions.push_back(object({{"index", std::to_string(i)}, {"status", std::to_string(status)},
++                {"angle", status == Acad::eOk ? number(angle) : "null"},
++                {"base", status == Acad::eOk ? point(AcGePoint2d(base_x, base_y)) : "null"},
++                {"offset", status == Acad::eOk ? vector(AcGeVector2d(offset_x, offset_y)) : "null"},
++                {"dashes", array(dash_values)}}));
++        }
+         std::vector<std::string> loops;
+         for (int i = 0; i < hatch->numLoops(); ++i) {
+             Adesk::Int32 type = hatch->loopTypeAt(i);
+             Fields loop{{"index", std::to_string(i)}, {"type", std::to_string(type)}};
+             if ((type & AcDbHatch::kPolyline) != 0) {
+                 AcGePoint2dArray points; AcGeDoubleArray bulges;
+                 const auto status = hatch->getLoopAt(i, type, points, bulges);
+                 status_error(errors, "hatch polyline loop", status);
+                 loop.emplace_back("status", std::to_string(status));
+-                require(points.length() <= maximum_vertices && bulges.length() <= maximum_vertices, "hatch vertex budget exceeded");
++                require(hatch_budget.try_consume(static_cast<std::size_t>((std::max)(points.length(), bulges.length()))), "hatch whole-leaf boundary budget exceeded");
+                 std::vector<std::string> vertices, values;
+                 if (status == Acad::eOk) {
+                     for (int j = 0; j < points.length(); ++j) vertices.push_back(point(points[j]));
+                     for (int j = 0; j < bulges.length(); ++j) values.push_back(number(bulges[j]));
+                     if (points.length() != bulges.length()) errors.push_back("hatch vertex/bulge count mismatch");
+                 }
+                 loop.emplace_back("vertices", array(vertices)); loop.emplace_back("bulges", array(values));
+             } else {
+                 AcGeVoidPointerArray edges; AcGeIntArray types;
+                 const auto status = hatch->getLoopAt(i, type, edges, types);
+                 status_error(errors, "hatch edge loop", status);
+                 loop.emplace_back("status", std::to_string(status));
+-                require(edges.length() <= maximum_vertices, "hatch edge budget exceeded");
++                require(hatch_budget.try_consume(static_cast<std::size_t>(edges.length())), "hatch whole-leaf boundary budget exceeded");
+                 std::vector<std::string> values;
+                 if (status == Acad::eOk) {
+                     if (edges.length() != types.length()) errors.push_back("hatch edge/type count mismatch");
+                     for (int j = 0; j < (std::min)(edges.length(), types.length()); ++j) {
+                         Fields edge{{"type", std::to_string(types[j])}, {"borrowed", "true"}};
+                         if (!edges[j]) errors.push_back("null hatch edge");
+                         else if (types[j] == AcDbHatch::kLine) {
+                             const auto* line = static_cast<const AcGeLineSeg2d*>(edges[j]);
+                             edge.emplace_back("start", point(line->startPoint())); edge.emplace_back("end", point(line->endPoint()));
+                         } else if (types[j] == AcDbHatch::kCirArc) {
+                             const auto* arc = static_cast<const AcGeCircArc2d*>(edges[j]);
+-                            edge.insert(edge.end(), {{"center", point(arc->center())}, {"radius", number(arc->radius())},
+-                                {"startAngle", number(arc->startAng())}, {"endAngle", number(arc->endAng())},
+-                                {"clockwise", boolean(arc->isClockWise())}});
++                            const auto center = arc->center(), start = arc->startPoint(), end = arc->endPoint();
++                            const auto reference_vector = arc->refVec();
++                            const bce_capture::CircularArc definition{{center.x, center.y}, arc->radius(), arc->startAng(), arc->endAng(),
++                                arc->isClockWise() != 0, {reference_vector.x, reference_vector.y}, {start.x, start.y}, {end.x, end.y}};
++                            require(bce_capture::circular_arc_endpoints_consistent(definition), "hatch circular-arc public endpoints/reference inconsistent");
++                            const auto arc_fields = bce_capture::circular_arc_fields(definition, number);
++                            edge.insert(edge.end(), arc_fields.begin(), arc_fields.end());
+                         } else if (types[j] == AcDbHatch::kEllArc) {
+                             const auto* arc = static_cast<const AcGeEllipArc2d*>(edges[j]);
+                             edge.insert(edge.end(), {{"center", point(arc->center())},
+                                 {"majorAxis", vector(arc->majorAxis())}, {"minorAxis", vector(arc->minorAxis())},
+                                 {"majorRadius", number(arc->majorRadius())}, {"minorRadius", number(arc->minorRadius())},
+                                 {"startAngle", number(arc->startAng())}, {"endAngle", number(arc->endAng())},
+                                 {"clockwise", boolean(arc->isClockWise())}});
+                         } else if (types[j] == AcDbHatch::kSpline) {
+                             const auto* spline = static_cast<const AcGeNurbCurve2d*>(edges[j]);
+-                            require(spline->numControlPoints() <= maximum_vertices && spline->numKnots() <= maximum_vertices &&
+-                                spline->numWeights() <= maximum_vertices, "hatch spline budget exceeded");
++                            require(hatch_budget.try_consume(static_cast<std::size_t>(spline->numControlPoints())) &&
++                                hatch_budget.try_consume(static_cast<std::size_t>(spline->numKnots())) &&
++                                hatch_budget.try_consume(static_cast<std::size_t>(spline->numWeights())), "hatch whole-leaf spline budget exceeded");
+                             std::vector<std::string> controls, knots, weights;
+                             for (int k = 0; k < spline->numControlPoints(); ++k) controls.push_back(point(spline->controlPointAt(k)));
+                             for (int k = 0; k < spline->numKnots(); ++k) knots.push_back(number(spline->knotAt(k)));
+                             for (int k = 0; k < spline->numWeights(); ++k) weights.push_back(number(spline->weightAt(k)));
+                             double period{}; const bool periodic = spline->isPeriodic(period) != 0;
+                             edge.insert(edge.end(), {{"degree", std::to_string(spline->degree())}, {"rational", boolean(spline->isRational())},
+                                 {"closed", boolean(spline->isClosed())}, {"periodic", boolean(periodic)},
+                                 {"period", periodic ? number(period) : "null"},
+                                 {"controlPoints", array(controls)}, {"knots", array(knots)}, {"weights", array(weights)}});
+                         } else { errors.push_back("unknown hatch edge boundary type"); edge.emplace_back("decoded", "false"); }
+@@ -388,20 +413,23 @@
+                 }
+                 loop.emplace_back("edges", array(values));
+                 // The SDK ARXDBG hatch reader clears these arrays without deleting their curves.
+                 // They are borrowed boundary geometry, not explode-created database entities.
+             }
+             loops.push_back(object(loop));
+         }
+         return {{"kind", "\"hatch\""}, {"pattern", quote(hatch->patternName())},
+             {"patternType", std::to_string(static_cast<int>(hatch->patternType()))},
+             {"scale", number(hatch->patternScale())}, {"angle", number(hatch->patternAngle())},
++            {"patternSpace", number(hatch->patternSpace())}, {"patternDouble", boolean(hatch->patternDouble())},
++            {"patternDefinitionCount", std::to_string(pattern_definition_count)}, {"patternDefinitions", array(pattern_definitions)},
++            {"captureItemCount", std::to_string(hatch_budget.used())},
+             {"associative", boolean(hatch->associative())}, {"loopCount", std::to_string(hatch->numLoops())},
+             {"normal", vector(hatch->normal())}, {"elevation", number(hatch->elevation())},
+             {"boundaryCoordinateSystem", "\"Hatch plane 2D; normal/elevation supplied separately\""}, {"loops", array(loops)}};
+     }
+     known = false;
+     return {{"kind", "\"unknown\""}};
+ }
+ 
+ struct ReadContext {
+     std::vector<std::unique_ptr<AcDbEntity>> owned;
+SHA256 2A2FD8E3C5C2318B41ECE0FC2CB18E2E855991565A959D6AFE00B4290E155774 ReferenceCapturePolicy.h
+--- ReferenceCapturePolicy.h@old
++++ ReferenceCapturePolicy.h@new
+@@ -0,0 +1,69 @@
++#ifndef BCE_REFERENCE_CAPTURE_POLICY_H
++#define BCE_REFERENCE_CAPTURE_POLICY_H
++
++#include <cstddef>
++#include <algorithm>
++#include <cmath>
++#include <string>
++#include <utility>
++#include <vector>
++
++namespace bce_capture {
++struct Point2 { double x{}, y{}; };
++struct CircularArc {
++    Point2 center;
++    double radius{}, start_angle{}, end_angle{};
++    bool clockwise{};
++    Point2 reference_vector;
++    Point2 start_point, end_point;
++};
++
++inline bool circular_arc_endpoints_consistent(const CircularArc& arc) noexcept {
++    const auto finite_point = [](Point2 point) { return std::isfinite(point.x) && std::isfinite(point.y); };
++    if (!finite_point(arc.center) || !finite_point(arc.reference_vector) || !finite_point(arc.start_point) ||
++        !finite_point(arc.end_point) || !std::isfinite(arc.radius) || arc.radius <= 0 ||
++        !std::isfinite(arc.start_angle) || !std::isfinite(arc.end_angle)) return false;
++    const double reference_length = std::hypot(arc.reference_vector.x, arc.reference_vector.y);
++    if (!std::isfinite(reference_length) || std::abs(reference_length - 1.0) > 1e-9) return false;
++    const double coordinate_scale = (std::max)({1.0, arc.radius, std::abs(arc.center.x), std::abs(arc.center.y)});
++    const double tolerance = 1e-9 * coordinate_scale;
++    const auto on_circle = [&arc, tolerance](Point2 point) {
++        const double distance = std::hypot(point.x - arc.center.x, point.y - arc.center.y);
++        return std::isfinite(distance) && std::abs(distance - arc.radius) <= tolerance;
++    };
++    return on_circle(arc.start_point) && on_circle(arc.end_point);
++}
++
++// The reader and the native-free tests use the same boundary projection.
++template<class EncodeNumber>
++std::vector<std::pair<std::string, std::string>> circular_arc_fields(
++    const CircularArc& arc, const EncodeNumber& encode_number) {
++    const auto point = [&encode_number](Point2 value) {
++        return '[' + encode_number(value.x) + ',' + encode_number(value.y) + ']';
++    };
++    return {{"center", point(arc.center)}, {"radius", encode_number(arc.radius)},
++        {"startAngle", encode_number(arc.start_angle)}, {"endAngle", encode_number(arc.end_angle)},
++        {"clockwise", arc.clockwise ? "true" : "false"},
++        {"referenceVector", point(arc.reference_vector)}, {"startPoint", point(arc.start_point)}, {"endPoint", point(arc.end_point)},
++        // Explicit absolute plane angles are derived from the authoritative SDK endpoints.
++        // This does not assume the SDK's clockwise-relative parameter convention.
++        {"planeStartAngle", encode_number(std::atan2(arc.start_point.y - arc.center.y, arc.start_point.x - arc.center.x))},
++        {"planeEndAngle", encode_number(std::atan2(arc.end_point.y - arc.center.y, arc.end_point.x - arc.center.x))},
++        {"endpointCheck", circular_arc_endpoints_consistent(arc) ? "true" : "false"}};
++}
++
++class LeafBudget {
++public:
++    explicit LeafBudget(std::size_t limit) noexcept : limit_(limit) {}
++    bool try_consume(std::size_t amount) noexcept {
++        if (amount > limit_ - used_) return false;
++        used_ += amount;
++        return true;
++    }
++    std::size_t used() const noexcept { return used_; }
++private:
++    std::size_t limit_{};
++    std::size_t used_{};
++};
++} // namespace bce_capture
++#endif
+SHA256 7F5B53F5EB9382259489D79609A7C5E655EFE354AEEA9C4064834DA49B829062 ReferenceCapturePolicyTests.cpp
+--- ReferenceCapturePolicyTests.cpp@old
++++ ReferenceCapturePolicyTests.cpp@new
+@@ -0,0 +1,79 @@
++#include "ReferenceCapturePolicy.h"
++#include <cmath>
++#include <iomanip>
++#include <iostream>
++#include <limits>
++#include <locale>
++#include <sstream>
++#include <stdexcept>
++#include <string>
++
++namespace {
++void expect(bool condition, const char* message) {
++    if (!condition) throw std::runtime_error(message);
++}
++std::string encode_number(double value) {
++    std::ostringstream stream;
++    stream.imbue(std::locale::classic());
++    stream << std::setprecision(17) << value;
++    return stream.str();
++}
++std::string field(const std::vector<std::pair<std::string, std::string>>& fields, const char* name) {
++    for (const auto& value : fields) if (value.first == name) return value.second;
++    throw std::runtime_error(std::string("missing serialized field: ") + name);
++}
++void test_rotated_arc_serialization_preserves_geometry() {
++    // Explicit physical points: quarter circle centered (3,5), +Y reference,
++    // from (3,7) to (1,5), counterclockwise. The old projection loses the +Y basis.
++    const double half_pi = std::acos(-1.0) / 2.0;
++    const bce_capture::CircularArc arc{{3, 5}, 2, 0, half_pi, false, {0, 1}, {3, 7}, {1, 5}};
++    expect(bce_capture::circular_arc_endpoints_consistent(arc), "valid physical endpoints rejected");
++    const auto fields = bce_capture::circular_arc_fields(arc, encode_number);
++    expect(field(fields, "referenceVector") == "[0,1]", "nondefault reference vector lost");
++    expect(field(fields, "startPoint") == "[3,7]", "physical start point changed");
++    expect(field(fields, "endPoint") == "[1,5]", "physical end point changed");
++    const auto start_angle = std::stod(field(fields, "planeStartAngle"));
++    const auto end_angle = std::stod(field(fields, "planeEndAngle"));
++    expect(std::abs(3 + 2 * std::cos(start_angle) - 3) < 1e-12 &&
++        std::abs(5 + 2 * std::sin(start_angle) - 7) < 1e-12, "serialized start cannot reconstruct actual point");
++    expect(std::abs(3 + 2 * std::cos(end_angle) - 1) < 1e-12 &&
++        std::abs(5 + 2 * std::sin(end_angle) - 5) < 1e-12, "serialized end cannot reconstruct actual point");
++    auto inconsistent = arc;
++    inconsistent.end_point = {2, 5};
++    expect(!bce_capture::circular_arc_endpoints_consistent(inconsistent), "endpoint not on circle must be rejected");
++}
++void test_two_large_loops_rejected_cumulatively() {
++    bce_capture::LeafBudget budget(65536);
++    expect(budget.try_consume(40000), "first loop should fit");
++    expect(!budget.try_consume(40000), "40000+40000 must exceed whole-leaf limit");
++    expect(budget.used() == 40000, "rejected allocation must not change consumed budget");
++}
++void test_exact_boundary_then_one_rejected() {
++    bce_capture::LeafBudget budget(65536);
++    expect(budget.try_consume(65536), "exact limit must fit");
++    expect(!budget.try_consume(1), "one after exact limit must be rejected");
++    expect(budget.used() == 65536, "exact limit consumed count changed");
++}
++void test_size_t_overflow_rejected() {
++    const auto maximum = (std::numeric_limits<std::size_t>::max)();
++    bce_capture::LeafBudget budget(maximum);
++    expect(budget.try_consume(maximum - 2), "large first count should fit");
++    expect(!budget.try_consume(4), "size_t wraparound must be rejected");
++    expect(budget.used() == maximum - 2, "overflow rejection changed consumed count");
++}
++} // namespace
++int main() {
++    struct Test { const char* name; void (*run)(); };
++    const Test tests[]{
++        {"rotated_arc_serialization_preserves_geometry", test_rotated_arc_serialization_preserves_geometry},
++        {"two_large_loops_rejected_cumulatively", test_two_large_loops_rejected_cumulatively},
++        {"exact_boundary_then_one_rejected", test_exact_boundary_then_one_rejected},
++        {"size_t_overflow_rejected", test_size_t_overflow_rejected}};
++    int failures{};
++    for (const auto& test : tests) {
++        try { test.run(); std::cout << "PASS " << test.name << '\n'; }
++        catch (const std::exception& error) { ++failures; std::cout << "FAIL " << test.name << ": " << error.what() << '\n'; }
++    }
++    std::cout << "tests=" << (sizeof(tests) / sizeof(tests[0])) << " failures=" << failures << '\n';
++    return failures ? 1 : 0;
++}

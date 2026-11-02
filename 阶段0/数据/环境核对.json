@@ -1,0 +1,184 @@
+{
+  "日期": "2026-10-28",
+  "方式": "仅只读进程和文件元数据，不启动或操作CAD",
+  "运行实例": [
+    {
+      "进程ID": 18652,
+      "宿主路径": "D:\\CAD2020\\AutoCAD 2020\\acad.exe",
+      "天正相关模块": [
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_kernal.arx",
+          "文件版本": "6, 0, 404, 8",
+          "产品版本": "6, 0, 0, 0"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_utility.arx",
+          "文件版本": "6, 0, 404, 8",
+          "产品版本": "6, 0, 0, 0"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_pipewire.arx",
+          "文件版本": null,
+          "产品版本": null
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_pipebase.arx",
+          "文件版本": "1, 0, 0, 1",
+          "产品版本": "1, 0, 0, 1"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_initstart.arx",
+          "文件版本": "6, 0, 404, 8",
+          "产品版本": "6, 0, 0, 0"
+        },
+        {
+          "路径": "C:\\Tangent\\TArchT20V8\\sys23x64\\tch.dll",
+          "文件版本": null,
+          "产品版本": null
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_uiframe.arx",
+          "文件版本": "1, 0, 0, 1",
+          "产品版本": "1, 0, 0, 1"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_common.arx",
+          "文件版本": null,
+          "产品版本": null
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelAxis.arx",
+          "文件版本": "1, 0, 0, 1",
+          "产品版本": "1, 0, 0, 1"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelColumn.arx",
+          "文件版本": "1, 0, 0, 1",
+          "产品版本": "1, 0, 0, 1"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelLayer.arx",
+          "文件版本": "1, 0, 0, 1",
+          "产品版本": "1, 0, 0, 1"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_sqlite.dll",
+          "文件版本": "1.0.0.1",
+          "产品版本": "1.0.0.1"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelRedLine.arx",
+          "文件版本": "1, 0, 0, 1",
+          "产品版本": "1, 0, 0, 1"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelWall.arx",
+          "文件版本": "1, 0, 0, 1",
+          "产品版本": "1, 0, 0, 1"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelWindowAndDoor.arx",
+          "文件版本": "1, 0, 0, 1",
+          "产品版本": "1, 0, 0, 1"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelsymbol.arx",
+          "文件版本": "1, 0, 0, 1",
+          "产品版本": "1, 0, 0, 1"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelSymbolManage.ARX",
+          "文件版本": "1.0.0.1",
+          "产品版本": "1.0.0.1"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIToolBar.arx",
+          "文件版本": "1, 0, 0, 1",
+          "产品版本": "1, 0, 0, 1"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch3_kernal.arx",
+          "文件版本": null,
+          "产品版本": null
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_kerncmd.arx",
+          "文件版本": "6, 0, 312, 24",
+          "产品版本": "6, 0, 0, 0"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_annotate.arx",
+          "文件版本": "6, 0, 312, 24",
+          "产品版本": "6, 0, 0, 0"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_toolcmd.arx",
+          "文件版本": null,
+          "产品版本": null
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_elevation.arx",
+          "文件版本": "6, 0, 312, 24",
+          "产品版本": "6, 0, 0, 0"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_collision.arx",
+          "文件版本": "1.0.0.1",
+          "产品版本": "1.0.0.1"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_structure.arx",
+          "文件版本": "1, 0, 0, 1",
+          "产品版本": "1, 0, 0, 1"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_siteplan.arx",
+          "文件版本": "1, 0, 0, 1",
+          "产品版本": "1, 0, 0, 1"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_public.arx",
+          "文件版本": "1.0.0.1",
+          "产品版本": "1.0.0.1"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_blklib.arx",
+          "文件版本": "6, 0, 312, 24",
+          "产品版本": "6, 0, 0, 0"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_3dsolids.arx",
+          "文件版本": "6, 0, 312, 10",
+          "产品版本": "6, 0, 0, 0"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_interior.arx",
+          "文件版本": "6, 0, 312, 10",
+          "产品版本": "6, 0, 0, 0"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_tgedit.arx",
+          "文件版本": "1, 0, 0, 1",
+          "产品版本": "1, 0, 0, 1"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_tginterior.arx",
+          "文件版本": "1, 0, 0, 1",
+          "产品版本": "1, 0, 0, 1"
+        },
+        {
+          "路径": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_tgtool.arx",
+          "文件版本": "1, 0, 0, 1",
+          "产品版本": "1, 0, 0, 1"
+        },
+        {
+          "路径": "D:\\CAD2020\\AutoCAD 2020\\AdComFolderWatch.dll",
+          "文件版本": "23.1.47.0.0",
+          "产品版本": "23.1.47.0.0"
+        }
+      ],
+      "模块读取错误": null
+    }
+  ],
+  "结论": "模块路径仅作本次运行环境证据，不证明开发接口或编译兼容性"
+}

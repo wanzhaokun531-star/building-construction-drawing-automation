@@ -1,0 +1,6 @@
+{
+  "candidate": "v53",
+  "nativeError": "failure: nonhex identity",
+  "DWGProduced": false,
+  "cause": "diagnostic message eagerly passed a class name through SHA-only ascii validator; corrected text narrowing; stock mask frame70 documented by Autodesk2020"
+}

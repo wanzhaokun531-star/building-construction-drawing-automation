@@ -1,0 +1,32 @@
+--- watch_native_case.py.before
++++ watch_native_case.py
+@@ -88,7 +88,12 @@
+     final = host.read(session / 'isolation-final.json')
+     assert final['nonce'] == binding['nonce'] and final['processId'] == report['pid']
+     assert final['workerExited'] and final['desktopClosed'] and final['processHandlesClosed']
+-    observed.update(normalQuit=final['nativeQuitConfirmed'] and not final['forcedTermination'],
++    # A QUIT marker cannot establish normal exit after an explicit stop request.
++    # Keep forcedTermination below as the raw supervisor observation.
++    observed.update(normalQuit=(final['nativeQuitConfirmed'] and not final['forcedTermination']
++                                and not stop_needed and final.get('workerExitCode') == 0),
++                    explicitStopRequested=stop_needed,
++                    normalQuitUnprovenDueToExplicitStop=stop_needed,
+                     forcedTermination=final['forcedTermination'], timedOut=final['timedOut'],
+                     supervisorFinalSHA256=host.sha(session / 'isolation-final.json'))
+     host.retire(binding_path)
+--- watch_command_case.py.before
++++ watch_command_case.py
+@@ -92,7 +92,12 @@
+     final = host.read(session / 'isolation-final.json')
+     assert final['nonce'] == binding['nonce'] and final['processId'] == report['pid']
+     assert final['workerExited'] and final['desktopClosed'] and final['processHandlesClosed']
+-    observed.update(normalQuit=final['nativeQuitConfirmed'] and not final['forcedTermination'],
++    # A QUIT marker cannot establish normal exit after an explicit stop request.
++    # Keep forcedTermination below as the raw supervisor observation.
++    observed.update(normalQuit=(final['nativeQuitConfirmed'] and not final['forcedTermination']
++                                and not stop_needed and final.get('workerExitCode') == 0),
++                    explicitStopRequested=stop_needed,
++                    normalQuitUnprovenDueToExplicitStop=stop_needed,
+                     forcedTermination=final['forcedTermination'], timedOut=final['timedOut'],
+                     supervisorFinalSHA256=host.sha(session / 'isolation-final.json'))
+     host.retire(binding_path)

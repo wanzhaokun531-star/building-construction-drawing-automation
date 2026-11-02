@@ -1,0 +1,484 @@
+{
+  "contract": "stage1.startup-owner-static-evidence.v1",
+  "subject": {
+    "name": "CP.CAD.dll",
+    "digest": {
+      "sha256": "ae3c22fec9971fc6fa71d7829d120859e20dc0f49e176d1b3801f1a758ba6a30"
+    },
+    "local_path": "C:\\SOW\\智源·云设计\\NET40\\CP.CAD.dll",
+    "format": "pe",
+    "architecture": "x86"
+  },
+  "provider": {
+    "id": "rea-dotnet-static",
+    "name": "REA managed static analysis provider",
+    "version": "1"
+  },
+  "formType": {
+    "token": "0x0200008e",
+    "row_offset": 2757874,
+    "namespace": "SOW.CP.CAD.Forms",
+    "name": "SelectProjectForm",
+    "full_name": "SOW.CP.CAD.Forms.SelectProjectForm",
+    "name_sha256": "78f38d125bc1bf8bd2d27a28fde6fee4a05e85baa6c954e3105b9cbd1525688b",
+    "flags": 1048577,
+    "extends_token": "0x02000018",
+    "enclosing_type_token": null,
+    "field_list": {
+      "first_row": 2322,
+      "last_row": 2330,
+      "count": 9
+    },
+    "method_list": {
+      "first_row": 1837,
+      "last_row": 1844,
+      "count": 8
+    }
+  },
+  "literal": {
+    "token": "0x7000d809",
+    "offset": 3261741,
+    "value": "选择项目 "
+  },
+  "startup": [
+    {
+      "caller_token": "0x0600011c",
+      "il_offset": 66,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Initialize",
+      "opcode": "newobj",
+      "target_token": "0x060000f5",
+      "target_kind": "method-def",
+      "target_name": ".ctor",
+      "target_declaring_type": "EventsWatcher.DocManForUI"
+    },
+    {
+      "caller_token": "0x0600011c",
+      "il_offset": 81,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Initialize",
+      "opcode": "callvirt",
+      "target_token": "0x060000f6",
+      "target_kind": "method-def",
+      "target_name": "Do",
+      "target_declaring_type": "EventsWatcher.DocManForUI"
+    },
+    {
+      "caller_token": "0x0600011c",
+      "il_offset": 86,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Initialize",
+      "opcode": "call",
+      "target_token": "0x0600011f",
+      "target_kind": "method-def",
+      "target_name": "AddMe",
+      "target_declaring_type": "EventsWatcher.DefaultContextMenu"
+    },
+    {
+      "caller_token": "0x0600011c",
+      "il_offset": 92,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Initialize",
+      "opcode": "call",
+      "target_token": "0x06000116",
+      "target_kind": "method-def",
+      "target_name": "Trigger",
+      "target_declaring_type": "EventsWatcher.EventsWatcher"
+    },
+    {
+      "caller_token": "0x0600011c",
+      "il_offset": 97,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Initialize",
+      "opcode": "call",
+      "target_token": "0x06000ea3",
+      "target_kind": "method-def",
+      "target_name": "GetTimingOpt",
+      "target_declaring_type": "SOW.CP.CAD.SystemInterface.MainLogic"
+    },
+    {
+      "caller_token": "0x0600011c",
+      "il_offset": 104,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Initialize",
+      "opcode": "call",
+      "target_token": "0x0600082a",
+      "target_kind": "method-def",
+      "target_name": "StartMonitor",
+      "target_declaring_type": "SOW.CP.CAD.Main"
+    },
+    {
+      "caller_token": "0x0600011c",
+      "il_offset": 109,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Initialize",
+      "opcode": "call",
+      "target_token": "0x0600081e",
+      "target_kind": "method-def",
+      "target_name": "get_Model",
+      "target_declaring_type": "SOW.CP.CAD.Main"
+    },
+    {
+      "caller_token": "0x0600011c",
+      "il_offset": 114,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Initialize",
+      "opcode": "callvirt",
+      "target_token": "0x060007e8",
+      "target_kind": "method-def",
+      "target_name": "get_SaveVersion",
+      "target_declaring_type": "SOW.CP.CAD.MainModel"
+    },
+    {
+      "caller_token": "0x0600011c",
+      "il_offset": 119,
+      "target_identity_sha256": "b60e35c2faa0db0144d0d4d286a12cbf011c9c7fb1b61c856aae285f649e4486",
+      "caller": "EventsWatcher.ExtApp.Initialize",
+      "opcode": "call",
+      "target_token": "0x0a00001f",
+      "target_kind": "member-ref",
+      "target_name": "IsNullOrEmpty",
+      "target_declaring_type": "System.String"
+    },
+    {
+      "caller_token": "0x0600011c",
+      "il_offset": 126,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Initialize",
+      "opcode": "call",
+      "target_token": "0x0600081e",
+      "target_kind": "method-def",
+      "target_name": "get_Model",
+      "target_declaring_type": "SOW.CP.CAD.Main"
+    },
+    {
+      "caller_token": "0x0600011c",
+      "il_offset": 131,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Initialize",
+      "opcode": "callvirt",
+      "target_token": "0x060007e8",
+      "target_kind": "method-def",
+      "target_name": "get_SaveVersion",
+      "target_declaring_type": "SOW.CP.CAD.MainModel"
+    },
+    {
+      "caller_token": "0x0600011c",
+      "il_offset": 136,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Initialize",
+      "opcode": "call",
+      "target_token": "0x06000bbe",
+      "target_kind": "method-def",
+      "target_name": "SetSaveVersion",
+      "target_declaring_type": "SOW.CP.CAD.SystemInterface.CADFunction"
+    },
+    {
+      "caller_token": "0x0600011c",
+      "il_offset": 147,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Initialize",
+      "opcode": "call",
+      "target_token": "0x06000081",
+      "target_kind": "method-def",
+      "target_name": "CopySettingFiles",
+      "target_declaring_type": "SOW.CP.CAD.Common.WorkFolder"
+    },
+    {
+      "caller_token": "0x0600011c",
+      "il_offset": 153,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Initialize",
+      "opcode": "call",
+      "target_token": "0x06000c3a",
+      "target_kind": "method-def",
+      "target_name": "CopyConfigFiles",
+      "target_declaring_type": "SOW.CP.CAD.SystemInterface.CADFunction"
+    },
+    {
+      "caller_token": "0x0600011c",
+      "il_offset": 164,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Initialize",
+      "opcode": "call",
+      "target_token": "0x06000e56",
+      "target_kind": "method-def",
+      "target_name": "GetLastUserInfo",
+      "target_declaring_type": "SOW.CP.CAD.SystemInterface.MainLogic"
+    },
+    {
+      "caller_token": "0x0600011c",
+      "il_offset": 216,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Initialize",
+      "opcode": "call",
+      "target_token": "0x06000823",
+      "target_kind": "method-def",
+      "target_name": "StartThread",
+      "target_declaring_type": "SOW.CP.CAD.Main"
+    },
+    {
+      "caller_token": "0x0600011c",
+      "il_offset": 224,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Initialize",
+      "opcode": "call",
+      "target_token": "0x06000836",
+      "target_kind": "method-def",
+      "target_name": "Load",
+      "target_declaring_type": "SOW.CP.CAD.Main"
+    },
+    {
+      "caller_token": "0x0600011c",
+      "il_offset": 233,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Initialize",
+      "opcode": "call",
+      "target_token": "0x06000122",
+      "target_kind": "method-def",
+      "target_name": "Message",
+      "target_declaring_type": "EventsWatcher.Helper"
+    }
+  ],
+  "shutdown": [
+    {
+      "caller_token": "0x0600011b",
+      "il_offset": 31,
+      "target_identity_sha256": "b78cb4ac33593cf85d9cc9fce5852aed7131b0e3f905354c57c35176de1eb21c",
+      "caller": "EventsWatcher.ExtApp.Terminate",
+      "opcode": "callvirt",
+      "target_token": "0x0a000261",
+      "target_kind": "member-ref",
+      "target_name": "get_CurrentUser",
+      "target_declaring_type": "SOW.CP.Client.Biz.BussinessManager"
+    },
+    {
+      "caller_token": "0x0600011b",
+      "il_offset": 58,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Terminate",
+      "opcode": "call",
+      "target_token": "0x06000e55",
+      "target_kind": "method-def",
+      "target_name": "SaveLastUserInfo",
+      "target_declaring_type": "SOW.CP.CAD.SystemInterface.MainLogic"
+    },
+    {
+      "caller_token": "0x0600011b",
+      "il_offset": 64,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Terminate",
+      "opcode": "call",
+      "target_token": "0x0600081e",
+      "target_kind": "method-def",
+      "target_name": "get_Model",
+      "target_declaring_type": "SOW.CP.CAD.Main"
+    },
+    {
+      "caller_token": "0x0600011b",
+      "il_offset": 74,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Terminate",
+      "opcode": "callvirt",
+      "target_token": "0x0a00005a",
+      "target_kind": "member-ref",
+      "target_name": "get_Count",
+      "target_declaring_type": "System.Collections.Generic.List`1"
+    },
+    {
+      "caller_token": "0x0600011b",
+      "il_offset": 82,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Terminate",
+      "opcode": "call",
+      "target_token": "0x06000ea0",
+      "target_kind": "method-def",
+      "target_name": "IsLogin",
+      "target_declaring_type": "SOW.CP.CAD.SystemInterface.MainLogic"
+    },
+    {
+      "caller_token": "0x0600011b",
+      "il_offset": 89,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Terminate",
+      "opcode": "call",
+      "target_token": "0x0600081e",
+      "target_kind": "method-def",
+      "target_name": "get_Model",
+      "target_declaring_type": "SOW.CP.CAD.Main"
+    },
+    {
+      "caller_token": "0x0600011b",
+      "il_offset": 99,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Terminate",
+      "opcode": "callvirt",
+      "target_token": "0x0a000060",
+      "target_kind": "member-ref",
+      "target_name": "GetEnumerator",
+      "target_declaring_type": "System.Collections.Generic.List`1"
+    },
+    {
+      "caller_token": "0x0600011b",
+      "il_offset": 110,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Terminate",
+      "opcode": "call",
+      "target_token": "0x0a000061",
+      "target_kind": "member-ref",
+      "target_name": "get_Current",
+      "target_declaring_type": "Enumerator"
+    },
+    {
+      "caller_token": "0x0600011b",
+      "il_offset": 118,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Terminate",
+      "opcode": "call",
+      "target_token": "0x06000e3d",
+      "target_kind": "method-def",
+      "target_name": "GetFileInfoFromLocal",
+      "target_declaring_type": "SOW.CP.CAD.SystemInterface.MainLogic"
+    },
+    {
+      "caller_token": "0x0600011b",
+      "il_offset": 135,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Terminate",
+      "opcode": "call",
+      "target_token": "0x06000e44",
+      "target_kind": "method-def",
+      "target_name": "UpdateFile",
+      "target_declaring_type": "SOW.CP.CAD.SystemInterface.MainLogic"
+    },
+    {
+      "caller_token": "0x0600011b",
+      "il_offset": 143,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Terminate",
+      "opcode": "call",
+      "target_token": "0x0a000062",
+      "target_kind": "member-ref",
+      "target_name": "MoveNext",
+      "target_declaring_type": "Enumerator"
+    },
+    {
+      "caller_token": "0x0600011b",
+      "il_offset": 160,
+      "target_identity_sha256": "98e6cc4b0e746fddfcc91aa0b7cf5a39565d89cad96ff885d5af2f63c0cac69d",
+      "caller": "EventsWatcher.ExtApp.Terminate",
+      "opcode": "callvirt",
+      "target_token": "0x0a00003d",
+      "target_kind": "member-ref",
+      "target_name": "Dispose",
+      "target_declaring_type": "System.IDisposable"
+    },
+    {
+      "caller_token": "0x0600011b",
+      "il_offset": 166,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Terminate",
+      "opcode": "call",
+      "target_token": "0x0600011e",
+      "target_kind": "method-def",
+      "target_name": "RemoveMe",
+      "target_declaring_type": "EventsWatcher.DefaultContextMenu"
+    },
+    {
+      "caller_token": "0x0600011b",
+      "il_offset": 177,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Terminate",
+      "opcode": "call",
+      "target_token": "0x06000824",
+      "target_kind": "method-def",
+      "target_name": "StopThread",
+      "target_declaring_type": "SOW.CP.CAD.Main"
+    },
+    {
+      "caller_token": "0x0600011b",
+      "il_offset": 182,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Terminate",
+      "opcode": "call",
+      "target_token": "0x0600081f",
+      "target_kind": "method-def",
+      "target_name": "get_Panel",
+      "target_declaring_type": "SOW.CP.CAD.Main"
+    },
+    {
+      "caller_token": "0x0600011b",
+      "il_offset": 192,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Terminate",
+      "opcode": "callvirt",
+      "target_token": "0x060008c2",
+      "target_kind": "method-def",
+      "target_name": "StopThread",
+      "target_declaring_type": "SOW.CP.CAD.MainPanel"
+    },
+    {
+      "caller_token": "0x0600011b",
+      "il_offset": 198,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Terminate",
+      "opcode": "callvirt",
+      "target_token": "0x060008ea",
+      "target_kind": "method-def",
+      "target_name": "SaveOpenFolders",
+      "target_declaring_type": "SOW.CP.CAD.MainPanel"
+    },
+    {
+      "caller_token": "0x0600011b",
+      "il_offset": 203,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Terminate",
+      "opcode": "call",
+      "target_token": "0x06000ce3",
+      "target_kind": "method-def",
+      "target_name": "get_OnLine",
+      "target_declaring_type": "SOW.CP.CAD.SystemInterface.Interface"
+    },
+    {
+      "caller_token": "0x0600011b",
+      "il_offset": 211,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Terminate",
+      "opcode": "callvirt",
+      "target_token": "0x060008fb",
+      "target_kind": "method-def",
+      "target_name": "Logout",
+      "target_declaring_type": "SOW.CP.CAD.MainPanel"
+    },
+    {
+      "caller_token": "0x0600011b",
+      "il_offset": 216,
+      "target_identity_sha256": null,
+      "caller": "EventsWatcher.ExtApp.Terminate",
+      "opcode": "call",
+      "target_token": "0x0600082b",
+      "target_kind": "method-def",
+      "target_name": "StopMonitor",
+      "target_declaring_type": "SOW.CP.CAD.Main"
+    },
+    {
+      "caller_token": "0x0600011b",
+      "il_offset": 226,
+      "target_identity_sha256": "ecbb2593c350afd0c0bd825ad0c5d5572597eac20a7c806bef63def0915da699",
+      "caller": "EventsWatcher.ExtApp.Terminate",
+      "opcode": "call",
+      "target_token": "0x0a00028f",
+      "target_kind": "member-ref",
+      "target_name": "Sleep",
+      "target_declaring_type": "System.Threading.Thread"
+    }
+  ],
+  "evidenceIds": [
+    "ev_c3f74ef4ac9282278876c2c3ff8c9e58421f1c6f94f16f6b772c981ce074a086",
+    "ev_218241185e612e3d3bb07cf366da658d16be0108f204ddaf054a146294265568",
+    "ev_689fd215489cbcebf1c940b21d86b4d5ba8d291ab8fe163621400e70fb224b7a"
+  ],
+  "limitations": [
+    "Static code/metadata only, no vendor methods executed or patched; actual loaded-runtime stack attribution remains separate."
+  ]
+}

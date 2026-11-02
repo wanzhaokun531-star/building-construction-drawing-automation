@@ -1,0 +1,178 @@
+{
+  "contract": "bce.h1-final-four-file-review-package.v1",
+  "supersedes": "review-manifest.json (earlier two-watcher stage only)",
+  "files": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\before-manifest.json",
+      "SHA256": "2A4CB62BC33B7FB61F5A9AADF8DF787D1437F3E7E4273DAA779B222785A90A7D"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\evidence-correction-audit.json",
+      "SHA256": "9034488E10BA699B75B4A686AEB97B5C1763E959052DC3DC40558B86DB3E0F71"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\exitcode-red-exit-code.txt",
+      "SHA256": "F1B2F662800122BED0FF255693DF89C4487FBDCF453D3524A42D4EC20C3D9C04"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\exitcode-red-output.txt",
+      "SHA256": "EB664755D8AA8D7180F9C6A2AE101EBA3E0E9A98C825F6C8FE4DA1B7F251CD28"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\final-green-exit-code.txt",
+      "SHA256": "13BF7B3039C63BF5A50491FA3CFD8EB4E699D1BA1436315AEF9CBE5711530354"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\final-green-output.txt",
+      "SHA256": "AAA16FCC558423AA4BF119FEDC81F1BE562B4D7C36D225904964E62359169227"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\four-file-before-manifest.json",
+      "SHA256": "1EE5D8C6750CC5CB858A9F69A742AD0B75097B3BBEC9FAC6D735995C286E6695"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\four-file-evidence-correction-audit.json",
+      "SHA256": "60B50350F89A5196E3D89980D0810CD58DBE5DFE7E3D911EAF2EFB1BEC8AB72A"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\four-file-green-exit-code.txt",
+      "SHA256": "13BF7B3039C63BF5A50491FA3CFD8EB4E699D1BA1436315AEF9CBE5711530354"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\four-file-green-output.txt",
+      "SHA256": "DB2A5F7B1EB9440E046B87B8B8D2642070F43CCCF6D3DD6634673764537438F5"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\four-file-review.diff",
+      "SHA256": "9DCDA0F2C12C92CE134BB9F9449FE8C4EC00E052DEA0F86020368685739FC8E3"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\four-file-structural-verification.json",
+      "SHA256": "1DAFD6BD10B819701265B6527E84B38C60F808E16779EFCC2C6E69A4849EE7EB"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\green-exit-code.txt",
+      "SHA256": "13BF7B3039C63BF5A50491FA3CFD8EB4E699D1BA1436315AEF9CBE5711530354"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\green-output.txt",
+      "SHA256": "76C3780ECCA804D8E6C231B57D6D03C75A02D1CC18759111B69A95C08D8C250C"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\red-exit-code.txt",
+      "SHA256": "F1B2F662800122BED0FF255693DF89C4487FBDCF453D3524A42D4EC20C3D9C04"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\red-output.txt",
+      "SHA256": "C1906CD1508DA259462C5663585E6BA722BAB85D1511075FF650A8E3BA902C29"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\retire_command_staging.py.before",
+      "SHA256": "45649A10E3AD42180BD6C501D62D77B5B1B99C2655A5B76B050B32AFA830C7C8"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\retire_command_staging.py.final-frozen",
+      "SHA256": "8EAC15F4362C439B83CE1A8EFC32BB37CE403FB008B8328B061C2E0DC5C99894"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\retire_reader_staging.py.before",
+      "SHA256": "C30BA1E9E27B2FF134F2FE46D3B990731295C65A8EFB92F2350E587B11371CE9"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\retire_reader_staging.py.final-frozen",
+      "SHA256": "58034494244B4D8911A52231FE2F8415798AC8FF38D39B50171BEE4B141C93D7"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\retirement-red-exit-code.txt",
+      "SHA256": "F1B2F662800122BED0FF255693DF89C4487FBDCF453D3524A42D4EC20C3D9C04"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\retirement-red-output.txt",
+      "SHA256": "29920EBF1D9FBC0E217A2DB06CCAF16C5285873709842D113BA711211F64BEDC"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\review-manifest.json",
+      "SHA256": "5D78B2E2AA894A0111D66DF2B62A8BBE734012CA26C688CB483704A3211A54FF"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\structural-verification.json",
+      "SHA256": "93B85A5F3D43D26F75705A5ACC3CB9B5FD3E714E8F5DD913C7F36F403CA7B957"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\test_watcher_closure_evidence.py.final-frozen",
+      "SHA256": "A3BDCAB66C3510A19D131520F7D2E6A58B27A5BE8682729EE70A30EAC3421D82"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\test_watcher_closure_evidence.py.frozen",
+      "SHA256": "81CB4B2F21D1B67E7F3E08E5B979445CA66BFD75E1D81ED5D6B732A63CAE3F4C"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\watch_command_case.py.before",
+      "SHA256": "EEA26E6283C1E82E2D7F2E73DA0E3BDC4D6B493A35EC077CB50149161BD5574A"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\watch_command_case.py.final-frozen",
+      "SHA256": "2C578A79C7D51E1FCD1C425E1FE9693C69053AEACAC474B87C1B47F9847A3AC1"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\watch_command_case.py.frozen",
+      "SHA256": "2C578A79C7D51E1FCD1C425E1FE9693C69053AEACAC474B87C1B47F9847A3AC1"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\watch_native_case.py.before",
+      "SHA256": "45C732B7507552A91B60E3E33072E1CA449B98AA797AAE2C329C1007FCA462BC"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\watch_native_case.py.final-frozen",
+      "SHA256": "528992ED8D3FC6ACCC10856B01FDE9F3FBB0D867F54BE3E9824B8E7B682DFAA9"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\watch_native_case.py.frozen",
+      "SHA256": "528992ED8D3FC6ACCC10856B01FDE9F3FBB0D867F54BE3E9824B8E7B682DFAA9"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\H1-evidence-20261101\\watchers.diff",
+      "SHA256": "44E98B8404F05EB9B1B67C90B4F490A4119AAA5C75412C93B2FC95828F2673A8"
+    }
+  ],
+  "liveFiles": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\watch_native_case.py",
+      "SHA256": "528992ED8D3FC6ACCC10856B01FDE9F3FBB0D867F54BE3E9824B8E7B682DFAA9"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\watch_command_case.py",
+      "SHA256": "2C578A79C7D51E1FCD1C425E1FE9693C69053AEACAC474B87C1B47F9847A3AC1"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\工具\\retire_reader_staging.py",
+      "SHA256": "58034494244B4D8911A52231FE2F8415798AC8FF38D39B50171BEE4B141C93D7"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\retire_command_staging.py",
+      "SHA256": "8EAC15F4362C439B83CE1A8EFC32BB37CE403FB008B8328B061C2E0DC5C99894"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\test_watcher_closure_evidence.py",
+      "SHA256": "A3BDCAB66C3510A19D131520F7D2E6A58B27A5BE8682729EE70A30EAC3421D82"
+    }
+  ],
+  "historicalFiles": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-215047-9c4d780f\\native-result-closure.json",
+      "SHA256": "48F84C7F6C89EBC5440EC7B067DA03D760A05C55D94D395C1E824AE4805D24B7"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-215047-9c4d780f\\isolation-final.json",
+      "SHA256": "40074CCABBEE52FF178029CF25D11C990D805528234985B2D9B81AB62FF5E9D8"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-215047-9c4d780f\\isolation-stop-20261101-215403-047.json",
+      "SHA256": "0B586B401FC7677089DB780965CD367838FC6A3D7DEA822821AFE585C0BE87EC"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-215047-9c4d780f\\reader-retirement.json",
+      "SHA256": "35965FB6C29FBA4FB162ABD55C16E2BAB83DF487176A5C69F5D40122CD5A1436"
+    }
+  ]
+}

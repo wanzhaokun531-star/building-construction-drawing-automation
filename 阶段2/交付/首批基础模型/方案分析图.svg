@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="997.6630434782758" height="1075.0" viewBox="0 0 997.6630434782758 1075.0">
+<rect width="100%" height="100%" fill="white"/>
+<g font-family="Arial" font-size="11">
+<text x="16" y="24">Stage 2 analysis - NOT a construction drawing</text>
+<rect x="736.7391304347977" y="838.3695652173901" width="166.30434782608666" height="9.239130434783988" fill="#697582"><title>Wall CD83: native extents</title></rect>
+<rect x="505.7608695652329" y="838.3695652173901" width="230.97826086956485" height="9.239130434783988" fill="#697582"><title>Wall CD85: native extents</title></rect>
+<rect x="561.1956521739285" y="274.7826086956519" width="175.54347826086928" height="9.239130434783931" fill="#697582"><title>Wall CD87: native extents</title></rect>
+<rect x="376.41304347827656" y="274.7826086956519" width="184.7826086956519" height="9.239130434782567" fill="#697582"><title>Wall CD88: native extents</title></rect>
+<rect x="274.78260869566805" y="274.7826086956519" width="101.63043478260852" height="9.239130434782567" fill="#697582"><title>Wall CD8A: native extents</title></rect>
+<rect x="561.1956521739285" y="90.0" width="175.54347826086928" height="9.239130434782595" fill="#697582"><title>Wall CD8D: native extents</title></rect>
+<rect x="376.41304347827656" y="90.0" width="184.7826086956519" height="9.239130434782595" fill="#697582"><title>Wall CD8F: native extents</title></rect>
+<rect x="145.4347826087117" y="930.7608695652161" width="194.02173913043447" height="9.239130434783874" fill="#697582"><title>Wall CD91: native extents</title></rect>
+<rect x="339.4565217391462" y="750.5978260869555" width="166.3043478260867" height="9.239130434782624" fill="#697582"><title>Wall CD93: native extents</title></rect>
+<rect x="672.0652173913196" y="579.6739130434762" width="64.67391304347814" height="9.23913043478251" fill="#697582"><title>Wall CD95: native extents</title></rect>
+<rect x="145.4347826087117" y="579.6739130434776" width="129.34782608695633" height="9.23913043478251" fill="#697582"><title>Wall CD97: native extents</title></rect>
+<rect x="94.61956521740743" y="579.6739130434776" width="50.81521739130429" height="9.23913043478251" fill="#697582"><title>Wall CD98: native extents</title></rect>
+<rect x="94.61956521740743" y="413.3695652173908" width="180.16304347826062" height="9.239130434782567" fill="#697582"><title>Wall CD99: native extents</title></rect>
+<rect x="587.9891304348517" y="339.4565217391287" width="88.69565217385912" height="9.239130434783988" fill="#697582"><title>Wall CD9A: native extents</title></rect>
+<rect x="736.7391304347977" y="182.39130434782595" width="166.30434782608666" height="9.239130434782567" fill="#697582"><title>Wall CD9B: native extents</title></rect>
+<rect x="792.1739130434933" y="676.6847826086947" width="110.8695652173966" height="4.619565217391369" fill="#697582"><title>Wall CD9D: native extents</title></rect>
+<rect x="274.78260869566805" y="662.8260869565208" width="64.67391304347814" height="9.239130434782624" fill="#697582"><title>Wall CD9E: native extents</title></rect>
+<rect x="145.4347826087117" y="662.8260869565208" width="129.34782608695633" height="9.239130434782624" fill="#697582"><title>Wall CDA0: native extents</title></rect>
+<rect x="833.7500000000148" y="413.36956521738944" width="69.29347826086985" height="9.239130434783931" fill="#697582"><title>Wall CDA2: native extents</title></rect>
+<rect x="732.1195652174064" y="584.2934782608675" width="9.239130434782624" height="258.6956521739139" fill="#697582"><title>Wall CDA3: native extents</title></rect>
+<rect x="732.1195652174064" y="501.1413043478214" width="9.239130434782624" height="83.15217391304742" fill="#697582"><title>Wall CDA5: native extents</title></rect>
+<rect x="732.1195652174064" y="279.4021739130445" width="9.239130434782624" height="138.58695652173355" fill="#697582"><title>Wall CDA7: native extents</title></rect>
+<rect x="732.1195652174064" y="187.01086956521723" width="9.239130434782624" height="92.39130434782729" fill="#697582"><title>Wall CDA9: native extents</title></rect>
+<rect x="732.1195652174064" y="94.6195652173913" width="9.239130434782624" height="92.39130434782594" fill="#697582"><title>Wall CDAA: native extents</title></rect>
+<rect x="334.83695652175487" y="755.2173913043467" width="9.239130434782567" height="180.16304347826065" fill="#697582"><title>Wall CDAB: native extents</title></rect>
+<rect x="334.83695652175487" y="339.45652173920803" width="9.239130434782567" height="83.15217391290622" fill="#697582"><title>Wall CDAC: native extents</title></rect>
+<rect x="140.8152173913204" y="750.5978260869555" width="9.239130434782595" height="184.7826086956519" fill="#697582"><title>Wall CDAD: native extents</title></rect>
+<rect x="140.8152173913204" y="584.2934782608688" width="9.239130434782595" height="83.15217391304327" fill="#697582"><title>Wall CDAE: native extents</title></rect>
+<rect x="898.4239130434931" y="676.6847826086934" width="9.239130434782624" height="166.30434782608802" fill="#697582"><title>Wall CDB0: native extents</title></rect>
+<rect x="898.4239130434931" y="584.293478260963" width="9.239130434782624" height="92.39130434773176" fill="#697582"><title>Wall CDB1: native extents</title></rect>
+<rect x="898.4239130434931" y="187.01086956521723" width="9.239130434782624" height="230.97826086956618" fill="#697582"><title>Wall CDB3: native extents</title></rect>
+<rect x="90.00000000001613" y="417.9891304347821" width="9.239130434782595" height="166.3043478260867" fill="#697582"><title>Wall CDB4: native extents</title></rect>
+<rect x="90.0" y="223.96739130434727" width="9.239130434798724" height="194.02173913043518" fill="#697582"><title>Wall CDB6: native extents</title></rect>
+<rect x="270.16304347827673" y="667.4456521739121" width="9.239130434782567" height="83.15217391304338" fill="#697582"><title>Wall CDB7: native extents</title></rect>
+<rect x="270.16304347827673" y="279.40217391304316" width="9.239130434782567" height="138.58695652173895" fill="#697582"><title>Wall CDB8: native extents</title></rect>
+<rect x="501.1413043478416" y="584.2934782608688" width="9.239130434782567" height="23.09782608692558" fill="#697582"><title>Wall CDBA: native extents</title></rect>
+<rect x="501.1413043478416" y="661.9021739130385" width="9.239130434782567" height="93.31521739130824" fill="#697582"><title>Wall CDBB: native extents</title></rect>
+<rect x="556.5760869565372" y="94.6195652173913" width="9.23913043478251" height="184.78260869565185" fill="#697582"><title>Wall CDBC: native extents</title></rect>
+<rect x="787.554347826102" y="584.2934782608688" width="4.619565217391255" height="92.3913043478259" fill="#697582"><title>Wall CDBE: native extents</title></rect>
+<rect x="334.83695652176027" y="584.2934782608688" width="9.239130434782624" height="23.09782608692558" fill="#697582"><title>Wall CDE9: native extents</title></rect>
+<rect x="792.1739130434894" y="579.6739130434776" width="41.576086956454105" height="9.239130434817525" fill="#697582"><title>Wall CE31: native extents</title></rect>
+<rect x="898.4239130434931" y="501.14130434782544" width="9.239130434782624" height="83.15217391313752" fill="#697582"><title>Wall CE47: native extents</title></rect>
+<rect x="501.1413043478416" y="755.2173913043467" width="9.239130434782567" height="87.77173913043464" fill="#697582"><title>Wall CE94: native extents</title></rect>
+<rect x="334.83695652175487" y="667.4456521739121" width="9.239130434782567" height="87.77173913043464" fill="#697582"><title>Wall CE95: native extents</title></rect>
+<rect x="736.7391304347977" y="579.6739130434776" width="55.434782608695514" height="9.23913043478251" fill="#697582"><title>Wall CE96: native extents</title></rect>
+<rect x="833.7500000000148" y="501.1413043478241" width="69.29347826086962" height="4.619565217392676" fill="#697582"><title>Wall CF60: native extents</title></rect>
+<rect x="898.4239130434931" y="417.9891304347834" width="9.239130434782624" height="83.15217391304202" fill="#697582"><title>Wall CF61: native extents</title></rect>
+<rect x="732.1195652174064" y="417.9891304347794" width="9.239130434782624" height="83.15217391304202" fill="#697582"><title>Wall CF63: native extents</title></rect>
+<rect x="829.1304347825537" y="501.1413043478221" width="4.619565217428999" height="83.15217391308164" fill="#697582"><title>Wall CF64: native extents</title></rect>
+<rect x="736.7391304347977" y="501.1413043474974" width="46.195652173945405" height="4.619565217715319" fill="#697582"><title>Wall CF66: native extents</title></rect>
+<rect x="736.7391304347975" y="413.36956521738676" width="97.0108695652176" height="9.239130434785295" fill="#697582"><title>Wall CF67: native extents</title></rect>
+<rect x="829.1304347825914" y="417.9891304347816" width="4.619565217423656" height="83.15217391304247" fill="#697582"><title>Wall CF68: native extents</title></rect>
+<rect x="833.7499999999358" y="579.6739130435125" width="69.29347826102776" height="9.23913043484174" fill="#697582"><title>Wall CF6A: native extents</title></rect>
+<rect x="274.78260869566805" y="579.6739130434776" width="64.67391304348888" height="9.23913043478251" fill="#697582"><title>Wall CFB7: native extents</title></rect>
+<rect x="667.4456521739282" y="501.1413043476708" width="9.239130434782624" height="83.152173913198" fill="#697582"><title>Wall CFB9: native extents</title></rect>
+<rect x="339.4565217391569" y="579.6739130434776" width="166.30434782607597" height="9.23913043478251" fill="#697582"><title>Wall CFBA: native extents</title></rect>
+<rect x="505.7608695652329" y="579.6739130434762" width="166.3043478260867" height="9.239130434783874" fill="#697582"><title>Wall CFBB: native extents</title></rect>
+<rect x="145.4347826087117" y="745.9782608695642" width="129.34782608695633" height="9.23913043478251" fill="#697582"><title>Wall D003: native extents</title></rect>
+<rect x="140.8152173913204" y="667.4456521739121" width="9.239130434782595" height="83.15217391304338" fill="#697582"><title>Wall D004: native extents</title></rect>
+<rect x="270.16304347827673" y="584.2934782608688" width="9.239130434782567" height="83.15217391304327" fill="#697582"><title>Wall D006: native extents</title></rect>
+<rect x="371.79347826088525" y="94.6195652173913" width="9.239130434782624" height="184.78260869565185" fill="#697582"><title>Wall D009: native extents</title></rect>
+<rect x="94.61956521740743" y="219.34782608695633" width="180.16304347826062" height="9.239130434782595" fill="#697582"><title>Wall D00B: native extents</title></rect>
+<rect x="270.16304347827673" y="223.96739130434761" width="9.239130434782567" height="55.43478260869554" fill="#697582"><title>Wall D00C: native extents</title></rect>
+<line x1="875.3260869565743" y1="842.9891304347816" x2="764.4565217391831" y2="842.9891304347826" stroke="#10a36b" stroke-width="4"><title>Opening CD84</title></line>
+<line x1="704.4021739130586" y1="842.9891304347816" x2="538.097826086972" y2="842.9891304347826" stroke="#10a36b" stroke-width="4"><title>Opening CD86</title></line>
+<line x1="524.2391304347981" y1="279.40217391304316" x2="413.36956521740694" y2="279.40217391304316" stroke="#10a36b" stroke-width="4"><title>Opening CD89</title></line>
+<line x1="328.36956521740706" y1="279.40217391304316" x2="286.7934782608854" y2="279.40217391304316" stroke="#10a36b" stroke-width="4"><title>Opening CD8B</title></line>
+<line x1="240.1358695652333" y1="223.96739130434761" x2="129.26630434784215" y2="223.96739130434761" stroke="#10a36b" stroke-width="4"><title>Opening CD8C</title></line>
+<line x1="704.4021739130586" y1="94.6195652173913" x2="593.5326086956675" y2="94.6195652173913" stroke="#10a36b" stroke-width="4"><title>Opening CD8E</title></line>
+<line x1="524.2391304347981" y1="94.6195652173913" x2="413.36956521740694" y2="94.6195652173913" stroke="#10a36b" stroke-width="4"><title>Opening CD90</title></line>
+<line x1="297.8804347826245" y1="935.3804347826077" x2="187.01086956523338" y2="935.3804347826084" stroke="#10a36b" stroke-width="4"><title>Opening CD92</title></line>
+<line x1="722.8804347826239" y1="584.2934782608675" x2="681.3043478261021" y2="584.2934782608675" stroke="#10a36b" stroke-width="4"><title>Opening CD96</title></line>
+<line x1="788.4782608698439" y1="187.01086956521723" x2="746.9021739133223" y2="187.01086956521723" stroke="#10a36b" stroke-width="4"><title>Opening CD9C</title></line>
+<line x1="330.2173913049659" y1="667.4456521739121" x2="288.64130434844424" y2="667.4456521739121" stroke="#10a36b" stroke-width="4"><title>Opening CD9F</title></line>
+<line x1="274.78260869566805" y1="741.3586956521622" x2="274.78260869566805" y2="704.4021739130318" stroke="#10a36b" stroke-width="4"><title>Opening CDA1</title></line>
+<line x1="736.7391304347977" y1="636.9565217391269" x2="736.7391304347977" y2="595.3804347826052" stroke="#10a36b" stroke-width="4"><title>Opening CDA4</title></line>
+<line x1="736.7391304347977" y1="547.3369565215071" x2="736.7391304347977" y2="510.38043478237677" stroke="#10a36b" stroke-width="4"><title>Opening CDA6</title></line>
+<line x1="736.7391304347977" y1="408.7500000001042" x2="736.7391304347977" y2="367.1739130435825" stroke="#10a36b" stroke-width="4"><title>Opening CDA8</title></line>
+<line x1="145.4347826087117" y1="646.6576086956513" x2="145.4347826087117" y2="605.0815217391296" stroke="#10a36b" stroke-width="4"><title>Opening CDAF</title></line>
+<line x1="903.0434782608844" y1="651.2771739130936" x2="903.0434782608844" y2="609.701086956572" stroke="#10a36b" stroke-width="4"><title>Opening CDB2</title></line>
+<line x1="94.61956521740743" y1="556.5760869565211" x2="94.61956521740743" y2="459.56521739130375" stroke="#10a36b" stroke-width="4"><title>Opening CDB5</title></line>
+<line x1="274.78260869566805" y1="408.0068131126132" x2="274.78260869566805" y2="366.4307261560915" stroke="#10a36b" stroke-width="4"><title>Opening CDB9</title></line>
+<line x1="561.1956521739285" y1="242.4456521739128" x2="561.1956521739285" y2="131.57608695652166" stroke="#10a36b" stroke-width="4"><title>Opening CDBD</title></line>
+<line x1="789.8641304347976" y1="672.0652173913035" x2="789.8641304347976" y2="635.1086956521731" stroke="#10a36b" stroke-width="4"><title>Opening CDBF</title></line>
+<line x1="903.0434782608844" y1="565.8152173913522" x2="903.0434782608844" y2="524.2391304348305" stroke="#10a36b" stroke-width="4"><title>Opening CE48</title></line>
+<line x1="903.0434782608844" y1="480.35326086956076" x2="903.0434782608844" y2="438.77717391303906" stroke="#10a36b" stroke-width="4"><title>Opening CF62</title></line>
+<line x1="831.4402173912661" y1="547.33695652144" x2="831.4402173912829" y2="510.3804347823096" stroke="#10a36b" stroke-width="4"><title>Opening CF65</title></line>
+<line x1="831.4402173912887" y1="496.5217391294191" x2="831.4402173913032" y2="459.5652173902887" stroke="#10a36b" stroke-width="4"><title>Opening CF69</title></line>
+<line x1="330.2173913049713" y1="584.2934782608688" x2="288.6413043484496" y2="584.2934782608688" stroke="#10a36b" stroke-width="4"><title>Opening CFB8</title></line>
+<line x1="145.4347826087117" y1="729.8097826086946" x2="145.4347826087117" y2="688.233695652173" stroke="#10a36b" stroke-width="4"><title>Opening D005</title></line>
+<line x1="274.78260869566805" y1="658.2065217392156" x2="274.78260869566805" y2="616.6304347826939" stroke="#10a36b" stroke-width="4"><title>Opening D007</title></line>
+<line x1="376.41304347827656" y1="270.1630434782552" x2="376.41304347827656" y2="228.58695652173353" stroke="#10a36b" stroke-width="4"><title>Opening D00A</title></line>
+<line x1="94.61956521740743" y1="90.0" x2="94.61956521740743" y2="940.0" stroke="#cb790c" stroke-width=".8" stroke-dasharray="8 5"/><text x="91.61956521740743" y="72.0" fill="#9c5800">1?</text>
+<line x1="145.4347826087117" y1="90.0" x2="145.4347826087117" y2="940.0" stroke="#cb790c" stroke-width=".8" stroke-dasharray="8 5"/><text x="142.4347826087117" y="72.0" fill="#9c5800">2?</text>
+<line x1="274.78260869566805" y1="90.0" x2="274.78260869566805" y2="940.0" stroke="#cb790c" stroke-width=".8" stroke-dasharray="8 5"/><text x="271.78260869566805" y="72.0" fill="#9c5800">3?</text>
+<line x1="339.4565217391462" y1="90.0" x2="339.4565217391462" y2="940.0" stroke="#cb790c" stroke-width=".8" stroke-dasharray="8 5"/><text x="336.4565217391462" y="72.0" fill="#9c5800">4?</text>
+<line x1="376.41304347827656" y1="90.0" x2="376.41304347827656" y2="940.0" stroke="#cb790c" stroke-width=".8" stroke-dasharray="8 5"/><text x="373.41304347827656" y="72.0" fill="#9c5800">5?</text>
+<line x1="505.7608695652329" y1="90.0" x2="505.7608695652329" y2="940.0" stroke="#cb790c" stroke-width=".8" stroke-dasharray="8 5"/><text x="502.7608695652329" y="72.0" fill="#9c5800">6?</text>
+<line x1="561.1956521739285" y1="90.0" x2="561.1956521739285" y2="940.0" stroke="#cb790c" stroke-width=".8" stroke-dasharray="8 5"/><text x="558.1956521739285" y="72.0" fill="#9c5800">7?</text>
+<line x1="672.0652173913196" y1="90.0" x2="672.0652173913196" y2="940.0" stroke="#cb790c" stroke-width=".8" stroke-dasharray="8 5"/><text x="669.0652173913196" y="72.0" fill="#9c5800">8?</text>
+<line x1="736.7391304347977" y1="90.0" x2="736.7391304347977" y2="940.0" stroke="#cb790c" stroke-width=".8" stroke-dasharray="8 5"/><text x="733.7391304347977" y="72.0" fill="#9c5800">9?</text>
+<line x1="903.0434782608844" y1="90.0" x2="903.0434782608844" y2="940.0" stroke="#cb790c" stroke-width=".8" stroke-dasharray="8 5"/><text x="900.0434782608844" y="72.0" fill="#9c5800">10?</text>
+<line x1="90.0" y1="935.3804347826074" x2="907.6630434782758" y2="935.3804347826074" stroke="#cb790c" stroke-width=".8" stroke-dasharray="8 5"/><text x="55.0" y="938.3804347826074" fill="#9c5800">A?</text>
+<line x1="90.0" y1="842.9891304347814" x2="907.6630434782758" y2="842.9891304347814" stroke="#cb790c" stroke-width=".8" stroke-dasharray="8 5"/><text x="55.0" y="845.9891304347814" fill="#9c5800">B?</text>
+<line x1="90.0" y1="755.2173913043467" x2="907.6630434782758" y2="755.2173913043467" stroke="#cb790c" stroke-width=".8" stroke-dasharray="8 5"/><text x="55.0" y="758.2173913043467" fill="#9c5800">C?</text>
+<line x1="90.0" y1="750.5978260869555" x2="907.6630434782758" y2="750.5978260869555" stroke="#cb790c" stroke-width=".8" stroke-dasharray="8 5"/><text x="55.0" y="753.5978260869555" fill="#9c5800">D?</text>
+<line x1="90.0" y1="667.4456521739121" x2="907.6630434782758" y2="667.4456521739121" stroke="#cb790c" stroke-width=".8" stroke-dasharray="8 5"/><text x="55.0" y="670.4456521739121" fill="#9c5800">E?</text>
+<line x1="90.0" y1="584.2934782609037" x2="907.6630434782758" y2="584.2934782609037" stroke="#cb790c" stroke-width=".8" stroke-dasharray="8 5"/><text x="55.0" y="587.2934782609037" fill="#9c5800">F?</text>
+<line x1="90.0" y1="417.9891304347821" x2="907.6630434782758" y2="417.9891304347821" stroke="#cb790c" stroke-width=".8" stroke-dasharray="8 5"/><text x="55.0" y="420.9891304347821" fill="#9c5800">G?</text>
+<line x1="90.0" y1="344.07608695652" x2="907.6630434782758" y2="344.07608695652" stroke="#cb790c" stroke-width=".8" stroke-dasharray="8 5"/><text x="55.0" y="347.07608695652" fill="#9c5800">H?</text>
+<line x1="90.0" y1="279.4021739130445" x2="907.6630434782758" y2="279.4021739130445" stroke="#cb790c" stroke-width=".8" stroke-dasharray="8 5"/><text x="55.0" y="282.4021739130445" fill="#9c5800">J?</text>
+<line x1="90.0" y1="223.96739130434761" x2="907.6630434782758" y2="223.96739130434761" stroke="#cb790c" stroke-width=".8" stroke-dasharray="8 5"/><text x="55.0" y="226.96739130434761" fill="#9c5800">K?</text>
+<line x1="90.0" y1="187.01086956521723" x2="907.6630434782758" y2="187.01086956521723" stroke="#cb790c" stroke-width=".8" stroke-dasharray="8 5"/><text x="55.0" y="190.01086956521723" fill="#9c5800">L?</text>
+<line x1="90.0" y1="94.6195652173913" x2="907.6630434782758" y2="94.6195652173913" stroke="#cb790c" stroke-width=".8" stroke-dasharray="8 5"/><text x="55.0" y="97.6195652173913" fill="#9c5800">M?</text>
+<text x="16" y="1053.0">Gray: native wall extents / Green: matched openings / Orange: unconfirmed axis candidates</text>
+</g></svg>

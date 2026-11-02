@@ -1,0 +1,25 @@
+{
+  "contract": "bcp.stage2.final-audit.v1",
+  "recorded": "2026-10-30T16:41:46.393927+08:00",
+  "latestNative": "v9",
+  "sourceMatchesBoundCandidate": true,
+  "moduleSHA256": "AEB501F4289BF2A9F0B6BC7211245359C8011CD61599F06E3101565A09FF5FCB",
+  "confirmedAxes": 20,
+  "nativeDimensions": 36,
+  "issues17": true,
+  "userQ1Q6Applied": true,
+  "deliveryFingerprintsMatch": true,
+  "sourceGeometryScope": "93 public wall/opening geometries +34 text extents",
+  "stoppedAndCleanedSessions": 7,
+  "allSixSnapshotsUnchanged": true,
+  "sharedStartupRegistrationsUnchanged": true,
+  "latestWindowObservations": {
+    "samples": 508,
+    "ownedUserDesktopShows": 0,
+    "ownedForegroundEvents": 0,
+    "supervisorErrors": [],
+    "strictAllChecksPassed": true
+  },
+  "normalQuitPassed": false,
+  "stage2Complete": false
+}

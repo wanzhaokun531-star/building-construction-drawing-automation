@@ -1,0 +1,22 @@
+test_bigfont_failure_is_not_exact_font_pass (__main__.PureNativeAcceptance.test_bigfont_failure_is_not_exact_font_pass) ... ok
+test_changed_original_is_rejected (__main__.PureNativeAcceptance.test_changed_original_is_rejected) ... ok
+test_complete_actual_entity_set_is_accepted (__main__.PureNativeAcceptance.test_complete_actual_entity_set_is_accepted) ... ok
+test_duplicate_native_sample_is_rejected (__main__.PureNativeAcceptance.test_duplicate_native_sample_is_rejected) ... ok
+test_equal_names_but_different_physical_files_are_rejected (__main__.PureNativeAcceptance.test_equal_names_but_different_physical_files_are_rejected) ... ok
+test_exact_loaded_fonts_are_accepted (__main__.PureNativeAcceptance.test_exact_loaded_fonts_are_accepted) ... ok
+test_extension_completion_requires_same_physical_files (__main__.PureNativeAcceptance.test_extension_completion_requires_same_physical_files) ... ok
+test_loaded_font_filename_change_is_not_exact (__main__.PureNativeAcceptance.test_loaded_font_filename_change_is_not_exact) ... ok
+test_missing_native_sample_is_rejected (__main__.PureNativeAcceptance.test_missing_native_sample_is_rejected) ... ok
+test_saved_original_change_is_rejected (__main__.PureNativeAcceptance.test_saved_original_change_is_rejected) ... ok
+test_saved_root_replacement_is_rejected (__main__.PureNativeAcceptance.test_saved_root_replacement_is_rejected) ... ok
+test_saved_valid_native_text_fixture (__main__.PureNativeAcceptance.test_saved_valid_native_text_fixture) ... ok
+test_saved_wrong_model_count_is_rejected (__main__.PureNativeAcceptance.test_saved_wrong_model_count_is_rejected) ... ok
+test_substitution_is_not_exact_font_pass (__main__.PureNativeAcceptance.test_substitution_is_not_exact_font_pass) ... ok
+test_ttf_face_cannot_be_proved_by_shx_filename (__main__.PureNativeAcceptance.test_ttf_face_cannot_be_proved_by_shx_filename) ... ok
+test_unresolved_font_file_is_not_exact (__main__.PureNativeAcceptance.test_unresolved_font_file_is_not_exact) ... ok
+test_wrong_native_sample_type_is_rejected (__main__.PureNativeAcceptance.test_wrong_native_sample_type_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.001s
+
+OK

@@ -1,0 +1,1013 @@
+--- D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-174017-436-r1-fix-round1-final-9a0485e9\input\src\Recognition.h
++++ D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-180033-681-a1-evidence-green-785b9776\input\src\Recognition.h
+@@ -1,6 +1,7 @@
+ #ifndef BCE_RECOGNITION_H
+ #define BCE_RECOGNITION_H
+ #include "ElevationModel.h"
++#include "RuleModel.h"
+ 
+ namespace bce {
+ namespace diagnostic {
+@@ -70,7 +71,10 @@
+     std::vector<Issue> unconfirmed;
+     std::optional<AxisChain> projectedAxes;
+ };
+-struct FeatureModel { std::vector<Feature> features; };
++struct FeatureModel {
++    std::vector<Feature> features;
++    RuleInputs rules; // Explicit semantic confirmation; R1 candidates are never promoted here.
++};
+ struct AnalysisResult {
+     std::string sourceSha256;
+     std::vector<View> views;
+--- /dev/null
++++ D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-180033-681-a1-evidence-green-785b9776\input\src\RuleModel.h
+@@ -0,0 +1,157 @@
++#ifndef BCE_RULE_MODEL_H
++#define BCE_RULE_MODEL_H
++#include "ElevationModel.h"
++
++namespace bce {
++enum class SemanticRole { bodyContour, level, opening, eave, ridge, localMoulding, planAxis, materialRegion };
++struct SourcePoint { Point2 position; EntityKey source; };
++struct ClosedRing { std::vector<Point2> vertices; bool closed{false}; };
++struct PolygonRegion { ClosedRing outer; std::vector<ClosedRing> holes; };
++enum class MaterialExpressionKind { hatch, lineDrawing, glassBlock };
++struct MaterialExpression {
++    MaterialExpressionKind kind{MaterialExpressionKind::hatch};
++    std::string prototypeId;
++    Point2 direction{1, 0};
++    double scale{1};
++    std::string patternName;
++};
++struct SemanticFeature {
++    std::string identity;
++    std::string viewIdentity;
++    SemanticRole role{SemanticRole::bodyContour};
++    bool confirmed{false};
++    std::string confirmationSource;
++    std::vector<SourcePoint> points;
++    bool confirmedRectangle{false};
++    bool fromConfirmedPlan{false};
++    std::optional<PolygonRegion> region;
++    std::vector<EntityKey> sources;
++    std::string materialKey;
++    std::string materialPrototypeId;
++    std::string tableViewIdentity;
++    std::string sharedTableIdentity;
++    bool requestConstructionNote{false};
++    std::string construction;
++    std::string detailId;
++};
++struct RuleView {
++    std::string viewIdentity;
++    std::string familyId;
++    double scaleDenominator{100};
++    std::optional<SourcePoint> datum;
++    std::string datumConfirmationSource;
++    double datumMeters{0};
++    Point2 heightDirection{0, 1};
++    std::vector<SemanticRole> requiredRoles{SemanticRole::bodyContour, SemanticRole::level};
++    bool requirePlanAxes{true};
++};
++enum class CapabilityState { unverified, unsupported, verified };
++struct NativeRuleCapabilities {
++    CapabilityState fieldSetter{CapabilityState::unverified};
++    CapabilityState glyphPreparation{CapabilityState::unverified};
++};
++struct ReferenceFamily {
++    std::string identity;
++    bool approved{false};
++    std::string approvalSource;
++    std::vector<SemanticRole> roles;
++    // Explicit layout lanes; their count is never inferred from building size.
++    std::vector<double> laneOffsetsPaperMm;
++    double textHeightPaperMm{2.975};
++    double textWidthFactor{0.7058823529411765};
++    int dimensionDecimals{0};
++    std::string variant;
++};
++struct MaterialPrototype { MaterialExpression expression; bool approved{false}; std::string approvalSource; };
++struct ReferenceStandard {
++    std::string referenceSha256;
++    std::vector<ReferenceFamily> families;
++    std::vector<MaterialPrototype> materialPrototypes;
++    NativeRuleCapabilities nativeCapabilities;
++};
++struct MaterialOverride {
++    std::string key;
++    std::string number;
++    std::string name;
++    std::optional<std::string> prototypeId;
++};
++struct RuleInputs {
++    std::vector<RuleView> views;
++    std::vector<SemanticFeature> semanticFeatures;
++    std::vector<MaterialOverride> materialOverrides;
++};
++struct DimensionStation {
++    double coordinateInput{0}; // Relative to the explicitly recorded chain origin.
++    std::vector<SourcePoint> sourcePoints;
++    std::vector<Point2> projectedPoints; // Derived points, never source geometry.
++};
++struct DimensionSegment {
++    double measuredMm{0};
++    std::string display;
++};
++struct DimensionChain {
++    std::string viewIdentity;
++    std::string featureIdentity;
++    std::string purpose;
++    Point2 origin;
++    Point2 direction;
++    std::vector<DimensionStation> stations;
++    std::vector<DimensionSegment> segments;
++    int displayDecimals{0};
++    std::vector<std::string> semanticFeatureIdentities;
++};
++struct LevelMark {
++    std::string viewIdentity;
++    std::string featureIdentity;
++    SourcePoint actualPoint;
++    SourcePoint datum;
++    Point2 heightDirection;
++    double meters{0};
++    std::string display;
++};
++struct AnnotationLayout {
++    std::string viewIdentity;
++    std::string familyId;
++    double scaleDenominator{100};
++    double textHeightInput{0};
++    double textWidthFactor{0};
++    std::vector<double> laneOffsetsInput;
++};
++struct AnnotationPlan {
++    std::string referenceSha256;
++    std::vector<DimensionChain> chains;
++    std::vector<LevelMark> levels;
++    std::vector<AnnotationLayout> layouts;
++    NativeRuleCapabilities nativeCapabilities;
++    double mmPerInputUnit{0};
++    UnitDeclaration unitDeclaration;
++    std::string unitConfirmationSource;
++    std::vector<RuleView> viewEvidence;
++    std::vector<SemanticFeature> semanticEvidence;
++};
++struct MaterialRegionPlan {
++    std::string identity;
++    std::string viewIdentity;
++    std::string tableViewIdentity;
++    std::string sharedTableIdentity;
++    std::vector<EntityKey> sources;
++    std::string confirmationSource;
++    PolygonRegion geometry;
++    double areaSquareMm{0};
++    std::string materialNumber;
++    std::string materialName;
++    MaterialExpression expression;
++    std::optional<std::string> constructionNote;
++    std::string familyId;
++    std::string prototypeApprovalSource;
++};
++struct MaterialPlan {
++    std::string referenceSha256;
++    std::vector<MaterialRegionPlan> regions;
++    NativeRuleCapabilities nativeCapabilities;
++    double mmPerInputUnit{0};
++    UnitDeclaration unitDeclaration;
++    std::string unitConfirmationSource;
++};
++}
++#endif
+--- /dev/null
++++ D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-180033-681-a1-evidence-green-785b9776\input\src\AnnotationRules.h
+@@ -0,0 +1,7 @@
++#ifndef BCE_ANNOTATION_RULES_H
++#define BCE_ANNOTATION_RULES_H
++#include "Recognition.h"
++namespace bce {
++[[nodiscard]] Result<AnnotationPlan> planAnnotations(const FeatureModel&, const ReferenceStandard&, const ProjectConfig&);
++}
++#endif
+--- /dev/null
++++ D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-180033-681-a1-evidence-green-785b9776\input\src\AnnotationRules.cpp
+@@ -0,0 +1,241 @@
++#include "AnnotationRules.h"
++#include <cmath>
++#include <iomanip>
++#include <locale>
++#include <set>
++#include <sstream>
++#include <utility>
++
++namespace bce {
++namespace {
++bool finite(Point2 p) { return std::isfinite(p.x) && std::isfinite(p.y); }
++bool validKey(const EntityKey& key, const ProjectConfig& config) {
++    return !config.databaseIdentity.empty() && key.databaseIdentity == config.databaseIdentity && key == key;
++}
++bool validSha(const std::string& sha) {
++    return sha.size() == 64 && std::all_of(sha.begin(), sha.end(), [](char c) {
++        return (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f');
++    });
++}
++std::optional<EntityKey> source(const SemanticFeature* feature) {
++    if (!feature) { return std::nullopt; }
++    if (!feature->points.empty()) { return feature->points.front().source; }
++    if (!feature->sources.empty()) { return feature->sources.front(); }
++    return std::nullopt;
++}
++void issue(Result<AnnotationPlan>& r, const char* code, const char* message,
++    const std::string& view = "", const SemanticFeature* feature = nullptr) {
++    r.issues.push_back({code, message, {"", view, source(feature)}, true});
++}
++double projection(Point2 p, Point2 origin, Point2 direction) {
++    return (p.x - origin.x) * direction.x + (p.y - origin.y) * direction.y;
++}
++std::string display(double value, int decimals, bool signedLevel = false) {
++    // Normalize display-only negative zero without modifying measured geometry.
++    const auto threshold = 0.5 * std::pow(10.0, -decimals);
++    const auto shown = std::abs(value) < threshold ? 0.0 : value;
++    std::ostringstream out; out.imbue(std::locale::classic());
++    if (signedLevel) { out << (shown == 0.0 ? u8"±" : shown > 0.0 ? "+" : ""); }
++    out << std::fixed << std::setprecision(decimals) << shown; return out.str();
++}
++const ReferenceFamily* familyFor(const RuleView& view, const ReferenceStandard& standard) {
++    const ReferenceFamily* match = nullptr;
++    for (const auto& family : standard.families) {
++        if (family.identity != view.familyId) { continue; }
++        if (match) { return nullptr; }
++        match = &family;
++    }
++    if (!match || view.familyId.empty() || !match->approved || match->approvalSource.empty()) { return nullptr; }
++    return match;
++}
++bool validFamily(const ReferenceFamily& family) {
++    if (!std::isfinite(family.textHeightPaperMm) || family.textHeightPaperMm <= 0 ||
++        !std::isfinite(family.textWidthFactor) || family.textWidthFactor <= 0 ||
++        family.dimensionDecimals < 0 || family.dimensionDecimals > 10 || family.laneOffsetsPaperMm.empty()) { return false; }
++    double previous = 0;
++    for (const auto offset : family.laneOffsetsPaperMm) {
++        if (!std::isfinite(offset) || offset <= previous) { return false; }
++        previous = offset;
++    }
++    return true;
++}
++std::vector<SourcePoint> extremes(const std::vector<SourcePoint>& points, Point2 origin, Point2 direction) {
++    std::vector<SourcePoint> selected;
++    if (points.empty()) { return selected; }
++    auto low = projection(points[0].position, origin, direction); auto high = low;
++    for (const auto& p : points) { const auto c = projection(p.position, origin, direction); low = (std::min)(low, c); high = (std::max)(high, c); }
++    for (const auto& p : points) { const auto c = projection(p.position, origin, direction); if (c == low || c == high) { selected.push_back(p); } }
++    return selected;
++}
++bool addChain(Result<AnnotationPlan>& result, const RuleView& view, const ReferenceFamily& family,
++    const std::string& identity, const char* purpose, const std::vector<SourcePoint>& points,
++    Point2 direction, double unit, bool mustSpan = true, const std::vector<std::string>& semanticIds = {}) {
++    DimensionChain chain; chain.viewIdentity = view.viewIdentity; chain.featureIdentity = identity;
++    chain.purpose = purpose; chain.origin = view.datum->position; chain.direction = direction;
++    chain.displayDecimals = family.dimensionDecimals;
++    chain.semanticFeatureIdentities = semanticIds.empty() ? std::vector<std::string>{identity} : semanticIds;
++    std::vector<std::pair<double, SourcePoint>> sorted;
++    for (const auto& p : points) {
++        const auto c = projection(p.position, chain.origin, direction);
++        const Point2 projected{chain.origin.x + c * direction.x, chain.origin.y + c * direction.y};
++        if (!std::isfinite(c) || !finite(projected)) {
++            result.issues.push_back({"NONFINITE_RULE_GEOMETRY", u8"测点投影溢出或非有限，不能制定尺寸链。", {"", view.viewIdentity, p.source}, true}); return false;
++        }
++        sorted.push_back({c, p});
++    }
++    std::stable_sort(sorted.begin(), sorted.end(), [](const auto& a, const auto& b) { return a.first < b.first; });
++    for (const auto& item : sorted) {
++        if (chain.stations.empty() || chain.stations.back().coordinateInput != item.first) {
++            chain.stations.push_back({item.first, {}, {}});
++        }
++        auto& station = chain.stations.back(); station.sourcePoints.push_back(item.second);
++        station.projectedPoints.push_back({chain.origin.x + item.first * direction.x, chain.origin.y + item.first * direction.y});
++    }
++    if (chain.stations.size() < 2) {
++        if (mustSpan) { issue(result,"INSUFFICIENT_RULE_GEOMETRY",u8"尺寸链需要至少两个不同的实际测站。",view.viewIdentity); return false; }
++        return true; // Coincident positioning has no zero-length dimension.
++    }
++    for (std::size_t i = 1; i < chain.stations.size(); ++i) {
++        const auto measured = (chain.stations[i].coordinateInput - chain.stations[i - 1].coordinateInput) * unit;
++        if (!std::isfinite(measured) || measured <= 0) {
++            issue(result,"NONFINITE_RULE_GEOMETRY",u8"实际尺寸测值溢出、非有限或不递增。",view.viewIdentity); return false;
++        }
++        chain.segments.push_back({measured, display(measured, family.dimensionDecimals)});
++    }
++    result.value->chains.push_back(std::move(chain)); return true;
++}
++bool rectangle(const SemanticFeature& feature, Point2 origin, Point2 width, Point2 height) {
++    if (feature.points.size() != 4) { return false; }
++    std::vector<double> xs, ys;
++    std::set<std::pair<double,double>> corners;
++    for (const auto& p : feature.points) {
++        const auto x = projection(p.position, origin, width); const auto y = projection(p.position, origin, height);
++        if (!std::isfinite(x) || !std::isfinite(y)) { return false; }
++        xs.push_back(x); ys.push_back(y); corners.emplace(x,y);
++    }
++    std::sort(xs.begin(),xs.end()); xs.erase(std::unique(xs.begin(),xs.end()),xs.end());
++    std::sort(ys.begin(),ys.end()); ys.erase(std::unique(ys.begin(),ys.end()),ys.end());
++    return xs.size()==2 && ys.size()==2 && corners.size()==4;
++}
++void addLevels(Result<AnnotationPlan>& result, const SemanticFeature& feature, const RuleView& view,
++    Point2 height, double unit) {
++    for (const auto& p : feature.points) {
++        const auto meters = projection(p.position,view.datum->position,height) * unit / 1000.0 + view.datumMeters;
++        if (!std::isfinite(meters)) { issue(result,"NONFINITE_RULE_GEOMETRY",u8"实际标高投影溢出或非有限。",view.viewIdentity,&feature); continue; }
++        result.value->levels.push_back({view.viewIdentity,feature.identity,p,*view.datum,height,meters,display(meters,3,true)});
++    }
++}
++}
++
++Result<AnnotationPlan> planAnnotations(const FeatureModel& model, const ReferenceStandard& standard, const ProjectConfig& config) {
++    Result<AnnotationPlan> result; result.value.emplace(); result.value->referenceSha256 = standard.referenceSha256;
++    result.value->nativeCapabilities = standard.nativeCapabilities;
++    if (!validSha(standard.referenceSha256)) { issue(result,"REFERENCE_STANDARD_REQUIRED",u8"参考标准缺少有效的源SHA256绑定。"); }
++    const auto units = resolveUnits(config.units);
++    if (!units.canCommit()) { result.issues.insert(result.issues.end(),units.issues.begin(),units.issues.end()); return result; }
++    const auto unit = units.value->mmPerInputUnit;
++    result.value->mmPerInputUnit = unit;
++    result.value->unitDeclaration = config.units;
++    result.value->unitConfirmationSource = config.unitConfirmationSource;
++    if (model.rules.views.empty()) { issue(result,"SEMANTIC_ROLE_REQUIRED",u8"缺少明确视图和已确认构件语义。"); return result; }
++    std::set<std::string> viewIds;
++    for (const auto& view : model.rules.views) {
++        if (view.viewIdentity.empty() || !viewIds.insert(view.viewIdentity).second) {
++            issue(result,"AMBIGUOUS_RULE_VIEW",u8"视图ID缺失或重复，无法唯一关联标注。",view.viewIdentity); continue;
++        }
++        const auto* family = familyFor(view,standard);
++        if (!family || !validFamily(*family)) { issue(result,"REFERENCE_FAMILY_REQUIRED",u8"必须明确选择参数完整且按角色核准的参考排法。",view.viewIdentity); continue; }
++        if (!std::isfinite(view.scaleDenominator) || view.scaleDenominator <= 0) { issue(result,"INVALID_RULE_SCALE",u8"出图比例分母必须为有限正数。",view.viewIdentity); continue; }
++        AnnotationLayout layout; layout.viewIdentity=view.viewIdentity; layout.familyId=family->identity;
++        layout.scaleDenominator=view.scaleDenominator; layout.textWidthFactor=family->textWidthFactor;
++        layout.textHeightInput=family->textHeightPaperMm*view.scaleDenominator/unit;
++        for(const auto offset:family->laneOffsetsPaperMm) { layout.laneOffsetsInput.push_back(offset*view.scaleDenominator/unit); }
++        if (!std::isfinite(layout.textHeightInput) || layout.textHeightInput <= 0 ||
++            std::any_of(layout.laneOffsetsInput.begin(),layout.laneOffsetsInput.end(),[](double x){return !std::isfinite(x)||x<=0;})) {
++            issue(result,"NONFINITE_RULE_GEOMETRY",u8"纸面参数换算溢出或非有限。",view.viewIdentity); continue;
++        }
++        result.value->layouts.push_back(std::move(layout));
++        if (!view.datum || view.datumConfirmationSource.empty() || !config.zeroLevel.confirmed || config.zeroLevel.source.empty()) {
++            issue(result,"DATUM_REQUIRED",u8"一层零点规则必须关联已确认的实际基准点及确认来源。",view.viewIdentity); continue;
++        }
++        const auto norm=std::hypot(view.heightDirection.x,view.heightDirection.y);
++        if(!finite(view.datum->position)||!validKey(view.datum->source,config)||!std::isfinite(view.datumMeters)||
++            !finite(view.heightDirection)||!std::isfinite(norm)||norm<=0) {
++            issue(result,"DATUM_REQUIRED",u8"实际基准点、来源、标高值或高度方向无效。",view.viewIdentity); continue;
++        }
++        const Point2 height{view.heightDirection.x/norm,view.heightDirection.y/norm}; const Point2 width{height.y,-height.x};
++        result.value->viewEvidence.push_back(view);
++        std::vector<const SemanticFeature*> confirmed; std::set<std::string> featureIds;
++        for(const auto& f:model.rules.semanticFeatures) {
++            if(f.viewIdentity!=view.viewIdentity || f.role==SemanticRole::materialRegion) { continue; }
++            if(f.identity.empty()||!featureIds.insert(f.identity).second) {issue(result,"AMBIGUOUS_RULE_FEATURE",u8"构件ID缺失或重复。",view.viewIdentity,&f);continue;}
++            if(!f.confirmed||f.confirmationSource.empty()) {issue(result,"SEMANTIC_CONFIRMATION_REQUIRED",u8"构件仍为候选，需明确角色和实际几何确认。",view.viewIdentity,&f);continue;}
++            if(std::find(family->roles.begin(),family->roles.end(),f.role)==family->roles.end()) {issue(result,"REFERENCE_FAMILY_REQUIRED",u8"所选排法尚未核准用于该构件角色。",view.viewIdentity,&f);continue;}
++            if(f.points.empty()||std::any_of(f.points.begin(),f.points.end(),[&](const SourcePoint& p){return !finite(p.position)||!validKey(p.source,config);})) {
++                issue(result,"INSUFFICIENT_RULE_GEOMETRY",u8"缺少有效实际几何点或源对象身份。",view.viewIdentity,&f);continue;
++            }
++            if(std::any_of(f.points.begin(),f.points.end(),[&](const SourcePoint& p){return !std::isfinite(projection(p.position,view.datum->position,height))||!std::isfinite(projection(p.position,view.datum->position,width));})) {
++                issue(result,"NONFINITE_RULE_GEOMETRY",u8"实际构件相对基准投影溢出。",view.viewIdentity,&f);continue;
++            }
++            confirmed.push_back(&f);
++            result.value->semanticEvidence.push_back(f);
++        }
++        for(const auto role:view.requiredRoles) {
++            if(std::none_of(confirmed.begin(),confirmed.end(),[&](const SemanticFeature* f){return f->role==role;})) {issue(result,"SEMANTIC_ROLE_REQUIRED",u8"所需构件角色缺少已确认几何。",view.viewIdentity);}
++        }
++        std::vector<const SemanticFeature*> bodies;
++        for(const auto* f:confirmed) {if(f->role==SemanticRole::bodyContour) {bodies.push_back(f);}}
++        if(bodies.size()!=1) {issue(result,"SEMANTIC_ROLE_REQUIRED",u8"每视图需要唯一确认的主体轮廓；多个主体须先明确分组。",view.viewIdentity);continue;}
++        const auto& body=*bodies[0];
++        const auto bx=extremes(body.points,view.datum->position,width); const auto by=extremes(body.points,view.datum->position,height);
++        addChain(result,view,*family,body.identity,"body-horizontal",bx,width,unit);
++        addChain(result,view,*family,body.identity,"body-vertical",by,height,unit);
++        const auto left=*std::min_element(body.points.begin(),body.points.end(),[&](const SourcePoint& a,const SourcePoint& b){return projection(a.position,view.datum->position,width)<projection(b.position,view.datum->position,width);});
++        bool actualPlan=false;
++        std::vector<SourcePoint> floorPoints;
++        std::vector<std::string> floorIdentities;
++        for (const auto* f : confirmed) {
++            if (f->role == SemanticRole::level) {
++                floorPoints.insert(floorPoints.end(), f->points.begin(), f->points.end());
++                floorIdentities.push_back(f->identity);
++            }
++        }
++        if (!floorPoints.empty()) {
++            addChain(result, view, *family, view.viewIdentity + ":floor-levels", "floor-levels",
++                floorPoints, height, unit, true, floorIdentities);
++        }
++        for(const auto* f:confirmed) {
++            switch(f->role) {
++            case SemanticRole::bodyContour: break;
++            case SemanticRole::level:
++                addLevels(result,*f,view,height,unit); break;
++            case SemanticRole::planAxis:
++                if(!f->fromConfirmedPlan) {issue(result,"PLAN_REQUIRED",u8"轴位链必须来自已确认的配套平面，不能从立面猜轴。",view.viewIdentity,f);break;}
++                actualPlan=true;addChain(result,view,*family,f->identity,"plan-axis",f->points,width,unit);break;
++            case SemanticRole::opening: {
++                if(!f->confirmedRectangle) {issue(result,"RECTANGLE_CONFIRMATION_REQUIRED",u8"洞口矩形边界尚未确认。",view.viewIdentity,f);break;}
++                if(!rectangle(*f,view.datum->position,width,height)) {issue(result,"INVALID_OPENING_GEOMETRY",u8"洞口需要四个有效的正交矩形实际角点。",view.viewIdentity,f);break;}
++                addChain(result,view,*family,f->identity,"opening-width",extremes(f->points,view.datum->position,width),width,unit);
++                addChain(result,view,*family,f->identity,"opening-height",extremes(f->points,view.datum->position,height),height,unit);
++                const auto openingLeft=*std::min_element(f->points.begin(),f->points.end(),[&](const SourcePoint& a,const SourcePoint& b){return projection(a.position,view.datum->position,width)<projection(b.position,view.datum->position,width);});
++                const auto openingBottom=*std::min_element(f->points.begin(),f->points.end(),[&](const SourcePoint& a,const SourcePoint& b){return projection(a.position,view.datum->position,height)<projection(b.position,view.datum->position,height);});
++                addChain(result,view,*family,f->identity,"opening-horizontal-location",{left,openingLeft},width,unit,false);
++                addChain(result,view,*family,f->identity,"opening-vertical-location",{*view.datum,openingBottom},height,unit,false); break;
++            }
++            case SemanticRole::eave: case SemanticRole::ridge: case SemanticRole::localMoulding:
++                addChain(result,view,*family,f->identity,"component-horizontal",extremes(f->points,view.datum->position,width),width,unit,false);
++                addChain(result,view,*family,f->identity,"component-vertical",extremes(f->points,view.datum->position,height),height,unit,false);
++                addChain(result,view,*family,f->identity,"component-horizontal-location",{left,f->points.front()},width,unit,false);
++                addChain(result,view,*family,f->identity,"component-vertical-location",{*view.datum,f->points.front()},height,unit,false);
++                addLevels(result,*f,view,height,unit);break;
++            case SemanticRole::materialRegion: break;
++            }
++        }
++        if(view.requirePlanAxes&&!actualPlan) {issue(result,"PLAN_REQUIRED",u8"缺少已确认的配套平面轴位；保留轴网待补诊断。",view.viewIdentity);}
++    }
++    for(const auto& f:model.rules.semanticFeatures) {
++        if(f.role!=SemanticRole::materialRegion&&viewIds.find(f.viewIdentity)==viewIds.end()) {issue(result,"AMBIGUOUS_RULE_VIEW",u8"构件没有关联到唯一明确的视图。",f.viewIdentity,&f);}
++    }
++    return result;
++}
++}
+--- /dev/null
++++ D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-180033-681-a1-evidence-green-785b9776\input\src\MaterialRules.h
+@@ -0,0 +1,8 @@
++#ifndef BCE_MATERIAL_RULES_H
++#define BCE_MATERIAL_RULES_H
++#include "Recognition.h"
++namespace bce {
++[[nodiscard]] Result<MaterialPlan> planMaterials(const FeatureModel&, const ReferenceStandard&, const ProjectConfig&);
++[[nodiscard]] bool materialContains(const MaterialRegionPlan&, Point2);
++}
++#endif
+--- /dev/null
++++ D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-180033-681-a1-evidence-green-785b9776\input\src\MaterialRules.cpp
+@@ -0,0 +1,200 @@
++#include "MaterialRules.h"
++#include <cmath>
++#include <set>
++#include <utility>
++
++namespace bce {
++namespace {
++bool finite(Point2 p) { return std::isfinite(p.x)&&std::isfinite(p.y); }
++bool same(Point2 a,Point2 b) { return a.x==b.x&&a.y==b.y; }
++bool validSha(const std::string& sha) {
++    return sha.size()==64&&std::all_of(sha.begin(),sha.end(),[](char c){return (c>='0'&&c<='9')||(c>='A'&&c<='F')||(c>='a'&&c<='f');});
++}
++void issue(Result<MaterialPlan>& r,const char* code,const char* message,const SemanticFeature* f=nullptr) {
++    const auto entity=f&&!f->sources.empty()?std::optional<EntityKey>(f->sources.front()):std::nullopt;
++    r.issues.push_back({code,message,{"",f?f->viewIdentity:"",entity},true});
++}
++std::vector<Point2> vertices(const ClosedRing& r) {
++    auto v=r.vertices;if(v.size()>1&&same(v.front(),v.back())) {v.pop_back();}return v;
++}
++double cross(Point2 a,Point2 b,Point2 c) {return (b.x-a.x)*(c.y-a.y)-(b.y-a.y)*(c.x-a.x);}
++bool onSegment(Point2 p,Point2 a,Point2 b) {
++    return p.x>=(std::min)(a.x,b.x)&&p.x<=(std::max)(a.x,b.x)&&p.y>=(std::min)(a.y,b.y)&&p.y<=(std::max)(a.y,b.y);
++}
++bool intersects(Point2 a,Point2 b,Point2 c,Point2 d,bool& valid) {
++    const auto ac=cross(a,b,c),ad=cross(a,b,d),ca=cross(c,d,a),cb=cross(c,d,b);
++    if(!std::isfinite(ac)||!std::isfinite(ad)||!std::isfinite(ca)||!std::isfinite(cb)) {valid=false;return true;}
++    if((ac==0&&onSegment(c,a,b))||(ad==0&&onSegment(d,a,b))||(ca==0&&onSegment(a,c,d))||(cb==0&&onSegment(b,c,d))) {return true;}
++    return ((ac>0&&ad<0)||(ac<0&&ad>0))&&((ca>0&&cb<0)||(ca<0&&cb>0));
++}
++enum class Location { outside, inside, boundary };
++Location locate(Point2 p,const std::vector<Point2>& ring,bool& valid) {
++    int winding=0;
++    for(std::size_t i=0;i<ring.size();++i) {
++        const auto a=ring[i],b=ring[(i+1)%ring.size()];const auto side=cross(a,b,p);
++        if(!std::isfinite(side)) {valid=false;return Location::outside;}
++        if(side==0&&onSegment(p,a,b)) {return Location::boundary;}
++        if(a.y<=p.y&&b.y>p.y&&side>0) {++winding;}
++        if(a.y>p.y&&b.y<=p.y&&side<0) {--winding;}
++    }
++    return winding==0?Location::outside:Location::inside;
++}
++std::optional<double> ringArea(const ClosedRing& input) {
++    if(!input.closed) {return std::nullopt;}const auto ring=vertices(input);
++    if(ring.size()<3||std::any_of(ring.begin(),ring.end(),[](Point2 p){return !finite(p);})) {return std::nullopt;}
++    bool valid=true;double area=0;
++    for(std::size_t i=0;i<ring.size();++i) {
++        const auto a=ring[i],b=ring[(i+1)%ring.size()];if(same(a,b)) {return std::nullopt;}
++        // A translated fan avoids the catastrophic cancellation of global-coordinate shoelace sums.
++        const auto contribution=cross(ring.front(),a,b)/2.0;
++        area+=contribution;if(!std::isfinite(contribution)||!std::isfinite(area)) {return std::nullopt;}
++        for(std::size_t j=i+1;j<ring.size();++j) {
++            const auto c=ring[j],d=ring[(j+1)%ring.size()];
++            if(j==i+1||(i==0&&j+1==ring.size())) {
++                // Adjacent edges may share only their common endpoint, never reverse along one another.
++                const auto previous=ring[(i+ring.size()-1)%ring.size()];
++                const auto turn=cross(previous,a,b);if(!std::isfinite(turn)) {return std::nullopt;}
++                if(turn==0&&(onSegment(previous,a,b)||onSegment(b,previous,a))) {return std::nullopt;}
++                continue;
++            }
++            if(intersects(a,b,c,d,valid)||!valid) {return std::nullopt;}
++        }
++    }
++    area=std::abs(area);if(area<=0||!std::isfinite(area)) {return std::nullopt;}return area;
++}
++bool ringsIntersect(const std::vector<Point2>& a,const std::vector<Point2>& b,bool& valid) {
++    for(std::size_t i=0;i<a.size();++i) {for(std::size_t j=0;j<b.size();++j) {
++        if(intersects(a[i],a[(i+1)%a.size()],b[j],b[(j+1)%b.size()],valid)) {return true;}
++    }}return false;
++}
++std::optional<double> regionArea(const PolygonRegion& region,double unit) {
++    const auto outerArea=ringArea(region.outer);if(!outerArea) {return std::nullopt;}
++    const auto outer=vertices(region.outer);double area=*outerArea;bool valid=true;
++    for(std::size_t i=0;i<region.holes.size();++i) {
++        const auto holeArea=ringArea(region.holes[i]);if(!holeArea) {return std::nullopt;}
++        const auto hole=vertices(region.holes[i]);
++        if(ringsIntersect(outer,hole,valid)||!valid) {return std::nullopt;}
++        for(const auto p:hole) {if(locate(p,outer,valid)!=Location::inside||!valid) {return std::nullopt;}}
++        for(std::size_t j=0;j<i;++j) {
++            const auto other=vertices(region.holes[j]);
++            if(ringsIntersect(hole,other,valid)||!valid||locate(hole.front(),other,valid)!=Location::outside||
++                locate(other.front(),hole,valid)!=Location::outside||!valid) {return std::nullopt;}
++        }
++        area-=*holeArea;if(!std::isfinite(area)||area<=0) {return std::nullopt;}
++    }
++    const auto squareMm=(area*unit)*unit;
++    if(!std::isfinite(squareMm)||squareMm<=0) {return std::nullopt;}return squareMm;
++}
++std::vector<Point2> comparisonVertices(const ClosedRing& ring) {
++    auto points = vertices(ring);
++    bool changed = true;
++    while (changed && points.size() > 3) {
++        changed = false;
++        for (std::size_t i = 0; i < points.size(); ++i) {
++            const auto previous = points[(i + points.size() - 1) % points.size()];
++            const auto next = points[(i + 1) % points.size()];
++            if (cross(previous, points[i], next) == 0 && onSegment(points[i], previous, next)) {
++                points.erase(points.begin() + static_cast<std::ptrdiff_t>(i)); changed = true; break;
++            }
++        }
++    }
++    return points;
++}
++bool sameRing(const ClosedRing& a,const ClosedRing& b) {
++    const auto av=comparisonVertices(a),bv=comparisonVertices(b);if(av.size()!=bv.size()||av.empty()) {return false;}
++    for(std::size_t offset=0;offset<bv.size();++offset) {
++        bool forward=true,reverse=true;
++        for(std::size_t i=0;i<av.size();++i) {forward=forward&&same(av[i],bv[(offset+i)%bv.size()]);reverse=reverse&&same(av[i],bv[(offset+bv.size()-i)%bv.size()]);}
++        if(forward||reverse) {return true;}
++    }return false;
++}
++bool sameRegion(const PolygonRegion& a,const PolygonRegion& b) {
++    if(!sameRing(a.outer,b.outer)||a.holes.size()!=b.holes.size()) {return false;}
++    std::vector<bool> used(b.holes.size(),false);
++    for(const auto& hole:a.holes) {
++        bool found=false;for(std::size_t i=0;i<b.holes.size();++i) {if(!used[i]&&sameRing(hole,b.holes[i])) {used[i]=true;found=true;break;}}
++        if(!found) {return false;}
++    }return true;
++}
++const ReferenceFamily* familyFor(const RuleView& view,const ReferenceStandard& standard) {
++    if (view.familyId.empty()) { return nullptr; }
++    const ReferenceFamily* match=nullptr;
++    for(const auto& f:standard.families) {if(f.identity==view.familyId) {if(match) {return nullptr;}match=&f;}}
++    if(!match||!match->approved||match->approvalSource.empty()||
++        std::find(match->roles.begin(),match->roles.end(),SemanticRole::materialRegion)==match->roles.end()) {return nullptr;}return match;
++}
++const MaterialPrototype* prototypeFor(const std::string& id,const ReferenceStandard& standard) {
++    const MaterialPrototype* match=nullptr;
++    for(const auto& p:standard.materialPrototypes) {if(p.expression.prototypeId==id) {if(match) {return nullptr;}match=&p;}}
++    if(!match||id.empty()||!match->approved||match->approvalSource.empty()||!finite(match->expression.direction)||
++        std::hypot(match->expression.direction.x,match->expression.direction.y)<=0||
++        !std::isfinite(std::hypot(match->expression.direction.x,match->expression.direction.y))||
++        !std::isfinite(match->expression.scale)||match->expression.scale<=0) {return nullptr;}return match;
++}
++struct MaterialDefinition {std::string key,number,name;std::string prototypeId;};
++}
++
++Result<MaterialPlan> planMaterials(const FeatureModel& model,const ReferenceStandard& standard,const ProjectConfig& config) {
++    Result<MaterialPlan> result;result.value.emplace();result.value->referenceSha256=standard.referenceSha256;
++    result.value->nativeCapabilities=standard.nativeCapabilities;
++    if(!validSha(standard.referenceSha256)) {issue(result,"REFERENCE_STANDARD_REQUIRED",u8"参考标准缺少有效的源SHA256绑定。");}
++    const auto units=resolveUnits(config.units);if(!units.canCommit()) {result.issues.insert(result.issues.end(),units.issues.begin(),units.issues.end());return result;}
++    result.value->mmPerInputUnit=units.value->mmPerInputUnit;
++    result.value->unitDeclaration=config.units;
++    result.value->unitConfirmationSource=config.unitConfirmationSource;
++    std::vector<MaterialDefinition> definitions={{"dark-stone","M1",u8"深灰色仿石漆",""},{"ivory-stone","M2",u8"米白色仿石漆",""},{"dark-roof","M3",u8"深灰色双波陶瓷瓦",""}};
++    std::set<std::string> overrideKeys;
++    for(const auto& o:model.rules.materialOverrides) {
++        if(o.key.empty()||o.number.empty()||o.name.empty()||!overrideKeys.insert(o.key).second) {issue(result,"INVALID_MATERIAL_OVERRIDE",u8"材料覆盖需要唯一键、编号和名称。");continue;}
++        auto found=std::find_if(definitions.begin(),definitions.end(),[&](const MaterialDefinition& d){return d.key==o.key;});
++        const MaterialDefinition definition{o.key,o.number,o.name,o.prototypeId.value_or("")};
++        if(found==definitions.end()) {definitions.push_back(definition);}else {*found=definition;}
++    }
++    std::set<std::string> viewIds;std::set<std::string> ambiguousViews;
++    for(const auto& v:model.rules.views) {if(v.viewIdentity.empty()||!viewIds.insert(v.viewIdentity).second) {ambiguousViews.insert(v.viewIdentity);}}
++    std::set<std::pair<std::string,std::string>> regionIds;std::size_t regionCount=0;
++    for(const auto& f:model.rules.semanticFeatures) {
++        if(f.role!=SemanticRole::materialRegion) {continue;}++regionCount;
++        if(!f.confirmed||f.confirmationSource.empty()) {issue(result,"SEMANTIC_CONFIRMATION_REQUIRED",u8"材料区域必须有目标项目确认，不能复制参考绝对区域。",&f);continue;}
++        if(f.identity.empty()||!regionIds.emplace(f.viewIdentity,f.identity).second) {issue(result,"DUPLICATE_MATERIAL_REGION",u8"材料区域ID为空或重复。",&f);continue;}
++        const auto view=std::find_if(model.rules.views.begin(),model.rules.views.end(),[&](const RuleView& v){return v.viewIdentity==f.viewIdentity;});
++        if(view==model.rules.views.end()||ambiguousViews.count(f.viewIdentity)!=0) {issue(result,"MATERIAL_ASSOCIATION_REQUIRED",u8"材料区域需要关联唯一明确的视图。",&f);continue;}
++        if(!familyFor(*view,standard)) {issue(result,"REFERENCE_FAMILY_REQUIRED",u8"材料表达需要明确选择已按角色核准的参考排法。",&f);continue;}
++        if((f.tableViewIdentity.empty()&&f.sharedTableIdentity.empty())||(!f.tableViewIdentity.empty()&&f.tableViewIdentity!=f.viewIdentity)||
++            (!f.tableViewIdentity.empty()&&!f.sharedTableIdentity.empty())) {issue(result,"MATERIAL_ASSOCIATION_REQUIRED",u8"材料表和图例必须唯一关联本视图或明确的共享表ID。",&f);continue;}
++        if(f.sources.empty()||config.databaseIdentity.empty()||std::any_of(f.sources.begin(),f.sources.end(),[&](const EntityKey& k){return k.databaseIdentity!=config.databaseIdentity||!(k==k);})) {
++            issue(result,"MATERIAL_SOURCE_REQUIRED",u8"材料区域缺少有效的目标源对象身份。",&f);continue;
++        }
++        if(!f.region) {issue(result,"MATERIAL_REGION_REQUIRED",u8"缺少明确确认的外环及洞口边界。",&f);continue;}
++        const auto area=regionArea(*f.region,units.value->mmPerInputUnit);
++        if(!area) {issue(result,"INVALID_MATERIAL_TOPOLOGY",u8"仅支持有限、简单闭合外环和严格内部不相交孔洞；请修正开放、自交、触边或数值溢出区域。",&f);continue;}
++        if(std::any_of(result.value->regions.begin(),result.value->regions.end(),[&](const MaterialRegionPlan& r){return r.viewIdentity==f.viewIdentity&&sameRegion(r.geometry,*f.region);})) {
++            issue(result,"DUPLICATE_MATERIAL_REGION",u8"同一视图存在几何重复的材料区域。",&f);continue;
++        }
++        const auto definition=std::find_if(definitions.begin(),definitions.end(),[&](const MaterialDefinition& d){return d.key==f.materialKey;});
++        if(definition==definitions.end()) {issue(result,"MATERIAL_DEFINITION_REQUIRED",u8"目标材料键没有明确配置。",&f);continue;}
++        const auto& prototypeId=definition->prototypeId.empty()?f.materialPrototypeId:definition->prototypeId;
++        const auto* prototype=prototypeFor(prototypeId,standard);
++        if(!prototype) {issue(result,"MATERIAL_PROTOTYPE_REQUIRED",u8"材料表达必须绑定已核准的源原型ID、方向及比例。",&f);continue;}
++        MaterialRegionPlan region;region.identity=f.identity;region.viewIdentity=f.viewIdentity;
++        region.tableViewIdentity=f.tableViewIdentity;region.sharedTableIdentity=f.sharedTableIdentity;
++        region.sources=f.sources;region.confirmationSource=f.confirmationSource;region.geometry=*f.region;region.areaSquareMm=*area;
++        region.materialNumber=definition->number;region.materialName=definition->name;region.expression=prototype->expression;
++        region.familyId=view->familyId;region.prototypeApprovalSource=prototype->approvalSource;
++        if(f.requestConstructionNote) {
++            if(f.construction.empty()||f.detailId.empty()) {issue(result,"CONSTRUCTION_DETAIL_REQUIRED",u8"构造注记需要目标项目的实际做法及详图编号。",&f);}
++            else {region.constructionNote=f.construction+" / "+f.detailId;}
++        }
++        result.value->regions.push_back(std::move(region));
++    }
++    if(regionCount==0) {issue(result,"MATERIAL_REGION_REQUIRED",u8"尚无已确认材料区域，不能从参考复制绝对边界。");}
++    return result;
++}
++
++bool materialContains(const MaterialRegionPlan& region,Point2 point) {
++    if(!finite(point)) {return false;}const auto outer=vertices(region.geometry.outer);if(outer.size()<3) {return false;}
++    bool valid=true;if(locate(point,outer,valid)==Location::outside||!valid) {return false;}
++    for(const auto& h:region.geometry.holes) {const auto hole=vertices(h);if(hole.size()<3||locate(point,hole,valid)!=Location::outside||!valid) {return false;}}
++    return true;
++}
++}
+--- /dev/null
++++ D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-180033-681-a1-evidence-green-785b9776\input\tests\AnnotationRulesTests.cpp
+@@ -0,0 +1,170 @@
++#include "TestSupport.h"
++#include "../src/AnnotationRules.h"
++#include <cmath>
++#include <limits>
++
++namespace bce::test {
++namespace {
++EntityKey ruleKey(const std::string& h) { return {"rules-db", h, 1}; }
++SourcePoint sp(double x, double y, const std::string& h) { return {{x, y}, ruleKey(h)}; }
++SemanticFeature feature(const char* id, SemanticRole role, std::vector<SourcePoint> points) {
++    SemanticFeature f; f.identity = id; f.viewIdentity = "front"; f.role = role;
++    f.confirmed = true; f.confirmationSource = "project-confirmation"; f.points = std::move(points); return f;
++}
++ReferenceStandard standard() {
++    ReferenceStandard s; s.referenceSha256 = "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D";
++    ReferenceFamily a; a.identity = "main-800"; a.approved = true; a.approvalSource = "reference-role-review";
++    a.roles = {SemanticRole::bodyContour, SemanticRole::level, SemanticRole::opening, SemanticRole::eave,
++        SemanticRole::ridge, SemanticRole::localMoulding, SemanticRole::planAxis};
++    // Fixture chooses explicit reviewed lane counts; these are not an inference from real buildings.
++    a.laneOffsetsPaperMm = {8, 16, 24}; a.variant = "main-100";
++    auto b = a; b.identity = "main-831"; b.laneOffsetsPaperMm = {8.31877151438, 16.63754302876};
++    auto small = a; small.identity = "11B93-small25"; small.approved = false; small.textHeightPaperMm = 0.74375;
++    small.variant = "block-25"; s.families = {a, b, small}; return s;
++}
++ProjectConfig config() {
++    ProjectConfig c; c.databaseIdentity = "rules-db"; c.units.confirmedMmPerInputUnit = 1;
++    c.unitConfirmationSource = "project-mm"; c.zeroLevel = {"first-floor +0", "user", true}; return c;
++}
++FeatureModel model() {
++    FeatureModel m; RuleView v; v.viewIdentity = "front"; v.familyId = "main-800";
++    v.datum = sp(0, 0, "10"); v.datumConfirmationSource = "first-floor-geometry-confirmation"; m.rules.views = {v};
++    m.rules.semanticFeatures = {
++        feature("body", SemanticRole::bodyContour, {sp(0,0,"11"), sp(10000,0,"12"), sp(10000,6000,"13"), sp(0,6000,"14")}),
++        feature("levels", SemanticRole::level, {sp(0,0,"20"),sp(0,3000,"21"),sp(0,6000,"22")}),
++        feature("ridge", SemanticRole::ridge, {sp(5000,7500,"23")}),
++        feature("axes", SemanticRole::planAxis, {sp(0,0,"30"),sp(4000,0,"31"),sp(10000,0,"32")})};
++    m.rules.semanticFeatures.back().fromConfirmedPlan = true; return m;
++}
++const DimensionChain& chain(const AnnotationPlan& p, const std::string& purpose, const std::string& id = "") {
++    for (const auto& c : p.chains) { if (c.purpose == purpose && (id.empty() || c.featureIdentity == id)) { return c; } }
++    throw std::runtime_error("required chain missing: " + purpose);
++}
++void close(double actual, double expected, const char* message) { require(std::abs(actual - expected) < 1e-8, message); }
++}
++
++// Catches copied reference heights and level text coordinates substituted for real datum geometry.
++void projectLevelsDoNotUseReferenceNumbers() {
++    const auto r = planAnnotations(model(), standard(), config()); require(r.canCommit(), "confirmed actual levels must plan");
++    require(r.value->levels.size() == 4, "all project levels and ridge required");
++    const std::vector<std::string> displays = {"±0.000", "+3.000", "+6.000", "+7.500"};
++    for (std::size_t i = 0; i < displays.size(); ++i) { require(r.value->levels[i].display == displays[i], "actual project level display"); }
++    close(chain(*r.value, "body-horizontal").segments.at(0).measuredMm, 10000, "actual body width");
++    close(chain(*r.value, "body-vertical").segments.at(0).measuredMm, 6000, "actual body height");
++    auto m = model(); m.rules.views[0].datumMeters = -0.125;
++    const auto negative = planAnnotations(m, standard(), config()); require(negative.canCommit(), "negative actual datum");
++    require(negative.value->levels[0].display == "-0.125", "negative sign retained");
++}
++void openingDimensionsUseActualEdges() {
++    auto m = model(); auto o = feature("window", SemanticRole::opening,
++        {sp(1200,900,"40"),sp(2400,900,"41"),sp(2400,2400,"42"),sp(1200,2400,"43")});
++    o.confirmedRectangle = true; m.rules.semanticFeatures.push_back(o);
++    auto r = planAnnotations(m, standard(), config()); require(r.canCommit(), "confirmed rectangular opening");
++    const auto& width = chain(*r.value,"opening-width","window");
++    close(width.segments.at(0).measuredMm,1200,"opening width from edges");
++    close(chain(*r.value,"opening-height","window").segments.at(0).measuredMm,1500,"opening height from edges");
++    close(chain(*r.value,"opening-horizontal-location","window").segments.at(0).measuredMm,1200,"opening actual horizontal location");
++    close(chain(*r.value,"opening-vertical-location","window").segments.at(0).measuredMm,900,"opening actual vertical location");
++    require(width.stations.front().sourcePoints.front().source == ruleKey("40"), "opening edge source retained");
++    require(width.stations.front().sourcePoints.front().position.y == 900, "source geometry never replaced by projection");
++    m.rules.semanticFeatures.back().confirmedRectangle = false;
++    r = planAnnotations(m,standard(),config()); require(!r.canCommit() && hasCode(r,"RECTANGLE_CONFIRMATION_REQUIRED"),"unconfirmed rectangle rejected");
++    m.rules.semanticFeatures.back().confirmedRectangle = true; m.rules.semanticFeatures.back().points[2].position.x = 2500;
++    require(!planAnnotations(m,standard(),config()).canCommit(),"nonrectangular geometry rejected even with claimed confirmation");
++}
++void translationDoesNotChangeMeasurements() {
++    auto m = model(); const auto original = planAnnotations(m,standard(),config()); require(original.canCommit(),"base plan");
++    for (auto& f : m.rules.semanticFeatures) { for (auto& p : f.points) { p.position.x += 100000; p.position.y -= 50000; } }
++    m.rules.views[0].datum->position = {100000,-50000};
++    const auto moved = planAnnotations(m,standard(),config()); require(moved.canCommit(),"translated plan");
++    require(moved.value->chains.size() == original.value->chains.size(),"translated chain count");
++    for (std::size_t i=0;i<original.value->chains.size();++i) {
++        const auto& a=original.value->chains[i]; const auto& b=moved.value->chains[i]; require(a.segments.size()==b.segments.size(),"segment count invariant");
++        for(std::size_t j=0;j<a.segments.size();++j) { require(a.segments[j].measuredMm==b.segments[j].measuredMm,"translation measurement invariant"); }
++    }
++    for(std::size_t i=0;i<original.value->levels.size();++i) { require(original.value->levels[i].meters==moved.value->levels[i].meters,"translated level invariant"); }
++    require(moved.value->levels[3].actualPoint.position.x==105000,"actual points remain translated");
++}
++void nonRoundCoordinatesArePreserved() {
++    auto m=model(); auto& axes=m.rules.semanticFeatures.back(); axes.points={sp(0.125,0.25,"30"),sp(1234.875,0.25,"31"),sp(1234.875001,0.25,"32")};
++    const auto r=planAnnotations(m,standard(),config()); require(r.canCommit(),"nonround axes"); const auto& c=chain(*r.value,"plan-axis");
++    require(c.segments.size()==2,"nearby distinct points never snapped together");
++    require(c.segments[0].measuredMm==1234.75 && c.segments[0].display=="1235","display rounded separately");
++    require(c.stations[1].sourcePoints[0].position.x==1234.875,"original double retained");
++    require(c.stations[2].sourcePoints[0].position.x==1234.875001 && c.segments[1].measuredMm>0,"noninteger station survives");
++}
++void duplicateStationsNeverCreateZeroSegments() {
++    auto m=model(); m.rules.semanticFeatures.back().points={sp(4000,0,"31"),sp(0,0,"30"),sp(4000,0,"33"),sp(10000,0,"32"),sp(4000,0,"31")};
++    const auto r=planAnnotations(m,standard(),config()); require(r.canCommit(),"duplicate axes allowed with provenance"); const auto& c=chain(*r.value,"plan-axis");
++    require(c.stations.size()==3 && c.segments.size()==2,"equal projected stations deduplicated");
++    require(c.stations[1].sourcePoints.size()==3,"all original duplicate provenance retained");
++    require(c.segments[0].measuredMm==4000 && c.segments[1].measuredMm==6000,"strictly positive ordered spacings");
++}
++void dimensionFamilyKeepsItsVerifiedSpacing() {
++    auto m=model(); auto r=planAnnotations(m,standard(),config()); require(r.canCommit(),"800 family");
++    require(r.value->layouts[0].laneOffsetsInput==std::vector<double>({800,1600,2400}),"800 explicit lanes retained");
++    close(r.value->layouts[0].textHeightInput,297.5,"actual reference text height");
++    m.rules.views[0].familyId="main-831"; r=planAnnotations(m,standard(),config()); require(r.canCommit(),"831 family");
++    close(r.value->layouts[0].laneOffsetsInput[0],831.877151438,"831 spacing retained"); require(r.value->layouts[0].laneOffsetsInput.size()==2,"explicit lane count retained");
++    m.rules.views[0].scaleDenominator=50; r=planAnnotations(m,standard(),config()); require(r.canCommit(),"1:50 family");
++    close(r.value->layouts[0].textHeightInput,148.75,"paper text height invariant"); close(r.value->layouts[0].laneOffsetsInput[0],415.938575719,"paper spacing invariant");
++    require(chain(*r.value,"body-horizontal").stations.back().sourcePoints[0].position.x==10000,"building geometry unscaled");
++    m.rules.views[0].familyId=""; require(hasCode(planAnnotations(m,standard(),config()),"REFERENCE_FAMILY_REQUIRED"),"missing explicit family");
++    m.rules.views[0].familyId="11B93-small25"; require(hasCode(planAnnotations(m,standard(),config()),"REFERENCE_FAMILY_REQUIRED"),"unapproved small block family rejected");
++    m.rules.views[0].familyId="main-800"; auto s=standard(); s.families[0].roles={SemanticRole::bodyContour};
++    require(!planAnnotations(m,s,config()).canCommit(),"family role approval required");
++}
++void missingDatumOrSemanticRoleBlocksAnnotation() {
++    auto m=model(); m.rules.views[0].datum.reset(); auto r=planAnnotations(m,standard(),config());
++    require(!r.canCommit()&&hasCode(r,"DATUM_REQUIRED"),"zero text rule without actual datum blocked");
++    m=model(); m.rules.semanticFeatures[0].confirmed=false; r=planAnnotations(m,standard(),config());
++    require(!r.canCommit()&&hasCode(r,"SEMANTIC_CONFIRMATION_REQUIRED"),"candidate not promoted");
++    bool located=false; for(const auto& i:r.issues) { if(i.source.viewIdentity=="front"&&i.source.entity.has_value()) { located=true; } } require(located,"diagnostic is located");
++    m=model(); m.rules.semanticFeatures.erase(m.rules.semanticFeatures.begin()); require(hasCode(planAnnotations(m,standard(),config()),"SEMANTIC_ROLE_REQUIRED"),"missing body blocked");
++    auto c=config(); c.units={}; require(hasCode(planAnnotations(model(),standard(),c),"UNIT_REQUIRED"),"unknown units blocked");
++    m=model(); m.rules.semanticFeatures[0].points[0].position.x=std::numeric_limits<double>::infinity(); require(!planAnnotations(m,standard(),config()).canCommit(),"infinite source blocked");
++    m=model(); m.rules.views[0].datumMeters=std::numeric_limits<double>::quiet_NaN(); require(!planAnnotations(m,standard(),config()).canCommit(),"NaN datum blocked");
++    m=model(); m.rules.views[0].scaleDenominator=std::numeric_limits<double>::max(); require(!planAnnotations(m,standard(),config()).canCommit(),"overflowing layout blocked");
++    m=model(); m.rules.semanticFeatures[0].points[0].position.x=-std::numeric_limits<double>::max();m.rules.semanticFeatures[0].points[1].position.x=std::numeric_limits<double>::max();
++    require(!planAnnotations(m,standard(),config()).canCommit(),"overflowing measurement blocked");
++}
++void axisChainRequiresConfirmedPlan() {
++    auto m=model(); m.rules.semanticFeatures.pop_back(); auto r=planAnnotations(m,standard(),config()); require(!r.canCommit()&&hasCode(r,"PLAN_REQUIRED"),"missing plan cannot invent axis chain");
++    m=model(); m.rules.semanticFeatures.back().fromConfirmedPlan=false; r=planAnnotations(m,standard(),config()); require(!r.canCommit()&&hasCode(r,"PLAN_REQUIRED"),"elevation marks cannot impersonate plan axes");
++}
++void featureRolesAndDirectionsRemainTraceable() {
++    auto m=model(); m.rules.semanticFeatures.push_back(feature("eave",SemanticRole::eave,{sp(0,6200,"50"),sp(10000,6200,"51")}));
++    m.rules.semanticFeatures.push_back(feature("trim",SemanticRole::localMoulding,{sp(500,2000,"52"),sp(9500,2100,"53")}));
++    auto s=standard(); s.nativeCapabilities={CapabilityState::unsupported,CapabilityState::unverified};
++    auto r=planAnnotations(m,s,config()); require(r.canCommit(),"explicit eave and local geometry");
++    close(chain(*r.value,"component-horizontal","eave").segments[0].measuredMm,10000,"eave actual width");
++    close(chain(*r.value,"component-vertical","trim").segments[0].measuredMm,100,"local actual height");
++    require(r.value->nativeCapabilities.fieldSetter==CapabilityState::unsupported&&r.value->nativeCapabilities.glyphPreparation==CapabilityState::unverified,"native capability state never promoted");
++    require(r.value->referenceSha256==s.referenceSha256,"reference SHA retained");
++    // Rotate every actual point and the datum basis by +90 degrees: dimensions still describe the same geometry.
++    for(auto& f:m.rules.semanticFeatures) { for(auto& p:f.points) { p.position={-p.position.y,p.position.x}; } }
++    m.rules.views[0].heightDirection={-1,0}; r=planAnnotations(m,s,config()); require(r.canCommit(),"confirmed rotated height direction");
++    close(chain(*r.value,"body-horizontal").segments[0].measuredMm,10000,"rotated actual width");
++    require(r.value->levels[3].display=="+7.500","rotated height projection");
++}
++void individuallyConfirmedFloorsFormOneChain() {
++    auto m=model();m.rules.semanticFeatures.erase(m.rules.semanticFeatures.begin()+1);
++    m.rules.semanticFeatures.push_back(feature("floor-2",SemanticRole::level,{sp(0,6000,"22")}));
++    m.rules.semanticFeatures.push_back(feature("floor-0",SemanticRole::level,{sp(0,0,"20")}));
++    m.rules.semanticFeatures.push_back(feature("floor-1",SemanticRole::level,{sp(0,3000,"21"),sp(0,3000,"24")}));
++    const auto r=planAnnotations(m,standard(),config());require(r.canCommit(),"individually confirmed floor geometry grouped per explicit view");
++    const auto& c=chain(*r.value,"floor-levels");require(c.segments.size()==2&&c.segments[0].measuredMm==3000&&c.segments[1].measuredMm==3000,"one monotonic actual floor chain");
++    require(c.semanticFeatureIdentities.size()==3&&c.stations[1].sourcePoints.size()==2,"all floor feature and duplicate source evidence retained");
++}
++void annotationPlanRetainsConfirmationAndUnitEvidence() {
++    auto c=config();c.units.confirmedMmPerInputUnit=1000;
++    auto m=model();for(auto& f:m.rules.semanticFeatures) {for(auto& p:f.points) {p.position.x/=1000;p.position.y/=1000;}}
++    const auto r=planAnnotations(m,standard(),c);require(r.canCommit(),"confirmed meters converted to model parameters");
++    require(r.value->mmPerInputUnit==1000,"unit evidence retained");
++    require(r.value->viewEvidence.at(0).datumConfirmationSource=="first-floor-geometry-confirmation","actual datum confirmation retained");
++    require(r.value->semanticEvidence.at(0).confirmationSource=="project-confirmation","semantic confirmation retained");
++    close(chain(*r.value,"body-horizontal").segments[0].measuredMm,10000,"meter source actual width in mm");
++    close(r.value->layouts[0].textHeightInput,0.2975,"paper text converted to meter input units");
++    require(r.value->levels[3].meters==7.5,"actual meters remain meters");
++}
++}
+--- /dev/null
++++ D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-180033-681-a1-evidence-green-785b9776\input\tests\MaterialRulesTests.cpp
+@@ -0,0 +1,105 @@
++#include "TestSupport.h"
++#include "../src/MaterialRules.h"
++#include <cmath>
++#include <limits>
++
++namespace bce::test {
++namespace {
++ClosedRing rectangle(double x0,double y0,double x1,double y1) { return {{{x0,y0},{x1,y0},{x1,y1},{x0,y1}},true}; }
++ReferenceStandard materialStandard() {
++    ReferenceStandard s;s.referenceSha256="109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D";
++    ReferenceFamily f;f.identity="wall-family";f.approved=true;f.approvalSource="review";f.roles={SemanticRole::materialRegion};f.laneOffsetsPaperMm={8};s.families={f};
++    s.materialPrototypes={{{MaterialExpressionKind::hatch,"wall-hatch",{1,0},1,"ANSI31"},true,"reference-prototype-review"},
++        {{MaterialExpressionKind::lineDrawing,"roof-lines",{0,1},2,""},true,"reference-lines-review"},
++        {{MaterialExpressionKind::glassBlock,"glass-block",{1,0},0.5,""},true,"reference-glass-review"}};return s;
++}
++ProjectConfig materialConfig() {ProjectConfig c;c.databaseIdentity="rules-db";c.units.confirmedMmPerInputUnit=1;c.unitConfirmationSource="project-mm";return c;}
++FeatureModel materialModel() {
++    FeatureModel m;RuleView v;v.viewIdentity="front";v.familyId="wall-family";m.rules.views={v};
++    SemanticFeature f;f.identity="wall-1";f.viewIdentity="front";f.role=SemanticRole::materialRegion;f.confirmed=true;
++    f.confirmationSource="project-region-review";f.sources={{"rules-db","100",1}};
++    f.region=PolygonRegion{rectangle(0,0,10000,6000),{rectangle(1200,900,2400,2400)}};
++    f.materialKey="dark-stone";f.materialPrototypeId="wall-hatch";f.tableViewIdentity="front";m.rules.semanticFeatures={f};return m;
++}
++void rejected(const FeatureModel& m,const char* code) {const auto r=planMaterials(m,materialStandard(),materialConfig());require(!r.canCommit()&&hasCode(r,code),"invalid region must give expected diagnostic");}
++}
++void wallMaterialExcludesWindowHole() {
++    const auto r=planMaterials(materialModel(),materialStandard(),materialConfig());require(r.canCommit(),"confirmed wall with opening hole");
++    const auto& wall=r.value->regions.at(0);require(wall.areaSquareMm==58200000,"actual net area excludes 1800000 opening");
++    require(materialContains(wall,{500,500}),"wall point has material");require(!materialContains(wall,{1800,1500}),"window hole stays empty");
++    require(!materialContains(wall,{1200,900}),"hole boundary never covered");require(!materialContains(wall,{11000,500}),"outside stays empty");
++    require(wall.geometry.holes[0].vertices[0].x==1200&&wall.sources[0].handle=="100","region geometry and source retained");
++}
++void invalidOpenRegionNeedsCorrection() {
++    auto m=materialModel();m.rules.semanticFeatures[0].region->outer.closed=false;rejected(m,"INVALID_MATERIAL_TOPOLOGY");
++    m=materialModel();m.rules.semanticFeatures[0].region->outer.vertices={{0,0},{10000,6000},{0,6000},{10000,0}};rejected(m,"INVALID_MATERIAL_TOPOLOGY");
++    m=materialModel();m.rules.semanticFeatures[0].region->holes={rectangle(11000,100,12000,200)};rejected(m,"INVALID_MATERIAL_TOPOLOGY");
++    m=materialModel();m.rules.semanticFeatures[0].region->holes.push_back(rectangle(2000,1000,3000,2000));rejected(m,"INVALID_MATERIAL_TOPOLOGY");
++    m=materialModel();m.rules.semanticFeatures[0].region->holes={rectangle(0,900,2400,2400)};rejected(m,"INVALID_MATERIAL_TOPOLOGY");
++    m=materialModel();m.rules.semanticFeatures[0].region->holes.push_back(rectangle(1400,1000,1600,1200));rejected(m,"INVALID_MATERIAL_TOPOLOGY");
++    m=materialModel();m.rules.semanticFeatures[0].region->outer.vertices[1].x=std::numeric_limits<double>::infinity();rejected(m,"INVALID_MATERIAL_TOPOLOGY");
++    m=materialModel();m.rules.semanticFeatures[0].region->outer=rectangle(0,0,1e200,1e200);rejected(m,"INVALID_MATERIAL_TOPOLOGY");
++    auto c=materialConfig();c.units={};require(hasCode(planMaterials(materialModel(),materialStandard(),c),"UNIT_REQUIRED"),"unknown units rejected");
++    m=materialModel();m.rules.semanticFeatures.clear();rejected(m,"MATERIAL_REGION_REQUIRED");
++    m=materialModel();m.rules.semanticFeatures[0].confirmed=false;rejected(m,"SEMANTIC_CONFIRMATION_REQUIRED");
++}
++void missingConstructionAndDetailIdBlocksItsAnnotation() {
++    auto m=materialModel();m.rules.semanticFeatures[0].requestConstructionNote=true;
++    auto r=planMaterials(m,materialStandard(),materialConfig());require(!r.canCommit()&&hasCode(r,"CONSTRUCTION_DETAIL_REQUIRED"),"missing target construction data blocked");
++    require(r.value.has_value()&&r.value->regions[0].constructionNote==std::nullopt,"no reference-project proprietary note fabricated");
++    m.rules.semanticFeatures[0].construction="project wall coating";r=planMaterials(m,materialStandard(),materialConfig());require(!r.canCommit(),"detail id also required");
++    m.rules.semanticFeatures[0].detailId="project-A17";r=planMaterials(m,materialStandard(),materialConfig());require(r.canCommit(),"explicit target note");
++    require(*r.value->regions[0].constructionNote=="project wall coating / project-A17","only actual project text emitted");
++}
++void materialDefaultsAreProjectOverridable() {
++    auto m=materialModel();auto second=m.rules.semanticFeatures[0];second.identity="wall-2";second.materialKey="ivory-stone";second.materialPrototypeId="glass-block";
++    second.region=PolygonRegion{rectangle(20000,0,30000,6000),{}};second.sources[0].handle="101";m.rules.semanticFeatures.push_back(second);
++    second.identity="roof";second.materialKey="dark-roof";second.materialPrototypeId="roof-lines";second.region=PolygonRegion{rectangle(0,10000,10000,12000),{}};
++    second.sources[0].handle="102";second.tableViewIdentity="";second.sharedTableIdentity="shared-material-table";m.rules.semanticFeatures.push_back(second);
++    auto r=planMaterials(m,materialStandard(),materialConfig());require(r.canCommit(),"three explicit materials");
++    require(r.value->regions[0].materialName=="深灰色仿石漆"&&r.value->regions[1].materialName=="米白色仿石漆"&&r.value->regions[2].materialName=="深灰色双波陶瓷瓦","three project defaults");
++    require(r.value->regions[0].expression.kind==MaterialExpressionKind::hatch&&r.value->regions[1].expression.kind==MaterialExpressionKind::glassBlock&&r.value->regions[2].expression.kind==MaterialExpressionKind::lineDrawing,"expression roles distinct");
++    require(r.value->regions[2].expression.direction.y==1&&r.value->regions[2].expression.scale==2&&r.value->regions[2].sharedTableIdentity=="shared-material-table","prototype orientation scale association traced");
++    m.rules.materialOverrides={{"dark-stone","W9","project-white",std::string("glass-block")},{"ivory-stone","W10","project-beige",std::nullopt},{"dark-roof","R9","project-roof",std::nullopt}};
++    r=planMaterials(m,materialStandard(),materialConfig());require(r.canCommit(),"project overrides");
++    require(r.value->regions[0].materialNumber=="W9"&&r.value->regions[0].materialName=="project-white"&&r.value->regions[0].expression.kind==MaterialExpressionKind::glassBlock,"number name and expression override");
++    require(r.value->regions[1].materialName=="project-beige"&&r.value->regions[2].materialName=="project-roof","all names overridable");
++}
++void materialRegionsRequireUniqueExplicitAssociation() {
++    auto m=materialModel();m.rules.semanticFeatures[0].tableViewIdentity="";rejected(m,"MATERIAL_ASSOCIATION_REQUIRED");
++    m=materialModel();m.rules.semanticFeatures.push_back(m.rules.semanticFeatures[0]);rejected(m,"DUPLICATE_MATERIAL_REGION");
++    m=materialModel();auto duplicate=m.rules.semanticFeatures[0];duplicate.identity="other-id";
++    std::rotate(duplicate.region->outer.vertices.begin(),duplicate.region->outer.vertices.begin()+1,duplicate.region->outer.vertices.end());
++    m.rules.semanticFeatures.push_back(duplicate);rejected(m,"DUPLICATE_MATERIAL_REGION");
++    m=materialModel();m.rules.semanticFeatures[0].tableViewIdentity="wrong-view";rejected(m,"MATERIAL_ASSOCIATION_REQUIRED");
++}
++void referenceAndCapabilityEvidenceRemainsUnchanged() {
++    auto s=materialStandard();s.nativeCapabilities={CapabilityState::unverified,CapabilityState::unsupported};
++    auto r=planMaterials(materialModel(),s,materialConfig());require(r.canCommit(),"pure material plan valid");
++    require(r.value->referenceSha256==s.referenceSha256&&r.value->nativeCapabilities.glyphPreparation==CapabilityState::unsupported&&r.value->nativeCapabilities.fieldSetter==CapabilityState::unverified,"source and unsupported native evidence retained");
++    s.materialPrototypes[0].approved=false;require(!planMaterials(materialModel(),s,materialConfig()).canCommit(),"unapproved prototype blocked");
++    s=materialStandard();s.referenceSha256="";require(hasCode(planMaterials(materialModel(),s,materialConfig()),"REFERENCE_STANDARD_REQUIRED"),"missing reference binding blocked");
++    s=materialStandard();s.materialPrototypes[0].expression.scale=std::numeric_limits<double>::quiet_NaN();require(!planMaterials(materialModel(),s,materialConfig()).canCommit(),"invalid prototype scale blocked");
++    auto m=materialModel();m.rules.views[0].familyId="";require(hasCode(planMaterials(m,materialStandard(),materialConfig()),"REFERENCE_FAMILY_REQUIRED"),"material family must be explicit");
++}
++void materialDuplicateTopologyIgnoresRedundantVertices() {
++    auto m=materialModel();auto duplicate=m.rules.semanticFeatures[0];duplicate.identity="same-physical-region";
++    duplicate.region->outer.vertices.insert(duplicate.region->outer.vertices.begin()+1,{5000,0});
++    duplicate.region->holes[0].vertices.push_back(duplicate.region->holes[0].vertices.front());
++    m.rules.semanticFeatures.push_back(duplicate);rejected(m,"DUPLICATE_MATERIAL_REGION");
++}
++void emptyMaterialFamilyIsNotAnExplicitSelection() {
++    auto m=materialModel();m.rules.views[0].familyId="";auto s=materialStandard();s.families[0].identity="";
++    const auto r=planMaterials(m,s,materialConfig());require(!r.canCommit()&&hasCode(r,"REFERENCE_FAMILY_REQUIRED"),"empty approved identity cannot impersonate explicit selection");
++}
++void materialPlanRetainsFamilyAndUnitEvidence() {
++    auto m=materialModel();for(auto& p:m.rules.semanticFeatures[0].region->outer.vertices) {p.x/=1000;p.y/=1000;}
++    for(auto& h:m.rules.semanticFeatures[0].region->holes) {for(auto& p:h.vertices) {p.x/=1000;p.y/=1000;}}
++    auto c=materialConfig();c.units.confirmedMmPerInputUnit=1000;
++    const auto r=planMaterials(m,materialStandard(),c);require(r.canCommit(),"meter-input region");
++    require(r.value->mmPerInputUnit==1000,"material unit evidence retained");
++    require(std::abs(r.value->regions[0].areaSquareMm-58200000)<1e-6,"actual region converted to square millimeters");
++    require(r.value->regions[0].familyId=="wall-family"&&r.value->regions[0].prototypeApprovalSource=="reference-prototype-review","family and prototype approval trace retained");
++    require(!materialContains(r.value->regions[0],{1.8,1.5}),"meter-input window remains empty");
++}
++}
+--- D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-174017-436-r1-fix-round1-final-9a0485e9\input\tests\CoreTests.cpp
++++ D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-180033-681-a1-evidence-green-785b9776\input\tests\CoreTests.cpp
+@@ -3,6 +3,28 @@
+ #include <iostream>
+ #include <string>
+ namespace bce::test {
++void individuallyConfirmedFloorsFormOneChain();
++void annotationPlanRetainsConfirmationAndUnitEvidence();
++void materialDuplicateTopologyIgnoresRedundantVertices();
++void emptyMaterialFamilyIsNotAnExplicitSelection();
++void materialPlanRetainsFamilyAndUnitEvidence();
++
++void projectLevelsDoNotUseReferenceNumbers();
++void openingDimensionsUseActualEdges();
++void translationDoesNotChangeMeasurements();
++void nonRoundCoordinatesArePreserved();
++void duplicateStationsNeverCreateZeroSegments();
++void dimensionFamilyKeepsItsVerifiedSpacing();
++void missingDatumOrSemanticRoleBlocksAnnotation();
++void axisChainRequiresConfirmedPlan();
++void featureRolesAndDirectionsRemainTraceable();
++void wallMaterialExcludesWindowHole();
++void invalidOpenRegionNeedsCorrection();
++void missingConstructionAndDetailIdBlocksItsAnnotation();
++void materialDefaultsAreProjectOverridable();
++void materialRegionsRequireUniqueExplicitAssociation();
++void referenceAndCapabilityEvidenceRemainsUnchanged();
++
+ void fourElevationsExcludeTwoSections();
+ void sceneTranslationAndQuarterTurnKeepMembership();
+ void verticalOrGridViewsUseTwoDimensionalGaps();
+@@ -21,7 +43,27 @@
+ 
+ namespace {
+ struct TestCase { const char* name; void (*run)(); };
+-const std::array<TestCase, 29> cases{{
++const std::array<TestCase, 49> cases{{
++    {"IndividuallyConfirmedFloorsFormOneChain", bce::test::individuallyConfirmedFloorsFormOneChain},
++    {"AnnotationPlanRetainsConfirmationAndUnitEvidence", bce::test::annotationPlanRetainsConfirmationAndUnitEvidence},
++    {"MaterialDuplicateTopologyIgnoresRedundantVertices", bce::test::materialDuplicateTopologyIgnoresRedundantVertices},
++    {"EmptyMaterialFamilyIsNotAnExplicitSelection", bce::test::emptyMaterialFamilyIsNotAnExplicitSelection},
++    {"MaterialPlanRetainsFamilyAndUnitEvidence", bce::test::materialPlanRetainsFamilyAndUnitEvidence},
++    {"ProjectLevelsDoNotUseReferenceNumbers", bce::test::projectLevelsDoNotUseReferenceNumbers},
++    {"OpeningDimensionsUseActualEdges", bce::test::openingDimensionsUseActualEdges},
++    {"TranslationDoesNotChangeMeasurements", bce::test::translationDoesNotChangeMeasurements},
++    {"NonRoundCoordinatesArePreserved", bce::test::nonRoundCoordinatesArePreserved},
++    {"DuplicateStationsNeverCreateZeroSegments", bce::test::duplicateStationsNeverCreateZeroSegments},
++    {"DimensionFamilyKeepsItsVerifiedSpacing", bce::test::dimensionFamilyKeepsItsVerifiedSpacing},
++    {"MissingDatumOrSemanticRoleBlocksAnnotation", bce::test::missingDatumOrSemanticRoleBlocksAnnotation},
++    {"AxisChainRequiresConfirmedPlan", bce::test::axisChainRequiresConfirmedPlan},
++    {"FeatureRolesAndDirectionsRemainTraceable", bce::test::featureRolesAndDirectionsRemainTraceable},
++    {"WallMaterialExcludesWindowHole", bce::test::wallMaterialExcludesWindowHole},
++    {"InvalidOpenRegionNeedsCorrection", bce::test::invalidOpenRegionNeedsCorrection},
++    {"MissingConstructionAndDetailIdBlocksItsAnnotation", bce::test::missingConstructionAndDetailIdBlocksItsAnnotation},
++    {"MaterialDefaultsAreProjectOverridable", bce::test::materialDefaultsAreProjectOverridable},
++    {"MaterialRegionsRequireUniqueExplicitAssociation", bce::test::materialRegionsRequireUniqueExplicitAssociation},
++    {"ReferenceAndCapabilityEvidenceRemainsUnchanged", bce::test::referenceAndCapabilityEvidenceRemainsUnchanged},
+     {"FourElevationsExcludeTwoSections", bce::test::fourElevationsExcludeTwoSections},
+     {"SceneTranslationAndQuarterTurnKeepMembership", bce::test::sceneTranslationAndQuarterTurnKeepMembership},
+     {"VerticalOrGridViewsUseTwoDimensionalGaps", bce::test::verticalOrGridViewsUseTwoDimensionalGaps},
+--- D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-174017-436-r1-fix-round1-final-9a0485e9\input\tests\ElevationCoreTests.vcxproj
++++ D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-180033-681-a1-evidence-green-785b9776\input\tests\ElevationCoreTests.vcxproj
+@@ -7,7 +7,7 @@
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+   <PropertyGroup><OutDir>..\..\out\</OutDir><IntDir>..\..\obj\</IntDir><TargetName>ElevationCoreTests</TargetName></PropertyGroup>
+   <ItemDefinitionGroup><ClCompile><WarningLevel>Level4</WarningLevel><TreatWarningAsError>true</TreatWarningAsError><SDLCheck>true</SDLCheck><ConformanceMode>true</ConformanceMode><LanguageStandard>stdcpp17</LanguageStandard><RuntimeLibrary>MultiThreaded</RuntimeLibrary><AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions><ExceptionHandling>Sync</ExceptionHandling></ClCompile><Link><SubSystem>Console</SubSystem></Link></ItemDefinitionGroup>
+-  <ItemGroup><ClCompile Include="..\src\ElevationModel.cpp" /><ClCompile Include="..\src\Recognition.cpp" /><ClCompile Include="RecognitionTests.cpp" /><ClCompile Include="CoreTests.cpp" /><ClCompile Include="ReferenceTests.cpp" /><ClCompile Include="ScopeTests.cpp" /></ItemGroup>
++  <ItemGroup><ClCompile Include="..\src\ElevationModel.cpp" /><ClCompile Include="..\src\Recognition.cpp" /><ClCompile Include="..\src\AnnotationRules.cpp" /><ClCompile Include="..\src\MaterialRules.cpp" /><ClCompile Include="AnnotationRulesTests.cpp" /><ClCompile Include="MaterialRulesTests.cpp" /><ClCompile Include="RecognitionTests.cpp" /><ClCompile Include="CoreTests.cpp" /><ClCompile Include="ReferenceTests.cpp" /><ClCompile Include="ScopeTests.cpp" /></ItemGroup>
+   <ItemGroup><ClInclude Include="..\src\ElevationModel.h" /><ClInclude Include="TestSupport.h" /></ItemGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+ </Project>
+--- D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-174017-436-r1-fix-round1-final-9a0485e9\input\tools\build.ps1
++++ D:\Codex\建筑施工图自动化\立面插件\build\f1-20261101-180033-681-a1-evidence-green-785b9776\input\tools\build.ps1
+@@ -11,7 +11,7 @@
+ $receipt = [ordered]@{ target=$Target; label=$Label; startedUtc=[DateTime]::UtcNow.ToString('o'); buildRoot=$buildRoot; inputs=@(); commands=@(); outputs=@(); buildExitCode=$null; testExitCode=$null; unknownCaseExitCode=$null; exitCode=1 }
+ $finalExit = 1
+ try {
+-    $inputs = @('src/ElevationModel.h','src/ElevationModel.cpp','src/Recognition.h','src/Recognition.cpp','tests/CoreTests.cpp','tests/RecognitionTests.cpp','tests/ReferenceTests.cpp','tests/ScopeTests.cpp','tests/TestSupport.h','tests/ElevationCoreTests.vcxproj','tools/build.ps1','tests/fixtures/scheme-scene.tsv','tests/fixtures/scheme-expected.tsv','tests/fixtures/scheme-scene-manifest.json')
++    $inputs = @('src/ElevationModel.h','src/ElevationModel.cpp','src/Recognition.h','src/Recognition.cpp','src/RuleModel.h','src/AnnotationRules.h','src/AnnotationRules.cpp','src/MaterialRules.h','src/MaterialRules.cpp','tests/AnnotationRulesTests.cpp','tests/MaterialRulesTests.cpp','tests/CoreTests.cpp','tests/RecognitionTests.cpp','tests/ReferenceTests.cpp','tests/ScopeTests.cpp','tests/TestSupport.h','tests/ElevationCoreTests.vcxproj','tools/build.ps1','tests/fixtures/scheme-scene.tsv','tests/fixtures/scheme-expected.tsv','tests/fixtures/scheme-scene-manifest.json')
+     foreach ($relative in $inputs) {
+         $source = Join-Path $projectRoot $relative
+         $destination = Join-Path (Join-Path $buildRoot 'input') $relative

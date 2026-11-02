@@ -1,0 +1,68 @@
+{
+    "contract":  "stage1.isolation-supervisor-selftest.v1",
+    "recorded":  "2026-10-29T10:12:32.4996781+08:00",
+    "cadStarted":  false,
+    "checks":  {
+                   "EmptyArgument":  true,
+                   "SpaceArgument":  true,
+                   "TrailingSlash":  true,
+                   "EmbeddedQuote":  true,
+                   "IdentityPositive":  true,
+                   "IdentityRejectPidReuse":  true,
+                   "IdentityRejectOtherDesktop":  true,
+                   "LocalFileSHA256":  true,
+                   "MetadataFailureDoesNotThrow":  true,
+                   "MetadataFailurePreservesOwnership":  true,
+                   "DefaultLocalMetadataHashes":  true,
+                   "PhysicalMinimalReceiptSurvivesMetadataFailure":  true,
+                   "PhysicalFullReceiptReplacesMinimal":  true,
+                   "PhysicalHeartbeatReplacesSameFileThreeTimes":  true,
+                   "PrivateDesktopAllocated":  true,
+                   "InputDesktopNotSwitched":  true,
+                   "SupervisorThreadDesktopUnchanged":  true,
+                   "NoProcessCreated":  true,
+                   "MonitorStarted":  true,
+                   "MonitorStopped":  true,
+                   "MonitorNoError":  true,
+                   "MonitorNoDrops":  true,
+                   "DesktopClosed":  true
+               },
+    "atomicPublicationEvidence":  {
+                                      "method":  "MoveFileExW",
+                                      "flags":  9,
+                                      "writeCount":  5,
+                                      "allWritesSameFile":  true,
+                                      "readbacks":  [
+                                                        {
+                                                            "phase":  "minimal",
+                                                            "nonce":  "synthetic-no-process",
+                                                            "creationFileTime":  "synthetic-only"
+                                                        },
+                                                        {
+                                                            "phase":  "full_metadata",
+                                                            "metadataState":  "complete",
+                                                            "nonce":  "synthetic-no-process",
+                                                            "controllerSHA256":  "CBF70F8CE31A0130C76CDD69E76F3BD250B18B7D08BFB2E7888FD1047C4F7457"
+                                                        },
+                                                        {
+                                                            "phase":  "heartbeat",
+                                                            "sequence":  1,
+                                                            "nonce":  "synthetic-no-process"
+                                                        },
+                                                        {
+                                                            "phase":  "heartbeat",
+                                                            "sequence":  2,
+                                                            "nonce":  "synthetic-no-process"
+                                                        },
+                                                        {
+                                                            "phase":  "heartbeat",
+                                                            "sequence":  3,
+                                                            "nonce":  "synthetic-no-process"
+                                                        }
+                                                    ],
+                                      "powershellVersion":  "5.1.19041.5369",
+                                      "powershellExecutable":  "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+                                      "cadStarted":  false
+                                  },
+    "result":  "PASS"
+}

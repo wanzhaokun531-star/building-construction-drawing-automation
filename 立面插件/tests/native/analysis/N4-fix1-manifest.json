@@ -1,0 +1,70 @@
+{
+  "contract": "bce.analysis-fix-review.v1",
+  "status": "native-fix1-passed-awaiting-scoped-review",
+  "round": 1,
+  "scope": [
+    "P2 current document/database identity compatibility",
+    "P2 hidden constant ATTDEF visibility and detailed signatures"
+  ],
+  "publicApiChanged": false,
+  "baselineReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-195113-243-cold-source-and-nested-world-bounds-799a1a21\\receipt.json",
+  "redReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-201630-873-review-fix1-red-identity-hidden-constant-fbb63697\\receipt.json",
+  "redBinarySHA256": "0E1AC9181831DA35C9647C621DCBA22917E603F1A4E412ED8F7BB6D28D6F496A",
+  "redNativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-201821-2e610687\\case\\native-case.json",
+  "redNativeReportSHA256": "0CE5EF12ED1BCFC6774E4DEE57A7E131721C19B7DE96D69103583581C60AEA71",
+  "redClosure": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-201821-2e610687\\native-result-closure.json",
+  "redClosureSHA256": "42EBBC15B2A7DFCCFCB99143C3E569B68EC698329E2694E7AE15953BE6B48D60",
+  "redFailedSteps": [
+    "CurrentIdentityMatchesSceneWriterContract",
+    "InvisibleConstantAttributeDefinitionPreserved",
+    "ConstantAttributeVisibilityChangesDetailedSignature"
+  ],
+  "greenReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\receipt.json",
+  "greenReceiptSHA256": "70AFC5BA63D9D8431F76A8D51194E5F0C7BC0DF0B36609A59FEEDE5C71B68488",
+  "greenBinarySHA256": "7CCEBB1B4E80D7DBDBED168B0186A0109E38F28278447D8D52BE388C599279A5",
+  "expectedNativeSteps": 25,
+  "diff": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\analysis\\N4-fix1.diff",
+  "diffSHA256": "F4894E7630A3F16AD157E94498C33C8922B469EFBDF8751F3F67BFB8BD7FD087",
+  "files": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\AnalysisReader.cpp",
+      "sha256": "471BD590A70377D69215921AAC839D028A35DB395BF744764868CDA9173148E9",
+      "baseline": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-195113-243-cold-source-and-nested-world-bounds-799a1a21\\src\\AnalysisReader.cpp",
+      "baselineSHA256": "D5287349B3E6A57B5283BF31E386BA232AFCD7335C26004DD8ECE54741823429",
+      "frozen": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\AnalysisReader.cpp"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\analysis\\AnalysisDriver.cpp",
+      "sha256": "6833AF8C22AEF80854B91B68E6267931E4A726F807539FAA4D57620C09E655C2",
+      "baseline": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-195113-243-cold-source-and-nested-world-bounds-799a1a21\\src\\AnalysisDriver.cpp",
+      "baselineSHA256": "50B2184BE3093E40C1563F3C4EF2AB9F83E6256EF52F594AC30EBAEBDAB58DDD",
+      "frozen": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\AnalysisDriver.cpp"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\analysis\\AnalysisFixtures.h",
+      "sha256": "521F61C513D99CCA51DEDD8EB5EF18A837EA319A8E47AF2EB176E71E7A898E4E",
+      "baseline": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-195113-243-cold-source-and-nested-world-bounds-799a1a21\\src\\AnalysisFixtures.h",
+      "baselineSHA256": "A148F1BC9D423D6D5CD4F47A115157C8C730FEEDB19F72C7E28144613D754564",
+      "frozen": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\src\\AnalysisFixtures.h"
+    }
+  ],
+  "redToGreenChangedInputs": [
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\AnalysisReader.cpp"
+  ],
+  "unchangedPureRegression": "f1-20261101-192033-058-n4-hidden-semantics-green-ccc34b6e: 77/77; core files unchanged by fix1",
+  "greenNativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-202738-880254bc\\case\\native-case.json",
+  "greenNativeReportSHA256": "9FC5F77CBECB5F0361F765C3A10681273155EC6145EB5E87F6BAA3F84AD8556C",
+  "greenClosure": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-202738-880254bc\\native-result-closure.json",
+  "greenClosureSHA256": "C9CD0CFC5636A53A756C79C2EE8039BA3C0C5C9BBCB768A4600B3B764F78F691",
+  "greenBinding": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-880254bc.json",
+  "greenBindingSHA256": "42AD94CD814CD0E83815F0A3D44994817A9FA5254E7185385F0C3CC7EF95DA01",
+  "greenNativeStatus": "passed",
+  "greenNativeSteps": 25,
+  "greenNativeErrors": [],
+  "greenNonce": "880254bc4011464791e044ed8e83568e",
+  "greenProcessId": 11800,
+  "sourceSHAsUnchanged": true,
+  "timedOut": false,
+  "normalQuit": false,
+  "forcedTermination": true
+}

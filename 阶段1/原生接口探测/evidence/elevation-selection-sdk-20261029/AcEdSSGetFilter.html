@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>AcEdSSGetFilter</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+<link rel="stylesheet" type="text/css" href="default_plus.css" media="screen, projection, tv " />
+<script language=javascript src="arxref.js"></script>
+<script language=javascript src="ac_common.js"></script>
+<script language=javascript src="ac.acad_ak.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="ObjectARX_Reference_Guide.html">ObjectARX Reference Guide</a> &gt; <a href="AcEd_Classes_(WIN).html">AcEd Classes (WIN)</a> &gt; <a href="AcEdSSGetFilter.html">AcEdSSGetFilter Class</a></div>
+<div class="Element92">
+<div class="Element5">
+AcEdSSGetFilter</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<div class="Element58">
+<a name="436C61737320486965726172636879"></a><div class="Element14">
+Class Hierarchy</div>
+<div class="Element151"><div class="Element150"><pre class="Element150"><a href="AcEdInputContextReactor.html">AcEdInputContextReactor</a>
+    <strong>AcEdSSGetFilter</strong>
+        <a href="AcEdSSGetFilter2.html">AcEdSSGetFilter2</a>
+        <a href="AcEdSSGetFilter3.html">AcEdSSGetFilter3</a>
+        <a href="AcEdSSGetFilter4.html">AcEdSSGetFilter4</a>
+        <a href="AcEdSSGetFilter5.html">AcEdSSGetFilter5</a></pre></div></div>
+<a name="432B2B"></a><div class="Element99">
+C++</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #871F78">class</span></strong> <strong><span style="color: #660000">AcEdSSGetFilter</span></strong> : <strong><span style="color: #871F78">public</span></strong> AcEdInputContextReactor;</pre></div></div>
+<a name="46696C65"></a><div class="Element14">
+File</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+acssgetfilter.h</p></div>
+</div>
+<a name="4465736372697074696F6E"></a><div class="Element14">
+Description</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This class is used for notification of selection set operations. Classes derived from this class can receive enhanced notification about ongoing selection set operations in AutoCAD and can modify the current selection set by adding entries to it and removing entries from it.&nbsp;</p>
+<p class="Element10">
+ Modification of the current selection set is supported by the <span class="Element146">AcEdSelectionSetService</span> class. &nbsp;</p>
+<p class="Element10">
+ Creation or modification of the <span class="Element146">PICKFIRST</span> set normally triggers an <span class="Element146">AcEdSSGetFilter::ssgetAddFilter()</span> or <span class="Element146">AcEdSSGetFilter::ssgetRemoveFilter()</span> notification. &nbsp;</p>
+<p class="Element10">
+ It does not typically trigger an <span class="Element146">AcEdSSGetFilter::endSSGet()</span>notification, except in the following circumstances:  * If the user cancels the creation of a <span class="Element146">PICKFIRST</span> set by pressing ESC, an <span class="Element146">AcEdSSGetFilter::endSSGet()</span> notification is sent with a <span class="Element146">PromptStatus</span> of <span class="Element146">eCancel</span>.&nbsp;</p>
+<p class="Element10">
+* If an application calls the <span class="Element146">acedSSGet()</span> or <span class="Element146">acedSSGetFirst()</span> global function without starting a command or a LISP expression, an <span class="Element146">AcEdSSGetFilter::endSSGet() </span>notification is sent with a <span class="Element146">PromptStatus</span> of <span class="Element146">eNormal</span> right before the <span class="Element146">AcEdSSGetFilter::ssgetAddFilter()</span> notification is sent.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p></div>
+</div>
+<a name="4C696E6B73"></a><div class="Element14">
+Links</div>
+<div class="Element11">
+<div class="Element10">
+<a href="!!MEMBERTYPE_Methods_AcEdSSGetFilter.html">AcEdSSGetFilter Methods</a></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<table class=FooterTable width=100%><tr valign=top>
+<td>&nbsp;</td>
+<td align=right>&nbsp;<span class="CommentsLink" onclick="doComments();" title="Click here to send a comment about this topic.">Comments?</span>&nbsp;</td>
+</tr></table>
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

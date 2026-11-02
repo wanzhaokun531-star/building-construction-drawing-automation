@@ -1,0 +1,1 @@
+EARLY_NATIVE_LAUNCH assertions=4 failed=0; no CAD or desktop created

@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>AcDbEntity::moveGripPointsAt</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+<link rel="stylesheet" type="text/css" href="default_plus.css" media="screen, projection, tv " />
+<script language=javascript src="arxref.js"></script>
+<script language=javascript src="ac_common.js"></script>
+<script language=javascript src="ac.acad_ak.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="ObjectARX_Reference_Guide.html">ObjectARX Reference Guide</a> &gt; <a href="AcDb_Classes.html">AcDb Classes</a> &gt; <a href="AcDbEntity.html">AcDbEntity Class</a> &gt; <a href="!!MEMBERTYPE_Methods_AcDbEntity.html">AcDbEntity Methods</a> &gt; <a href="!!OVERLOADED_moveGripPointsAt_AcDbEntity.html">moveGripPointsAt Method</a> &gt; <a href="AcDbEntity__moveGripPointsAt@AcDbVoidPtrArray_@AcGeVector3d_@int.html">moveGripPointsAt(AcDbVoidPtrArray&amp;, AcGeVector3d&amp;, int) Method</a></div>
+<div class="Element92">
+<div class="Element5">
+AcDbEntity::moveGripPointsAt<span class="Element61">&nbsp;&nbsp;&nbsp; </span></div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<div class="Element58">
+<a name="432B2B"></a><div class="Element99">
+C++</div>
+<div class="Element101"><div class="Element100"><pre class="Element100">ACDBCORE2D_PORT ADESK_SEALED_VIRTUAL Acad::ErrorStatus <strong><span style="color: #660000">moveGripPointsAt</span></strong>(
+    <strong><span style="color: #871F78">const</span></strong> AcDbVoidPtrArray&amp; <strong><span style="color: #660000">gripAppData</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> AcGeVector3d&amp; <strong><span style="color: #660000">offset</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> <strong><span style="color: #871F78">int</span></strong> <strong><span style="color: #660000">bitflags</span></strong>
+);</pre></div></div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element252">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element240" valign="top" width="50%">
+<div class="Element241">
+Parameters&nbsp;</div></td><td class="Element244" valign="top" width="50%">
+<div class="Element245">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+gripAppData&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input array of pointers, one for each grip point to be moved; these are the appData pointers from the AcDbGripData objects for the grip points to be moved<br>&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+offset&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Vector, in WCS coordinates, indicating the direction and magnitude of the translation to be applied to the grips&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+bitflags&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Reserved for future use, currently zero&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="4465736372697074696F6E"></a><div class="Element14">
+Description</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+<strong>Function usage</strong>&nbsp;</p>
+<p class="Element10">
+This function is intended to be called by the host application to move the grip points during a grip edit of the entity. However, it is also possible for ObjectARX applications to call it.&nbsp;</p>
+<p class="Element10">
+Prior to calling this function, an ObjectARX application must call&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #871F78">virtual</span></strong> Acad::ErrorStatus   getGripPoints(AcDbGripDataArray&amp; grips,
+<strong><span style="color: #871F78">const</span></strong> <strong><span style="color: #871F78">double</span></strong> curViewUnitSize, <strong><span style="color: #871F78">const</span></strong> AcGeVector3d curViewDir,
+<strong><span style="color: #871F78">const</span></strong> <strong><span style="color: #871F78">int</span></strong> bitflags) <strong><span style="color: #871F78">const</span></strong>;</pre></div></div>
+<p class="Element10">
+to obtain the grip points and their application data pointers.&nbsp;</p>
+<p class="Element10">
+A host application calls this function only if the previous call to <span class="Element146">AcDbEntity::getGripPoints</span> returned <span class="Element146">Acad:eOK</span>.&nbsp;</p>
+<p class="Element10">
+On success this function returns <span class="Element146">Acad::eOK</span>.&nbsp;</p>
+<p class="Element10">
+It is recommended that the grip application data maintain pointers to the <span class="Element146">AcDbDimData </span>objects associated with this grip.&nbsp;</p>
+<p class="Element10">
+<strong>Function implementation in derived classes</strong>&nbsp;</p>
+<p class="Element10">
+The application must override this function and update the entity being grip edited. The application also must update the dynamic dimensions associated with this grip to conform to the geometry change of the entity being grip edited.&nbsp;</p>
+<p class="Element10">
+This function modifies the entity such that the grip points identified by the <span class="Element146">gripAppData</span> array are translated to the direction and magnitude specified by the <span class="Element146">offset</span> vector. How this affects the rest of the entity is dependent on the entity, but any other effects must also be taken care of by this function since this function is expected to perform all entity modifications that result from the grip edit.&nbsp;</p>
+<p class="Element10">
+If this function is implemented in a derived class, </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #871F78">virtual</span></strong> Acad::ErrorStatus   getGripPoints(AcDbGripDataArray&amp; grips,
+<strong><span style="color: #871F78">const</span></strong> <strong><span style="color: #871F78">double</span></strong> curViewUnitSize, <strong><span style="color: #871F78">const</span></strong> AcGeVector3d curViewDir,
+<strong><span style="color: #871F78">const</span></strong> <strong><span style="color: #871F78">int</span></strong> bitflags) <strong><span style="color: #871F78">const</span></strong>;</pre></div></div>
+<p class="Element10">
+must also be implemented.&nbsp;</p>
+<p class="Element10">
+On success, this function should return <span class="Element146">Acad::eOk</span>. Return values for error conditions are up to the implementer.&nbsp;</p>
+<p class="Element10">
+<strong>Function usage</strong>&nbsp;</p>
+<p class="Element10">
+The default implementation does nothing and immediately returns <span class="Element146">Acad::eNotImplemented</span>.</p></div>
+</div>
+<a name="4C696E6B73"></a><div class="Element14">
+Links</div>
+<div class="Element11">
+<div class="Element10">
+<a href="AcDbEntity.html">AcDbEntity</a></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<table class=FooterTable width=100%><tr valign=top>
+<td>&nbsp;</td>
+<td align=right>&nbsp;<span class="CommentsLink" onclick="doComments();" title="Click here to send a comment about this topic.">Comments?</span>&nbsp;</td>
+</tr></table>
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

@@ -1,0 +1,21 @@
+{
+  "version": "v127",
+  "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-163652",
+  "nonce": "f89cc1d6f13b409e9e3f833bcb189e0e",
+  "input": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门号轴线与面积_20261101\\方案施工图_一层_面积符号确认样张_v4.dwg",
+  "inputSHA256": "1484F1C4E2E721FD9671F275B47B1A1574A412342037E3F8CF15A0E89781D2B6",
+  "control": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-163652\\control.dwg",
+  "handle": "846C",
+  "gripPoint": [
+    39241.70152820693,
+    25765.213801956095,
+    0
+  ],
+  "delta": [
+    120,
+    0,
+    0
+  ],
+  "log": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-163652\\stretch-trial.log",
+  "bootSHA256": "A2E5A0FC5FD2A1EA93077B6EBFC8AE4E7020D2DFD07716DE14D452580AC2FDA6"
+}

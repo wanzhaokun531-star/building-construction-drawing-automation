@@ -1,0 +1,111 @@
+{
+  "contract": "bcp.native-stretch-baseline-trial.v1",
+  "version": "v127",
+  "completed": true,
+  "previewJob": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-stretch-20261101-163853",
+  "sourceSHA256": "1484F1C4E2E721FD9671F275B47B1A1574A412342037E3F8CF15A0E89781D2B6",
+  "outputSHA256": "B6E4E167134C4161A6A74BAE2126B53A264BD8765B7528FBD0CEFA0821D109E2",
+  "target": "846C",
+  "baselineBefore": [
+    [
+      39241.70152820693,
+      25765.213801956095,
+      0
+    ],
+    [
+      39241.70152820693,
+      35985.213801956095,
+      0
+    ]
+  ],
+  "baselineAfter": [
+    [
+      39361.70152820693,
+      25765.213801956095,
+      0
+    ],
+    [
+      39361.70152820693,
+      35985.213801956095,
+      0
+    ]
+  ],
+  "nodesUnchanged": true,
+  "valuesUnchanged": true,
+  "otherObjectsUnchanged": true,
+  "steps": [
+    {
+      "serial": "4c880213aeee41ffb36f2638c0199783",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-163652\\dispatch_4c880213aeee41ffb36f2638c0199783.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "f89cc1d6f13b409e9e3f833bcb189e0e",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-163652",
+        "processId": 28356,
+        "desktop": "CodexS1_f89cc1d6f13b409e9e3f833bcb189e0e",
+        "inputDesktop": "Default",
+        "serial": "4c880213aeee41ffb36f2638c0199783",
+        "command": "S1OPENPROBECONTROL",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-stretch-20261101-163853",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-stretch-20261101-163853\\control.dwg",
+        "error": null
+      }
+    },
+    {
+      "serial": "74336e2b140445a68ab7ea9eba0e6cf2",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-163652\\dispatch_74336e2b140445a68ab7ea9eba0e6cf2.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "f89cc1d6f13b409e9e3f833bcb189e0e",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-163652",
+        "processId": 28356,
+        "desktop": "CodexS1_f89cc1d6f13b409e9e3f833bcb189e0e",
+        "inputDesktop": "Default",
+        "serial": "74336e2b140445a68ab7ea9eba0e6cf2",
+        "command": "S1PHASE2EXECUTE",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-stretch-20261101-163853",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-stretch-20261101-163853\\control.dwg",
+        "error": null
+      }
+    },
+    {
+      "serial": "4850600032a44685a4efadd4df7b9c47",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-163652\\dispatch_4850600032a44685a4efadd4df7b9c47.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "f89cc1d6f13b409e9e3f833bcb189e0e",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261101-163652",
+        "processId": 28356,
+        "desktop": "CodexS1_f89cc1d6f13b409e9e3f833bcb189e0e",
+        "inputDesktop": "Default",
+        "serial": "4850600032a44685a4efadd4df7b9c47",
+        "command": "S1PHASE2PREVIEW",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-stretch-20261101-163853",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-stretch-20261101-163853\\control.dwg",
+        "error": null
+      }
+    }
+  ],
+  "route": "AutoCAD STRETCH explicit crossing, non-target layers temporarily locked and restored; no COM/CUA/C++ changes"
+}

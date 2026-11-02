@@ -1,0 +1,3 @@
+FAIL: native exercise result missing: D:\Codex\����ʩ��ͼ�Զ���\�׶�1\tests\not-generated-native-exercise.json
+assertions=1 passed=0 failed=1 result=FAIL
+This checks selected grip edits, not arbitrary axis numbering or dimension generation.

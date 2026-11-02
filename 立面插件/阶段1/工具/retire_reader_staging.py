@@ -1,0 +1,67 @@
+"""Archive/remove exactly four owned staging files after supervisor-confirmed exit."""
+from pathlib import Path
+import datetime
+import hashlib
+import json
+import sys
+
+
+def read(path):
+    return json.loads(Path(path).read_text(encoding='utf-8-sig'))
+
+
+def sha(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest().upper()
+
+
+def main(binding_path):
+    binding_path = Path(binding_path).resolve(strict=True)
+    binding = read(binding_path)
+    session = Path(binding['session']).resolve(strict=True)
+    final_path = session / 'isolation-final.json'
+    final = read(final_path)
+    assert final['nonce'] == binding['nonce'] and final['session'] == str(session)
+    assert final['workerExited'] and not final['stillRunningOwnedWorker']
+    assert final['desktopClosed'] and final['processHandlesClosed']
+    staging = Path(binding['stagingDirectory']).resolve(strict=True)
+    expected = Path('C:/Program Files/Autodesk/ApplicationPlugins') / ('CodexElevationStage1_' + binding['nonce'])
+    assert staging == expected.resolve(strict=True) and not staging.is_symlink()
+    paths = [Path(binding[k]) for k in ('stagedARX', 'stagedINI', 'readerARX', 'readerINI')]
+    assert len({p.name for p in paths}) == 4
+    assert {p.resolve(strict=True) for p in staging.iterdir()} == {p.resolve(strict=True) for p in paths}
+    for p in paths:
+        assert not p.is_symlink() and p.resolve(strict=True).parent == staging and p.is_file()
+    assert sha(paths[0]) == binding['binarySHA256'] and sha(paths[2]) == binding['readerSHA256']
+    archive = session / 'retired-module-snapshot'
+    archive.mkdir()
+    retired = []
+    for p in paths:
+        digest = sha(p)
+        copied = archive / p.name
+        with copied.open('xb') as out:
+            out.write(p.read_bytes())
+        assert sha(copied) == digest == sha(p)
+        p.unlink()
+        retired.append(dict(path=str(p), SHA256=digest, archive=str(copied), removed=not p.exists()))
+    assert not any(staging.iterdir())
+    staging.rmdir()
+    inputs = []
+    for item in binding['inputs']:
+        for key in ('source', 'snapshot', 'inspectionCopy'):
+            p = Path(item[key])
+            assert sha(p) == item['SHA256']
+            inputs.append(dict(role=item['role'], kind=key, path=str(p), SHA256=sha(p)))
+    controls = []
+    for p in session.glob('view-*/control.dwg'):
+        expected_sha = next(i['SHA256'] for i in binding['inputs'] if i['role'] == 'reference')
+        assert sha(p) == expected_sha
+        controls.append(dict(path=str(p), SHA256=sha(p)))
+    report = dict(contract='bce.stage1.reader-retirement.v1', recorded=datetime.datetime.now().astimezone().isoformat(), binding=str(binding_path), bindingSHA256=sha(binding_path), session=str(session), nonce=binding['nonce'], processId=final['processId'], supervisorFinal=str(final_path), supervisorFinalSHA256=sha(final_path), normalQuit=(final['nativeQuitConfirmed'] and not final['forcedTermination'] and final.get('workerExitCode') == 0 and not any(session.glob('isolation-stop-*.json'))), explicitStopEvidencePresent=any(session.glob('isolation-stop-*.json')), forcedTermination=final['forcedTermination'], removedFiles=retired, stagingRemoved=not staging.exists(), coreInputChecks=inputs, previewControlChecks=controls, inputDesktopReadErrors=final['inputDesktopReadErrors'], ownedUserShows=final['workerUserDesktopShowEvents'], ownedForeground=final['workerForegroundEvents'], monitorError=final['monitorError'], relatedCadEventsNeedReview=final['relatedCadEventsNeedReview'], relatedCadShowEvents=final['relatedCadShowEvents'], relatedCadForegroundEvents=final['relatedCadForegroundEvents'], scope='Only own nonce staging removed after attested worker exit; originals, snapshots and controls retained unchanged; forced exit is not normal QUIT')
+    target = session / 'reader-retirement.json'
+    with target.open('x', encoding='utf-8') as out:
+        json.dump(report, out, ensure_ascii=False, indent=2)
+    print(json.dumps(dict(report=str(target), removed=len(retired), inputsChecked=len(inputs), controlsChecked=len(controls)), ensure_ascii=False))
+
+
+if __name__ == '__main__':
+    main(sys.argv[1])

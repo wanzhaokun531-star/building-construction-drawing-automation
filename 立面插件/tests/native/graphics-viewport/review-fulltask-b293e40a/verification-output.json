@@ -1,0 +1,20 @@
+{
+  "nativeSteps": 70,
+  "passed": 70,
+  "errors": [],
+  "contexts": 2668,
+  "textRequests": 72,
+  "twoRoundsEqualPerSample": true,
+  "utf16AndLengthMatch": true,
+  "compiledInputsMatch": 18,
+  "strictNativeEvidenceUnchangedFromStub": true,
+  "controllerMatchesExecutedSHA": true,
+  "sixInputSHAsRechecked": true,
+  "fourRetiredFilesArchiveSHARechecked": true,
+  "closureReferencesRechecked": true,
+  "normalQuit": false,
+  "forcedExit": 70,
+  "manifestSHA256": "6CE5FA2176504FD5897D3791D580A71EEBF95FF625202780C449CDFA62AC1B1E",
+  "commands": "python 立面插件/tests/native/graphics-viewport/review-fulltask-b293e40a/assemble_review.py",
+  "rawResultsReusedNoCadLaunch": true
+}

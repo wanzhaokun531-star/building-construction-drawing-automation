@@ -1,0 +1,12 @@
+from prepare_native import ROOT,S,P,read,sha
+from pathlib import Path
+import sys,json,datetime,shutil,importlib.util
+v=sys.argv[1];b=read(S/f'evidence/native-host-binding-{v}.json');session=Path(b['session']);ready=read(session/'quiet-worker-ready.json');floor=int(sys.argv[2]) if len(sys.argv)>2 else 0;result=read(Path(b['job'])/(f'floor-{floor}/product-result.json' if floor else 'product-result.json'));source=Path(result['output']);assert result['completed'] and sha(source)==result['outputSHA256']
+job=ROOT/'阶段1/runs'/('stage2-preview-dynamic-'+datetime.datetime.now().strftime('%Y%m%d-%H%M%S'));job.mkdir();shutil.copyfile(source,job/'control.dwg');x0,x1=(72422,103422) if floor==2 else (26000,57000) if floor else (9000,40000);y0=18000 if floor else 8000;(job/'annotation-index.tsv').write_text(f'S2DIMPREVIEW3 0 {result["finalRoots"]} {x0} {y0} {x1} 44000 594 420\n',encoding='ascii')
+spec=importlib.util.spec_from_file_location('native_queue',P/'run_quiet_job.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+r=dict(contract='bcp.dynamic-native-preview.v1',session=str(session),nonce=b['nonce'],job=str(job),source=str(source),sourceSHA256=sha(source),steps=[],error=None)
+try:
+ r['steps'].append(m.dispatch(session,ready,'S1OPENPROBECONTROL',job,'native-open.done',90));(job/'phase2-mask-audit.only').write_text('owned native axes and mask QA\n',encoding='ascii');r['steps'].append(m.dispatch(session,ready,'S1PHASE2EXECUTE',job,'native-mask-document-audit.json',60));axes=read(job/'product-axis-document-audit.json');assert axes['error'] is None;r['axisAudit']=axes;r['steps'].append(m.dispatch(session,ready,'S1PHASE2PREVIEW',job,'stage2-preview-native.json',120));p=read(job/'stage2-preview-native.json');assert p['error'] is None and p['originalBefore']==p['originalAfter'] and p['initialModelCount']==p['finalModelCount']==result['finalRoots'];assert p['globalsBefore']==p['globalsAfter'] and p['layoutBefore']==p['layoutAfter'];r.update(PDF=p['page']['outputPDF'],PDFSHA256=sha(p['page']['outputPDF']),controlSHA256=sha(job/'control.dwg'));assert r['controlSHA256']==r['sourceSHA256']
+except BaseException as e:r['error']=repr(e);raise
+finally:
+ out=ROOT/f'插件/evidence/preview-dynamic-{v}-floor{floor}.json';assert not out.exists();out.write_text(json.dumps(r,ensure_ascii=False,indent=2),encoding='utf-8');print(json.dumps(dict(job=r['job'],PDF=r.get('PDF'),error=r['error']),ensure_ascii=False))

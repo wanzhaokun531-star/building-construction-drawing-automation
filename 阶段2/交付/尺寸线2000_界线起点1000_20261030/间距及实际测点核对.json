@@ -1,0 +1,384 @@
+{
+  "contract": "bcp.perimeter-spacing-trial-verification.v1",
+  "nearCircleGap": 600,
+  "circleRadius": 400,
+  "circleCentreOffset": 4600,
+  "outerCircleOffset": 5000,
+  "dimensionOffsets": [
+    2000,
+    2800,
+    3600
+  ],
+  "witnessStart": 1000,
+  "actualSavedGapFilters": 28,
+  "nativeAxisCirclesVerified": 40,
+  "visibleEnds": 28,
+  "savedModelRootAxisEndsIndependentlyRead": 0,
+  "savedDimensionEndpointsVerified": 56,
+  "axisDimensions": 24,
+  "bodyEnvelopeTotals": {
+    "bottom": 17700.00000000035,
+    "top": 17700.00000000035,
+    "left": 18400.00000000003,
+    "right": 18400.00000000003
+  },
+  "innerGuides": 4,
+  "threeRowsComplete": false,
+  "wholeBuildingTotalSemanticAcceptance": false,
+  "ends": [
+    {
+      "label": "1",
+      "side": "bottom",
+      "visible": true,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "1",
+      "side": "top",
+      "visible": true,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "2",
+      "side": "bottom",
+      "visible": true,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0000000000009,
+      "outerCircleOffset": 4999.999999999999
+    },
+    {
+      "label": "2",
+      "side": "top",
+      "visible": false,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "3",
+      "side": "bottom",
+      "visible": true,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "3",
+      "side": "top",
+      "visible": true,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "4",
+      "side": "bottom",
+      "visible": true,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "4",
+      "side": "top",
+      "visible": false,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "5",
+      "side": "bottom",
+      "visible": false,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "5",
+      "side": "top",
+      "visible": true,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "6",
+      "side": "bottom",
+      "visible": true,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "6",
+      "side": "top",
+      "visible": false,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "7",
+      "side": "bottom",
+      "visible": false,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "7",
+      "side": "top",
+      "visible": true,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "8",
+      "side": "bottom",
+      "visible": true,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "8",
+      "side": "top",
+      "visible": true,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "9",
+      "side": "bottom",
+      "visible": true,
+      "centreOffset": 4599.999999999998,
+      "totalLineToNearCircle": 599.9999999999964,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "9",
+      "side": "top",
+      "visible": true,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 599.9999999999982,
+      "outerCircleOffset": 5000.000000000002
+    },
+    {
+      "label": "A",
+      "side": "left",
+      "visible": true,
+      "centreOffset": 4599.999999999996,
+      "totalLineToNearCircle": 599.9999999999964,
+      "outerCircleOffset": 4999.999999999996
+    },
+    {
+      "label": "A",
+      "side": "right",
+      "visible": false,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "B",
+      "side": "left",
+      "visible": false,
+      "centreOffset": 4599.999999999996,
+      "totalLineToNearCircle": 599.9999999999964,
+      "outerCircleOffset": 4999.999999999996
+    },
+    {
+      "label": "B",
+      "side": "right",
+      "visible": true,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "C",
+      "side": "left",
+      "visible": false,
+      "centreOffset": 4599.999999999996,
+      "totalLineToNearCircle": 599.9999999999964,
+      "outerCircleOffset": 4999.999999999996
+    },
+    {
+      "label": "C",
+      "side": "right",
+      "visible": true,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "D",
+      "side": "left",
+      "visible": true,
+      "centreOffset": 4599.999999999996,
+      "totalLineToNearCircle": 599.9999999999964,
+      "outerCircleOffset": 4999.999999999996
+    },
+    {
+      "label": "D",
+      "side": "right",
+      "visible": false,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "E",
+      "side": "left",
+      "visible": true,
+      "centreOffset": 4599.999999999996,
+      "totalLineToNearCircle": 599.9999999999964,
+      "outerCircleOffset": 4999.999999999996
+    },
+    {
+      "label": "E",
+      "side": "right",
+      "visible": false,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "F",
+      "side": "left",
+      "visible": true,
+      "centreOffset": 4599.999999999996,
+      "totalLineToNearCircle": 599.9999999999964,
+      "outerCircleOffset": 4999.999999999996
+    },
+    {
+      "label": "F",
+      "side": "right",
+      "visible": true,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "G",
+      "side": "left",
+      "visible": true,
+      "centreOffset": 4599.999999999996,
+      "totalLineToNearCircle": 599.9999999999964,
+      "outerCircleOffset": 4999.999999999996
+    },
+    {
+      "label": "G",
+      "side": "right",
+      "visible": true,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "H",
+      "side": "left",
+      "visible": true,
+      "centreOffset": 4599.999999999996,
+      "totalLineToNearCircle": 599.9999999999964,
+      "outerCircleOffset": 4999.999999999996
+    },
+    {
+      "label": "H",
+      "side": "right",
+      "visible": true,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "J",
+      "side": "left",
+      "visible": true,
+      "centreOffset": 4599.999999999996,
+      "totalLineToNearCircle": 599.9999999999964,
+      "outerCircleOffset": 4999.999999999996
+    },
+    {
+      "label": "J",
+      "side": "right",
+      "visible": false,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "K",
+      "side": "left",
+      "visible": false,
+      "centreOffset": 4599.999999999996,
+      "totalLineToNearCircle": 599.9999999999964,
+      "outerCircleOffset": 4999.999999999996
+    },
+    {
+      "label": "K",
+      "side": "right",
+      "visible": true,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    },
+    {
+      "label": "L",
+      "side": "left",
+      "visible": true,
+      "centreOffset": 4599.999999999996,
+      "totalLineToNearCircle": 599.9999999999964,
+      "outerCircleOffset": 4999.999999999996
+    },
+    {
+      "label": "L",
+      "side": "right",
+      "visible": true,
+      "centreOffset": 4600.0,
+      "totalLineToNearCircle": 600.0,
+      "outerCircleOffset": 5000.0
+    }
+  ],
+  "chains": {
+    "bottom": [
+      1100,
+      2800,
+      1400,
+      3600,
+      5000,
+      3600
+    ],
+    "top": [
+      3900,
+      2200,
+      4000,
+      3800,
+      3600
+    ],
+    "left": [
+      4000,
+      1800,
+      1799.9999999992433,
+      3600.0000000007567,
+      2999.999999999971,
+      1200.000000000029,
+      2800
+    ],
+    "right": [
+      1900,
+      3699.9999999992433,
+      3600.0000000007567,
+      2999.999999999971,
+      2000.000000000029,
+      2000
+    ]
+  }
+}

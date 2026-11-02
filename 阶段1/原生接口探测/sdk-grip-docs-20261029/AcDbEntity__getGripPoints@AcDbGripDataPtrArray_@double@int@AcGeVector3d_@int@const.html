@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>AcDbEntity::getGripPoints</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+<link rel="stylesheet" type="text/css" href="default_plus.css" media="screen, projection, tv " />
+<script language=javascript src="arxref.js"></script>
+<script language=javascript src="ac_common.js"></script>
+<script language=javascript src="ac.acad_ak.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="ObjectARX_Reference_Guide.html">ObjectARX Reference Guide</a> &gt; <a href="AcDb_Classes.html">AcDb Classes</a> &gt; <a href="AcDbEntity.html">AcDbEntity Class</a> &gt; <a href="!!MEMBERTYPE_Methods_AcDbEntity.html">AcDbEntity Methods</a> &gt; <a href="!!OVERLOADED_getGripPoints_AcDbEntity.html">getGripPoints Method</a> &gt; <a href="AcDbEntity__getGripPoints@AcDbGripDataPtrArray_@double@int@AcGeVector3d_@int@const.html">getGripPoints(AcDbGripDataPtrArray&amp;, double, int, AcGeVector3d&amp;, int) Method</a></div>
+<div class="Element92">
+<div class="Element5">
+AcDbEntity::getGripPoints<span class="Element61">&nbsp;&nbsp;&nbsp; </span></div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<div class="Element58">
+<a name="432B2B"></a><div class="Element99">
+C++</div>
+<div class="Element101"><div class="Element100"><pre class="Element100">ACDBCORE2D_PORT ADESK_SEALED_VIRTUAL Acad::ErrorStatus <strong><span style="color: #660000">getGripPoints</span></strong>(
+    AcDbGripDataPtrArray&amp; <strong><span style="color: #660000">grips</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> <strong><span style="color: #871F78">double</span></strong> <strong><span style="color: #660000">curViewUnitSize</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> <strong><span style="color: #871F78">int</span></strong> <strong><span style="color: #660000">gripSize</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> AcGeVector3d&amp; <strong><span style="color: #660000">curViewDir</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> <strong><span style="color: #871F78">int</span></strong> <strong><span style="color: #660000">bitflags</span></strong>
+) <strong><span style="color: #871F78">const</span></strong>;</pre></div></div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element252">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element240" valign="top" width="50%">
+<div class="Element241">
+Parameters&nbsp;</div></td><td class="Element244" valign="top" width="50%">
+<div class="Element245">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+grips&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Array of pointers to dynamically allocated AcDbGripData objects, one for each grip point in the entity&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+curViewUnitSize&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Size, in pixels, of one drawing unit in the current viewport&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+gripSize&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Current grip size, in pixels&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+curViewDir&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Vector describing the view direction in the current viewport&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+bitflags&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Bitmap of one or more flags specified by the GetGripPointsFlags enumeration&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="4465736372697074696F6E"></a><div class="Element14">
+Description</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+<strong>Function usage</strong>&nbsp;</p>
+<p class="Element10">
+This function gets the grip points and supporting information about the grips for this entity. It is not intended to be called by ObjectARX applications. However, it is possible to do so.&nbsp;</p>
+<p class="Element10">
+<strong>Function implementation in derived classes</strong>&nbsp;</p>
+<p class="Element10">
+The <span class="Element146">grips</span> array cannot be empty, so it is important to append to it rather than assign to any existing objects in the array. If you wish to preallocate space for the elements to be appended, be sure to include the existing array logical length when calculating a new physical length for the array.&nbsp;</p>
+<p class="Element10">
+The caller is responsible for freeing the <span class="Element146">AcDbGripData</span> objects whose pointers are in the <span class="Element146">grips</span> array.&nbsp;</p>
+<p class="Element10">
+After appending pointers to all desired <span class="Element146">AcDbGripData</span> objects, the method should return <span class="Element146">Acad::eOk</span>. The default implementation of this method returns <span class="Element146">Acad::eNotImplemented</span>. When <span class="Element146">Acad::eNotImplemented</span> is returned, the application should call the other overload of this method: </p><div class="Element13"><div class="Element12"><pre class="Element12"> <strong><span style="color: #871F78">virtual</span></strong> Acad::ErrorStatus   getGripPoints(
+        AcGePoint3dArray&amp;  gripPoints,
+        AcDbIntArray&amp;  osnapModes,
+        AcDbIntArray&amp;  geomIds) <strong><span style="color: #871F78">const</span></strong>;</pre></div></div>
+<p class="Element10">
+If an value other than <span class="Element146">Acad::eOk</span> or <span class="Element146">Acad::eNotImplemented</span> is returned, grips are not activated for this entity.&nbsp;</p>
+<p class="Element10">
+When a custom entity is displayed as part of a block reference, only the <span class="Element146">getGripPoints() </span>method is called on the entity . The <span class="Element146">moveGripPointsAt() </span>is not called and none of the custom functionality implemented by this overload is used. <span class="Element146">getGripPoints()</span> is called with the <span class="Element146">bitflags</span> argument's <span class="Element146">kGripPointsOnly</span> bit set to indicate that only the grip points will be used. The grip points are displayed as standard &quot;old style&quot;grips, if they are displayed at all (see the <span class="Element146">GRIPBLOCK</span> sysvar) and none of the callbacks pointed to by the <span class="Element146">grips</span> array are invoked.</p></div>
+</div>
+<a name="4C696E6B73"></a><div class="Element14">
+Links</div>
+<div class="Element11">
+<div class="Element10">
+<a href="AcDbEntity.html">AcDbEntity</a></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<table class=FooterTable width=100%><tr valign=top>
+<td>&nbsp;</td>
+<td align=right>&nbsp;<span class="CommentsLink" onclick="doComments();" title="Click here to send a comment about this topic.">Comments?</span>&nbsp;</td>
+</tr></table>
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

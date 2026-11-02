@@ -1,0 +1,6 @@
+{
+  "candidate": "v58",
+  "nativeError": "failure: saved stock WIPEOUTVARIABLES frame70 is not zero",
+  "DWGProduced": false,
+  "next": "Public stock DXF70 setter returned RTNORM but readback still1. Test scoped SDK WIPEOUTFRAME=0 only in own active scratch, across save/reopen, restoring FRAME and WIPEOUTFRAME; actual saved active-document audit remains mandatory"
+}

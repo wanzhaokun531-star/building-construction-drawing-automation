@@ -1,0 +1,3 @@
+FAIL: native resource evidence missing
+assertions=1 passed=0 failed=1 result=FAIL
+Scope: native resource-table audit; not all custom entity overrides or final font/print acceptance.

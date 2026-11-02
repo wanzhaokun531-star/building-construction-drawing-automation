@@ -1,0 +1,24 @@
+{
+  "contract": "bce.stage1.block-visual-crop.v1",
+  "rootHandle": "11B93",
+  "sourcePDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-stage1-20261101-162251-d748fbf0\\view-AB0B\\stage2-A2-1-100.pdf",
+  "sourcePDFSHA256": "84AD74928D4DE4E41C0234791CD5883C3BD5F873FE6986916E480D8183299113",
+  "approximateWindowWCS": [
+    60000,
+    136850,
+    66150,
+    138850
+  ],
+  "pixelCrop720": [
+    6375,
+    4964,
+    1744,
+    568
+  ],
+  "output": "D:\\Codex\\建筑施工图自动化\\立面插件\\阶段1\\图面\\11B93-native720.png",
+  "outputSHA256": "16D9FADB9D5CB4DFCC52234BE1020D794DEE907D6E7281855870FA2660163F96",
+  "displayMeaning": "Source-native PDF crop only; not generated new DWG",
+  "visualStatus": "partial-visible-with-overlap",
+  "visualObservation": "Decorative column area; upper 50/800/50 readable, lower short values overlap; all 7 glyph strings not independently ratified; source PDF unchanged.",
+  "actualGlyphGeometryProgrammaticallyVerified": false
+}

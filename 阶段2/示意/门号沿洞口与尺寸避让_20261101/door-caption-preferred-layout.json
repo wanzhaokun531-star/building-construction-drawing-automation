@@ -1,0 +1,1344 @@
+{
+  "contract": "bcp.door-example-layout-data.v1",
+  "units": "model mm",
+  "scope": "Read-only candidates for latest example; not edited DWG or product implementation",
+  "interpretation": {
+    "sourceImage": "C:/Users/PC/AppData/Local/Temp/codex-clipboard-3f484126-ffb4-4d6b-b343-4be7f511da65.png",
+    "description": "Door caption parallel to opening, centered along opening, next to the opening on opposite side from swing arc; dimension labels and baselines yield to caption.",
+    "overridesPriorCandidate": "opening-side lower-end placement",
+    "userDidNotSpecifyNumericSpacing": true,
+    "trialWallFaceGapMm": 120
+  },
+  "floors": [
+    {
+      "floor": 1,
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门号轴线与面积_20261101\\方案施工图_一层_面积符号确认样张_v4.dwg",
+      "sourceSHA256": "1484F1C4E2E721FD9671F275B47B1A1574A412342037E3F8CF15A0E89781D2B6",
+      "actualPreview": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161104-floor1\\stage2-preview-native.json",
+      "actualPreviewSHA256": "A21FB0DD01D415815763345FC9A206601FB3E0003B75A8FAAE99B0B3B6284D42",
+      "captionWitness": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-caption-clearance.json",
+      "captionWitnessSHA256": "81A6A1ACC4A58DC2822840E9BBD2B6A9C70AC53046ADDB67219BCAEC85537720",
+      "candidates": [
+        {
+          "handle": "84A6",
+          "opening": "7F36",
+          "text": "M2221",
+          "wall": "7F35",
+          "rotation": 0,
+          "verticalOpening": false,
+          "anchorA": [
+            45951.7015282074,
+            25645.213801956615,
+            0
+          ],
+          "anchorB": [
+            43751.7015282074,
+            25645.213801956463,
+            0
+          ],
+          "closedPlaneNormal": 25645.21380195654,
+          "openingMidAlong": 44851.7015282074,
+          "arcCount": 2,
+          "swingExtentPositive": 1072.1473779290573,
+          "swingExtentNegative": 0.0,
+          "swingSide": 1,
+          "currentPosition": [
+            44851.7015282074,
+            26957.713801956615,
+            0
+          ],
+          "currentBounds": [
+            44438.487242493116,
+            26807.713801956615,
+            45264.91581392169,
+            27107.713801956615
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-graphic-probe.json",
+          "kind": "multi-leaf-swing",
+          "status": "preferred-geometry-needs-nondimension-resolution",
+          "desiredSide": -1,
+          "wallFace": 25525.213801956095,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            44851.7015282074,
+            25255.213801956095,
+            0.0
+          ],
+          "desiredBounds": [
+            44438.487242493116,
+            25105.213801956095,
+            45264.91581392169,
+            25405.213801956095
+          ],
+          "delta": [
+            0.0,
+            -1702.5000000005202,
+            0.0
+          ],
+          "hardContacts": [
+            {
+              "kind": "fixed-text",
+              "handle": "7F46",
+              "bounds": [
+                44525.041572136804,
+                24954.207472842172,
+                45216.34958901444,
+                25352.51970912909
+              ],
+              "text": null
+            }
+          ],
+          "dimensionContacts": []
+        },
+        {
+          "handle": "84A8",
+          "opening": "7F39",
+          "text": "M0927",
+          "wall": "7F38",
+          "rotation": 1.5707963267948966,
+          "verticalOpening": true,
+          "anchorA": [
+            38471.70152820693,
+            31085.213801995444,
+            0
+          ],
+          "anchorB": [
+            38471.70152820693,
+            31985.213801995444,
+            0
+          ],
+          "closedPlaneNormal": 38471.70152820693,
+          "openingMidAlong": 31535.213801995444,
+          "arcCount": 1,
+          "swingExtentPositive": 0.0,
+          "swingExtentNegative": 877.2114910328091,
+          "swingSide": -1,
+          "currentPosition": [
+            38141.70152820693,
+            30540.213801995444,
+            0
+          ],
+          "currentBounds": [
+            37991.70152820693,
+            30085.213801995444,
+            38291.70152820693,
+            30995.213801995444
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-dimensions-yield",
+          "desiredSide": 1,
+          "wallFace": 38591.70152820693,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            38861.70152820693,
+            31535.213801995444,
+            0.0
+          ],
+          "desiredBounds": [
+            38711.70152820693,
+            31080.213801995444,
+            39011.70152820693,
+            31990.213801995444
+          ],
+          "delta": [
+            720.0,
+            995.0,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": [
+            {
+              "handle": "846C",
+              "kind": "dimension-text",
+              "segment": 1,
+              "value": 899.9999999999964,
+              "fontBounds": [
+                38842.70152820693,
+                31189.213801995444,
+                39160.70152820693,
+                31881.213801995444
+              ]
+            }
+          ]
+        },
+        {
+          "handle": "84A9",
+          "opening": "7F3B",
+          "text": "M0927",
+          "wall": "7F3A",
+          "rotation": 1.5707963267948966,
+          "verticalOpening": true,
+          "anchorA": [
+            42851.70152820693,
+            32325.213801994978,
+            0
+          ],
+          "anchorB": [
+            42851.70152820693,
+            33225.21380199498,
+            0
+          ],
+          "closedPlaneNormal": 42851.70152820693,
+          "openingMidAlong": 32775.21380199498,
+          "arcCount": 1,
+          "swingExtentPositive": 877.2114910328091,
+          "swingExtentNegative": 0.0,
+          "swingSide": 1,
+          "currentPosition": [
+            44381.70152820693,
+            32780.21380199498,
+            0
+          ],
+          "currentBounds": [
+            44231.70152820693,
+            32325.213801994978,
+            44531.70152820693,
+            33235.21380199498
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-clear",
+          "desiredSide": -1,
+          "wallFace": 42731.70152820693,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            42461.70152820693,
+            32775.21380199498,
+            0.0
+          ],
+          "desiredBounds": [
+            42311.70152820693,
+            32320.213801994978,
+            42611.70152820693,
+            33230.21380199498
+          ],
+          "delta": [
+            -1920.0,
+            -5.0,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": []
+        },
+        {
+          "handle": "84AC",
+          "opening": "7F43",
+          "text": "M0927",
+          "wall": "8183",
+          "rotation": 0,
+          "verticalOpening": false,
+          "anchorA": [
+            47071.70152804465,
+            30205.213801956696,
+            0
+          ],
+          "anchorB": [
+            47971.70152804465,
+            30205.213801956776,
+            0
+          ],
+          "closedPlaneNormal": 30205.213801956736,
+          "openingMidAlong": 47521.70152804465,
+          "arcCount": 1,
+          "swingExtentPositive": 3.637978807091713e-11,
+          "swingExtentNegative": 877.2114910328419,
+          "swingSide": -1,
+          "currentPosition": [
+            47521.70152804465,
+            29087.713801956696,
+            0
+          ],
+          "currentBounds": [
+            47066.70152804465,
+            28937.713801956696,
+            47976.70152804465,
+            29237.713801956696
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-dimensions-yield",
+          "desiredSide": 1,
+          "wallFace": 30325.213801956794,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            47521.70152804465,
+            30595.213801956794,
+            0.0
+          ],
+          "desiredBounds": [
+            47066.70152804465,
+            30445.213801956794,
+            47976.70152804465,
+            30745.213801956794
+          ],
+          "delta": [
+            0.0,
+            1507.5000000000982,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": [
+            {
+              "handle": "848C",
+              "kind": "dimension-text",
+              "segment": 2,
+              "value": 220.00000016298873,
+              "fontBounds": [
+                47735.70152812614,
+                30606.213801956677,
+                48427.70152812614,
+                30924.213801956677
+              ]
+            }
+          ]
+        },
+        {
+          "handle": "84AE",
+          "opening": "7F45",
+          "text": "M0927",
+          "wall": "8187",
+          "rotation": 0,
+          "verticalOpening": false,
+          "anchorA": [
+            47071.701528036494,
+            32105.213801953625,
+            0
+          ],
+          "anchorB": [
+            47971.701528036494,
+            32105.213801965434,
+            0
+          ],
+          "closedPlaneNormal": 32105.21380195953,
+          "openingMidAlong": 47521.701528036494,
+          "arcCount": 1,
+          "swingExtentPositive": 877.2114910274904,
+          "swingExtentNegative": -5.900801625102758e-09,
+          "swingSide": 1,
+          "currentPosition": [
+            48571.701528036494,
+            32435.213801953625,
+            0
+          ],
+          "currentBounds": [
+            48116.701528036494,
+            32285.213801953625,
+            49026.701528036494,
+            32585.213801953625
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-clear",
+          "desiredSide": -1,
+          "wallFace": 31985.21380195074,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            47521.701528036494,
+            31715.21380195074,
+            0.0
+          ],
+          "desiredBounds": [
+            47066.701528036494,
+            31565.21380195074,
+            47976.701528036494,
+            31865.21380195074
+          ],
+          "delta": [
+            -1050.0,
+            -720.0000000028849,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": []
+        },
+        {
+          "handle": "84AF",
+          "opening": "7FE0",
+          "text": "M0927",
+          "wall": "7FDF",
+          "rotation": 0,
+          "verticalOpening": false,
+          "anchorA": [
+            32271.701528206933,
+            33105.21380195598,
+            0
+          ],
+          "anchorB": [
+            33171.70152820693,
+            33105.21380195598,
+            0
+          ],
+          "closedPlaneNormal": 33105.21380195598,
+          "openingMidAlong": 32721.701528206933,
+          "arcCount": 1,
+          "swingExtentPositive": 877.2114910328091,
+          "swingExtentNegative": 0.0,
+          "swingSide": 1,
+          "currentPosition": [
+            33771.70152820693,
+            33435.21380195598,
+            0
+          ],
+          "currentBounds": [
+            33316.70152820693,
+            33285.21380195598,
+            34226.70152820693,
+            33585.21380195598
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-needs-nondimension-resolution",
+          "desiredSide": -1,
+          "wallFace": 32985.21380195598,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            32721.701528206933,
+            32715.21380195598,
+            0.0
+          ],
+          "desiredBounds": [
+            32266.701528206933,
+            32565.21380195598,
+            33176.70152820693,
+            32865.21380195598
+          ],
+          "delta": [
+            -1050.0,
+            -720.0,
+            0.0
+          ],
+          "hardContacts": [
+            {
+              "kind": "furniture-block-root-bounds-conservative",
+              "handle": "7FFD",
+              "bounds": [
+                32649.200286315652,
+                29749.962425644677,
+                35651.65186441511,
+                32742.71242564469
+              ]
+            }
+          ],
+          "dimensionContacts": []
+        },
+        {
+          "handle": "84B0",
+          "opening": "7FE2",
+          "text": "M2227",
+          "wall": "7FE1",
+          "rotation": 0,
+          "verticalOpening": false,
+          "anchorA": [
+            33031.70152820693,
+            28945.21380195598,
+            0
+          ],
+          "anchorB": [
+            35231.70152820693,
+            28945.21380195598,
+            0
+          ],
+          "closedPlaneNormal": 28945.21380195598,
+          "openingMidAlong": 34131.70152820693,
+          "arcCount": 0,
+          "swingExtentPositive": 0,
+          "swingExtentNegative": 0,
+          "swingSide": null,
+          "currentPosition": [
+            34131.70152820693,
+            29275.21380195598,
+            0
+          ],
+          "currentBounds": [
+            33676.70152820693,
+            29125.21380195598,
+            34586.70152820693,
+            29425.21380195598
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-graphic-probe.json",
+          "kind": "no-source-arc",
+          "status": "retain-current-unresolved-side",
+          "desiredPosition": [
+            34131.70152820693,
+            29275.21380195598,
+            0
+          ],
+          "desiredBounds": [
+            33676.70152820693,
+            29125.21380195598,
+            34586.70152820693,
+            29425.21380195598
+          ],
+          "delta": [
+            0,
+            0,
+            0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": []
+        },
+        {
+          "handle": "84B1",
+          "opening": "7FE5",
+          "text": "M0927",
+          "wall": "7FE4",
+          "rotation": 1.5707963267948966,
+          "verticalOpening": true,
+          "anchorA": [
+            36231.70152820693,
+            27825.21380195598,
+            0
+          ],
+          "anchorB": [
+            36231.70152820693,
+            28725.21380195598,
+            0
+          ],
+          "closedPlaneNormal": 36231.70152820693,
+          "openingMidAlong": 28275.21380195598,
+          "arcCount": 1,
+          "swingExtentPositive": 0.0,
+          "swingExtentNegative": 877.2114910328091,
+          "swingSide": -1,
+          "currentPosition": [
+            35901.70152820693,
+            27280.21380195598,
+            0
+          ],
+          "currentBounds": [
+            35751.70152820693,
+            26825.21380195598,
+            36051.70152820693,
+            27735.21380195598
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-dimensions-yield",
+          "desiredSide": 1,
+          "wallFace": 36351.70152820693,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            36621.70152820693,
+            28275.21380195598,
+            0.0
+          ],
+          "desiredBounds": [
+            36471.70152820693,
+            27820.21380195598,
+            36771.70152820693,
+            28730.21380195598
+          ],
+          "delta": [
+            720.0,
+            995.0,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": [
+            {
+              "handle": "847E",
+              "kind": "dimension-text",
+              "segment": 1,
+              "value": 900,
+              "fontBounds": [
+                36602.70152820693,
+                27929.21380195598,
+                36920.70152820693,
+                28621.21380195598
+              ]
+            }
+          ]
+        },
+        {
+          "handle": "84B2",
+          "opening": "7FFA",
+          "text": "M2227",
+          "wall": "826C",
+          "rotation": 1.5707963267948966,
+          "verticalOpening": true,
+          "anchorA": [
+            36231.70152820693,
+            29967.55057494616,
+            0
+          ],
+          "anchorB": [
+            36231.70152820693,
+            32167.55057494616,
+            0
+          ],
+          "closedPlaneNormal": 36231.70152820693,
+          "openingMidAlong": 31067.55057494616,
+          "arcCount": 0,
+          "swingExtentPositive": 0,
+          "swingExtentNegative": 0,
+          "swingSide": null,
+          "currentPosition": [
+            36561.70152820693,
+            29422.55057494616,
+            0
+          ],
+          "currentBounds": [
+            36411.70152820693,
+            28967.55057494616,
+            36711.70152820693,
+            29877.55057494616
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-graphic-probe.json",
+          "kind": "no-source-arc",
+          "status": "retain-current-unresolved-side",
+          "desiredPosition": [
+            36561.70152820693,
+            29422.55057494616,
+            0
+          ],
+          "desiredBounds": [
+            36411.70152820693,
+            28967.55057494616,
+            36711.70152820693,
+            29877.55057494616
+          ],
+          "delta": [
+            0,
+            0,
+            0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": []
+        },
+        {
+          "handle": "84B4",
+          "opening": "8107",
+          "text": "M0827",
+          "wall": "8106",
+          "rotation": 1.5707963267948966,
+          "verticalOpening": true,
+          "anchorA": [
+            36231.70152820693,
+            34025.213801956095,
+            0
+          ],
+          "anchorB": [
+            36231.70152820693,
+            33225.213801956095,
+            0
+          ],
+          "closedPlaneNormal": 36231.70152820693,
+          "openingMidAlong": 33625.213801956095,
+          "arcCount": 1,
+          "swingExtentPositive": 0.0,
+          "swingExtentNegative": 779.743547584716,
+          "swingSide": -1,
+          "currentPosition": [
+            35211.70152820693,
+            33725.213801956095,
+            0
+          ],
+          "currentBounds": [
+            35061.70152820693,
+            33270.213801956095,
+            35361.70152820693,
+            34180.213801956095
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_一层_生成记录_9752_499498234\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-dimensions-yield",
+          "desiredSide": 1,
+          "wallFace": 36351.70152820693,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            36621.70152820693,
+            33625.213801956095,
+            0.0
+          ],
+          "desiredBounds": [
+            36471.70152820693,
+            33170.213801956095,
+            36771.70152820693,
+            34080.213801956095
+          ],
+          "delta": [
+            1410.0,
+            -100.0,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": [
+            {
+              "handle": "8485",
+              "kind": "dimension-text",
+              "segment": 0,
+              "value": 800,
+              "fontBounds": [
+                36602.70152820693,
+                33279.213801956095,
+                36920.70152820693,
+                33971.213801956095
+              ]
+            }
+          ]
+        }
+      ],
+      "summary": {
+        "Mcaptions": 10,
+        "withSwing": 8,
+        "unresolvedSide": [
+          "7FE2",
+          "7FFA"
+        ],
+        "dimensionChainsToYield": [
+          "846C",
+          "847E",
+          "8485",
+          "848C"
+        ],
+        "nondimensionConflicted": [
+          "7F36",
+          "7FE0"
+        ]
+      }
+    },
+    {
+      "floor": 2,
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段2\\示意\\门号轴线与面积_20261101\\方案施工图_二层_面积符号确认样张_v4.dwg",
+      "sourceSHA256": "868F77608B8A9CB8D96E15C699DBE3B54FBCBD77F9EB9E0842956C8DEAB8976B",
+      "actualPreview": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-area-symbol-20261101-161107-floor2\\stage2-preview-native.json",
+      "actualPreviewSHA256": "3C5766D52CF1B831B8975621002F289BACFCC1C04F3EB6CC080580FE12F863E8",
+      "captionWitness": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层_生成记录_9752_499508390\\过程\\caption\\door-caption-clearance.json",
+      "captionWitnessSHA256": "7C813014E0D9EF7B89CCE7A483BA532082EE0596F63CD3B6AE5661A0E206EB5D",
+      "candidates": [
+        {
+          "handle": "84A0",
+          "opening": "801A",
+          "text": "M2121",
+          "wall": "8019",
+          "rotation": 0,
+          "verticalOpening": false,
+          "anchorA": [
+            92323.70152820786,
+            25645.213801956623,
+            0
+          ],
+          "anchorB": [
+            90223.70152820786,
+            25645.2138019565,
+            0
+          ],
+          "closedPlaneNormal": 25645.21380195656,
+          "openingMidAlong": 91273.70152820786,
+          "arcCount": 0,
+          "swingExtentPositive": 0,
+          "swingExtentNegative": 0,
+          "swingSide": null,
+          "currentPosition": [
+            91273.70152820786,
+            25975.213801956623,
+            0
+          ],
+          "currentBounds": [
+            90879.05867106501,
+            25825.213801956623,
+            91668.34438535072,
+            26125.213801956623
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层_生成记录_9752_499508390\\过程\\caption\\door-graphic-probe.json",
+          "kind": "no-source-arc",
+          "status": "retain-current-unresolved-side",
+          "desiredPosition": [
+            91273.70152820786,
+            25975.213801956623,
+            0
+          ],
+          "desiredBounds": [
+            90879.05867106501,
+            25825.213801956623,
+            91668.34438535072,
+            26125.213801956623
+          ],
+          "delta": [
+            0,
+            0,
+            0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": []
+        },
+        {
+          "handle": "84A4",
+          "opening": "8025",
+          "text": "M0927",
+          "wall": "818B",
+          "rotation": 0,
+          "verticalOpening": false,
+          "anchorA": [
+            93493.70152804488,
+            30205.213801956696,
+            0
+          ],
+          "anchorB": [
+            94393.70152804488,
+            30205.213801956776,
+            0
+          ],
+          "closedPlaneNormal": 30205.213801956736,
+          "openingMidAlong": 93943.70152804488,
+          "arcCount": 1,
+          "swingExtentPositive": 3.637978807091713e-11,
+          "swingExtentNegative": 877.2114910328419,
+          "swingSide": -1,
+          "currentPosition": [
+            93943.70152804488,
+            29087.713801956696,
+            0
+          ],
+          "currentBounds": [
+            93488.70152804488,
+            28937.713801956696,
+            94398.70152804488,
+            29237.713801956696
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层_生成记录_9752_499508390\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-dimensions-yield",
+          "desiredSide": 1,
+          "wallFace": 30325.213801956794,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            93943.70152804488,
+            30595.213801956794,
+            0.0
+          ],
+          "desiredBounds": [
+            93488.70152804488,
+            30445.213801956794,
+            94398.70152804488,
+            30745.213801956794
+          ],
+          "delta": [
+            0.0,
+            1507.5000000000982,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": [
+            {
+              "handle": "847B",
+              "kind": "dimension-text",
+              "segment": 2,
+              "value": 220.00000016298145,
+              "fontBounds": [
+                94157.70152812637,
+                30606.213801956677,
+                94849.70152812637,
+                30924.213801956677
+              ]
+            }
+          ]
+        },
+        {
+          "handle": "84A5",
+          "opening": "8078",
+          "text": "M0927",
+          "wall": "815F",
+          "rotation": 0,
+          "verticalOpening": false,
+          "anchorA": [
+            88153.70152816131,
+            30205.213801956354,
+            0
+          ],
+          "anchorB": [
+            89053.70152816131,
+            30205.213801956426,
+            0
+          ],
+          "closedPlaneNormal": 30205.21380195639,
+          "openingMidAlong": 88603.70152816131,
+          "arcCount": 1,
+          "swingExtentPositive": -3.637978807091713e-11,
+          "swingExtentNegative": 877.2114910327764,
+          "swingSide": -1,
+          "currentPosition": [
+            88603.70152816131,
+            29087.713801956423,
+            0
+          ],
+          "currentBounds": [
+            88148.70152816131,
+            28937.713801956423,
+            89058.70152816131,
+            29237.713801956423
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层_生成记录_9752_499508390\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-dimensions-yield",
+          "desiredSide": 1,
+          "wallFace": 30325.213801956445,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            88603.70152816131,
+            30595.213801956445,
+            0.0
+          ],
+          "desiredBounds": [
+            88148.70152816131,
+            30445.213801956445,
+            89058.70152816131,
+            30745.213801956445
+          ],
+          "delta": [
+            0.0,
+            1507.5000000000218,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": [
+            {
+              "handle": "8478",
+              "kind": "dimension-text",
+              "segment": 2,
+              "value": 100.00000004608592,
+              "fontBounds": [
+                88780.36819485103,
+                30606.213801956095,
+                89427.0348615177,
+                30924.213801956095
+              ]
+            }
+          ]
+        },
+        {
+          "handle": "84A7",
+          "opening": "8103",
+          "text": "M0927",
+          "wall": "81BF",
+          "rotation": 0,
+          "verticalOpening": false,
+          "anchorA": [
+            92153.70152836898,
+            32105.213801956612,
+            0
+          ],
+          "anchorB": [
+            93053.70152836898,
+            32105.213801956663,
+            0
+          ],
+          "closedPlaneNormal": 32105.213801956637,
+          "openingMidAlong": 92603.70152836898,
+          "arcCount": 1,
+          "swingExtentPositive": 877.2114910328273,
+          "swingExtentNegative": 2.1827872842550278e-11,
+          "swingSide": 1,
+          "currentPosition": [
+            91553.70152836898,
+            32435.213801956612,
+            0
+          ],
+          "currentBounds": [
+            91098.70152836898,
+            32285.213801956612,
+            92008.70152836898,
+            32585.213801956612
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层_生成记录_9752_499508390\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-clear",
+          "desiredSide": -1,
+          "wallFace": 31985.213801956445,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            92603.70152836898,
+            31715.213801956445,
+            0.0
+          ],
+          "desiredBounds": [
+            92148.70152836898,
+            31565.213801956445,
+            93058.70152836898,
+            31865.213801956445
+          ],
+          "delta": [
+            1050.0,
+            -720.0000000001673,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": []
+        },
+        {
+          "handle": "84A8",
+          "opening": "8147",
+          "text": "M1227",
+          "wall": "8146",
+          "rotation": 0,
+          "verticalOpening": false,
+          "anchorA": [
+            87793.70152820228,
+            32105.213801956364,
+            0
+          ],
+          "anchorB": [
+            88993.70152820228,
+            32105.21380195643,
+            0
+          ],
+          "closedPlaneNormal": 32105.213801956397,
+          "openingMidAlong": 88393.70152820228,
+          "arcCount": 2,
+          "swingExtentPositive": -1.983353286930651,
+          "swingExtentNegative": 902.5470010710451,
+          "swingSide": -1,
+          "currentPosition": [
+            88193.70152820228,
+            30662.666800885323,
+            0
+          ],
+          "currentBounds": [
+            87757.27295677371,
+            30512.666800885323,
+            88630.13009963086,
+            30812.666800885323
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层_生成记录_9752_499508390\\过程\\caption\\door-graphic-probe.json",
+          "kind": "multi-leaf-swing",
+          "status": "preferred-geometry-clear",
+          "desiredSide": 1,
+          "wallFace": 32225.213801956445,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            88393.70152820228,
+            32495.213801956445,
+            0.0
+          ],
+          "desiredBounds": [
+            87957.27295677371,
+            32345.213801956445,
+            88830.13009963086,
+            32645.213801956445
+          ],
+          "delta": [
+            200.0,
+            1832.5470010711215,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": []
+        },
+        {
+          "handle": "84AA",
+          "opening": "81C1",
+          "text": "M0927",
+          "wall": "81C0",
+          "rotation": 1.5707963267948966,
+          "verticalOpening": true,
+          "anchorA": [
+            84893.70152820693,
+            32345.213801490783,
+            0
+          ],
+          "anchorB": [
+            84893.70152820693,
+            33245.21380149078,
+            0
+          ],
+          "closedPlaneNormal": 84893.70152820693,
+          "openingMidAlong": 32795.21380149078,
+          "arcCount": 1,
+          "swingExtentPositive": 0.0,
+          "swingExtentNegative": 877.2114910328091,
+          "swingSide": -1,
+          "currentPosition": [
+            84563.70152820693,
+            31800.213801490783,
+            0
+          ],
+          "currentBounds": [
+            84413.70152820693,
+            31345.213801490783,
+            84713.70152820693,
+            32255.213801490783
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层_生成记录_9752_499508390\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-dimensions-yield",
+          "desiredSide": 1,
+          "wallFace": 85013.70152820693,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            85283.70152820693,
+            32795.21380149078,
+            0.0
+          ],
+          "desiredBounds": [
+            85133.70152820693,
+            32340.213801490783,
+            85433.70152820693,
+            33250.21380149078
+          ],
+          "delta": [
+            720.0,
+            995.0,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": [
+            {
+              "handle": "8475",
+              "kind": "baseline",
+              "baseline": [
+                [
+                  85013.70152820693,
+                  32875.21380195621,
+                  0
+                ],
+                [
+                  89153.70152820689,
+                  32875.21380195621,
+                  0
+                ]
+              ]
+            },
+            {
+              "handle": "8481",
+              "kind": "dimension-text",
+              "segment": 0,
+              "value": 119.99999953457154,
+              "fontBounds": [
+                85264.70152820693,
+                31961.880468390165,
+                85582.70152820693,
+                32608.547135056833
+              ]
+            },
+            {
+              "handle": "8481",
+              "kind": "dimension-text",
+              "segment": 1,
+              "value": 899.9999999999964,
+              "fontBounds": [
+                85264.70152820693,
+                32649.213801490783,
+                85582.70152820693,
+                33341.21380149078
+              ]
+            }
+          ]
+        },
+        {
+          "handle": "84AB",
+          "opening": "81EA",
+          "text": "M0927",
+          "wall": "81EB",
+          "rotation": 0,
+          "verticalOpening": false,
+          "anchorA": [
+            93493.7015280365,
+            32105.21380196096,
+            0
+          ],
+          "anchorB": [
+            94393.7015280365,
+            32105.213801972768,
+            0
+          ],
+          "closedPlaneNormal": 32105.213801966864,
+          "openingMidAlong": 93943.7015280365,
+          "arcCount": 1,
+          "swingExtentPositive": 877.2114910274904,
+          "swingExtentNegative": -5.900801625102758e-09,
+          "swingSide": 1,
+          "currentPosition": [
+            94993.7015280365,
+            32435.21380196096,
+            0
+          ],
+          "currentBounds": [
+            94538.7015280365,
+            32285.21380196096,
+            95448.7015280365,
+            32585.21380196096
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层_生成记录_9752_499508390\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-clear",
+          "desiredSide": -1,
+          "wallFace": 31985.213801958074,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            93943.7015280365,
+            31715.213801958074,
+            0.0
+          ],
+          "desiredBounds": [
+            93488.7015280365,
+            31565.213801958074,
+            94398.7015280365,
+            31865.213801958074
+          ],
+          "delta": [
+            -1050.0,
+            -720.0000000028849,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": []
+        },
+        {
+          "handle": "84AD",
+          "opening": "82B0",
+          "text": "M0927",
+          "wall": "82AF",
+          "rotation": 0,
+          "verticalOpening": false,
+          "anchorA": [
+            78693.70152820693,
+            33105.21380195598,
+            0
+          ],
+          "anchorB": [
+            79593.70152820693,
+            33105.21380195598,
+            0
+          ],
+          "closedPlaneNormal": 33105.21380195598,
+          "openingMidAlong": 79143.70152820693,
+          "arcCount": 1,
+          "swingExtentPositive": 877.2114910328091,
+          "swingExtentNegative": 0.0,
+          "swingSide": 1,
+          "currentPosition": [
+            80193.70152820693,
+            33435.21380195598,
+            0
+          ],
+          "currentBounds": [
+            79738.70152820693,
+            33285.21380195598,
+            80648.70152820693,
+            33585.21380195598
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层_生成记录_9752_499508390\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-clear",
+          "desiredSide": -1,
+          "wallFace": 32985.21380195598,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            79143.70152820693,
+            32715.21380195598,
+            0.0
+          ],
+          "desiredBounds": [
+            78688.70152820693,
+            32565.21380195598,
+            79598.70152820693,
+            32865.21380195598
+          ],
+          "delta": [
+            -1050.0,
+            -720.0,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": []
+        },
+        {
+          "handle": "84AE",
+          "opening": "82B2",
+          "text": "M0827",
+          "wall": "82B1",
+          "rotation": 1.5707963267948966,
+          "verticalOpening": true,
+          "anchorA": [
+            82653.70152820693,
+            34025.213801956095,
+            0
+          ],
+          "anchorB": [
+            82653.70152820693,
+            33225.213801956095,
+            0
+          ],
+          "closedPlaneNormal": 82653.70152820693,
+          "openingMidAlong": 33625.213801956095,
+          "arcCount": 1,
+          "swingExtentPositive": 0.0,
+          "swingExtentNegative": 779.743547584716,
+          "swingSide": -1,
+          "currentPosition": [
+            81633.70152820693,
+            33725.213801956095,
+            0
+          ],
+          "currentBounds": [
+            81483.70152820693,
+            33270.213801956095,
+            81783.70152820693,
+            34180.213801956095
+          ],
+          "sourceGraphicProbe": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261101-143628\\插件生成施工图_二层_生成记录_9752_499508390\\过程\\caption\\door-graphic-probe.json",
+          "kind": "single-swing",
+          "status": "preferred-geometry-dimensions-yield",
+          "desiredSide": 1,
+          "wallFace": 82773.70152820693,
+          "trialInkGapMm": 120,
+          "desiredPosition": [
+            83043.70152820693,
+            33625.213801956095,
+            0.0
+          ],
+          "desiredBounds": [
+            82893.70152820693,
+            33170.213801956095,
+            83193.70152820693,
+            34080.213801956095
+          ],
+          "delta": [
+            1410.0,
+            -100.0,
+            0.0
+          ],
+          "hardContacts": [],
+          "dimensionContacts": [
+            {
+              "handle": "848E",
+              "kind": "dimension-text",
+              "segment": 0,
+              "value": 800,
+              "fontBounds": [
+                83024.70152820693,
+                33279.213801956095,
+                83342.70152820693,
+                33971.213801956095
+              ]
+            }
+          ]
+        }
+      ],
+      "summary": {
+        "Mcaptions": 9,
+        "withSwing": 8,
+        "unresolvedSide": [
+          "801A"
+        ],
+        "dimensionChainsToYield": [
+          "8475",
+          "8478",
+          "847B",
+          "8481",
+          "848E"
+        ],
+        "nondimensionConflicted": []
+      }
+    }
+  ],
+  "limitations": [
+    "Opposite swing side is inferred from example, not an additional verbal user confirmation.",
+    "120mm face-to-caption ink gap is a sample layout choice, not a user dimension rule.",
+    "Actual final v125 root geometry bounds used; furniture block bounds are conservative and do not prove leaf-stroke intersection.",
+    "No-arc/sliding opening side is not guessed.",
+    "Dimension conflicts are reported separately and do not reject the preferred caption position.",
+    "No CAD process started or DWG modified."
+  ]
+}

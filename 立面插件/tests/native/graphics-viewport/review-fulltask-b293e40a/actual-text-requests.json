@@ -1,0 +1,5239 @@
+{
+  "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-221520-2b412dba\\case\\viewport-callbacks.jsonl",
+  "sourceSHA256": "F6C732B4C3134A1910B4F128D7D27D6FE39C2E224CB4D9D30A1BBDBFAFF8E6F4",
+  "rows": [
+    {
+      "rawLine": 5433,
+      "sample": 2,
+      "round": 0,
+      "request": {
+        "text": "123.45",
+        "utf16": [
+          49,
+          50,
+          51,
+          46,
+          52,
+          53
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 6,
+        "raw": false,
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "worldPosition": [
+          0,
+          0,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 3,
+        "width": 0.75,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "simplex.shx",
+        "bigFont": "gbcbig.shx",
+        "styleName": "N7_SIMPLEX_GBCBIG",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "7B"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5435,
+      "sample": 3,
+      "round": 0,
+      "request": {
+        "text": "中文立面",
+        "utf16": [
+          20013,
+          25991,
+          31435,
+          38754
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 4,
+        "raw": false,
+        "position": [
+          0,
+          5,
+          0
+        ],
+        "worldPosition": [
+          0,
+          5,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 3,
+        "width": 1,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "simplex.shx",
+        "bigFont": "gbcbig.shx",
+        "styleName": "N7_SIMPLEX_GBCBIG",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "7E"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5437,
+      "sample": 4,
+      "round": 0,
+      "request": {
+        "text": "270",
+        "utf16": [
+          50,
+          55,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 3,
+        "raw": false,
+        "position": [
+          10,
+          5,
+          0
+        ],
+        "worldPosition": [
+          10,
+          5,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          -2.220446049250313e-16,
+          1.0000000000000002,
+          0
+        ],
+        "height": 3,
+        "width": 1,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "simplex.shx",
+        "bigFont": "gbcbig.shx",
+        "styleName": "N7_SIMPLEX_GBCBIG",
+        "tracking": 1,
+        "backward": true,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "7F"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5439,
+      "sample": 5,
+      "round": 0,
+      "request": {
+        "text": "AB",
+        "utf16": [
+          65,
+          66
+        ],
+        "rawLength": 2,
+        "copiedCodeUnits": 2,
+        "raw": true,
+        "position": [
+          0,
+          -3,
+          0
+        ],
+        "worldPosition": [
+          0,
+          -3,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 3,
+        "width": 1,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "simplex.shx",
+        "bigFont": "gbcbig.shx",
+        "styleName": "",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "80"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5440,
+      "sample": 5,
+      "round": 0,
+      "request": {
+        "text": "2",
+        "utf16": [
+          50
+        ],
+        "rawLength": 1,
+        "copiedCodeUnits": 1,
+        "raw": true,
+        "position": [
+          0,
+          -12,
+          0
+        ],
+        "worldPosition": [
+          0,
+          -12,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 1.5,
+        "width": 1,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "simplex.shx",
+        "bigFont": "gbcbig.shx",
+        "styleName": "",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "80"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5441,
+      "sample": 5,
+      "round": 0,
+      "request": {
+        "text": "7",
+        "utf16": [
+          55
+        ],
+        "rawLength": 1,
+        "copiedCodeUnits": 1,
+        "raw": true,
+        "position": [
+          1.4285714285714286,
+          -8,
+          0
+        ],
+        "worldPosition": [
+          1.4285714285714286,
+          -8,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 3,
+        "width": 1,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "simplex.shx",
+        "bigFont": "gbcbig.shx",
+        "styleName": "",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "80"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5443,
+      "sample": 5,
+      "round": 0,
+      "request": {
+        "text": "9",
+        "utf16": [
+          57
+        ],
+        "rawLength": 1,
+        "copiedCodeUnits": 1,
+        "raw": true,
+        "position": [
+          1.5,
+          -12,
+          0
+        ],
+        "worldPosition": [
+          1.5,
+          -12,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 3,
+        "width": 1,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "simplex.shx",
+        "bigFont": "gbcbig.shx",
+        "styleName": "",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "80"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5455,
+      "sample": 6,
+      "round": 0,
+      "request": {
+        "text": "nested",
+        "utf16": [
+          110,
+          101,
+          115,
+          116,
+          101,
+          100
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 6,
+        "raw": false,
+        "position": [
+          1,
+          2,
+          0
+        ],
+        "worldPosition": [
+          40.79631404657234,
+          62.71401620098915,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 2,
+        "width": 1,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "simplex.shx",
+        "bigFont": "gbcbig.shx",
+        "styleName": "N7_SIMPLEX_GBCBIG",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "89",
+          "transient:AcDbBlockTableRecord",
+          "88",
+          "transient:AcDbBlockTableRecord",
+          "87"
+        ],
+        "modelToWorld": [
+          1.7551651237807455,
+          -0.479425538604203,
+          0,
+          40,
+          0.958851077208406,
+          0.8775825618903728,
+          0,
+          60,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5481,
+      "sample": 7,
+      "round": 0,
+      "request": {
+        "text": "19760",
+        "utf16": [
+          49,
+          57,
+          55,
+          54,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 5,
+        "raw": false,
+        "position": [
+          65173.01324127689,
+          89369.3585739113,
+          0
+        ],
+        "worldPosition": [
+          65173.01324127689,
+          89369.3585739113,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          6.661338147750939e-15,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$0$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "8B"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5515,
+      "sample": 8,
+      "round": 0,
+      "request": {
+        "text": "400",
+        "utf16": [
+          52,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 3,
+        "raw": false,
+        "position": [
+          66823.39181510304,
+          94785.78867729328,
+          0
+        ],
+        "worldPosition": [
+          66823.39181510304,
+          94785.78867729328,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          6.123233995736766e-17,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$1$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "97"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5516,
+      "sample": 8,
+      "round": 0,
+      "request": {
+        "text": "2400",
+        "utf16": [
+          50,
+          52,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 4,
+        "raw": false,
+        "position": [
+          66823.39181510304,
+          93285.78867729346,
+          0
+        ],
+        "worldPosition": [
+          66823.39181510304,
+          93285.78867729346,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          6.123233995736766e-17,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$1$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "97"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5590,
+      "sample": 9,
+      "round": 0,
+      "request": {
+        "text": "2860",
+        "utf16": [
+          50,
+          56,
+          54,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 4,
+        "raw": false,
+        "position": [
+          79897.76324127664,
+          104915.77187351731,
+          0
+        ],
+        "worldPosition": [
+          79897.76324127664,
+          104915.77187351731,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          6.123233995736766e-17,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$2$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "A1"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5591,
+      "sample": 9,
+      "round": 0,
+      "request": {
+        "text": "400",
+        "utf16": [
+          52,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 3,
+        "raw": false,
+        "position": [
+          79897.76324127664,
+          103385.77187348949,
+          0
+        ],
+        "worldPosition": [
+          79897.76324127664,
+          103385.77187348949,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          6.123233995736766e-17,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$2$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "A1"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5592,
+      "sample": 9,
+      "round": 0,
+      "request": {
+        "text": "3600",
+        "utf16": [
+          51,
+          54,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 4,
+        "raw": false,
+        "position": [
+          79897.76324127664,
+          101285.77187349717,
+          0
+        ],
+        "worldPosition": [
+          79897.76324127664,
+          101285.77187349717,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          6.123233995736766e-17,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$2$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "A1"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5593,
+      "sample": 9,
+      "round": 0,
+      "request": {
+        "text": "3500",
+        "utf16": [
+          51,
+          53,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 4,
+        "raw": false,
+        "position": [
+          79897.76324127664,
+          97735.77187349723,
+          0
+        ],
+        "worldPosition": [
+          79897.76324127664,
+          97735.77187349723,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          6.123233995736766e-17,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$2$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "A1"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5594,
+      "sample": 9,
+      "round": 0,
+      "request": {
+        "text": "3900",
+        "utf16": [
+          51,
+          57,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 4,
+        "raw": false,
+        "position": [
+          79897.76324127664,
+          94035.77187349717,
+          0
+        ],
+        "worldPosition": [
+          79897.76324127664,
+          94035.77187349717,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          6.123233995736766e-17,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$2$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "A1"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5595,
+      "sample": 9,
+      "round": 0,
+      "request": {
+        "text": "450",
+        "utf16": [
+          52,
+          53,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 3,
+        "raw": false,
+        "position": [
+          79897.76324127664,
+          91960.77187349723,
+          0
+        ],
+        "worldPosition": [
+          79897.76324127664,
+          91960.77187349723,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          6.123233995736766e-17,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$2$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "A1"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5729,
+      "sample": 10,
+      "round": 0,
+      "request": {
+        "text": "955",
+        "utf16": [
+          57,
+          53,
+          53
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 3,
+        "raw": false,
+        "position": [
+          80272.6219478074,
+          62468.54130105311,
+          0
+        ],
+        "worldPosition": [
+          80272.6219478074,
+          62468.54130105311,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1.6048443894559622e-14,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$3$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "AC"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5730,
+      "sample": 10,
+      "round": 0,
+      "request": {
+        "text": "1205",
+        "utf16": [
+          49,
+          50,
+          48,
+          53
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 4,
+        "raw": false,
+        "position": [
+          80272.62194780738,
+          61308.54128417387,
+          0
+        ],
+        "worldPosition": [
+          80272.62194780738,
+          61308.54128417387,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1.6048443894559622e-14,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$3$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "AC"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5731,
+      "sample": 10,
+      "round": 0,
+      "request": {
+        "text": "1100",
+        "utf16": [
+          49,
+          49,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 4,
+        "raw": false,
+        "position": [
+          80272.62194780735,
+          60176.04128288551,
+          0
+        ],
+        "worldPosition": [
+          80272.62194780735,
+          60176.04128288551,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1.6048443894559622e-14,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$3$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "AC"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5732,
+      "sample": 10,
+      "round": 0,
+      "request": {
+        "text": "600",
+        "utf16": [
+          54,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 3,
+        "raw": false,
+        "position": [
+          80272.62194780735,
+          59386.04128159737,
+          0
+        ],
+        "worldPosition": [
+          80272.62194780735,
+          59386.04128159737,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1.6048443894559622e-14,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$3$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "AC"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5733,
+      "sample": 10,
+      "round": 0,
+      "request": {
+        "text": "2100",
+        "utf16": [
+          50,
+          49,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 4,
+        "raw": false,
+        "position": [
+          80272.62194780735,
+          57956.04128144103,
+          0
+        ],
+        "worldPosition": [
+          80272.62194780735,
+          57956.04128144103,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1.6048443894559622e-14,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$3$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "AC"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5734,
+      "sample": 10,
+      "round": 0,
+      "request": {
+        "text": "900",
+        "utf16": [
+          57,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 3,
+        "raw": false,
+        "position": [
+          80272.6219478073,
+          56536.041281441074,
+          0
+        ],
+        "worldPosition": [
+          80272.6219478073,
+          56536.041281441074,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1.6048443894559622e-14,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$3$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "AC"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5735,
+      "sample": 10,
+      "round": 0,
+      "request": {
+        "text": "500",
+        "utf16": [
+          53,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 3,
+        "raw": false,
+        "position": [
+          80272.62194780729,
+          55836.041281532,
+          0
+        ],
+        "worldPosition": [
+          80272.62194780729,
+          55836.041281532,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1.6048443894559622e-14,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$3$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "AC"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5736,
+      "sample": 10,
+      "round": 0,
+      "request": {
+        "text": "2100",
+        "utf16": [
+          50,
+          49,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 4,
+        "raw": false,
+        "position": [
+          80272.62194780729,
+          54456.04128137555,
+          0
+        ],
+        "worldPosition": [
+          80272.62194780729,
+          54456.04128137555,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1.6048443894559622e-14,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$3$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "AC"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5737,
+      "sample": 10,
+      "round": 0,
+      "request": {
+        "text": "900",
+        "utf16": [
+          57,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 3,
+        "raw": false,
+        "position": [
+          80272.62194780723,
+          53036.041281441205,
+          0
+        ],
+        "worldPosition": [
+          80272.62194780723,
+          53036.041281441205,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1.6048443894559622e-14,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$3$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "AC"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5738,
+      "sample": 10,
+      "round": 0,
+      "request": {
+        "text": "550",
+        "utf16": [
+          53,
+          53,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 3,
+        "raw": false,
+        "position": [
+          80272.62194780723,
+          52311.00191263654,
+          0
+        ],
+        "worldPosition": [
+          80272.62194780723,
+          52311.00191263654,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1.6048443894559622e-14,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$3$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "AC"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5739,
+      "sample": 10,
+      "round": 0,
+      "request": {
+        "text": "2400",
+        "utf16": [
+          50,
+          52,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 4,
+        "raw": false,
+        "position": [
+          80272.62194780723,
+          50736.00191263625,
+          0
+        ],
+        "worldPosition": [
+          80272.62194780723,
+          50736.00191263625,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1.6048443894559622e-14,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$3$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "AC"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 5740,
+      "sample": 10,
+      "round": 0,
+      "request": {
+        "text": "950",
+        "utf16": [
+          57,
+          53,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 3,
+        "raw": false,
+        "position": [
+          80272.62194780717,
+          49161.041281597245,
+          0
+        ],
+        "worldPosition": [
+          80272.62194780717,
+          49161.041281597245,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1.6048443894559622e-14,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$3$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "AC"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9500,
+      "sample": 11,
+      "round": 0,
+      "request": {
+        "text": "50",
+        "utf16": [
+          53,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 2,
+        "raw": false,
+        "position": [
+          637037.9698675164,
+          -890815.5743926642,
+          0
+        ],
+        "worldPosition": [
+          60256.36995069054,
+          137527.40711231623,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 74.375,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$4$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "B6",
+          "transient:AcDbBlockTableRecord",
+          "597"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          -576781.5999168259,
+          0,
+          1,
+          0,
+          1028342.9815049805,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9501,
+      "sample": 11,
+      "round": 0,
+      "request": {
+        "text": "800",
+        "utf16": [
+          56,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 3,
+        "raw": false,
+        "position": [
+          637438.122001277,
+          -890815.5743926642,
+          0
+        ],
+        "worldPosition": [
+          60656.522084451164,
+          137527.40711231623,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 74.375,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$4$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "B6",
+          "transient:AcDbBlockTableRecord",
+          "597"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          -576781.5999168259,
+          0,
+          1,
+          0,
+          1028342.9815049805,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9502,
+      "sample": 11,
+      "round": 0,
+      "request": {
+        "text": "50",
+        "utf16": [
+          53,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 2,
+        "raw": false,
+        "position": [
+          637888.2741350376,
+          -890815.5743926642,
+          0
+        ],
+        "worldPosition": [
+          61106.67421821167,
+          137527.40711231623,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 74.375,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$4$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "B6",
+          "transient:AcDbBlockTableRecord",
+          "597"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          -576781.5999168259,
+          0,
+          1,
+          0,
+          1028342.9815049805,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9537,
+      "sample": 11,
+      "round": 0,
+      "request": {
+        "text": "10",
+        "utf16": [
+          49,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 2,
+        "raw": false,
+        "position": [
+          637115.469884981,
+          -891119.757096001,
+          0
+        ],
+        "worldPosition": [
+          60333.869968155166,
+          137223.22440897953,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 74.375,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$4$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "B6",
+          "transient:AcDbBlockTableRecord",
+          "5A1"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          -576781.5999168259,
+          0,
+          1,
+          0,
+          1028342.9815049805,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9538,
+      "sample": 11,
+      "round": 0,
+      "request": {
+        "text": "25",
+        "utf16": [
+          50,
+          53
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 2,
+        "raw": false,
+        "position": [
+          637025.4698832346,
+          -891119.757096001,
+          0
+        ],
+        "worldPosition": [
+          60243.8699664087,
+          137223.22440897953,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 74.375,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$4$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "B6",
+          "transient:AcDbBlockTableRecord",
+          "5A1"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          -576781.5999168259,
+          0,
+          1,
+          0,
+          1028342.9815049805,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9573,
+      "sample": 11,
+      "round": 0,
+      "request": {
+        "text": "10",
+        "utf16": [
+          49,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 2,
+        "raw": false,
+        "position": [
+          637815.0783835239,
+          -891119.757096001,
+          0
+        ],
+        "worldPosition": [
+          61033.47846669797,
+          137223.22440897953,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 74.375,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$4$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "B6",
+          "transient:AcDbBlockTableRecord",
+          "5A2"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          -576781.5999168259,
+          0,
+          1,
+          0,
+          1028342.9815049805,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9574,
+      "sample": 11,
+      "round": 0,
+      "request": {
+        "text": "25",
+        "utf16": [
+          50,
+          53
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 2,
+        "raw": false,
+        "position": [
+          637895.0783852703,
+          -891119.757096001,
+          0
+        ],
+        "worldPosition": [
+          61113.47846844443,
+          137223.22440897953,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 74.375,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$4$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "B6",
+          "transient:AcDbBlockTableRecord",
+          "5A2"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          -576781.5999168259,
+          0,
+          1,
+          0,
+          1028342.9815049805,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9584,
+      "sample": 2,
+      "round": 1,
+      "request": {
+        "text": "123.45",
+        "utf16": [
+          49,
+          50,
+          51,
+          46,
+          52,
+          53
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 6,
+        "raw": false,
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "worldPosition": [
+          0,
+          0,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 3,
+        "width": 0.75,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "simplex.shx",
+        "bigFont": "gbcbig.shx",
+        "styleName": "N7_SIMPLEX_GBCBIG",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "7B"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9586,
+      "sample": 3,
+      "round": 1,
+      "request": {
+        "text": "中文立面",
+        "utf16": [
+          20013,
+          25991,
+          31435,
+          38754
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 4,
+        "raw": false,
+        "position": [
+          0,
+          5,
+          0
+        ],
+        "worldPosition": [
+          0,
+          5,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 3,
+        "width": 1,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "simplex.shx",
+        "bigFont": "gbcbig.shx",
+        "styleName": "N7_SIMPLEX_GBCBIG",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "7E"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9588,
+      "sample": 4,
+      "round": 1,
+      "request": {
+        "text": "270",
+        "utf16": [
+          50,
+          55,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 3,
+        "raw": false,
+        "position": [
+          10,
+          5,
+          0
+        ],
+        "worldPosition": [
+          10,
+          5,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          -2.220446049250313e-16,
+          1.0000000000000002,
+          0
+        ],
+        "height": 3,
+        "width": 1,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "simplex.shx",
+        "bigFont": "gbcbig.shx",
+        "styleName": "N7_SIMPLEX_GBCBIG",
+        "tracking": 1,
+        "backward": true,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "7F"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9590,
+      "sample": 5,
+      "round": 1,
+      "request": {
+        "text": "AB",
+        "utf16": [
+          65,
+          66
+        ],
+        "rawLength": 2,
+        "copiedCodeUnits": 2,
+        "raw": true,
+        "position": [
+          0,
+          -3,
+          0
+        ],
+        "worldPosition": [
+          0,
+          -3,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 3,
+        "width": 1,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "simplex.shx",
+        "bigFont": "gbcbig.shx",
+        "styleName": "",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "80"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9591,
+      "sample": 5,
+      "round": 1,
+      "request": {
+        "text": "2",
+        "utf16": [
+          50
+        ],
+        "rawLength": 1,
+        "copiedCodeUnits": 1,
+        "raw": true,
+        "position": [
+          0,
+          -12,
+          0
+        ],
+        "worldPosition": [
+          0,
+          -12,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 1.5,
+        "width": 1,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "simplex.shx",
+        "bigFont": "gbcbig.shx",
+        "styleName": "",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "80"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9592,
+      "sample": 5,
+      "round": 1,
+      "request": {
+        "text": "7",
+        "utf16": [
+          55
+        ],
+        "rawLength": 1,
+        "copiedCodeUnits": 1,
+        "raw": true,
+        "position": [
+          1.4285714285714286,
+          -8,
+          0
+        ],
+        "worldPosition": [
+          1.4285714285714286,
+          -8,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 3,
+        "width": 1,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "simplex.shx",
+        "bigFont": "gbcbig.shx",
+        "styleName": "",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "80"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9594,
+      "sample": 5,
+      "round": 1,
+      "request": {
+        "text": "9",
+        "utf16": [
+          57
+        ],
+        "rawLength": 1,
+        "copiedCodeUnits": 1,
+        "raw": true,
+        "position": [
+          1.5,
+          -12,
+          0
+        ],
+        "worldPosition": [
+          1.5,
+          -12,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 3,
+        "width": 1,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "simplex.shx",
+        "bigFont": "gbcbig.shx",
+        "styleName": "",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "80"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9606,
+      "sample": 6,
+      "round": 1,
+      "request": {
+        "text": "nested",
+        "utf16": [
+          110,
+          101,
+          115,
+          116,
+          101,
+          100
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 6,
+        "raw": false,
+        "position": [
+          1,
+          2,
+          0
+        ],
+        "worldPosition": [
+          40.79631404657234,
+          62.71401620098915,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 2,
+        "width": 1,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "simplex.shx",
+        "bigFont": "gbcbig.shx",
+        "styleName": "N7_SIMPLEX_GBCBIG",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "89",
+          "transient:AcDbBlockTableRecord",
+          "88",
+          "transient:AcDbBlockTableRecord",
+          "87"
+        ],
+        "modelToWorld": [
+          1.7551651237807455,
+          -0.479425538604203,
+          0,
+          40,
+          0.958851077208406,
+          0.8775825618903728,
+          0,
+          60,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9632,
+      "sample": 7,
+      "round": 1,
+      "request": {
+        "text": "19760",
+        "utf16": [
+          49,
+          57,
+          55,
+          54,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 5,
+        "raw": false,
+        "position": [
+          65173.01324127689,
+          89369.3585739113,
+          0
+        ],
+        "worldPosition": [
+          65173.01324127689,
+          89369.3585739113,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          6.661338147750939e-15,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$0$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "8B"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9666,
+      "sample": 8,
+      "round": 1,
+      "request": {
+        "text": "400",
+        "utf16": [
+          52,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 3,
+        "raw": false,
+        "position": [
+          66823.39181510304,
+          94785.78867729328,
+          0
+        ],
+        "worldPosition": [
+          66823.39181510304,
+          94785.78867729328,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          6.123233995736766e-17,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$1$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "97"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9667,
+      "sample": 8,
+      "round": 1,
+      "request": {
+        "text": "2400",
+        "utf16": [
+          50,
+          52,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 4,
+        "raw": false,
+        "position": [
+          66823.39181510304,
+          93285.78867729346,
+          0
+        ],
+        "worldPosition": [
+          66823.39181510304,
+          93285.78867729346,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          6.123233995736766e-17,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$1$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "97"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9741,
+      "sample": 9,
+      "round": 1,
+      "request": {
+        "text": "2860",
+        "utf16": [
+          50,
+          56,
+          54,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 4,
+        "raw": false,
+        "position": [
+          79897.76324127664,
+          104915.77187351731,
+          0
+        ],
+        "worldPosition": [
+          79897.76324127664,
+          104915.77187351731,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          6.123233995736766e-17,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$2$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "A1"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9742,
+      "sample": 9,
+      "round": 1,
+      "request": {
+        "text": "400",
+        "utf16": [
+          52,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 3,
+        "raw": false,
+        "position": [
+          79897.76324127664,
+          103385.77187348949,
+          0
+        ],
+        "worldPosition": [
+          79897.76324127664,
+          103385.77187348949,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          6.123233995736766e-17,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$2$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "A1"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9743,
+      "sample": 9,
+      "round": 1,
+      "request": {
+        "text": "3600",
+        "utf16": [
+          51,
+          54,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 4,
+        "raw": false,
+        "position": [
+          79897.76324127664,
+          101285.77187349717,
+          0
+        ],
+        "worldPosition": [
+          79897.76324127664,
+          101285.77187349717,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          6.123233995736766e-17,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$2$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "A1"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9744,
+      "sample": 9,
+      "round": 1,
+      "request": {
+        "text": "3500",
+        "utf16": [
+          51,
+          53,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 4,
+        "raw": false,
+        "position": [
+          79897.76324127664,
+          97735.77187349723,
+          0
+        ],
+        "worldPosition": [
+          79897.76324127664,
+          97735.77187349723,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          6.123233995736766e-17,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$2$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "A1"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9745,
+      "sample": 9,
+      "round": 1,
+      "request": {
+        "text": "3900",
+        "utf16": [
+          51,
+          57,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 4,
+        "raw": false,
+        "position": [
+          79897.76324127664,
+          94035.77187349717,
+          0
+        ],
+        "worldPosition": [
+          79897.76324127664,
+          94035.77187349717,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          6.123233995736766e-17,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$2$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "A1"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9746,
+      "sample": 9,
+      "round": 1,
+      "request": {
+        "text": "450",
+        "utf16": [
+          52,
+          53,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 3,
+        "raw": false,
+        "position": [
+          79897.76324127664,
+          91960.77187349723,
+          0
+        ],
+        "worldPosition": [
+          79897.76324127664,
+          91960.77187349723,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          6.123233995736766e-17,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$2$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "A1"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9880,
+      "sample": 10,
+      "round": 1,
+      "request": {
+        "text": "955",
+        "utf16": [
+          57,
+          53,
+          53
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 3,
+        "raw": false,
+        "position": [
+          80272.6219478074,
+          62468.54130105311,
+          0
+        ],
+        "worldPosition": [
+          80272.6219478074,
+          62468.54130105311,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1.6048443894559622e-14,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$3$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "AC"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9881,
+      "sample": 10,
+      "round": 1,
+      "request": {
+        "text": "1205",
+        "utf16": [
+          49,
+          50,
+          48,
+          53
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 4,
+        "raw": false,
+        "position": [
+          80272.62194780738,
+          61308.54128417387,
+          0
+        ],
+        "worldPosition": [
+          80272.62194780738,
+          61308.54128417387,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1.6048443894559622e-14,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$3$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "AC"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9882,
+      "sample": 10,
+      "round": 1,
+      "request": {
+        "text": "1100",
+        "utf16": [
+          49,
+          49,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 4,
+        "raw": false,
+        "position": [
+          80272.62194780735,
+          60176.04128288551,
+          0
+        ],
+        "worldPosition": [
+          80272.62194780735,
+          60176.04128288551,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1.6048443894559622e-14,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$3$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "AC"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9883,
+      "sample": 10,
+      "round": 1,
+      "request": {
+        "text": "600",
+        "utf16": [
+          54,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 3,
+        "raw": false,
+        "position": [
+          80272.62194780735,
+          59386.04128159737,
+          0
+        ],
+        "worldPosition": [
+          80272.62194780735,
+          59386.04128159737,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1.6048443894559622e-14,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$3$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "AC"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9884,
+      "sample": 10,
+      "round": 1,
+      "request": {
+        "text": "2100",
+        "utf16": [
+          50,
+          49,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 4,
+        "raw": false,
+        "position": [
+          80272.62194780735,
+          57956.04128144103,
+          0
+        ],
+        "worldPosition": [
+          80272.62194780735,
+          57956.04128144103,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1.6048443894559622e-14,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$3$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "AC"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9885,
+      "sample": 10,
+      "round": 1,
+      "request": {
+        "text": "900",
+        "utf16": [
+          57,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 3,
+        "raw": false,
+        "position": [
+          80272.6219478073,
+          56536.041281441074,
+          0
+        ],
+        "worldPosition": [
+          80272.6219478073,
+          56536.041281441074,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1.6048443894559622e-14,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$3$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "AC"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9886,
+      "sample": 10,
+      "round": 1,
+      "request": {
+        "text": "500",
+        "utf16": [
+          53,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 3,
+        "raw": false,
+        "position": [
+          80272.62194780729,
+          55836.041281532,
+          0
+        ],
+        "worldPosition": [
+          80272.62194780729,
+          55836.041281532,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1.6048443894559622e-14,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$3$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "AC"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9887,
+      "sample": 10,
+      "round": 1,
+      "request": {
+        "text": "2100",
+        "utf16": [
+          50,
+          49,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 4,
+        "raw": false,
+        "position": [
+          80272.62194780729,
+          54456.04128137555,
+          0
+        ],
+        "worldPosition": [
+          80272.62194780729,
+          54456.04128137555,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1.6048443894559622e-14,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$3$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "AC"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9888,
+      "sample": 10,
+      "round": 1,
+      "request": {
+        "text": "900",
+        "utf16": [
+          57,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 3,
+        "raw": false,
+        "position": [
+          80272.62194780723,
+          53036.041281441205,
+          0
+        ],
+        "worldPosition": [
+          80272.62194780723,
+          53036.041281441205,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1.6048443894559622e-14,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$3$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "AC"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9889,
+      "sample": 10,
+      "round": 1,
+      "request": {
+        "text": "550",
+        "utf16": [
+          53,
+          53,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 3,
+        "raw": false,
+        "position": [
+          80272.62194780723,
+          52311.00191263654,
+          0
+        ],
+        "worldPosition": [
+          80272.62194780723,
+          52311.00191263654,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1.6048443894559622e-14,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$3$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "AC"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9890,
+      "sample": 10,
+      "round": 1,
+      "request": {
+        "text": "2400",
+        "utf16": [
+          50,
+          52,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 4,
+        "raw": false,
+        "position": [
+          80272.62194780723,
+          50736.00191263625,
+          0
+        ],
+        "worldPosition": [
+          80272.62194780723,
+          50736.00191263625,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1.6048443894559622e-14,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$3$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "AC"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 9891,
+      "sample": 10,
+      "round": 1,
+      "request": {
+        "text": "950",
+        "utf16": [
+          57,
+          53,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 3,
+        "raw": false,
+        "position": [
+          80272.62194780717,
+          49161.041281597245,
+          0
+        ],
+        "worldPosition": [
+          80272.62194780717,
+          49161.041281597245,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1.6048443894559622e-14,
+          1,
+          0
+        ],
+        "height": 297.5,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$3$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "AC"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 13651,
+      "sample": 11,
+      "round": 1,
+      "request": {
+        "text": "50",
+        "utf16": [
+          53,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 2,
+        "raw": false,
+        "position": [
+          637037.9698675164,
+          -890815.5743926642,
+          0
+        ],
+        "worldPosition": [
+          60256.36995069054,
+          137527.40711231623,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 74.375,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$4$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "B6",
+          "transient:AcDbBlockTableRecord",
+          "597"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          -576781.5999168259,
+          0,
+          1,
+          0,
+          1028342.9815049805,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 13652,
+      "sample": 11,
+      "round": 1,
+      "request": {
+        "text": "800",
+        "utf16": [
+          56,
+          48,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 3,
+        "raw": false,
+        "position": [
+          637438.122001277,
+          -890815.5743926642,
+          0
+        ],
+        "worldPosition": [
+          60656.522084451164,
+          137527.40711231623,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 74.375,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$4$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "B6",
+          "transient:AcDbBlockTableRecord",
+          "597"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          -576781.5999168259,
+          0,
+          1,
+          0,
+          1028342.9815049805,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 13653,
+      "sample": 11,
+      "round": 1,
+      "request": {
+        "text": "50",
+        "utf16": [
+          53,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 2,
+        "raw": false,
+        "position": [
+          637888.2741350376,
+          -890815.5743926642,
+          0
+        ],
+        "worldPosition": [
+          61106.67421821167,
+          137527.40711231623,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 74.375,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$4$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "B6",
+          "transient:AcDbBlockTableRecord",
+          "597"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          -576781.5999168259,
+          0,
+          1,
+          0,
+          1028342.9815049805,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 13688,
+      "sample": 11,
+      "round": 1,
+      "request": {
+        "text": "10",
+        "utf16": [
+          49,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 2,
+        "raw": false,
+        "position": [
+          637115.469884981,
+          -891119.757096001,
+          0
+        ],
+        "worldPosition": [
+          60333.869968155166,
+          137223.22440897953,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 74.375,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$4$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "B6",
+          "transient:AcDbBlockTableRecord",
+          "5A1"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          -576781.5999168259,
+          0,
+          1,
+          0,
+          1028342.9815049805,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 13689,
+      "sample": 11,
+      "round": 1,
+      "request": {
+        "text": "25",
+        "utf16": [
+          50,
+          53
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 2,
+        "raw": false,
+        "position": [
+          637025.4698832346,
+          -891119.757096001,
+          0
+        ],
+        "worldPosition": [
+          60243.8699664087,
+          137223.22440897953,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 74.375,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$4$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "B6",
+          "transient:AcDbBlockTableRecord",
+          "5A1"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          -576781.5999168259,
+          0,
+          1,
+          0,
+          1028342.9815049805,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 13724,
+      "sample": 11,
+      "round": 1,
+      "request": {
+        "text": "10",
+        "utf16": [
+          49,
+          48
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 2,
+        "raw": false,
+        "position": [
+          637815.0783835239,
+          -891119.757096001,
+          0
+        ],
+        "worldPosition": [
+          61033.47846669797,
+          137223.22440897953,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 74.375,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$4$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "B6",
+          "transient:AcDbBlockTableRecord",
+          "5A2"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          -576781.5999168259,
+          0,
+          1,
+          0,
+          1028342.9815049805,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "rawLine": 13725,
+      "sample": 11,
+      "round": 1,
+      "request": {
+        "text": "25",
+        "utf16": [
+          50,
+          53
+        ],
+        "rawLength": -1,
+        "copiedCodeUnits": 2,
+        "raw": false,
+        "position": [
+          637895.0783852703,
+          -891119.757096001,
+          0
+        ],
+        "worldPosition": [
+          61113.47846844443,
+          137223.22440897953,
+          0
+        ],
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "height": 74.375,
+        "width": 0.7058823529411765,
+        "oblique": 0,
+        "styleKnown": true,
+        "font": "SIMPLEX",
+        "bigFont": "GBCBIG",
+        "styleName": "$4$_TCH_DIM",
+        "tracking": 1,
+        "backward": false,
+        "upsideDown": false,
+        "vertical": false,
+        "underline": false,
+        "overline": false,
+        "strike": false,
+        "kind": "text",
+        "path": [
+          "B6",
+          "transient:AcDbBlockTableRecord",
+          "5A2"
+        ],
+        "modelToWorld": [
+          1,
+          0,
+          0,
+          -576781.5999168259,
+          0,
+          1,
+          0,
+          1028342.9815049805,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    }
+  ],
+  "scope": "Exact public request strings/styles/coordinates; no glyph outline or rendered ink claim."
+}

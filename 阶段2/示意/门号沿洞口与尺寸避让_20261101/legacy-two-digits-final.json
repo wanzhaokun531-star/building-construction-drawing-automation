@@ -1,0 +1,418 @@
+{
+  "scope": "Read-only v131 actual grips, SDK root obstacles plus native-PDF furniture black strokes and white fills. New candidate data only; no CAD action, plugin/source/frozen plans unchanged.",
+  "units": "model mm",
+  "sourcePreview": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-door-clearance-20261101-172401-floor1\\stage2-preview-native.json",
+  "sourcePDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-door-clearance-20261101-172401-floor1\\stage2-A2-1-100.pdf",
+  "furnitureStrokeSegments": 15924,
+  "furnitureWhiteFilledSubpaths": 309,
+  "moves": [
+    {
+      "floor": 1,
+      "handle": "846C",
+      "segment": 0,
+      "gripIndex": 6,
+      "value": 5320.000000039348,
+      "before": [
+        39001.70152820693,
+        28425.21380197577,
+        0
+      ],
+      "target": [
+        39801.70152820693,
+        28725.21380197577,
+        0
+      ],
+      "delta": [
+        800,
+        300,
+        0
+      ],
+      "fontBoundsAfter": [
+        39642.70152820693,
+        28265.880468642437,
+        39960.70152820693,
+        29184.547135309105
+      ],
+      "hardContacts": [],
+      "actualFurnitureContacts": [],
+      "illustrativeStraightLeaderTextContacts": [],
+      "distance": 854.4003745317531
+    },
+    {
+      "floor": 1,
+      "handle": "847B",
+      "segment": 1,
+      "gripIndex": 7,
+      "value": 2200,
+      "before": [
+        34131.70152820693,
+        29955.21380195598,
+        0
+      ],
+      "target": [
+        31381.701528206933,
+        29655.21380195598,
+        0
+      ],
+      "delta": [
+        -2750,
+        -300,
+        0
+      ],
+      "fontBoundsAfter": [
+        30922.368194873598,
+        29496.21380195598,
+        31841.03486154026,
+        29814.21380195598
+      ],
+      "hardContacts": [],
+      "actualFurnitureContacts": [],
+      "illustrativeStraightLeaderTextContacts": [],
+      "distance": 2766.315238724611
+    }
+  ],
+  "alternates": [
+    {
+      "handle": "846C",
+      "candidates": [
+        {
+          "floor": 1,
+          "handle": "846C",
+          "segment": 0,
+          "gripIndex": 6,
+          "value": 5320.000000039348,
+          "before": [
+            39001.70152820693,
+            28425.21380197577,
+            0
+          ],
+          "target": [
+            39801.70152820693,
+            28775.21380197577,
+            0
+          ],
+          "delta": [
+            800,
+            350,
+            0
+          ],
+          "fontBoundsAfter": [
+            39642.70152820693,
+            28315.880468642437,
+            39960.70152820693,
+            29234.547135309105
+          ],
+          "hardContacts": [],
+          "actualFurnitureContacts": [],
+          "illustrativeStraightLeaderTextContacts": [],
+          "distance": 873.212459828649
+        },
+        {
+          "floor": 1,
+          "handle": "846C",
+          "segment": 0,
+          "gripIndex": 6,
+          "value": 5320.000000039348,
+          "before": [
+            39001.70152820693,
+            28425.21380197577,
+            0
+          ],
+          "target": [
+            39801.70152820693,
+            28825.21380197577,
+            0
+          ],
+          "delta": [
+            800,
+            400,
+            0
+          ],
+          "fontBoundsAfter": [
+            39642.70152820693,
+            28365.880468642437,
+            39960.70152820693,
+            29284.547135309105
+          ],
+          "hardContacts": [],
+          "actualFurnitureContacts": [],
+          "illustrativeStraightLeaderTextContacts": [],
+          "distance": 894.4271909999159
+        },
+        {
+          "floor": 1,
+          "handle": "846C",
+          "segment": 0,
+          "gripIndex": 6,
+          "value": 5320.000000039348,
+          "before": [
+            39001.70152820693,
+            28425.21380197577,
+            0
+          ],
+          "target": [
+            39851.70152820693,
+            28725.21380197577,
+            0
+          ],
+          "delta": [
+            850,
+            300,
+            0
+          ],
+          "fontBoundsAfter": [
+            39692.70152820693,
+            28265.880468642437,
+            40010.70152820693,
+            29184.547135309105
+          ],
+          "hardContacts": [],
+          "actualFurnitureContacts": [],
+          "illustrativeStraightLeaderTextContacts": [],
+          "distance": 901.3878188659974
+        },
+        {
+          "floor": 1,
+          "handle": "846C",
+          "segment": 0,
+          "gripIndex": 6,
+          "value": 5320.000000039348,
+          "before": [
+            39001.70152820693,
+            28425.21380197577,
+            0
+          ],
+          "target": [
+            39801.70152820693,
+            28875.21380197577,
+            0
+          ],
+          "delta": [
+            800,
+            450,
+            0
+          ],
+          "fontBoundsAfter": [
+            39642.70152820693,
+            28415.880468642437,
+            39960.70152820693,
+            29334.547135309105
+          ],
+          "hardContacts": [],
+          "actualFurnitureContacts": [],
+          "illustrativeStraightLeaderTextContacts": [],
+          "distance": 917.8779875342909
+        },
+        {
+          "floor": 1,
+          "handle": "846C",
+          "segment": 0,
+          "gripIndex": 6,
+          "value": 5320.000000039348,
+          "before": [
+            39001.70152820693,
+            28425.21380197577,
+            0
+          ],
+          "target": [
+            39851.70152820693,
+            28775.21380197577,
+            0
+          ],
+          "delta": [
+            850,
+            350,
+            0
+          ],
+          "fontBoundsAfter": [
+            39692.70152820693,
+            28315.880468642437,
+            40010.70152820693,
+            29234.547135309105
+          ],
+          "hardContacts": [],
+          "actualFurnitureContacts": [],
+          "illustrativeStraightLeaderTextContacts": [],
+          "distance": 919.2388155425118
+        }
+      ]
+    },
+    {
+      "handle": "847B",
+      "candidates": [
+        {
+          "floor": 1,
+          "handle": "847B",
+          "segment": 1,
+          "gripIndex": 7,
+          "value": 2200,
+          "before": [
+            34131.70152820693,
+            29955.21380195598,
+            0
+          ],
+          "target": [
+            31381.701528206933,
+            29605.21380195598,
+            0
+          ],
+          "delta": [
+            -2750,
+            -350,
+            0
+          ],
+          "fontBoundsAfter": [
+            30922.368194873598,
+            29446.21380195598,
+            31841.03486154026,
+            29764.21380195598
+          ],
+          "hardContacts": [],
+          "actualFurnitureContacts": [],
+          "illustrativeStraightLeaderTextContacts": [],
+          "distance": 2772.183255125822
+        },
+        {
+          "floor": 1,
+          "handle": "847B",
+          "segment": 1,
+          "gripIndex": 7,
+          "value": 2200,
+          "before": [
+            34131.70152820693,
+            29955.21380195598,
+            0
+          ],
+          "target": [
+            31381.701528206933,
+            29555.21380195598,
+            0
+          ],
+          "delta": [
+            -2750,
+            -400,
+            0
+          ],
+          "fontBoundsAfter": [
+            30922.368194873598,
+            29396.21380195598,
+            31841.03486154026,
+            29714.21380195598
+          ],
+          "hardContacts": [],
+          "actualFurnitureContacts": [],
+          "illustrativeStraightLeaderTextContacts": [],
+          "distance": 2778.938646318051
+        },
+        {
+          "floor": 1,
+          "handle": "847B",
+          "segment": 1,
+          "gripIndex": 7,
+          "value": 2200,
+          "before": [
+            34131.70152820693,
+            29955.21380195598,
+            0
+          ],
+          "target": [
+            31381.701528206933,
+            29505.21380195598,
+            0
+          ],
+          "delta": [
+            -2750,
+            -450,
+            0
+          ],
+          "fontBoundsAfter": [
+            30922.368194873598,
+            29346.21380195598,
+            31841.03486154026,
+            29664.21380195598
+          ],
+          "hardContacts": [],
+          "actualFurnitureContacts": [],
+          "illustrativeStraightLeaderTextContacts": [],
+          "distance": 2786.574958618555
+        },
+        {
+          "floor": 1,
+          "handle": "847B",
+          "segment": 1,
+          "gripIndex": 7,
+          "value": 2200,
+          "before": [
+            34131.70152820693,
+            29955.21380195598,
+            0
+          ],
+          "target": [
+            31381.701528206933,
+            29455.21380195598,
+            0
+          ],
+          "delta": [
+            -2750,
+            -500,
+            0
+          ],
+          "fontBoundsAfter": [
+            30922.368194873598,
+            29296.21380195598,
+            31841.03486154026,
+            29614.21380195598
+          ],
+          "hardContacts": [],
+          "actualFurnitureContacts": [],
+          "illustrativeStraightLeaderTextContacts": [],
+          "distance": 2795.084971874737
+        },
+        {
+          "floor": 1,
+          "handle": "847B",
+          "segment": 1,
+          "gripIndex": 7,
+          "value": 2200,
+          "before": [
+            34131.70152820693,
+            29955.21380195598,
+            0
+          ],
+          "target": [
+            31381.701528206933,
+            29405.21380195598,
+            0
+          ],
+          "delta": [
+            -2750,
+            -550,
+            0
+          ],
+          "fontBoundsAfter": [
+            30922.368194873598,
+            29246.21380195598,
+            31841.03486154026,
+            29564.21380195598
+          ],
+          "hardContacts": [],
+          "actualFurnitureContacts": [],
+          "illustrativeStraightLeaderTextContacts": [],
+          "distance": 2804.460732476032
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "PDF paths rounded to internal grid about4.23mm; furniture clearance includes actual stroke halfwidth plus10mm. Cubic curves tessellated in24 parts.",
+    "TCH automatic leader shape after moving text is not predicted. Native rendering mandatory.",
+    "Trial40/60/80mm obstacle margins are existing sample choices, not user dimension standard."
+  ],
+  "frontDimensions": [
+    {
+      "floor": 1,
+      "handle": "847B",
+      "reason": "New 2200 font rectangle lies inside existing axis gap Wipeout 84BB. Bring only this dimension ahead, then new door clearance masks and captions above it; no axis draw order change."
+    }
+  ]
+}

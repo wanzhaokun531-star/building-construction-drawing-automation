@@ -1,0 +1,6 @@
+{
+  "candidate": "v59",
+  "nativeError": "failure: saved stock WIPEOUTVARIABLES frame70 is not zero",
+  "DWGProduced": false,
+  "next": "Sample specific SDK getter/DXF70/active vars before and after layer import, then direct actual WIPEOUTVARIABLES virtual setter; do not assume phase1 bug or layer clone is root cause"
+}
