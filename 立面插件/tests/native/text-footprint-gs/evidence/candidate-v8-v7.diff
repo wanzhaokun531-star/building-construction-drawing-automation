@@ -1,0 +1,92 @@
+--- v7/NativeGsTextFootprint.cpp
++++ v8/NativeGsTextFootprint.cpp
+@@ -76,13 +76,13 @@
+     Config config;std::unique_ptr<Evidence> evidence;File trace;
+     AcApDocument* current{};AcApDocument* active{};AcDbDatabase* ambient{};AmbientWatch watch;bool watchAttached{},ambientInitialized{};int dbmodBefore{};
+     std::unique_ptr<AcDbDatabase> db;AcDbObjectId markerId;std::unique_ptr<AcDbPoint,Close> marker;
+-    AcGsManager* manager{};AcGsGraphicsKernel* kernel{};AcGsModel* model{};AcGsModel* priorModel{};AcGsDevice* device{};AcGsView* view{};bool associated{};
++    AcGsManager* manager{};AcGsGraphicsKernel* kernel{};AcGsModel* model{};AcGsModel* priorModel{};AcGsDevice* device{};AcGsView* view{};bool associated{},viewAttached{};
+     std::unique_ptr<Rule> rule;bool ruleAttached{},priorOverruling{};
+     int sample{-1};unsigned callbacks{},frameCallbacks{};std::string callbackError,executionFailure;int faultPoint{};
+     std::wstring font,bigfont;std::string fontSHA,bigfontSHA;std::vector<std::string> frames;
+     void log(const char* event,Fields f={}){if(!trace.valid())return;f.push_back({"event",q(event)});write_flushed(trace.get(),object(f)+"\n");}
+     bool ambientSame()const{return current==acDocManager->curDocument()&&active==acDocManager->mdiActiveDocument()&&ambient==acdbHostApplicationServices()->workingDatabase();}
+-    bool resourcesReleased()const noexcept{return !db&&!marker&&!kernel&&!model&&!device&&!view&&!associated&&!rule&&!ruleAttached&&!watchAttached;}
++    bool resourcesReleased()const noexcept{return !db&&!marker&&!kernel&&!model&&!device&&!view&&!associated&&!viewAttached&&!rule&&!ruleAttached&&!watchAttached;}
+     void cleanupLog(const char* event,Fields f={})noexcept{try{log(event,std::move(f));}catch(...){}}
+     bool cleanup(){
+         cleanupLog("cleanup.enter",{{"faultPoint",std::to_string(faultPoint)},{"view",address(view)},{"marker",address(marker.get())},{"model",address(model)},{"device",address(device)},{"kernel",address(kernel)},{"database",address(db.get())},{"ruleAttached",ruleAttached?"true":"false"}});
+@@ -90,7 +90,8 @@
+         if(ruleAttached){cleanupLog("removeOverrule.before");const auto st=AcRxOverrule::removeOverrule(AcDbPoint::desc(),rule.get());cleanupLog("removeOverrule.after",{{"status",std::to_string(st)}});if(st!=Acad::eOk)return false;ruleAttached=false;cleanupLog("restoreOverruling.before");AcRxOverrule::setIsOverruling(priorOverruling);cleanupLog("restoreOverruling.after");}
+         cleanupLog("rule.reset.before");rule.reset();cleanupLog("rule.reset.after");
+         cleanupLog("marker.close.before");marker.reset();cleanupLog("marker.close.after");
+-        if(view){cleanupLog("destroyView.before");manager->destroyView(view);view=nullptr;cleanupLog("destroyView.after");}
++        if(viewAttached){cleanupLog("device.eraseView.before");const bool erased=device->erase(view);cleanupLog("device.eraseView.after",{{"removed",erased?"true":"false"}});if(!erased)return false;viewAttached=false;}
++        if(view){cleanupLog("kernel.deleteView.before");kernel->deleteView(view);view=nullptr;cleanupLog("kernel.deleteView.after");}
+         if(associated){cleanupLog("restoreOwnedDatabaseAssociation.before");kernel->associate(reinterpret_cast<Adesk::LongPtr>(db.get()),priorModel,AcGsModel::kMain);cleanupLog("restoreOwnedDatabaseAssociation.after");cleanupLog("restoredAssociation.find.before");const bool restored=kernel->find(reinterpret_cast<Adesk::LongPtr>(db.get()),AcGsModel::kMain)==priorModel;cleanupLog("restoredAssociation.find.after",{{"matches",restored?"true":"false"}});if(!restored)return false;associated=false;}
+         if(model){cleanupLog("destroyAutoCADModel.before");manager->destroyAutoCADModel(model);model=nullptr;cleanupLog("destroyAutoCADModel.after");}
+         if(device){cleanupLog("destroyAutoCADDevice.before");manager->destroyAutoCADDevice(device);device=nullptr;cleanupLog("destroyAutoCADDevice.after");}
+@@ -104,6 +105,32 @@
+ std::unique_ptr<Session> session;
+ std::vector<std::unique_ptr<Session>> lifecycleSessions;
+ int dbmod(){resbuf value{};require(acedGetVar(L"DBMOD",&value)==RTNORM&&value.restype==RTSHORT,"DBMOD read failed");return value.resval.rint;}
++std::string variant(const AcGiVariant& v){
++    std::string value;
++    switch(v.type()){
++    case AcGiVariant::kUndefined:value="null";break;
++    case AcGiVariant::kBoolean:value=v.asBoolean()?"true":"false";break;
++    case AcGiVariant::kInt:value=std::to_string(v.asInt());break;
++    case AcGiVariant::kDouble:value=num(v.asDouble());break;
++    case AcGiVariant::kColor:{const auto c=v.asColor();value=object({{"method",std::to_string(c.colorMethod())},{"index",std::to_string(c.colorIndex())},{"rgb",array({std::to_string(c.red()),std::to_string(c.green()),std::to_string(c.blue())})}});break;}
++    case AcGiVariant::kString:value=quote(std::wstring(v.asString().kACharPtr()));break;
++    default:throw std::runtime_error("unexpected table variant for controlled visual style property");
++    }
++    return object({{"variantType",std::to_string(v.type())},{"value",value}});
++}
++void verifyStyle(Session& s,const AcGiVisualStyle& requested,const AcGiVisualStyle& actual,bool styleSet){
++    using namespace AcGiVisualStyleProperties;
++    const std::array<std::pair<Property,const char*>,16> properties{{
++        {kFaceLightingModel,"faceLightingModel"},{kFaceLightingQuality,"faceLightingQuality"},{kFaceColorMode,"faceColorMode"},{kFaceOpacity,"faceOpacity"},
++        {kEdgeModel,"edgeModel"},{kEdgeStyles,"edgeStyles"},{kEdgeModifiers,"edgeModifiers"},{kEdgeColor,"edgeColor"},{kEdgeOpacity,"edgeOpacity"},{kEdgeWidth,"edgeWidth"},
++        {kDisplayStyles,"displayStyles"},{kDisplayBrightness,"displayBrightness"},{kUseDrawOrder,"useDrawOrder"},{kViewportTransparency,"viewportTransparency"},{kLightingEnabled,"lightingEnabled"},{kFaceModifiers,"faceModifiers"}
++    }};
++    bool equal=true;std::vector<std::string> traits;
++    for(const auto& p:properties){AcGiVisualStyle::Operation expectedOp,actualOp;const auto& expected=requested.trait(p.first,&expectedOp);const auto& observed=actual.trait(p.first,&actualOp);const bool same=expected==observed&&expectedOp==actualOp;equal=equal&&same;
++        traits.push_back(object({{"property",q(p.second)},{"propertyId",std::to_string(p.first)},{"expected",variant(expected)},{"actual",variant(observed)},{"expectedOperation",std::to_string(expectedOp)},{"actualOperation",std::to_string(actualOp)},{"equivalent",same?"true":"false"}}));}
++    s.log("ownedViewVisualStyle",{{"requestedType",std::to_string(requested.type())},{"styleSet",styleSet?"true":"false"},{"actualType",styleSet?std::to_string(actual.type()):"null"},{"drawingPropertiesEquivalent",equal?"true":"false"},{"properties",array(traits)}});
++    require(styleSet&&equal,"own view visual style drawing properties differ");
++}
+ bool Rule::isApplicable(const AcRxObject* object)const{const auto* p=AcDbPoint::cast(object);return running&&p&&p->database()==s.db.get()&&p->objectId()==s.markerId;}
+ Adesk::Boolean Rule::worldDraw(AcGiDrawable* drawable,AcGiWorldDraw* wd){
+     try{
+@@ -202,9 +229,12 @@
+     s.device=s.manager->createAutoCADOffScreenDevice(*s.kernel);require(s.device!=nullptr,"offscreen device unavailable");require(s.device->setBackgroundColor({255,255,255,0}),"white background rejected");
+     const auto bg=s.device->getBackgroundColor();require(bg.m_red==255&&bg.m_green==255&&bg.m_blue==255,"background readback not white");
+     std::array<AcGsColor,256> palette{};for(auto& c:palette)c={0,0,0,0};palette[0]={255,255,255,0};s.device->setLogicalPalette(palette.data(),static_cast<int>(palette.size()));
+-    s.view=s.manager->createView(s.device);require(s.view!=nullptr,"offscreen view unavailable");s.view->setViewport(AcGePoint2d(0,0),AcGePoint2d(1,1));s.view->setViewportBorderVisibility(false);
++    s.log("kernel.createView.before");s.view=s.kernel->createView(nullptr,false);s.log("kernel.createView.after",{{"view",address(s.view)}});require(s.view!=nullptr,"offscreen kernel view unavailable");
++    s.log("device.addView.before");s.viewAttached=s.device->add(s.view);s.log("device.addView.after",{{"added",s.viewAttached?"true":"false"}});require(s.viewAttached,"attach owned kernel view failed");
++    if(s.faultPoint==3)throw std::runtime_error("injected-after-view-attached-before-style-camera");
++    s.view->setViewport(AcGePoint2d(0,0),AcGePoint2d(1,1));s.view->setViewportBorderVisibility(false);
+     AcGiVisualStyle wireframe;require(wireframe.setType(AcGiVisualStyle::k3DWireframe),"prepare own k3DWireframe style failed");s.view->setVisualStyle(wireframe);AcGiVisualStyle readback;const bool styleSet=s.view->visualStyle(readback);
+-    s.log("ownedViewVisualStyle",{{"requestedType",std::to_string(AcGiVisualStyle::k3DWireframe)},{"styleSet",styleSet?"true":"false"},{"actualType",styleSet?std::to_string(readback.type()):"null"}});require(styleSet&&readback.type()==AcGiVisualStyle::k3DWireframe,"own view visual style readback differs");
++    verifyStyle(s,wireframe,readback,styleSet);
+     s.view->setEnableFrontClip(false);s.view->setEnableBackClip(false);
+     s.view->setView({75,50,100},{75,50,0},AcGeVector3d::kYAxis,150,112.5,AcGsView::kParallel);
+     s.log("ownedDeviceSettings",{{"backgroundRGB",array({std::to_string(bg.m_red),std::to_string(bg.m_green),std::to_string(bg.m_blue)})},{"foregroundRGB",array({"0","0","0"})},{"lineweight",q("AcDb::kLnWt000 hairline")},{"frontClip",s.view->isFrontClipped()?"true":"false"},{"backClip",s.view->isBackClipped()?"true":"false"},{"border",s.view->isViewportBorderVisible()?"true":"false"}});
+@@ -229,13 +259,13 @@
+ }
+ void lifecycleControls(Session& primary){
+     std::vector<std::string> results;
+-    for(int fault:{1,2}){
++    for(int fault:{1,3,2}){
+         lifecycleSessions.push_back(std::make_unique<Session>());auto& s=*lifecycleSessions.back();s.config=primary.config;s.faultPoint=fault;
+         s.config.output+=L"\\lifecycle-"+std::to_wstring(fault);require(CreateDirectoryW(s.config.output.c_str(),nullptr)!=FALSE,"create lifecycle evidence directory");
+         s.trace=File(CreateFileW((s.config.output+L"\\gs-trace.jsonl").c_str(),GENERIC_WRITE,FILE_SHARE_READ,nullptr,CREATE_NEW,FILE_ATTRIBUTE_NORMAL|FILE_FLAG_WRITE_THROUGH,nullptr));require(s.trace.valid(),"lifecycle trace unavailable");
+         std::string observed;try{execute(s);}catch(const std::exception& e){observed=e.what();s.cleanupLog("execute.cppException.beforeCleanup",{{"message",quote(observed)}});}
+         const bool cleaned=s.cleanup();const auto after=s.ambientInitialized?dbmod():0;const bool stable=s.ambientInitialized&&s.ambientSame()&&s.watch.untouched()&&s.dbmodBefore==after;
+-        const auto expected=fault==1?"injected-after-model-association":"injected-after-overrule-install";
++        const auto expected=fault==1?"injected-after-model-association":fault==3?"injected-after-view-attached-before-style-camera":"injected-after-overrule-install";
+         const bool passed=observed==expected&&cleaned&&stable;
+         const auto record=object({{"faultPoint",q(expected)},{"faultReached",observed==expected?"true":"false"},{"observed",quote(observed)},{"cleanupComplete",cleaned?"true":"false"},{"ambientObserved",s.ambientInitialized?"true":"false"},{"ambientUnchanged",s.ambientInitialized?(stable?"true":"false"):"null"},{"ambientWriteEvents",s.ambientInitialized?s.watch.json():"null"},{"dbmodBefore",s.ambientInitialized?std::to_string(s.dbmodBefore):"null"},{"dbmodAfter",s.ambientInitialized?std::to_string(after):"null"},{"passed",passed?"true":"false"}});
+         save(s.config.output+L"\\result.json",record);results.push_back(record);require(passed,"real GS resource lifecycle fault control failed: "+observed);

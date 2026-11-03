@@ -21,7 +21,13 @@ void prepareRun() noexcept {
     ++prepareCalls;
     bce::viewport::trace("handler.prepare.enter",{{"prepareCalls",std::to_string(prepareCalls)},{"captureCalls",std::to_string(captureCalls)},{"pendingEvidence",pendingEvidence?"true":"false"}});
     try {
-        require(!pendingEvidence,"N7 prepare already active");
+        if(pendingEvidence){
+            auto replayConfig=load_config(module);validate_identity(replayConfig);
+            bce::viewport::acceptPreparedReplay(replayConfig);
+            require(bce::viewport::traceHealthy(),"command trace logging failed");
+            bce::viewport::trace("handler.prepare.replayAccepted",{{"prepareCalls",std::to_string(prepareCalls)},{"captureCalls",std::to_string(captureCalls)},{"pendingEvidence","true"}});
+            return;
+        }
         pendingConfig=load_config(module);pendingEvidence=std::make_unique<Evidence>(pendingConfig);
         pendingEvidence->checkpoint("validate-N7-identity");validate_identity(pendingConfig);
         require(pendingConfig.caseName==L"PublicGraphicsViewport","unsupported N7 case");

@@ -1,0 +1,50 @@
+{
+  "contract": "bce.unitconfig-undo-clone-fix.v1",
+  "candidateReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i2-20261102-191026-985-fix-undo-markers-explicit-test-archive-copy-912f02cc\\receipt.json",
+  "candidateReceiptSHA256": "F95F9CC93694419386F28CAC7FDB30E60D12BD62EDD64CAC4E3DA523AB972325",
+  "baselineReceiptArchived": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\立面插件\\build\\i2-20261101-223032-760-green-diagnostic-undo-state-factors-f961d67c\\receipt.json",
+  "baselineReceiptSHA256": "5C56334621A2FBCF79FF2264F31BC28B28AF600FD43BF3B09F4E050D4DE301D8",
+  "actualFactorObservation": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-223900-f498f9b1\\unitconfig-state-factor-observation.json",
+  "actualFactorSHA256": "7C22D5D60C7774B2D4B361BCED9B52F4A1CE48E5FF2CEB35935AF6EEDE3208A0",
+  "changedSources": [
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\AnalysisCommands.cpp",
+      "baselineArchivedSource": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\立面插件\\build\\i2-20261101-223032-760-green-diagnostic-undo-state-factors-f961d67c\\src\\AnalysisCommands.cpp",
+      "baselineSHA256": "A3289BBA308C2EB16A50249F9A6EB480D92C1D87DD1B71C1593B280574A45E17",
+      "candidateSource": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i2-20261102-191026-985-fix-undo-markers-explicit-test-archive-copy-912f02cc\\src\\AnalysisCommands.cpp",
+      "candidateSHA256": "04A605D5045BA7C384E59E061865DB230F1CA84FADC1DBF880E23037152E28DB"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\unitconfig\\UnitConfigDriver.cpp",
+      "baselineArchivedSource": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\立面插件\\build\\i2-20261101-223032-760-green-diagnostic-undo-state-factors-f961d67c\\src\\UnitConfigDriver.cpp",
+      "baselineSHA256": "5DA836BE1FCE037775CF67E21CCDF32E21C2D185606DBFBDF598A836504BD45E",
+      "candidateSource": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i2-20261102-191026-985-fix-undo-markers-explicit-test-archive-copy-912f02cc\\src\\UnitConfigDriver.cpp",
+      "candidateSHA256": "61544D40560FA82B291919400140C62F090C06616B3A2F46C6B8B912DCC72ECD"
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n4-20261101-202044-712-review-fix1-green-identity-hidden-constant-2d31d01f\\receipt.json",
+      "SHA256": "70AFC5BA63D9D8431F76A8D51194E5F0C7BC0DF0B36609A59FEEDE5C71B68488",
+      "verifiedOwnedSources": 7
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\g2-20261101-193143-056-fix1-undo-reopen-green-candidate-3d68c479\\receipt.json",
+      "SHA256": "D3562019037590BF58B44C390579120C35EAE8DC6709057F9C663B9A8C4E516B",
+      "verifiedOwnedSources": 4
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n2-20261101-202438-658-n6-shared-reader-green-84664abf\\receipt.json",
+      "SHA256": "518C2B461E08922C67F0BCE572DE7199221C98651B3FEB55FAA70563EE81562D",
+      "verifiedOwnedSources": 2
+    }
+  ],
+  "productSHA256": "A6CA6AC389164E674385125E4EA4871361C25A69BEC15C3316745A92BF47D252",
+  "driverSHA256": "C6567779640350445C7B2233273234047C256D005E094A541ADF42D8FD7A458F",
+  "nativeValidation": "pending controller; compilation is not proof of U restoration",
+  "SDK": "AutoCAD2020 accmd-defs.h:65; dbmain.h:668; dbdict.h:152",
+  "officialReferences": [
+    "https://help.autodesk.com/cloudhelp/2021/ENU/OARX-DevGuide/files/GUID-BC6903E0-E821-40DC-912C-07E090C74850.htm",
+    "https://help.autodesk.com/cloudhelp/2018/ENU/OARXMAC-RefGuide/files/OREFMAC-AcEdCommandStack__addCommand_ACHAR___ACHAR___ACHAR___Adesk__Int32_AcRxFunctionPtr_AcEdUIContext___int_AcRxResourceInstance__AcEdCommand__.html"
+  ]
+}

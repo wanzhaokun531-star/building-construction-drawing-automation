@@ -1,0 +1,169 @@
+{
+  "contract": "bce.n9h-owned-resource-actual-evidence.v1",
+  "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-134059-1ce10761",
+  "nonce": "1ce10761b60546afbc3c80f07474cb0a",
+  "pid": 49032,
+  "frozenReceipt": "D:/Codex/建筑施工图自动化/立面插件/build/n9c-20261103-133951-997-n9h-owned-resource-v27-frozen-9c7b8692/receipt.json",
+  "receiptSHA256": "2791F797A94FACE4774C95809633CC87797D99755BCF993CC7274EC9F2D4764E",
+  "nativeBinarySHA256": "222B6D94D331B232599A730CAFB6765FBB45B60C43A27D2252E10E463FFB9D9F",
+  "report": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\N9h-自有资源读取适配报告.md",
+  "artifacts": {
+    "case/model-factory-comparison.json": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-134059-1ce10761\\case\\model-factory-comparison.json",
+      "sha256": "D222E391D4665DA15A5E3B7833101487D9B3E3600BCEB7E120366E458DD2404E"
+    },
+    "case/lifecycle-controls.json": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-134059-1ce10761\\case\\lifecycle-controls.json",
+      "sha256": "FAB2643C507561F8E3ACDB63C0CFA01BCA2FF40C572164749D880E7573D6FE1F"
+    },
+    "case/nonpersistent-kernel-model-control/gs-trace.jsonl": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-134059-1ce10761\\case\\nonpersistent-kernel-model-control\\gs-trace.jsonl",
+      "sha256": "8D81CA88D5C7694CBF9F2E6B7A31A34E468CA91793D8A1042DFB581EE398A4B3"
+    },
+    "native-result-closure.json": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-134059-1ce10761\\native-result-closure.json",
+      "sha256": "6F07F81592829AD0AA694882A0C4419587FA056CC99C539F32CAED91761D6FB5"
+    },
+    "case/gs-result.json": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-134059-1ce10761\\case\\gs-result.json",
+      "sha256": "2DDDDF37A545AD1B9E8701B9F3AC0BF7BB532DC8DA52642CF42116E36B904B98"
+    },
+    "case/native-case.json": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-134059-1ce10761\\case\\native-case.json",
+      "sha256": "EBA13F212C2AA98457D5AB04907C1B7FA66EB2C94D825584E44BDB917AF40471"
+    },
+    "case/nonpersistent-control/gs-trace.jsonl": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-134059-1ce10761\\case\\nonpersistent-control\\gs-trace.jsonl",
+      "sha256": "436EFAB184212D35DB6892EEBA1C9B0FB7BE495678D7089AA37E4D01BC241B4D"
+    },
+    "case/lifecycle-1/gs-trace.jsonl": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-134059-1ce10761\\case\\lifecycle-1\\gs-trace.jsonl",
+      "sha256": "0B80CB25B1B1AF76235BD4DA1ED7B96A2FBF7BD7183CE904A1D7347487A3850E"
+    },
+    "case/nonpersistent-control/owned-resource-catalog.json": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-134059-1ce10761\\case\\nonpersistent-control\\owned-resource-catalog.json",
+      "sha256": "8DF37753099B1D827063C66F061E345CEEDC72EB13FFA540E911539C53D533FD"
+    },
+    "case/nonpersistent-kernel-model-control/owned-resource-catalog.json": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-134059-1ce10761\\case\\nonpersistent-kernel-model-control\\owned-resource-catalog.json",
+      "sha256": "504BB75716E17EF1E63A56167631A5C45BEC5C84727F4BD61FB2616A2FAA66C5"
+    },
+    "case/lifecycle-1/owned-resource-catalog.json": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-134059-1ce10761\\case\\lifecycle-1\\owned-resource-catalog.json",
+      "sha256": "FA11F7516110560D66C4B343D1BF4B851856A242E6C216E5B9E287167C02FA0C"
+    },
+    "reader-retirement.json": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-134059-1ce10761\\reader-retirement.json",
+      "sha256": "511958A1F139A2EE2FE4A53D77247CA27EAF1C4E2D05F1C42855D046B59111E9"
+    },
+    "isolation-final.json": {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-134059-1ce10761\\isolation-final.json",
+      "sha256": "50124AF1AF33E6643D48A0291AEB02EAD27A5CB549F108255C4742582F73D308"
+    }
+  },
+  "observed": {
+    "mainStatus": "failed",
+    "mainError": "GS produced no real owned WorldDraw callback",
+    "comparisonProtectionVerified": true,
+    "AandBUniqueIdsEach": 92,
+    "AandBReadPinsEach": 92,
+    "AandBSuccessfulClosesEach": 92,
+    "closeErrors": 0,
+    "fault1Factory": "kernel.createModel",
+    "fault1ExpectedInjectionReached": true,
+    "fault1CacheCleanupPassed": true,
+    "fault1ReadPinsAndCloses": 92,
+    "BproviderInstalled": true,
+    "BactualInvocation": "not-called",
+    "BactualGetCalls": 0,
+    "BactualReleaseCalls": 0,
+    "BmatchedGetReturns": 0,
+    "BmatchedReleaseReturns": 0,
+    "BdynamicResourceMatchObserved": false,
+    "actualRequestedResourceRole": null,
+    "actualDrawableReturnBranchCovered": false,
+    "mainAandBWorldDrawCalls": 0,
+    "RGBObserved": false,
+    "ambientDbmodBefore": 1,
+    "ambientDbmodAfter": 1,
+    "ambientWriteEvents": 0,
+    "workerExitCode": 70,
+    "forcedTermination": true,
+    "normalQuit": false,
+    "retiredFiles": 4,
+    "protectedInputs": 6,
+    "ownedShowEvents": 0,
+    "ownedForegroundEvents": 0,
+    "relatedCadEventsNeedReview": false
+  },
+  "traceLocationsOneBased": {
+    "A": {
+      "ready": 99,
+      "modelDelete": [
+        170,
+        171
+      ],
+      "cacheCloseItems": [
+        173,
+        264
+      ],
+      "cacheCloseEnd": 265,
+      "dbDelete": [
+        272,
+        273
+      ],
+      "resourcesReleased": 276
+    },
+    "B": {
+      "ready": 99,
+      "modelCreate": [
+        102,
+        103
+      ],
+      "modelDelete": [
+        172,
+        173
+      ],
+      "providerWithdrawn": 174,
+      "cacheCloseItems": [
+        176,
+        267
+      ],
+      "cacheCloseEnd": 268,
+      "dbDelete": [
+        275,
+        276
+      ],
+      "resourcesReleased": 279
+    },
+    "fault1": {
+      "ready": 98,
+      "modelCreate": [
+        101,
+        102
+      ],
+      "modelDelete": [
+        124,
+        125
+      ],
+      "providerWithdrawn": 126,
+      "cacheCloseItems": [
+        128,
+        219
+      ],
+      "cacheCloseEnd": 220,
+      "dbDelete": [
+        225,
+        226
+      ],
+      "resourcesReleased": 229
+    }
+  },
+  "limits": [
+    "No actual get/release means dynamic role identification, drawable return, and release behavior are not tested.",
+    "v24 request did not recur after common setup/cache timing changed; provider-only causation and solved root cause are not established.",
+    "92 pinned public owned objects is a finite enumerated scope, not every GS resource.",
+    "Normal and generic fault1 exercised successful close lifecycle; unknown get/release, underflow, and close-failure runtime branches remain uncovered.",
+    "diagnosticOnly=true and qualification=false; original main failed, no text/RGB/glyph/BUILD capability."
+  ]
+}

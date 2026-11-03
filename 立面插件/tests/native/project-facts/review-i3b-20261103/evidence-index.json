@@ -1,0 +1,215 @@
+{
+  "contract": "bce.i3b-evidence-index.v1",
+  "scope": "Entire I3b addition only: six newly added files; read-only dependency inspection may confirm contracts, but do not re-review/re-run approved I3a/I2/GS/core matrices.",
+  "frozenSourceAndCopyMismatches": [],
+  "businessGreen": {
+    "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-145021-1b7be28c",
+    "steps": 32,
+    "passed": 32,
+    "errors": [],
+    "checkpoints": 11,
+    "readOnlyIntervals": 9,
+    "allIntervalDBMOD": [
+      1,
+      1
+    ],
+    "fixtureEditEvents": 4,
+    "actualDocumentSwitchCovered": false,
+    "relatedReview": true,
+    "relatedPid": 35036,
+    "relatedEventCounts": {
+      "foreground": 4,
+      "create": 2,
+      "show": 6,
+      "hide": 6,
+      "destroy": 2
+    },
+    "workerExitCode": 70,
+    "explicitStop": true,
+    "forced": true,
+    "normalQuit": false,
+    "nativeQuit": false,
+    "retiredFiles": 4,
+    "protectedInputChecks": 6,
+    "ownShows": 0,
+    "ownForeground": 0,
+    "inputDesktopReadErrors": 0
+  },
+  "artifacts": [
+    {
+      "role": "receipt.json",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i3b-20261103-144226-082-green-39397c2a\\receipt.json",
+      "sha256": "C0AF93E4CECEB83CE645A716DA38ED627211FD23F0F99DC15E1E24D0C4DA9211"
+    },
+    {
+      "role": "green-freeze.json",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i3b-20261103-144226-082-green-39397c2a\\green-freeze.json",
+      "sha256": "E32364771DA7AFC680CCA8931467DBE1DC71212F777F9A5CC08F7608414AF44F"
+    },
+    {
+      "role": "ElevationProjectFactCases.arx",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i3b-20261103-144226-082-green-39397c2a\\out\\ElevationProjectFactCases.arx",
+      "sha256": "FC2D9320C3A7B741B3D25267A0D0A4E992E1158CCB5117AB0A7BB9CCA2D377E4"
+    },
+    {
+      "role": "receipt.json",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i3b-20261103-143611-167-red-fixture-fix-53ce8740\\receipt.json",
+      "sha256": "02201EA69ACA662445F089ADF78915A7FC82D6340F99DFF5B5BFB819C1961E50"
+    },
+    {
+      "role": "I3b-当前定义点读取报告.md",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\I3b-当前定义点读取报告.md",
+      "sha256": "BBAA6A0A990B6372CD48FBF3703FF01563ED1CD9576890702812A4C3CA7B7A1D"
+    },
+    {
+      "role": "scope-stat.json",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\project-facts\\review-i3b-20261103\\scope-stat.json",
+      "sha256": "B577760B1573B6D35C57C2E6F1BBCC8CC67C274B2EF95A11151EF384B0F413F4"
+    },
+    {
+      "role": "reviewInput",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\project-facts\\review-i3b-20261103\\01-initial-six-new-files.diff",
+      "sha256": "3026C6662AC6C68EAA41BF87A5CBF0F315309BD084F17551FA2377D06E46B719"
+    },
+    {
+      "role": "reviewInput",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\project-facts\\review-i3b-20261103\\02-fixture-legality-fix.diff",
+      "sha256": "81AE25C0A4E9CEF59A698A6FB49E46B9ECD35E6BE60022E2289B25A26FD7CF75"
+    },
+    {
+      "role": "reviewInput",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\project-facts\\review-i3b-20261103\\03-reader-green-vs-valid-red.diff",
+      "sha256": "9D6AA11A316B662F9B7771AC561ECED44854C93112EE8F52FA3EC175B94957E8"
+    },
+    {
+      "role": "reviewInput",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\project-facts\\review-i3b-20261103\\04-current-six-new-files-complete.diff",
+      "sha256": "D1AC124463E0A47718CE048294146D0918188F28BD1DF9A33C152592F62BDDD6"
+    },
+    {
+      "role": "reviewInput",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\project-facts\\review-i3b-20261103\\current\\src\\ProjectFactsReader.cpp",
+      "sha256": "4D676610A668590CC10D6EAC7FC3B441E91F0823E48B4CA44196EC495DBED9B7"
+    },
+    {
+      "role": "reviewInput",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\project-facts\\review-i3b-20261103\\current\\src\\ProjectFactsReader.h",
+      "sha256": "5FC330E5C1E2D2CC6DB3FAD5462C5FCB93CD2DB9CAA3FD72289AE65B6968D51B"
+    },
+    {
+      "role": "reviewInput",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\project-facts\\review-i3b-20261103\\current\\tools\\build_project_facts_reader.ps1",
+      "sha256": "1B3EE1A721D5E79AA770F543B97848709369B09D9026AEF8E8D32FA16FD76861"
+    },
+    {
+      "role": "reviewInput",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\project-facts\\review-i3b-20261103\\current\\tests\\native\\project-facts\\ElevationProjectFactCases.vcxproj",
+      "sha256": "22D38DC09F616D734D4A7C7F20687FDD40A3BE2413832A0837AD9ED917D5920A"
+    },
+    {
+      "role": "reviewInput",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\project-facts\\review-i3b-20261103\\current\\tests\\native\\project-facts\\ProjectFactsDriver.cpp",
+      "sha256": "B1C57508CEA3C8F254EAE1E01EBE9FF5A0558FD01AE612EF2DC2C5547D53373F"
+    },
+    {
+      "role": "reviewInput",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\project-facts\\review-i3b-20261103\\current\\tests\\native\\project-facts\\ProjectFactsFixture.h",
+      "sha256": "164D139C45DE8F4AF3375EE5D6FAA772744520E2D8F7F97F1E369209DA93250B"
+    },
+    {
+      "role": "fixtureFailure:reader-retirement.json",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-143315-5e06e911\\reader-retirement.json",
+      "sha256": "C13C0C4A3B5378F8D8DCEBC684F4F3F9A91F92F4C642B3E88A43C52B5E9AA78F"
+    },
+    {
+      "role": "fixtureFailure:isolation-final.json",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-143315-5e06e911\\isolation-final.json",
+      "sha256": "8C10A16D342AAA77D037197F05765074C81E62961177047F1494B55ADE5A23B8"
+    },
+    {
+      "role": "fixtureFailure:case/native-case.json",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-143315-5e06e911\\case\\native-case.json",
+      "sha256": "B59166C24899B7C3AF81321F281716386D4EE019F24181FCBFFE8F5C367167DD"
+    },
+    {
+      "role": "fixtureFailure:native-result-closure.json",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-143315-5e06e911\\native-result-closure.json",
+      "sha256": "C77FE9F6EEF6B76F337EA0A96713253A37A497742A61E45516CE8CD45D3B6F57"
+    },
+    {
+      "role": "businessRed:reader-retirement.json",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-143743-07a2fef5\\reader-retirement.json",
+      "sha256": "775EAB02A2BCB365F05D82E6E74864B53B88398584953E3A231C2B33850F6290"
+    },
+    {
+      "role": "businessRed:isolation-final.json",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-143743-07a2fef5\\isolation-final.json",
+      "sha256": "63C3659832EC322B97F8EF499CD4C839EB37F1413CC772E1A8EFEC09D45B6830"
+    },
+    {
+      "role": "businessRed:case/native-case.json",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-143743-07a2fef5\\case\\native-case.json",
+      "sha256": "1CD10D12751D074E5C0F99CE3CC4A8CDAFBC1C0DA2D8392AFC0C166B85B98303"
+    },
+    {
+      "role": "businessRed:native-result-closure.json",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-143743-07a2fef5\\native-result-closure.json",
+      "sha256": "3BC3D30CDB847D6A7C6097E9A6F09179EF6ECDD3C933ED7D0082006F79205604"
+    },
+    {
+      "role": "preReadyInfra:reader-retirement.json",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-144536-c3c34ac9\\reader-retirement.json",
+      "sha256": "22001E6C83B1A9AC202D00C0EFB9FCCCB64BDD80A91EBD453222765EF32BCD55"
+    },
+    {
+      "role": "preReadyInfra:isolation-final.json",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-144536-c3c34ac9\\isolation-final.json",
+      "sha256": "2745C161574AB7356A45FD78747682A124DB20BCCF48421CED49D2BCF5426F80"
+    },
+    {
+      "role": "preReadyInfra:pre-ready-infra-closure-audit.json",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-144536-c3c34ac9\\pre-ready-infra-closure-audit.json",
+      "sha256": "BB1FD1CB96ADC29B7B1AB5E6222D1BAF44412C819EAF947DA23D338CD7B7E6BB"
+    },
+    {
+      "role": "preReadyInfra:supervisor-stdout.log",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-144536-c3c34ac9\\supervisor-stdout.log",
+      "sha256": "B1BE6ED580FD8C3922E97D66047E47114FE05B7C0CAF6F3562BCE53141677ECF"
+    },
+    {
+      "role": "preReadyInfra:supervisor-stderr.log",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-144536-c3c34ac9\\supervisor-stderr.log",
+      "sha256": "BE2A813C5E264E6E4B05C9816B17DC6EB039A1CC247767C8927D259FA5541E12"
+    },
+    {
+      "role": "preReadyInfra:isolation-host-heartbeat.json",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-144536-c3c34ac9\\isolation-host-heartbeat.json",
+      "sha256": "B422FA809A293E023293A5EB8C1AAC633D9645B6CF8E911294EDADAF1A4BBDE4"
+    },
+    {
+      "role": "businessGreen:reader-retirement.json",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-145021-1b7be28c\\reader-retirement.json",
+      "sha256": "8D74CDB677FB32256FCF7AE65FA7C5D5ABDB9B286B97BF88DA5464BE489A71D5"
+    },
+    {
+      "role": "businessGreen:isolation-final.json",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-145021-1b7be28c\\isolation-final.json",
+      "sha256": "17ED5863C61416B0548CAF77222328CC4EC0778745F90E402A490E8FF312138F"
+    },
+    {
+      "role": "businessGreen:case/native-case.json",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-145021-1b7be28c\\case\\native-case.json",
+      "sha256": "3DC1028889F2309EFA94695D314496AED476253EBFC4E433EAB8DEEF0FFC60B4"
+    },
+    {
+      "role": "businessGreen:native-result-closure.json",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-145021-1b7be28c\\native-result-closure.json",
+      "sha256": "02D36EF375129360EBC2103FA1054FA969F0A975CBF25FC03E4A7EB5508B81FE"
+    },
+    {
+      "role": "businessGreen:isolation-related-cad-events.jsonl",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-145021-1b7be28c\\isolation-related-cad-events.jsonl",
+      "sha256": "0471D4610FF93DDD54D1AEA1A7756211011D42031D032602C3D501F2C1A33C89"
+    }
+  ]
+}

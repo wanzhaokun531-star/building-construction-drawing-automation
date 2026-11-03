@@ -1,0 +1,55 @@
+{
+  "version": "v168",
+  "job": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-195749",
+  "steps": [
+    {
+      "serial": "829d02ffff3b4ce5bef063a7179f40b0",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-195749\\dispatch_829d02ffff3b4ce5bef063a7179f40b0.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "f05371f8a9a049b4afa0f06a6846e4ad",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-195749",
+        "processId": 49648,
+        "desktop": "CodexS1_f05371f8a9a049b4afa0f06a6846e4ad",
+        "inputDesktop": "Default",
+        "serial": "829d02ffff3b4ce5bef063a7179f40b0",
+        "command": "S1OPENPROBECONTROL",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-195749",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-195749\\control.dwg",
+        "error": null
+      }
+    },
+    {
+      "serial": "431f890b8c924fc889232145d200e69e",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-195749\\dispatch_431f890b8c924fc889232145d200e69e.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "f05371f8a9a049b4afa0f06a6846e4ad",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-195749",
+        "processId": 49648,
+        "desktop": "CodexS1_f05371f8a9a049b4afa0f06a6846e4ad",
+        "inputDesktop": "Default",
+        "serial": "431f890b8c924fc889232145d200e69e",
+        "command": "S1PHASE2EXECUTE",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-195749",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-195749\\插件生成施工图_一层_生成记录_49648_605182343\\过程\\join\\control.dwg",
+        "error": null
+      }
+    }
+  ],
+  "error": "AssertionError({'contract': 'bcp.product-result.v1', 'version': '0.1.3', 'completed': False, 'error': 'native axis lead cannot be positioned without moving circle'})"
+}

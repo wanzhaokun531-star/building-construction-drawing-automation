@@ -1,0 +1,69 @@
+{
+  "scope": [
+    "src/ProjectFacts.h",
+    "src/ProjectFacts.cpp",
+    "tests/ProjectFactsTests.cpp",
+    "tests/CoreTests.cpp",
+    "tests/ElevationCoreTests.vcxproj",
+    "tools/build.ps1"
+  ],
+  "addedFiles": [
+    "src/ProjectFacts.h",
+    "src/ProjectFacts.cpp",
+    "tests/ProjectFactsTests.cpp"
+  ],
+  "modifiedExistingFiles": [
+    "tests/CoreTests.cpp",
+    "tests/ElevationCoreTests.vcxproj",
+    "tools/build.ps1"
+  ],
+  "runs": [
+    {
+      "label": "red-initial",
+      "originalBuildRoot": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\f1-20261103-140649-139-I3a-red-9cfd2cfc",
+      "frozenPath": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\I3a-evidence-20261103-140525\\red-initial",
+      "buildExitCode": 0,
+      "testExitCode": 1,
+      "unknownCaseExitCode": 2
+    },
+    {
+      "label": "red-multitext",
+      "originalBuildRoot": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\f1-20261103-140738-328-I3a-red-multitext-c37b93cf",
+      "frozenPath": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\I3a-evidence-20261103-140525\\red-multitext",
+      "buildExitCode": 0,
+      "testExitCode": 1,
+      "unknownCaseExitCode": 2
+    },
+    {
+      "label": "green",
+      "originalBuildRoot": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\f1-20261103-140841-370-I3a-green-b4b2b11f",
+      "frozenPath": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\I3a-evidence-20261103-140525\\green",
+      "buildExitCode": 0,
+      "testExitCode": 0,
+      "unknownCaseExitCode": 2
+    },
+    {
+      "label": "red-revision0",
+      "originalBuildRoot": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\f1-20261103-141115-780-I3a-red-revision0-4c1d5594",
+      "frozenPath": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\I3a-evidence-20261103-140525\\red-revision0",
+      "buildExitCode": 0,
+      "testExitCode": 1,
+      "unknownCaseExitCode": 2
+    },
+    {
+      "label": "final-green",
+      "originalBuildRoot": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\f1-20261103-141138-274-I3a-final-green-18fa9522",
+      "frozenPath": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\I3a-evidence-20261103-140525\\final-green",
+      "buildExitCode": 0,
+      "testExitCode": 0,
+      "unknownCaseExitCode": 2
+    }
+  ],
+  "selfReview": {
+    "requiredLocalIncludesMissing": [],
+    "generationHeadersOrCallsInCore": false,
+    "SDKOrCADOperations": false,
+    "revisionZeroRejected": true
+  },
+  "finalRun": "final-green"
+}

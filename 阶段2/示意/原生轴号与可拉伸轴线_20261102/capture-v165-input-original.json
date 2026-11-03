@@ -1,0 +1,60 @@
+{
+  "version": "v165",
+  "tag": "input-original",
+  "source": "D:\\方案施工图.dwg",
+  "SHA256": "FD1F766C52E1D870F39D2C643857FD0A4EDE244837B1B2B62631F8EE69F44628",
+  "job": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-192909-237004-input-original",
+  "PDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-192909-237004-input-original\\stage2-A2-1-100.pdf",
+  "steps": [
+    {
+      "serial": "ae9cc5f356e049f0ad0e08d494b2dcb0",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-192810\\dispatch_ae9cc5f356e049f0ad0e08d494b2dcb0.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "e79d63786b38456c803fea7ee49ca2dd",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-192810",
+        "processId": 32180,
+        "desktop": "CodexS1_e79d63786b38456c803fea7ee49ca2dd",
+        "inputDesktop": "Default",
+        "serial": "ae9cc5f356e049f0ad0e08d494b2dcb0",
+        "command": "S1OPENPROBECONTROL",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-192909-237004-input-original",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-192909-237004-input-original\\control.dwg",
+        "error": null
+      }
+    },
+    {
+      "serial": "3062735670c346fa9e78e8a78c36c832",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-192810\\dispatch_3062735670c346fa9e78e8a78c36c832.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "e79d63786b38456c803fea7ee49ca2dd",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-192810",
+        "processId": 32180,
+        "desktop": "CodexS1_e79d63786b38456c803fea7ee49ca2dd",
+        "inputDesktop": "Default",
+        "serial": "3062735670c346fa9e78e8a78c36c832",
+        "command": "S1PHASE2PREVIEW",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-192909-237004-input-original",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-preview-direct-axes-20261102-192909-237004-input-original\\control.dwg",
+        "error": null
+      }
+    }
+  ],
+  "readOnly": true,
+  "rootCount": 257
+}

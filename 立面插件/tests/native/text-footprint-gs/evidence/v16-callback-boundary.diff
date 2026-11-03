@@ -1,0 +1,18 @@
+--- v16-first/NativeGsTextFootprint.cpp
++++ v16-final/NativeGsTextFootprint.cpp
+@@ -128,13 +128,13 @@
+ std::vector<std::unique_ptr<Session>> lifecycleSessions;
+ std::vector<std::unique_ptr<Session>> diagnosticSessions;
+ AcGiDrawable* graphRoot(Session& s){return s.positiveControl?static_cast<AcGiDrawable*>(s.primitive.get()):static_cast<AcGiDrawable*>(s.sceneRoot.get());}
+-Adesk::UInt32 PrimitiveRoot::subSetAttributes(AcGiDrawableTraits*){++s.attributeCalls;if(s.attributeCalls<=64)s.log("nonpersistent.subSetAttributes",{{"flags",std::to_string(kDrawableNone)},{"diagnosticOnly","true"}});return kDrawableNone;}
++Adesk::UInt32 PrimitiveRoot::subSetAttributes(AcGiDrawableTraits*){++s.attributeCalls;if(s.attributeCalls<=64){try{s.log("nonpersistent.subSetAttributes",{{"flags",std::to_string(kDrawableNone)},{"diagnosticOnly","true"}});}catch(...){s.callbackError="nonpersistent setAttributes observation log failed";}}return kDrawableNone;}
+ Adesk::Boolean PrimitiveRoot::subWorldDraw(AcGiWorldDraw* wd){
+     ++s.callbacks;++s.frameCallbacks;try{s.log("nonpersistent.realSubWorldDraw",{{"diagnosticOnly","true"},{"qualification","false"},{"isPersistent","false"},{"objectId","null"},{"context",address(wd?wd->context():nullptr)},{"contextDatabase",address(wd&&wd->context()?wd->context()->database():nullptr)},{"ownedDatabaseForComparisonOnly",address(s.db.get())},{"regenType",wd?std::to_string(wd->regenType()):"null"},{"sideDbSuccessClaimed","false"}});
+         require(wd!=nullptr,"nonpersistent GS callback has null WorldDraw");require(s.callbacks<=64,"nonpersistent callback budget");drawCalibration(*wd);
+     }catch(const std::exception& e){s.callbackError=e.what();}catch(...){s.callbackError="nonpersistent callback unknown exception";}return Adesk::kTrue;
+ }
+-void PrimitiveRoot::subViewportDraw(AcGiViewportDraw*){++s.viewportCalls;if(s.viewportCalls<=64)s.log("nonpersistent.subViewportDraw",{{"diagnosticOnly","true"}});}
++void PrimitiveRoot::subViewportDraw(AcGiViewportDraw*){++s.viewportCalls;if(s.viewportCalls<=64){try{s.log("nonpersistent.subViewportDraw",{{"diagnosticOnly","true"}});}catch(...){s.callbackError="nonpersistent viewportDraw observation log failed";}}}
+ int dbmod(){resbuf value{};require(acedGetVar(L"DBMOD",&value)==RTNORM&&value.restype==RTSHORT,"DBMOD read failed");return value.resval.rint;}
+ std::string variant(const AcGiVariant& v){
+     std::string value;

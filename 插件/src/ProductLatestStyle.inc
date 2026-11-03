@@ -1,0 +1,25 @@
+// Latest user-wide presentation rules; applied only to the owned output copy.
+void productLatestStyle(AcDbDatabase& db){
+ Working work(&db);AcDbObjectId pub;
+ {auto layers=open<AcDbLayerTable>(db.layerTableId());if(layers->getAt(L"PUB_DIM",pub)!=Acad::eOk){layers.reset();auto table=editObject<AcDbLayerTable>(db.layerTableId());auto layer=std::make_unique<AcDbLayerTableRecord>();productStatus(layer->setName(L"PUB_DIM"),"new PUB_DIM layer");productStatus(table->add(pub,layer.get()),"add PUB_DIM layer");layer.release()->close();}else layers.reset();auto layer=editObject<AcDbLayerTableRecord>(pub);AcCmColor color;color.setColorIndex(25);layer->setColor(color);require(layer->color().colorIndex()==25,"PUB_DIM colour25");}
+ std::vector<AcDbObjectId> masks,dimensions;
+ {auto table=open<AcDbBlockTable>(db.blockTableId());AcDbBlockTableIterator* raw{};productStatus(table->newIterator(raw),"scan output block definitions");std::unique_ptr<AcDbBlockTableIterator> blocks(raw);
+  for(;!blocks->done();blocks->step()){AcDbObjectId id;productStatus(blocks->getRecordId(id),"output block id");auto record=open<AcDbBlockTableRecord>(id);if(record->isFromExternalReference())continue;AcDbBlockTableRecordIterator* iraw{};productStatus(record->newIterator(iraw),"output entity iterator");std::unique_ptr<AcDbBlockTableRecordIterator> entities(iraw);for(;!entities->done();entities->step()){AcDbObjectId entityId;productStatus(entities->getEntityId(entityId),"output entity id");auto e=open<AcDbEntity>(entityId);if(AcDbWipeout::cast(e.get()))masks.push_back(entityId);else if(id==modelId(db)&&std::wstring(e->isA()->name())==L"TDbDimension2")dimensions.push_back(entityId);}}
+ }
+ std::set<AcDbObjectId> maskBlocks;
+ for(auto id:masks){auto e=editObject<AcDbEntity>(id);maskBlocks.insert(e->ownerId());productStatus(e->erase(),"remove prohibited region coverage");}
+ // Old label backgrounds were one-WIPEOUT block definitions. Remove their
+ // now-empty references as well; keeping stale block extents is not geometry.
+ for(auto blockId:maskBlocks){if(blockId==modelId(db))continue;auto block=open<AcDbBlockTableRecord>(blockId);AcDbBlockTableRecordIterator* raw{};productStatus(block->newIterator(raw),"remaining background block entities");std::unique_ptr<AcDbBlockTableRecordIterator> it(raw);const bool empty=it->done();AcDbObjectIdArray refs;productStatus(block->getBlockReferenceIds(refs,true,true),"background block references");block.reset();for(int k=0;k<refs.length();++k){auto ref=editObject<AcDbEntity>(refs[k]);if(empty)productStatus(ref->erase(),"remove empty background carrier");else ref->recordGraphicsModified(true);}}
+ dimensions.erase(std::remove_if(dimensions.begin(),dimensions.end(),[&](AcDbObjectId id){auto e=open<AcDbEntity>(id);auto layer=open<AcDbLayerTableRecord>(e->layerId());return e->visibility()!=AcDb::kVisible||layer->isOff()||layer->isFrozen();}),dimensions.end());
+ for(auto id:dimensions){bool legacyLayer=false;{auto e=open<AcDbEntity>(id);legacyLayer=symbolName(e->layerId())==L"A-PUB_DIM";}if(legacyLayer){auto e=editObject<AcDbEntity>(id);productStatus(e->setLayer(pub),"unify third and interior dimension layer");}}
+ if(masks.empty())return;
+ AcDbExtents envelope;bool hasWall=false;for(const auto& item:modelTypes(db))if(item.second==L"TDbWall"){auto e=open<AcDbEntity>(find(db,ascii(item.first)));AcDbExtents box;productStatus(e->getGeomExtents(box),"wall envelope for unmasked witnesses");if(hasWall)envelope.addExt(box);else{envelope=box;hasWall=true;}}
+ if(!hasWall)return;
+ for(auto id:dimensions){const auto p=chainGrips(id);const auto values=chainValues(id);const auto n=values.size();if(p.size()!=2*n+6)continue;const bool vertical=std::abs(p[0].x-p[1].x)<1e-5;double normal=0;bool outside=false;
+  if(vertical&&p[0].x<envelope.minPoint().x){normal=envelope.minPoint().x-1000;outside=true;}else if(vertical&&p[0].x>envelope.maxPoint().x){normal=envelope.maxPoint().x+1000;outside=true;}else if(!vertical&&p[0].y<envelope.minPoint().y){normal=envelope.minPoint().y-1000;outside=true;}else if(!vertical&&p[0].y>envelope.maxPoint().y){normal=envelope.maxPoint().y+1000;outside=true;}
+  if(!outside)continue;double gap;{auto e=open<AcDbEntity>(id);TemplateParts parts(e.get());productStatus(e->explode(parts.values),"public witness display offset");require(parts.values.length()>0,"native dimension display missing");auto* d=AcDbAlignedDimension::cast(static_cast<AcRxObject*>(parts.values[0]));require(d!=nullptr,"native dimension display type");gap=d->dimexo()*d->dimscale();}
+  const double baseline=vertical?p[0].x:p[0].y;const double datum=normal-(baseline>normal?gap:-gap);
+  for(std::size_t k=2;k<=n+2;++k){auto target=p[k];if(vertical)target.x=datum;else target.y=datum;moveDimensionGrip(id,static_cast<int>(k),target);}moveDimensionGrip(id,0,p[0]);for(std::size_t k=n+3;k<2*n+3;++k)moveDimensionGrip(id,static_cast<int>(k),p[k]);const auto actual=chainValues(id);require(actual.size()==values.size(),"unmasked dimension segment count");for(std::size_t k=0;k<n;++k)require(std::abs(actual[k]-values[k])<1e-5,"unmasking changed measured value");
+ }
+}

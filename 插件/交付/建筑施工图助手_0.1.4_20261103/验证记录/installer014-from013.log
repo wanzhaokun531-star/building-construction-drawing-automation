@@ -1,0 +1,14 @@
+test_011_can_upgrade_directly_with_complete_backup (__main__.SetupTests.test_011_can_upgrade_directly_with_complete_backup) ... ok
+test_built_native_installer_exists (__main__.SetupTests.test_built_native_installer_exists) ... ok
+test_different_existing_install_not_overwritten (__main__.SetupTests.test_different_existing_install_not_overwritten) ... ok
+test_failed_011_upgrade_restores_every_file (__main__.SetupTests.test_failed_011_upgrade_restores_every_file) ... ok
+test_failed_upgrade_restores_original (__main__.SetupTests.test_failed_upgrade_restores_original) ... ok
+test_install_and_repeat_preserve_payload (__main__.SetupTests.test_install_and_repeat_preserve_payload) ... ok
+test_modified_or_extra_011_files_are_preserved (__main__.SetupTests.test_modified_or_extra_011_files_are_preserved) ... ok
+test_test_mode_requires_owned_marker (__main__.SetupTests.test_test_mode_requires_owned_marker) ... ok
+test_verified_old_version_is_backed_up_before_upgrade (__main__.SetupTests.test_verified_old_version_is_backed_up_before_upgrade) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.920s
+
+OK

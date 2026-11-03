@@ -1,0 +1,12 @@
+  BuildingPlanPlugin2020.cpp
+c:\autodesk\objectarx_for_autocad_2020_win_64_bit\inc\acstring.h(1073): warning C4828: 文件包含在偏移 0xe0d7 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。 [D:\Codex\建筑施工图自动化\插件\src\BuildingPlanPlugin2020.vcxproj]
+  PluginPolicy.cpp
+  ProductDiagnostics.cpp
+  PlanRules.cpp
+  GroupEndpoints.cpp
+  WallTopology.cpp
+  ApronGeometry.cpp
+  正在生成代码...
+    正在创建库 D:\Codex\建筑施工图自动化\插件\build\candidate-015\BuildingPlanPlugin2020.lib 和对象 D:\Codex\建筑施工图自动化\插件\build\candidate-015\BuildingPlanPlugin2020.exp
+rxapi.lib(libinit.obj) : warning LNK4099: 未找到 PDB“rxapi.pdb”(使用“rxapi.lib(libinit.obj)”或在“D:\Codex\建筑施工图自动化\插件\build\candidate-015\rxapi.pdb”中寻找)；正在链接对象，如同没有调试信息一样 [D:\Codex\建筑施工图自动化\插件\src\BuildingPlanPlugin2020.vcxproj]
+  BuildingPlanPlugin2020.vcxproj -> D:\Codex\建筑施工图自动化\插件\build\candidate-015\BuildingPlanPlugin2020.arx

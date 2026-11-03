@@ -1,0 +1,31 @@
+{"current":2957151957040,"active":2957151957040,"workingDatabase":2957160404176,"dbmod":1,"event":"ambient.before"}
+{"type":"AcDbBlockTableRecord modelspace","rootOldId":2957357551360,"rootDatabase":2957362010144,"markerOldId":2957357541376,"children":1,"event":"ownedSceneRoot"}
+{"requirement":"k3DDrawing","capabilityAddress":2957536448064,"descriptorRequires3D":true,"event":"acquireGraphicsKernel.before"}
+{"kernel":2957120899168,"compatibleWith3D":true,"compatibleWith2D":false,"event":"acquireGraphicsKernel.after"}
+{"targetDatabase":2957362010144,"model":2957120927632,"priorModel":0,"readBackModel":2957120927632,"route":"manager.createAutoCADModel + kernel.associate; real context checked separately","event":"ownedModelBinding"}
+{"factory":"kernel.createOffScreenDevice/deleteDevice","device":2957120928512,"deviceKernel":2957120899168,"expectedKernel":2957120899168,"rendererOriginal":0,"event":"ownedDeviceFactory"}
+{"old":0,"requested":1,"viewExists":false,"scope":"this owned device only","event":"ownedDeviceRenderer.before"}
+{"old":0,"requested":1,"actual":0,"matches":false,"event":"ownedDeviceRenderer.after"}
+{"message":"owned software device renderer readback mismatch","event":"execute.cppException.beforeCleanup"}
+{"faultPoint":3,"view":0,"marker":2957362014688,"model":2957120927632,"device":2957120928512,"kernel":2957120899168,"database":2957362010144,"ruleAttached":false,"event":"cleanup.enter"}
+{"event":"rule.reset.before"}
+{"event":"rule.reset.after"}
+{"event":"sceneRoot.close.before"}
+{"event":"sceneRoot.close.after"}
+{"event":"marker.close.before"}
+{"event":"marker.close.after"}
+{"event":"restoreOwnedDatabaseAssociation.before"}
+{"event":"restoreOwnedDatabaseAssociation.after"}
+{"event":"restoredAssociation.find.before"}
+{"matches":true,"event":"restoredAssociation.find.after"}
+{"event":"destroyAutoCADModel.before"}
+{"event":"destroyAutoCADModel.after"}
+{"event":"kernel.deleteDevice.before"}
+{"event":"kernel.deleteDevice.after"}
+{"event":"releaseGraphicsKernel.before"}
+{"event":"releaseGraphicsKernel.after"}
+{"event":"destroyOwnedDatabase.before"}
+{"event":"destroyOwnedDatabase.after"}
+{"event":"ambient.removeReactor.before"}
+{"event":"ambient.removeReactor.after"}
+{"resourcesReleased":true,"event":"cleanup.return"}

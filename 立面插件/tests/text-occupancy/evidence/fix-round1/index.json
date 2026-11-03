@@ -1,0 +1,97 @@
+{
+  "task": "N9b fix round1/5",
+  "review": {
+    "path": "执行/N9b-full-task-review-20261103.md",
+    "sha256": "999EBE8ABE8C3C373C7A4D5C4ED1CF5615A65FD2C3ED7EC9CC694F541EF0C2B7"
+  },
+  "finding": "P2 reject rounded degenerate quadrilaterals before returning success",
+  "updatedReport": {
+    "path": "执行/N9b-文字坐标与实测占位报告.md",
+    "sha256": "27FBF4BA394725906BDEFECCF9E2E366AD2E2CCDD1998D2052FF045970D1350F"
+  },
+  "originalIndex": {
+    "path": "tests/text-occupancy/evidence/index.json",
+    "sha256": "84699A9F1FB718C195792D5E3C14C2805973658602578F8703F3F8D6401AE695"
+  },
+  "originalReportBackup": {
+    "path": "tests/text-occupancy/evidence/fix-round1/report-before-fix.md",
+    "sha256": "20CD14B99AFBDA1F9814AFC4E2C243FF38F7E87C1606E4111AD8E37755B913E5"
+  },
+  "originalReceipt": {
+    "path": "build/n9b-20261103-101858-736-delivery-b2a48216/receipt.json",
+    "sha256": "A8796C4C058B64ABFC1EBB5C5BBE995398D824B85CFECC54D8D332B288AFB104"
+  },
+  "scopedDiff": {
+    "path": "tests/text-occupancy/evidence/fix-round1/scoped.diff",
+    "sha256": "A477E939B37BC1AD152E7A25F98CB6C1C4B7683C1D9E0D80D2D628D1E019F52B"
+  },
+  "changedSourceFiles": [
+    {
+      "path": "src/TextOccupancy.cpp",
+      "beforeSHA256": "7EBDEBF6F188F0560D32411B3B3BB6E4C4E191DE26D30739A582DC63776142F0",
+      "afterSHA256": "28D106F22219C8CCD6C0FBC9A6C16EC48296177F6DD0A3D1252C3D9ECF5F3520"
+    },
+    {
+      "path": "tests/text-occupancy/TextOccupancyTests.cpp",
+      "beforeSHA256": "365B6C3625EB2684E0DFE25345B4067971EAB37CC5C6A6AA0C629DAEDB579580",
+      "afterSHA256": "23E0D1E50A1450EC0BC60CC963C3F73A422767680759C987CE54F10434BD585F"
+    }
+  ],
+  "red": {
+    "receipt": {
+      "path": "build/n9b-20261103-102838-575-fix1-red-d6246965/receipt.json",
+      "sha256": "5F71D6FE3AD0C945BFF61D8138D62F4012215023E5CA4C94340022F2747CA4CD"
+    },
+    "buildExitCode": 0,
+    "testExitCode": 1,
+    "tests": "11/13; both new behavior assertions failed",
+    "log": {
+      "path": "build/n9b-20261103-102838-575-fix1-red-d6246965/focused-tests.log",
+      "sha256": "B80331AA929C1B9039B3163AD4A7D4F14A18E3CDED68A4EEF19EA4929F307768"
+    }
+  },
+  "green": {
+    "receipt": {
+      "path": "build/n9b-20261103-102855-993-fix1-final-3a0f0c94/receipt.json",
+      "sha256": "8D884C0E68A6C170BCFA31D20EB8A6F6A20E52997C052A7D80B1EB265B79EF21"
+    },
+    "executable": {
+      "path": "build/n9b-20261103-102855-993-fix1-final-3a0f0c94/out/TextOccupancyAdapter.exe",
+      "sha256": "0F6FC9073D5DA1BB8F6342947FECAAB398F478751793E0E87C405BEBF5766966"
+    },
+    "buildExitCode": 0,
+    "testExitCode": 0,
+    "tests": "13/13 including representable large-coordinate controls",
+    "log": {
+      "path": "build/n9b-20261103-102855-993-fix1-final-3a0f0c94/focused-tests.log",
+      "sha256": "3FA04460DD7400A3851D0D89C7B8D59A8EBA8B9DC9F39A0CD3F31DC2C97B33E7"
+    }
+  },
+  "realRasters": {
+    "comparison": {
+      "path": "tests/text-occupancy/evidence/fix-round1/native-rasters-final/comparison.json",
+      "sha256": "E9D9AC6E1B8322355B42FD03E164DBBF600F2CCA558AF3782BAE7A8BA5614BA3"
+    },
+    "log": {
+      "path": "tests/text-occupancy/evidence/fix-round1/real-rasters-final.log",
+      "sha256": "A47B05F4584D31CA222778E167D44D27A0EAC9842DDFA900F9EC86F9F8830034"
+    },
+    "exitCode": 0,
+    "observations": "10/10",
+    "incorrectResultsRejected": "30/30",
+    "finalCandidateRuns": 1
+  },
+  "checks": {
+    "originalIndexUnchanged": true,
+    "reportBackupMatchesOriginalIndex": true,
+    "otherFrozenSourcesUnchanged": true,
+    "initialProtectedFilesUnchanged": 104,
+    "externalProgressUpdate": {
+      "path": "执行进度.md",
+      "sha256": "82FC4C7188CDD0497BB024E18AE732F297ECF56CCE3B0DA3C9B2737DDEE3F5A3",
+      "owner": "root confirmed normal ledger update after original protected-file audit; author did not modify"
+    },
+    "sourceEqualsFinalFrozenInput": true,
+    "receiptOutputsVerified": true
+  }
+}

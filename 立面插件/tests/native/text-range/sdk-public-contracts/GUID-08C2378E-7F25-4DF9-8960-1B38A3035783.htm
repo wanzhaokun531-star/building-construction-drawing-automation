@@ -1,0 +1,82 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso8859-1"><meta name="product" content="OARX"><meta name="book" content="Developer"><meta name="created" content="2018-12-31"><meta name="topicid" content="GUID-08C2378E-7F25-4DF9-8960-1B38A3035783"><meta name="indexterm" content="AcGi classes: text styles"><meta name="indexterm" content="text: using with AcGi"><meta name="indexterm" content="AcGiTextStyle class: loadStyleRec() function"><meta name="indexterm" content="loadStyleRec() function"><meta name="indexterm" content="AcGiTextStyle class: setTextSize() function"><meta name="indexterm" content="AcGiTextStyle class: setTrackingPercent() function"><meta name="indexterm" content="AcGiTextStyle class: setXScale() function"><meta name="indexterm" content="setTextSize() function"><meta name="indexterm" content="setTrackingPercent() function"><meta name="indexterm" content="setXScale() function"><meta name="indexterm" content="AcGiTextStyle class: extents() function"><meta name="indexterm" content="extents() function"><meta name="indexterm" content="examples: AcGi text"><meta name="indexterm" content="text: example"><meta name="topic-type" content="concept"><meta name="parent-id" content="GUID-29EA5972-F92E-43A2-810B-5F2930414D78"><title>Text</title><link rel="stylesheet" type="text/css" href="style/adsk.cpm.css"><script type="text/javascript" src="scripts/adsk.strings.js"></script><script type="text/javascript" src="scripts/adsk.common.js"></script></head><body><div class="head"><div class="head-block"><div class="nav-group"><!--browse buttons--><div class="browse"><nobr><!--No Additional browse buttons are defined--><div class="headNavLinkPrev"><div id="prevTitle" style="display:none">Polyline</div><a href="GUID-E1991062-955F-4B5B-87B6-B141DDF86FE3.htm" class="headNavLink" onmouseover="showInfo(document.getElementById('prevTitle').innerHTML);" onmouseout="hideInfo();"><img src="images/nav-prev-xp.gif" border="0"></a></div><div class="headNavLinkUp"><div id="parentTitle" style="display:none">Primitives</div><a href="GUID-29EA5972-F92E-43A2-810B-5F2930414D78.htm" class="headNavLink" onmouseover="showInfo(document.getElementById('parentTitle').innerHTML);" onmouseout="hideInfo();"><img src="images/nav-up-xp.gif" border="0"></a></div><div class="headNavLinkNext"><div id="nextTitle" style="display:none">Associating an AcDbTextStyleTableRecord with an AcGiTextStyle</div><a href="GUID-9728266A-2FA2-4D9E-92A9-B224C5E360EB.htm" class="headNavLink" onmouseover="showInfo(document.getElementById('nextTitle').innerHTML);" onmouseout="hideInfo();"><img src="images/nav-next-xp.gif" border="0"></a></div></nobr></div><!--end browse buttons--></div><div class="button-info"><span id="infoline">&nbsp;</span></div><div class="ancestry"><a href="topichead_0.htm">Autodesk ObjectARX for AutoCAD 2020: Developer's Guide</a>&nbsp;&gt;&nbsp;<a href="topichead_4.htm">ObjectARX Graphics, Geometry, and Boundary Representation Libraries</a>&nbsp;&gt;&nbsp;<a href="GUID-6FED7B82-D2C7-4932-AB72-78B530C1044E.htm">The Graphics Interface Library</a>&nbsp;&gt;&nbsp;<a href="GUID-29EA5972-F92E-43A2-810B-5F2930414D78.htm">Primitives</a>&nbsp;&gt;&nbsp;</div><div class="head-text"><span style="display:none"><a name="WS4B0506698C46277A100AB23105A303E39B-7FF5"></a></span><h1>Text</h1></div></div></div><div class="head-margin">&nbsp;</div><div style="line-height: 0pt">&nbsp;</div><div class="head-margin">&nbsp;</div><div class="body_content"><span style="display:none"><a name="GUID-08C2378E-7F25-4DF9-8960-1B38A3035783"></a></span><!--Body--><p><span style="display:none"><a name="WSFACF1429558A55DE8821C21057FBEBC2B-3125"></a></span>  The example in this section shows use of the <span class="code">AcGiTextStyle</span> class. It draws a rectangle around a piece of AcGi text that can be oriented and located anywhere in space.</p><p><span style="display:none"><a name="WSFACF1429558A55DE8821C21057FBEBC2B-3124"></a></span>The normal and direction vectors of the text must be perpendicular to each other. If you're unsure of the directions, consider the direction to be along the <em class="mild">X</em> axis and the normal along the <em class="mild">Z</em> axis in a right-handed coordinate system. Calculate the <em class="mild">Y</em> axis from these. Then the cross product of the <em class="mild">Y</em> axis to <em class="mild">Z</em> axis will give you the normal plane's interpretation of the direction. Be sure that the direction is not aligned with the normal, or you will not have a direction with respect to the normal.</p><p><span style="display:none"><a name="WSFACF1429558A55DE8821C21057FBEBC2B-3123"></a></span>  The <span class="code">AcGiTextStyle::loadStyleRec()</span> function loads a font if it is not already loaded. (This function does not load an ACAD STYLE.) Its return values are as follows:</p><span style="display:none"><a name="WS1A9193826455F5FF-3859B43C1209703A8384362"></a></span><dl><span style="display:none"><a name="WS1A9193826455F5FF44C205DF11D7D1722DF-7E3F"></a></span><dt><span class="term"><span style="display:none"><a name="WSFACF1429558A55DE8821C21057FBEBC2B-316C"></a></span>0x10</span></dt><dd><div class="definition"><span style="display:none"><a name="GUID-2B292C4F-DE3B-4587-BA7A-824260A8B841"></a></span> <p><span style="display:none"><a name="WSFACF1429558A55DE8821C21057FBEBC2B-3122"></a></span>Another file (not FONTALT) opened in place of -BigFont file name</p> </div></dd><span style="display:none"><a name="WS1A9193826455F5FF44C205DF11D7D1722DF-7E3E"></a></span><dt><span class="term"><span style="display:none"><a name="WSFACF1429558A55DE8821C21057FBEBC2B-316B"></a></span>0x08</span></dt><dd><div class="definition"><span style="display:none"><a name="GUID-38ABABC7-E9AA-45C2-AC7F-CC4769173223"></a></span> <p><span style="display:none"><a name="WSFACF1429558A55DE8821C21057FBEBC2B-3121"></a></span>Another file (not FONTALT) opened in place of file name</p> </div></dd><span style="display:none"><a name="WS1A9193826455F5FF44C205DF11D7D1722DF-7E3D"></a></span><dt><span class="term"><span style="display:none"><a name="WSFACF1429558A55DE8821C21057FBEBC2B-316A"></a></span>0x04</span></dt><dd><div class="definition"><span style="display:none"><a name="GUID-2C52A726-6FD2-4A24-967B-A959D09C5056"></a></span> <p><span style="display:none"><a name="WSFACF1429558A55DE8821C21057FBEBC2B-3120"></a></span>BigFont file name failed to be loaded</p> </div></dd><span style="display:none"><a name="WS1A9193826455F5FF44C205DF11D7D1722DF-7E3C"></a></span><dt><span class="term"><span style="display:none"><a name="WSFACF1429558A55DE8821C21057FBEBC2B-3169"></a></span>0x02</span></dt><dd><div class="definition"><span style="display:none"><a name="GUID-3618688E-04A0-4CDC-9660-FDA3A6B08331"></a></span> <p><span style="display:none"><a name="WSFACF1429558A55DE8821C21057FBEBC2B-311F"></a></span>File name failed to be loaded</p> </div></dd><span style="display:none"><a name="WS1A9193826455F5FF44C205DF11D7D1722DF-7E3B"></a></span><dt><span class="term"><span style="display:none"><a name="WSFACF1429558A55DE8821C21057FBEBC2B-3168"></a></span>0x01</span></dt><dd><div class="definition"><span style="display:none"><a name="GUID-96F40325-CFEA-4B0D-BD83-118258EB5C0E"></a></span> <p><span style="display:none"><a name="WSFACF1429558A55DE8821C21057FBEBC2B-311E"></a></span>Files opened as called for</p> </div></dd></dl><p><span style="display:none"><a name="WSFACF1429558A55DE8821C21057FBEBC2B-311D"></a></span>      Text can be scaled in a number of ways. Use <span class="code">AcGiTextStyle::setTextSize()</span> to scale the width and height of the text at the same time. Use <span class="code">setXScale()</span> to scale the width of the text. Use <span class="code">setTrackingPercent()</span> to specify how the characters of a particular font are placed next to each other. If you specify a value of 1.0, the spacing does not change; if you specify less than 1.0, the characters will squeeze together; and if it's more than 1.0, the characters will be farther apart. This example sets the tracking percent to a value of .80.</p><p><span style="display:none"><a name="WSFACF1429558A55DE8821C21057FBEBC2B-311C"></a></span>  The <span class="code">AcGiTextStyle::extents()</span> function returns the world coordinate size of the text's bounding box. If the <span class="code">penups</span> argument is <span class="code">kTrue</span>, then any undrawn pen moves made while the user was drawing the text will be included in the bounding box. The <span class="code">raw</span> option tells the calculation to ignore escape code processing (so that &#8220;%%%&#8221; would not be interpreted as a single percent sign but as three percent signs). Before calling the <span class="code">extents()</span> function, you must call <span class="code">AcGiTextStyle::</span>loadStyleRec() to load any recent style changes into the graphics system.</p><p><span style="display:none"><a name="WSFACF1429558A55DE8821C21057FBEBC2B-311B"></a></span>  The following example draws text and then draws a bounding box around a portion of the text.</p><div class="codeBlock"><pre>
+ Adesk::Boolean 
+      AsdkTextStyleSamp::subWorldDraw(AcGiWorldDraw* pW)     
+ { 
+ AcGePoint3d pos(4.0, 4.0, 0.0); 
+ AcGeVector3d norm(0.0, 0.0, 1.0); 
+      AcGeVector3d dir(-1.0, -       0.2, 0.0);     
+ TCHAR *pStr = _T("This is a percent, '%%%'."); 
+ int len = _tcslen(pStr); 
+ AcGiTextStyle style; 
+  
+      AcGeVector3d vec = norm;     
+      vec       = vec.crossProduct(dir);     
+ dir = vec.crossProduct(norm); 
+  
+ style.setFileName(_T("txt.shx")); 
+      style.setBigFontFileName(_T(""));     
+      int       status;     
+ if (!((status = style.loadStyleRec()) &amp; 1)) 
+ pStr = _T("Font not found."); 
+  
+      pW-&gt;geometry().text(pos, norm, dir, pStr,       len,     
+      Adesk::kFalse, style);     
+  
+ pos.y += 2.0; 
+  
+ style.setTrackingPercent(0.8); 
+ style.setObliquingAngle(0.5); 
+  
+      // You must call loadStyleRec() again after       changing     
+ // the style's properties in order for the current style 
+ // settings to be loaded into the graphics system. 
+      // Otherwise, the extents       calculation may be incorrect.     
+ // 
+ style.loadStyleRec(); 
+ AcGePoint2d ext = style.extents(pStr, Adesk::kFalse, 
+ _tcslen(pStr), Adesk::kFalse); 
+  
+      pW-&gt;geometry       ().text(pos, norm, dir, pStr, len,     
+ Adesk::kFalse, style); 
+  
+ // Draw a rectangle around the last text drawn. 
+      // First you have to create a polyline the       size of the     
+ // bounding box, then you have to transform it to the 
+ // correct orientation, and then to the location of the 
+ // text. 
+  
+      // Compute the       matrix that orients the box.     
+ // 
+ AcGeMatrix3d textMat; 
+ norm.normalize(); 
+ dir.normalize(); 
+ AcGeVector3d yAxis = norm; 
+ yAxis = yAxis.crossProduct(dir); 
+      yAxis.normalize();     
+ textMat.setCoordSystem(AcGePoint3d(0.0, 0.0, 0.0), dir, 
+ yAxis, norm); 
+  
+ // Create the bounding box and enlarge it somewhat. 
+ // 
+      double offset =       ext.y / 2.0;     
+ AcGePoint3d verts[5]; 
+ verts[0] = verts[4] = AcGePoint3d(-offset, -offset, 0.0); 
+ verts[1] = AcGePoint3d(ext.x + offset, -offset, 0.0); 
+      verts[2] =       AcGePoint3d(ext.x + offset, ext.y + offset, 0.0);     
+ verts[3] = AcGePoint3d(-offset, ext.y + offset, 0.0); 
+  
+      // Orient and then translate each point in       the     
+      // bounding box.     
+ // 
+ for (int i = 0; i &lt; 5; i++) { 
+ verts[i].transformBy(textMat); 
+ verts[i].x += pos.x; 
+ verts[i].y += pos.y; 
+      verts[i].z += pos.z;     
+      }     
+      pW-       &gt;geometry().polyline(5, verts);     
+  
+ return Adesk::kTrue; 
+</pre></div><span class="noindex"><div class="topic-list"><h4 class="related">Topics in this section</h4><ul class="jumplist"><li><a href="GUID-9728266A-2FA2-4D9E-92A9-B224C5E360EB.htm">Associating an AcDbTextStyleTableRecord with an AcGiTextStyle</a></li></ul></div></span><div class="footer-block"><a href="javascript:doComments('html/ac.cmtdialog.htm');"><span class="comments-link">Please send us your comment about this page</span></a></div><br></div></body></html>

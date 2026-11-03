@@ -1,10 +1,30 @@
 #pragma once
 // Every public geometry call preserves the host call and return value.
 // Logging is observation only; unrecorded geometry remains explicitly partial.
-// Shared preflight seam: exact legacy predicate, exercised without rendering a foreign drawable.
-void validateChildDrawable(Session& s,AcGiDrawable* d) {
-    require(d,"null child drawable");const auto* entity=AcDbEntity::cast(d);
-    require(!entity||!entity->database()||entity->database()==s.target,"child draw references protected external database");
+enum class DrawableOwnership { rejected, ownedResident, transient };
+struct DrawableIdentity {DrawableOwnership ownership{DrawableOwnership::rejected};AcDbObjectId id;};
+// AcDbObject includes persistent non-entities such as block table records.
+// Unknown persistent drawables and inconsistent identities never use pointer authorization.
+DrawableIdentity classifyDrawable(const Session& s,const AcGiDrawable* d) {
+    if(!d)return {};
+    const auto* object=AcDbObject::cast(d);const auto id=d->id();
+    if(object&&object->database()) {
+        if(d->isPersistent()&&object->database()==s.target&&!id.isNull()&&
+            id==object->objectId()&&id.database()==s.target)return {DrawableOwnership::ownedResident,id};
+        return {};
+    }
+    if(d->isPersistent()||!id.isNull()||(object&&!object->objectId().isNull()))return {};
+    return {DrawableOwnership::transient,AcDbObjectId::kNull};
+}
+bool drawableAuthorized(const Session& s,const AcGiDrawable* d,const DrawableIdentity& identity) {
+    return identity.ownership==DrawableOwnership::ownedResident||
+        (identity.ownership==DrawableOwnership::transient&&
+         std::find(s.authorizedTransient.begin(),s.authorizedTransient.end(),d)!=s.authorizedTransient.end());
+}
+DrawableIdentity validateChildDrawable(Session& s,AcGiDrawable* d) {
+    require(d,"null child drawable");const auto identity=classifyDrawable(s,d);
+    require(identity.ownership!=DrawableOwnership::rejected,"child draw references foreign or unknown persistent database");
+    return identity;
 }
 template<class Base> class GeometryForward:public Base {
 public:
@@ -46,9 +66,11 @@ public:
     N7_FWD(edge,(const AcArray<AcGeCurve2d*>& e),(e))
 #undef N7_FWD
     Adesk::Boolean draw(AcGiDrawable* d) const override {
-        validateChildDrawable(s,d);
+        const auto identity=validateChildDrawable(s,d);
         s.emit(g,"draw",{{"class",quote(std::wstring(d->isA()->name()))},{"persistent",d->isPersistent()?"true":"false"}});
-        s.authorizedTransient.push_back(d);struct Pop {Session& state;~Pop(){state.authorizedTransient.pop_back();}} pop{s};
+        const auto depth=s.authorizedTransient.size();
+        struct Pop {Session& state;std::size_t depth;~Pop(){state.authorizedTransient.resize(depth);}} pop{s,depth};
+        if(identity.ownership==DrawableOwnership::transient)s.authorizedTransient.push_back(d);
         return g.draw(d);
     }
     Adesk::Boolean worldLine(const AcGePoint3d p[2]) override {s.points(g,"worldLine",2,p);return g.worldLine(p);}

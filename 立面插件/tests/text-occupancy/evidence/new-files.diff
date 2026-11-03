@@ -1,0 +1,640 @@
+--- /dev/null
++++ b/src/TextOccupancy.h
+@@ -0,0 +1,66 @@
++#ifndef BCE_TEXT_OCCUPANCY_H
++#define BCE_TEXT_OCCUPANCY_H
++
++#include "ElevationModel.h"
++#include <array>
++#include <cstddef>
++#include <cstdint>
++
++namespace bce {
++
++// Row-major 2x3 affine: (a*x+b*y+tx, c*x+d*y+ty).
++struct TextAffine2 {
++    double a{1}; double b{0}; double tx{0};
++    double c{0}; double d{1}; double ty{0};
++};
++enum class TextRangeCoordinates { unknown, beforeDisplayBackward, afterDisplayBackward };
++struct TextRangeInput {
++    Bounds2 localRange;
++    TextRangeCoordinates coordinates{TextRangeCoordinates::unknown};
++    bool backward{false};
++    Point2 position;
++    // Explicit 2D text plane basis, including normal handedness. Caller obtains
++    // this from normal/direction. Do not apply height/xScale/tracking/oblique again.
++    Point2 localX{1, 0};
++    Point2 localY{0, 1};
++    TextAffine2 modelToWorld; // The single NET model transform, applied once.
++};
++struct TextQuadrilateral {
++    std::array<Point2, 4> corners;
++    Bounds2 bounds;
++};
++Result<TextQuadrilateral> transformTextRange(const TextRangeInput& input);
++
++struct TextRenderContext {
++    std::string deviceIdentity;
++    std::string frameIdentity;
++    std::string fontIdentity;
++    std::string sourceIdentity;
++    double dpiX{0}; double dpiY{0};
++    // Pixel boundary origin relative to the named device frame, in pixels.
++    // worldToPixel already includes this phase; it is never added a second time.
++    Point2 pixelBoundaryPhase;
++};
++struct TextRgbBuffer {
++    const std::uint8_t* bytes{nullptr}; // Borrowed RGB, opaque white background.
++    std::size_t byteLength{0};
++    std::size_t width{0}; std::size_t height{0};
++    std::size_t rowStride{0}; // Positive, top-to-bottom; padding is not image data.
++};
++struct ObservedTextFootprint {
++    std::size_t inkPixels{0};
++    // Complete cells [minX,maxX+1] x [minY,maxY+1], never pixel centers.
++    Bounds2 deviceCellBounds;
++    TextQuadrilateral world;
++    TextAffine2 worldToPixel;
++    TextRenderContext context;
++};
++// Any RGB channel <255 is ink (including AA). Pixel (x,y) occupies
++// [x,x+1] x [y,y+1], top-left origin, y DOWN. Scan the complete image.
++// Blank or edge-touching ink is rejected. Successful observation does not
++// establish external scene completeness, glyph completeness or Layout eligibility.
++Result<ObservedTextFootprint> measureTextFootprint(const TextRgbBuffer& buffer,
++    const TextAffine2& worldToPixel, const TextRenderContext& context);
++
++}
++#endif
+--- /dev/null
++++ b/src/TextOccupancy.cpp
+@@ -0,0 +1,115 @@
++#include "TextOccupancy.h"
++#include <algorithm>
++#include <cmath>
++#include <limits>
++
++namespace bce {
++namespace {
++bool finite(Point2 p) { return std::isfinite(p.x) && std::isfinite(p.y); }
++bool finite(const TextAffine2& m) {
++    return std::isfinite(m.a) && std::isfinite(m.b) && std::isfinite(m.tx) &&
++        std::isfinite(m.c) && std::isfinite(m.d) && std::isfinite(m.ty);
++}
++Point2 apply(const TextAffine2& m, Point2 p) {
++    return {m.a*p.x+m.b*p.y+m.tx, m.c*p.x+m.d*p.y+m.ty};
++}
++bool invert(const TextAffine2& m, TextAffine2& inverse) {
++    if (!finite(m)) return false;
++    const double scale=std::max({std::abs(m.a),std::abs(m.b),std::abs(m.c),std::abs(m.d)});
++    if (scale==0) return false;
++    const double a=m.a/scale,b=m.b/scale,c=m.c/scale,d=m.d/scale;
++    const double determinant=a*d-b*c;
++    if (!std::isfinite(determinant) || determinant==0) return false;
++    inverse={d/determinant/scale,-b/determinant/scale,0,
++        -c/determinant/scale,a/determinant/scale,0};
++    inverse.tx=-(inverse.a*m.tx+inverse.b*m.ty);
++    inverse.ty=-(inverse.c*m.tx+inverse.d*m.ty);
++    return finite(inverse);
++}
++template<class T> Result<T> reject(const char* code,const char* message) {
++    return {std::nullopt,{{code,message,{},true}}};
++}
++bool boundsValid(const Bounds2& b) {
++    return finite(b.minimum) && finite(b.maximum) &&
++        b.minimum.x<b.maximum.x && b.minimum.y<b.maximum.y;
++}
++std::array<Point2,4> corners(const Bounds2& b) {
++    return {{b.minimum,{b.maximum.x,b.minimum.y},b.maximum,{b.minimum.x,b.maximum.y}}};
++}
++bool finish(TextQuadrilateral& q) {
++    q.bounds={q.corners[0],q.corners[0]};
++    for(const auto p:q.corners) {
++        if(!finite(p)) return false;
++        q.bounds.minimum.x=std::min(q.bounds.minimum.x,p.x);
++        q.bounds.minimum.y=std::min(q.bounds.minimum.y,p.y);
++        q.bounds.maximum.x=std::max(q.bounds.maximum.x,p.x);
++        q.bounds.maximum.y=std::max(q.bounds.maximum.y,p.y);
++    }
++    return boundsValid(q.bounds);
++}
++}
++Result<TextQuadrilateral> transformTextRange(const TextRangeInput& i) {
++    if(i.coordinates!=TextRangeCoordinates::beforeDisplayBackward &&
++       i.coordinates!=TextRangeCoordinates::afterDisplayBackward)
++        return reject<TextQuadrilateral>("TEXT_RANGE_CONVENTION","Explicit range coordinate convention required.");
++    if(!boundsValid(i.localRange) || !finite(i.position) || !finite(i.localX) || !finite(i.localY))
++        return reject<TextQuadrilateral>("TEXT_RANGE_INPUT","Finite nondegenerate local range and basis required.");
++    TextAffine2 unused;
++    if(!invert({i.localX.x,i.localY.x,0,i.localX.y,i.localY.y,0},unused) ||
++       !invert(i.modelToWorld,unused))
++        return reject<TextQuadrilateral>("TEXT_RANGE_TRANSFORM","Finite invertible basis and net affine required.");
++    TextQuadrilateral q;
++    const auto local=corners(i.localRange);
++    for(std::size_t k=0;k<local.size();++k) {
++        const double x=(i.backward && i.coordinates==TextRangeCoordinates::beforeDisplayBackward)?-local[k].x:local[k].x;
++        const Point2 model={i.position.x+i.localX.x*x+i.localY.x*local[k].y,
++            i.position.y+i.localX.y*x+i.localY.y*local[k].y};
++        q.corners[k]=apply(i.modelToWorld,model);
++    }
++    if(!finish(q)) return reject<TextQuadrilateral>("TEXT_RANGE_NUMERIC","Transformed corners are not finite and nondegenerate.");
++    return {q,{}};
++}
++
++Result<ObservedTextFootprint> measureTextFootprint(const TextRgbBuffer& b,
++    const TextAffine2& mapping,const TextRenderContext& context) {
++    const auto limit=std::numeric_limits<std::size_t>::max();
++    constexpr double exactIntegerLimit=9007199254740992.0;
++    if(!b.bytes || b.width==0 || b.height==0 || b.width>limit/3 ||
++       static_cast<double>(b.width)>=exactIntegerLimit || static_cast<double>(b.height)>=exactIntegerLimit)
++        return reject<ObservedTextFootprint>("TEXT_RGB_LAYOUT","Invalid RGB dimensions or pointer.");
++    const auto rowBytes=b.width*3;
++    if(b.rowStride<rowBytes || (b.height-1)>(limit-rowBytes)/b.rowStride ||
++       b.byteLength<(b.height-1)*b.rowStride+rowBytes)
++        return reject<ObservedTextFootprint>("TEXT_RGB_LAYOUT","RGB stride, length or size overflow.");
++    TextAffine2 inverse;
++    if(!invert(mapping,inverse))
++        return reject<ObservedTextFootprint>("TEXT_PIXEL_MAPPING","Finite invertible worldToPixel required.");
++    if(context.deviceIdentity.empty() || context.frameIdentity.empty() || context.fontIdentity.empty() ||
++       context.sourceIdentity.empty() || !std::isfinite(context.dpiX) || !std::isfinite(context.dpiY) ||
++       context.dpiX<=0 || context.dpiY<=0 || !finite(context.pixelBoundaryPhase))
++        return reject<ObservedTextFootprint>("TEXT_RENDER_CONTEXT","Device, frame, font, source, DPI and finite phase required.");
++    std::size_t count=0,minX=b.width,minY=b.height,maxX=0,maxY=0;
++    for(std::size_t y=0;y<b.height;++y) {
++        const auto* row=b.bytes+y*b.rowStride;
++        for(std::size_t x=0;x<b.width;++x) {
++            const auto* pixel=row+x*3;
++            if(pixel[0]<255 || pixel[1]<255 || pixel[2]<255) {
++                ++count; minX=std::min(minX,x);minY=std::min(minY,y);
++                maxX=std::max(maxX,x);maxY=std::max(maxY,y);
++            }
++        }
++    }
++    if(count==0) return reject<ObservedTextFootprint>("TEXT_RGB_BLANK","No observed ink.");
++    if(minX==0 || minY==0 || maxX==b.width-1 || maxY==b.height-1)
++        return reject<ObservedTextFootprint>("TEXT_RGB_EDGE","Ink touches buffer edge; uncropped observation unproven.");
++    ObservedTextFootprint result;
++    result.inkPixels=count; result.context=context; result.worldToPixel=mapping;
++    result.deviceCellBounds={{static_cast<double>(minX),static_cast<double>(minY)},
++        {static_cast<double>(maxX+1),static_cast<double>(maxY+1)}};
++    const auto device=corners(result.deviceCellBounds);
++    for(std::size_t k=0;k<device.size();++k) result.world.corners[k]=apply(inverse,device[k]);
++    if(!finish(result.world))
++        return reject<ObservedTextFootprint>("TEXT_PIXEL_NUMERIC","Inverse cell corners are not finite and nondegenerate.");
++    return {result,{}};
++}
++}
+--- /dev/null
++++ b/tests/text-occupancy/TextOccupancyTests.cpp
+@@ -0,0 +1,128 @@
++#include "../../src/TextOccupancy.h"
++#include <cmath>
++#include <functional>
++#include <iostream>
++#include <limits>
++#include <stdexcept>
++#include <vector>
++
++using namespace bce;
++namespace {
++void require(bool b, const char* message) { if (!b) throw std::runtime_error(message); }
++void near(double a, double b) { require(std::abs(a-b)<1e-9, "coordinate mismatch"); }
++TextRenderContext context() { return {"device", "frame", "font", "source", 144, 144, {0,0}}; }
++void backwardOnce() {
++    TextRangeInput i; i.localRange={{-2,-1},{5,3}}; i.backward=true;
++    i.coordinates=TextRangeCoordinates::beforeDisplayBackward;
++    auto r=transformTextRange(i); require(r.canCommit(), "range failed");
++    near(r.value->bounds.minimum.x,-5); near(r.value->bounds.maximum.x,2);
++    i.coordinates=TextRangeCoordinates::afterDisplayBackward;
++    r=transformTextRange(i); near(r.value->bounds.minimum.x,-2); near(r.value->bounds.maximum.x,5);
++}
++void allFourCorners() {
++    TextRangeInput i; i.localRange={{-2,-1},{5,3}};
++    i.coordinates=TextRangeCoordinates::afterDisplayBackward;
++    i.localX={0,1}; i.localY={-1,0}; i.position={10,20};
++    i.modelToWorld={2,1,7,-1,3,-4};
++    const auto r=transformTextRange(i); require(r.canCommit(), "range failed");
++    // Hand calculation: (x,y)->(10-y,20+x)->(47+x-2y,46+3x+y).
++    const std::array<Point2,4> expected{{{47,39},{54,60},{46,64},{39,43}}};
++    for(std::size_t k=0;k<4;++k){near(r.value->corners[k].x,expected[k].x);near(r.value->corners[k].y,expected[k].y);}
++    near(r.value->bounds.minimum.x,39); near(r.value->bounds.maximum.x,54);
++    near(r.value->bounds.minimum.y,39); near(r.value->bounds.maximum.y,64);
++}
++void completePixelCells() {
++    std::vector<std::uint8_t> rgb(5*5*3,255); rgb[(2*5+2)*3]=254;
++    const auto r=measureTextFootprint({rgb.data(),rgb.size(),5,5,15},{},context());
++    require(r.canCommit(), "footprint failed"); require(r.value->inkPixels==1,"count");
++    near(r.value->deviceCellBounds.minimum.x,2); near(r.value->deviceCellBounds.maximum.x,3);
++    near(r.value->world.corners[2].x,3); near(r.value->world.corners[2].y,3);
++}
++void actualRotatedBackward() {
++    TextRangeInput i; i.localRange={{0,-3.885780586188048e-16},{29.999999999999993,7}};
++    i.coordinates=TextRangeCoordinates::beforeDisplayBackward; i.backward=true;
++    i.position={88,28}; i.localX={0.891568288195329,0.4528862853790683};
++    i.localY={-0.4528862853790683,0.891568288195329};
++    const auto r=transformTextRange(i);require(r.canCommit(),"actual range");
++    const std::array<Point2,4> expected{{{88,28},{61.25295135414014,14.41341143862795},
++        {58.08274735648666,20.65438945599525},{84.82979600234653,34.240978017367304}}};
++    for(std::size_t k=0;k<4;++k){near(r.value->corners[k].x,expected[k].x);near(r.value->corners[k].y,expected[k].y);}
++}
++void unknownConvention() {
++    TextRangeInput i; i.localRange={{0,0},{1,1}};
++    require(!transformTextRange(i).canCommit(),"unknown accepted");
++    i.coordinates=static_cast<TextRangeCoordinates>(99);require(!transformTextRange(i).canCommit(),"invalid enum");
++}
++void invalidRangeTransforms() {
++    TextRangeInput i; i.localRange={{0,0},{1,1}};i.coordinates=TextRangeCoordinates::afterDisplayBackward;
++    i.localY={2,0};require(!transformTextRange(i).canCommit(),"singular basis");
++    i.localY={0,1};i.modelToWorld={1,2,0,2,4,0};require(!transformTextRange(i).canCommit(),"singular net");
++    i.modelToWorld={};i.localX.x=std::numeric_limits<double>::infinity();require(!transformTextRange(i).canCommit(),"nonfinite basis");
++    i.localX={1,0};i.localRange.minimum.y=std::numeric_limits<double>::quiet_NaN();require(!transformTextRange(i).canCommit(),"nan range");
++    i.localRange={{1,0},{0,1}};require(!transformTextRange(i).canCommit(),"reversed range");
++}
++void shearAndReflectedBasis() {
++    TextRangeInput i; i.localRange={{-2,-1},{5,3}};i.coordinates=TextRangeCoordinates::afterDisplayBackward;
++    i.localX={1,0};i.localY={2,-1}; // Explicit -normal handedness and shear.
++    const auto r=transformTextRange(i);require(r.canCommit(),"sheared basis");
++    near(r.value->corners[0].x,-4);near(r.value->corners[2].x,11);
++    near(r.value->bounds.minimum.y,-3);near(r.value->bounds.maximum.y,1);
++}
++void fullScanStrideAndInverseCorners() {
++    std::vector<std::uint8_t> rgb(5*19,255);
++    // Nonwhite padding must not count. Second ink lies on last interior row.
++    for(std::size_t y=0;y<5;++y)rgb[y*19+18]=0;
++    rgb[1*19+1*3+1]=254;rgb[3*19+3*3+2]=1;
++    auto c=context();c.pixelBoundaryPhase={0.25,0.75};
++    const TextAffine2 m={1,1,0,-1,1,0};
++    const auto r=measureTextFootprint({rgb.data(),rgb.size(),5,5,19},m,c);
++    require(r.canCommit() && r.value->inkPixels==2,"full scan or stride");
++    const std::array<Point2,4> expected{{{0,1},{1.5,2.5},{0,4},{-1.5,2.5}}};
++    for(std::size_t k=0;k<4;++k){near(r.value->world.corners[k].x,expected[k].x);near(r.value->world.corners[k].y,expected[k].y);}
++    near(r.value->world.bounds.minimum.x,-1.5);near(r.value->world.bounds.maximum.x,1.5);
++    require(r.value->context.frameIdentity==c.frameIdentity && r.value->context.fontIdentity==c.fontIdentity &&
++        r.value->context.deviceIdentity==c.deviceIdentity && r.value->context.sourceIdentity==c.sourceIdentity,"context identity");
++    near(r.value->context.pixelBoundaryPhase.x,0.25);near(r.value->worldToPixel.c,-1);
++}
++void rejectBlankAndEachEdge() {
++    std::vector<std::uint8_t> rgb(5*5*3,255);
++    const TextRgbBuffer b={rgb.data(),rgb.size(),5,5,15};
++    require(!measureTextFootprint(b,{},context()).canCommit(),"blank accepted");
++    for(const auto p:std::array<std::size_t,4>{{2,10,14,22}}){
++        rgb[p*3]=0;const auto r=measureTextFootprint(b,{},context());
++        require(!r.canCommit() && r.issues[0].code=="TEXT_RGB_EDGE","edge accepted");rgb[p*3]=255;
++    }
++}
++void rejectBadBuffer() {
++    std::vector<std::uint8_t> rgb(75,255);rgb[36]=0;
++    const TextRgbBuffer good={rgb.data(),rgb.size(),5,5,15};
++    auto b=good;b.bytes=nullptr;require(!measureTextFootprint(b,{},context()).canCommit(),"null");
++    b=good;b.width=0;require(!measureTextFootprint(b,{},context()).canCommit(),"zero width");
++    b=good;b.rowStride=14;require(!measureTextFootprint(b,{},context()).canCommit(),"short stride");
++    b=good;b.byteLength=74;require(!measureTextFootprint(b,{},context()).canCommit(),"short length");
++    b=good;b.width=std::numeric_limits<std::size_t>::max();require(!measureTextFootprint(b,{},context()).canCommit(),"row overflow");
++    b=good;b.rowStride=std::numeric_limits<std::size_t>::max();require(!measureTextFootprint(b,{},context()).canCommit(),"stride overflow");
++}
++void rejectBadMappingAndContext() {
++    std::vector<std::uint8_t> rgb(75,255);rgb[36]=0;const TextRgbBuffer b={rgb.data(),rgb.size(),5,5,15};
++    require(!measureTextFootprint(b,{1,2,0,2,4,0},context()).canCommit(),"singular mapping");
++    auto m=TextAffine2{};m.tx=std::numeric_limits<double>::infinity();require(!measureTextFootprint(b,m,context()).canCommit(),"nonfinite mapping");
++    auto c=context();c.fontIdentity.clear();require(!measureTextFootprint(b,{},c).canCommit(),"font identity");
++    c=context();c.dpiX=0;require(!measureTextFootprint(b,{},c).canCommit(),"dpi");
++    c=context();c.pixelBoundaryPhase.y=std::numeric_limits<double>::quiet_NaN();require(!measureTextFootprint(b,{},c).canCommit(),"phase");
++}
++}
++int main() {
++    const std::vector<std::pair<const char*, std::function<void()>>> tests={
++        {"backward reflects exactly once",backwardOnce},{"all four asymmetric transformed corners",allFourCorners},
++        {"AA pixel occupies complete cell",completePixelCells},
++        {"N9a actual rotated backward range and direction",actualRotatedBackward},
++        {"unknown convention rejected",unknownConvention},{"invalid range and transforms rejected",invalidRangeTransforms},
++        {"explicit sheared and reflected basis",shearAndReflectedBasis},
++        {"full scan padded RGB and four inverse corners",fullScanStrideAndInverseCorners},
++        {"blank and four buffer edges rejected",rejectBlankAndEachEdge},
++        {"buffer length and overflow rejected",rejectBadBuffer},{"mapping and context rejected",rejectBadMappingAndContext}};
++    int failed=0; for(const auto& t:tests){try{t.second();std::cout<<"PASS "<<t.first<<'\n';}
++        catch(const std::exception& e){++failed;std::cout<<"FAIL "<<t.first<<": "<<e.what()<<'\n';}}
++    std::cout<<tests.size()-failed<<'/'<<tests.size()<<" passed\n";return failed?1:0;
++}
+--- /dev/null
++++ b/tests/text-occupancy/TextOccupancyAdapter.cpp
+@@ -0,0 +1,48 @@
++#include "../../src/TextOccupancy.h"
++#include <fstream>
++#include <iomanip>
++#include <iostream>
++#include <iterator>
++#include <limits>
++#include <stdexcept>
++#include <vector>
++
++namespace {
++std::size_t size(const char* s) {
++    const std::string text(s); if(text.empty() || text.find_first_not_of("0123456789")!=std::string::npos) throw std::runtime_error("unsigned integer required");
++    std::size_t used=0;const auto n=std::stoull(text,&used);
++    if(used!=text.size() || n>std::numeric_limits<std::size_t>::max())throw std::runtime_error("size overflow");
++    return static_cast<std::size_t>(n);
++}
++double number(const char* s) {
++    std::size_t used=0;const std::string text(s);const auto n=std::stod(text,&used);
++    if(used!=text.size())throw std::runtime_error("invalid number");return n;
++}
++void point(bce::Point2 p){std::cout<<'['<<p.x<<','<<p.y<<']';}
++void bounds(bce::Bounds2 b){std::cout<<'[';point(b.minimum);std::cout<<',';point(b.maximum);std::cout<<']';}
++void quoted(const std::string& s) {
++    std::cout<<'"';for(const unsigned char ch:s){if(ch=='"'||ch=='\\')std::cout<<'\\'<<ch;
++        else if(ch<32)std::cout<<"\\u00"<<std::hex<<std::setw(2)<<std::setfill('0')<<static_cast<int>(ch)<<std::dec;
++        else std::cout<<ch;}std::cout<<'"';
++}
++}
++int main(int argc,char** argv) {
++    try {
++        if(argc!=18)throw std::runtime_error("rgb width height stride a b tx c d ty dpi device frame font source phaseX phaseY required");
++        std::ifstream input(argv[1],std::ios::binary);if(!input)throw std::runtime_error("RGB open failed");
++        const std::vector<std::uint8_t> bytes((std::istreambuf_iterator<char>(input)),std::istreambuf_iterator<char>());
++        const bce::TextAffine2 m={number(argv[5]),number(argv[6]),number(argv[7]),number(argv[8]),number(argv[9]),number(argv[10])};
++        const bce::TextRenderContext c={argv[12],argv[13],argv[14],argv[15],number(argv[11]),number(argv[11]),{number(argv[16]),number(argv[17])}};
++        const auto r=bce::measureTextFootprint({bytes.data(),bytes.size(),size(argv[2]),size(argv[3]),size(argv[4])},m,c);
++        if(!r.canCommit()){std::cerr<<r.issues[0].code<<": "<<r.issues[0].message<<'\n';return 2;}
++        const auto& f=*r.value; std::cout<<std::setprecision(17);
++        std::cout<<"{\"kind\":\"observed device footprint\",\"inkPixels\":"<<f.inkPixels<<",\"deviceCellBounds\":";bounds(f.deviceCellBounds);
++        std::cout<<",\"worldCorners\":[";for(std::size_t k=0;k<4;++k){if(k)std::cout<<',';point(f.world.corners[k]);}
++        std::cout<<"],\"worldBounds\":";bounds(f.world.bounds);
++        std::cout<<",\"worldToPixel\":["<<f.worldToPixel.a<<','<<f.worldToPixel.b<<','<<f.worldToPixel.tx<<','<<f.worldToPixel.c<<','<<f.worldToPixel.d<<','<<f.worldToPixel.ty<<']';
++        std::cout<<",\"context\":{\"deviceIdentity\":";quoted(f.context.deviceIdentity);std::cout<<",\"frameIdentity\":";quoted(f.context.frameIdentity);
++        std::cout<<",\"fontIdentity\":";quoted(f.context.fontIdentity);std::cout<<",\"sourceIdentity\":";quoted(f.context.sourceIdentity);
++        std::cout<<",\"dpi\":["<<f.context.dpiX<<','<<f.context.dpiY<<"],\"pixelBoundaryPhase\":";point(f.context.pixelBoundaryPhase);std::cout<<"}}\n";
++        return 0;
++    } catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 2;}
++}
+--- /dev/null
++++ b/tests/text-occupancy/README.md
+@@ -0,0 +1,51 @@
++# N9b pure C++ text coordinates and observed occupancy
++
++Build from `立面插件` with `./tools/build_text_occupancy.ps1 -Label run`.
++The script copies its inputs before building two isolated consoles with VS2019,
++v141 14.16 / x64 / C++17. It does not build or load an ARX.
++
++`TextOccupancyTests.cpp` covers the explicit range convention, single backward
++reflection, all four corners, a hand-calculated rotation/shear/net transform,
++the exact N9a rotated-backward range and direction, negative minima, invalid
++transforms, complete antialiased cells, padded rows, full scanning, inverse
++four-corner mapping, blank/edge rejection, byte-length/overflow and context.
++
++Using the bundled development Python, run:
++
++```powershell
++& 'C:/Users/PC/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe' `
++  ./tools/verify_text_occupancy.py --receipt <build/receipt.json> --output <new-directory>
++```
++
++The verifier decodes the ten existing RGB PNGs; there is no rendering or PDF
++parsing. It binds the actual PNG, native report, measured mapping, font hashes,
++frozen comparator and this build's source/EXE. The compiled adapter returns
++the C++ footprint, four world corners, AABB, mapping and context. The unchanged
++N9a `full_cells` checks every ink cell independently. It also rejects a 35%
++shrink of each result and results computed using incorrect/omitted mappings.
++No production `glyphComplete`, `nativeVerified` or qualification is emitted.
++
++RGB layout: three bytes per pixel, R then G then B; positive rowStride;
++top-to-bottom rows; opaque white background; any channel below 255 is ink.
++The buffer must contain `(height-1)*rowStride+width*3` bytes; final row padding
++is not required. Padding and extra trailing bytes are not image pixels.
++Pixel `(x,y)` is the full closed cell `[x,x+1] × [y,y+1]`, y down. The phase
++identifies that boundary origin in the device frame and is already included in
++worldToPixel. Empty or edge-touching observations fail. The result is the device
++bounding rectangle of all observed complete cells, inverse-mapped with all four
++corners; it can contain white space. It establishes no external scene coverage.
++
++The explicit 2D basis is caller-provided; it must express the intended text
++plane direction and normal handedness. Height, xScale, tracking and oblique
++must already be represented by the declared range; they are not reapplied.
++Only `beforeDisplayBackward` permits one local-X reflection when backward is
++true. `afterDisplayBackward` never adds that reflection. Unknown convention,
++nonfinite/singular input, invalid range or unrepresentable output fails.
++The inherited `Result::canCommit()` reports an available calculation here;
++it does not authorize a drawing write or production Layout use.
++
++The unique task report is `执行/N9b-文字坐标与实测占位报告.md`.
++`evidence/index.json` points to RED, final GREEN and the real-image checks.
++`evidence/baseline.json` is the pre-edit protected-file fingerprint list;
++`evidence/new-files.diff` compares each added source with the empty baseline.
++No old evidence library or PNG has been copied into this directory.
+--- /dev/null
++++ b/tools/build_text_occupancy.ps1
+@@ -0,0 +1,49 @@
++param([string]$Label = 'run')
++$ErrorActionPreference = 'Stop'
++$projectRoot = Split-Path $PSScriptRoot -Parent
++$safeLabel = $Label -replace '[^A-Za-z0-9_-]', '_'
++$buildRoot = Join-Path $projectRoot ('build/n9b-' + (Get-Date -Format 'yyyyMMdd-HHmmss-fff') + '-' + $safeLabel + '-' + [Guid]::NewGuid().ToString('N').Substring(0,8))
++$null = New-Item -ItemType Directory -Path $buildRoot
++$receipt = [ordered]@{label=$Label; startedUtc=[DateTime]::UtcNow.ToString('o'); buildRoot=$buildRoot; inputs=@(); buildExitCode=$null; testExitCode=$null; outputs=@(); exitCode=1}
++$finalExit = 1
++try {
++    $inputs = @('src/ElevationModel.h','src/TextOccupancy.h','src/TextOccupancy.cpp','tests/text-occupancy/TextOccupancyTests.cpp','tools/build_text_occupancy.ps1')
++    if (Test-Path -LiteralPath (Join-Path $projectRoot 'tests/text-occupancy/TextOccupancyAdapter.cpp')) { $inputs += 'tests/text-occupancy/TextOccupancyAdapter.cpp' }
++    if (Test-Path -LiteralPath (Join-Path $projectRoot 'tools/verify_text_occupancy.py')) { $inputs += 'tools/verify_text_occupancy.py' }
++    foreach ($relative in $inputs) {
++        $destination = Join-Path $buildRoot ('input/' + $relative)
++        $null = New-Item -ItemType Directory -Force -Path (Split-Path $destination -Parent)
++        Copy-Item -LiteralPath (Join-Path $projectRoot $relative) -Destination $destination
++        $receipt.inputs += [ordered]@{path=$relative;sha256=(Get-FileHash -LiteralPath $destination -Algorithm SHA256).Hash}
++    }
++    $null = New-Item -ItemType Directory -Path (Join-Path $buildRoot 'out')
++    $vcvars = 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat'
++    $command = @('@echo off',('call "' + $vcvars + '" -vcvars_ver=14.16'),'if errorlevel 1 exit /b %errorlevel%',
++        'cl /nologo /W4 /WX /EHsc /std:c++17 /MT /utf-8 /O2 /Fe:out\TextOccupancyTests.exe input\src\TextOccupancy.cpp input\tests\text-occupancy\TextOccupancyTests.cpp',
++        'if errorlevel 1 exit /b %errorlevel%')
++    if ($inputs -contains 'tests/text-occupancy/TextOccupancyAdapter.cpp') {
++        $command += 'cl /nologo /W4 /WX /EHsc /std:c++17 /MT /utf-8 /O2 /Fe:out\TextOccupancyAdapter.exe input\src\TextOccupancy.cpp input\tests\text-occupancy\TextOccupancyAdapter.cpp'
++        $command += 'if errorlevel 1 exit /b %errorlevel%'
++    }
++    $command += 'exit /b 0'
++    Set-Content -LiteralPath (Join-Path $buildRoot 'build-command.cmd') -Value ($command -join "`r`n") -Encoding ASCII
++    Push-Location $buildRoot
++    try {
++        & $env:ComSpec /d /c 'build-command.cmd' > 'build.log' 2>&1
++        $receipt.buildExitCode = $LASTEXITCODE
++        if ($receipt.buildExitCode -eq 0) {
++            & '.\out\TextOccupancyTests.exe' > 'focused-tests.log' 2>&1
++            $receipt.testExitCode = $LASTEXITCODE
++            $finalExit = $receipt.testExitCode
++        } else { $finalExit = $receipt.buildExitCode }
++    } finally { Pop-Location }
++} catch { $receipt.error = $_.Exception.Message; $finalExit = 1 }
++finally {
++    foreach ($file in Get-ChildItem -LiteralPath $buildRoot -File -Recurse | Where-Object { $_.FullName -notlike '*\input\*' -and $_.Name -ne 'receipt.json' }) {
++        $receipt.outputs += [ordered]@{path=$file.FullName.Substring($buildRoot.Length+1);sha256=(Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash}
++    }
++    $receipt.exitCode=$finalExit; $receipt.finishedUtc=[DateTime]::UtcNow.ToString('o')
++    $receipt | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath (Join-Path $buildRoot 'receipt.json') -Encoding UTF8
++    Write-Output ('RECEIPT=' + (Join-Path $buildRoot 'receipt.json')); Write-Output ('EXIT_CODE=' + $finalExit)
++}
++exit $finalExit
+--- /dev/null
++++ b/tools/verify_text_occupancy.py
+@@ -0,0 +1,162 @@
++"""Development only: decode existing N9a PNGs; call C++; reuse frozen full_cells.
++
++No rendering, PDF parsing, CAD, production qualification or geometric margin.
++"""
++from pathlib import Path
++import argparse
++import hashlib
++import importlib.util
++import json
++import subprocess
++
++import numpy as np
++from PIL import Image
++
++ROOT = next(p for p in Path(__file__).resolve().parents
++            if (p / '立面插件').is_dir() and (p / '阶段1/原生接口探测').is_dir())
++PLUGIN = ROOT / '立面插件'
++CASE = ROOT / '阶段1/runs/elevation-native-20261103-093743-84f838a5/case'
++IMAGES = CASE / 'text-range-public-measured-v8'
++COMPARATOR = PLUGIN / 'tests/native/text-range/offline-projection-v8/verify_text_range.py'
++NATIVE_SHA = '05254B213DC3F1B0C5D20DF1F0C352E8D12D9281DF68B9180D010800EECF6CD1'
++COMPARATOR_SHA = '9296A063343919A13C3A954CE855E239C706254A55063AB8B431DF21857B27F3'
++
++
++def sha(path):
++    return hashlib.sha256(Path(path).read_bytes()).hexdigest().upper()
++
++
++def read(path):
++    return json.loads(Path(path).read_text(encoding='utf-8-sig'))
++
++
++def binding(path):
++    return dict(path=str(Path(path).resolve()), sha256=sha(path))
++
++
++def run_adapter(exe, work, rgb, matrix, dpi, identities):
++    # RGB order, opaque white background, tight positive rows; byte offset
++    # (y*width+x)*3. No overlay and no selective sampling enters this adapter.
++    height, width, channels = rgb.shape
++    assert channels == 3 and rgb.dtype == np.uint8
++    raw_path = work / 'input.rgb'
++    raw_path.write_bytes(rgb.tobytes(order='C'))
++    command = [str(exe), raw_path.name, str(width), str(height), str(width*3),
++               *[format(float(n), '.17g') for n in matrix.reshape(-1)], str(dpi),
++               *identities, '0', '0']
++    executed = subprocess.run(command, cwd=work, capture_output=True, text=True, check=False)
++    assert executed.returncode == 0, (executed.returncode, executed.stderr)
++    result = json.loads(executed.stdout)
++    raw_binding = dict(sha256=sha(raw_path), bytes=raw_path.stat().st_size,
++                       width=width, height=height, rowStride=width*3)
++    raw_path.unlink()  # This single owned file only; no directory cleanup.
++    assert result['kind'] == 'observed device footprint'
++    assert np.array_equal(np.asarray(result['worldToPixel']).reshape(2, 3), matrix)
++    assert [result['context'][key] for key in
++            ('deviceIdentity', 'frameIdentity', 'fontIdentity', 'sourceIdentity')] == identities
++    assert result['context']['dpi'] == [dpi, dpi]
++    assert result['context']['pixelBoundaryPhase'] == [0, 0]
++    return result, raw_binding
++
++
++def project(corners, matrix):
++    points = np.asarray(corners, dtype=float)
++    assert points.shape == (4, 2) and np.isfinite(points).all()
++    return np.column_stack((points, np.ones(4))) @ matrix.T
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--receipt', required=True, type=Path)
++    parser.add_argument('--output', required=True, type=Path)
++    args = parser.parse_args()
++    receipt_path = args.receipt.resolve(strict=True)
++    receipt = read(receipt_path)
++    assert receipt['exitCode'] == receipt['buildExitCode'] == receipt['testExitCode'] == 0
++    build = receipt_path.parent
++    for entry in receipt['inputs']:
++        assert sha(build/'input'/entry['path']) == entry['sha256']
++    assert sha(build/'input/tools/verify_text_occupancy.py') == sha(__file__)
++    exe = build/'out/TextOccupancyAdapter.exe'
++    recorded = next(e for e in receipt['outputs'] if Path(e['path']).name == exe.name)
++    assert sha(exe) == recorded['sha256']
++    assert sha(CASE/'text-range.json') == NATIVE_SHA
++    assert sha(COMPARATOR) == COMPARATOR_SHA
++    assert sha(PLUGIN/'tools/verify_text_range.py') == COMPARATOR_SHA
++    spec = importlib.util.spec_from_file_location('n9a_frozen_full_cells', COMPARATOR)
++    old = importlib.util.module_from_spec(spec)
++    # Execute the unchanged comparator source without writing __pycache__ into
++    # its frozen evidence directory.
++    exec(compile(COMPARATOR.read_bytes(), str(COMPARATOR), 'exec'), old.__dict__)
++    native = read(CASE/'text-range.json')
++    previous = read(IMAGES/'comparison.json')
++    assert previous['nativeReportSHA256'] == NATIVE_SHA
++    assert previous['comparatorSHA256'] == COMPARATOR_SHA
++    assert len(previous['comparisons']) == 10
++    assert sum(e['renderContainmentVerified'] for e in previous['comparisons']) == 0
++    diagnostics = CASE/'text-range-backward-basis-diagnostic-v8/diagnostic.json'
++    diagnostic_binding = binding(diagnostics)
++    measured = np.asarray(previous['measuredProjection']['worldToPageMeasured'], dtype=float)
++    assert measured.shape == (2, 3)
++    output = args.output.resolve()
++    output.mkdir(parents=True, exist_ok=False)
++    samples = {s['id']: s for s in native['samples']}
++    results = []
++    for prior in previous['comparisons']:
++        name, dpi = prior['id'], prior['dpi']
++        image_path = IMAGES/f'{name}-{dpi}-ink.png'
++        assert sha(image_path) == prior['inkSHA256']
++        with Image.open(image_path) as source:
++            assert source.mode == 'RGB', 'expected original opaque RGB native render'
++            rgb = np.asarray(source.convert('RGB')).copy()
++        yy, xx = np.nonzero(np.any(rgb < 255, axis=2))
++        assert xx.size == prior['inkPixels'] > 0
++        assert xx.min() > 0 and yy.min() > 0 and xx.max() < rgb.shape[1]-1 and yy.max() < rgb.shape[0]-1
++        matrix = measured*(dpi/72)
++        sample = samples[name]
++        identities = ['Poppler-'+previous['rasterizerSHA256'], prior['inkSHA256'],
++                      sample['fontSHA256']+'-'+sample['bigfontSHA256'], NATIVE_SHA+'-'+name]
++        cpp, raw = run_adapter(exe, output, rgb, matrix, dpi, identities)
++        expected_bounds = [[int(xx.min()), int(yy.min())], [int(xx.max()+1), int(yy.max()+1)]]
++        assert cpp['inkPixels'] == xx.size and cpp['deviceCellBounds'] == expected_bounds
++        polygon = project(cpp['worldCorners'], matrix)
++        inside, distances = old.full_cells(polygon, xx, yy)
++        assert inside.all(), (name, dpi, int((~inside).sum()))
++        world = np.asarray(cpp['worldCorners'])
++        assert np.array_equal(cpp['worldBounds'], [world.min(axis=0).tolist(), world.max(axis=0).tolist()])
++        negatives = []
++        shrunk = world.mean(axis=0)+(world-world.mean(axis=0))*0.35
++        bad, bad_dist = old.full_cells(project(shrunk, matrix), xx, yy)
++        assert not bad.all(), 'independent comparator accepted a 35% result'
++        negatives.append(dict(kind='shrink-world-result-to-35-percent', outsidePixels=int((~bad).sum()), maxOutsidePixel=float(bad_dist.max())))
++        # Both are finite, invertible mappings accepted by C++; the independent
++        # comparator must reject their WORLD result under the actual mapping.
++        wrong = matrix.copy(); wrong[:, 2] += [50, -30]
++        for label, incorrect in [('wrong-mapping-translation', wrong), ('omitted-worldToPixel', np.array([[1., 0., 0.], [0., 1., 0.]]))]:
++            wrong_cpp, _ = run_adapter(exe, output, rgb, incorrect, dpi, identities)
++            bad, bad_dist = old.full_cells(project(wrong_cpp['worldCorners'], matrix), xx, yy)
++            assert not bad.all(), (label, 'independent comparator failed to reject')
++            negatives.append(dict(kind=label, outsidePixels=int((~bad).sum()), maxOutsidePixel=float(bad_dist.max())))
++        results.append(dict(id=name, dpi=dpi, image=binding(image_path), decodedRGB=raw,
++                            cpp=cpp, independentlyCheckedInkPixels=int(xx.size), outsidePixels=int((~inside).sum()),
++                            maxOutsidePixel=float(distances.max()), negativeControls=negatives,
++                            preservedOriginalRangeOutsidePixels=prior['outsidePixels']))
++        print(f'{name} {dpi}dpi: {xx.size} ink; cells={expected_bounds}; outside=0; 3 negatives rejected')
++    result = dict(contract='bce.text-occupancy-development-check.v1', kind='observed device footprint',
++                  buildReceipt=binding(receipt_path), executable=binding(exe), verifier=binding(__file__),
++                  nativeReport=binding(CASE/'text-range.json'), preservedN9aComparison=binding(IMAGES/'comparison.json'),
++                  preservedBackwardDiagnostic=diagnostic_binding, comparator=binding(COMPARATOR),
++                  sources=[dict(path=e['path'], sha256=e['sha256']) for e in receipt['inputs']],
++                  pixelContract='RGB any channel <255; complete [x,x+1] by [y,y+1]; y down; top-left boundary phase [0,0]',
++                  numericalComparisonTolerancePixel=1e-8, geometricMarginPixel=0,
++                  scope='Exact existing 5 native scenes x 2 finite rasters and measured mappings; external scene completeness and Layout binding remain unestablished.',
++                  results=results, summary=dict(images=10, containedObservations=10, rejectedNegativeResults=30,
++                                               preservedHistoricalStringRangeContainments=0))
++    with (output/'comparison.json').open('x', encoding='utf-8') as stream:
++        json.dump(result, stream, ensure_ascii=False, indent=2, allow_nan=False)
++    print('10/10 observed footprints independently contained; 30/30 incorrect results rejected; historical range remains 0/10')
++    return 0
++
++
++if __name__ == '__main__':
++    raise SystemExit(main())

@@ -1,0 +1,28 @@
+[
+  {
+    "floor": 1,
+    "job": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-inspect-number-20261102-201027-169882-approved-edit-floor1",
+    "proof": {
+      "nativeAxis": "85DB",
+      "number21ReadAndRestoredTo1": true,
+      "independentAxisLine": "855D",
+      "lineStretchMm": 123,
+      "wholeDimension": "8573",
+      "linkedBaselineMm": 120,
+      "allTrialsRestored": true
+    }
+  },
+  {
+    "floor": 2,
+    "job": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-inspect-number-20261102-201030-090549-approved-edit-floor2",
+    "proof": {
+      "nativeAxis": "8557",
+      "number21ReadAndRestoredTo1": true,
+      "independentAxisLine": "84FA",
+      "lineStretchMm": 123,
+      "wholeDimension": "850E",
+      "linkedBaselineMm": 120,
+      "allTrialsRestored": true
+    }
+  }
+]

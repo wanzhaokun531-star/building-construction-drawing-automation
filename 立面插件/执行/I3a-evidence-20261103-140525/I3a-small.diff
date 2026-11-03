@@ -1,0 +1,653 @@
+--- /dev/null
++++ b/src/ProjectFacts.h
+@@ -0,0 +1,111 @@
++#ifndef BCE_PROJECT_FACTS_H
++#define BCE_PROJECT_FACTS_H
++#include "ElevationModel.h"
++#include <array>
++#include <variant>
++
++namespace bce {
++// Version 1 is only a dependency subset, never a complete scene fingerprint.
++struct FactPoint3 { double x{0.0}; double y{0.0}; double z{0.0}; };
++struct FactReadProvenance {
++    std::string documentIdentity;
++    std::string databaseIdentity;
++    std::uint64_t revision{0}; // Zero is unavailable provenance, even within a consistent batch.
++};
++struct FactLine {
++    FactPoint3 start;
++    FactPoint3 end;
++    FactPoint3 normal{0.0, 0.0, 1.0};
++    double thickness{0.0};
++};
++struct FactAlignedDimension {
++    FactPoint3 xLine1Point;
++    FactPoint3 xLine2Point;
++    FactPoint3 normal{0.0, 0.0, 1.0};
++    // Measurement, displayed text and DimStyle are deliberately outside this subset.
++};
++struct FactText {
++    std::string text;
++    FactPoint3 position;
++    FactPoint3 alignmentPoint;
++    FactPoint3 normal{0.0, 0.0, 1.0};
++    double rotation{0.0};
++    double height{1.0};
++    double widthFactor{1.0};
++    double oblique{0.0};
++    int horizontalMode{0};
++    int verticalMode{0};
++    bool mirroredX{false};
++    bool mirroredY{false};
++    double thickness{0.0};
++    bool hasFields{false};
++};
++struct FactSource {
++    std::string rootHandle;
++    std::string ownerHandle;
++    std::string exactClass;
++    bool directRoot{false};
++    bool effectiveVisible{false};
++    FactReadProvenance read;
++    std::variant<std::monostate, FactLine, FactAlignedDimension, FactText> definition;
++};
++struct FactUnits {
++    double mmPerInputUnit{0.0};
++    std::string confirmationSource;
++};
++enum class DatumPointSelector { lineStart, lineEnd, dimXLine1, dimXLine2 };
++struct FactWindow {
++    FactPoint3 origin;
++    FactPoint3 u{1.0, 0.0, 0.0};
++    FactPoint3 v{0.0, 1.0, 0.0};
++    double width{0.0};
++    double height{0.0};
++};
++struct FactTextDependency {
++    std::string role; // Explicit association, e.g. floor-name or level-value; no inferred grouping.
++    FactSource source;
++};
++struct ProjectFactConfirmation {
++    std::string persistentProjectId;
++    FactUnits units;
++    // All sources must come from this same completed, current read batch.
++    FactReadProvenance read;
++    std::string modelSpaceOwnerHandle;
++    FactSource title;
++    std::vector<FactTextDependency> levelDeclarations;
++    FactSource datumSource;
++    DatumPointSelector pointSelector{DatumPointSelector::lineStart};
++    double datumMeters{0.0};
++    std::string datumConfirmationSource;
++    FactPoint3 heightDirection;
++    FactWindow window;
++    std::string selectionConfirmationSource;
++};
++struct ProjectFacts {
++    unsigned subsetVersion{1};
++    ProjectFactConfirmation confirmed;
++    FactPoint3 datumPoint; // Derived solely from the explicitly selected typed getter.
++    FactPoint3 unitHeightDirection;
++    std::array<FactPoint3, 4> windowCorners;
++};
++struct ProjectFactObservation {
++    bool readCompleted{false}; // An adapter assertion, not recoverable from historical facts.
++    std::string persistentProjectId;
++    FactUnits units;
++    FactReadProvenance read;
++    std::string modelSpaceOwnerHandle;
++    std::vector<FactSource> sources;
++};
++enum class FactSubsetStatus { currentSubsetMatches, stale, unsupported, orphan };
++struct FactSubsetCheck {
++    FactSubsetStatus status{FactSubsetStatus::stale};
++    std::vector<Issue> issues;
++    // No archive binding, write plan, rule input or generation qualification is produced.
++};
++[[nodiscard]] Result<ProjectFacts> confirmProjectFacts(const ProjectFactConfirmation&);
++[[nodiscard]] FactSubsetCheck checkProjectFacts(
++    const ProjectFacts&, const std::optional<ProjectFactObservation>& current);
++// Actual projected elevation; datumMeters may be nonzero and direction need not be +Y.
++[[nodiscard]] Result<double> projectFactElevationMeters(const ProjectFacts&, FactPoint3 point);
++} // namespace bce
++#endif
+--- /dev/null
++++ b/src/ProjectFacts.cpp
+@@ -0,0 +1,263 @@
++#include "ProjectFacts.h"
++#include <cmath>
++#include <utility>
++
++namespace bce {
++namespace {
++constexpr double planeTolerance = 1e-9;
++bool sameHandle(const std::string& left, const std::string& right) {
++    // Reuse the existing nonzero uint64 hex identity/overflow contract.
++    return EntityKey{"", left, 0} == EntityKey{"", right, 0};
++}
++bool sameRead(const FactReadProvenance& left, const FactReadProvenance& right) {
++    return !left.documentIdentity.empty() && !left.databaseIdentity.empty() && left.revision != 0 &&
++        left.documentIdentity == right.documentIdentity && left.databaseIdentity == right.databaseIdentity &&
++        left.revision == right.revision;
++}
++bool finite(FactPoint3 point) {
++    return std::isfinite(point.x) && std::isfinite(point.y) && std::isfinite(point.z);
++}
++bool samePoint(FactPoint3 left, FactPoint3 right) {
++    return left.x == right.x && left.y == right.y && left.z == right.z;
++}
++bool onPlane(FactPoint3 point, double z) {
++    return finite(point) && std::abs(point.z - z) <= planeTolerance;
++}
++bool xyNormal(FactPoint3 normal) {
++    return finite(normal) && normal.x == 0.0 && normal.y == 0.0 && normal.z != 0.0;
++}
++bool xyDirection(FactPoint3 direction) {
++    return finite(direction) && direction.z == 0.0 && (direction.x != 0.0 || direction.y != 0.0);
++}
++FactPoint3 normalized(FactPoint3 direction) {
++    // Scaling first also handles very large finite directions without overflowing hypot.
++    const auto scale = std::max(std::abs(direction.x), std::abs(direction.y));
++    const auto x = direction.x / scale;
++    const auto y = direction.y / scale;
++    const auto length = std::hypot(x, y);
++    return {x / length, y / length, 0.0};
++}
++Issue issue(const char* code, const char* message, const std::string& role,
++    const FactReadProvenance& read, const FactSource* source = nullptr) {
++    IssueSource location{read.documentIdentity, role, std::nullopt};
++    if (source) { location.entity = EntityKey{read.databaseIdentity, source->rootHandle, read.revision}; }
++    return {code, message, std::move(location), true};
++}
++template<class T> Result<T> failed(Issue problem) {
++    return {std::nullopt, {std::move(problem)}};
++}
++bool validText(const FactText& text, double z) {
++    return !text.text.empty() && text.text.find('\0') == std::string::npos && !text.hasFields &&
++        onPlane(text.position, z) && onPlane(text.alignmentPoint, z) && xyNormal(text.normal) &&
++        std::isfinite(text.rotation) && std::isfinite(text.height) && text.height > 0.0 &&
++        std::isfinite(text.widthFactor) && text.widthFactor > 0.0 && std::isfinite(text.oblique) &&
++        text.horizontalMode >= 0 && text.horizontalMode <= 5 && text.verticalMode >= 0 && text.verticalMode <= 3 &&
++        text.thickness == 0.0;
++}
++std::optional<Issue> sourceProblem(const FactSource& source, const FactReadProvenance& read,
++    const std::string& owner, double z, const std::string& role, bool textRequired) {
++    if (!sameRead(source.read, read)) {
++        return issue("FACT_READ_INVALID", u8"依赖不是同一次文档/数据库/修订的读取。", role, read, &source);
++    }
++    bool definitionSupported = false;
++    if (const auto* line = std::get_if<FactLine>(&source.definition)) {
++        definitionSupported = !textRequired && source.exactClass == "AcDbLine" &&
++            onPlane(line->start, z) && onPlane(line->end, z) && xyNormal(line->normal) && line->thickness == 0.0;
++    } else if (const auto* dimension = std::get_if<FactAlignedDimension>(&source.definition)) {
++        definitionSupported = !textRequired && source.exactClass == "AcDbAlignedDimension" &&
++            onPlane(dimension->xLine1Point, z) && onPlane(dimension->xLine2Point, z) && xyNormal(dimension->normal);
++    } else if (const auto* text = std::get_if<FactText>(&source.definition)) {
++        definitionSupported = textRequired && source.exactClass == "AcDbText" && validText(*text, z);
++    }
++    if (!sameHandle(source.rootHandle, source.rootHandle) || !sameHandle(source.ownerHandle, owner) ||
++        !source.directRoot || !source.effectiveVisible || !definitionSupported) {
++        return issue("FACT_SOURCE_UNSUPPORTED", u8"依赖须为模型空间直接可见的受支持exact类、合法句柄及XY平面定义；文字不能含field。",
++            role, read, &source);
++    }
++    return std::nullopt;
++}
++bool sameDefinition(const FactSource& left, const FactSource& right) {
++    if (left.definition.index() != right.definition.index()) { return false; }
++    if (const auto* a = std::get_if<FactLine>(&left.definition)) {
++        const auto& b = std::get<FactLine>(right.definition);
++        return samePoint(a->start, b.start) && samePoint(a->end, b.end) &&
++            samePoint(a->normal, b.normal) && a->thickness == b.thickness;
++    }
++    if (const auto* a = std::get_if<FactAlignedDimension>(&left.definition)) {
++        const auto& b = std::get<FactAlignedDimension>(right.definition);
++        return samePoint(a->xLine1Point, b.xLine1Point) && samePoint(a->xLine2Point, b.xLine2Point) &&
++            samePoint(a->normal, b.normal);
++    }
++    if (const auto* a = std::get_if<FactText>(&left.definition)) {
++        const auto& b = std::get<FactText>(right.definition);
++        return a->text == b.text && samePoint(a->position, b.position) && samePoint(a->alignmentPoint, b.alignmentPoint) &&
++            samePoint(a->normal, b.normal) && a->rotation == b.rotation && a->height == b.height &&
++            a->widthFactor == b.widthFactor && a->oblique == b.oblique && a->horizontalMode == b.horizontalMode &&
++            a->verticalMode == b.verticalMode && a->mirroredX == b.mirroredX && a->mirroredY == b.mirroredY &&
++            a->thickness == b.thickness && a->hasFields == b.hasFields;
++    }
++    return false;
++}
++struct Dependency {
++    const FactSource* source;
++    std::string role;
++    bool textRequired;
++};
++std::vector<Dependency> dependencies(const ProjectFactConfirmation& input) {
++    std::vector<Dependency> result{{&input.title, "title", true}, {&input.datumSource, "datum", false}};
++    for (const auto& declaration : input.levelDeclarations) {
++        result.push_back({&declaration.source, "level:" + declaration.role, true});
++    }
++    return result;
++}
++std::optional<FactPoint3> selectedPoint(const ProjectFactConfirmation& input) {
++    if (const auto* line = std::get_if<FactLine>(&input.datumSource.definition)) {
++        if (input.pointSelector == DatumPointSelector::lineStart) { return line->start; }
++        if (input.pointSelector == DatumPointSelector::lineEnd) { return line->end; }
++    } else if (const auto* dimension = std::get_if<FactAlignedDimension>(&input.datumSource.definition)) {
++        if (input.pointSelector == DatumPointSelector::dimXLine1) { return dimension->xLine1Point; }
++        if (input.pointSelector == DatumPointSelector::dimXLine2) { return dimension->xLine2Point; }
++    }
++    return std::nullopt;
++}
++std::optional<std::array<FactPoint3, 4>> windowCorners(const FactWindow& window) {
++    if (!finite(window.origin) || !xyDirection(window.u) || !xyDirection(window.v) ||
++        !std::isfinite(window.width) || window.width <= 0.0 || !std::isfinite(window.height) || window.height <= 0.0 ||
++        std::abs(std::hypot(window.u.x, window.u.y) - 1.0) > planeTolerance ||
++        std::abs(std::hypot(window.v.x, window.v.y) - 1.0) > planeTolerance ||
++        std::abs(window.u.x * window.v.x + window.u.y * window.v.y) > planeTolerance) { return std::nullopt; }
++    const auto corner = [&window](double u, double v) -> FactPoint3 {
++        return {window.origin.x + window.u.x * u + window.v.x * v,
++            window.origin.y + window.u.y * u + window.v.y * v, window.origin.z};
++    };
++    std::array<FactPoint3, 4> result{{window.origin, corner(window.width, 0),
++        corner(window.width, window.height), corner(0, window.height)}};
++    for (const auto& point : result) { if (!finite(point)) { return std::nullopt; } }
++    // Reject finite dimensions that disappear through floating-point rounding at a huge origin.
++    if (samePoint(result[0], result[1]) || samePoint(result[0], result[3]) ||
++        samePoint(result[1], result[2]) || samePoint(result[2], result[3])) { return std::nullopt; }
++    return result;
++}
++bool validUnits(const FactUnits& units) {
++    return std::isfinite(units.mmPerInputUnit) && units.mmPerInputUnit > 0.0 && !units.confirmationSource.empty();
++}
++bool validHistory(const ProjectFacts& history) {
++    const auto rebuilt = confirmProjectFacts(history.confirmed);
++    if (history.subsetVersion != 1 || !rebuilt.value || !samePoint(history.datumPoint, rebuilt.value->datumPoint) ||
++        !samePoint(history.unitHeightDirection, rebuilt.value->unitHeightDirection)) { return false; }
++    for (std::size_t i = 0; i < history.windowCorners.size(); ++i) {
++        if (!samePoint(history.windowCorners[i], rebuilt.value->windowCorners[i])) { return false; }
++    }
++    return true;
++}
++FactSubsetCheck checked(FactSubsetStatus status, Issue problem) {
++    return {status, {std::move(problem)}};
++}
++} // namespace
++
++Result<ProjectFacts> confirmProjectFacts(const ProjectFactConfirmation& input) {
++    if (input.persistentProjectId.empty() || !validUnits(input.units) || !sameRead(input.read, input.read) ||
++        !sameHandle(input.modelSpaceOwnerHandle, input.modelSpaceOwnerHandle) ||
++        input.datumConfirmationSource.empty() || input.selectionConfirmationSource.empty() ||
++        input.levelDeclarations.empty()) {
++        return failed<ProjectFacts>(issue("FACT_CONFIRMATION_REQUIRED", u8"缺少项目、已确认单位/来源、批次身份、模型owner或人工确认来源。", "project", input.read));
++    }
++    for (const auto& level : input.levelDeclarations) {
++        if (level.role.empty()) {
++            return failed<ProjectFacts>(issue("FACT_CONFIRMATION_REQUIRED", u8"楼层文字须有明确关联角色。", "level", input.read, &level.source));
++        }
++    }
++    const auto corners = windowCorners(input.window);
++    if (!corners) {
++        return failed<ProjectFacts>(issue("FACT_WINDOW_UNSUPPORTED", u8"窗口须为有限正尺寸的XY正交单位基矩形，且四角可表示。", "window", input.read));
++    }
++    if (!std::isfinite(input.datumMeters) || !xyDirection(input.heightDirection)) {
++        return failed<ProjectFacts>(issue("FACT_DATUM_UNSUPPORTED", u8"基准米值须有限，高度方向须为明确非零XY向量。", "datum", input.read, &input.datumSource));
++    }
++    const auto required = dependencies(input);
++    for (std::size_t i = 0; i < required.size(); ++i) {
++        const auto& dependency = required[i];
++        if (const auto problem = sourceProblem(*dependency.source, input.read, input.modelSpaceOwnerHandle,
++            input.window.origin.z, dependency.role, dependency.textRequired)) { return failed<ProjectFacts>(*problem); }
++        for (std::size_t j = 0; j < i; ++j) {
++            if (sameHandle(dependency.source->rootHandle, required[j].source->rootHandle) &&
++                (dependency.source->exactClass != required[j].source->exactClass ||
++                    !sameDefinition(*dependency.source, *required[j].source))) {
++                return failed<ProjectFacts>(issue("FACT_SOURCE_AMBIGUOUS", u8"同一根句柄出现矛盾定义。", dependency.role, input.read, dependency.source));
++            }
++        }
++    }
++    const auto point = selectedPoint(input);
++    if (!point) {
++        return failed<ProjectFacts>(issue("FACT_SELECTOR_UNSUPPORTED", u8"必须明确选择与源exact类匹配的定义点getter。", "datum", input.read, &input.datumSource));
++    }
++    return {ProjectFacts{1, input, *point, normalized(input.heightDirection), *corners}, {}};
++}
++
++FactSubsetCheck checkProjectFacts(const ProjectFacts& history, const std::optional<ProjectFactObservation>& current) {
++    const auto& confirmed = history.confirmed;
++    if (!validHistory(history)) {
++        return checked(FactSubsetStatus::unsupported, issue("FACT_HISTORY_INVALID", u8"历史有限事实版本、定义或派生值无效。", "project", confirmed.read));
++    }
++    if (!current) {
++        return checked(FactSubsetStatus::stale, issue("FACT_READ_REQUIRED", u8"历史出处不能代替当前依赖读取。", "project", confirmed.read));
++    }
++    const auto& now = *current;
++    if (now.persistentProjectId.empty() || now.persistentProjectId != confirmed.persistentProjectId) {
++        return checked(FactSubsetStatus::orphan, issue("FACT_PROJECT_ORPHAN", u8"当前项目身份缺失或不同，历史事实不能重绑。", "project", now.read));
++    }
++    if (!now.readCompleted) {
++        return checked(FactSubsetStatus::stale, issue("FACT_READ_REQUIRED", u8"尚未完成当前依赖读取。", "project", now.read));
++    }
++    if (!sameRead(now.read, now.read) || !validUnits(now.units) || !sameHandle(now.modelSpaceOwnerHandle, now.modelSpaceOwnerHandle)) {
++        return checked(FactSubsetStatus::unsupported, issue("FACT_READ_INVALID", u8"当前批次身份、单位或模型owner无效。", "project", now.read));
++    }
++    if (now.units.mmPerInputUnit != confirmed.units.mmPerInputUnit || now.units.confirmationSource != confirmed.units.confirmationSource) {
++        return checked(FactSubsetStatus::stale, issue("FACT_UNITS_CHANGED", u8"已确认单位比例或来源已改变。", "units", now.read));
++    }
++    for (std::size_t i = 0; i < now.sources.size(); ++i) {
++        const auto& source = now.sources[i];
++        if (!sameRead(source.read, now.read) || !sameHandle(source.rootHandle, source.rootHandle) ||
++            !sameHandle(source.ownerHandle, source.ownerHandle)) {
++            return checked(FactSubsetStatus::unsupported, issue("FACT_READ_INVALID", u8"观察依赖不属于当前批次，或句柄无效。", "observation", now.read, &source));
++        }
++        for (std::size_t j = 0; j < i; ++j) {
++            if (sameHandle(source.rootHandle, now.sources[j].rootHandle)) {
++                return checked(FactSubsetStatus::unsupported, issue("FACT_SOURCE_AMBIGUOUS", u8"当前观察重复同一根句柄，不能选取任意一项。", "observation", now.read, &source));
++            }
++        }
++    }
++    for (const auto& dependency : dependencies(confirmed)) {
++        const auto& old = *dependency.source;
++        const auto found = std::find_if(now.sources.begin(), now.sources.end(), [&old](const FactSource& source) {
++            return sameHandle(old.rootHandle, source.rootHandle);
++        });
++        if (found == now.sources.end()) {
++            return checked(FactSubsetStatus::stale, issue("FACT_SOURCE_MISSING", u8"本次读取未找到已选依赖。", dependency.role, now.read, &old));
++        }
++        if (!sameHandle(found->ownerHandle, old.ownerHandle) || !sameHandle(now.modelSpaceOwnerHandle, confirmed.modelSpaceOwnerHandle)) {
++            return checked(FactSubsetStatus::stale, issue("FACT_OWNER_CHANGED", u8"已选依赖或模型空间owner改变。", dependency.role, now.read, &old));
++        }
++        if (const auto problem = sourceProblem(*found, now.read, now.modelSpaceOwnerHandle, confirmed.window.origin.z,
++            dependency.role, dependency.textRequired)) { return checked(FactSubsetStatus::unsupported, *problem); }
++        if (found->exactClass != old.exactClass || !sameDefinition(old, *found)) {
++            return checked(FactSubsetStatus::stale, issue("FACT_DEFINITION_CHANGED", u8"所需有限定义值已改变，须重新确认。", dependency.role, now.read, &old));
++        }
++    }
++    return {FactSubsetStatus::currentSubsetMatches, {}};
++}
++
++Result<double> projectFactElevationMeters(const ProjectFacts& facts, FactPoint3 point) {
++    if (!validHistory(facts) || !onPlane(point, facts.datumPoint.z)) {
++        return failed<double>(issue("FACT_DATUM_UNSUPPORTED", u8"有限事实或待量点无效，首域仅支持同一XY平面。", "datum", facts.confirmed.read));
++    }
++    const auto dx = point.x - facts.datumPoint.x;
++    const auto dy = point.y - facts.datumPoint.y;
++    const auto projected = dx * facts.unitHeightDirection.x + dy * facts.unitHeightDirection.y;
++    const auto meters = facts.confirmed.datumMeters + projected * (facts.confirmed.units.mmPerInputUnit / 1000.0);
++    if (!std::isfinite(dx) || !std::isfinite(dy) || !std::isfinite(projected) || !std::isfinite(meters)) {
++        return failed<double>(issue("FACT_DATUM_UNSUPPORTED", u8"实际高度换算超出有限数值范围。", "datum", facts.confirmed.read));
++    }
++    return {meters, {}};
++}
++}
+--- /dev/null
++++ b/tests/ProjectFactsTests.cpp
+@@ -0,0 +1,212 @@
++#include "TestSupport.h"
++#include "../src/ProjectFacts.h"
++#include "../src/GenerationState.h"
++#include <cmath>
++#include <limits>
++
++namespace bce::test {
++namespace {
++ProjectFactConfirmation confirmation() {
++    ProjectFactConfirmation input;
++    input.persistentProjectId = "actual-project";
++    input.units = {25.4, "user:inches"};
++    input.read = {"old-document", "old-database", 9};
++    input.modelSpaceOwnerHandle = "1F";
++    input.title = {"A1", "1F", "AcDbText", true, true, input.read, FactText{}};
++    std::get<FactText>(input.title.definition).text = u8"东立面";
++    auto levelName = input.title;
++    levelName.rootHandle = "A2";
++    std::get<FactText>(levelName.definition).text = u8"首层基准";
++    auto levelValue = levelName; levelValue.rootHandle = "A3";
++    std::get<FactText>(levelValue.definition).text = "-1.250";
++    input.levelDeclarations = {{"floor-name", levelName}, {"level-value", levelValue}};
++    input.datumSource = {"B3", "1F", "AcDbLine", true, true, input.read,
++        FactLine{{100, 200, 0}, {300, 400, 0}}};
++    input.pointSelector = DatumPointSelector::lineEnd;
++    input.datumMeters = -1.25;
++    input.datumConfirmationSource = "user:actual-level";
++    input.heightDirection = {-3, 4, 0};
++    input.window = {{20, 30, 0}, {0.6, 0.8, 0}, {-0.8, 0.6, 0}, 50, 20};
++    input.selectionConfirmationSource = "user:selected-elevation-only";
++    return input;
++}
++ProjectFacts facts(const ProjectFactConfirmation& input) {
++    const auto result = confirmProjectFacts(input);
++    require(result.value.has_value() && result.issues.empty(), "valid actual facts must be confirmable");
++    return *result.value;
++}
++ProjectFactObservation observation(const ProjectFactConfirmation& input) {
++    ProjectFactObservation current{true, input.persistentProjectId, input.units,
++        {"reopened-document", "reopened-database", 1}, input.modelSpaceOwnerHandle,
++        {input.title, input.levelDeclarations[0].source, input.datumSource, input.levelDeclarations[1].source}};
++    for (auto& source : current.sources) { source.read = current.read; }
++    return current;
++}
++bool near(double left, double right) { return std::abs(left - right) < 1e-10; }
++void pointIs(FactPoint3 actual, FactPoint3 expected, const char* message) {
++    require(near(actual.x, expected.x) && near(actual.y, expected.y) && near(actual.z, expected.z), message);
++}
++void located(const FactSubsetCheck& check, FactSubsetStatus status, const char* handle, const char* code) {
++    require(check.status == status, "fact status must describe the changed dependency");
++    require(!check.issues.empty() && check.issues.front().code == code, "diagnostic must identify change kind");
++    const auto& source = check.issues.front().source;
++    require(source.entity && source.entity->handle == handle && !check.issues.front().message.empty(),
++        "dependency diagnostic must retain selected source handle");
++}
++}
++
++void factSelectorsReadActualDefinitionPoints() {
++    auto input = confirmation();
++    input.pointSelector = DatumPointSelector::lineStart;
++    pointIs(facts(input).datumPoint, {100, 200, 0}, "line start must come from typed start");
++    input.pointSelector = DatumPointSelector::lineEnd;
++    pointIs(facts(input).datumPoint, {300, 400, 0}, "line end must come from typed end");
++    input.datumSource.exactClass = "AcDbAlignedDimension";
++    input.datumSource.definition = FactAlignedDimension{{7, 8, 0}, {12, 13, 0}};
++    input.pointSelector = DatumPointSelector::dimXLine1;
++    pointIs(facts(input).datumPoint, {7, 8, 0}, "dimension xLine1 must not use displayed text or measurement");
++    input.pointSelector = DatumPointSelector::dimXLine2;
++    pointIs(facts(input).datumPoint, {12, 13, 0}, "dimension xLine2 must be explicit");
++    input.pointSelector = DatumPointSelector::lineEnd;
++    const auto wrong = confirmProjectFacts(input);
++    require(hasCode(wrong, "FACT_SELECTOR_UNSUPPORTED") && !wrong.value, "selector must match exact source class");
++    input.pointSelector = static_cast<DatumPointSelector>(99);
++    require(!confirmProjectFacts(input).value, "unknown selector must not default to a point");
++}
++void factElevationUsesConfirmedUnitsDirectionAndDatum() {
++    auto input = confirmation();
++    const auto original = facts(input);
++    const auto elevation = projectFactElevationMeters(original, {294, 408, 0});
++    require(elevation.value && near(*elevation.value, -0.996), "10 input inches above nonzero datum in explicit direction");
++    pointIs(original.unitHeightDirection, {-0.6, 0.8, 0}, "height direction must be normalized");
++    auto& line = std::get<FactLine>(input.datumSource.definition);
++    line.start.x += 10000; line.start.y -= 7000;
++    line.end.x += 10000; line.end.y -= 7000;
++    const auto moved = projectFactElevationMeters(facts(input), {10294, -6592, 0});
++    require(moved.value && near(*moved.value, *elevation.value), "translation must retain actual elevation");
++    require(!projectFactElevationMeters(original, {294, 408, 1}).value, "off-plane measurement is unsupported");
++}
++void factRotatedWindowRetainsFourCorners() {
++    const auto confirmed = facts(confirmation());
++    pointIs(confirmed.windowCorners[0], {20, 30, 0}, "window origin");
++    pointIs(confirmed.windowCorners[1], {50, 70, 0}, "rotated U corner");
++    pointIs(confirmed.windowCorners[2], {34, 82, 0}, "rotated opposite corner");
++    pointIs(confirmed.windowCorners[3], {4, 42, 0}, "rotated V corner must not be WCS bounding box");
++    auto input = confirmation();
++    input.window.v = input.window.u;
++    require(hasCode(confirmProjectFacts(input), "FACT_WINDOW_UNSUPPORTED"), "sheared/degenerate window rejected");
++}
++void factChangesLocateOnlyRequiredSubset() {
++    const auto input = confirmation();
++    const auto history = facts(input);
++    auto current = observation(input);
++    std::get<FactLine>(current.sources[2].definition).start.x += 1;
++    located(checkProjectFacts(history, current), FactSubsetStatus::stale, "B3", "FACT_DEFINITION_CHANGED");
++    current = observation(input);
++    std::get<FactText>(current.sources[0].definition).text += " revised";
++    located(checkProjectFacts(history, current), FactSubsetStatus::stale, "A1", "FACT_DEFINITION_CHANGED");
++    current = observation(input);
++    std::get<FactText>(current.sources[1].definition).alignmentPoint.y += 1;
++    located(checkProjectFacts(history, current), FactSubsetStatus::stale, "A2", "FACT_DEFINITION_CHANGED");
++    current = observation(input);
++    std::get<FactText>(current.sources[3].definition).text = "0.000";
++    located(checkProjectFacts(history, current), FactSubsetStatus::stale, "A3", "FACT_DEFINITION_CHANGED");
++    current = observation(input); current.sources[2].effectiveVisible = false;
++    located(checkProjectFacts(history, current), FactSubsetStatus::unsupported, "B3", "FACT_SOURCE_UNSUPPORTED");
++    current = observation(input); current.sources[2].ownerHandle = "2F";
++    located(checkProjectFacts(history, current), FactSubsetStatus::stale, "B3", "FACT_OWNER_CHANGED");
++    current = observation(input); current.units.mmPerInputUnit = 1;
++    require(checkProjectFacts(history, current).status == FactSubsetStatus::stale, "changed unit scale stales facts");
++    current = observation(input); current.units.confirmationSource = "different confirmation";
++    require(checkProjectFacts(history, current).status == FactSubsetStatus::stale, "unit provenance change stales facts");
++}
++void factReopenRequiresFreshConsistentObservation() {
++    const auto input = confirmation();
++    const auto history = facts(input);
++    auto current = observation(input);
++    current.sources[2].rootHandle = "000b3";
++    current.sources[2].ownerHandle = "001f";
++    require(checkProjectFacts(history, current).status == FactSubsetStatus::currentSubsetMatches,
++        "fresh same subset after reopen matches despite new runtime identity and revision");
++    require(checkProjectFacts(history, std::nullopt).status == FactSubsetStatus::stale, "history alone is not a current read");
++    current.readCompleted = false;
++    require(checkProjectFacts(history, current).status == FactSubsetStatus::stale, "incomplete observation is not current");
++    current = observation(input); current.sources[1].read.revision++;
++    located(checkProjectFacts(history, current), FactSubsetStatus::unsupported, "A2", "FACT_READ_INVALID");
++    current = observation(input); current.read.revision = 0;
++    for (auto& source : current.sources) { source.read = current.read; }
++    const auto zeroRevision = checkProjectFacts(history, current);
++    require(zeroRevision.status == FactSubsetStatus::unsupported && !zeroRevision.issues.empty() &&
++        zeroRevision.issues.front().code == "FACT_READ_INVALID", "even a consistent zero revision is not a valid current read");
++    current = observation(input); current.sources.erase(current.sources.begin() + 2);
++    located(checkProjectFacts(history, current), FactSubsetStatus::stale, "B3", "FACT_SOURCE_MISSING");
++    current = observation(input); current.persistentProjectId = "another-project";
++    require(checkProjectFacts(history, current).status == FactSubsetStatus::orphan, "project ID mismatch cannot rebind history");
++    current.persistentProjectId.clear();
++    require(checkProjectFacts(history, current).status == FactSubsetStatus::orphan, "removed project leaves orphan facts");
++}
++void factUnsupportedSourcesAndNonfiniteValuesAreRejected() {
++    const auto baseline = confirmation();
++    (void)facts(baseline);
++    auto input = baseline;
++    input.read.revision = 0; input.title.read = input.read; input.datumSource.read = input.read;
++    for (auto& level : input.levelDeclarations) { level.source.read = input.read; }
++    require(!confirmProjectFacts(input).value, "zero revision cannot establish confirmed read provenance");
++    input = baseline;
++    input.datumSource.exactClass = "TDbDimension";
++    require(hasCode(confirmProjectFacts(input), "FACT_SOURCE_UNSUPPORTED"), "TCH/derived class is not exact supported source");
++    input = baseline; input.datumSource.directRoot = false;
++    require(!confirmProjectFacts(input).value, "nested source cannot act as direct definition point");
++    input = baseline; std::get<FactText>(input.title.definition).hasFields = true;
++    require(!confirmProjectFacts(input).value, "field-bearing title cannot silently match raw text");
++    input = baseline; input.heightDirection = {};
++    require(!confirmProjectFacts(input).value, "zero direction cannot normalize");
++    input = baseline; input.datumMeters = std::numeric_limits<double>::infinity();
++    require(!confirmProjectFacts(input).value, "nonfinite datum rejected");
++    input = baseline; std::get<FactLine>(input.datumSource.definition).end.z = 1;
++    require(!confirmProjectFacts(input).value, "nonplanar line rejected");
++    input = baseline; input.window.width = std::numeric_limits<double>::max();
++    input.window.origin.x = std::numeric_limits<double>::max();
++    require(!confirmProjectFacts(input).value, "overflowing corners rejected");
++    for (const auto* malformed : {"0", "0xB3", "-1", " B3", "10000000000000000"}) {
++        input = baseline; input.datumSource.rootHandle = malformed;
++        require(!confirmProjectFacts(input).value, "malformed/overflowing handle rejected");
++    }
++}
++void factObservationRejectsAmbiguityAndUnsupportedChanges() {
++    const auto input = confirmation();
++    const auto history = facts(input);
++    auto current = observation(input);
++    current.sources.push_back(current.sources[2]); current.sources.back().rootHandle = "00b3";
++    require(checkProjectFacts(history, current).status == FactSubsetStatus::unsupported, "duplicate canonical source is ambiguous");
++    current = observation(input); current.sources[2].exactClass = "AcDbAlignedDimension";
++    located(checkProjectFacts(history, current), FactSubsetStatus::unsupported, "B3", "FACT_SOURCE_UNSUPPORTED");
++    current = observation(input); std::get<FactText>(current.sources[0].definition).rotation = std::numeric_limits<double>::quiet_NaN();
++    located(checkProjectFacts(history, current), FactSubsetStatus::unsupported, "A1", "FACT_SOURCE_UNSUPPORTED");
++    auto damaged = history; damaged.datumPoint.x++;
++    require(checkProjectFacts(damaged, observation(input)).status == FactSubsetStatus::unsupported,
++        "malformed historical derived point cannot be trusted");
++}
++void factSubsetMatchNeverAuthorizesGeneration() {
++    const auto input = confirmation();
++    const auto history = facts(input);
++    auto current = observation(input);
++    // An unrelated source is outside the three selected dependencies.
++    auto other = current.sources[2]; other.rootHandle = "CAFE";
++    std::get<FactLine>(other.definition).end.x = -12345;
++    current.sources.push_back(other);
++    require(checkProjectFacts(history, current).status == FactSubsetStatus::currentSubsetMatches,
++        "unrelated building edit is not a claim of complete scene equality");
++    ProjectConfig config;
++    ObservedScene unqualified;
++    GenerationRequest request;
++    require(!planGenerationCommand(unqualified, config, request).value,
++        "finite subset match cannot supply complete generation qualification");
++    auto dimensionInput = input;
++    dimensionInput.datumSource.exactClass = "AcDbAlignedDimension";
++    dimensionInput.datumSource.definition = FactAlignedDimension{{1, 2, 0}, {3, 4, 0}};
++    dimensionInput.pointSelector = DatumPointSelector::dimXLine1;
++    require(checkProjectFacts(facts(dimensionInput), observation(dimensionInput)).status == FactSubsetStatus::currentSubsetMatches,
++        "dimension subset does not require measurement, displayed text or style fingerprints");
++}
++} // namespace bce::test
+--- a/tests/CoreTests.cpp
++++ b/tests/CoreTests.cpp
+@@ -3,6 +3,14 @@
+ #include <iostream>
+ #include <string>
+ namespace bce::test {
++void factSelectorsReadActualDefinitionPoints();
++void factElevationUsesConfirmedUnitsDirectionAndDatum();
++void factRotatedWindowRetainsFourCorners();
++void factChangesLocateOnlyRequiredSubset();
++void factReopenRequiresFreshConsistentObservation();
++void factUnsupportedSourcesAndNonfiniteValuesAreRejected();
++void factObservationRejectsAmbiguityAndUnsupportedChanges();
++void factSubsetMatchNeverAuthorizesGeneration();
+ void missingConfigDoesNotWriteDrawing();
+ void documentSwitchRejectsStaleCommit();
+ void repeatedBuildDoesNotDuplicate();
+@@ -71,7 +79,15 @@
+ 
+ namespace {
+ struct TestCase { const char* name; void (*run)(); };
+-const std::array<TestCase, 77> cases{{
++const std::array<TestCase, 85> cases{{
++    {"FactSelectorsReadActualDefinitionPoints", bce::test::factSelectorsReadActualDefinitionPoints},
++    {"FactElevationUsesConfirmedUnitsDirectionAndDatum", bce::test::factElevationUsesConfirmedUnitsDirectionAndDatum},
++    {"FactRotatedWindowRetainsFourCorners", bce::test::factRotatedWindowRetainsFourCorners},
++    {"FactChangesLocateOnlyRequiredSubset", bce::test::factChangesLocateOnlyRequiredSubset},
++    {"FactReopenRequiresFreshConsistentObservation", bce::test::factReopenRequiresFreshConsistentObservation},
++    {"FactUnsupportedSourcesAndNonfiniteValuesAreRejected", bce::test::factUnsupportedSourcesAndNonfiniteValuesAreRejected},
++    {"FactObservationRejectsAmbiguityAndUnsupportedChanges", bce::test::factObservationRejectsAmbiguityAndUnsupportedChanges},
++    {"FactSubsetMatchNeverAuthorizesGeneration", bce::test::factSubsetMatchNeverAuthorizesGeneration},
+     {"MissingConfigDoesNotWriteDrawing", bce::test::missingConfigDoesNotWriteDrawing},
+     {"DocumentSwitchRejectsStaleCommit", bce::test::documentSwitchRejectsStaleCommit},
+     {"RepeatedBuildDoesNotDuplicate", bce::test::repeatedBuildDoesNotDuplicate},
+--- a/tests/ElevationCoreTests.vcxproj
++++ b/tests/ElevationCoreTests.vcxproj
+@@ -7,8 +7,8 @@
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+   <PropertyGroup><OutDir>..\..\out\</OutDir><IntDir>..\..\obj\</IntDir><TargetName>ElevationCoreTests</TargetName></PropertyGroup>
+   <ItemDefinitionGroup><ClCompile><WarningLevel>Level4</WarningLevel><TreatWarningAsError>true</TreatWarningAsError><SDLCheck>true</SDLCheck><ConformanceMode>true</ConformanceMode><LanguageStandard>stdcpp17</LanguageStandard><RuntimeLibrary>MultiThreaded</RuntimeLibrary><AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions><ExceptionHandling>Sync</ExceptionHandling></ClCompile><Link><SubSystem>Console</SubSystem></Link></ItemDefinitionGroup>
+-  <ItemGroup><ClCompile Include="..\src\ElevationModel.cpp" /><ClCompile Include="..\src\Recognition.cpp" /><ClCompile Include="..\src\AnnotationRules.cpp" /><ClCompile Include="..\src\MaterialRules.cpp" /><ClCompile Include="AnnotationRulesTests.cpp" /><ClCompile Include="MaterialRulesTests.cpp" /><ClCompile Include="RecognitionTests.cpp" /><ClCompile Include="CoreTests.cpp" /><ClCompile Include="CommandStateTests.cpp" /><ClCompile Include="..\src\GenerationState.cpp" /><ClCompile Include="LayoutTests.cpp" /><ClCompile Include="..\src\Layout.cpp" /><ClCompile Include="ReferenceTests.cpp" /><ClCompile Include="ScopeTests.cpp" /></ItemGroup>
+-  <ItemGroup><ClInclude Include="..\src\ElevationModel.h" /><ClInclude Include="TestSupport.h" /></ItemGroup>
++  <ItemGroup><ClCompile Include="..\src\ElevationModel.cpp" /><ClCompile Include="..\src\Recognition.cpp" /><ClCompile Include="..\src\AnnotationRules.cpp" /><ClCompile Include="..\src\MaterialRules.cpp" /><ClCompile Include="AnnotationRulesTests.cpp" /><ClCompile Include="MaterialRulesTests.cpp" /><ClCompile Include="RecognitionTests.cpp" /><ClCompile Include="CoreTests.cpp" /><ClCompile Include="ProjectFactsTests.cpp" /><ClCompile Include="..\src\ProjectFacts.cpp" /><ClCompile Include="CommandStateTests.cpp" /><ClCompile Include="..\src\GenerationState.cpp" /><ClCompile Include="LayoutTests.cpp" /><ClCompile Include="..\src\Layout.cpp" /><ClCompile Include="ReferenceTests.cpp" /><ClCompile Include="ScopeTests.cpp" /></ItemGroup>
++  <ItemGroup><ClInclude Include="..\src\ElevationModel.h" /><ClInclude Include="TestSupport.h" /><ClInclude Include="..\src\ProjectFacts.h" /></ItemGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+ </Project>
+ 
+--- a/tools/build.ps1
++++ b/tools/build.ps1
+@@ -11,7 +11,7 @@
+ $receipt = [ordered]@{ target=$Target; label=$Label; startedUtc=[DateTime]::UtcNow.ToString('o'); buildRoot=$buildRoot; inputs=@(); commands=@(); outputs=@(); buildExitCode=$null; testExitCode=$null; unknownCaseExitCode=$null; exitCode=1 }
+ $finalExit = 1
+ try {
+-    $inputs = @('src/GenerationState.h','src/GenerationState.cpp','tests/CommandStateTests.cpp','src/ElevationModel.h','src/ElevationModel.cpp','src/Recognition.h','src/Recognition.cpp','src/RuleModel.h','src/AnnotationRules.h','src/AnnotationRules.cpp','src/MaterialRules.h','src/MaterialRules.cpp','tests/AnnotationRulesTests.cpp','tests/MaterialRulesTests.cpp','src/WriteContracts.h','src/Layout.h','src/Layout.cpp','tests/LayoutTests.cpp','tests/CoreTests.cpp','tests/RecognitionTests.cpp','tests/ReferenceTests.cpp','tests/ScopeTests.cpp','tests/TestSupport.h','tests/ElevationCoreTests.vcxproj','tools/build.ps1','tests/fixtures/scheme-scene.tsv','tests/fixtures/scheme-expected.tsv','tests/fixtures/scheme-scene-manifest.json')
++    $inputs = @('src/ProjectFacts.h','src/ProjectFacts.cpp','tests/ProjectFactsTests.cpp','src/GenerationState.h','src/GenerationState.cpp','tests/CommandStateTests.cpp','src/ElevationModel.h','src/ElevationModel.cpp','src/Recognition.h','src/Recognition.cpp','src/RuleModel.h','src/AnnotationRules.h','src/AnnotationRules.cpp','src/MaterialRules.h','src/MaterialRules.cpp','tests/AnnotationRulesTests.cpp','tests/MaterialRulesTests.cpp','src/WriteContracts.h','src/Layout.h','src/Layout.cpp','tests/LayoutTests.cpp','tests/CoreTests.cpp','tests/RecognitionTests.cpp','tests/ReferenceTests.cpp','tests/ScopeTests.cpp','tests/TestSupport.h','tests/ElevationCoreTests.vcxproj','tools/build.ps1','tests/fixtures/scheme-scene.tsv','tests/fixtures/scheme-expected.tsv','tests/fixtures/scheme-scene-manifest.json')
+     foreach ($relative in $inputs) {
+         $source = Join-Path $projectRoot $relative
+         $destination = Join-Path (Join-Path $buildRoot 'input') $relative

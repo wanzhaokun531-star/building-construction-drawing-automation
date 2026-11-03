@@ -1,0 +1,263 @@
+#include "NativeEvidence.h"
+#include "TextRangeReplayPolicy.h"
+#include "OwnedTextControlFile.h"
+#include <aced.h>
+#include <adscodes.h>
+#include <acutads.h>
+#include <acdocman.h>
+#include <accmd.h>
+class CPoint;
+#include <core_rxmfcapi.h>
+#include <dbapserv.h>
+#include <dbents.h>
+#include <dbsymtb.h>
+#include <dbsymutl.h>
+#include <dbdict.h>
+#include <dblayout.h>
+#include <acgi.h>
+#include <drawable.h>
+#include <rxregsvc.h>
+#include <AcPlPlotFactory.h>
+#include <AcPlPlotEngine.h>
+#include <AcPlPlotInfo.h>
+#include <AcPlPlotInfoValidator.h>
+#include <dbplotsettings.h>
+#include <dbplotsetval.h>
+#include <algorithm>
+#include <array>
+#include <cmath>
+#include <iomanip>
+#include <locale>
+#include <memory>
+#include <sstream>
+#include <tuple>
+
+namespace {
+using namespace bce::native;
+HMODULE moduleHandle{};
+unsigned prepareCalls{},captureCalls{};
+void ok(Acad::ErrorStatus s,const char* what){require(s==Acad::eOk,std::string(what)+" status="+std::to_string(s));}
+std::string q(const char* s){return quote(std::string(s));}
+std::string num(double v){require(std::isfinite(v),"nonfinite observed value");std::ostringstream s;s.imbue(std::locale::classic());s<<std::setprecision(17)<<v;return s.str();}
+std::string pt(const AcGePoint3d& p){return array({num(p.x),num(p.y),num(p.z)});}
+std::string vec(const AcGeVector3d& p){return array({num(p.x),num(p.y),num(p.z)});}
+std::string mat(const AcGeMatrix3d& m){std::vector<std::string> a;for(int r=0;r<4;++r)for(int c=0;c<4;++c)a.push_back(num(m(r,c)));return array(a);}
+std::wstring ws(const wchar_t* v){return v?v:L"";}
+struct Close{void operator()(AcDbObject* p)const noexcept{if(p)p->close();}};
+template<class T>std::unique_ptr<T,Close> opened(AcDbObjectId id,AcDb::OpenMode mode=AcDb::kForRead){T* p{};const auto s=acdbOpenObject(p,id,mode);std::unique_ptr<T,Close> v(p);ok(s,"open object");require(p!=nullptr,"null open");return v;}
+void saveNew(const std::wstring& path,const std::string& bytes){auto f=create_new(path);write_flushed(f.get(),bytes);}
+
+struct Control{
+    const char* id;const wchar_t* text;AcGePoint3d position;double angle{},tracking{1},oblique{};bool backward{},nested{};
+};
+const std::array<Control,5> controls{{
+    {"digits",L"1234567890",{25,30,0}},
+    {"chinese",L"中文测试",{25,30,0}},
+    {"rotated-backward",L"123ABC",{88,28,0},0.47,1,0,true},
+    {"nested-nonuniform",L"1200中文",{4,6,0},0.18,1,0,false,true},
+    {"tracking-oblique",L"12中文ABC",{25,30,0},0,1.6,0.25}
+}};
+const std::array<AcGePoint3d,5> calibration{{{10,10,0},{110,10,0},{10,80,0},{110,80,0},{67,43,0}}};
+struct Session;
+void onIdle();
+struct Gate final:AcApDocManagerReactor,AcEdCommandStackReactor{
+    explicit Gate(Session& v):s(v){}
+    void commandWillStart(AcEdCommand*,AcEdCommandEventArgs*)override;
+    void commandEnded(AcEdCommand*,AcEdCommandEventArgs*)override;
+    void documentBecameCurrent(AcApDocument*)override;
+    void documentToBeDestroyed(AcApDocument*)override;
+    Session& s;
+};
+struct Session{
+    Config config;std::unique_ptr<Evidence> evidence;std::unique_ptr<Gate> gate;
+    AcDbDatabase* ambient{};AcApDocument* prepareDoc{};AcDbDatabase* target{};AcDbObjectId marker;
+    bool docAttached{},commandAttached{},idleAttached{},openStarted{},openEnded{},queued{},capturing{},finished{};
+    std::string error,targetSHA,readySHA;std::wstring font,bigfont;std::string fontSHA,bigfontSHA;
+    int active{-1};std::vector<std::string> samples,pages,callbackRecords;std::string observed;
+    unsigned callbacks{};
+    File gateLog;unsigned gateSequence{},idleCalls{};std::string lastIdleSnapshot;bool prepareDocDestroyed{};
+    DWORD preparePid{},prepareThread{};std::wstring ambientPath;std::uint64_t targetBytes{};bool prepareComplete{};
+    std::wstring controlPath()const{return config.session+L"\\text-range-native-job\\control.dwg";}
+    bool ownsCurrent()const{
+        auto* d=acDocManager->curDocument();if(!d||d!=acDocManager->mdiActiveDocument()||d==prepareDoc)return false;
+        auto* db=d->database();if(!db||db==ambient||db!=acdbHostApplicationServices()->workingDatabase())return false;
+        const ACHAR* name{};return db->getFilename(name)==Acad::eOk&&name&&_wcsicmp(name,controlPath().c_str())==0;
+    }
+    void detach(){if(idleAttached){acedRemoveOnIdleWinMsg(onIdle);idleAttached=false;}if(commandAttached){acedRegCmds->removeReactor(gate.get());commandAttached=false;}if(docAttached){acDocManager->removeReactor(gate.get());docAttached=false;}}
+    ~Session(){detach();}
+};
+std::unique_ptr<Session> session;
+std::string address(const void* p){return std::to_string(reinterpret_cast<std::uintptr_t>(p));}
+std::string gateSnapshot(Session& s){
+    auto* current=acDocManager->curDocument();auto* active=acDocManager->mdiActiveDocument();auto* working=acdbHostApplicationServices()->workingDatabase();
+    const ACHAR* name{};const auto status=current&&current->database()?current->database()->getFilename(name):Acad::eNoDatabase;
+    return object({{"openStarted",s.openStarted?"true":"false"},{"openEnded",s.openEnded?"true":"false"},{"queued",s.queued?"true":"false"},{"capturing",s.capturing?"true":"false"},
+        {"prepareDoc",address(s.prepareDoc)},{"prepareDocDestroyed",s.prepareDocDestroyed?"true":"false"},{"currentDoc",address(current)},{"activeDoc",address(active)},
+        {"ambientDatabase",address(s.ambient)},{"currentDatabase",address(current?current->database():nullptr)},{"workingDatabase",address(working)},
+        {"filenameStatus",std::to_string(status)},{"currentPath",quote(ws(name))},{"expectedPath",quote(s.controlPath())},{"pathMatches",name&&_wcsicmp(name,s.controlPath().c_str())==0?"true":"false"},
+        {"ownsCurrent",s.ownsCurrent()?"true":"false"},{"quiescent",current&&current->isQuiescent()?"true":"false"},{"inputPending",current?std::to_string(acDocManager->inputPending(current)):"null"}});
+}
+void traceGate(Session& s,const char* event,Fields fields={})noexcept{try{
+    require(s.gateLog.valid()&&++s.gateSequence<=10000,"gate log unavailable/budget");fields.push_back({"event",q(event)});fields.push_back({"sequence",std::to_string(s.gateSequence)});fields.push_back({"pid",std::to_string(GetCurrentProcessId())});fields.push_back({"prepareCalls",std::to_string(prepareCalls)});fields.push_back({"captureCalls",std::to_string(captureCalls)});fields.push_back({"nonce",quote(s.config.nonce)});fields.push_back({"state",gateSnapshot(s)});write_flushed(s.gateLog.get(),object(fields)+"\n");
+}catch(...){s.error="gate trace failed";}}
+void Gate::commandWillStart(AcEdCommand* c,AcEdCommandEventArgs* a){if(c&&c->globalName()&&_wcsicmp(c->globalName(),L"S1OPENPROBECONTROL")==0)s.openStarted=true;traceGate(s,"commandWillStart",{{"globalName",quote(ws(c?c->globalName():nullptr))},{"groupName",quote(ws(a?a->groupName():nullptr))},{"status",a?std::to_string(a->status()):"null"}});}
+void Gate::commandEnded(AcEdCommand* c,AcEdCommandEventArgs* a){if(c&&c->globalName()&&_wcsicmp(c->globalName(),L"S1OPENPROBECONTROL")==0)s.openEnded=s.openStarted&&a&&a->status()==kCmdStatusNone;traceGate(s,"commandEnded",{{"globalName",quote(ws(c?c->globalName():nullptr))},{"groupName",quote(ws(a?a->groupName():nullptr))},{"status",a?std::to_string(a->status()):"null"}});}
+void Gate::documentBecameCurrent(AcApDocument* d){traceGate(s,"documentBecameCurrent",{{"eventDocument",address(d)},{"eventPath",quote(ws(d?d->fileName():nullptr))}});}
+void Gate::documentToBeDestroyed(AcApDocument* d){if(d==s.prepareDoc)s.prepareDocDestroyed=true;traceGate(s,"documentToBeDestroyed",{{"eventDocument",address(d)},{"eventPath",quote(ws(d?d->fileName():nullptr))},{"isPrepareDoc",d==s.prepareDoc?"true":"false"}});}
+void onIdle(){
+    if(!session)return;auto& s=*session;++s.idleCalls;try{const auto state=gateSnapshot(s);if(state!=s.lastIdleSnapshot){s.lastIdleSnapshot=state;traceGate(s,"idle.state",{{"idleCall",std::to_string(s.idleCalls)}});}}catch(...){s.error="idle diagnostic failed";}
+    if(s.queued||s.capturing||!s.openEnded||!s.ownsCurrent())return;
+    auto* d=acDocManager->curDocument();if(!d->isQuiescent()||acDocManager->inputPending(d)!=0)return;
+    s.queued=true;traceGate(s,"idle.queue.before");const auto status=acDocManager->sendStringToExecute(d,L"BCE_TEXT_RANGE_CAPTURE\n",false,false,false);traceGate(s,"idle.queue.after",{{"status",std::to_string(status)}});
+    if(status!=Acad::eOk){s.error="idle capture queue failed";try{s.evidence->error(s.error);s.evidence->finish(s.config,"failed");s.evidence.reset();s.finished=true;}catch(...){}}
+}
+std::wstring findFont(AcDbDatabase* db,const wchar_t* name){AcString path;ok(acdbHostApplicationServices()->findFile(path,name,db,AcDbHostApplicationServices::kFontFile),"resolve controlled font");std::wstring p=path.kACharPtr();require(p.size()>3&&p[1]==L':'&&GetFileAttributesW(p.c_str())!=INVALID_FILE_ATTRIBUTES,"font must be existing absolute file");return p;}
+
+class TextOverrule final:public AcGiDrawableOverrule{
+public:
+    explicit TextOverrule(Session& v):s(v){}
+    bool isApplicable(const AcRxObject* value)const override{const auto* p=AcDbPoint::cast(value);return s.capturing&&p&&p->objectId()==s.marker&&p->database()==s.target;}
+    Adesk::Boolean worldDraw(AcGiDrawable* drawable,AcGiWorldDraw* wd)override{
+        try{
+            auto* p=AcDbPoint::cast(drawable);require(p&&p->objectId()==s.marker&&p->database()==s.target,"nonowned drawable");
+            require(wd&&wd->context()&&wd->context()->database()==s.target,"real context database mismatch");require(++s.callbacks<=2000,"callback budget");
+            wd->subEntityTraits().setColor(7);wd->subEntityTraits().setLineWeight(AcDb::kLnWt000);
+            auto& g=wd->geometry();
+            if(s.active<0){for(const auto& c:calibration){AcGePoint3d line[]{c-AcGeVector3d(1,0,0),c+AcGeVector3d(1,0,0)};const auto raw=g.polyline(2,line);traceGate(s,"gi.polyline.return",{{"center",pt(c)},{"rawReturn",raw?"true":"false"},{"falseMeansStored","true"}});require(!raw,"calibration polyline terminated");}return Adesk::kTrue;}
+            const auto& c=controls.at(static_cast<std::size_t>(s.active));
+            AcGiTextStyle style(s.font.c_str(),s.bigfont.c_str(),7,0.75,c.oblique,c.tracking,c.backward,false,false,false,false);
+            const auto beforeFont=ws(style.fileName()),beforeBig=ws(style.bigFontFileName());
+            const int flags=style.loadStyleRec(s.target);
+            saveNew(s.config.output+L"\\font-load-"+std::to_wstring(s.callbacks)+L".json",object({{"id",q(c.id)},
+                {"beforeFont",quote(beforeFont)},{"beforeBigfont",quote(beforeBig)},{"afterFont",quote(ws(style.fileName()))},{"afterBigfont",quote(ws(style.bigFontFileName()))},
+                {"loadStyleRecBits",std::to_string(flags)},{"fontPath",quote(s.font)},{"fontSHA256",q(s.fontSHA.c_str())},{"bigfontPath",quote(s.bigfont)},{"bigfontSHA256",q(s.bigfontSHA.c_str())}}));
+            require((flags&1)!=0&&(flags&30)==0,"controlled font missing/substituted");
+            require(_wcsicmp(style.fileName(),s.font.c_str())==0&&_wcsicmp(style.bigFontFileName(),s.bigfont.c_str())==0,"controlled font changed after load");
+            require(sha256(s.font)==s.fontSHA&&sha256(s.bigfont)==s.bigfontSHA,"font bytes changed");
+            AcGeMatrix3d outer,inner;int pushed{};
+            struct Pop{AcGiGeometry& g;int& count;Session& s;~Pop(){while(count>0){const auto raw=g.popModelTransform();traceGate(s,"gi.popModelTransform.return",{{"rawReturn",raw?"true":"false"},{"trueMeansSuccess","true"}});if(!raw&&s.error.empty())s.error="popModelTransform failed";--count;}}} pop{g,pushed,s};
+            if(c.nested){
+                outer.setCoordSystem({32,25,0},{1.4,0.3,0},{0.2,0.8,0},{0,0,1});
+                inner.setCoordSystem({4,3,0},{0.8,0.25,0},{-0.15,1.1,0},{0,0,1});
+                const auto outerRaw=g.pushModelTransform(outer);traceGate(s,"gi.pushModelTransform.return",{{"level",q("outer")},{"rawReturn",outerRaw?"true":"false"},{"trueMeansSuccess","true"}});require(outerRaw,"push outer failed");++pushed;
+                const auto innerRaw=g.pushModelTransform(inner);traceGate(s,"gi.pushModelTransform.return",{{"level",q("inner")},{"rawReturn",innerRaw?"true":"false"},{"trueMeansSuccess","true"}});require(innerRaw,"push inner failed");++pushed;
+            }
+            AcGeMatrix3d net;g.getModelToWorldTransform(net);
+            const AcGeVector3d normal=AcGeVector3d::kZAxis,direction(std::cos(c.angle),std::sin(c.angle),0),y=normal.crossProduct(direction);
+            require(std::abs(normal.dotProduct(direction))<1e-12,"unknown text basis");
+            AcGePoint2d lo,hi;const int count=static_cast<int>(wcslen(c.text));
+            const auto status=style.extentsBox(c.text,true,count,true,lo,hi,wd);ok(status,"real-context extentsBox");
+            require(std::isfinite(lo.x)&&std::isfinite(lo.y)&&std::isfinite(hi.x)&&std::isfinite(hi.y)&&lo.x<hi.x&&lo.y<hi.y,"invalid string box");
+            std::vector<std::string> corners,omitted;for(const AcGePoint2d& v:std::array<AcGePoint2d,4>{{{lo.x,lo.y},{hi.x,lo.y},{hi.x,hi.y},{lo.x,hi.y}}}){
+                const auto local=c.position+direction*v.x+y*v.y;corners.push_back(pt(net*local));omitted.push_back(pt(local));
+            }
+            std::vector<std::string> units;for(int i=0;i<count;++i)units.push_back(std::to_string(static_cast<unsigned short>(c.text[i])));
+            Fields f{{"id",q(c.id)},{"text",quote(std::wstring(c.text))},{"utf16",array(units)},{"lengthCodeUnits",std::to_string(count)},{"raw","true"},{"penups","true"},
+                {"fontRequestedName",q("simplex.shx")},{"bigfontRequestedName",q("gbcbig.shx")},{"fontBeforeLoad",quote(beforeFont)},{"bigfontBeforeLoad",quote(beforeBig)},
+                {"fontAfterLoad",quote(ws(style.fileName()))},{"bigfontAfterLoad",quote(ws(style.bigFontFileName()))},{"loadStyleRecBits",std::to_string(flags)},
+                {"fontPath",quote(s.font)},{"fontSHA256",q(s.fontSHA.c_str())},{"bigfontPath",quote(s.bigfont)},{"bigfontSHA256",q(s.bigfontSHA.c_str())},
+                {"height",num(style.textSize())},{"xScale",num(style.xScale())},{"tracking",num(style.trackingPercent())},{"oblique",num(style.obliquingAngle())},
+                {"backward",c.backward?"true":"false"},{"upsideDown","false"},{"position",pt(c.position)},{"normal",vec(normal)},{"direction",vec(direction)},
+                {"outerTransform",mat(outer)},{"innerTransform",mat(inner)},{"modelToWorld",mat(net)},{"rangeMin",array({num(lo.x),num(lo.y)})},{"rangeMax",array({num(hi.x),num(hi.y)})},
+                {"worldCorners",array(corners)},{"omittedNetTransformCorners",array(omitted)},{"extentsStatus",std::to_string(status)},
+                {"contextDatabaseMatchesTarget","true"},
+                {"stringRangeComputed","true"},{"renderContainmentVerified","false"},{"glyphComplete","false"},{"capabilityUpgradeAllowed","false"}};
+            const auto observed=object(f);if(s.observed.empty())s.observed=observed;else require(s.observed==observed,"same plot callback changed text/range/context");
+            s.callbackRecords.push_back(object({{"id",q(c.id)},{"contextAddress",std::to_string(reinterpret_cast<std::uintptr_t>(wd->context()))},{"regenType",std::to_string(wd->regenType())},{"modelToWorld",mat(net)},{"contextDatabaseMatchesTarget","true"},{"loadStyleRecBits",std::to_string(flags)}}));
+            const auto raw=g.text(c.position,normal,direction,c.text,count,true,style);traceGate(s,"gi.text.return",{{"id",q(c.id)},{"rawReturn",raw?"true":"false"},{"falseMeansStored","true"}});require(!raw,"native text request terminated");return Adesk::kTrue;
+        }catch(const std::exception& e){s.error=e.what();return Adesk::kTrue;}catch(...){s.error="draw callback unknown exception";return Adesk::kTrue;}
+    }
+private:Session& s;
+};
+
+std::unique_ptr<TextOverrule> installedRule;
+bool ruleAttached{},priorOverruling{};
+bool removeRule()noexcept{
+    if(ruleAttached){if(AcRxOverrule::removeOverrule(AcDbPoint::desc(),installedRule.get())!=Acad::eOk)return false;ruleAttached=false;AcRxOverrule::setIsOverruling(priorOverruling);}
+    installedRule.reset();return true;
+}
+#include "TextRangePlot.inc"
+
+auto identity(const Config& c){return std::tie(c.nonce,c.session,c.scheme,c.reference,c.output,c.caseName,c.modulePath,c.iniPath,c.desktop,c.expectedModuleSHA256,c.moduleSHA256,c.iniSHA256,c.schemeSHA256,c.referenceSHA256);}
+std::uint64_t fileBytes(const std::wstring& path){WIN32_FILE_ATTRIBUTE_DATA a{};require(GetFileAttributesExW(path.c_str(),GetFileExInfoStandard,&a)&&!(a.dwFileAttributes&FILE_ATTRIBUTE_DIRECTORY),"artifact metadata unavailable");return (static_cast<std::uint64_t>(a.nFileSizeHigh)<<32)|a.nFileSizeLow;}
+bce::text_range::ReplayFacts replayFacts(Session& s,const Config& config){
+    using bce::text_range::ReplayFacts;ReplayFacts f;f.identityMatches=identity(config)==identity(s.config);f.pid=GetCurrentProcessId();f.expectedPid=s.preparePid;f.thread=GetCurrentThreadId();f.expectedThread=s.prepareThread;
+    f.prepared=s.prepareComplete;f.pendingEvidence=s.evidence!=nullptr;f.documentHook=s.docAttached;f.commandHook=s.commandAttached;f.idleHook=s.idleAttached;f.errorEmpty=s.error.empty();
+    f.openStarted=s.openStarted;f.openEnded=s.openEnded;f.queued=s.queued;f.capturing=s.capturing;f.finished=s.finished;f.hasTarget=s.target!=nullptr;f.hasMarker=!s.marker.isNull();f.callbacks=s.callbacks;f.outputCount=static_cast<unsigned>(s.pages.size()+s.samples.size()+s.callbackRecords.size());
+    auto* doc=acDocManager->curDocument();f.currentDocument=reinterpret_cast<std::uintptr_t>(doc);f.activeDocument=reinterpret_cast<std::uintptr_t>(acDocManager->mdiActiveDocument());f.prepareDocument=reinterpret_cast<std::uintptr_t>(s.prepareDoc);
+    f.currentDatabase=reinterpret_cast<std::uintptr_t>(doc?doc->database():nullptr);f.workingDatabase=reinterpret_cast<std::uintptr_t>(acdbHostApplicationServices()->workingDatabase());f.ambientDatabase=reinterpret_cast<std::uintptr_t>(s.ambient);
+    f.prepareDocumentDestroyed=s.prepareDocDestroyed;f.ambientPathMatches=doc&&s.ambientPath==ws(doc->fileName());
+    f.readyHashMatches=!s.readySHA.empty()&&sha256(s.config.output+L"\\prepare-ready.json")==s.readySHA;
+    f.targetHashMatches=!s.targetSHA.empty()&&sha256(s.config.output+L"\\text-range-target.dwg")==s.targetSHA;
+    f.targetBytesMatch=s.targetBytes>0&&fileBytes(s.config.output+L"\\text-range-target.dwg")==s.targetBytes;return f;
+}
+void replayPolicyControls(Session& s){
+    const auto healthy=replayFacts(s,s.config);std::vector<std::string> results;
+    auto check=[&](const char* name,const bce::text_range::ReplayFacts& facts,const char* expected){const auto* reason=bce::text_range::replayRejection(facts);const bool passed=expected?(reason&&strcmp(reason,expected)==0):!reason;
+        results.push_back(object({{"name",q(name)},{"accepted",reason?"false":"true"},{"rejection",reason?q(reason):"null"},{"passed",passed?"true":"false"}}));require(passed,std::string("N9a replay policy control failed: ")+name);};
+    check("exact-healthy-pending",healthy,nullptr);auto f=healthy;f.identityMatches=false;check("identity-tampered",f,"identity");f=healthy;++f.thread;check("wrong-thread",f,"execution");
+    f=healthy;f.openStarted=true;check("open-started",f,"phase");f=healthy;f.finished=true;f.pendingEvidence=false;check("capture-finished",f,"phase");f=healthy;f.queued=true;check("already-queued",f,"phase");
+    f=healthy;++f.currentDocument;check("other-current-document",f,"ambient");f=healthy;f.prepareDocumentDestroyed=true;check("prepare-document-destroyed",f,"ambient");
+    f=healthy;f.targetHashMatches=false;check("target-hash-mismatch",f,"artifacts");f=healthy;f.targetBytesMatch=false;check("target-size-mismatch",f,"artifacts");
+    saveNew(s.config.output+L"\\prepare-policy-controls.json",object({{"contract",q("bce.text-range-replay-policy-controls.v1")},{"scope",q("copied value-only policy facts; no live session mutations, no command replay")},{"checks",array(results)},{"actualPrepareCalls",std::to_string(prepareCalls)}}));
+}
+
+void capture()noexcept{
+    ++captureCalls;if(!session)return;auto& s=*session;
+    traceGate(s,"capture.enter");
+    try{
+        require(!s.capturing&&!s.finished&&s.queued&&s.openEnded&&s.ownsCurrent(),"capture gate/phase invalid");
+        validate_identity(s.config);require(sha256(s.config.output+L"\\prepare-ready.json")==s.readySHA,"prepared ready changed before capture");
+        const auto fileObserver=[&s](const std::string& event,const Fields& fields){traceGate(s,event.c_str(),fields);};
+        const auto beforeFile=bce::text_range::readOwnedTextControl(s.config.session,s.targetSHA,s.targetBytes,fileObserver);
+        s.capturing=true;s.target=acDocManager->curDocument()->database();require(s.target->tilemode(),"control must be model space");
+        auto ms=opened<AcDbBlockTableRecord>(acdbSymUtil()->blockModelSpaceId(s.target),AcDb::kForWrite);
+        AcDbBlockTableRecordIterator* raw{};ok(ms->newIterator(raw),"empty target iterator");std::unique_ptr<AcDbBlockTableRecordIterator> it(raw);require(it->done(),"control target not empty");it.reset();
+        auto marker=std::make_unique<AcDbPoint>(AcGePoint3d(75,50,0));marker->setDatabaseDefaults(s.target);ok(ms->appendAcDbEntity(s.marker,marker.get()),"append owned marker");marker.release()->close();ms.reset();
+        s.font=findFont(s.target,L"simplex.shx");s.bigfont=findFont(s.target,L"gbcbig.shx");s.fontSHA=sha256(s.font);s.bigfontSHA=sha256(s.bigfont);
+        require(!installedRule&&!ruleAttached,"previous overrule retained");installedRule=std::make_unique<TextOverrule>(s);priorOverruling=AcRxOverrule::isOverruling();const bool old=priorOverruling;
+        ok(AcRxOverrule::addOverrule(AcDbPoint::desc(),installedRule.get(),false),"add local overrule");ruleAttached=true;
+        struct Restore{~Restore(){removeRule();}} restore;
+        AcRxOverrule::setIsOverruling(true);
+        BackgroundScope background;background.activate();
+        s.active=-1;s.pages.push_back(plotPage(s,L"projection"));require(s.error.empty(),s.error);
+        for(std::size_t i=0;i<controls.size();++i){s.active=static_cast<int>(i);s.observed.clear();s.pages.push_back(plotPage(s,std::wstring(controls[i].id,controls[i].id+strlen(controls[i].id)).c_str()));require(s.error.empty(),s.error);require(!s.observed.empty(),"plot emitted no native text callback");s.samples.push_back(s.observed);}
+        background.restore();require(background.restored,"BACKGROUNDPLOT restoration failed");
+        require(removeRule(),"remove local overrule failed; retained safely, unload refused");require(AcRxOverrule::isOverruling()==old,"overruling restoration mismatch");
+        require(s.ownsCurrent(),"control context changed");const auto afterFile=bce::text_range::readOwnedTextControl(s.config.session,s.targetSHA,s.targetBytes,fileObserver);
+        require(beforeFile.identity.sameStable(afterFile.identity),"owned control identity/size/timestamps changed across capture");validate_identity(s.config);
+        std::vector<std::string> cs;for(const auto& c:calibration)cs.push_back(pt(c));
+        saveNew(s.config.output+L"\\text-range.json",object({{"contract",q("bce.text-range-native.v1")},{"nonce",quote(s.config.nonce)},{"pid",std::to_string(GetCurrentProcessId())},
+            {"moduleSHA256",q(s.config.moduleSHA256.c_str())},{"controlPath",quote(s.controlPath())},{"controlDiskSHA256",q(afterFile.sha.c_str())},{"ownedControlFileBefore",beforeFile.evidence},{"ownedControlFileAfter",afterFile.evidence},
+            {"ownedControlDocumentModifiedInMemory","true"},{"addedModelRoots","1"},{"sourceDrawingWritten","false"},{"dwgSaved","false"},
+            {"calibrationCenters",array(cs)},{"calibrationLineHalfLength","1"},{"pages",array(s.pages)},{"samples",array(s.samples)},{"callbacks",array(s.callbackRecords)},
+            {"overrulingBefore",old?"true":"false"},{"overrulingRestored","true"},{"backgroundPlotBefore",std::to_string(background.before)},{"backgroundPlotRestored","true"},
+            {"glyphComplete","false"},{"capabilityUpgradeAllowed","false"},{"renderContainmentVerified","false"},{"status",q("native-output-awaiting-offline-ink-comparison")}}));
+        s.evidence->step("controlledNativePlot","passed","5 text-only native PDF pages and independent 5-line projection page; owned control modified in memory only");
+        s.evidence->capability(object({{"stringRangeComputed","true"},{"renderContainmentVerified","false"},{"glyphComplete","false"},{"capabilityUpgradeAllowed","false"}}));
+        s.evidence->finish(s.config,"partial");s.evidence.reset();s.finished=true;s.capturing=false;traceGate(s,"capture.complete");s.detach();
+    }catch(const std::exception& e){s.capturing=false;s.finished=true;traceGate(s,"capture.failed",{{"error",q(e.what())}});s.detach();try{if(s.evidence){s.evidence->error(e.what());s.evidence->finish(s.config,"failed");s.evidence.reset();}}catch(...){}}
+    catch(...){s.capturing=false;s.finished=true;traceGate(s,"capture.failedUnknown");s.detach();try{if(s.evidence){s.evidence->error("capture unknown exception");s.evidence->finish(s.config,"failed");s.evidence.reset();}}catch(...){}}
+}
+void prepare()noexcept{
+    ++prepareCalls;if(session)traceGate(*session,"prepare.enter");
+    try{
+        if(session){auto config=load_config(moduleHandle);validate_identity(config);const auto facts=replayFacts(*session,config);const auto* rejected=bce::text_range::replayRejection(facts);require(!rejected,std::string("N9a prepare replay refused: ")+(rejected?rejected:""));traceGate(*session,"prepare.replayAccepted",{{"newPreparationCreated","false"},{"readySHA256",q(session->readySHA.c_str())},{"targetSHA256",q(session->targetSHA.c_str())},{"targetBytes",std::to_string(session->targetBytes)}});return;}
+        session=std::make_unique<Session>();auto& s=*session;s.config=load_config(moduleHandle);s.evidence=std::make_unique<Evidence>(s.config);validate_identity(s.config);
+        require(s.config.caseName==L"ControlledTextRange","unsupported N9a case");s.prepareDoc=acDocManager->curDocument();s.ambient=acdbHostApplicationServices()->workingDatabase();require(s.prepareDoc&&s.prepareDoc==acDocManager->mdiActiveDocument()&&s.prepareDoc->database()==s.ambient,"prepare ambient mismatch");
+        s.gateLog=File(CreateFileW((s.config.output+L"\\text-range-gate.jsonl").c_str(),GENERIC_WRITE,FILE_SHARE_READ,nullptr,CREATE_NEW,FILE_ATTRIBUTE_NORMAL|FILE_FLAG_WRITE_THROUGH,nullptr));require(s.gateLog.valid(),"create shared-read gate log");traceGate(s,"prepare.ambient");
+        s.preparePid=GetCurrentProcessId();s.prepareThread=GetCurrentThreadId();s.ambientPath=ws(s.prepareDoc->fileName());require(!s.ambientPath.empty(),"prepare ambient path missing");
+        const auto target=s.config.output+L"\\text-range-target.dwg";
+        {AcDbDatabase db(true,true);AcDbViewportTable* vt{};ok(db.getViewportTable(vt,AcDb::kForRead),"viewport table");std::unique_ptr<AcDbViewportTable,Close> table(vt);AcDbObjectId id;ok(vt->getAt(L"*Active",id),"active viewport id");auto view=opened<AcDbViewportTableRecord>(id,AcDb::kForWrite);view->setViewDirection(AcGeVector3d::kZAxis);view->setTarget(AcGePoint3d::kOrigin);view->setViewTwist(0);view->setCenterPoint({75,50});view->setHeight(100);view->setWidth(150);view->setPerspectiveEnabled(false);view.reset();table.reset();require(GetFileAttributesW(target.c_str())==INVALID_FILE_ATTRIBUTES,"target already exists");ok(db.saveAs(target.c_str()),"save new owned empty target");}
+        s.targetSHA=sha256(target);s.targetBytes=fileBytes(target);s.gate=std::make_unique<Gate>(s);acDocManager->addReactor(s.gate.get());s.docAttached=true;acedRegCmds->addReactor(s.gate.get());s.commandAttached=true;require(acedRegisterOnIdleWinMsg(onIdle),"idle registration failed");s.idleAttached=true;
+        saveNew(s.config.output+L"\\prepare-ready.json",object({{"contract",q("bce.text-range-prepare.v1")},{"nonce",quote(s.config.nonce)},{"pid",std::to_string(GetCurrentProcessId())},{"targetPath",quote(target)},{"targetSHA256",q(s.targetSHA.c_str())},{"modelRootCount","0"},{"sourceSHA",object({{"scheme",q(s.config.schemeSHA256.c_str())},{"reference",q(s.config.referenceSHA256.c_str())}})}}));
+        s.readySHA=sha256(s.config.output+L"\\prepare-ready.json");s.prepareComplete=true;replayPolicyControls(s);s.evidence->step("prepare","passed","new owned empty top-view target; awaiting independent controller open");s.evidence->finish(s.config,"prepared");traceGate(s,"prepare.return");
+    }catch(const std::exception& e){if(session){traceGate(*session,"prepare.failed",{{"error",q(e.what())}});session->detach();try{if(session->evidence){session->evidence->error(e.what());session->evidence->finish(session->config,"failed");session->evidence.reset();}}catch(...){}}}catch(...){}
+}
+}
+BOOL APIENTRY DllMain(HMODULE h,DWORD reason,LPVOID){if(reason==DLL_PROCESS_ATTACH){moduleHandle=h;DisableThreadLibraryCalls(h);}return TRUE;}
+extern "C" __declspec(dllexport) AcRx::AppRetCode acrxEntryPoint(AcRx::AppMsgCode message,void* id){try{
+    if(message==AcRx::kInitAppMsg){acrxDynamicLinker->unlockApplication(id);acrxRegisterAppMDIAware(id);ok(acedRegCmds->addCommand(L"BCE_TEXT_RANGE",L"BCE_TEST_RUN",L"BCE_TEST_RUN",ACRX_CMD_MODAL,prepare),"register prepare");ok(acedRegCmds->addCommand(L"BCE_TEXT_RANGE",L"BCE_TEXT_RANGE_CAPTURE",L"BCE_TEXT_RANGE_CAPTURE",ACRX_CMD_MODAL,capture),"register capture");}
+    if(message==AcRx::kUnloadAppMsg){if((session&&session->capturing)||!removeRule())return AcRx::kRetError;if(session&&session->evidence){session->evidence->error("unload before capture completion");session->evidence->finish(session->config,"failed");session->evidence.reset();traceGate(*session,"unload.incomplete");}session.reset();ok(acedRegCmds->removeGroup(L"BCE_TEXT_RANGE"),"remove commands");}
+    return AcRx::kRetOK;
+}catch(...){return AcRx::kRetError;}}

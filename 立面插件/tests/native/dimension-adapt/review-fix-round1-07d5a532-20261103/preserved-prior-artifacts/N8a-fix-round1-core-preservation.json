@@ -1,0 +1,46 @@
+{
+  "contract": "bce.dimension-fix-core-preservation.v1",
+  "baseReceipt": "D:/Codex/建筑施工图自动化/立面插件/build/n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f/receipt.json",
+  "focusedReceipt": "D:/Codex/建筑施工图自动化/立面插件/build/n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532/receipt.json",
+  "verifiedUnchangedSections": [
+    {
+      "section": "all geometry/resources/scratch before helper",
+      "originalSHA256": "D8F1037EEAEB7F6A79B7964EFA73D4C67D39F991FDDD8DEF56EFADCFE3220C1B",
+      "focusedSHA256": "D8F1037EEAEB7F6A79B7964EFA73D4C67D39F991FDDD8DEF56EFADCFE3220C1B",
+      "unchanged": true
+    },
+    {
+      "section": "SDK clone, derived binder, direct binder controls, scenes, roundtrip, ambient finally",
+      "originalSHA256": "A330DF18C9A55E705EDD8259AC2C24668DFEE52E66BC36E63364B894E7360DD2",
+      "focusedSHA256": "A330DF18C9A55E705EDD8259AC2C24668DFEE52E66BC36E63364B894E7360DD2",
+      "unchanged": true
+    },
+    {
+      "file": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/DimensionTopology.h",
+      "sha256": "12E6C5EA8410910D5045AB217AAD073DCDB7246C8829D4991456DDC30C96939B",
+      "unchanged": true
+    },
+    {
+      "file": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/DimensionTopologyTests.cpp",
+      "sha256": "3D2518C314E7E4B63A9EAE896243908486C496083DCC00F2C55B53183AB6D80E",
+      "unchanged": true
+    },
+    {
+      "file": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/ElevationDimensionAdaptCases.vcxproj",
+      "sha256": "4396B9D93D7BFFBC518D3BADBD559DAFC67192BEA1E982B9399516BBCEBCAD41",
+      "unchanged": true
+    },
+    {
+      "file": "D:/Codex/建筑施工图自动化/立面插件/tests/native/NativeEvidence.h",
+      "sha256": "C6B083EE0346AA7CDB51090274CCCADCB2C6DE0AA92A196AD846E11C41C9EBB6",
+      "unchanged": true
+    },
+    {
+      "file": "D:/Codex/建筑施工图自动化/立面插件/tests/native/NativeEvidence.cpp",
+      "sha256": "1B3CA34A61CC2C2DB2C42A7FDFD01C029DE7BE82EAE6CE96D9DE1C3B363A8FE2",
+      "unchanged": true
+    }
+  ],
+  "sourcePatch": "N8a-fix-round1-scoped.diff",
+  "scope": "Only helper implementation/source SHA rejection caller and focused dispatch; dimension/resource/roundtrip core not changed"
+}

@@ -1,0 +1,20 @@
+{
+  "command": "python 立面插件/tests/native/graphics-viewport/fix1-scoped-review/bind_evidence.py",
+  "noTestsReexecuted": true,
+  "noCadLaunched": true,
+  "compiledInputsRechecked": 19,
+  "RED": [
+    78,
+    74,
+    4
+  ],
+  "GREEN": [
+    78,
+    78,
+    0
+  ],
+  "protocolChecksPerRun": 7,
+  "retiredFilesPerRun": 4,
+  "inputHashesPerRun": 6,
+  "manifestSHA256": "9A1077307EE64429A133DE90FFEF385E5123BB4205C2D8112DAF2203FE7FB729"
+}

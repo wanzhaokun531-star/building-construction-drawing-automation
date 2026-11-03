@@ -1,0 +1,262 @@
+--- D:\Codex\项目清理归档\建筑施工图自动化_20261102-181100\立面插件\build\n7-20261101-221056-470-owned-file-idle-frozen-b293e40a\src\ViewportForward.h
++++ D:\Codex\建筑施工图自动化\立面插件\build\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\src\ViewportForward.h
+@@ -1,6 +1,31 @@
+ #pragma once
+ // Every public geometry call preserves the host call and return value.
+ // Logging is observation only; unrecorded geometry remains explicitly partial.
++enum class DrawableOwnership { rejected, ownedResident, transient };
++struct DrawableIdentity {DrawableOwnership ownership{DrawableOwnership::rejected};AcDbObjectId id;};
++// AcDbObject includes persistent non-entities such as block table records.
++// Unknown persistent drawables and inconsistent identities never use pointer authorization.
++DrawableIdentity classifyDrawable(const Session& s,const AcGiDrawable* d) {
++    if(!d)return {};
++    const auto* object=AcDbObject::cast(d);const auto id=d->id();
++    if(object&&object->database()) {
++        if(d->isPersistent()&&object->database()==s.target&&!id.isNull()&&
++            id==object->objectId()&&id.database()==s.target)return {DrawableOwnership::ownedResident,id};
++        return {};
++    }
++    if(d->isPersistent()||!id.isNull()||(object&&!object->objectId().isNull()))return {};
++    return {DrawableOwnership::transient,AcDbObjectId::kNull};
++}
++bool drawableAuthorized(const Session& s,const AcGiDrawable* d,const DrawableIdentity& identity) {
++    return identity.ownership==DrawableOwnership::ownedResident||
++        (identity.ownership==DrawableOwnership::transient&&
++         std::find(s.authorizedTransient.begin(),s.authorizedTransient.end(),d)!=s.authorizedTransient.end());
++}
++DrawableIdentity validateChildDrawable(Session& s,AcGiDrawable* d) {
++    require(d,"null child drawable");const auto identity=classifyDrawable(s,d);
++    require(identity.ownership!=DrawableOwnership::rejected,"child draw references foreign or unknown persistent database");
++    return identity;
++}
+ template<class Base> class GeometryForward:public Base {
+ public:
+     GeometryForward(Base& host,Session& state):g(host),s(state){}
+@@ -41,10 +66,11 @@
+     N7_FWD(edge,(const AcArray<AcGeCurve2d*>& e),(e))
+ #undef N7_FWD
+     Adesk::Boolean draw(AcGiDrawable* d) const override {
+-        require(d,"null child drawable");const auto* entity=AcDbEntity::cast(d);
+-        require(!entity||!entity->database()||entity->database()==s.target,"child draw references protected external database");
++        const auto identity=validateChildDrawable(s,d);
+         s.emit(g,"draw",{{"class",quote(std::wstring(d->isA()->name()))},{"persistent",d->isPersistent()?"true":"false"}});
+-        s.authorizedTransient.push_back(d);struct Pop {Session& state;~Pop(){state.authorizedTransient.pop_back();}} pop{s};
++        const auto depth=s.authorizedTransient.size();
++        struct Pop {Session& state;std::size_t depth;~Pop(){state.authorizedTransient.resize(depth);}} pop{s,depth};
++        if(identity.ownership==DrawableOwnership::transient)s.authorizedTransient.push_back(d);
+         return g.draw(d);
+     }
+     Adesk::Boolean worldLine(const AcGePoint3d p[2]) override {s.points(g,"worldLine",2,p);return g.worldLine(p);}
+--- /dev/null
++++ D:\Codex\建筑施工图自动化\立面插件\build\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\src\ViewportOwnershipTests.h
+@@ -0,0 +1,36 @@
++#pragma once
++// Actual SDK object controls only. No source drawable is sent to a renderer.
++void ownershipControls(Session& s,Overrule& rule) {
++    Open<AcDbBlockTableRecord> foreign(acdbSymUtil()->blockModelSpaceId(s.source.get()));
++    Open<AcDbBlockTableRecord> own(acdbSymUtil()->blockModelSpaceId(s.target));
++    auto record=[&](const char* name,bool passed,AcDbBlockTableRecord& value){
++        s.result.ownershipChecks.emplace_back(name,passed);
++        s.write(object({{"kind",q("persistentDrawableControl")},{"name",q(name)},{"passed",passed?"true":"false"},
++            {"class",quote(std::wstring(value.isA()->name()))},{"handle",quote(handle(value.objectId()))},
++            {"persistent",value.isPersistent()?"true":"false"},{"entityCast",AcDbEntity::cast(&value)?"true":"false"},
++            {"objectDatabaseMatchesTarget",value.database()==s.target?"true":"false"},
++            {"objectDatabaseMatchesSource",value.database()==s.source.get()?"true":"false"},
++            {"objectIdDatabaseMatchesObject",value.objectId().database()==value.database()?"true":"false"},
++            {"sourceRendererInvoked","false"}}));
++    };
++    record("persistent-nonentity-fixtures-real",foreign->isPersistent()&&own->isPersistent()&&
++        !AcDbEntity::cast(&*foreign)&&!AcDbEntity::cast(&*own)&&foreign->database()==s.source.get()&&own->database()==s.target&&
++        foreign->objectId().database()==s.source.get()&&own->objectId().database()==s.target,*foreign);
++    bool ownAllowed=false,foreignRejected=false;
++    try{validateChildDrawable(s,&*own);ownAllowed=true;}catch(const std::runtime_error&){}
++    try{validateChildDrawable(s,&*foreign);}catch(const std::runtime_error&){foreignRejected=true;}
++    record("owned-persistent-nonentity-child-allowed",ownAllowed,*own);
++    record("foreign-persistent-nonentity-child-rejected",foreignRejected,*foreign);
++    // Simulate the authorization window used by geometry.draw in the legacy implementation.
++    // Neither drawable is rendered here. Persisted identity must dominate pointer authorization.
++    const auto depth=s.authorizedTransient.size();
++    struct Restore {Session& state;std::size_t depth;~Restore(){state.authorizedTransient.resize(depth);}} restore{s,depth};
++    s.authorizedTransient.push_back(&*own);s.authorizedTransient.push_back(&*foreign);
++    record("owned-persistent-nonentity-filter-allowed",rule.isApplicable(&*own),*own);
++    record("foreign-persistent-nonentity-filter-rejected",!rule.isApplicable(&*foreign),*foreign);
++    bool ownPath=false,foreignScopeRejected=false;
++    try{Overrule::Scope scope(s,&*own,false);ownPath=!s.path.empty()&&s.path.back()==quote(handle(own->objectId()));}catch(const std::runtime_error&){}
++    try{Overrule::Scope scope(s,&*foreign,false);}catch(const std::runtime_error&){foreignScopeRejected=true;}
++    record("owned-persistent-nonentity-scope-handle-path",ownPath,*own);
++    record("foreign-persistent-nonentity-scope-rejected",foreignScopeRejected,*foreign);
++}
+--- D:\Codex\项目清理归档\建筑施工图自动化_20261102-181100\立面插件\build\n7-20261101-221056-470-owned-file-idle-frozen-b293e40a\src\ViewportProbe.h
++++ D:\Codex\建筑施工图自动化\立面插件\build\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\src\ViewportProbe.h
+@@ -12,9 +12,11 @@
+     std::array<Sample,12> samples{};
+     bool prepared{}, naturalRegen{}, sourceProtected{}, ambientProtected{}, workingDbRestored{};
+     bool registrationRemoved{}, globalOverruleRestored{}, targetOnly{}, failureCleanup{};
++    std::vector<std::pair<std::string,bool>> ownershipChecks;
+     std::vector<std::string> records;
+ };
+ Result capture(const bce::native::Config&, bce::native::Evidence&);
+ void prepare(const bce::native::Config&, bce::native::Evidence&);
++void acceptPreparedReplay(const bce::native::Config&);
+ bool cleanup() noexcept;
+ }
+--- D:\Codex\项目清理归档\建筑施工图自动化_20261102-181100\立面插件\build\n7-20261101-221056-470-owned-file-idle-frozen-b293e40a\src\ViewportProbe.cpp
++++ D:\Codex\建筑施工图自动化\立面插件\build\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\src\ViewportProbe.cpp
+@@ -21,7 +21,13 @@
+     ++prepareCalls;
+     bce::viewport::trace("handler.prepare.enter",{{"prepareCalls",std::to_string(prepareCalls)},{"captureCalls",std::to_string(captureCalls)},{"pendingEvidence",pendingEvidence?"true":"false"}});
+     try {
+-        require(!pendingEvidence,"N7 prepare already active");
++        if(pendingEvidence){
++            auto replayConfig=load_config(module);validate_identity(replayConfig);
++            bce::viewport::acceptPreparedReplay(replayConfig);
++            require(bce::viewport::traceHealthy(),"command trace logging failed");
++            bce::viewport::trace("handler.prepare.replayAccepted",{{"prepareCalls",std::to_string(prepareCalls)},{"captureCalls",std::to_string(captureCalls)},{"pendingEvidence","true"}});
++            return;
++        }
+         pendingConfig=load_config(module);pendingEvidence=std::make_unique<Evidence>(pendingConfig);
+         pendingEvidence->checkpoint("validate-N7-identity");validate_identity(pendingConfig);
+         require(pendingConfig.caseName==L"PublicGraphicsViewport","unsupported N7 case");
+@@ -46,6 +52,8 @@
+         check(result.workingDbRestored,"working-database-restored");check(result.targetOnly,"overrule-only-owned-targets");
+         check(result.registrationRemoved,"own-overrule-unregistered");check(result.globalOverruleRestored,"global-overrule-state-restored");
+         check(result.failureCleanup,"failure-cleanup-contract");
++        for(const auto& control:result.ownershipChecks)check(control.second,control.first);
++        check(result.ownershipChecks.size()==7,"persistent-drawable-control-count");
+         for(std::size_t i=0;i<result.samples.size();++i){
+             const auto& sample=result.samples[i];const auto prefix="sample-"+std::to_string(i)+"-";
+             check(sample.worldCalls+sample.viewportCalls>0,prefix+"actual-host-draw");
+--- D:\Codex\项目清理归档\建筑施工图自动化_20261102-181100\立面插件\build\n7-20261101-221056-470-owned-file-idle-frozen-b293e40a\src\ViewportCapture.cpp
++++ D:\Codex\建筑施工图自动化\立面插件\build\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\src\ViewportCapture.cpp
+@@ -25,6 +25,7 @@
+ #include <iomanip>
+ #include <cmath>
+ #include <algorithm>
++#include <tuple>
+ namespace bce::viewport {
+ using namespace bce::native;
+ using namespace bce::graphics;
+@@ -58,6 +59,7 @@
+ struct Session {
+     Config config;Evidence& evidence;File log;
+     AcDbDatabase* ambient{};std::unique_ptr<Monitor> ambientMonitor;
++    AcApDocument* prepareDocument{};DWORD preparePid{},prepareThread{};std::wstring ambientPath;std::string readySHA;bool prepareComplete{};
+     std::unique_ptr<AcDbDatabase> source;std::unique_ptr<Monitor> sourceMonitor;
+     std::unique_ptr<Monitor> targetMonitor;AcDbDatabase* target{};
+     std::string sourceFingerprint,targetSHA;std::uint64_t preparedTargetBytes{};std::vector<std::wstring> rootHandles;
+@@ -104,6 +106,48 @@
+     ~Session(){trace("session.destroy",{{"queued",queued?"true":"false"},{"capturing",capturing?"true":"false"}});if(commandQueueAttached)acedRegCmds->removeReactor(queue.get());if(queueAttached)acDocManager->removeReactor(queue.get());}
+ };
+ std::unique_ptr<Session> session;
++auto replayIdentity(const Config& c) {
++    return std::tie(c.nonce,c.session,c.scheme,c.reference,c.output,c.caseName,c.modulePath,c.iniPath,c.desktop,
++        c.expectedModuleSHA256,c.moduleSHA256,c.iniSHA256,c.schemeSHA256,c.referenceSHA256);
++}
++void validatePreparedReplay(const Config& config) {
++    require(session!=nullptr,"N7 replay session missing");auto& s=*session;
++    require(replayIdentity(config)==replayIdentity(s.config),"N7 replay config identity mismatch");
++    require(s.prepareComplete&&!s.target&&!s.queued&&!s.capturing&&!s.targetBecameCurrent&&!s.openCommandStarted&&!s.openCommandEnded,
++        "N7 replay phase mismatch");
++    require(GetCurrentProcessId()==s.preparePid&&GetCurrentThreadId()==s.prepareThread,"N7 replay execution identity mismatch");
++    require(curDoc()&&curDoc()==s.prepareDocument&&curDoc()==acDocManager->mdiActiveDocument()&&curDoc()->database()==s.ambient&&
++        acdbHostApplicationServices()->workingDatabase()==s.ambient,"N7 replay ambient context mismatch");
++    const ACHAR* name{};
++    require(s.ambient->getFilename(name)==Acad::eOk&&name&&s.ambientPath==name,"N7 replay ambient path mismatch");
++    require(s.rootHandles.size()==12&&s.classes.size()==12&&!s.targetSHA.empty()&&!s.readySHA.empty(),"N7 replay preparation incomplete");
++    require(sha256(config.output+L"\\prepare-ready.json")==s.readySHA,"N7 replay ready artifact mismatch");
++    require(sha256(config.output+L"\\viewport-target.dwg")==s.targetSHA,"N7 replay target artifact mismatch");
++    s.guarded();require(fingerprint(*s.source)==s.sourceFingerprint,"N7 replay source fingerprint mismatch");
++}
++void replayProtocolControls(Session& s) {
++    const auto targetSHA=s.targetSHA,readySHA=s.readySHA;const auto beforeEvents=s.eventCount;
++    auto check=[&](const char* label,const Config& config,const char* expectedError){
++        bool accepted=false;std::string error;
++        try{validatePreparedReplay(config);accepted=true;}catch(const std::runtime_error& e){error=e.what();}
++        const bool passed=expectedError?(!accepted&&error==expectedError):accepted;
++        trace("prepareReplay.control",{{"name",q(label)},{"accepted",accepted?"true":"false"},{"error",quote(error)},{"passed",passed?"true":"false"}});
++        require(passed,std::string("N7 replay protocol control failed: ")+label);
++    };
++    check("same-session-complete-preparation",s.config,nullptr);
++    auto mismatch=s.config;mismatch.nonce+=L"-wrong";check("wrong-nonce",mismatch,"N7 replay config identity mismatch");
++    mismatch=s.config;mismatch.session+=L"-wrong";check("wrong-session",mismatch,"N7 replay config identity mismatch");
++    mismatch=s.config;mismatch.output+=L"-wrong";check("wrong-output",mismatch,"N7 replay config identity mismatch");
++    mismatch=s.config;mismatch.caseName=L"OtherRole";check("wrong-role",mismatch,"N7 replay config identity mismatch");
++    // No host state or drawing is changed: only the protocol phase guard is challenged.
++    {struct Restore {bool& flag;bool old;~Restore(){flag=old;}} restore{s.queued,s.queued};s.queued=true;
++     check("already-queued",s.config,"N7 replay phase mismatch");}
++    {struct Restore {DWORD& value;DWORD old;~Restore(){value=old;}} restore{s.prepareThread,s.prepareThread};s.prepareThread=0;
++     check("wrong-thread",s.config,"N7 replay execution identity mismatch");}
++    require(s.targetSHA==targetSHA&&s.readySHA==readySHA&&sha256(s.config.output+L"\\prepare-ready.json")==readySHA&&
++        sha256(s.config.output+L"\\viewport-target.dwg")==targetSHA,"N7 replay fixture rewrote prepared artifacts");
++    trace("prepareReplay.controlsComplete",{{"checks","7"},{"artifactsUnchanged","true"},{"guardObservationsAdded",std::to_string(s.eventCount-beforeEvents)}});
++}
+ void QueueReactor::documentBecameCurrent(AcApDocument* doc){
+     trace("document.becameCurrent",{{"eventDocPath",quote(std::wstring(doc&&doc->fileName()?doc->fileName():L""))},{"queued",s.queued?"true":"false"},{"capturing",s.capturing?"true":"false"}});
+     if(s.queued||s.capturing||!doc||!doc->database())return;
+@@ -144,21 +188,20 @@
+ public:
+     explicit Overrule(Session& state):s(state){}
+     bool isApplicable(const AcRxObject* value) const override {
+-        if(!s.capturing)return false;const auto* entity=AcDbEntity::cast(value);
+-        if(entity&&entity->database())return entity->database()==s.target;
++        if(!s.capturing)return false;
+         const auto* drawable=AcGiDrawable::cast(value);
+-        return drawable&&std::find(s.authorizedTransient.begin(),s.authorizedTransient.end(),drawable)!=s.authorizedTransient.end();
++        return drawableAuthorized(s,drawable,classifyDrawable(s,drawable));
+     }
+     struct Scope {
+         Session& s;int index;bool recording;std::size_t depth;
+         Scope(Session& state,AcGiDrawable* d,bool viewport):s(state),index(s.index),recording(s.recording),depth(s.path.size()){
+-            const auto* e=AcDbEntity::cast(d);const bool resident=e&&e->database();
+-            require(resident?e->database()==s.target:std::find(s.authorizedTransient.begin(),s.authorizedTransient.end(),d)!=s.authorizedTransient.end(),"non-target overrule");
+-            const auto found=resident?std::find(s.roots.begin(),s.roots.end(),e->objectId()):s.roots.end();
++            const auto identity=classifyDrawable(s,d);const bool resident=identity.ownership==DrawableOwnership::ownedResident;
++            require(drawableAuthorized(s,d,identity),"non-target overrule");
++            const auto found=resident?std::find(s.roots.begin(),s.roots.end(),identity.id):s.roots.end();
+             if(found!=s.roots.end()) {s.index=static_cast<int>(found-s.roots.begin());auto& seen=viewport?s.seenViewport:s.seenWorld;
+                 s.recording=s.round>=0&&!seen[static_cast<std::size_t>(s.round)][static_cast<std::size_t>(s.index)];
+                 if(s.round>=0)seen[static_cast<std::size_t>(s.round)][static_cast<std::size_t>(s.index)]=true;}
+-            s.path.push_back(resident?quote(handle(e->objectId())):quote(std::string("transient:")+utf8(d->isA()->name())));
++            s.path.push_back(resident?quote(handle(identity.id)):quote(std::string("transient:")+utf8(d->isA()->name())));
+             if(auto* o=s.observation()){++o->coverage.drawRequests;++o->coverage.drawsEntered;}
+         }
+         ~Scope(){s.index=index;s.recording=recording;s.path.resize(depth);}
+@@ -185,6 +228,7 @@
+     }
+ private:Session& s;
+ };
++#include "ViewportOwnershipTests.h"
+ std::unique_ptr<Overrule> overrule;bool overruleAdded{},oldOverruling{};
+ bool removeOverrule() noexcept {
+     if(overruleAdded){if(AcRxOverrule::removeOverrule(AcGiDrawable::desc(),overrule.get())!=Acad::eOk)return false;overruleAdded=false;AcRxOverrule::setIsOverruling(oldOverruling);}
+@@ -195,6 +239,8 @@
+     trace("prepare.implementation.enter",{{"existingSession",session?"true":"false"},{"existingOverrule",overrule?"true":"false"}});
+     require(!session&&!overrule,"N7 already prepared");session=std::make_unique<Session>(config,evidence);auto& s=*session;
+     s.ambient=acdbHostApplicationServices()->workingDatabase();require(s.ambient,"ambient missing");
++    s.prepareDocument=curDoc();require(s.prepareDocument&&s.prepareDocument->database()==s.ambient,"prepare ambient document mismatch");
++    s.preparePid=GetCurrentProcessId();s.prepareThread=GetCurrentThreadId();const ACHAR* ambientName{};ok(s.ambient->getFilename(ambientName),"prepare ambient filename");require(ambientName,"prepare ambient path missing");s.ambientPath=ambientName;
+     const auto sink=[&s](const std::string& line){s.write(line);};s.ambientMonitor=std::make_unique<Monitor>(*s.ambient,"ambient",sink);
+     s.ambientMonitor->begin("reference-read");s.source=std::make_unique<AcDbDatabase>(false,true);
+     {WorkingDatabase scope(*s.source);ok(s.source->readDwgFile(config.reference.c_str(),AcDbDatabase::kForReadAndAllShare,false,L""),"reference read");ok(s.source->closeInput(true),"reference closeInput");}
+@@ -220,7 +266,13 @@
+     const auto ready=object({{"contract",q("bce.graphics-viewport-prepare.v1")},{"nonce",quote(config.nonce)},{"pid",std::to_string(GetCurrentProcessId())},{"targetPath",quote(config.output+L"\\viewport-target.dwg")},{"targetSHA256",quote(s.targetSHA)},{"modelRootCount",std::to_string(s.rootHandles.size())},{"rootHandles",array(handles)},{"sourceSHA",object({{"scheme",quote(config.schemeSHA256)},{"reference",quote(config.referenceSHA256)}})}});
+     {auto f=create_new(config.output+L"\\prepare-ready.tmp");write_flushed(f.get(),ready);}
+     require(MoveFileExW((config.output+L"\\prepare-ready.tmp").c_str(),(config.output+L"\\prepare-ready.json").c_str(),MOVEFILE_WRITE_THROUGH)!=FALSE,"atomic prepare ready publish failed");
++    s.readySHA=sha256(config.output+L"\\prepare-ready.json");s.prepareComplete=true;
++    replayProtocolControls(s);
+     trace("prepare.readyPublished");
++}
++void acceptPreparedReplay(const Config& config){
++    trace("prepareReplay.validate.begin");validatePreparedReplay(config);
++    trace("prepareReplay.validate.accepted",{{"readySHA256",quote(session->readySHA)},{"targetSHA256",quote(session->targetSHA)},{"newPreparationCreated","false"}});
+ }
+ Result capture(const Config& config,Evidence& evidence){
+     trace("capture.implementation.enter",{{"existingSession",session?"true":"false"}});
+@@ -247,6 +299,7 @@
+     oldOverruling=AcRxOverrule::isOverruling();overrule=std::make_unique<Overrule>(s);ok(AcRxOverrule::addOverrule(AcGiDrawable::desc(),overrule.get()),"add N7 overrule");overruleAdded=true;AcRxOverrule::setIsOverruling(true);
+     struct Remove {~Remove(){removeOverrule();}} remove;
+     {AcDbObjectId sourceId;ok(s.source->getAcDbObjectId(sourceId,false,AcDbHandle(L"ACB0")),"source negative-filter fixture");Open<AcDbEntity> e(sourceId);Open<AcDbEntity> own(s.roots.front());s.result.targetOnly=!overrule->isApplicable(&*e)&&overrule->isApplicable(&*own);}
++    ownershipControls(s,*overrule);s.guarded();
+     evidence.checkpoint("natural-host-regeneration");
+     for(int round=0;round<2;++round){s.round=round;require(acedCommandS(RTSTR,L"_.REGEN",RTNONE)==RTNORM,"native REGEN failed");s.round=-1;s.guarded();}
+     s.result.naturalRegen=true;require(removeOverrule(),"remove N7 overrule failed");s.result.registrationRemoved=!overruleAdded;s.result.globalOverruleRestored=AcRxOverrule::isOverruling()==oldOverruling;

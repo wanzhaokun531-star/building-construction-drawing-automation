@@ -3,6 +3,12 @@
 #include <string>
 #include <vector>
 namespace bcpproduct {
+// The input is the saved DWG, including its saved database variables. Never
+// auto-save the live document or reset DBMOD. Entity/field/unknown bits block.
+inline bool canGenerateSavedDrawing(int dbmod) noexcept {
+ constexpr int savedInputOnlyChanges = 4 | 8 | 16;
+ return dbmod >= 0 && (dbmod & ~savedInputOnlyChanges) == 0;
+}
 struct FailureRecovery {bool diagnosticFailed=false,cleanupFailed=false,reportFailed=false;};
 template<class Record,class Cleanup,class Report>
 FailureRecovery recoverFailure(Record&& record,Cleanup&& cleanup,Report&& report) noexcept {

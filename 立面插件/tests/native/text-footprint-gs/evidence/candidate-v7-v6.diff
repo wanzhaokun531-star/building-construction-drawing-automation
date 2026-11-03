@@ -1,0 +1,50 @@
+--- v6/NativeGsTextFootprint.cpp
++++ v7/NativeGsTextFootprint.cpp
+@@ -85,16 +85,19 @@
+     bool resourcesReleased()const noexcept{return !db&&!marker&&!kernel&&!model&&!device&&!view&&!associated&&!rule&&!ruleAttached&&!watchAttached;}
+     void cleanupLog(const char* event,Fields f={})noexcept{try{log(event,std::move(f));}catch(...){}}
+     bool cleanup(){
+-        if(view)view->eraseAll();
+-        if(ruleAttached){const auto st=AcRxOverrule::removeOverrule(AcDbPoint::desc(),rule.get());cleanupLog("removeOverrule",{{"status",std::to_string(st)}});if(st!=Acad::eOk)return false;ruleAttached=false;AcRxOverrule::setIsOverruling(priorOverruling);}
+-        rule.reset();marker.reset();
+-        if(view){manager->destroyView(view);view=nullptr;cleanupLog("destroyView");}
+-        if(associated){kernel->associate(reinterpret_cast<Adesk::LongPtr>(db.get()),priorModel,AcGsModel::kMain);const bool restored=kernel->find(reinterpret_cast<Adesk::LongPtr>(db.get()),AcGsModel::kMain)==priorModel;cleanupLog("restoreOwnedDatabaseAssociation",{{"matches",restored?"true":"false"}});if(!restored)return false;associated=false;}
+-        if(model){manager->destroyAutoCADModel(model);model=nullptr;cleanupLog("destroyAutoCADModel");}
+-        if(device){manager->destroyAutoCADDevice(device);device=nullptr;cleanupLog("destroyAutoCADDevice");}
+-        if(kernel){AcGsManager::releaseGraphicsKernel(kernel);kernel=nullptr;cleanupLog("releaseGraphicsKernel");}
+-        if(db){db.reset();cleanupLog("destroyOwnedDatabase");}
+-        if(watchAttached){ambient->removeReactor(&watch);watchAttached=false;}
++        cleanupLog("cleanup.enter",{{"faultPoint",std::to_string(faultPoint)},{"view",address(view)},{"marker",address(marker.get())},{"model",address(model)},{"device",address(device)},{"kernel",address(kernel)},{"database",address(db.get())},{"ruleAttached",ruleAttached?"true":"false"}});
++        if(view){cleanupLog("view.eraseAll.before");view->eraseAll();cleanupLog("view.eraseAll.after");}
++        if(ruleAttached){cleanupLog("removeOverrule.before");const auto st=AcRxOverrule::removeOverrule(AcDbPoint::desc(),rule.get());cleanupLog("removeOverrule.after",{{"status",std::to_string(st)}});if(st!=Acad::eOk)return false;ruleAttached=false;cleanupLog("restoreOverruling.before");AcRxOverrule::setIsOverruling(priorOverruling);cleanupLog("restoreOverruling.after");}
++        cleanupLog("rule.reset.before");rule.reset();cleanupLog("rule.reset.after");
++        cleanupLog("marker.close.before");marker.reset();cleanupLog("marker.close.after");
++        if(view){cleanupLog("destroyView.before");manager->destroyView(view);view=nullptr;cleanupLog("destroyView.after");}
++        if(associated){cleanupLog("restoreOwnedDatabaseAssociation.before");kernel->associate(reinterpret_cast<Adesk::LongPtr>(db.get()),priorModel,AcGsModel::kMain);cleanupLog("restoreOwnedDatabaseAssociation.after");cleanupLog("restoredAssociation.find.before");const bool restored=kernel->find(reinterpret_cast<Adesk::LongPtr>(db.get()),AcGsModel::kMain)==priorModel;cleanupLog("restoredAssociation.find.after",{{"matches",restored?"true":"false"}});if(!restored)return false;associated=false;}
++        if(model){cleanupLog("destroyAutoCADModel.before");manager->destroyAutoCADModel(model);model=nullptr;cleanupLog("destroyAutoCADModel.after");}
++        if(device){cleanupLog("destroyAutoCADDevice.before");manager->destroyAutoCADDevice(device);device=nullptr;cleanupLog("destroyAutoCADDevice.after");}
++        if(kernel){cleanupLog("releaseGraphicsKernel.before");AcGsManager::releaseGraphicsKernel(kernel);kernel=nullptr;cleanupLog("releaseGraphicsKernel.after");}
++        if(db){cleanupLog("destroyOwnedDatabase.before");db.reset();cleanupLog("destroyOwnedDatabase.after");}
++        if(watchAttached){cleanupLog("ambient.removeReactor.before");ambient->removeReactor(&watch);watchAttached=false;cleanupLog("ambient.removeReactor.after");}
++        cleanupLog("cleanup.return",{{"resourcesReleased",resourcesReleased()?"true":"false"}});
+         return true;
+     }
+ };
+@@ -230,7 +233,7 @@
+         lifecycleSessions.push_back(std::make_unique<Session>());auto& s=*lifecycleSessions.back();s.config=primary.config;s.faultPoint=fault;
+         s.config.output+=L"\\lifecycle-"+std::to_wstring(fault);require(CreateDirectoryW(s.config.output.c_str(),nullptr)!=FALSE,"create lifecycle evidence directory");
+         s.trace=File(CreateFileW((s.config.output+L"\\gs-trace.jsonl").c_str(),GENERIC_WRITE,FILE_SHARE_READ,nullptr,CREATE_NEW,FILE_ATTRIBUTE_NORMAL|FILE_FLAG_WRITE_THROUGH,nullptr));require(s.trace.valid(),"lifecycle trace unavailable");
+-        std::string observed;try{execute(s);}catch(const std::exception& e){observed=e.what();}
++        std::string observed;try{execute(s);}catch(const std::exception& e){observed=e.what();s.cleanupLog("execute.cppException.beforeCleanup",{{"message",quote(observed)}});}
+         const bool cleaned=s.cleanup();const auto after=s.ambientInitialized?dbmod():0;const bool stable=s.ambientInitialized&&s.ambientSame()&&s.watch.untouched()&&s.dbmodBefore==after;
+         const auto expected=fault==1?"injected-after-model-association":"injected-after-overrule-install";
+         const bool passed=observed==expected&&cleaned&&stable;
+@@ -244,7 +247,7 @@
+     try{
+         session=std::make_unique<Session>();auto& s=*session;s.config=load_config(moduleHandle);s.evidence=std::make_unique<Evidence>(s.config);validate_identity(s.config);require(s.config.caseName==L"NativeGsTextFootprint","case mismatch");
+         s.trace=File(CreateFileW((s.config.output+L"\\gs-trace.jsonl").c_str(),GENERIC_WRITE,FILE_SHARE_READ,nullptr,CREATE_NEW,FILE_ATTRIBUTE_NORMAL|FILE_FLAG_WRITE_THROUGH,nullptr));require(s.trace.valid(),"trace unavailable");
+-        std::string failure;try{lifecycleControls(s);execute(s);}catch(const std::exception& e){failure=e.what();}catch(...){failure="unknown native execution exception";}
++        std::string failure;try{lifecycleControls(s);execute(s);}catch(const std::exception& e){failure=e.what();s.cleanupLog("execute.cppException.beforeCleanup",{{"message",quote(failure)}});}catch(...){failure="unknown native execution exception";s.cleanupLog("execute.unknownException.beforeCleanup");}
+         s.executionFailure=failure;
+         const bool primaryCleaned=s.cleanup();const bool cleaned=primaryCleaned&&s.resourcesReleased()&&std::all_of(lifecycleSessions.begin(),lifecycleSessions.end(),[](const auto& control){return control->resourcesReleased();});const bool ambientSame=s.ambientInitialized&&s.ambientSame();const auto dbmodAfter=s.ambientInitialized?dbmod():0;
+         const bool ambientStable=s.ambientInitialized&&ambientSame&&s.watch.untouched()&&s.dbmodBefore==dbmodAfter;const bool passed=failure.empty()&&cleaned&&ambientStable;

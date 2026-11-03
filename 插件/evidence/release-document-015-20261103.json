@@ -1,0 +1,21 @@
+{
+  "version": "0.1.5",
+  "recorded": "2026-11-03T14:34:06.757136+08:00",
+  "nativeVersion": "v196",
+  "releaseDirectory": "D:\\Codex\\建筑施工图自动化\\插件\\交付\\建筑施工图助手_0.1.5_20261103",
+  "ZIP": "D:\\Codex\\建筑施工图自动化\\插件\\交付\\建筑施工图助手_0.1.5_20261103.zip",
+  "ZIP_SHA256": "7064C2288AD3867F2558F7A897425D0A8761E6B23293B7E7536CE15346C7428C",
+  "installer": "D:\\Codex\\建筑施工图自动化\\插件\\交付\\建筑施工图助手_0.1.5_安装程序.exe",
+  "installerSHA256": "359EBB0C88685E5F09909A76F5C54523C1F67B4B19AEAE62857306F542940461",
+  "ARXSHA256": "90294625C5F738B07DB8ECCED02090CBBEFBDEBB46A00BD6398CCE1025D28167",
+  "DWG": "D:\\Codex\\建筑施工图自动化\\插件\\交付\\建筑施工图助手_0.1.5_20261103\\示例\\百塘村邹总_三层平面_插件0.1.5.dwg",
+  "DWGSHA256": "5399DC8610D0DB504AF96C93D603852378D3A1150B8A865D573F4CF9ED6F2837",
+  "DBMOD20Generated": true,
+  "unsavedEntityBlocked": true,
+  "shortCommand": "BCP",
+  "policyChecks": 41,
+  "installerTestsPassed": 9,
+  "normalQUIT": true,
+  "actualAppDataInstalled": false,
+  "GitHubPushed": false
+}

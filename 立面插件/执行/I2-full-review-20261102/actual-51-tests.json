@@ -1,0 +1,628 @@
+{
+  "nativeReport": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-192313-d01b1cfc\\case\\native-case.json",
+  "nativeSHA256": "E0922838AC5670AFA5EDCD9360C402FB1AE2FD322E5639B9A5E0E771843A23B9",
+  "tests": [
+    {
+      "name": "FourPublicCallbacksOwnedByProduct",
+      "status": "passed",
+      "details": "{\"win32ModulePresent\":true,\"sdkLocked\":false,\"sdkBusy\":false,\"analyzePresent\":true,\"infoPresent\":true,\"issuesPresent\":true,\"testRunPresent\":true,\"analyzeCallbackOwnedByProduct\":true,\"infoCallbackOwnedByProduct\":true}"
+    },
+    {
+      "name": "ZeroRevisionRejectedBeforeReaderGetters",
+      "status": "passed",
+      "details": "reproduces prior caller failure before Reader.run or any geometry getter"
+    },
+    {
+      "name": "InitialAnalyzeRequiresUnits",
+      "status": "passed",
+      "details": "no config assumption"
+    },
+    {
+      "name": "OrdinaryConfigPersistsExplicitUnit",
+      "status": "passed",
+      "details": "ordinary BCE_CONFIG input 1, G2 archive readback"
+    },
+    {
+      "name": "ConfigInvalidatesAnalysisAndPages",
+      "status": "passed",
+      "details": "old read-only report no longer available"
+    },
+    {
+      "name": "OnlyProjectDictionaryWritten",
+      "status": "passed",
+      "details": "event whitelist NOD + exact owned dictionary/record; zero global writes"
+    },
+    {
+      "name": "All741AndUnsavedChineseResourcesUnchanged",
+      "status": "passed",
+      "details": "all canonical root/leaf geometry, text, resources and global values"
+    },
+    {
+      "name": "OneActualUndoRemovesOnlyNewConfig",
+      "status": "passed",
+      "details": "real U after config; 741 roots and prior Chinese edit retained"
+    },
+    {
+      "name": "ConfigInvalidatesOrdinaryIssuePages",
+      "status": "passed",
+      "details": "actual output"
+    },
+    {
+      "name": "AnalyzeConsumesOnlyExplicitUnit",
+      "status": "passed",
+      "details": "unit provenance + missing plan + false authorization"
+    },
+    {
+      "name": "RecognizesFourElevationsTwoSectionsAndChinese",
+      "status": "passed",
+      "details": "current memory, no save"
+    },
+    {
+      "name": "UpdatePreservesProjectIdRefreshesConfirmation",
+      "status": "passed",
+      "details": "explicit input 2; no geometry authorization"
+    },
+    {
+      "name": "OneActualUndoRestoresOldUnitBytes",
+      "status": "passed",
+      "details": "one U restores exact previous archive and prior unsaved edits"
+    },
+    {
+      "name": "InvalidNumericInputWritesNothing",
+      "status": "passed",
+      "details": "input=0.000000"
+    },
+    {
+      "name": "InvalidNumericInputWritesNothing",
+      "status": "passed",
+      "details": "input=-1.000000"
+    },
+    {
+      "name": "EmptyCancelWritesNothing",
+      "status": "passed",
+      "details": "null response cancels without default"
+    },
+    {
+      "name": "CallerTransactionRejectedWithoutWrite",
+      "status": "passed",
+      "details": "ordinary CONFIG within caller transaction; ownership retained"
+    },
+    {
+      "name": "CallerUndoGroupRejectedWithoutWrite",
+      "status": "passed",
+      "details": "ordinary CONFIG refuses caller Undo boundary"
+    },
+    {
+      "name": "EscapeCancelPreservesArchive",
+      "status": "passed",
+      "details": "actual queued Esc"
+    },
+    {
+      "name": "HistoryOrForeignRejectedWithoutWrite",
+      "status": "passed",
+      "details": "fixture index=0 exact raw bytes retained"
+    },
+    {
+      "name": "UnboundHistoryNeverSuppliesUnitOrGeneration",
+      "status": "passed",
+      "details": "fixture index=0"
+    },
+    {
+      "name": "HistoryOrForeignRejectedWithoutWrite",
+      "status": "passed",
+      "details": "fixture index=1 exact raw bytes retained"
+    },
+    {
+      "name": "UnboundHistoryNeverSuppliesUnitOrGeneration",
+      "status": "passed",
+      "details": "fixture index=1"
+    },
+    {
+      "name": "HistoryOrForeignRejectedWithoutWrite",
+      "status": "passed",
+      "details": "fixture index=2 exact raw bytes retained"
+    },
+    {
+      "name": "UnboundHistoryNeverSuppliesUnitOrGeneration",
+      "status": "passed",
+      "details": "fixture index=2"
+    },
+    {
+      "name": "HistoryOrForeignRejectedWithoutWrite",
+      "status": "passed",
+      "details": "fixture index=3 exact raw bytes retained"
+    },
+    {
+      "name": "UnboundHistoryNeverSuppliesUnitOrGeneration",
+      "status": "passed",
+      "details": "fixture index=3"
+    },
+    {
+      "name": "HistoryOrForeignRejectedWithoutWrite",
+      "status": "passed",
+      "details": "fixture index=4 exact raw bytes retained"
+    },
+    {
+      "name": "UnboundHistoryNeverSuppliesUnitOrGeneration",
+      "status": "passed",
+      "details": "fixture index=4"
+    },
+    {
+      "name": "HistoryOrForeignRejectedWithoutWrite",
+      "status": "passed",
+      "details": "fixture index=5 exact raw bytes retained"
+    },
+    {
+      "name": "UnboundHistoryNeverSuppliesUnitOrGeneration",
+      "status": "passed",
+      "details": "fixture index=5"
+    },
+    {
+      "name": "HistoryOrForeignRejectedWithoutWrite",
+      "status": "passed",
+      "details": "fixture index=6 exact raw bytes retained"
+    },
+    {
+      "name": "UnboundHistoryNeverSuppliesUnitOrGeneration",
+      "status": "passed",
+      "details": "fixture index=6"
+    },
+    {
+      "name": "HistoryOrForeignRejectedWithoutWrite",
+      "status": "passed",
+      "details": "fixture index=7 exact raw bytes retained"
+    },
+    {
+      "name": "UnboundHistoryNeverSuppliesUnitOrGeneration",
+      "status": "passed",
+      "details": "fixture index=7"
+    },
+    {
+      "name": "HistoryOrForeignRejectedWithoutWrite",
+      "status": "passed",
+      "details": "fixture index=8 exact raw bytes retained"
+    },
+    {
+      "name": "UnboundHistoryNeverSuppliesUnitOrGeneration",
+      "status": "passed",
+      "details": "fixture index=8"
+    },
+    {
+      "name": "HistoryTestsPreserveCurrentDrawing",
+      "status": "passed",
+      "details": "test archive restored; geometry unchanged"
+    },
+    {
+      "name": "IndependentReopenKeepsUnitWithoutAuthority",
+      "status": "passed",
+      "details": "copy only; current unsaved document never saved/closed/reopened"
+    },
+    {
+      "name": "ActualSwitchInvalidatesReport",
+      "status": "passed",
+      "details": "new current doc"
+    },
+    {
+      "name": "SwitchInvalidatesOrdinaryIssuePages",
+      "status": "passed",
+      "details": "ordinary output"
+    },
+    {
+      "name": "IndependentProjectGetsOwnIdAndUnit",
+      "status": "passed",
+      "details": "second project explicit input 1000"
+    },
+    {
+      "name": "SecondAnalysisDoesNotReuseFirstUnit",
+      "status": "passed",
+      "details": "actual second document report"
+    },
+    {
+      "name": "ActualInsunitsConflictIsDiagnosed",
+      "status": "passed",
+      "details": "actual template INSUNITS 4 vs explicit 1000; global remains unchanged"
+    },
+    {
+      "name": "ReturnInvalidatesReportAndPreservesUnit",
+      "status": "passed",
+      "details": "switch back; no current file save/close"
+    },
+    {
+      "name": "ReturnAnalysisUsesOriginalUnit",
+      "status": "passed",
+      "details": "no cross-document scale cache"
+    },
+    {
+      "name": "InfoDisclosesUnitOnlyScope",
+      "status": "passed",
+      "details": "ordinary info output"
+    },
+    {
+      "name": "ForeignConfigConflictIsPreserved",
+      "status": "passed",
+      "details": "failed product load preserves foreign callback and registers no partial commands"
+    },
+    {
+      "name": "ReloadAfterConflictRestoresFourCommands",
+      "status": "passed",
+      "details": "ordinary SDK reload"
+    },
+    {
+      "name": "FourCommandsUnloadOwnedOnly",
+      "status": "passed",
+      "details": "SDK unload four command callbacks"
+    },
+    {
+      "name": "FrozenSourcesUnchanged",
+      "status": "passed",
+      "details": "source/reference hash readback; supervisor checks six sources"
+    }
+  ],
+  "errors": [],
+  "stateFactors": [
+    {
+      "contract": "bce.unitconfig-state.v1",
+      "label": "before-first-U",
+      "phase": 1,
+      "sdkStatus": 0,
+      "currentDocument": 2754222670544,
+      "targetDatabase": 2754230859024,
+      "archiveReadable": true,
+      "archiveBound": false,
+      "archiveCanCommit": false,
+      "archiveIssues": "",
+      "matchesExpectedOldBytes": true,
+      "matchesEscapeBeforeBytes": false,
+      "expectedPersistentId": "62491737-a41d-490c-801f-5587062a526d",
+      "configCancelled": 0,
+      "undoStarted": 0,
+      "undoEnded": 0,
+      "undoFailed": 0,
+      "actualUnit": "1",
+      "actualPersistentId": "62491737-a41d-490c-801f-5587062a526d",
+      "unitSource": "BCE_CONFIG:user-explicit; mmPerInputUnit=1; confirmation=549da383-f9b7-4bd2-9829-87d5d11070f2",
+      "generationViews": 0,
+      "abiQueryStatus": 1,
+      "sourceShapeSame": true,
+      "sourceGlobalsSame": true,
+      "sourceResourcesSame": true,
+      "sourceNodSameAsBeforeCreate": false,
+      "sourceRootCount": 742,
+      "undoCtlGetStatus": 5100,
+      "undoCtl": 53,
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-192313-d01b1cfc\\case\\unitconfig-state-1.json",
+      "SHA256": "7BF411CF9FB3331400B789E1593C6747A5CD37BF81022C20F8E0ABD9E6FB4FA6"
+    },
+    {
+      "contract": "bce.unitconfig-state.v1",
+      "label": "after-first-U",
+      "phase": 2,
+      "sdkStatus": 0,
+      "currentDocument": 2754222670544,
+      "targetDatabase": 2754230859024,
+      "archiveReadable": false,
+      "archiveBound": false,
+      "archiveCanCommit": false,
+      "archiveIssues": "PROJECT_NOT_FOUND:No BCE project archive;",
+      "matchesExpectedOldBytes": false,
+      "matchesEscapeBeforeBytes": false,
+      "expectedPersistentId": "62491737-a41d-490c-801f-5587062a526d",
+      "configCancelled": 0,
+      "undoStarted": 1,
+      "undoEnded": 1,
+      "undoFailed": 0,
+      "abiQueryStatus": 1,
+      "sourceShapeSame": true,
+      "sourceGlobalsSame": true,
+      "sourceResourcesSame": true,
+      "sourceNodSameAsBeforeCreate": true,
+      "sourceRootCount": 742,
+      "undoCtlGetStatus": 5100,
+      "undoCtl": 53,
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-192313-d01b1cfc\\case\\unitconfig-state-2.json",
+      "SHA256": "3FF12643FC022F483C83AFD219E22B9921315D28EB703D6B1BED955A58418D94"
+    },
+    {
+      "contract": "bce.unitconfig-state.v1",
+      "label": "before-update-U",
+      "phase": 4,
+      "sdkStatus": 0,
+      "currentDocument": 2754222670544,
+      "targetDatabase": 2754230859024,
+      "archiveReadable": true,
+      "archiveBound": false,
+      "archiveCanCommit": false,
+      "archiveIssues": "",
+      "matchesExpectedOldBytes": false,
+      "matchesEscapeBeforeBytes": false,
+      "expectedPersistentId": "95ec4bdc-c6a5-4954-a15b-83d8e4b7a477",
+      "configCancelled": 0,
+      "undoStarted": 0,
+      "undoEnded": 0,
+      "undoFailed": 0,
+      "actualUnit": "2",
+      "actualPersistentId": "95ec4bdc-c6a5-4954-a15b-83d8e4b7a477",
+      "unitSource": "BCE_CONFIG:user-explicit; mmPerInputUnit=2; confirmation=00536325-b98a-4f3a-8e52-71b1f2e5bc1b",
+      "generationViews": 0,
+      "abiQueryStatus": 1,
+      "sourceShapeSame": true,
+      "sourceGlobalsSame": true,
+      "sourceResourcesSame": true,
+      "sourceNodSameAsBeforeCreate": false,
+      "sourceRootCount": 742,
+      "undoCtlGetStatus": 5100,
+      "undoCtl": 53,
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-192313-d01b1cfc\\case\\unitconfig-state-3.json",
+      "SHA256": "899C7D5E39E30A59860F58AC8E4418D0569A1C594C2CD6C29D0A070750C36D8E"
+    },
+    {
+      "contract": "bce.unitconfig-state.v1",
+      "label": "after-update-U",
+      "phase": 5,
+      "sdkStatus": 0,
+      "currentDocument": 2754222670544,
+      "targetDatabase": 2754230859024,
+      "archiveReadable": true,
+      "archiveBound": false,
+      "archiveCanCommit": false,
+      "archiveIssues": "",
+      "matchesExpectedOldBytes": true,
+      "matchesEscapeBeforeBytes": false,
+      "expectedPersistentId": "95ec4bdc-c6a5-4954-a15b-83d8e4b7a477",
+      "configCancelled": 0,
+      "undoStarted": 1,
+      "undoEnded": 1,
+      "undoFailed": 0,
+      "actualUnit": "1",
+      "actualPersistentId": "95ec4bdc-c6a5-4954-a15b-83d8e4b7a477",
+      "unitSource": "BCE_CONFIG:user-explicit; mmPerInputUnit=1; confirmation=29ae5893-ae44-4751-be5e-914ad4efa079",
+      "generationViews": 0,
+      "abiQueryStatus": 1,
+      "sourceShapeSame": true,
+      "sourceGlobalsSame": true,
+      "sourceResourcesSame": true,
+      "sourceNodSameAsBeforeCreate": false,
+      "sourceRootCount": 742,
+      "undoCtlGetStatus": 5100,
+      "undoCtl": 53,
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-192313-d01b1cfc\\case\\unitconfig-state-4.json",
+      "SHA256": "742B54A67F3AB8FA5344FE52C52C441592ACD09685D66F21A6D6C0A24D7C80EC"
+    },
+    {
+      "contract": "bce.unitconfig-state.v1",
+      "label": "before-Esc",
+      "phase": 5,
+      "sdkStatus": 0,
+      "currentDocument": 2754222670544,
+      "targetDatabase": 2754230859024,
+      "archiveReadable": true,
+      "archiveBound": false,
+      "archiveCanCommit": false,
+      "archiveIssues": "",
+      "matchesExpectedOldBytes": true,
+      "matchesEscapeBeforeBytes": true,
+      "expectedPersistentId": "95ec4bdc-c6a5-4954-a15b-83d8e4b7a477",
+      "configCancelled": 0,
+      "undoStarted": null,
+      "undoEnded": null,
+      "undoFailed": null,
+      "actualUnit": "1",
+      "actualPersistentId": "95ec4bdc-c6a5-4954-a15b-83d8e4b7a477",
+      "unitSource": "BCE_CONFIG:user-explicit; mmPerInputUnit=1; confirmation=29ae5893-ae44-4751-be5e-914ad4efa079",
+      "generationViews": 0,
+      "abiQueryStatus": 1,
+      "sourceShapeSame": true,
+      "sourceGlobalsSame": true,
+      "sourceResourcesSame": true,
+      "sourceNodSameAsBeforeCreate": false,
+      "sourceRootCount": 742,
+      "undoCtlGetStatus": 5100,
+      "undoCtl": 53,
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-192313-d01b1cfc\\case\\unitconfig-state-5.json",
+      "SHA256": "EC1D05C9442E4AD0FDC275DF69417AFFEABA6DB990657A87D3C7F37515E89668"
+    },
+    {
+      "contract": "bce.unitconfig-state.v1",
+      "label": "after-Esc",
+      "phase": 6,
+      "sdkStatus": 0,
+      "currentDocument": 2754222670544,
+      "targetDatabase": 2754230859024,
+      "archiveReadable": true,
+      "archiveBound": false,
+      "archiveCanCommit": false,
+      "archiveIssues": "",
+      "matchesExpectedOldBytes": true,
+      "matchesEscapeBeforeBytes": true,
+      "expectedPersistentId": "95ec4bdc-c6a5-4954-a15b-83d8e4b7a477",
+      "configCancelled": 1,
+      "undoStarted": null,
+      "undoEnded": null,
+      "undoFailed": null,
+      "actualUnit": "1",
+      "actualPersistentId": "95ec4bdc-c6a5-4954-a15b-83d8e4b7a477",
+      "unitSource": "BCE_CONFIG:user-explicit; mmPerInputUnit=1; confirmation=29ae5893-ae44-4751-be5e-914ad4efa079",
+      "generationViews": 0,
+      "abiQueryStatus": 1,
+      "sourceShapeSame": true,
+      "sourceGlobalsSame": true,
+      "sourceResourcesSame": true,
+      "sourceNodSameAsBeforeCreate": false,
+      "sourceRootCount": 742,
+      "undoCtlGetStatus": 5100,
+      "undoCtl": 53,
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-192313-d01b1cfc\\case\\unitconfig-state-6.json",
+      "SHA256": "154AB3D85288087072873EF474602958CB0EEBFB5DBEBF88981AAE5977470C83"
+    },
+    {
+      "contract": "bce.unitconfig-state.v1",
+      "label": "before-clone",
+      "phase": 6,
+      "sdkStatus": 0,
+      "currentDocument": 2754222670544,
+      "targetDatabase": 2754230859024,
+      "archiveReadable": true,
+      "archiveBound": false,
+      "archiveCanCommit": false,
+      "archiveIssues": "",
+      "matchesExpectedOldBytes": true,
+      "matchesEscapeBeforeBytes": true,
+      "expectedPersistentId": "95ec4bdc-c6a5-4954-a15b-83d8e4b7a477",
+      "configCancelled": 1,
+      "undoStarted": null,
+      "undoEnded": null,
+      "undoFailed": null,
+      "actualUnit": "1",
+      "actualPersistentId": "95ec4bdc-c6a5-4954-a15b-83d8e4b7a477",
+      "unitSource": "BCE_CONFIG:user-explicit; mmPerInputUnit=1; confirmation=29ae5893-ae44-4751-be5e-914ad4efa079",
+      "generationViews": 0,
+      "abiQueryStatus": 1,
+      "sourceShapeSame": true,
+      "sourceGlobalsSame": true,
+      "sourceResourcesSame": true,
+      "sourceNodSameAsBeforeCreate": false,
+      "sourceRootCount": 742,
+      "undoCtlGetStatus": 5100,
+      "undoCtl": 53,
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-192313-d01b1cfc\\case\\unitconfig-state-7.json",
+      "SHA256": "04E2AB7B58E5626A8CA2A40853712E7B99252B982C1235505C19FF3E631F502D"
+    },
+    {
+      "contract": "bce.unitconfig-state.v1",
+      "label": "clone-before-explicit-project-copy",
+      "phase": 6,
+      "sdkStatus": 0,
+      "currentDocument": 2754222670544,
+      "targetDatabase": 2791858169520,
+      "archiveReadable": false,
+      "archiveBound": false,
+      "archiveCanCommit": false,
+      "archiveIssues": "PROJECT_NOT_FOUND:No BCE project archive;",
+      "matchesExpectedOldBytes": false,
+      "matchesEscapeBeforeBytes": false,
+      "expectedPersistentId": "95ec4bdc-c6a5-4954-a15b-83d8e4b7a477",
+      "configCancelled": 1,
+      "undoStarted": null,
+      "undoEnded": null,
+      "undoFailed": null,
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-192313-d01b1cfc\\case\\unitconfig-state-8.json",
+      "SHA256": "5FA38B22CB45E6ABD00EAC95A8AB8AF6A47AA2DB92D7C3885663B267163030FA"
+    },
+    {
+      "contract": "bce.unitconfig-state.v1",
+      "label": "clone-before-save",
+      "phase": 6,
+      "sdkStatus": 0,
+      "currentDocument": 2754222670544,
+      "targetDatabase": 2791858169520,
+      "archiveReadable": true,
+      "archiveBound": false,
+      "archiveCanCommit": false,
+      "archiveIssues": "",
+      "matchesExpectedOldBytes": true,
+      "matchesEscapeBeforeBytes": true,
+      "expectedPersistentId": "95ec4bdc-c6a5-4954-a15b-83d8e4b7a477",
+      "configCancelled": 1,
+      "undoStarted": null,
+      "undoEnded": null,
+      "undoFailed": null,
+      "actualUnit": "1",
+      "actualPersistentId": "95ec4bdc-c6a5-4954-a15b-83d8e4b7a477",
+      "unitSource": "BCE_CONFIG:user-explicit; mmPerInputUnit=1; confirmation=29ae5893-ae44-4751-be5e-914ad4efa079",
+      "generationViews": 0,
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-192313-d01b1cfc\\case\\unitconfig-state-9.json",
+      "SHA256": "5E9BF00582D1C11CF4765AA6095B316397B7BBCA795F53AF19FB21FD48C7346F"
+    },
+    {
+      "contract": "bce.unitconfig-state.v1",
+      "label": "reopened-copy",
+      "phase": 6,
+      "sdkStatus": 0,
+      "currentDocument": 2754222670544,
+      "targetDatabase": 1066420663376,
+      "archiveReadable": true,
+      "archiveBound": false,
+      "archiveCanCommit": false,
+      "archiveIssues": "",
+      "matchesExpectedOldBytes": true,
+      "matchesEscapeBeforeBytes": true,
+      "expectedPersistentId": "95ec4bdc-c6a5-4954-a15b-83d8e4b7a477",
+      "configCancelled": 1,
+      "undoStarted": null,
+      "undoEnded": null,
+      "undoFailed": null,
+      "actualUnit": "1",
+      "actualPersistentId": "95ec4bdc-c6a5-4954-a15b-83d8e4b7a477",
+      "unitSource": "BCE_CONFIG:user-explicit; mmPerInputUnit=1; confirmation=29ae5893-ae44-4751-be5e-914ad4efa079",
+      "generationViews": 0,
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-192313-d01b1cfc\\case\\unitconfig-state-10.json",
+      "SHA256": "8FBEAAC938D4FC94C538DC6EB62102A61AA85CA48135C181653B9D92FEC71CDE"
+    },
+    {
+      "contract": "bce.unitconfig-state.v1",
+      "label": "current-after-reopen",
+      "phase": 6,
+      "sdkStatus": 0,
+      "currentDocument": 2754222670544,
+      "targetDatabase": 2754230859024,
+      "archiveReadable": true,
+      "archiveBound": false,
+      "archiveCanCommit": false,
+      "archiveIssues": "",
+      "matchesExpectedOldBytes": true,
+      "matchesEscapeBeforeBytes": true,
+      "expectedPersistentId": "95ec4bdc-c6a5-4954-a15b-83d8e4b7a477",
+      "configCancelled": 1,
+      "undoStarted": null,
+      "undoEnded": null,
+      "undoFailed": null,
+      "actualUnit": "1",
+      "actualPersistentId": "95ec4bdc-c6a5-4954-a15b-83d8e4b7a477",
+      "unitSource": "BCE_CONFIG:user-explicit; mmPerInputUnit=1; confirmation=29ae5893-ae44-4751-be5e-914ad4efa079",
+      "generationViews": 0,
+      "abiQueryStatus": 1,
+      "sourceShapeSame": true,
+      "sourceGlobalsSame": true,
+      "sourceResourcesSame": true,
+      "sourceNodSameAsBeforeCreate": false,
+      "sourceRootCount": 742,
+      "undoCtlGetStatus": 5100,
+      "undoCtl": 53,
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-192313-d01b1cfc\\case\\unitconfig-state-11.json",
+      "SHA256": "B93776478142F00CD30E09C93A4E7E327319F31FF32583D1FC3533E0A779B6DF"
+    },
+    {
+      "contract": "bce.unitconfig-state.v1",
+      "label": "returned-original-before-analyze",
+      "phase": 6,
+      "sdkStatus": 0,
+      "currentDocument": 2754222670544,
+      "targetDatabase": 2754230859024,
+      "archiveReadable": true,
+      "archiveBound": false,
+      "archiveCanCommit": false,
+      "archiveIssues": "",
+      "matchesExpectedOldBytes": true,
+      "matchesEscapeBeforeBytes": true,
+      "expectedPersistentId": "95ec4bdc-c6a5-4954-a15b-83d8e4b7a477",
+      "configCancelled": 1,
+      "undoStarted": null,
+      "undoEnded": null,
+      "undoFailed": null,
+      "actualUnit": "1",
+      "actualPersistentId": "95ec4bdc-c6a5-4954-a15b-83d8e4b7a477",
+      "unitSource": "BCE_CONFIG:user-explicit; mmPerInputUnit=1; confirmation=29ae5893-ae44-4751-be5e-914ad4efa079",
+      "generationViews": 0,
+      "abiQueryStatus": 1,
+      "sourceShapeSame": true,
+      "sourceGlobalsSame": true,
+      "sourceResourcesSame": true,
+      "sourceNodSameAsBeforeCreate": false,
+      "sourceRootCount": 742,
+      "undoCtlGetStatus": 5100,
+      "undoCtl": 53,
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-192313-d01b1cfc\\case\\unitconfig-state-12.json",
+      "SHA256": "DB1085D5EB649E590014BD53611B70972490BF2B65BD1EBBE694C33D1AD41853"
+    }
+  ]
+}

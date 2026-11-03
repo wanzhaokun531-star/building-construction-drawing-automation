@@ -1,0 +1,18 @@
+{
+  "reviewed": true,
+  "finalImages": [
+    {
+      "floor": 1,
+      "image": "D:\\Codex\\建筑施工图自动化\\插件\\build\\approved-013-visual\\floor-1-v170.png",
+      "SHA256": "F69EE05A2E1A97C70E268D27A8DAACA088321FB89E34D4E6949D66131F93A4B6",
+      "pixelIdenticalToReviewedV169": true
+    },
+    {
+      "floor": 2,
+      "image": "D:\\Codex\\建筑施工图自动化\\插件\\build\\approved-013-visual\\floor-2-v170.png",
+      "SHA256": "5E7960434B2A91AA67459C43F442F1D0169B8776F225F2395216460D904E5313",
+      "pixelIdenticalToReviewedV169": true
+    }
+  ],
+  "samePixelsAsReviewedV169": true
+}

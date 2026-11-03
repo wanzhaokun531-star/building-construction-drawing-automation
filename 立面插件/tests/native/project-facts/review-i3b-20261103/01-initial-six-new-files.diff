@@ -1,0 +1,378 @@
+--- /dev/null
++++ src/ProjectFactsReader.h
+@@ -0,0 +1,23 @@
++#pragma once
++#include "ProjectFacts.h"
++#include "SceneReader.h"
++namespace bce {
++struct ProjectFactSourceRead {
++    bool readCompleted{false};
++    FactReadProvenance read;
++    std::string modelSpaceOwnerHandle;
++    std::vector<FactSource> sources;
++};
++struct ProjectFactsReadRequest {
++    NativeSceneContext& context;
++    FactReadProvenance expected;
++    std::vector<std::string> sourceHandles;
++};
++// Limited typed observation of explicitly selected current-memory sources only.
++// Completed does not mean supported, matched, configured or eligible for generation.
++// No project ID or confirmed units are invented here; configuration owns those fields.
++// Missing sources are omitted with FACT_SOURCE_MISSING; unsupported sources retain
++// their actual class/owner and monostate. An unavailable read never completes a batch.
++[[nodiscard]] Result<ProjectFactSourceRead> readCurrentProjectFacts(const ProjectFactsReadRequest&);
++}
++
+--- /dev/null
++++ src/ProjectFactsReader.cpp
+@@ -0,0 +1,8 @@
++#include "ProjectFactsReader.h"
++namespace bce {
++Result<ProjectFactSourceRead> readCurrentProjectFacts(const ProjectFactsReadRequest&) {
++    // Deliberate TDD RED skeleton: no native source getter has been implemented.
++    return {std::nullopt, {{"FACT_READER_NOT_IMPLEMENTED", "当前定义点读取尚未实现。", {}, true}}};
++}
++}
++
+--- /dev/null
++++ tests/native/project-facts/ProjectFactsFixture.h
+@@ -0,0 +1,113 @@
++#pragma once
++#include "ProjectFactsReader.h"
++#include "NativeEvidence.h"
++#include <acdocman.h>
++#include <aced.h>
++#include <adscodes.h>
++#include <dbapserv.h>
++#include <dbdim.h>
++#include <dbents.h>
++#include <dbfield.h>
++#include <dbidmap.h>
++#include <dbmtext.h>
++#include <dbsymtb.h>
++#include <dbsymutl.h>
++#include <cmath>
++#include <iomanip>
++#include <memory>
++#include <set>
++#include <sstream>
++namespace bce::facts_test {
++inline void ok(Acad::ErrorStatus s, const char* action) { native::require(s == Acad::eOk, std::string(action)+":"+std::to_string(s)); }
++template<class T> class Open final {
++public:
++    explicit Open(AcDbObjectId id, AcDb::OpenMode mode=AcDb::kForRead) { ok(acdbOpenObject(value_,id,mode),"fixture open"); }
++    ~Open() noexcept { if(value_) value_->close(); }
++    Open(const Open&)=delete;
++    Open& operator=(const Open&)=delete;
++    T* operator->() const noexcept { return value_; }
++private: T* value_{};
++};
++inline AcDbObjectId append(AcDbObjectId owner, std::unique_ptr<AcDbEntity> entity) {
++    Open<AcDbBlockTableRecord> space(owner,AcDb::kForWrite); AcDbObjectId id;
++    ok(space->appendAcDbEntity(id,entity.get()),"fixture append"); entity.release()->close(); return id;
++}
++inline AcDbObjectId layer(AcDbDatabase& db,const wchar_t* name,bool off,bool frozen) {
++    Open<AcDbLayerTable> table(db.layerTableId(),AcDb::kForWrite);
++    auto value=std::make_unique<AcDbLayerTableRecord>(); ok(value->setName(name),"layer name");
++    value->setIsOff(off); ok(value->setIsFrozen(frozen),"layer frozen"); AcDbObjectId id;
++    ok(table->add(id,value.get()),"layer append"); value.release()->close(); return id;
++}
++inline AcDbObjectId block(AcDbDatabase& db) {
++    Open<AcDbBlockTable> table(db.blockTableId(),AcDb::kForWrite);
++    auto value=std::make_unique<AcDbBlockTableRecord>(); ok(value->setName(L"I3bNested"),"block name");
++    AcDbObjectId id; ok(table->add(id,value.get()),"block append"); value.release()->close(); return id;
++}
++inline std::string number(double v) { std::ostringstream out; out.imbue(std::locale::classic()); out<<std::setprecision(17)<<v; return out.str(); }
++inline std::string pointJson(FactPoint3 p) { return native::array({number(p.x),number(p.y),number(p.z)}); }
++inline bool point(FactPoint3 p,double x,double y,double z=0) { return std::abs(p.x-x)<1e-8 && std::abs(p.y-y)<1e-8 && std::abs(p.z-z)<1e-8; }
++inline std::string sourceJson(const FactSource& s) {
++    using namespace native;
++    std::string definition="null";
++    if(const auto* p=std::get_if<FactLine>(&s.definition))
++        definition=object({{"kind",quote(std::string("line"))},{"start",pointJson(p->start)},{"end",pointJson(p->end)},{"normal",pointJson(p->normal)},{"thickness",number(p->thickness)}});
++    if(const auto* p=std::get_if<FactAlignedDimension>(&s.definition))
++        definition=object({{"kind",quote(std::string("alignedDimension"))},{"xLine1",pointJson(p->xLine1Point)},{"xLine2",pointJson(p->xLine2Point)},{"normal",pointJson(p->normal)}});
++    if(const auto* p=std::get_if<FactText>(&s.definition))
++        definition=object({{"kind",quote(std::string("text"))},{"text",quote(p->text)},{"position",pointJson(p->position)},{"alignmentPoint",pointJson(p->alignmentPoint)},{"normal",pointJson(p->normal)},
++            {"rotation",number(p->rotation)},{"height",number(p->height)},{"widthFactor",number(p->widthFactor)},{"oblique",number(p->oblique)},
++            {"horizontalMode",std::to_string(p->horizontalMode)},{"verticalMode",std::to_string(p->verticalMode)},{"mirroredX",p->mirroredX?"true":"false"},{"mirroredY",p->mirroredY?"true":"false"},{"thickness",number(p->thickness)},{"hasFields",p->hasFields?"true":"false"}});
++    return object({{"handle",quote(s.rootHandle)},{"owner",quote(s.ownerHandle)},{"class",quote(s.exactClass)},{"direct",s.directRoot?"true":"false"},{"visible",s.effectiveVisible?"true":"false"},
++        {"documentIdentity",quote(s.read.documentIdentity)},{"databaseIdentity",quote(s.read.databaseIdentity)},{"revision",std::to_string(s.read.revision)},{"definition",definition}});
++}
++inline const FactSource* find(const Result<ProjectFactSourceRead>& r,const std::string& h) {
++    if(r.value) for(const auto& s:r.value->sources) if(s.rootHandle==h) return &s;
++    return nullptr;
++}
++inline bool issue(const Result<ProjectFactSourceRead>& r,const std::string& code,const std::string& h={}) {
++    for(const auto& i:r.issues) if(i.code==code && (h.empty() || (i.source.entity && i.source.entity->handle==h))) return true;
++    return false;
++}
++struct Monitor final : AcDbDatabaseReactor {
++    explicit Monitor(AcDbDatabase& value):db(value) { ok(db.addReactor(this),"monitor attach"); }
++    ~Monitor() noexcept { db.removeReactor(this); }
++    void event(const char* kind,const AcDbObject* value) noexcept {
++        ++changes;
++        try { events.push_back(native::object({{"event",native::quote(std::string(kind))},{"handle",native::quote(value?native_scene::handle(value->objectId()):std::string{})},
++            {"class",native::quote(value?native_scene::utf8(value->isA()->name()):std::string{})}})); }
++        catch(...) { loggingFailed=true; }
++    }
++    void objectOpenedForModify(const AcDbDatabase*,const AcDbObject* p) override { event("openWrite",p); }
++    void objectModified(const AcDbDatabase*,const AcDbObject* p) override { event("modified",p); }
++    void objectAppended(const AcDbDatabase*,const AcDbObject* p) override { event("append",p); }
++    void objectErased(const AcDbDatabase*,const AcDbObject* p,Adesk::Boolean) override { event("erase",p); }
++    void objectUnAppended(const AcDbDatabase*,const AcDbObject* p) override { event("unappend",p); }
++    void objectReAppended(const AcDbDatabase*,const AcDbObject* p) override { event("reappend",p); }
++    void headerSysVarChanged(const AcDbDatabase*,const ACHAR*,Adesk::Boolean success) override { if(success) event("header",nullptr); }
++    AcDbDatabase& db; unsigned changes{}; bool loggingFailed{}; std::vector<std::string> events;
++};
++inline std::string inventory(AcDbDatabase& db) {
++    Open<AcDbBlockTableRecord> model(acdbSymUtil()->blockModelSpaceId(&db));
++    AcDbBlockTableRecordIterator* raw{}; ok(model->newIterator(raw),"inventory iterator");
++    std::unique_ptr<AcDbBlockTableRecordIterator> it(raw); std::vector<std::string> rows;
++    for(;!it->done();it->step()) { AcDbObjectId id; ok(it->getEntityId(id),"inventory id"); Open<AcDbEntity> e(id);
++        rows.push_back(native::object({{"handle",native::quote(native_scene::handle(id))},{"owner",native::quote(native_scene::handle(e->ownerId()))},{"class",native::quote(native_scene::utf8(e->isA()->name()))},
++            {"layer",native::quote(native_scene::handle(e->layerId()))},{"visible",e->visibility()==AcDb::kVisible?"true":"false"}})); }
++    return native::array(rows);
++}
++inline std::string resources(AcDbDatabase& db) {
++    std::vector<std::string> rows;
++    for(const auto& r:native_scene::readResources(db)) rows.push_back(native::object({{"kind",native::quote(r.kind)},{"name",native::quote(r.name)},{"signature",native::quote(r.definitionSignature)}}));
++    return native::array(rows);
++}
++inline int dbmod() { resbuf v{}; native::require(acedGetVar(L"DBMOD",&v)==RTNORM && v.restype==RTSHORT,"DBMOD read"); return v.resval.rint; }
++struct Boundary {
++    explicit Boundary(NativeSceneContext& c,AcDbDatabase& d,Monitor& m):context(c),db(d),monitor(m),current(acDocManager->curDocument()),active(acDocManager->mdiActiveDocument()),working(acdbHostApplicationServices()->workingDatabase()),
++        revision(c.revision()),changes(m.changes),mod(dbmod()),roots(inventory(d)),resource(resources(d)) {}
++    bool unchanged() const { return current==acDocManager->curDocument() && active==acDocManager->mdiActiveDocument() && working==acdbHostApplicationServices()->workingDatabase() &&
++        context.currentDatabase()==&db && context.revision()==revision && monitor.changes==changes && !monitor.loggingFailed && mod==dbmod() && roots==inventory(db) && resource==resources(db); }
++    NativeSceneContext& context; AcDbDatabase& db; Monitor& monitor; const AcApDocument* current; const AcApDocument* active; const AcDbDatabase* working;
++    std::uint64_t revision; unsigned changes; int mod; std::string roots,resource;
++};
++}
++
+--- /dev/null
++++ tests/native/project-facts/ProjectFactsDriver.cpp
+@@ -0,0 +1,146 @@
++#include "ProjectFactsFixture.h"
++#include "AuditedFactLocations.h"
++#include <acutads.h>
++#include <rxregsvc.h>
++#include <cctype>
++#include <map>
++namespace {
++HMODULE moduleHandle{};
++void run_case() noexcept {
++    using namespace bce;
++    using namespace bce::native;
++    using namespace bce::facts_test;
++    Config config;
++    std::unique_ptr<Evidence> evidence;
++    try {
++        config=load_config(moduleHandle); evidence=std::make_unique<Evidence>(config); validate_identity(config);
++        require(config.caseName==L"CurrentProjectFactSources","unsupported case");
++        bool passed=true;
++        auto expect=[&](const std::string& name,bool condition,const std::string& details) { evidence->step(name,condition?"passed":"failed",details); passed=passed && condition; };
++        {
++            require(acDocManager->curDocument()!=nullptr,"no current document");
++            auto* db=acDocManager->curDocument()->database(); require(db!=nullptr,"no current database");
++            const auto model=acdbSymUtil()->blockModelSpaceId(db);
++            const auto modelHandle=native_scene::handle(model);
++            evidence->checkpoint("install-owned-unsaved-current-fixture");
++            std::map<std::string,AcDbObjectId> mapped;
++            std::vector<std::string> auditedHandles;
++            {
++                AcDbDatabase source(false,true);
++                ok(source.readDwgFile(config.scheme.c_str(),AcDbDatabase::kForReadAndReadShare,false),"read frozen scheme"); source.closeInput(true);
++                AcDbObjectIdArray ids;
++                for(const auto& view:auditedViews()) for(const auto& h:{view.datum,view.title,view.lower,view.upper}) ids.append(native_scene::objectId(source,h));
++                AcDbIdMapping mapping; ok(source.wblockCloneObjects(ids,model,mapping,AcDb::kDrcIgnore),"clone selected audited sources");
++                for(int i=0;i<ids.length();++i) {
++                    AcDbIdPair pair; pair.setKey(ids[i]); require(mapping.compute(pair) && pair.isCloned() && !pair.value().isNull(),"source current clone mapping");
++                    const auto oldHandle=native_scene::handle(ids[i]),newHandle=native_scene::handle(pair.value()); mapped.emplace(oldHandle,pair.value()); auditedHandles.push_back(newHandle);
++                    evidence->capability(object({{"fixtureMapping",quote(oldHandle)},{"currentHandle",quote(newHandle)}}));
++                }
++            }
++            auto text=std::make_unique<AcDbText>(AcGePoint3d(120,240,0),L"未保存中文立面",db->textstyle(),3.25);
++            ok(text->setWidthFactor(0.73),"text width"); ok(text->setRotation(0.21),"text rotation"); ok(text->setOblique(0.12),"text oblique");
++            ok(text->mirrorInX(true),"text mirror X"); ok(text->setThickness(0.5),"text thickness");
++            const auto chinese=append(model,std::move(text));
++            auto line=std::make_unique<AcDbLine>(AcGePoint3d(12,34,0),AcGePoint3d(56,78,0)); ok(line->setThickness(2.0),"line thickness");
++            const auto lineId=append(model,std::move(line));
++            auto aligned=std::make_unique<AcDbAlignedDimension>(); ok(aligned->setXLine1Point({10,20,0}),"dimension point 1"); ok(aligned->setXLine2Point({30,70,0}),"dimension point 2");
++            ok(aligned->setDimLinePoint({90,90,0}),"dimension display point"); ok(aligned->setDimensionText(L"文字覆盖不是定义点"),"dimension override");
++            const auto dimId=append(model,std::move(aligned));
++            const auto off=layer(*db,L"I3bOff",true,false),frozen=layer(*db,L"I3bFrozen",false,true);
++            auto hiddenLine=std::make_unique<AcDbLine>(AcGePoint3d(1,2,0),AcGePoint3d(3,4,0)); ok(hiddenLine->setVisibility(AcDb::kInvisible),"hide entity"); const auto hidden=append(model,std::move(hiddenLine));
++            auto offLine=std::make_unique<AcDbLine>(AcGePoint3d(1,2,0),AcGePoint3d(3,4,0)); ok(offLine->setLayer(off),"off layer assignment"); const auto offId=append(model,std::move(offLine));
++            auto frozenLine=std::make_unique<AcDbLine>(AcGePoint3d(1,2,0),AcGePoint3d(3,4,0)); ok(frozenLine->setLayer(frozen),"frozen layer assignment"); const auto frozenId=append(model,std::move(frozenLine));
++            const auto nestedOwner=block(*db); const auto nested=append(nestedOwner,std::make_unique<AcDbLine>(AcGePoint3d(1,2,0),AcGePoint3d(3,4,0)));
++            const auto blockRef=append(model,std::make_unique<AcDbBlockReference>(AcGePoint3d(200,300,0),nestedOwner));
++            const auto attribute=append(model,std::make_unique<AcDbAttribute>());
++            const auto mtext=append(model,std::make_unique<AcDbMText>());
++            const auto fieldText=append(model,std::make_unique<AcDbText>(AcGePoint3d(0,0,0),L"field",db->textstyle(),2));
++            {
++                Open<AcDbText> e(fieldText,AcDb::kForWrite); auto field=std::make_unique<AcDbField>(L"%<\\AcVar Date \\f \"%tc1\">%",true); AcDbObjectId fieldId;
++                ok(e->setField(L"TEXT",field.get(),fieldId),"attach unevaluated field"); field.release()->close(); require(e->hasFields(),"field fixture did not attach");
++            }
++            const auto erased=append(model,std::make_unique<AcDbLine>(AcGePoint3d(1,1,0),AcGePoint3d(2,2,0)));
++            const auto erasedHandle=native_scene::handle(erased);
++            { Open<AcDbEntity> e(erased,AcDb::kForWrite); ok(e->erase(),"erase owned fixture"); }
++            NativeSceneContext context;
++            Monitor monitor(*db);
++            auto provenance=[&] { return FactReadProvenance{context.documentIdentity(),context.documentIdentity()+"/database",context.revision()}; };
++            auto read=[&](const std::string& label,const FactReadProvenance& expected,const std::vector<std::string>& handles) {
++                Boundary before(context,*db,monitor); evidence->checkpoint(label);
++                auto result=readCurrentProjectFacts({context,expected,handles});
++                expect(label+"ReadOnly",before.unchanged(),"current/active/working/context, revision, DBMOD, roots, resources, write-open/modify/append/erase/header events unchanged");
++                std::vector<std::string> rows,diagnostics;
++                if(result.value) for(const auto& s:result.value->sources) rows.push_back(sourceJson(s));
++                for(const auto& i:result.issues) diagnostics.push_back(object({{"code",quote(i.code)},{"message",quote(i.message)},{"handle",quote(i.source.entity?i.source.entity->handle:std::string{})}}));
++                evidence->capability(object({{"read",quote(label)},{"expectedRevision",std::to_string(expected.revision)},{"currentRevision",std::to_string(context.revision())},{"dbmodBefore",std::to_string(before.mod)},
++                    {"dbmodAfter",std::to_string(dbmod())},{"readCompleted",result.value && result.value->readCompleted?"true":"false"},{"sources",array(rows)},{"issues",array(diagnostics)}}));
++                return result;
++            };
++            const auto audited=read("AuditedCurrentClone",provenance(),auditedHandles);
++            bool auditedExact=audited.value && audited.value->readCompleted && audited.value->modelSpaceOwnerHandle==modelHandle;
++            if(audited.value) for(const auto& s:audited.value->sources)
++                auditedExact=auditedExact && s.read.documentIdentity==context.documentIdentity() && s.read.databaseIdentity==context.documentIdentity()+"/database" && s.read.revision==context.revision();
++            for(const auto& view:auditedViews()) {
++                const auto* datum=find(audited,native_scene::handle(mapped.at(view.datum)));
++                const auto* definition=datum?std::get_if<FactAlignedDimension>(&datum->definition):nullptr;
++                bool correct=definition && point(definition->xLine1Point,view.x,view.y) && point(definition->xLine2Point,view.x,view.upperY);
++                for(const auto& pair:std::vector<std::pair<std::string,std::string>>{{view.title,view.titleText},{view.lower,u8"一层平面图 +0 mm"},{view.upper,u8"二层平面图 +3000 mm"}}) {
++                    const auto* s=find(audited,native_scene::handle(mapped.at(pair.first))); const auto* t=s?std::get_if<FactText>(&s->definition):nullptr;
++                    correct=correct && t && t->text==pair.second && s->directRoot && s->effectiveVisible && s->ownerHandle==modelHandle && s->exactClass=="AcDbText";
++                }
++                expect("AuditedDatumTitleFloorText_"+view.role,correct,"actual cloned current handles; frozen audit definition points and independently frozen TSV text"); auditedExact=auditedExact && correct;
++            }
++            expect("AuditedBatchProvenance",auditedExact && audited.value->read.documentIdentity==context.documentIdentity() && audited.value->read.databaseIdentity==context.documentIdentity()+"/database" && audited.value->read.revision==context.revision(),"batch preserves actual current context identity/revision and model owner");
++            const auto ch=native_scene::handle(chinese),lh=native_scene::handle(lineId),dh=native_scene::handle(dimId);
++            std::string normalized=ch; for(auto& c:normalized) c=static_cast<char>(std::tolower(static_cast<unsigned char>(c))); normalized="000"+normalized;
++            const auto raw=read("UnsavedTypedGetters",provenance(),{normalized,lh,dh});
++            const auto* cs=find(raw,ch); const auto* ct=cs?std::get_if<FactText>(&cs->definition):nullptr;
++            expect("UnsavedChineseAndLayout",ct && ct->text==u8"未保存中文立面" && point(ct->position,120,240) && std::abs(ct->height-3.25)<1e-8 && std::abs(ct->widthFactor-0.73)<1e-8 && std::abs(ct->rotation-0.21)<1e-8 && std::abs(ct->oblique-0.12)<1e-8 && ct->mirroredX && !ct->mirroredY && std::abs(ct->thickness-0.5)<1e-8 && !ct->hasFields && point(ct->normal,0,0,1) && ct->horizontalMode==static_cast<int>(AcDb::kTextLeft) && ct->verticalMode==static_cast<int>(AcDb::kTextBase),"raw text, public layout scalars, normalized actual handle");
++            const auto* ls=find(raw,lh); const auto* lp=ls?std::get_if<FactLine>(&ls->definition):nullptr;
++            expect("LineActualDefinition",lp && point(lp->start,12,34) && point(lp->end,56,78) && point(lp->normal,0,0,1) && lp->thickness==2,"actual SDK endpoints and thickness");
++            const auto* ds=find(raw,dh); const auto* dp=ds?std::get_if<FactAlignedDimension>(&ds->definition):nullptr;
++            expect("AlignedDefinitionIgnoresDisplayOverride",dp && point(dp->xLine1Point,10,20) && point(dp->xLine2Point,30,70),"xLine points, independent of custom display text and dim-line point");
++            const auto old=provenance();
++            { Open<AcDbLine> e(lineId,AcDb::kForWrite); ok(e->setStartPoint({123,456,0}),"edit unsaved line point"); }
++            { Open<AcDbText> e(chinese,AcDb::kForWrite); ok(e->setTextString(L"未保存修改中文"),"edit unsaved text"); }
++            const auto changed=read("ReadUnsavedEdits",provenance(),{ch,lh});
++            const auto* es=find(changed,ch); const auto* et=es?std::get_if<FactText>(&es->definition):nullptr; const auto* el=find(changed,lh); const auto* ep=el?std::get_if<FactLine>(&el->definition):nullptr;
++            expect("CurrentEditsReplaceDiskState",context.revision()>old.revision && et && et->text==u8"未保存修改中文" && ep && point(ep->start,123,456),"native mutation before read; fresh expected revision sees actual unsaved point/text");
++            auto invalid=provenance(); invalid.revision=0; const auto zero=read("ZeroRevision",invalid,{lh}); expect("RejectZeroRevision",!zero.value && issue(zero,"FACT_STALE_CONTEXT"),"zero expected revision cannot complete");
++            const auto stale=read("StaleRevision",old,{lh}); expect("RejectStaleRevision",!stale.value && issue(stale,"FACT_STALE_CONTEXT"),"earlier explicit revision never refreshed by reader");
++            invalid=provenance(); invalid.documentIdentity+="-other"; const auto foreign=read("WrongDocumentIdentity",invalid,{lh}); expect("RejectWrongDocumentIdentity",!foreign.value && issue(foreign,"FACT_STALE_CONTEXT"),"wrong expected document identity rejected");
++            invalid=provenance(); invalid.databaseIdentity+="-other"; const auto foreignDb=read("WrongDatabaseIdentity",invalid,{lh}); expect("RejectWrongDatabaseIdentity",!foreignDb.value && issue(foreignDb,"FACT_STALE_CONTEXT"),"wrong expected database identity rejected");
++            std::vector<std::string> special;
++            for(const auto id:{hidden,offId,frozenId,nested,blockRef,attribute,mtext,fieldText}) special.push_back(native_scene::handle(id));
++            special.push_back(erasedHandle); special.push_back("FFFFFFFFFFFFFFFE");
++            const auto boundaries=read("SourceBoundaries",provenance(),special);
++            for(const auto id:{hidden,offId,frozenId}) { const auto* s=find(boundaries,native_scene::handle(id)); expect("EffectiveHidden_"+native_scene::handle(id),s && s->directRoot && !s->effectiveVisible && std::holds_alternative<FactLine>(s->definition),"entity hidden or own layer off/frozen retains typed source but is effectively hidden"); }
++            const auto nh=native_scene::handle(nested); const auto* ns=find(boundaries,nh);
++            expect("NonDirectOwnerLocated",ns && !ns->directRoot && ns->ownerHandle==native_scene::handle(nestedOwner) && ns->exactClass=="AcDbLine" && std::holds_alternative<std::monostate>(ns->definition) && issue(boundaries,"FACT_SOURCE_NON_DIRECT",nh),"actual block-definition member remains non-direct");
++            for(const auto id:{blockRef,attribute,mtext}) { const auto h=native_scene::handle(id); const auto* s=find(boundaries,h); Open<AcDbEntity> actual(id); expect("UnsupportedExactClass_"+h,s && s->exactClass==native_scene::utf8(actual->isA()->name()) && std::holds_alternative<std::monostate>(s->definition) && issue(boundaries,"FACT_SOURCE_UNSUPPORTED",h),"real exact class retained; Attribute must not pass Text cast"); }
++            const auto fh=native_scene::handle(fieldText); const auto* fs=find(boundaries,fh); const auto* ft=fs?std::get_if<FactText>(&fs->definition):nullptr;
++            expect("FieldPresencePreserved",ft && ft->hasFields && issue(boundaries,"FACT_SOURCE_FIELD",fh),"public hasFields preserved without evaluation; core remains responsible for unsupported field semantics");
++            expect("ProvenMissingLocated",boundaries.value && boundaries.value->readCompleted && !find(boundaries,erasedHandle) && !find(boundaries,"FFFFFFFFFFFFFFFE") && issue(boundaries,"FACT_SOURCE_MISSING",erasedHandle) && issue(boundaries,"FACT_SOURCE_MISSING","FFFFFFFFFFFFFFFE"),"known erased and unresolved valid handle are proven missing, never substituted");
++            const auto malformed=read("MalformedUnavailable",provenance(),{"not-a-handle"});
++            expect("UnavailableIsNotMissing",!malformed.value && issue(malformed,"FACT_SOURCE_UNAVAILABLE") && !issue(malformed,"FACT_SOURCE_MISSING"),"malformed request cannot masquerade as proven orphan or completed batch");
++            evidence->capability(object({{"readOnlyWriteEvents",array(monitor.events)},{"eventLoggingFailed",monitor.loggingFailed?"true":"false"},{"actualSwitchCoverage",quote(std::string("not exercised; root accepted deferred document scheduling"))}}));
++        }
++        require(sha256(config.scheme)==config.schemeSHA256 && sha256(config.reference)==config.referenceSHA256,"frozen input changed");
++        evidence->checkpoint("current-fact-reader-tests-complete"); evidence->finish(config,passed?"passed":"failed");
++        evidence.reset(); // NativeEvidence uses share0; release terminal report for unchanged watcher.
++        acutPrintf(passed?L"\nBCE_NATIVE_CASE_PASSED\n":L"\nBCE_NATIVE_CASE_FAILED\n");
++    } catch(const std::exception& failure) {
++        try { if(evidence) { evidence->error(failure.what()); evidence->finish(config,"failed"); evidence.reset(); } } catch(...) {}
++    } catch(...) {
++        try { if(evidence) { evidence->error("unknown exception"); evidence->finish(config,"failed"); evidence.reset(); } } catch(...) {}
++    }
++}
++}
++BOOL APIENTRY DllMain(HMODULE module,DWORD reason,LPVOID) { if(reason==DLL_PROCESS_ATTACH) { moduleHandle=module; DisableThreadLibraryCalls(module); } return TRUE; }
++extern "C" __declspec(dllexport) AcRx::AppRetCode acrxEntryPoint(AcRx::AppMsgCode message,void* id) {
++    try {
++        if(message==AcRx::kInitAppMsg) { acrxDynamicLinker->unlockApplication(id); acrxRegisterAppMDIAware(id); return acedRegCmds->addCommand(L"BCE_FACT_SOURCE_CASES",L"BCE_TEST_RUN",L"BCE_TEST_RUN",ACRX_CMD_MODAL,run_case)==Acad::eOk?AcRx::kRetOK:AcRx::kRetError; }
++        if(message==AcRx::kUnloadAppMsg) return acedRegCmds->removeGroup(L"BCE_FACT_SOURCE_CASES")==Acad::eOk?AcRx::kRetOK:AcRx::kRetError;
++        return AcRx::kRetOK;
++    } catch(...) { return AcRx::kRetError; }
++}
+--- /dev/null
++++ tests/native/project-facts/ElevationProjectFactCases.vcxproj
+@@ -0,0 +1,17 @@
++<?xml version="1.0" encoding="utf-8"?>
++<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <ItemGroup Label="ProjectConfigurations"><ProjectConfiguration Include="Release|x64"><Configuration>Release</Configuration><Platform>x64</Platform></ProjectConfiguration></ItemGroup>
++  <PropertyGroup Label="Globals"><ProjectGuid>{4694F356-271B-4A07-BCA1-DF1BD702F0D3}</ProjectGuid><RootNamespace>ElevationProjectFactCases</RootNamespace><WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion></PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
++  <PropertyGroup Label="Configuration"><ConfigurationType>DynamicLibrary</ConfigurationType><UseDebugLibraries>false</UseDebugLibraries><PlatformToolset>v141</PlatformToolset><CharacterSet>Unicode</CharacterSet></PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
++  <PropertyGroup><OutDir>..\out\</OutDir><IntDir>..\obj\</IntDir><TargetName>ElevationProjectFactCases</TargetName><TargetExt>.arx</TargetExt><ObjectArxSdk Condition="'$(ObjectArxSdk)'==''">C:\Autodesk\ObjectARX_for_AutoCAD_2020_Win_64_bit</ObjectArxSdk></PropertyGroup>
++  <ItemDefinitionGroup>
++    <ClCompile><WarningLevel>Level4</WarningLevel><TreatWarningAsError>true</TreatWarningAsError><SDLCheck>true</SDLCheck><ConformanceMode>true</ConformanceMode><LanguageStandard>stdcpp17</LanguageStandard><RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary><DisableSpecificWarnings>4828;%(DisableSpecificWarnings)</DisableSpecificWarnings><AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions><ExceptionHandling>Sync</ExceptionHandling><PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;UNICODE;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions><AdditionalIncludeDirectories>$(ObjectArxSdk)\inc;$(ObjectArxSdk)\inc-x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories></ClCompile>
++    <Link><SubSystem>Windows</SubSystem><ModuleDefinitionFile>$(ObjectArxSdk)\inc\AcRxDefault.def</ModuleDefinitionFile><AdditionalLibraryDirectories>$(ObjectArxSdk)\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories><AdditionalDependencies>rxapi.lib;acdb23.lib;acge23.lib;accore.lib;ac1st23.lib;Advapi32.lib;User32.lib;%(AdditionalDependencies)</AdditionalDependencies></Link>
++  </ItemDefinitionGroup>
++  <ItemGroup><ClCompile Include="ProjectFactsDriver.cpp" /><ClCompile Include="ProjectFactsReader.cpp" /><ClCompile Include="NativeEvidence.cpp" /><ClCompile Include="AnalysisReader.cpp" /><ClCompile Include="SceneReader.cpp" /><ClCompile Include="ElevationModel.cpp" /><ClCompile Include="Recognition.cpp" /></ItemGroup>
++  <ItemGroup><ClInclude Include="NativeEvidence.h" /><ClInclude Include="AnalysisReader.h" /><ClInclude Include="ProjectFactsFixture.h" /><ClInclude Include="ProjectFactsReader.h" /><ClInclude Include="AuditedFactLocations.h" /></ItemGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
++</Project>
++
+--- /dev/null
++++ tools/build_project_facts_reader.ps1
+@@ -0,0 +1,53 @@
++param([string]$Label='red')
++$ErrorActionPreference='Stop'
++$projectRoot=Split-Path $PSScriptRoot -Parent
++$buildName='i3b-'+(Get-Date -Format 'yyyyMMdd-HHmmss-fff')+'-'+($Label -replace '[^A-Za-z0-9_-]','_')+'-'+[Guid]::NewGuid().ToString('N').Substring(0,8)
++$buildRoot=Join-Path (Join-Path $projectRoot 'build') $buildName
++$sourceRoot=Join-Path $buildRoot 'src'
++$null=New-Item -ItemType Directory -Path $sourceRoot
++$receipt=[ordered]@{contract='bce.project-fact-source-build.v1';label=$Label;caseName='CurrentProjectFactSources';startedUtc=[DateTime]::UtcNow.ToString('o');compiledSourcesDirectory=$sourceRoot;sourceFiles=[ordered]@{};inputOrigins=@();binary=$null;binarySHA256=$null;log=(Join-Path $buildRoot 'build.log');exitCode=1;nativeExecuted=$false;toolchain='AutoCAD2020 SDK23.1 / v141 14.16.27023 / x64 / C++17'}
++$exitResult=1
++try {
++    $inputs=@('src/ElevationModel.h','src/ElevationModel.cpp','src/RuleModel.h','src/Recognition.h','src/Recognition.cpp','src/SceneReader.h','src/SceneReader.cpp','src/AnalysisReader.h','src/AnalysisReader.cpp','src/ProjectFacts.h','src/ProjectFactsReader.h','src/ProjectFactsReader.cpp','tests/native/NativeEvidence.h','tests/native/NativeEvidence.cpp','tests/native/project-facts/ProjectFactsFixture.h','tests/native/project-facts/ProjectFactsDriver.cpp','tests/native/project-facts/ElevationProjectFactCases.vcxproj')
++    foreach($relative in $inputs) {
++        $source=Join-Path $projectRoot $relative; $copy=Join-Path $sourceRoot (Split-Path $relative -Leaf)
++        Copy-Item -LiteralPath $source -Destination $copy
++        $digest=(Get-FileHash -LiteralPath $copy).Hash
++        $receipt.sourceFiles[$copy]=$digest; $receipt.inputOrigins += [ordered]@{origin=$source;compiledCopy=$copy;sha256=$digest}
++    }
++    foreach($relative in @('evidence/current-project-datum-audit.json','tests/fixtures/scheme-scene.tsv')) {
++        $source=Join-Path $projectRoot $relative; $copy=Join-Path $buildRoot (Split-Path $relative -Leaf)
++        Copy-Item -LiteralPath $source -Destination $copy
++        $digest=(Get-FileHash -LiteralPath $copy).Hash
++        $receipt.sourceFiles[$copy]=$digest; $receipt.inputOrigins += [ordered]@{origin=$source;compiledCopy=$copy;sha256=$digest}
++    }
++    $audit=Get-Content -Raw -LiteralPath (Join-Path $buildRoot 'current-project-datum-audit.json') | ConvertFrom-Json
++    if($audit.schemeSHA256 -ne '595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1') { throw 'Audited scheme identity mismatch' }
++    $rows=Import-Csv -LiteralPath (Join-Path $buildRoot 'scheme-scene.tsv') -Delimiter "`t"
++    $header='#pragma once'+"`n"+'#include <string>'+"`n"+'#include <vector>'+"`n"+'struct AuditedView { std::string role,title,datum,lower,upper,titleText; double x,y,upperY; };'+"`n"+'inline std::vector<AuditedView> auditedViews() { return {'+"`n"
++    foreach($v in $audit.views) {
++        $title=($rows | Where-Object { $_.handle -eq $v.titleHandle }).text
++        if(!$title -or $title.Contains('"') -or $title.Contains('\')) { throw 'Invalid title fixture' }
++        $x=([double]$v.datumPoint[0]).ToString('R',[Globalization.CultureInfo]::InvariantCulture)
++        $y=([double]$v.datumPoint[1]).ToString('R',[Globalization.CultureInfo]::InvariantCulture)
++        $uy=([double]$v.upperPoint[1]).ToString('R',[Globalization.CultureInfo]::InvariantCulture)
++        $header+='{"'+$v.role+'","'+$v.titleHandle+'","'+$v.datumSourceHandle+'","'+$v.labelHandles[0]+'","'+$v.labelHandles[1]+'",u8"'+$title+'",'+$x+','+$y+','+$uy+'},'+"`n"
++    }
++    $header+='}; }'+"`n"
++    $headerPath=Join-Path $sourceRoot 'AuditedFactLocations.h'; Set-Content -LiteralPath $headerPath -Value $header -Encoding utf8
++    $receipt.sourceFiles[$headerPath]=(Get-FileHash -LiteralPath $headerPath).Hash
++    $scriptCopy=Join-Path $buildRoot 'build_project_facts_reader.ps1'; Copy-Item -LiteralPath $PSCommandPath -Destination $scriptCopy
++    $receipt.sourceFiles[$scriptCopy]=(Get-FileHash -LiteralPath $scriptCopy).Hash
++    $receipt.inputOrigins += [ordered]@{origin=$PSCommandPath;compiledCopy=$scriptCopy;sha256=$receipt.sourceFiles[$scriptCopy]}
++    $vcvars='C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat'
++    $msbuild='C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe'
++    $command='@echo off'+"`r`n"+'call "'+$vcvars+'" -vcvars_ver=14.16'+"`r`n"+'if errorlevel 1 exit /b %errorlevel%'+"`r`n"+'"'+$msbuild+'" ElevationProjectFactCases.vcxproj /t:Rebuild /p:Configuration=Release /p:Platform=x64 /p:VCToolsVersion=14.16.27023 /m:1 /nologo /verbosity:normal'+"`r`n"+'exit /b %errorlevel%'+"`r`n"
++    $receipt.commandFile=Join-Path $buildRoot 'build-command.cmd'; Set-Content -LiteralPath $receipt.commandFile -Value $command -Encoding ascii
++    $receipt.sourceFiles[$receipt.commandFile]=(Get-FileHash -LiteralPath $receipt.commandFile).Hash
++    Push-Location $sourceRoot
++    try { & $env:ComSpec /d /c '..\build-command.cmd' > $receipt.log 2>&1; $exitResult=$LASTEXITCODE } finally { Pop-Location }
++    foreach($entry in $receipt.inputOrigins) { if((Get-FileHash -LiteralPath $entry.origin).Hash -ne $entry.sha256) { throw 'Live input changed during build' } }
++    if($exitResult -eq 0) { $receipt.binary=Join-Path $buildRoot 'out/ElevationProjectFactCases.arx'; $receipt.binarySHA256=(Get-FileHash -LiteralPath $receipt.binary).Hash }
++} catch { $receipt.error=$_.Exception.Message; $exitResult=1 }
++finally { $receipt.exitCode=$exitResult; $receipt.finishedUtc=[DateTime]::UtcNow.ToString('o'); $receipt | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath (Join-Path $buildRoot 'receipt.json') -Encoding utf8; Write-Output ('RECEIPT='+(Join-Path $buildRoot 'receipt.json')); Write-Output ('EXIT_CODE='+$exitResult) }
++exit $exitResult

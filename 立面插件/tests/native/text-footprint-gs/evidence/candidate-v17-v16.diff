@@ -1,0 +1,120 @@
+--- v16/NativeGsTextFootprint.cpp
++++ v17/NativeGsTextFootprint.cpp
+@@ -4,6 +4,10 @@
+ #include <adscodes.h>
+ #include <accmd.h>
+ #include <acdocman.h>
++#include <acutads.h>
++#include <acutmem.h>
++class CPoint;
++#include <core_rxmfcapi.h>
+ #include <dbapserv.h>
+ #include <dbents.h>
+ #include <dbsymtb.h>
+@@ -31,6 +35,7 @@
+ #include <memory>
+ #include <sstream>
+ #include <stdexcept>
++#include <tuple>
+ 
+ namespace {
+ using namespace bce::native;
+@@ -382,7 +387,7 @@
+     save(s.config.output+L"\\result.json",object({{"diagnosticOnly","true"},{"qualification","false"},{"originalMainFailure",quote(primary.executionFailure)},{"status",failure.empty()?q("diagnostic-buffer-observed"):q("diagnostic-failed")},{"error",quote(failure)},{"worldDrawCalls",std::to_string(s.callbacks)},{"attributeCalls",std::to_string(s.attributeCalls)},{"viewportDrawCalls",std::to_string(s.viewportCalls)},{"rawRGBPath",s.positiveRawPath.empty()?"null":quote(s.positiveRawPath)},{"rawRGBSHA256",s.positiveRawPath.empty()?"null":quote(sha256(s.positiveRawPath))},{"mappingVerified",s.positiveMappingVerified?"true":"false"},{"sideDbSuccessClaimed","false"},{"textRequested","false"},{"cleanupComplete",cleaned&&s.resourcesReleased()?"true":"false"},{"ambientObserved",s.ambientInitialized?"true":"false"},{"ambientUnchanged",s.ambientInitialized?(stable?"true":"false"):"null"},{"ambientWriteEvents",s.ambientInitialized?s.watch.json():"null"},{"dbmodBefore",s.ambientInitialized?std::to_string(s.dbmodBefore):"null"},{"dbmodAfter",s.ambientInitialized?std::to_string(after):"null"}}));
+     primary.log("nonpersistentControl.complete",{{"diagnosticOnly","true"},{"qualification","false"},{"worldDrawCalls",std::to_string(s.callbacks)},{"rawRGBObserved",s.positiveRawPath.empty()?"false":"true"},{"cleanupComplete",cleaned&&s.resourcesReleased()?"true":"false"},{"ambientUnchanged",stable?"true":"false"}});return cleaned&&s.resourcesReleased()&&stable;
+ }
+-void run()noexcept{
++void runGsCore()noexcept{
+     if(running||completed)return;running=true;
+     try{
+         session=std::make_unique<Session>();auto& s=*session;s.config=load_config(moduleHandle);s.evidence=std::make_unique<Evidence>(s.config);validate_identity(s.config);require(s.config.caseName==L"NativeGsTextFootprint","case mismatch");
+@@ -406,10 +411,71 @@
+     catch(...){if(session&&session->evidence){auto terminal=std::move(session->evidence);try{if(!session->executionFailure.empty())terminal->error(session->executionFailure);terminal->error("unknown native command exception");terminal->finish(session->config,"failed");}catch(...){}}completed=true;}
+     running=false;
+ }
++struct CommandState{
++    AcApDocument* current{};AcApDocument* active{};AcDbDatabase* currentDb{};AcDbDatabase* activeDb{};AcDbDatabase* working{};
++    DWORD pid{},thread{};int cmdActive{},inputPending{};std::wstring cmdNames;bool quiescent{},applicationContext{};
++};
++CommandState commandState(){
++    require(acDocManager!=nullptr,"dispatch document manager unavailable");CommandState s;s.pid=GetCurrentProcessId();s.thread=GetCurrentThreadId();s.current=acDocManager->curDocument();s.active=acDocManager->mdiActiveDocument();s.currentDb=s.current?s.current->database():nullptr;s.activeDb=s.active?s.active->database():nullptr;s.working=acdbHostApplicationServices()->workingDatabase();s.applicationContext=acDocManager->isApplicationContext();
++    resbuf active{},names{};struct FreeString{resbuf& value;~FreeString(){if(value.restype==RTSTR&&value.resval.rstring)acutDelString(value.resval.rstring);}} freeNames{names};
++    require(acedGetVar(L"CMDACTIVE",&active)==RTNORM&&active.restype==RTSHORT,"dispatch CMDACTIVE observation failed");s.cmdActive=active.resval.rint;
++    require(acedGetVar(L"CMDNAMES",&names)==RTNORM&&names.restype==RTSTR&&names.resval.rstring,"dispatch CMDNAMES observation failed");s.cmdNames=names.resval.rstring;s.inputPending=s.current?acDocManager->inputPending(s.current):-1;s.quiescent=s.current&&s.current->isQuiescent();return s;
++}
++std::string commandJson(const CommandState& s){return object({{"pid",std::to_string(s.pid)},{"thread",std::to_string(s.thread)},{"cmdActive",std::to_string(s.cmdActive)},{"scriptBitSet",(s.cmdActive&4)?"true":"false"},{"cmdNames",quote(s.cmdNames)},{"inputPending",std::to_string(s.inputPending)},{"quiescent",s.quiescent?"true":"false"},{"applicationContext",s.applicationContext?"true":"false"},{"current",address(s.current)},{"active",address(s.active)},{"currentDatabase",address(s.currentDb)},{"activeDatabase",address(s.activeDb)},{"workingDatabase",address(s.working)}});}
++bool sameConfig(const Config& a,const Config& b){
++    auto identity=[](const Config& c){return std::tie(c.nonce,c.session,c.scheme,c.reference,c.output,c.caseName,c.modulePath,c.iniPath,c.desktop,c.expectedModuleSHA256,c.moduleSHA256,c.iniSHA256,c.schemeSHA256,c.referenceSHA256);};return identity(a)==identity(b);
++}
++struct Dispatch{
++    Config config;CommandState entry;File trace,state;bool hookAttached{},idleReady{},queued{},queueAccepted{},captureStarted{},captureFinished{},failed{};unsigned entries{},captures{};int queueStatus{-1};std::string phase="waiting-idle",error;
++    bool sameHost(const CommandState& s)const{return s.pid==entry.pid&&s.thread==entry.thread&&s.current==entry.current&&s.active==entry.active&&s.currentDb==entry.currentDb&&s.activeDb==entry.activeDb&&s.working==entry.working;}
++    void record(const char* event,const CommandState* observed=nullptr){
++        const auto json=object({{"contract",q("bce.native-gs-dispatch.v1")},{"event",q(event)},{"phase",quote(phase)},{"nonce",quote(config.nonce)},{"tickMs",std::to_string(GetTickCount64())},{"entryCalls",std::to_string(entries)},{"captureCalls",std::to_string(captures)},{"hookAttached",hookAttached?"true":"false"},{"idleReady",idleReady?"true":"false"},{"queued",queued?"true":"false"},{"queueAccepted",queueAccepted?"true":"false"},{"queueStatus",std::to_string(queueStatus)},{"captureStarted",captureStarted?"true":"false"},{"captureFinished",captureFinished?"true":"false"},{"gsCoreCompleted",completed?"true":"false"},{"error",quote(error)},{"observed",observed?commandJson(*observed):"null"}});
++        write_flushed(trace.get(),json+"\n");replace_owned_report(state.get(),json);
++    }
++};
++std::unique_ptr<Dispatch> dispatch;
++void dispatchIdle()noexcept;
++bool removeDispatchIdle(Dispatch& d)noexcept{
++    if(!d.hookAttached)return true;try{const bool removed=acedRemoveOnIdleWinMsg(dispatchIdle);if(removed)d.hookAttached=false;
++        try{d.record(removed?"idle-hook-removed":"idle-hook-removal-failed");}catch(...){}return removed;
++    }catch(...){try{d.record("idle-hook-removal-exception");}catch(...){}return false;}
++}
++void dispatchFailure(const char* message)noexcept{
++    if(!dispatch)return;auto& d=*dispatch;d.failed=true;try{d.phase="dispatch-failed";d.error=message;d.record("dispatch-failed");}catch(...){}removeDispatchIdle(d);
++}
++void dispatchIdle()noexcept{
++    if(!dispatch)return;auto& d=*dispatch;if(d.failed||d.queued||d.captureStarted||d.captureFinished)return;
++    try{
++        const auto observed=commandState();require(d.sameHost(observed),"idle host/thread/document/database identity changed");require(observed.inputPending>=0,"idle inputPending observation failed");
++        const bool ready=observed.cmdActive==0&&observed.cmdNames.empty()&&observed.quiescent&&observed.inputPending==0;
++        if(!ready)return;
++        d.idleReady=true;d.record("idle-ready",&observed);d.queued=true;d.phase="queue-requested";d.record("capture-queue-before",&observed);
++        const auto status=acDocManager->sendStringToExecute(d.entry.current,L"BCE_GS_CAPTURE\n",false,false,false);d.queueStatus=static_cast<int>(status);d.queueAccepted=status==Acad::eOk;d.phase=d.queueAccepted?"queued":"queue-failed";d.record("capture-queue-after");require(d.queueAccepted,"capture command queue rejected; no GS execution");
++    }catch(const std::exception& e){dispatchFailure(e.what());}catch(...){dispatchFailure("unknown idle callback exception");}
++}
++void prepareDispatch()noexcept{
++    try{
++        auto config=load_config(moduleHandle);validate_identity(config);require(config.caseName==L"NativeGsTextFootprint","dispatch case mismatch");const auto observed=commandState();
++        if(dispatch){auto& d=*dispatch;++d.entries;require(sameConfig(config,d.config)&&d.sameHost(observed)&&!d.failed,"dispatch replay identity/state differs");d.record("entry-exact-noop",&observed);return;}
++        require(!running&&!completed,"GS core already active/completed without dispatch");require(observed.current&&observed.current==observed.active&&observed.currentDb==observed.working&&observed.activeDb==observed.working,"entry document/database identities inconsistent");
++        dispatch=std::make_unique<Dispatch>();auto& d=*dispatch;d.config=std::move(config);d.entry=observed;d.entries=1;
++        d.trace=File(CreateFileW((d.config.output+L"\\dispatch-trace.jsonl").c_str(),GENERIC_WRITE,FILE_SHARE_READ,nullptr,CREATE_NEW,FILE_ATTRIBUTE_NORMAL|FILE_FLAG_WRITE_THROUGH,nullptr));require(d.trace.valid(),"dispatch trace unavailable");
++        d.state=File(CreateFileW((d.config.output+L"\\dispatch-state.json").c_str(),GENERIC_WRITE,FILE_SHARE_READ,nullptr,CREATE_NEW,FILE_ATTRIBUTE_NORMAL|FILE_FLAG_WRITE_THROUGH,nullptr));require(d.state.valid(),"dispatch state unavailable");d.record("entry",&observed);
++        d.hookAttached=acedRegisterOnIdleWinMsg(dispatchIdle);d.record("idle-hook-register");require(d.hookAttached,"idle hook registration failed; no GS execution");
++    }catch(const std::exception& e){dispatchFailure(e.what());}catch(...){dispatchFailure("unknown dispatch entry exception");}
++}
++void captureDispatch()noexcept{
++    try{
++        require(dispatch!=nullptr,"capture invoked without prepared dispatch");auto& d=*dispatch;auto config=load_config(moduleHandle);validate_identity(config);const auto observed=commandState();
++        require(sameConfig(config,d.config)&&d.sameHost(observed),"capture nonce/host/thread/document/database identity differs");require(d.idleReady&&d.queued&&d.queueAccepted&&!d.failed&&!d.captureStarted&&!d.captureFinished&&!running&&!completed,"capture is not the single queued command");
++        ++d.captures;d.captureStarted=true;d.phase="capture-guard";d.record("capture",&observed);require((observed.cmdActive&4)==0&&observed.inputPending==0&&!observed.applicationContext,"capture must be after SCRIPT, in document command context, without extra pending input");require(removeDispatchIdle(d),"capture cannot remove idle hook; no GS execution");
++        d.phase="capture-running";d.record("gs-core-before");runGsCore();d.captureFinished=true;d.phase="capture-finished";d.record("gs-core-after");
++    }catch(const std::exception& e){dispatchFailure(e.what());}catch(...){dispatchFailure("unknown capture command exception");}
++}
+ }
+ BOOL APIENTRY DllMain(HMODULE h,DWORD reason,LPVOID){if(reason==DLL_PROCESS_ATTACH){moduleHandle=h;DisableThreadLibraryCalls(h);}return TRUE;}
+ extern "C" __declspec(dllexport) AcRx::AppRetCode acrxEntryPoint(AcRx::AppMsgCode message,void* id){try{
+-    if(message==AcRx::kInitAppMsg){acrxDynamicLinker->unlockApplication(id);acrxRegisterAppMDIAware(id);ok(acedRegCmds->addCommand(L"BCE_NATIVE_GS_TEXT",L"BCE_TEST_RUN",L"BCE_TEST_RUN",ACRX_CMD_MODAL,run),"register command");}
+-    if(message==AcRx::kUnloadAppMsg){if(running)return AcRx::kRetError;for(const auto& s:lifecycleSessions)if(!s->cleanup())return AcRx::kRetError;for(const auto& s:diagnosticSessions)if(!s->cleanup())return AcRx::kRetError;if(session&&!session->cleanup())return AcRx::kRetError;lifecycleSessions.clear();diagnosticSessions.clear();session.reset();ok(acedRegCmds->removeGroup(L"BCE_NATIVE_GS_TEXT"),"remove commands");}
++    if(message==AcRx::kInitAppMsg){acrxDynamicLinker->unlockApplication(id);acrxRegisterAppMDIAware(id);ok(acedRegCmds->addCommand(L"BCE_NATIVE_GS_TEXT",L"BCE_TEST_RUN",L"BCE_TEST_RUN",ACRX_CMD_MODAL,prepareDispatch),"register deferred entry");ok(acedRegCmds->addCommand(L"BCE_NATIVE_GS_TEXT",L"BCE_GS_CAPTURE",L"BCE_GS_CAPTURE",ACRX_CMD_MODAL,captureDispatch),"register capture command");}
++    if(message==AcRx::kUnloadAppMsg){if(running||(dispatch&&(dispatch->hookAttached||(dispatch->queued&&!dispatch->captureFinished)||(dispatch->captureStarted&&!dispatch->captureFinished))))return AcRx::kRetError;for(const auto& s:lifecycleSessions)if(!s->cleanup())return AcRx::kRetError;for(const auto& s:diagnosticSessions)if(!s->cleanup())return AcRx::kRetError;if(session&&!session->cleanup())return AcRx::kRetError;lifecycleSessions.clear();diagnosticSessions.clear();session.reset();dispatch.reset();ok(acedRegCmds->removeGroup(L"BCE_NATIVE_GS_TEXT"),"remove commands");}
+     return AcRx::kRetOK;
+ }catch(...){return AcRx::kRetError;}}
+--- v16/README.md
++++ v17/README.md
+@@ -1,6 +1,6 @@
+ # NativeGsTextFootprint (N9c)
+ 
+-Development-only AutoCAD 2020 / R23.1 x64 ARX. `BCE_TEST_RUN` synchronously creates an owned in-memory database, one persistent point control, one k3DDrawing GS kernel/model/offscreen device/view. The owned view uses an explicit custom value style and orthographic XY camera: invisible faces, drawable-color edges without edge modifiers, opaque, no lighting/transparency, fixed width/display mask. Sixteen requested/read-back trait values and operations are retained; active properties require exact equality. Face lighting quality/color/opacity are marked inapplicable only when both sides explicitly use kInvisible/kSet (SDK: faces are not drawn). Kernel createView/device.add pairs with eraseAll/device.erase/kernel.deleteView, including a just-attached-before-style/camera exception regression. The kernel request follows the local 2020 SDK ARXDBG sample. There is one fixed request and no fallback loop. No working/current database switch, GUI view, DWG save, shared GS/profile modification, Plot, Python, or external converter occurs in the native command.
++Development-only AutoCAD 2020 / R23.1 x64 ARX. `BCE_TEST_RUN` records entry command/document state and registers one real idle hook; it creates no GS objects or native terminal evidence. Only actual CMDACTIVE=0, empty CMDNAMES, quiescent state and inputPending=0 under the pinned host/thread/document/database identities permit one queued modal `BCE_GS_CAPTURE`. Capture records its own state, requires no SCRIPT bit/extra input, removes the hook and then runs the unchanged v16 GS body synchronously: one owned in-memory database, persistent point control and k3DDrawing kernel/model/offscreen device/view. The owned view uses an explicit custom value style and orthographic XY camera: invisible faces, drawable-color edges without edge modifiers, opaque, no lighting/transparency, fixed width/display mask. Sixteen requested/read-back trait values and operations are retained; active properties require exact equality. Face lighting quality/color/opacity are marked inapplicable only when both sides explicitly use kInvisible/kSet (SDK: faces are not drawn). Kernel createView/device.add pairs with eraseAll/device.erase/kernel.deleteView, including a just-attached-before-style/camera exception regression. The kernel request follows the local 2020 SDK ARXDBG sample. There is one fixed request and no fallback loop. No working/current database switch, GUI view, DWG save, shared GS/profile modification, Plot, Python, or external converter occurs in the native command.
+ 
+ The candidate uses `createAutoCADModel` and `kernel.associate(ownedDb, model, kMain)`; the association is only an attempted route. The device uses this same kernel's `createOffScreenDevice/deleteDevice` pair. It records its actual kernel and original/default renderer without calling a renderer setter. It never edits shared GS/hardware configuration or tries fallback renderer values. The sole scene graph root is the owned modelspace AcDbBlockTableRecord containing only the exact point marker; only that marker is overruled. Every genuine WorldDraw independently records and checks its context database, entity database/ObjectId and model binding before drawing. An actual mismatch fails and is preserved in `gs-trace.jsonl`; it does not establish impossibility of other public routes. The finite custom value style is copied into an AcDbVisualStyle in this same owned database's style dictionary, closed/reopened and copied back with strict equality of all sixteen raw values/operations. The owned BTR/model is added before setting the owned style ObjectId, as the 2020 ObjectId-overload contract requires. ObjectId/database and reopened persistent source are checked initially and after every frame's erase/readd. A false value-getter return is observation unavailable (actual values/operations are null), not a contradictory default output or a requirement that this other overload resolve the ID; it makes no renderer-consistency claim. A true value-getter observation must meet the active contract. A real contradiction permits only the explicit unqualified lifecycle2 nontext diagnostic and then failure, without the five-text matrix. Bounded applicability/attribute flags/viewportDraw observations preserve base behavior, and visible/valid/device/model/viewport state is read without show, flag changes or suppression/global settings. No A/B/C retry is retained: v10 actual evidence excluded that timing hypothesis.
+ 
+@@ -15,3 +15,5 @@
+ Cleanup removes scene/overrule, closes own point, destroys view, restores only its own database association, destroys model/device, releases kernel, then deletes the owned database. An overrule-removal error retains live state and rejects module unload. Ambient write notifications and current/active/working identities are recorded separately. All work remains developer evidence, no production build eligibility.
+ 
+ Only if the original main BTR hits the specific zero-WorldDraw failure, has no text frames/callbacks and has fully cleaned up with ambient protection intact, one independent diagnostic Session reuses the same default device/model/view/camera/1024/style configuration with a nonpersistent PrimitiveRoot. Its false isPersistent/null ID follow the 2020 pointer-based contract; GS itself calls subWorldDraw to draw only the same small nontext calibration. No manual worldDraw/context, point overrule, text or N9b qualification. A real callback is required before RGB/calibration; context database is observed, never claimed as SideDB success. The root address survives view/model removal and deletion, and diagnostic resources participate in cleanup/unload refusal. DiagnosticOnly/qualification=false and the original main failed result are preserved. No control runs for another failure cause.
++
++Deferred dispatch is a startup-command timing diagnostic, distinct from the exhausted view-internal A/B/C/update hypotheses. Entry, idle-ready and capture snapshots are in readable dispatch-trace.jsonl and dispatch-state.json; there is no per-idle log stream, sleep, timer framework, OPEN/REGEN/display action or shared bridge/watch modification. Repeated exact entry is a no-op; eOk means queued only. Pending/queued callbacks block unload. Native terminal Evidence is created only by actual capture; failure to reach capture is dispatch/infra, never a fabricated GS result.

@@ -1,0 +1,12 @@
+{
+  "sourceCHM": "C:\\Autodesk\\ObjectARX_for_AutoCAD_2020_Win_64_bit\\docs\\arxref.chm",
+  "sourceSHA256": "92BB53D177903BB780329F5EBD5A72374C434F6DF4AF25CEB5449C90BB928BA2",
+  "originalByteEntries": {
+    "AcGiDrawable__isPersistent.html": "616490E5B89887B1AF6F41DA3BFECAA7043ACA5200B937664D614A22185F271B",
+    "AcGiDrawable__id.html": "33496D9700D56180D4BA3995F1D3FCCD46D71AE1D5FFB4AC10658B5C924E73A5",
+    "AcGiDrawable__subWorldDraw@AcGiWorldDraw__.html": "CCFFF5BE582EF3237A83A1861DCE29D9574912E2B192D28D0E78B5E35A02E8AF",
+    "AcGiDrawable__subSetAttributes@AcGiDrawableTraits__.html": "EB47DAB01539F03B67DAEF30BA4A593950B271E03D72C3CD45C1C436474567FA",
+    "drawable.h": "BE4D3F150A70EE40B7DB89EEB5093D52D668297E999643C6C581F7F94CBD9CAC"
+  },
+  "interpretation": "isPersistent=false is pointer-based direct access; id only meaningful for persistent objects; callbacks are called by real GS, never manually invoked; no gsNode/setGsNode requirement in actual 2020 header"
+}

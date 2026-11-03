@@ -1,0 +1,147 @@
+{
+  "version": "v170",
+  "floors": [
+    {
+      "floor": 1,
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-200738\\插件生成施工图_一层.dwg",
+      "SHA256": "8ABE432BEFA76C2D5A02041D470F572D0702B8BAED08436623715EC57AA7104A",
+      "previewJob": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\approved-native-preview-20261102-201024-104484-approved-floor1",
+      "PDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\approved-native-preview-20261102-201024-104484-approved-floor1\\stage2-A2-1-100.pdf",
+      "geometryCompared": 245,
+      "directNativeAxes": 12,
+      "convertedWrapperAxes": [
+        "85DB",
+        "85DC",
+        "85DD",
+        "85DE",
+        "85DF",
+        "85E0",
+        "85E1",
+        "85E2",
+        "85E3",
+        "85E4",
+        "85E5",
+        "85E6"
+      ],
+      "modelRoots": 258,
+      "nativeTCHDimensions": 40,
+      "openingCount": 22,
+      "records": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-200738\\插件生成施工图_一层_生成记录_47060_605804718",
+      "steps": [
+        {
+          "serial": "144b4dc9e1f3491bb882eb3182363f18",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-200738\\dispatch_144b4dc9e1f3491bb882eb3182363f18.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "e37798eb6eab40fea91f1e19f613a54a",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-200738",
+            "processId": 47060,
+            "desktop": "CodexS1_e37798eb6eab40fea91f1e19f613a54a",
+            "inputDesktop": "Default",
+            "serial": "144b4dc9e1f3491bb882eb3182363f18",
+            "command": "S1OPENPROBECONTROL",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\approved-native-preview-20261102-201024-104484-approved-floor1",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\approved-native-preview-20261102-201024-104484-approved-floor1\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "de4d6490e4db46799b24d2b324fa7369",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-200738\\dispatch_de4d6490e4db46799b24d2b324fa7369.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "e37798eb6eab40fea91f1e19f613a54a",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-200738",
+            "processId": 47060,
+            "desktop": "CodexS1_e37798eb6eab40fea91f1e19f613a54a",
+            "inputDesktop": "Default",
+            "serial": "de4d6490e4db46799b24d2b324fa7369",
+            "command": "S1PHASE2PREVIEW",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\approved-native-preview-20261102-201024-104484-approved-floor1",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\approved-native-preview-20261102-201024-104484-approved-floor1\\control.dwg",
+            "error": null
+          }
+        }
+      ]
+    },
+    {
+      "floor": 2,
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-200738\\插件生成施工图_二层.dwg",
+      "SHA256": "D9A3768C7FA6F7D347EF0D00A876E2CC6AA6265A5860BD80E5E137D1543B954A",
+      "previewJob": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\approved-native-preview-20261102-201025-642216-approved-floor2",
+      "PDF": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\approved-native-preview-20261102-201025-642216-approved-floor2\\stage2-A2-1-100.pdf",
+      "geometryCompared": 241,
+      "directNativeAxes": 12,
+      "convertedWrapperAxes": [],
+      "modelRoots": 242,
+      "nativeTCHDimensions": 28,
+      "openingCount": 20,
+      "records": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-200738\\插件生成施工图_二层_生成记录_47060_605812546",
+      "steps": [
+        {
+          "serial": "cbc5e9650d1a4bb7aa3ebce0d5906c81",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-200738\\dispatch_cbc5e9650d1a4bb7aa3ebce0d5906c81.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "e37798eb6eab40fea91f1e19f613a54a",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-200738",
+            "processId": 47060,
+            "desktop": "CodexS1_e37798eb6eab40fea91f1e19f613a54a",
+            "inputDesktop": "Default",
+            "serial": "cbc5e9650d1a4bb7aa3ebce0d5906c81",
+            "command": "S1OPENPROBECONTROL",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\approved-native-preview-20261102-201025-642216-approved-floor2",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\approved-native-preview-20261102-201025-642216-approved-floor2\\control.dwg",
+            "error": null
+          }
+        },
+        {
+          "serial": "3bf657fc5c7644dba50090cfbf3545ec",
+          "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-200738\\dispatch_3bf657fc5c7644dba50090cfbf3545ec.json",
+          "idleState": {
+            "contract": "stage1.quiet-worker-state.v1",
+            "nonce": "e37798eb6eab40fea91f1e19f613a54a",
+            "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-200738",
+            "processId": 47060,
+            "desktop": "CodexS1_e37798eb6eab40fea91f1e19f613a54a",
+            "inputDesktop": "Default",
+            "serial": "3bf657fc5c7644dba50090cfbf3545ec",
+            "command": "S1PHASE2PREVIEW",
+            "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\approved-native-preview-20261102-201025-642216-approved-floor2",
+            "phase": "idle",
+            "commandStarted": true,
+            "commandEnded": true,
+            "commandFailed": false,
+            "cmdActive": 0,
+            "inputPending": 0,
+            "nativePending": false,
+            "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\approved-native-preview-20261102-201025-642216-approved-floor2\\control.dwg",
+            "error": null
+          }
+        }
+      ]
+    }
+  ],
+  "passed": true
+}

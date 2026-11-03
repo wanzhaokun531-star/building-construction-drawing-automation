@@ -1,0 +1,451 @@
+diff --git "a/D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-192749-164-resource-path-mixed-undo-diagnostic-34c407a8\\src\\NativeMaterialTiles.h" "b/D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-195042-679-owned-only-binding-api-contract-freeze-9393a7a2\\src\\NativeMaterialTiles.h"
+index cdfed65..5b443c9 100644
+--- "a/D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-192749-164-resource-path-mixed-undo-diagnostic-34c407a8\\src\\NativeMaterialTiles.h"
++++ "b/D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-195042-679-owned-only-binding-api-contract-freeze-9393a7a2\\src\\NativeMaterialTiles.h"
+@@ -9,6 +9,11 @@ struct MaterialTileRecord {
+     int nativeLines{};
+     unsigned depth{};
+ };
++struct MaterialDatabaseDeleter { void operator()(AcDbDatabase*) const noexcept; };
++struct OwnedMaterialDatabase {
++    std::unique_ptr<AcDbDatabase,MaterialDatabaseDeleter> database;
++    AcDbObjectIdArray roots;
++};
+ class PreparedMaterialTiles final {
+ public:
+     ~PreparedMaterialTiles();
+@@ -21,7 +26,7 @@ public:
+     const std::vector<MaterialTileRecord>& tiles() const;
+     const MaterialPlan& parentPlan() const;
+     bool intact() const noexcept;
+-    Result<std::vector<AcDbObjectId>> cloneToEmpty(AcDbDatabase&) const;
++    Result<OwnedMaterialDatabase> cloneIntoNewOwnedDb() const;
+ private:
+     struct State;
+     std::unique_ptr<State> state_;
+@@ -31,10 +36,11 @@ private:
+ [[nodiscard]] Result<PreparedMaterialTiles> prepareMaterialTiles(const MaterialPlan&,const std::vector<ReferenceMaterialSeed>&,const MaterialPreparationOptions&,const MaterialTileLimits& = {});
+ #ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
+ namespace material_tiles_diagnostics {
+-struct AbortProbe {std::string before,afterClone,beforeAbort,afterAbort,mapAfterClone,mapBeforeAbort,mapAfterAbort,adoption,primary;int cloneStatus{},abortStatus{};bool restored{};};
+-AbortProbe forcedCloneAbort(const PreparedMaterialBatch&);
+-struct MixedUndoProbe : AbortProbe {bool requestedUndo{},undoInitial{},undoBeforeClone{},undoAfterClone{},undoAfterAbort{},undoRestored{};};
+-MixedUndoProbe mixedCloneAbort(const PreparedMaterialBatch&,bool enableUndo);
++enum class OwnedFault { AfterFirstTile, AfterSecondTile, AfterExportClone, BeforeExportPublish };
++enum class ResourceConflict { LayerColor, DictionaryKey, XrecordPayload, XrecordPolicy, ReusedOwnedKey, ReusedOwnedPayload, ReusedOwnedOwner, ReferenceAlias };
++struct OwnedProbe {bool noResult{},destroyedAll{},workingRestored{},preflightUnchanged{};std::size_t created{},destroyed{};std::string issue,bindings;};
++OwnedProbe ownershipFault(const MaterialPlan&,const std::vector<ReferenceMaterialSeed>&,const MaterialPreparationOptions&,OwnedFault);
++OwnedProbe resourceConflict(const PreparedMaterialTiles&,ResourceConflict);
+ }
+ #endif
+ }
+diff --git "a/D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-192749-164-resource-path-mixed-undo-diagnostic-34c407a8\\src\\NativeMaterialTiles.cpp" "b/D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-195042-679-owned-only-binding-api-contract-freeze-9393a7a2\\src\\NativeMaterialTiles.cpp"
+index 9741ec3..0338576 100644
+--- "a/D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-192749-164-resource-path-mixed-undo-diagnostic-34c407a8\\src\\NativeMaterialTiles.cpp"
++++ "b/D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-195042-679-owned-only-binding-api-contract-freeze-9393a7a2\\src\\NativeMaterialTiles.cpp"
+@@ -37,6 +37,28 @@ public:explicit Working(AcDbDatabase& db):old_(acdbHostApplicationServices()->wo
+ private:AcDbDatabase* old_;
+ };
+ bool documentDatabase(AcDbDatabase& db){need(acDocManager!=nullptr,"DOCUMENT_MANAGER_REQUIRED");std::unique_ptr<AcApDocumentIterator> it(acDocManager->newAcApDocumentIterator());need(it!=nullptr,"DOCUMENT_ITERATOR_REQUIRED");for(;!it->done();it->step())if(it->document()&&it->document()->database()==&db)return true;return false;}
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++struct TestHooks {
++    std::vector<AcDbDatabase*> live;
++    std::size_t created{},destroyed{};
++    bool destructionWhileWorking{},exporting{};
++    int fault{-1};
++    std::string bindings;
++};
++thread_local TestHooks* testHooks{};
++class HookScope final {
++public:explicit HookScope(TestHooks& hooks){need(!testHooks,"NESTED_MATERIAL_TEST_HOOKS");testHooks=&hooks;}~HookScope(){testHooks=nullptr;}
++};
++void inject(material_tiles_diagnostics::OwnedFault point){if(testHooks&&testHooks->fault==static_cast<int>(point))throw std::runtime_error("INJECTED_OWNED_FAILURE:"+std::to_string(static_cast<int>(point)));}
++#endif
++using OwnedDbPtr=std::unique_ptr<AcDbDatabase,MaterialDatabaseDeleter>;
++OwnedDbPtr newOwnedDatabase(){
++    OwnedDbPtr db(new AcDbDatabase(true,true));need(db.get()!=acdbHostApplicationServices()->workingDatabase()&&!documentDatabase(*db),"FRESH_NON_DOCUMENT_DATABASE_REQUIRED");
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++    if(testHooks){testHooks->live.push_back(db.get());++testHooks->created;}
++#endif
++    return db;
++}
+ AcDbObjectIdArray modelRoots(AcDbDatabase& db){Open<AcDbBlockTableRecord> b(acdbSymUtil()->blockModelSpaceId(&db));AcDbBlockTableRecordIterator* raw{};check(b->newIterator(raw),"root iterator");std::unique_ptr<AcDbBlockTableRecordIterator> it(raw);AcDbObjectIdArray ids;for(;!it->done();it->step()){AcDbObjectId id;check(it->getEntityId(id),"root id");ids.append(id);}return ids;}
+ struct Rect {double x0,y0,x1,y1;};
+ Rect rectangle(const ClosedRing& ring){
+@@ -112,7 +134,9 @@ public:
+ private:Graph& graph_;AcDbObjectId self_,owner_;Acad::ErrorStatus status_{Acad::eOk};
+ };
+ struct Graph {
++    struct Edge {AcDbObjectId from,to;std::string role;};
+     std::vector<AcDbObjectId> active,resources;
++    std::vector<Edge> edges;
+     std::vector<std::string> diagnosticPath,resourcePaths;
+     std::size_t bytes{};
+     std::string value(AcDbObjectId id,bool root=false,const char* role="root-or-resource-check"){
+@@ -123,7 +147,7 @@ struct Graph {
+         const auto filingStatus=object->dwgOutFields(&filer);need(filingStatus==Acad::eOk&&filer.filerStatus()==Acad::eOk,"PUBLIC_RESOURCE_FILER_FAILED; "+node+"; callStatus="+std::to_string(filingStatus)+"; filerStatus="+std::to_string(filer.filerStatus()));auto result=filer.out.str();need(result.size()<=4194304&&bytes<=16777216-result.size(),"RESOURCE_GRAPH_BYTES_BUDGET");bytes+=result.size();return result;
+     }
+ };
+-Acad::ErrorStatus ValueFiler::reference(AcDbObjectId id,const char* type){out<<type<<':';if(id.isNull())out<<"null;";else if(id==self_)out<<"self;";else if(id==owner_)out<<"owner;";else{const auto edge=std::string(type)+"(source="+diagnosticHandle(self_)+",filerStatus="+std::to_string(status_)+")";out<<'{'<<graph_.value(id,false,edge.c_str())<<"};";}return Acad::eOk;}
++Acad::ErrorStatus ValueFiler::reference(AcDbObjectId id,const char* type){out<<type<<':';if(id.isNull())out<<"null;";else if(id==self_)out<<"self;";else if(id==owner_)out<<"owner;";else{need(graph_.edges.size()<16384,"RESOURCE_EDGE_BUDGET");graph_.edges.push_back({self_,id,type});const auto edge=std::string(type)+"(source="+diagnosticHandle(self_)+",filerStatus="+std::to_string(status_)+")";out<<'{'<<graph_.value(id,false,edge.c_str())<<"};";}return Acad::eOk;}
+ std::string expression(AcDbObjectId id){Graph graph;return graph.value(id,true);}
+ void equalResource(AcDbObjectId source,AcDbObjectId target,const char* reason,bool root=false){Graph a,b;const auto left=a.value(source,root),right=b.value(target,root);if(left==right)return;std::size_t offset=0;while(offset<left.size()&&offset<right.size()&&left[offset]==right[offset])++offset;const auto start=offset>64?offset-64:0;Open<AcDbObject> from(source),to(target);throw std::runtime_error(std::string(reason)+"; source=["+diagnosticNode(*from,"compare-source",0)+"]; target=["+diagnosticNode(*to,"compare-target",0)+"]; firstOpaqueDifference="+std::to_string(offset)+"; sourceLength="+std::to_string(left.size())+"; targetLength="+std::to_string(right.size())+"; sourceFragment="+left.substr(start,192)+"; targetFragment="+right.substr(start,192));}
+ AcDbObjectId targetResource(AcDbObjectId source,AcDbDatabase& target,unsigned depth=0){
+@@ -134,33 +158,79 @@ AcDbObjectId targetResource(AcDbObjectId source,AcDbDatabase& target,unsigned de
+     }
+     AcDbObjectId id;AcString name;if(object->isKindOf(AcDbSymbolTableRecord::desc())){auto* record=AcDbSymbolTableRecord::cast(&*object);check(record->getName(name),"resource name");Open<AcDbSymbolTable> table(targetOwner);if(table->has(name.kACharPtr()))check(table->getAt(name.kACharPtr(),id),"target symbol");}else{Open<AcDbDictionary> old(owner);check(old->nameAt(source,name),"resource dictionary key");Open<AcDbDictionary> dictionary(targetOwner);if(dictionary->has(name.kACharPtr()))check(dictionary->getAt(name.kACharPtr(),id),"target resource dictionary");}return id;
+ }
+-void preflight(const AcDbObjectIdArray& roots,AcDbDatabase& target){Graph graph;for(int i=0;i<roots.length();++i)graph.value(roots[i],true);for(auto resource:graph.resources){auto destination=targetResource(resource,target);if(!destination.isNull())equalResource(resource,destination,"RESOURCE_CONFLICT");}}
+-std::string missingResourceDiagnostic(AcDbObjectId source,const std::string& path,bool computed,const AcDbIdPair& pair,AcDbDatabase& target){
+-    std::ostringstream out;out<<"RESOURCE_MAPPING_MISSING; sourcePath="<<path<<"; compute="<<computed<<"; pairKey="<<diagnosticHandle(pair.key())<<"; pairValue="<<diagnosticHandle(pair.value())<<"; isCloned="<<pair.isCloned()<<"; isPrimary="<<pair.isPrimary()<<"; isOwnerXlated="<<pair.isOwnerXlated()<<"; valueInTarget="<<(!pair.value().isNull()&&pair.value().database()==&target);
+-    // This is evidence only: a resolved path never substitutes for an SDK map.
+-    try{const auto resolved=targetResource(source,target);out<<"; targetResource="<<diagnosticHandle(resolved);if(!resolved.isNull()){Open<AcDbObject> object(resolved);out<<"; resolvedNode=["<<diagnosticNode(*object,"owner-key-resolution-only",0)<<']';}out<<"; targetResolutionStatus=completed";}catch(const std::exception& e){out<<"; targetResolutionError="<<e.what();}return out.str();
+-}
+-std::string cloneMapState(AcDbIdMapping& map,AcDbDatabase& db){
+-    std::ostringstream out;out<<"transactions="<<db.transactionManager()->numActiveTransactions()<<';';AcDbIdMappingIter iterator(map);std::size_t count=0;
+-    for(iterator.start();!iterator.done();iterator.next()){if(++count>128){out<<"MAP_DIAGNOSTIC_LIMIT=128;";break;}AcDbIdPair pair;if(!iterator.getMap(pair)){out<<"getMap=false;";break;}out<<"[key="<<diagnosticHandle(pair.key())<<",value="<<diagnosticHandle(pair.value())<<",cloned="<<pair.isCloned()<<",primary="<<pair.isPrimary()<<",ownerXlated="<<pair.isOwnerXlated();
+-        if(!pair.value().isNull()){out<<",targetDb="<<(pair.value().database()==&db)<<",erased="<<pair.value().isErased();if(!pair.value().isErased()){AcDbObject* object{};const auto status=acdbOpenObject(object,pair.value(),AcDb::kForRead);out<<",openStatus="<<status;if(status==Acad::eOk){out<<",class="<<diagnosticText(object->isA()->name())<<",owner="<<diagnosticHandle(object->ownerId())<<",new="<<object->isNewObject()<<",resident="<<object->isTransactionResident()<<",write="<<object->isWriteEnabled();object->close();}}}out<<"];";if(out.tellp()>32768){out<<"MAP_DIAGNOSTIC_BYTES_LIMIT;";break;}
+-    }return out.str();
+-}
+-class Transaction final {
+-public:explicit Transaction(AcDbDatabase& db):manager_(db.transactionManager()){need(manager_&&manager_->startTransaction(),"CLONE_TRANSACTION_REQUIRED");}~Transaction(){if(active_)manager_->abortTransaction();}
+-    void adopt(AcDbIdMapping& map,AcDbDatabase& db,std::string& trace){AcDbIdMappingIter it(map);std::size_t count=0;for(it.start();!it.done();it.next()){AcDbIdPair p;need(it.getMap(p),"clone map iteration");if(!p.isCloned()||p.value().isNull()||p.value().database()!=&db)continue;Open<AcDbObject> o(p.value(),AcDb::kForWrite);const bool resident=o->isTransactionResident();if(count++<128)trace+="[adopt-key="+diagnosticHandle(p.key())+",value="+diagnosticHandle(p.value())+",class="+diagnosticText(o->isA()->name())+",new="+std::to_string(o->isNewObject())+",resident="+std::to_string(resident)+",write="+std::to_string(o->isWriteEnabled());if(!resident){const auto status=manager_->addNewlyCreatedDBRObject(&*o);if(count<=128)trace+=",status="+std::to_string(status)+"];";check(status,"adopt cloned object");o.release();}else if(count<=128)trace+=",action=already-resident];";}}
+-    void commit(){check(manager_->endTransaction(),"clone transaction commit");active_=false;}
+-    Acad::ErrorStatus abort(){if(!active_)return Acad::eNoActiveTransactions;const auto status=manager_->abortTransaction();if(status==Acad::eOk)active_=false;return status;}
+-private:AcDbTransactionManager* manager_;bool active_{true};
++using ResourcePairs=std::vector<std::pair<AcDbObjectId,AcDbObjectId>>;
++ResourcePairs preflight(const AcDbObjectIdArray& roots,AcDbDatabase& target){Graph graph;for(int i=0;i<roots.length();++i)graph.value(roots[i],true);ResourcePairs existing;for(auto resource:graph.resources){auto destination=targetResource(resource,target);if(!destination.isNull()){equalResource(resource,destination,"RESOURCE_CONFLICT");existing.emplace_back(resource,destination);}}return existing;}
++// SDK map and verified owned-path bindings are separate evidence. Never insert
++// synthetic entries into AcDbIdMapping. One source graph is checked at a time.
++struct VerifiedBinding {
++    AcDbObjectId source,target,reusedSource,reusedTarget;
++    bool sdkPair{},cloned{};
++};
++class BindingVerifier final {
++public:
++    BindingVerifier(AcDbIdMapping& mapping,AcDbDatabase& target,const ResourcePairs& existing,const AcDbObjectIdArray& roots)
++        :mapping_(mapping),target_(target),existing_(existing),roots_(roots){}
++    VerifiedBinding bind(AcDbObjectId source){
++        try{return bindImpl(source);}catch(const std::exception& e){throw std::runtime_error("VERIFIED_BINDING_SOURCE="+diagnosticHandle(source)+"; "+e.what());}
++    }
++private:
++    VerifiedBinding bindImpl(AcDbObjectId source){
++        for(const auto& b:bindings_)if(b.source==source)return b;
++        need(bindings_.size()<4096&&active_.size()<32,"VERIFIED_BINDING_BUDGET");need(std::find(active_.begin(),active_.end(),source)==active_.end(),"RESOURCE_OWNER_CYCLE");active_.push_back(source);struct Pop{std::vector<AcDbObjectId>& v;~Pop(){v.pop_back();}} pop{active_};
++        const bool root=roots_.contains(source);Open<AcDbObject> from(source);need(root?from->isA()==AcDbHatch::desc():standardResource(from->isA()),"UNSUPPORTED_BINDING_CLASS");
++        AcDbIdPair pair;pair.setKey(source);const bool computed=mapping_.compute(pair);VerifiedBinding binding;binding.source=source;binding.sdkPair=computed;
++        if(computed){
++            need(!pair.value().isNull()&&pair.value().database()==&target_&&!pair.value().isErased(),"INVALID_SDK_RESOURCE_MAPPING");binding.target=pair.value();binding.cloned=pair.isCloned();
++            if(root)need(pair.isCloned(),"ROOT_NOT_CLONED");
++            if(!pair.isCloned()){
++                const auto found=std::find(existing_.begin(),existing_.end(),std::make_pair(source,pair.value()));need(found!=existing_.end(),"UNPROVEN_REUSED_SDK_RESOURCE");binding.reusedSource=source;binding.reusedTarget=pair.value();
++            }
++        }else{
++            need(!root&&!from->ownerId().isNull(),"RESOURCE_MAPPING_MISSING_WITHOUT_OWNER");const auto parent=bind(from->ownerId());need(!parent.reusedSource.isNull(),"RESOURCE_MAPPING_MISSING_UNDER_NEW_PARENT");
++            binding.target=targetResource(source,target_);need(!binding.target.isNull(),"RESOURCE_OWNED_PATH_MISSING");ownedPair(source,binding.target,parent.source,parent.target);binding.reusedSource=parent.reusedSource;binding.reusedTarget=parent.reusedTarget;
++        }
++        Open<AcDbObject> to(binding.target);need(to->isA()==from->isA(),"RESOURCE_BINDING_CLASS_MISMATCH");
++        if(root)need(to->ownerId()==acdbSymUtil()->blockModelSpaceId(&target_),"ROOT_TARGET_OWNER_MISMATCH");
++        else need(targetResource(source,target_)==binding.target,"RESOURCE_BINDING_LOCATION_MISMATCH");
++        // Check actual owner, not just an independent same-name lookup.
++        if(!root){const auto owner=from->ownerId();auto* sourceDb=from->database();AcDbObjectId expectedOwner;
++            if(owner==sourceDb->layerTableId())expectedOwner=target_.layerTableId();else if(owner==sourceDb->linetypeTableId())expectedOwner=target_.linetypeTableId();else if(owner==sourceDb->regAppTableId())expectedOwner=target_.regAppTableId();else if(owner==sourceDb->materialDictionaryId())expectedOwner=target_.materialDictionaryId();else if(owner==sourceDb->plotStyleNameDictionaryId())expectedOwner=target_.plotStyleNameDictionaryId();else expectedOwner=bind(owner).target;
++            need(to->ownerId()==expectedOwner,"RESOURCE_BINDING_OWNER_MISMATCH");
++        }
++        equalResource(source,binding.target,"RESOURCE_BINDING_DEFINITION_CONFLICT",root);
++        for(const auto& b:bindings_)need(b.target!=binding.target||b.source==source,"RESOURCE_BINDING_ALIAS_COLLISION");bindings_.push_back(binding);return binding;
++    }
++public:
++    void verifyEdges(const Graph& from,const Graph& to){
++        need(from.edges.size()==to.edges.size(),"RESOURCE_REFERENCE_EDGE_COUNT");
++        for(std::size_t i=0;i<from.edges.size();++i){const auto& a=from.edges[i];const auto& b=to.edges[i];const auto owner=bind(a.from),child=bind(a.to);need(a.role==b.role&&owner.target==b.from&&child.target==b.to,"RESOURCE_REFERENCE_BINDING_MISMATCH");
++            if(!child.sdkPair){Open<AcDbObject> object(a.to);need(object->ownerId()==a.from&&(a.role=="HardOwnershipId"||a.role=="SoftOwnershipId"),"MISSING_SDK_PAIR_ON_NONOWNING_REFERENCE");ownedPair(a.to,b.to,a.from,b.from);}
++        }
++    }
++    std::string summary()const{std::ostringstream out;for(const auto& b:bindings_)out<<"[source="<<diagnosticHandle(b.source)<<",target="<<diagnosticHandle(b.target)<<",kind="<<(b.sdkPair?"SdkPair":"VerifiedOwnedPath")<<",cloned="<<b.cloned<<",reusedSource="<<diagnosticHandle(b.reusedSource)<<",reusedTarget="<<diagnosticHandle(b.reusedTarget)<<"];";return out.str();}
++private:
++    static void ownedPair(AcDbObjectId source,AcDbObjectId target,AcDbObjectId sourceParent,AcDbObjectId targetParent){
++        Open<AcDbObject> a(source),b(target),pa(sourceParent),pb(targetParent);need(a->ownerId()==sourceParent&&b->ownerId()==targetParent&&pa->isA()==pb->isA()&&a->isA()==b->isA(),"OWNED_BINDING_REVERSE_OWNER_OR_CLASS");
++        if(pa->extensionDictionary()==source){need(a->isA()==AcDbDictionary::desc()&&pb->extensionDictionary()==target,"OWNED_EXTENSION_FORWARD_MISMATCH");return;}
++        need(pa->isA()==AcDbDictionary::desc()&&pb->isA()==AcDbDictionary::desc(),"UNSUPPORTED_OWNED_BINDING_EDGE");auto* da=AcDbDictionary::cast(&*pa);auto* db=AcDbDictionary::cast(&*pb);AcString ka,kb;check(da->nameAt(source,ka),"source owned key");check(db->nameAt(target,kb),"target reverse owned key");need(ka==kb,"OWNED_DICTIONARY_KEY_MISMATCH");AcDbObjectId ia,ib;check(da->getAt(ka.kACharPtr(),ia),"source forward key");check(db->getAt(kb.kACharPtr(),ib),"target forward key");need(ia==source&&ib==target,"OWNED_DICTIONARY_FORWARD_MISMATCH");
++    }
++    AcDbIdMapping& mapping_;AcDbDatabase& target_;const ResourcePairs& existing_;const AcDbObjectIdArray& roots_;std::vector<VerifiedBinding> bindings_;std::vector<AcDbObjectId> active_;
+ };
++// Only private owned targets reach this core. Failure abandons the entire owner;
++// this function makes no claim that wblockClone changes were rolled back.
+ AcDbObjectIdArray cloneVerified(AcDbDatabase& source,const AcDbObjectIdArray& input,AcDbDatabase& target){
+-    preflight(input,target);Working work(target);Transaction transaction(target);AcDbIdMapping mapping;const auto status=source.wblockCloneObjects(input,acdbSymUtil()->blockModelSpaceId(&target),mapping,AcDb::kDrcIgnore);
+-    std::string stage="clone-return",adoptionTrace;bool adoptionAttempted=false;const auto afterClone=cloneMapState(mapping,target);
+-    try{check(status,"clone verified material tiles");AcDbObjectIdArray result;stage="verify-root-expression";
+-    for(int i=0;i<input.length();++i){AcDbIdPair p;p.setKey(input[i]);need(mapping.compute(p)&&p.isCloned()&&!p.value().isNull()&&p.value().database()==&target,"TILE_MAPPING_MISMATCH");equalResource(input[i],p.value(),"CLONED_NATIVE_EXPRESSION_CHANGED",true);result.append(p.value());}
+-    stage="verify-resource-mapping";Graph graph;for(int i=0;i<input.length();++i)graph.value(input[i],true);for(std::size_t n=0;n<graph.resources.size();++n){const auto id=graph.resources[n];AcDbIdPair p;p.setKey(id);const bool computed=mapping.compute(p);if(!computed||p.value().isNull()||p.value().database()!=&target)throw std::runtime_error(missingResourceDiagnostic(id,graph.resourcePaths[n],computed,p,target));need(targetResource(id,target)==p.value(),"RESOURCE_MAPPING_NAME_OR_OWNER_CHANGED");equalResource(id,p.value(),"RESOURCE_MAPPING_CONFLICT");}stage="adopt-after-verified";adoptionAttempted=true;transaction.adopt(mapping,target,adoptionTrace);stage="commit";transaction.commit();return result;
+-    }catch(const std::exception& primary){const std::string original=primary.what();std::string cleanup="not-repeated";if(!adoptionAttempted){adoptionAttempted=true;try{transaction.adopt(mapping,target,adoptionTrace);cleanup="adopt-eOk";}catch(const std::exception& secondary){cleanup=secondary.what();}}const auto beforeAbort=cloneMapState(mapping,target);const auto abortStatus=transaction.abort();const auto afterAbort=cloneMapState(mapping,target);throw std::runtime_error("CLONE_PRIMARY_FAILURE; stage="+stage+"; primary="+original+"; cleanupAdoption="+cleanup+"; cloneStatus="+std::to_string(status)+"; afterClone={"+afterClone+"}; adoption={"+adoptionTrace+"}; beforeAbort={"+beforeAbort+"}; abortStatus="+std::to_string(abortStatus)+"; afterAbort={"+afterAbort+"}");}
+-}
++    const auto existing=preflight(input,target);Working work(target);AcDbIdMapping mapping;const auto status=source.wblockCloneObjects(input,acdbSymUtil()->blockModelSpaceId(&target),mapping,AcDb::kDrcIgnore);check(status,"clone verified material tiles");
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++    if(testHooks&&testHooks->exporting)inject(material_tiles_diagnostics::OwnedFault::AfterExportClone);
++#endif
++    BindingVerifier verifier(mapping,target,existing,input);AcDbObjectIdArray result;Graph from,to;
++    for(int i=0;i<input.length();++i){const auto binding=verifier.bind(input[i]);result.append(binding.target);const auto a=from.value(input[i],true),b=to.value(binding.target,true);need(a==b,"CLONED_NATIVE_EXPRESSION_CHANGED");}
++    for(auto resource:from.resources)verifier.bind(resource);verifier.verifyEdges(from,to);
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++    if(testHooks&&testHooks->bindings.size()<262144)testHooks->bindings+=verifier.summary();
++#endif
++    return result;
++}
+ std::string snapshot(AcDbDatabase& db,const AcDbObjectIdArray& ids){auto actual=modelRoots(db);need(actual.length()==ids.length(),"TILE_ROOT_SET_CHANGED");std::string data;for(int i=0;i<ids.length();++i){need(actual.contains(ids[i]),"TILE_ROOT_CHANGED");auto text=expression(ids[i]);data+=std::to_string(text.size())+":"+text;}return data;}
+ std::pair<double,int> measure(AcDbDatabase& db,AcDbObjectId id,Rect r){
+     Working work(db);Open<AcDbHatch> h(id);need(h->isA()==AcDbHatch::desc()&&!h->associative()&&h->numLoops()==1,"INVALID_NATIVE_TILE");double measured{};check(h->getArea(measured),"native tile area");need(close(measured,area(r)),"NATIVE_TILE_AREA_MISMATCH");
+@@ -190,31 +260,20 @@ std::string resourceCensus(AcDbDatabase& db){
+         if(object->isA()==AcDbLayerTableRecord::desc()||object->isA()==AcDbXrecord::desc()||roots.contains(id)){Graph graph;const auto data=graph.value(id,roots.contains(id));out<<"opaqueLength="<<data.size()<<':'<<data;}out<<"];";need(out.tellp()<=4194304,"ABORT_PROBE_CENSUS_BYTES_BUDGET");
+     }return out.str();
+ }
+-AbortProbe forcedCloneAbort(const PreparedMaterialBatch& child){
+-    need(child.intact(),"ABORT_PROBE_CHILD_CHANGED");AcDbDatabase target(true,true);Working working(target);AbortProbe result;result.before=resourceCensus(target);Transaction transaction(target);AcDbIdMapping mapping;
+-    const auto status=child.database().wblockCloneObjects(child.roots(),acdbSymUtil()->blockModelSpaceId(&target),mapping,AcDb::kDrcIgnore);result.cloneStatus=static_cast<int>(status);result.mapAfterClone=cloneMapState(mapping,target);result.afterClone=resourceCensus(target);
+-    // Force the same error-cleanup path even when the clone reports eOk. This
+-    // only measures the existing adoption/abort policy; it grants no authority.
+-    result.primary=status==Acad::eOk?"FORCED_TEST_FAILURE_AFTER_PUBLIC_CLONE":"clone status "+std::to_string(status);
+-    try{transaction.adopt(mapping,target,result.adoption);}catch(const std::exception& e){result.adoption+="secondary="+std::string(e.what());}
+-    result.beforeAbort=resourceCensus(target);result.mapBeforeAbort=cloneMapState(mapping,target);result.abortStatus=static_cast<int>(transaction.abort());result.mapAfterAbort=cloneMapState(mapping,target);result.afterAbort=resourceCensus(target);result.restored=result.before==result.afterAbort;need(child.intact(),"ABORT_PROBE_MUTATED_CHILD");return result;
+-}
+-MixedUndoProbe mixedCloneAbort(const PreparedMaterialBatch& child,bool enableUndo){
+-    need(child.intact(),"MIXED_PROBE_CHILD_CHANGED");AcDbDatabase target(true,true);need(!documentDatabase(target),"MIXED_PROBE_PRIVATE_DATABASE_REQUIRED");Working working(target);MixedUndoProbe result;result.requestedUndo=enableUndo;result.undoInitial=target.undoRecording();
+-    // Public 2020 dbmain.h API; only this newly owned database is controlled.
+-    // New databases default to Undo OFF. Restore that actual initial state on
+-    // every exit, after any active transaction has been destroyed.
+-    struct UndoRestore {AcDbDatabase& db;bool initial;~UndoRestore(){db.disableUndoRecording(!initial);}} restore{target,result.undoInitial};
+-    target.disableUndoRecording(!enableUndo);result.undoBeforeClone=target.undoRecording();need(result.undoBeforeClone==enableUndo,"MIXED_PROBE_UNDO_STATE_NOT_APPLIED");result.before=resourceCensus(target);
+-    Transaction transaction(target);AcDbIdMapping mapping;const auto status=child.database().wblockCloneObjects(child.roots(),acdbSymUtil()->blockModelSpaceId(&target),mapping,AcDb::kDrcIgnore);result.cloneStatus=static_cast<int>(status);result.undoAfterClone=target.undoRecording();result.mapAfterClone=cloneMapState(mapping,target);result.afterClone=resourceCensus(target);
+-    result.primary=status==Acad::eOk?"FORCED_TEST_FAILURE_AFTER_PUBLIC_CLONE":"clone status "+std::to_string(status);result.adoption="test-only mixed open/close path; no post-close addNewlyCreatedDBRObject";result.beforeAbort=resourceCensus(target);result.mapBeforeAbort=cloneMapState(mapping,target);
+-    result.abortStatus=static_cast<int>(transaction.abort());result.undoAfterAbort=target.undoRecording();result.mapAfterAbort=cloneMapState(mapping,target);result.afterAbort=resourceCensus(target);result.restored=result.before==result.afterAbort;
+-    target.disableUndoRecording(!result.undoInitial);result.undoRestored=target.undoRecording()==result.undoInitial;need(child.intact(),"MIXED_PROBE_MUTATED_CHILD");return result;
+-}
+-}
++}
++#endif
++void MaterialDatabaseDeleter::operator()(AcDbDatabase* db)const noexcept{
++    if(!db)return;
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++    bool observed=false;if(testHooks){const auto it=std::find(testHooks->live.begin(),testHooks->live.end(),db);if(it!=testHooks->live.end()){observed=true;testHooks->destructionWhileWorking|=acdbHostApplicationServices()->workingDatabase()==db;testHooks->live.erase(it);}}
+ #endif
++    delete db;
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++    if(observed)++testHooks->destroyed; // Witness after the actual SDK destructor.
++#endif
++}
+ struct PreparedMaterialTiles::State:AcDbDatabaseReactor {
+-    std::unique_ptr<AcDbDatabase> database;AcDbObjectIdArray roots;MaterialPlan parent;std::vector<MaterialTileRecord> tiles;std::vector<PreparedMaterialBatch> children;std::set<AcDbDatabase*> sources;std::string baseline;bool armed{},changed{};
++    OwnedDbPtr database;AcDbObjectIdArray roots;MaterialPlan parent;std::vector<MaterialTileRecord> tiles;std::vector<PreparedMaterialBatch> children;std::set<AcDbDatabase*> sources;std::string baseline;bool armed{},changed{};
+     ~State(){if(armed)database->removeReactor(this);}
+     void objectAppended(const AcDbDatabase*,const AcDbObject*)override{changed=true;}void objectUnAppended(const AcDbDatabase*,const AcDbObject*)override{changed=true;}void objectReAppended(const AcDbDatabase*,const AcDbObject*)override{changed=true;}void objectOpenedForModify(const AcDbDatabase*,const AcDbObject*)override{changed=true;}void objectModified(const AcDbDatabase*,const AcDbObject*)override{changed=true;}void objectErased(const AcDbDatabase*,const AcDbObject*,Adesk::Boolean)override{changed=true;}void headerSysVarWillChange(const AcDbDatabase*,const ACHAR*)override{changed=true;}
+ };
+@@ -227,13 +286,20 @@ const AcDbObjectIdArray& PreparedMaterialTiles::roots()const{need(state_!=nullpt
+ const std::vector<MaterialTileRecord>& PreparedMaterialTiles::tiles()const{need(state_!=nullptr,"MOVED_TILE_BATCH");return state_->tiles;}
+ const MaterialPlan& PreparedMaterialTiles::parentPlan()const{need(state_!=nullptr,"MOVED_TILE_BATCH");return state_->parent;}
+ bool PreparedMaterialTiles::intact()const noexcept{try{if(!state_||state_->changed)return false;for(const auto& child:state_->children)if(!child.intact())return false;Working work(*state_->database);return snapshot(*state_->database,state_->roots)==state_->baseline;}catch(...){return false;}}
+-Result<std::vector<AcDbObjectId>> PreparedMaterialTiles::cloneToEmpty(AcDbDatabase& target)const{
+-    try{need(state_&&&target!=state_->database.get()&&state_->sources.count(&target)==0&&&target!=acdbHostApplicationServices()->workingDatabase()&&!documentDatabase(target),"INDEPENDENT_NON_DOCUMENT_TARGET_REQUIRED");need(modelRoots(target).isEmpty(),"EMPTY_TARGET_REQUIRED");need(intact(),"PREPARED_MATERIAL_TILES_CHANGED");auto ids=cloneVerified(*state_->database,state_->roots,target);need(modelRoots(target).length()==ids.length(),"EXTRA_CLONED_ROOT");std::vector<AcDbObjectId> result;for(int i=0;i<ids.length();++i)result.push_back(ids[i]);return {std::move(result),{}};}catch(const std::exception& e){return {std::nullopt,{{"MATERIAL_TILES_CLONE_REJECTED",e.what(),{},true}}};}
++Result<OwnedMaterialDatabase> PreparedMaterialTiles::cloneIntoNewOwnedDb()const{
++    try{need(intact(),"PREPARED_MATERIAL_TILES_CHANGED");OwnedMaterialDatabase result;result.database=newOwnedDatabase();need(result.database.get()!=state_->database.get()&&state_->sources.count(result.database.get())==0,"NEW_EXPORT_IDENTITY_REQUIRED");result.roots=cloneVerified(*state_->database,state_->roots,*result.database);need(modelRoots(*result.database).length()==result.roots.length()&&static_cast<std::size_t>(result.roots.length())==state_->tiles.size(),"EXTRA_OR_MISSING_CLONED_ROOT");
++        for(int i=0;i<result.roots.length();++i){const auto cell=rectangle(state_->tiles[static_cast<std::size_t>(i)].geometry.outer);const auto measured=measure(*result.database,result.roots[i],cell);need(close(measured.first,state_->tiles[static_cast<std::size_t>(i)].nativeArea)&&measured.second==state_->tiles[static_cast<std::size_t>(i)].nativeLines,"EXPORT_NATIVE_OUTPUT_CHANGED");}
++        need(intact(),"PREPARED_MATERIAL_TILES_CHANGED_DURING_EXPORT");
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++        inject(material_tiles_diagnostics::OwnedFault::BeforeExportPublish);
++#endif
++        return {std::move(result),{}};
++    }catch(const std::exception& e){return {std::nullopt,{{"MATERIAL_TILES_OWNED_EXPORT_REJECTED",e.what(),{},true}}};}
+ }
+ Result<PreparedMaterialTiles> prepareMaterialTiles(const MaterialPlan& plan,const std::vector<ReferenceMaterialSeed>& seeds,const MaterialPreparationOptions& options,const MaterialTileLimits& limits){
+     std::string diagnosticLocation;
+     try{
+-        need(positive(plan.mmPerInputUnit)&&!plan.regions.empty()&&!plan.unitConfirmationSource.empty(),"MATERIAL_FACTS_REQUIRED");need(limits.maxTiles>0&&limits.maxTiles<=4096&&limits.maxAttempts>0&&limits.maxAttempts<=8192&&limits.maxDepth<=32,"INVALID_TILE_LIMITS");need(options.placements.size()==plan.regions.size(),"EXPLICIT_MATERIAL_PLACEMENT_REQUIRED");auto state=std::make_unique<PreparedMaterialTiles::State>();state->database=std::make_unique<AcDbDatabase>(true,true);state->parent=plan;for(const auto& seed:seeds)if(seed.database)state->sources.insert(seed.database);std::size_t attempts{};std::set<std::pair<std::string,std::string>> identities;
++        need(positive(plan.mmPerInputUnit)&&!plan.regions.empty()&&!plan.unitConfirmationSource.empty(),"MATERIAL_FACTS_REQUIRED");need(limits.maxTiles>0&&limits.maxTiles<=4096&&limits.maxAttempts>0&&limits.maxAttempts<=8192&&limits.maxDepth<=32,"INVALID_TILE_LIMITS");need(options.placements.size()==plan.regions.size(),"EXPLICIT_MATERIAL_PLACEMENT_REQUIRED");auto state=std::make_unique<PreparedMaterialTiles::State>();state->database=newOwnedDatabase();state->parent=plan;for(const auto& seed:seeds)if(seed.database)state->sources.insert(seed.database);std::size_t attempts{};std::set<std::pair<std::string,std::string>> identities;
+         for(const auto& parent:plan.regions){need(identities.emplace(parent.viewIdentity,parent.identity).second,"DUPLICATE_MATERIAL_REGION");const MaterialPlacement* placement{};for(const auto& p:options.placements)if(p.regionIdentity==parent.identity&&p.viewIdentity==parent.viewIdentity){need(!placement,"DUPLICATE_PLACEMENT");placement=&p;}need(placement!=nullptr,"MATERIAL_PLACEMENT_REQUIRED");const auto cells=partition(parent,plan.mmPerInputUnit,limits);double total{};AcDbObjectId layer;const auto first=state->tiles.size();
+             std::function<void(Rect,unsigned)> prepare=[&](Rect cell,unsigned depth){
+                 {std::ostringstream context;context<<std::setprecision(17)<<"parent="<<parent.viewIdentity<<"/"<<parent.identity<<"; tile=["<<cell.x0<<','<<cell.y0<<','<<cell.x1<<','<<cell.y1<<"]; splitDepth="<<depth<<"; prototype="<<parent.expression.prototypeId;for(const auto& seed:seeds)if(seed.prototypeId==parent.expression.prototypeId)context<<"; originalReferenceHandle="<<seed.handle;diagnosticLocation=context.str();}
+@@ -242,10 +308,59 @@ Result<PreparedMaterialTiles> prepareMaterialTiles(const MaterialPlan& plan,cons
+                     const auto reason=child.issues.empty()?std::string("MATERIAL_CHILD_FAILED"):child.issues.front().message;need(reason.find("EMPTY_NATIVE_PATTERN_OUTPUT")!=std::string::npos,reason);need(depth<limits.maxDepth,"TILE_DEPTH_BUDGET");Rect left=cell,right=cell;const bool splitX=(cell.x1-cell.x0)>=(cell.y1-cell.y0);if(splitX){double middle=cell.x0+(cell.x1-cell.x0)*.5;need(middle>cell.x0&&middle<cell.x1,"TILE_FLOATING_POINT_SPLIT_EXHAUSTED");left.x1=middle;right.x0=middle;}else{double middle=cell.y0+(cell.y1-cell.y0)*.5;need(middle>cell.y0&&middle<cell.y1,"TILE_FLOATING_POINT_SPLIT_EXHAUSTED");left.y1=middle;right.y0=middle;}prepare(left,depth+1);prepare(right,depth+1);return;
+                 }
+                 need(child.value->intact()&&child.value->roots().length()==1,"INVALID_CHILD_BATCH");auto measured=measure(child.value->database(),child.value->roots()[0],cell);auto ids=cloneVerified(child.value->database(),child.value->roots(),*state->database);need(ids.length()==1,"TILE_ROOT_MAPPING_COUNT");auto copied=measure(*state->database,ids[0],cell);need(close(measured.first,copied.first)&&measured.second==copied.second,"CLONE_NATIVE_OUTPUT_CHANGED");{Open<AcDbHatch> h(ids[0]);if(layer.isNull())layer=h->layerId();need(h->layerId()==layer,"DUPLICATE_PARENT_MATERIAL_LAYER");}state->roots.append(ids[0]);state->tiles.push_back({parent.identity,parent.viewIdentity,geometry(cell),copied.first,copied.second,depth});state->children.push_back(std::move(*child.value));total+=copied.first;
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++                if(state->tiles.size()==1)inject(material_tiles_diagnostics::OwnedFault::AfterFirstTile);if(state->tiles.size()==2)inject(material_tiles_diagnostics::OwnedFault::AfterSecondTile);
++#endif
+             };
+             for(auto cell:cells)prepare(cell,0);need(close(total*plan.mmPerInputUnit*plan.mmPerInputUnit,parent.areaSquareMm),"NATIVE_WHOLE_MATERIAL_AREA_MISMATCH");{Working work(*state->database);validateSeams(state->roots,state->tiles,first,plan.mmPerInputUnit);}
+         }
+         state->baseline=snapshot(*state->database,state->roots);check(state->database->addReactor(state.get()),"arm immutable tile batch");state->armed=true;return {PreparedMaterialTiles(std::move(state)),{}};
+     }catch(const std::exception& e){return {std::nullopt,{{"MATERIAL_TILES_PREPARATION_REJECTED",diagnosticLocation+"; "+e.what(),{},true}}};}
++}
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++namespace material_tiles_diagnostics {
++namespace {
++void finishProbe(OwnedProbe& result,const TestHooks& hooks,AcDbDatabase* working){result.created=hooks.created;result.destroyed=hooks.destroyed;result.destroyedAll=hooks.created>0&&hooks.created==hooks.destroyed&&hooks.live.empty()&&!hooks.destructionWhileWorking;result.workingRestored=acdbHostApplicationServices()->workingDatabase()==working;result.bindings=hooks.bindings;}
++AcDbObjectId firstXrecord(AcDbObjectId dictionaryId){Open<AcDbDictionary> dictionary(dictionaryId);std::unique_ptr<AcDbDictionaryIterator> it(dictionary->newIterator());need(it!=nullptr,"CONFLICT_FIXTURE_ITERATOR");for(;!it->done();it->next()){Open<AcDbObject> object(it->objectId());if(object->isA()==AcDbXrecord::desc())return it->objectId();}throw std::runtime_error("CONFLICT_FIXTURE_XRECORD_REQUIRED");}
++void extraKey(AcDbObjectId dictionaryId){Open<AcDbDictionary> dictionary(dictionaryId,AcDb::kForWrite);auto object=std::make_unique<AcDbPlaceHolder>();AcDbObjectId id;check(dictionary->setAt(L"BCE_M2_CONFLICT_EXTRA",object.get(),id),"conflict extra dictionary key");object.release()->close();}
++}
++OwnedProbe ownershipFault(const MaterialPlan& plan,const std::vector<ReferenceMaterialSeed>& seeds,const MaterialPreparationOptions& options,OwnedFault point){
++    OwnedProbe report;auto* working=acdbHostApplicationServices()->workingDatabase();const bool exportFault=point==OwnedFault::AfterExportClone||point==OwnedFault::BeforeExportPublish;
++    // Export setup is outside the observed scope; only the new output is counted.
++    auto prepared=exportFault?prepareMaterialTiles(plan,seeds,options):Result<PreparedMaterialTiles>{std::nullopt,{}};
++    if(exportFault&&!prepared.canCommit()){report.issue="FAULT_FIXTURE_PREPARATION_FAILED: "+(prepared.issues.empty()?std::string("unknown"):prepared.issues.front().message);return report;}
++    TestHooks hooks;HookScope scope(hooks);hooks.fault=static_cast<int>(point);hooks.exporting=exportFault;
++    if(exportFault){auto output=prepared.value->cloneIntoNewOwnedDb();report.noResult=!output.value&&!output.canCommit();report.issue=output.issues.empty()?"FAULT_NOT_REACHED":output.issues.front().message;need(prepared.value->intact(),"FAULT_MUTATED_PREPARED_SOURCE");}
++    else{auto output=prepareMaterialTiles(plan,seeds,options);report.noResult=!output.value&&!output.canCommit();report.issue=output.issues.empty()?"FAULT_NOT_REACHED":output.issues.front().message;}
++    finishProbe(report,hooks,working);return report;
+ }
++OwnedProbe resourceConflict(const PreparedMaterialTiles& batch,ResourceConflict mutation){
++    OwnedProbe report;auto* working=acdbHostApplicationServices()->workingDatabase();TestHooks hooks;HookScope scope(hooks);
++    try{
++        auto initial=batch.cloneIntoNewOwnedDb();need(initial.canCommit(),"CONFLICT_FIXTURE_INITIAL_EXPORT_FAILED");auto owned=std::move(*initial.value);auto& target=*owned.database;AcDbObjectId layerId,layerDictionary,materialDictionary;
++        {Open<AcDbHatch> root(owned.roots[0]);layerId=root->layerId();Open<AcDbLayerTableRecord> layer(layerId);layerDictionary=layer->extensionDictionary();Open<AcDbMaterial> material(layer->materialId());materialDictionary=material->extensionDictionary();}
++        for(int i=0;i<owned.roots.length();++i){Open<AcDbEntity> root(owned.roots[i],AcDb::kForWrite);check(root->erase(),"erase private conflict fixture roots");}
++        if(mutation==ResourceConflict::LayerColor){Open<AcDbLayerTableRecord> layer(layerId,AcDb::kForWrite);AcCmColor color;color.setColorIndex(layer->color().colorIndex()==1?2:1);layer->setColor(color);}
++        else if(mutation==ResourceConflict::DictionaryKey)extraKey(layerDictionary);
++        else if(mutation==ResourceConflict::ReusedOwnedKey)extraKey(materialDictionary);
++        else if(mutation==ResourceConflict::ReferenceAlias){
++            // Two public PlaceHolders can have identical opaque fields while
++            // their dictionary keys/identities differ. Change the actual edge.
++            AcDbObjectId alias;{Open<AcDbDictionary> dict(target.plotStyleNameDictionaryId(),AcDb::kForWrite);auto item=std::make_unique<AcDbPlaceHolder>();check(dict->setAt(L"BCE_M2_SAME_PAYLOAD_ALIAS",item.get(),alias),"alias placeholder fixture");item.release()->close();}
++            Open<AcDbLayerTableRecord> layer(layerId,AcDb::kForWrite);check(layer->setPlotStyleName(alias),"alias layer reference fixture");
++        }else{
++            const bool reused=mutation==ResourceConflict::ReusedOwnedPayload||mutation==ResourceConflict::ReusedOwnedOwner;const auto record=firstXrecord(reused?materialDictionary:layerDictionary);Open<AcDbXrecord> object(record,AcDb::kForWrite);
++            if(mutation==ResourceConflict::XrecordPolicy)object->setXlateReferences(!object->isXlateReferences());
++            else if(mutation==ResourceConflict::ReusedOwnedOwner)check(object->setOwnerId(layerDictionary),"private conflicting owner fixture");
++            else{resbuf item{};item.restype=90;item.resval.rlong=1729;check(object->appendRbChain(item),"opaque payload conflict fixture");}
++        }
++        const auto before=resourceCensus(target);
++        try{cloneVerified(batch.database(),batch.roots(),target);report.issue="CONFLICT_NOT_REJECTED";}
++        catch(const std::exception& e){report.noResult=true;report.issue=e.what();report.preflightUnchanged=resourceCensus(target)==before;}
++        need(batch.intact(),"CONFLICT_MUTATED_PREPARED_SOURCE");
++    }catch(const std::exception& e){report.noResult=false;report.issue=std::string("CONFLICT_FIXTURE_FAILED: ")+e.what();}
++    finishProbe(report,hooks,working);return report;
++}
++}
++#endif
+ }
+diff --git "a/D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-192749-164-resource-path-mixed-undo-diagnostic-34c407a8\\src\\MaterialTileDriver.cpp" "b/D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-195042-679-owned-only-binding-api-contract-freeze-9393a7a2\\src\\MaterialTileDriver.cpp"
+index bc12f92..c5c935c 100644
+--- "a/D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-192749-164-resource-path-mixed-undo-diagnostic-34c407a8\\src\\MaterialTileDriver.cpp"
++++ "b/D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-195042-679-owned-only-binding-api-contract-freeze-9393a7a2\\src\\MaterialTileDriver.cpp"
+@@ -1,7 +1,13 @@
+ #include "MaterialTileFixtures.h"
+ #include <rxregsvc.h>
+ #include <limits>
++#include <type_traits>
++#include <utility>
+ namespace {
++template<class T,class=void>struct HasBorrowedClone:std::false_type{};
++template<class T>struct HasBorrowedClone<T,std::void_t<decltype(std::declval<const T&>().cloneToEmpty(std::declval<AcDbDatabase&>()))>>:std::true_type{};
++static_assert(!HasBorrowedClone<bce::PreparedMaterialTiles>::value,"M2 must not expose a borrowed target writer");
++static_assert(!std::is_copy_constructible<bce::OwnedMaterialDatabase>::value&&std::is_move_constructible<bce::OwnedMaterialDatabase>::value,"owned output must transfer exclusively");
+ HMODULE moduleHandle{};
+ void runCase()noexcept{
+     bce::native::Config config;std::unique_ptr<bce::native::Evidence> evidence;
+@@ -17,18 +23,14 @@ void runCase()noexcept{
+         evidence->checkpoint("independent-xrecord-iterator-termination");for(const auto elements:{0U,1U,3U}){const auto actual=independentXrecordCount(elements);expect("XrecordIteratorCount"+std::to_string(elements),actual==elements,"expected="+std::to_string(elements)+" actual="+std::to_string(actual)+"; eIteratorDone accepted only with done()");}
+         evidence->checkpoint("read-only-layer-dictionary-graph");std::vector<std::string> inventories;{Open<AcDbHatch> h(sourceId);inventories.push_back(dictionaryInventory(h->layerId(),"reference-114CF"));}
+         {auto diagnosticPlan=plan;diagnosticPlan.regions[0].geometry.outer={{{0,0},{1200,0},{1200,900},{0,900}},true};diagnosticPlan.regions[0].geometry.holes.clear();diagnosticPlan.regions[0].areaSquareMm=1080000;auto diagnosticChild=prepareMaterials(diagnosticPlan,{seed},options);require(diagnosticChild.canCommit(),"M1 first-cell diagnostic preparation");{Open<AcDbHatch> h(diagnosticChild.value->roots()[0]);inventories.push_back(dictionaryInventory(h->layerId(),"M1-first-grid-cell-resource-clone"));}require(diagnosticChild.value->intact(),"read-only dictionary diagnostic keeps child intact");
+-#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
+-            for(bool enableUndo:{false,true}){
+-                const std::string label=enableUndo?"MixedCloneUndoOn":"MixedCloneUndoOff";evidence->checkpoint(label);auto diagnosticReport=create_new(config.output+(enableUndo?L"/material-clone-mixed-undo-on.json":L"/material-clone-mixed-undo-off.json"));
+-                try{const auto probe=material_tiles_diagnostics::mixedCloneAbort(*diagnosticChild.value,enableUndo);write_flushed(diagnosticReport.get(),object({{"diagnosticOnly","true"},{"primary",quote(probe.primary)},{"cloneStatus",std::to_string(probe.cloneStatus)},{"abortStatus",std::to_string(probe.abortStatus)},{"restoredByFullCensus",probe.restored?"true":"false"},{"undoRequested",probe.requestedUndo?"true":"false"},{"undoInitial",probe.undoInitial?"true":"false"},{"undoBeforeClone",probe.undoBeforeClone?"true":"false"},{"undoAfterClone",probe.undoAfterClone?"true":"false"},{"undoAfterAbort",probe.undoAfterAbort?"true":"false"},{"undoRestored",probe.undoRestored?"true":"false"},{"adoption",quote(probe.adoption)},{"mapAfterClone",quote(probe.mapAfterClone)},{"mapBeforeAbort",quote(probe.mapBeforeAbort)},{"mapAfterAbort",quote(probe.mapAfterAbort)},{"before",quote(probe.before)},{"afterClone",quote(probe.afterClone)},{"beforeAbort",quote(probe.beforeAbort)},{"afterAbort",quote(probe.afterAbort)}}));
+-                    // OFF is a measured control, not an asserted rollback capability.
+-                    const bool measured=probe.cloneStatus==Acad::eOk&&probe.abortStatus==Acad::eOk&&probe.undoBeforeClone==enableUndo&&probe.undoAfterClone==enableUndo&&probe.undoAfterAbort==enableUndo&&probe.undoRestored;
+-                    expect(label+(enableUndo?"RestoresFullResourceCensus":"ControlMeasured"),measured&&(!enableUndo||probe.restored),"cloneStatus="+std::to_string(probe.cloneStatus)+" abortStatus="+std::to_string(probe.abortStatus)+" restored="+(probe.restored?"true":"false")+"; no post-close adoption; complete resource census; OFF control grants no rollback capability");}
+-                catch(const std::exception& e){write_flushed(diagnosticReport.get(),object({{"diagnosticOnly","true"},{"complete","false"},{"error",quote(std::string(e.what()))}}));expect(label+"Complete",false,std::string("incomplete census: ")+e.what());}
+-            }
+-#endif
++
+         }
+         {auto inventory=create_new(config.output+L"/material-dictionary-inventory.json");const auto json=object({{"diagnosticOnly","true"},{"sourcePrototypeHandle",quote(std::string("114CF"))},{"sourceSHA256",quote(config.referenceSHA256)},{"inventories",array(inventories)},{"scope",quote(std::string("Exact AcDbDictionary public keys/ownership/classes only; unknown leaf payloads not read; no capability authorization"))}});write_flushed(inventory.get(),json);evidence->capability(json);}
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++        {auto faultPlan=plan;faultPlan.regions[0].geometry.outer={{{0,0},{2400,0},{2400,1800},{0,1800}},true};faultPlan.regions[0].geometry.holes={{{{1200,450},{1800,450},{1800,900},{1200,900}},true}};faultPlan.regions[0].areaSquareMm=4050000;using Fault=material_tiles_diagnostics::OwnedFault;const std::pair<Fault,const char*> faults[]={{Fault::AfterFirstTile,"AfterFirstTile"},{Fault::AfterSecondTile,"AfterSecondTile"},{Fault::AfterExportClone,"AfterExportClone"},{Fault::BeforeExportPublish,"BeforeExportPublish"}};
++            for(const auto& item:faults){evidence->checkpoint(std::string("owned-fault-")+item.second);const auto probe=material_tiles_diagnostics::ownershipFault(faultPlan,{seed},options,item.first);const bool hit=probe.issue.find("INJECTED_OWNED_FAILURE:")!=std::string::npos;expect(std::string(item.second)+"FailureDestroysOwnedDatabase",hit&&probe.noResult&&probe.destroyedAll&&probe.workingRestored&&ambientMonitor.changes==0&&sourceMonitor.changes==0,probe.issue+"; created="+std::to_string(probe.created)+" destroyed="+std::to_string(probe.destroyed)+"; external source/ambient monitors unchanged");evidence->capability(object({{"ownedFault",quote(std::string(item.second))},{"hit",hit?"true":"false"},{"noResult",probe.noResult?"true":"false"},{"destroyedAll",probe.destroyedAll?"true":"false"},{"bindings",quote(probe.bindings)}}));}
++        }
++#endif
+         for(int scenario=0;scenario<5;++scenario){auto p=plan;auto o=options;std::string name="WholeWall58M";double factor=1,angle=0;
+             if(scenario==1){name="TranslatedNoninteger";for(auto& v:p.regions[0].geometry.outer.vertices){v.x+=100000.125;v.y-=50000.375;}for(auto& h:p.regions[0].geometry.holes)for(auto& v:h.vertices){v.x+=100000.125;v.y-=50000.375;}o.placements[0].targetAnchor={100012.375,-49962.875};}
+             if(scenario==2){name="PaperScale50";o.placements[0].targetPaperScale=50;factor=.5;}
+@@ -37,15 +39,17 @@ void runCase()noexcept{
+             evidence->checkpoint("prepare-"+name);auto result=prepareMaterialTiles(p,{seed},o);expect(name+"Prepared",result.canCommit(),result.issues.empty()?"native tiled whole wall":result.issues.front().message);if(!result.canCommit())continue;
+             auto& batch=*result.value;auto checked=verify(batch.database(),batch.roots(),batch.tiles(),p,o,false);expect(name+"NativeCoverageAndSeams",true,"native area="+number(checked.area)+" lines="+std::to_string(checked.lines)+" seams="+std::to_string(checked.seams)+" contacts="+std::to_string(checked.contacts));evidence->capability(object({{"scenario",quote(name)},{"tiles",array(checked.rows)},{"nativeArea",number(checked.area)},{"nativeLines",std::to_string(checked.lines)},{"seams",std::to_string(checked.seams)},{"contacts",std::to_string(checked.contacts)}}));
+             {Open<AcDbHatch> h(batch.roots()[0]);Open<AcDbHatch> original(sourceId);expect(name+"ScaleDirection",nearValue(h->patternScale(),sourceScale*factor)&&nearValue(std::sin(h->patternAngle()-sourceAngle),std::sin(angle)),"source scale="+number(sourceScale)+" target="+number(h->patternScale()));expect(name+"All67MappedDefinitions",mappedDefinitions(*original.p,*h.p,factor,angle,seed.referenceAnchor,o.placements[0].targetAnchor),"all source base/angle/offset/dash fields mapped by declared physical transform");}
+-            AcDbDatabase output(true,true);auto clone=batch.cloneToEmpty(output);expect(name+"Clone",clone.canCommit(),clone.issues.empty()?"independent scratch only":clone.issues.front().message);if(clone.canCommit()){AcDbObjectIdArray ids;for(auto id:*clone.value)ids.append(id);verify(output,ids,batch.tiles(),p,o,true);auto path=config.output+L"/material-tiles-"+std::to_wstring(scenario)+L".dwg";require(GetFileAttributesW(path.c_str())==INVALID_FILE_ATTRIBUTES,"exclusive dwg");{Working work(output);ok(output.saveAs(path.c_str(),false,AcDb::kDHL_CURRENT),"save test dwg");}AcDbDatabase reopen(false,true);ok(reopen.readDwgFile(path.c_str(),AcDbDatabase::kForReadAndReadShare,false),"independent reopen");reopen.closeInput(true);AcDbObjectIdArray reids;for(int i=0;i<ids.length();++i){AcDbObjectId id;ok(reopen.getAcDbObjectId(id,false,ids[i].handle()),"roundtrip handle");reids.append(id);}auto again=verify(reopen,reids,batch.tiles(),p,o,true);expect(name+"SaveReopenNativeCoverage",nearValue(again.area,checked.area)&&again.lines==checked.lines,"actual reopened roots loops 67 definitions generated segments seams");}
++            auto clone=batch.cloneIntoNewOwnedDb();expect(name+"OwnedClone",clone.canCommit(),clone.issues.empty()?"new independently owned output":clone.issues.front().message);
++            if(clone.canCommit()){auto& output=*clone.value->database;const auto& ids=clone.value->roots;expect(name+"FreshOutputIdentity",&output!=&batch.database()&&&output!=&source&&&output!=ambient&&&output!=workingBefore,"no caller-supplied destination; new DB identity");verify(output,ids,batch.tiles(),p,o,true);auto path=config.output+L"/material-tiles-"+std::to_wstring(scenario)+L".dwg";require(GetFileAttributesW(path.c_str())==INVALID_FILE_ATTRIBUTES,"exclusive dwg");{Working work(output);ok(output.saveAs(path.c_str(),false,AcDb::kDHL_CURRENT),"save test dwg");}AcDbDatabase reopen(false,true);ok(reopen.readDwgFile(path.c_str(),AcDbDatabase::kForReadAndReadShare,false),"independent reopen");reopen.closeInput(true);AcDbObjectIdArray reids;for(int i=0;i<ids.length();++i){AcDbObjectId id;ok(reopen.getAcDbObjectId(id,false,ids[i].handle()),"roundtrip handle");reids.append(id);}auto again=verify(reopen,reids,batch.tiles(),p,o,true);expect(name+"SaveReopenNativeCoverage",nearValue(again.area,checked.area)&&again.lines==checked.lines,"actual reopened roots loops 67 definitions generated segments seams");}
+             expect(name+"OriginalIntact",batch.intact(),"permanent mutation guard");
+-            if(scenario==0){AcDbDatabase occupied(true,true);appendText(occupied);auto no=batch.cloneToEmpty(occupied);expect("OccupiedTargetRejected",!no.canCommit()&&roots(occupied).length()==1,"no existing roots overwritten");{Working scratch(occupied);auto docCopy=batch.cloneToEmpty(*ambient);expect("DocumentTargetRejectedWhileNoncurrentWorking",!docCopy.canCommit()&&!docCopy.issues.empty()&&docCopy.issues.front().message.find("NON_DOCUMENT")!=std::string::npos,"all open document DBs excluded before nonempty-root check");}
+-                AcDbDatabase conflict(true,true);AcDbObjectId conflictLayer;{Open<AcDbHatch> h(batch.roots()[0]);Open<AcDbLayerTableRecord> originalLayer(h->layerId());AcString layerName;ok(originalLayer->getName(layerName),"same resource name");Open<AcDbLayerTable> table(conflict.layerTableId(),AcDb::kForWrite);auto layer=std::make_unique<AcDbLayerTableRecord>();ok(layer->setName(layerName.kACharPtr()),"conflict layer name");AcCmColor red;red.setColorIndex(1);layer->setColor(red);ok(table->add(conflictLayer,layer.get()),"conflict layer");layer.release()->close();}auto conflictCopy=batch.cloneToEmpty(conflict);bool conflictUnchanged=false;{Open<AcDbLayerTableRecord> layer(conflictLayer);conflictUnchanged=layer->color().colorIndex()==1;}expect("SameNameDifferentDefinitionRejected",!conflictCopy.canCommit()&&roots(conflict).isEmpty()&&conflictUnchanged&&!conflictCopy.issues.empty()&&conflictCopy.issues.front().message.find("RESOURCE_CONFLICT")!=std::string::npos,"empty target with same-name different layer must reject before clone");
+-                AcDbDatabase nestedConflict(true,true);auto nestedInitial=batch.cloneToEmpty(nestedConflict);require(nestedInitial.canCommit(),"initial nested conflict copy");AcDbObjectId nestedDictionary,extraEntry;{Open<AcDbHatch> firstHatch(nestedInitial.value->front());Open<AcDbLayerTableRecord> layer(firstHatch->layerId());nestedDictionary=layer->extensionDictionary();require(!nestedDictionary.isNull(),"actual layer extension dictionary fixture");}for(auto id:*nestedInitial.value){Open<AcDbEntity> e(id,AcDb::kForWrite);ok(e->erase(),"clear only independent conflict fixture roots");}{Open<AcDbDictionary> dictionary(nestedDictionary,AcDb::kForWrite);auto entry=std::make_unique<AcDbPlaceHolder>();ok(dictionary->setAt(L"BCE_M2_TEST_EXTRA_KEY",entry.get(),extraEntry),"extra extension dictionary key");entry.release()->close();}auto nestedCopy=batch.cloneToEmpty(nestedConflict);bool extraPreserved=false;{Open<AcDbDictionary> dictionary(nestedDictionary);AcDbObjectId id;extraPreserved=dictionary->getAt(L"BCE_M2_TEST_EXTRA_KEY",id)==Acad::eOk&&id==extraEntry;}expect("NestedDictionaryDefinitionConflictRejected",!nestedCopy.canCommit()&&roots(nestedConflict).isEmpty()&&extraPreserved&&!nestedCopy.issues.empty()&&nestedCopy.issues.front().message.find("RESOURCE_CONFLICT")!=std::string::npos,"same layer appearance but different owned dictionary key rejected without modifying target");
+-                for(int mutation=0;mutation<2;++mutation){AcDbDatabase xrecordConflict(true,true);auto initial=batch.cloneToEmpty(xrecordConflict);require(initial.canCommit(),"initial Xrecord conflict copy");AcDbObjectId recordId;{Open<AcDbHatch> h(initial.value->front());Open<AcDbLayerTableRecord> layer(h->layerId());Open<AcDbDictionary> dictionary(layer->extensionDictionary());ok(dictionary->getAt(L"ADSK_XREC_LAYER_RECONCILED",recordId),"observed standard Xrecord key fixture");}for(auto id:*initial.value){Open<AcDbEntity> e(id,AcDb::kForWrite);ok(e->erase(),"erase only owned Xrecord fixture roots");}
+-                    auto countRecord=[&](){Open<AcDbXrecord> record(recordId);return countXrecord(*record.p);};const auto countBefore=countRecord();bool expectedPolicy{};{Open<AcDbXrecord> record(recordId,AcDb::kForWrite);expectedPolicy=record->isXlateReferences();if(mutation==0){resbuf item{};item.restype=90;item.resval.rlong=1729;ok(record->appendRbChain(item),"append opaque standard typed Xrecord test value");}else{expectedPolicy=!expectedPolicy;record->setXlateReferences(expectedPolicy);}}
+-                    auto copied=batch.cloneToEmpty(xrecordConflict);bool unchanged=false;{Open<AcDbXrecord> record(recordId);unchanged=record->isXlateReferences()==expectedPolicy;}unchanged=unchanged&&countRecord()==countBefore+(mutation==0?1U:0U);expect(mutation==0?"XrecordPayloadConflictRejected":"XrecordReferencePolicyConflictRejected",!copied.canCommit()&&roots(xrecordConflict).isEmpty()&&unchanged&&!copied.issues.empty()&&copied.issues.front().message.find("RESOURCE_CONFLICT")!=std::string::npos,"same dictionary key and owner but changed opaque typed payload/reference policy must reject without alteration");}
+-                {Open<AcDbHatch> h(batch.roots()[0],AcDb::kForWrite);ok(h->setColorIndex(1),"mutation");}AcDbDatabase reject(true,true);auto noCopy=batch.cloneToEmpty(reject);expect("AlteredTilesNoCopy",!batch.intact()&&!noCopy.canCommit()&&roots(reject).isEmpty(),"changed immutable tile set has no authority");}
++            if(scenario==0){
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++                using Conflict=material_tiles_diagnostics::ResourceConflict;
++                const std::pair<Conflict,const char*> cases[]={{Conflict::LayerColor,"LayerColor"},{Conflict::DictionaryKey,"DictionaryKey"},{Conflict::XrecordPayload,"XrecordPayload"},{Conflict::XrecordPolicy,"XrecordPolicy"},{Conflict::ReusedOwnedKey,"ReusedOwnedKey"},{Conflict::ReusedOwnedPayload,"ReusedOwnedPayload"},{Conflict::ReusedOwnedOwner,"ReusedOwnedOwner"},{Conflict::ReferenceAlias,"ReferenceAlias"}};
++                for(const auto& item:cases){const auto probe=material_tiles_diagnostics::resourceConflict(batch,item.first);const bool preflightRequired=item.first!=Conflict::ReusedOwnedOwner&&item.first!=Conflict::ReferenceAlias;const bool diagnosis=preflightRequired?probe.issue.find("RESOURCE_CONFLICT")!=std::string::npos:item.first==Conflict::ReferenceAlias?probe.issue.find("RESOURCE_REFERENCE_BINDING_MISMATCH")!=std::string::npos:(probe.issue.find("OWNER")!=std::string::npos||probe.issue.find("RESOURCE_CONFLICT")!=std::string::npos);const bool accepted=diagnosis&&probe.noResult&&probe.destroyedAll&&probe.workingRestored&&(!preflightRequired||probe.preflightUnchanged)&&ambientMonitor.changes==0&&sourceMonitor.changes==0;expect(std::string(item.second)+"OwnedConflictRejected",accepted,probe.issue+"; created="+std::to_string(probe.created)+" destroyed="+std::to_string(probe.destroyed)+" preflightUnchanged="+(probe.preflightUnchanged?"true":"false"));evidence->capability(object({{"ownedConflict",quote(std::string(item.second))},{"noResult",probe.noResult?"true":"false"},{"destroyedAll",probe.destroyedAll?"true":"false"},{"bindings",quote(probe.bindings)}}));}
++#endif
++                {Open<AcDbHatch> h(batch.roots()[0],AcDb::kForWrite);ok(h->setColorIndex(1),"mutation");}auto noCopy=batch.cloneIntoNewOwnedDb();expect("AlteredTilesNoOwnedOutput",!batch.intact()&&!noCopy.canCommit()&&!noCopy.value,"changed immutable set grants no owned export");
++            }
+         }
+         auto rejected=[&](const std::string& name,const std::string& diagnostic,const MaterialPlan& p,const MaterialPreparationOptions& o,const MaterialTileLimits& limits){auto result=prepareMaterialTiles(p,{seed},o,limits);expect(name,!result.value&&!result.canCommit()&&!result.issues.empty()&&result.issues.front().message.find(diagnostic)!=std::string::npos,result.issues.empty()?"missing diagnosis":result.issues.front().message);};
+         auto invalid=plan;invalid.regions[0].geometry.outer.vertices[2].x-=1;rejected("NonRectangularRejected","NONRECTANGULAR",invalid,options,{});invalid=plan;invalid.regions[0].geometry.holes.push_back(invalid.regions[0].geometry.holes[0]);rejected("IntersectingHolesRejected","INTERSECTING",invalid,options,{});invalid=plan;invalid.regions[0].areaSquareMm=std::numeric_limits<double>::infinity();rejected("InfiniteParentAreaRejected","PARENT_MATERIAL_AREA",invalid,options,{});invalid=plan;invalid.regions[0].geometry.outer.closed=false;rejected("OpenRegionRejected","OPEN_MATERIAL_RING",invalid,options,{});auto missing=options;missing.placements[0].phaseConfirmationSource.clear();rejected("MissingPhaseRejected","TARGET_PLACEMENT_REQUIRED",plan,missing,{});missing=options;missing.placements[0].targetPaperScale=0;rejected("MissingScaleRejected","TARGET_PLACEMENT_REQUIRED",plan,missing,{});rejected("BudgetFailureNoPartial","BUDGET",plan,options,{1,0,1});
+diff --git "a/D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-192749-164-resource-path-mixed-undo-diagnostic-34c407a8\\build_material_tiles.ps1" "b/D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-195042-679-owned-only-binding-api-contract-freeze-9393a7a2\\build_material_tiles.ps1"
+index e5ebede..22e90cb 100644
+--- "a/D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-192749-164-resource-path-mixed-undo-diagnostic-34c407a8\\build_material_tiles.ps1"
++++ "b/D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-195042-679-owned-only-binding-api-contract-freeze-9393a7a2\\build_material_tiles.ps1"
+@@ -8,7 +8,7 @@ $null = New-Item -ItemType Directory -Path $sourceRoot
+ $receipt = [ordered]@{ contract='bce.material-tiles-build.v1'; label=$Label; startedUtc=[DateTime]::UtcNow.ToString('o'); compiledSourcesDirectory=$sourceRoot; sourceFiles=[ordered]@{}; inputOrigins=@(); binary=$null; binarySHA256=$null; log=(Join-Path $buildRoot 'build.log'); exitCode=1; nativeExecuted=$false;toolchain='AutoCAD2020 SDK23.1 / v141 14.16.27023 / x64 / C++17' }
+ $exitResult = 1
+ try {
+-    $inputs = @('src/ElevationModel.h','src/ElevationModel.cpp','src/RuleModel.h','src/Recognition.h','src/MaterialRules.h','src/MaterialRules.cpp','src/NativeMaterials.h','src/NativeMaterials.cpp','tests/native/NativeEvidence.h','tests/native/NativeEvidence.cpp','src/NativeMaterialTiles.h','src/NativeMaterialTiles.cpp','tests/native/material-tiles/MaterialTileDriver.cpp','tests/native/material-tiles/MaterialTileFixtures.h','tests/native/material-tiles/ElevationMaterialTileCases.vcxproj')
++    $inputs = @('src/ElevationModel.h','src/ElevationModel.cpp','src/RuleModel.h','src/Recognition.h','src/MaterialRules.h','src/MaterialRules.cpp','src/NativeMaterials.h','src/NativeMaterials.cpp','tests/native/NativeEvidence.h','tests/native/NativeEvidence.cpp','src/NativeMaterialTiles.h','src/NativeMaterialTiles.cpp','tests/native/material-tiles/MaterialTileDriver.cpp','tests/native/material-tiles/MaterialTileFixtures.h','tests/native/material-tiles/OwnedApiCompileCheck.cpp','tests/native/material-tiles/ElevationMaterialTileCases.vcxproj')
+     $m1Root = Join-Path $projectRoot 'build/m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee'
+     $m1ReceiptPath = Join-Path $m1Root 'receipt.json'
+     $m1Sha = 'A898B95C981FD852953F8500FCBFC244201C022A102CEC28E0D69A511B587BE6'
+@@ -33,7 +33,11 @@ try {
+     $vcvars = 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat'
+     $msbuild = 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe'
+     if (!(Test-Path -LiteralPath $vcvars) -or !(Test-Path -LiteralPath $msbuild)) { throw 'v141 build tools missing' }
+-    $command = '@echo off' + "`r`n" + 'call "' + $vcvars + '" -vcvars_ver=14.16' + "`r`n" + 'if errorlevel 1 exit /b %errorlevel%' + "`r`n" + '"' + $msbuild + '" ElevationMaterialTileCases.vcxproj /t:Rebuild /p:Configuration=Release /p:Platform=x64 /p:VCToolsVersion=14.16.27023 /m:1 /nologo /verbosity:normal' + "`r`n" + 'exit /b %errorlevel%' + "`r`n"
++    $command = '@echo off' + "`r`n" + 'call "' + $vcvars + '" -vcvars_ver=14.16' + "`r`n" + 'if errorlevel 1 exit /b %errorlevel%' + "`r`n" + '"' + $msbuild + '" ElevationMaterialTileCases.vcxproj /t:Rebuild /p:Configuration=Release /p:Platform=x64 /p:VCToolsVersion=14.16.27023 /m:1 /nologo /verbosity:normal' + "`r`n" + 'if errorlevel 1 exit /b %errorlevel%' + "`r`n"
++    # Separate compile-only checks deliberately omit BCE_MATERIAL_TILE_DIAGNOSTICS.
++    $clOptions = 'cl /nologo /c /std:c++17 /EHsc /MD /W4 /WX /sdl /permissive- /utf-8 /wd4828 /DWIN32 /D_WINDOWS /D_USRDLL /DUNICODE /D_UNICODE /I"C:\Autodesk\ObjectARX_for_AutoCAD_2020_Win_64_bit\inc" /I"C:\Autodesk\ObjectARX_for_AutoCAD_2020_Win_64_bit\inc-x64" '
++    $command += $clOptions + 'NativeMaterialTiles.cpp /Fo"..\obj\NativeMaterialTiles.product.obj"' + "`r`n" + 'if errorlevel 1 exit /b %errorlevel%' + "`r`n"
++    $command += $clOptions + 'OwnedApiCompileCheck.cpp /Fo"..\obj\OwnedApiCompileCheck.obj"' + "`r`n" + 'exit /b %errorlevel%' + "`r`n"
+     Set-Content -LiteralPath (Join-Path $buildRoot 'build-command.cmd') -Value $command -Encoding ascii
+     $receipt.commandFile = Join-Path $buildRoot 'build-command.cmd'
+     $receipt.commandSHA256 = (Get-FileHash -LiteralPath $receipt.commandFile).Hash
+@@ -43,6 +47,9 @@ try {
+     if ($exitResult -eq 0) {
+         $receipt.binary = Join-Path $buildRoot 'out/ElevationMaterialTileCases.arx'
+         $receipt.binarySHA256 = (Get-FileHash -LiteralPath $receipt.binary -Algorithm SHA256).Hash
++        $receipt.offlineOwnedContract = [ordered]@{diagnosticsDefined=$false;hostExecuted=$false;productObject=(Join-Path $buildRoot 'obj/NativeMaterialTiles.product.obj');apiObject=(Join-Path $buildRoot 'obj/OwnedApiCompileCheck.obj')}
++        $receipt.offlineOwnedContract.productObjectSHA256 = (Get-FileHash -LiteralPath $receipt.offlineOwnedContract.productObject).Hash
++        $receipt.offlineOwnedContract.apiObjectSHA256 = (Get-FileHash -LiteralPath $receipt.offlineOwnedContract.apiObject).Hash
+     }
+ } catch {
+     $receipt.error = $_.Exception.Message
+--- /dev/null
++++ tests/native/material-tiles/OwnedApiCompileCheck.cpp
+@@ -0,0 +1,17 @@
++#include "NativeMaterialTiles.h"
++#include <type_traits>
++#include <utility>
++
++template<class T,class=void> struct BorrowedClone : std::false_type {};
++template<class T> struct BorrowedClone<T,std::void_t<decltype(
++    std::declval<const T&>().cloneToEmpty(std::declval<AcDbDatabase&>()))>> : std::true_type {};
++template<class T,class=void> struct SuppliedExportTarget : std::false_type {};
++template<class T> struct SuppliedExportTarget<T,std::void_t<decltype(
++    std::declval<const T&>().cloneIntoNewOwnedDb(std::declval<AcDbDatabase&>()))>> : std::true_type {};
++
++static_assert(!BorrowedClone<bce::PreparedMaterialTiles>::value,"borrowed writer must not be exposed");
++static_assert(!SuppliedExportTarget<bce::PreparedMaterialTiles>::value,"owned export cannot accept any external database");
++static_assert(!std::is_copy_constructible<bce::OwnedMaterialDatabase>::value,"database ownership cannot be copied");
++static_assert(std::is_move_constructible<bce::OwnedMaterialDatabase>::value,"database ownership must be transferable");
++using OwnedExportSignature=bce::Result<bce::OwnedMaterialDatabase>(bce::PreparedMaterialTiles::*)()const;
++static_assert(std::is_same<decltype(&bce::PreparedMaterialTiles::cloneIntoNewOwnedDb),OwnedExportSignature>::value,"exact no-target API contract");

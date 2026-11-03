@@ -1,0 +1,27 @@
+{
+  "recorded": "2026-11-03T11:09:38.729245",
+  "output": "D:\\Codex\\建筑施工图自动化\\阶段2\\交付\\百塘村邹总_标注深化_20261103\\百塘村邹总_三层平面_标注深化确认稿_v1.dwg",
+  "SHA256": "83B61C3ED6E57C915C7EC302E73CEAFB0D48CA98F8F1125088AB9AFAE440DC38",
+  "sourceOriginalSHA256": "0DC6A390DDB022241F69698D5FC18FDEEFAC6DA1303893CAE32BF1D23661E205",
+  "qa": "D:\\Codex\\建筑施工图自动化\\阶段2\\项目\\百塘村邹总_20261103\\qa-v185.json",
+  "nativeReadback": "阶段1/runs/stage2-inspect-number-20261103-110745-043745-btfinal/product-result.json",
+  "visualReviewed": [
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261103-110641\\preview-final-1\\preview.png",
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261103-110641\\preview-final-2\\preview.png",
+    "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261103-110641\\preview-final-3\\preview.png"
+  ],
+  "nativeDimensionChains": 59,
+  "visibleNativeDimensionChains": 56,
+  "nativeAxisSets": 40,
+  "nativeNumberedOpenings": 43,
+  "roomAreaLabels": 20,
+  "floorAreas": [
+    181.55,
+    180.3,
+    180.24
+  ],
+  "runtimePluginChanged": false,
+  "COMUsed": false,
+  "ComputerUseUsed": false,
+  "deliveredPDF": false
+}

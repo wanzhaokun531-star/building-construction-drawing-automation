@@ -1,0 +1,334 @@
+{
+  "status": "DONE_WITH_CONCERNS",
+  "caseName": "NativeGsTextFootprint",
+  "candidateReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-121817-090-idle-command-capture-v17-frozen-167b5fda\\receipt.json",
+  "candidateReceiptSHA256": "1FCA912E7C12BBBD1E6A94B3047C43BBF5D85B5472001995D33A1E5898487B2D",
+  "binary": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-121817-090-idle-command-capture-v17-frozen-167b5fda\\out\\NativeGsTextFootprint.arx",
+  "binarySHA256": "776CE5E23883D73A484BC8C20D3A58E6273C40209DB9E4D9EA2ED035877E4B54",
+  "sourceFiles": {
+    "tests/native/text-footprint-gs/NativeGsTextFootprint.cpp": "B21EC93D28AA2A0C943092FB08A2BDF40DD74B45328227FF5DE72298C1B2A022",
+    "tests/native/text-footprint-gs/NativeGsTextFootprint.vcxproj": "0AA3DA1B8BE07AE12B708BF6859951FD1FB5C1BD0DC146037EAEC45259CA744E",
+    "tests/native/text-footprint-gs/README.md": "D0A6BB404293DCCBD0EF16B0CBD065BD306626B9BA69938680BAFDA8CDDF144D",
+    "tools/build_text_footprint_gs.ps1": "876D3908847BAB40CC4627545C959F49481157899D04EE8AE5ED12BADC8653C3",
+    "tools/verify_text_footprint_gs.py": "73F4B0957981C6B5954215D7BEBD85ED481E1F5199DF628156DE141CDB36BB42"
+  },
+  "sourceDiff": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\candidate-v17-new-files.diff",
+  "sourceDiffSHA256": "C53ED85B9168D52792A068EE7F62A42E715C06981B101B21189AC4491A91623E",
+  "core": {
+    "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\TextOccupancy.cpp",
+    "sha256": "28D106F22219C8CCD6C0FBC9A6C16EC48296177F6DD0A3D1252C3D9ECF5F3520",
+    "reviewedN9bIndex": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\text-occupancy\\evidence\\fix-round1\\index.json"
+  },
+  "verifierSelfTest": {
+    "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\verifier-self-test-v1.json",
+    "sha256": "7E0E320F91CEEA0DB1D1B9FC48D0340E583EB4F85F0FD745FAC8AACF9479DC84",
+    "scope": "offline verifier only; not native evidence"
+  },
+  "buildHistory": [
+    {
+      "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-103718-839-api-compile-v1-5ba40f36\\receipt.json",
+      "sha256": "3103ABA9353C007F85B344A66A3648B1434C51B898B963E9BCF3ED948587AB8E",
+      "exitCode": 1
+    },
+    {
+      "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-103911-800-api-compile-v2-a15a7c14\\receipt.json",
+      "sha256": "2DD71F702AB0B31C8D0AA6CB0D543DE9E7BB959D26505DEB3A3FD0A8E01C2C8B",
+      "exitCode": 0
+    },
+    {
+      "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-104030-498-static-audit-v3-fbc6856b\\receipt.json",
+      "sha256": "04555672FB7D8942E2BCFB8CB9F38DA4F87B61BAA2AD108A6D871FD7CDE67D9C",
+      "exitCode": 1
+    },
+    {
+      "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-104130-159-candidate-v4-f385f535\\receipt.json",
+      "sha256": "FB5ACCBC11E5350589C0ACB57D7F7865164D9B4A74102CA8C4B402AD00387629",
+      "exitCode": 0
+    },
+    {
+      "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-104445-736-final-candidate-v5-4fa5e91c\\receipt.json",
+      "sha256": "DB9A040FB40E3980346C177CEFE6842EE3A8A87121B729BD748D367CF7761516",
+      "exitCode": 0
+    },
+    {
+      "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-105044-620-kernel-terminal-v6-28913a9c\\receipt.json",
+      "sha256": "87E649E096EC1A8CE7578F20D96659206449ED662D0DEDA5C72C9D53468BE966",
+      "exitCode": 0
+    },
+    {
+      "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-105709-050-cleanup-call-diag-v7-ef882948\\receipt.json",
+      "sha256": "5C29DCADFCA69AFD0DCE1AF353811E6C668FD4241E1A22809291E4D24F13B071",
+      "exitCode": 0
+    },
+    {
+      "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-110422-203-kernel-view-pair-v8-f3377f2e\\receipt.json",
+      "sha256": "E1AC24D474BDF539AF2B077EB62F94ADA19A623B25040E5F404975F396374893",
+      "exitCode": 0
+    },
+    {
+      "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-111027-709-custom-xy-contract-v9-bb9a3cbc\\receipt.json",
+      "sha256": "AC2F8F06D254D26352437F05137BAB07DA55A540DB4C3E088F624147A253AC2D",
+      "exitCode": 0
+    },
+    {
+      "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-111714-486-staged-style-readback-v10-0fd62254\\receipt.json",
+      "sha256": "750D8742F5D76B9693EF097F36EF7FE5AE154611EF46F506FF1303961BC7D8E5",
+      "exitCode": 0
+    },
+    {
+      "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-111822-416-staged-default-readback-v10-c5c07340\\receipt.json",
+      "sha256": "BACEFFD8DDADFC074F2894645D66567A1E7D49379344E5CC87DA6E7F0A259A55",
+      "exitCode": 0
+    },
+    {
+      "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-112754-611-owned-style-id-v11-7d3136a0\\receipt.json",
+      "sha256": "D9C3BB8DE23530455C18103D8624CC8DFE6BE8A07F882AADA861A2FE0E30E6A1",
+      "exitCode": 0
+    },
+    {
+      "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-113908-799-owned-btr-root-v12-6f2db910\\receipt.json",
+      "sha256": "FD44EE2496CF0DA869E4E3DA408A73CDAD610B9FB967BD0850538FA62AD1A596",
+      "exitCode": 0
+    },
+    {
+      "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-114404-987-direct-noninteractive-view-v13-2e9ead48\\receipt.json",
+      "sha256": "EF457AE92D9E162FCA8945AF1B1AEF086738FC479B184F8718272C0163330742",
+      "exitCode": 0
+    },
+    {
+      "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-114859-474-kernel-device-pair-v14-9b300c9e\\receipt.json",
+      "sha256": "BEE228F56F80B15EE9BF92CD96195DDD7917CDAE975C594F9E1D014614F69369",
+      "exitCode": 0
+    },
+    {
+      "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-115300-775-owned-software-device-v15-e0a4509c\\receipt.json",
+      "sha256": "F3EE04FDDA4BFD68A3D6F9CDACAB356ACE0D641E8BD4CF466E36F1465143C986",
+      "exitCode": 0
+    },
+    {
+      "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-120241-208-nonpersistent-positive-control-v16-d8c37d47\\receipt.json",
+      "sha256": "A0BA45E244C77AC7BFFA3A454434B412DEC95CD90BB0BD8F6C5E9B67669C31B3",
+      "exitCode": 0
+    },
+    {
+      "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-120334-608-nonpersistent-callback-boundary-v16-a5599f21\\receipt.json",
+      "sha256": "D1B3EBC9D3613E705344837DCE28B8DDAA3CA5650C208FDF5A6F5F082CA8DF00",
+      "exitCode": 0
+    },
+    {
+      "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-121621-744-idle-command-capture-v17-c93c0ef2\\receipt.json",
+      "sha256": "588FEEA1694FC7527FEBC21259D24EAF4049D6098588423F6A52F70B4CB81272",
+      "exitCode": 1
+    },
+    {
+      "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-121655-170-idle-command-capture-v17-final-c3bf927a\\receipt.json",
+      "sha256": "F465A869AA302CC0062BB818B7AE82FC67EDB979B665D9912A376154297AB91D",
+      "exitCode": 0
+    },
+    {
+      "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-121817-090-idle-command-capture-v17-frozen-167b5fda\\receipt.json",
+      "sha256": "1FCA912E7C12BBBD1E6A94B3047C43BBF5D85B5472001995D33A1E5898487B2D",
+      "exitCode": 0
+    }
+  ],
+  "nativeRun": {
+    "candidate": "v17",
+    "status": "closed failed after proven one-shot idle capture; main and nonpersistent no traversal/RGB",
+    "evidenceIndex": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v17-idle-capture-zero-traversal\\index.json",
+    "captureConnected": false
+  },
+  "authorStartedOrControlledCAD": false,
+  "candidateV5Change": "Only aggregate cleanupComplete across primary and lifecycle sessions; no API/mapping change.",
+  "controllerDispatch": {
+    "v4": "controller read-only preflight only; no prepare, launch, nonce, stage or host",
+    "v5": "root verified frozen inputs/receipt/binary and dispatched controller once with fresh nonce; results pending"
+  },
+  "v6Scope": "single fixed k3DDrawing + own k3DWireframe readback; explicit ambient applicability; terminal Evidence release preserving first failure. No other route/matrix change.",
+  "nativeV6": {
+    "status": "fatal after actualType10 readback and C++ type assertion; exact native call unknown",
+    "evidenceIndex": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v6-fatal\\index.json",
+    "lifecycle1": "faultReached true, cleanup true, ambient DBMOD1->1/no write notifications",
+    "lifecycle2": "no result; final trace ownedViewVisualStyle requestedType5 actualType10",
+    "main": "not entered, trace empty, native-case uncommitted skeleton"
+  },
+  "v7Scope": "Only immediately flushed before/after cleanup call checkpoints and caught C++ error message; API, order, strict type assertion and algorithm unchanged.",
+  "nativeV7": {
+    "status": "fatal in manager.destroyView(view), not drawing",
+    "evidenceIndex": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v7-destroyview-fatal\\index.json",
+    "lifecycle1": "passed",
+    "lifecycle2": "C++ type assertion observed; eraseAll/marker close completed; destroyView.before without after",
+    "nativeReport": "uncommitted skeleton"
+  },
+  "v8Scope": "Complete kernel.createView/device.add -> view.eraseAll/device.erase/kernel.deleteView pairing; explicit viewAttached; 16 public style trait+operation comparisons with type metadata retained; add uninitialized view-attached cleanup regression. Original fault controls and text matrix unchanged.",
+  "nativeV8": {
+    "status": "style trait differences rejected, no fatal",
+    "evidenceIndex": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v8-style-differences\\index.json",
+    "lifecycle1": "passed, released",
+    "lifecycle3": "new uninitialized attached-view fault passed, released",
+    "lifecycle2": "not faultReached, style traits refused, cleanup succeeded",
+    "terminal": "closed, original error preserved; main ambient not observed/null"
+  },
+  "v9Scope": "Explicit finite XY custom value style; strict active trait+operation readback, drawable-color edges/no modifiers, faces invisible; three inactive face property differences recorded as inapplicable; all 16 raw properties and differences retained. No factory/matrix/calibration change.",
+  "nativeV9": {
+    "status": "closed failed, four active style trait/operation differences remain",
+    "evidenceIndex": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v9-custom-style-differences\\index.json",
+    "activeDifferences": [
+      "edgeStyles5/set->4/enable",
+      "edgeModifiers0->8",
+      "viewportTransparency false->true",
+      "lightingEnabled false->true"
+    ],
+    "main": "not entered, frames empty"
+  },
+  "v10Scope": "Same custom setter/values, one staged readback diagnostic A immediate/B size+camera/C empty update. C strict gate before original control2/text; A/B not passing evidence. No renderer/shared settings or matrix changes.",
+  "v10DefaultSnapshot": "One separate default AcGiVisualStyle snapshot of all 16 traits/operations before any getter; no sentinels/output mutation.",
+  "nativeV10": {
+    "status": "closed failed, A/B/C all fields+operations identical",
+    "evidenceIndex": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v10-staged-readback\\index.json",
+    "getter": "default->A changes 6 fields; not an unchanged output object",
+    "timing": "empty update did not change active differences; do not repeat timing"
+  },
+  "v11Scope": "Only owned SideDB persistent style ObjectId route, after marker/model added per 2020 contract. Closed/reopened DB copyTo strict all 16 raw properties. ID rebind after frame erase/readd. If active mismatch: exactly one reachable lifecycle2 diagnosticOnly nontext WD/raw RGB attempt; qualification false and resource fault not passed. No A/B/C loop.",
+  "nativeV11": {
+    "status": "closed failed, diagnostic reached but no WorldDraw/RGB",
+    "evidenceIndex": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v11-id-zero-callbacks\\index.json",
+    "style": "persistent source16/16 exact and ID/db exact; value getter false means unknown, not adopted default properties",
+    "root": "direct point leaf was previous GS root, does not prove leaf unsupported"
+  },
+  "v12Scope": "Owned modelspace BTR sole root (one marker), exact point overrule. Bounded applicability/attributes/viewportDraw observers preserve flags/base behavior; read-only visible/valid/device/model state. False value getter is unavailable/null, not a source/ID failure; available contradicting value still rejected. Persistent source/ID checked each frame; real calibration/context/pixels remain strict.",
+  "nativeV12": {
+    "status": "closed failed, three resource faults passed; main zero traversal",
+    "evidenceIndex": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v12-btr-zero-traversal\\index.json",
+    "state": "visible=true, point in view=true, viewport[0,0,1023,767], device/model exact; view/device valid=false before/after"
+  },
+  "v13Scope": "Keep one ordinary device.update, record; require observed noninteractive state then one ordinary owned view.update, record. Remove noninteractive-inapplicable flush. No Future Use SyncBehavior overload, palette, show, model/renderer/shared settings changes.",
+  "nativeV13": {
+    "status": "closed failed, direct noninteractive view update still zero traversal",
+    "evidenceIndex": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v13-direct-view-zero-traversal\\index.json",
+    "interactive": "false",
+    "ambient": "1->1, no write events, cleanup true"
+  },
+  "v14Scope": "Only same-kernel createOffScreenDevice/deleteDevice pair replaces manager device wrapper; exact device kernel checked, original renderer getter recorded. No renderer setter/model/update/parameter changes.",
+  "nativeV14": {
+    "status": "closed failed, device factory did not solve zero traversal",
+    "evidenceIndex": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v14-kernel-device-default-zero\\index.json",
+    "rendererOriginal": "kDefault (0)",
+    "deviceKernelMatches": true
+  },
+  "v15Scope": "One owned device setDeviceRenderer(kSoftware) before any view; strict original/requested/actual getter record. Software identity explicit. No global GS/config/hardware, enum loop, fallback/FullRender/model/view/update/parameter change.",
+  "nativeV15": {
+    "status": "closed failed before primary update at renderer readback, not zero callbacks",
+    "evidenceIndex": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v15-software-not-adopted\\index.json",
+    "requestedSoftwareAdopted": false,
+    "main": "not entered"
+  },
+  "v16Scope": "Remove software request, restore default v14 device/model; only after main specific zero-WD/no frames and complete protected cleanup run one independent nonpersistent PrimitiveRoot diagnostic at 1024. No point overrule/text/fake context/manual WorldDraw; GS callback required for RGB. Root alive through view/model removal. Diagnostic resources included in terminal/unload; original main failed/qualification false preserved.",
+  "captureConnected": false,
+  "qualification": false,
+  "nativeV5": {
+    "candidate": "v5",
+    "status": "failed before model/device/view/WorldDraw; k2DDrawing acquisition null",
+    "evidenceIndex": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v5-failure\\index.json",
+    "mainAmbient": "not observed; original false/0->1 invalid comparison",
+    "terminalReport": "original stale error ambient identities changed masked primary cause; file locked until controller closure"
+  },
+  "nativeV16": {
+    "status": "DONE_WITH_CONCERNS",
+    "captureConnected": false,
+    "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-120532-36fd1d3d",
+    "pid": 18476,
+    "controllerClosure": "standard watch exact stop70/4 retired/6 preserved/owned0, not normal QUIT",
+    "main": "failed: GS produced no real owned WorldDraw callback; attributes/applicability/viewport also zero; no RGB",
+    "nonpersistentControl": "diagnosticOnly=true, qualification=false, attributes/WorldDraw/viewport zero; no RGB; original main failure preserved",
+    "protection": "main and independent diagnostic cleanup true, ambient DBMOD1->1, all write notifications0",
+    "moduleInventory": "373 loaded modules; inventory is not active driver evidence and does not establish null15 or another module as cause",
+    "qualification": false,
+    "glyphComplete": false,
+    "capabilityUpgradeAllowed": false
+  },
+  "nextScope": "Source remains frozen at v17. No further parameter candidate/CAD; independent actual graphics kernel working-chain investigation is required.",
+  "v17Scope": "One idle hook dispatch: BCE_TEST_RUN only entry record/prepare, CMDACTIVE0+CMDNAMES empty+quiescent+inputPending0 and pinned identity queue one BCE_GS_CAPTURE. Capture validates no script/pending input/document context and removes hook before unchanged v16 body. Dispatch errors readable, no fake native report if capture absent; shared bridge/watch unchanged.",
+  "v17GsBodyIdentity": {
+    "baselineV16Receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-120334-608-nonpersistent-callback-boundary-v16-a5599f21\\receipt.json",
+    "comparison": "GS run function body exact UTF-8 text equality after function rename; no GS body change",
+    "bodySHA256": "3E92F05386829B8ED532CCA46A2036EDA0C74E63EDA75BB9C0DEE927D4D46589",
+    "equal": true
+  },
+  "nativeV17": {
+    "status": "DONE_WITH_CONCERNS",
+    "captureConnected": false,
+    "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-122027-e03879b7",
+    "pid": 32760,
+    "controllerClosure": "standard watch exact stop70/4 retired/6 preserved/owned0, not normal QUIT",
+    "dispatch": "real entry/idle/capture succeeded once; entryCalls2/captureCalls1/queueStatus0/hook removed; GS core returned but native result failed",
+    "threeSnapshots": {
+      "entry": {
+        "pid": 32760,
+        "thread": 39160,
+        "cmdActive": 5,
+        "scriptBitSet": true,
+        "cmdNames": "BCE_TEST_RUN",
+        "inputPending": 0,
+        "quiescent": false,
+        "applicationContext": false,
+        "current": 2125645732064,
+        "active": 2125645732064,
+        "currentDatabase": 2125729545600,
+        "activeDatabase": 2125729545600,
+        "workingDatabase": 2125729545600
+      },
+      "idle-ready": {
+        "pid": 32760,
+        "thread": 39160,
+        "cmdActive": 0,
+        "scriptBitSet": false,
+        "cmdNames": "",
+        "inputPending": 0,
+        "quiescent": true,
+        "applicationContext": true,
+        "current": 2125645732064,
+        "active": 2125645732064,
+        "currentDatabase": 2125729545600,
+        "activeDatabase": 2125729545600,
+        "workingDatabase": 2125729545600
+      },
+      "capture": {
+        "pid": 32760,
+        "thread": 39160,
+        "cmdActive": 1,
+        "scriptBitSet": false,
+        "cmdNames": "BCE_GS_CAPTURE",
+        "inputPending": 0,
+        "quiescent": false,
+        "applicationContext": false,
+        "current": 2125645732064,
+        "active": 2125645732064,
+        "currentDatabase": 2125729545600,
+        "activeDatabase": 2125729545600,
+        "workingDatabase": 2125729545600
+      }
+    },
+    "dispatchFinal": {
+      "contract": "bce.native-gs-dispatch.v1",
+      "event": "gs-core-after",
+      "phase": "capture-finished",
+      "nonce": "e03879b7064446868b1e035072ce0ae4",
+      "tickMs": 664133000,
+      "entryCalls": 2,
+      "captureCalls": 1,
+      "hookAttached": false,
+      "idleReady": true,
+      "queued": true,
+      "queueAccepted": true,
+      "queueStatus": 0,
+      "captureStarted": true,
+      "captureFinished": true,
+      "gsCoreCompleted": true,
+      "error": "",
+      "observed": null
+    },
+    "native": "main and independent nonpersistent control zero attributes/WorldDraw/viewportDraw, raw RGB null; original failure and qualification=false",
+    "protection": "cleanup true, main and diagnostic ambient DBMOD1->1/no write notifications",
+    "interpretation": "specific SCRIPT-active execution condition excluded in this run; GS root cause remains unknown"
+  }
+}

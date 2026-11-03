@@ -1,0 +1,44 @@
+[
+  {
+    "floor": 1,
+    "functionalBathroomArea": 5.8998051584614535,
+    "transferredDryArea": 2.3410594924740065,
+    "internalOpeningGroundArea": 0.096,
+    "domain": [
+      4920.468697689989,
+      9139.919651824574,
+      6480.100435219282,
+      12981.188483428188
+    ],
+    "partitionWall": "97",
+    "partitionDoor": "E29"
+  },
+  {
+    "floor": 2,
+    "functionalBathroomArea": 5.903856629264378,
+    "transferredDryArea": 2.3426937193736155,
+    "internalOpeningGroundArea": 0.096,
+    "domain": [
+      47808.06494810847,
+      9139.919651824574,
+      49368.78473384667,
+      12981.188483428188
+    ],
+    "partitionWall": "BE",
+    "partitionDoor": "1357"
+  },
+  {
+    "floor": 3,
+    "functionalBathroomArea": 5.897622931217575,
+    "transferredDryArea": 2.3401700054939902,
+    "internalOpeningGroundArea": 0.096,
+    "domain": [
+      90954.9801440832,
+      9141.935985738288,
+      92514.31068801625,
+      12982.521759796866
+    ],
+    "partitionWall": "E5",
+    "partitionDoor": "18E1"
+  }
+]

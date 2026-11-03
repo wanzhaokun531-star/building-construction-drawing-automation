@@ -1,0 +1,304 @@
+{
+  "version": "v195",
+  "moduleSHA256": "E4C4966C223B22A3633DD646F16CE3733B28ED5E585872EE478918FD658B3FB6",
+  "three": {
+    "rootsCompared": 8525,
+    "nativeRoomNames": 34,
+    "nativeWalls": 126,
+    "openingFieldsCompared": 47,
+    "numbered": 44,
+    "visibleChains": 56,
+    "visibleSegments": 232,
+    "areas": [
+      {
+        "sourceBody": "3FBB",
+        "text": "3D4F",
+        "areaM2": 89.65769999999999
+      },
+      {
+        "sourceBody": "3FBD",
+        "text": "3D51",
+        "areaM2": 7.517644
+      },
+      {
+        "sourceBody": "3FBF",
+        "text": "3D53",
+        "areaM2": 5.8992
+      },
+      {
+        "sourceBody": "3FC1",
+        "text": "3D55",
+        "areaM2": 22.689
+      },
+      {
+        "sourceBody": "3FC3",
+        "text": "3D57",
+        "areaM2": 3.92964
+      },
+      {
+        "sourceBody": "3FC5",
+        "text": "3D59",
+        "areaM2": 15.2064
+      },
+      {
+        "sourceBody": "3FC7",
+        "text": "3D5B",
+        "areaM2": 181.516
+      },
+      {
+        "sourceBody": "3FCA",
+        "text": "3D5E",
+        "areaM2": 5.8992
+      },
+      {
+        "sourceBody": "3FCC",
+        "text": "3D60",
+        "areaM2": 7.517644
+      },
+      {
+        "sourceBody": "3FCE",
+        "text": "3D62",
+        "areaM2": 54.626101
+      },
+      {
+        "sourceBody": "3FD0",
+        "text": "3D64",
+        "areaM2": 22.68756
+      },
+      {
+        "sourceBody": "3FD2",
+        "text": "3D66",
+        "areaM2": 31.83336
+      },
+      {
+        "sourceBody": "3FD4",
+        "text": "3D68",
+        "areaM2": 15.2064
+      },
+      {
+        "sourceBody": "3FD6",
+        "text": "3D6A",
+        "areaM2": 4.11528
+      },
+      {
+        "sourceBody": "3FD8",
+        "text": "3D6C",
+        "areaM2": 180.28124
+      },
+      {
+        "sourceBody": "3FDA",
+        "text": "3D6E",
+        "areaM2": 5.8992
+      },
+      {
+        "sourceBody": "3FDC",
+        "text": "3D70",
+        "areaM2": 54.62696
+      },
+      {
+        "sourceBody": "3FDE",
+        "text": "3D72",
+        "areaM2": 22.6764
+      },
+      {
+        "sourceBody": "3FE0",
+        "text": "3D74",
+        "areaM2": 31.8288
+      },
+      {
+        "sourceBody": "3FE2",
+        "text": "3D76",
+        "areaM2": 7.517799999999999
+      },
+      {
+        "sourceBody": "3FE4",
+        "text": "3D78",
+        "areaM2": 4.12152
+      },
+      {
+        "sourceBody": "3FE6",
+        "text": "3D7A",
+        "areaM2": 15.2064
+      },
+      {
+        "sourceBody": "3FE8",
+        "text": "3D7C",
+        "areaM2": 180.268
+      }
+    ],
+    "editing": {
+      "nativeAxis": "3CC9",
+      "number21ReadAndRestoredTo1": true,
+      "independentAxisLine": "3D2C",
+      "lineStretchMm": 123,
+      "wholeDimension": "3D88",
+      "linkedBaselineMm": 120,
+      "maxMeasurementDeltaMm": 1.1368683772161603e-13,
+      "measurementToleranceMm": 1e-05,
+      "allTrialsRestored": true
+    },
+    "sourceUnchanged": true,
+    "DWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-rules-three-floor-20261103-140737\\插件生成施工图.dwg",
+    "SHA256": "CA5ED2F9640141E49D10DF0D55F759FE722E6A79428191A3B4BA95BE2153CAA7"
+  },
+  "two": [
+    {
+      "floor": 1,
+      "modelRoots": 244,
+      "removedBackgrounds": 14,
+      "allRemainingNonDimensionGripsMatch013": true,
+      "dimensionsWithUnchangedMeasures": 40,
+      "numbered": 21,
+      "areas": [
+        {
+          "text": "8591",
+          "sourceBody": "8623",
+          "areaM2": 5.961600000001006,
+          "display": "5.96m"
+        },
+        {
+          "text": "8593",
+          "sourceBody": "8625",
+          "areaM2": 15.5232,
+          "display": "15.52m"
+        },
+        {
+          "text": "8595",
+          "sourceBody": "8627",
+          "areaM2": 12.117599999997234,
+          "display": "12.12m"
+        },
+        {
+          "text": "8597",
+          "sourceBody": "8629",
+          "areaM2": 4.305600000000727,
+          "display": "4.31m"
+        },
+        {
+          "text": "8599",
+          "sourceBody": "862B",
+          "areaM2": 69.41520000000237,
+          "display": "69.42m"
+        },
+        {
+          "text": "859B",
+          "sourceBody": "862D",
+          "areaM2": 14.13759999995798,
+          "display": "14.14m"
+        },
+        {
+          "text": "859D",
+          "sourceBody": "862F",
+          "areaM2": 15.56639999995259,
+          "display": "15.57m"
+        },
+        {
+          "text": "859F",
+          "sourceBody": "8631",
+          "areaM2": 17.884800000002492,
+          "display": "17.88m"
+        },
+        {
+          "text": "85A2",
+          "sourceBody": "8635",
+          "areaM2": 5.197600000097072,
+          "display": "5.20m"
+        },
+        {
+          "text": "85A6",
+          "sourceBody": "8639",
+          "areaM2": 189.78200000000902,
+          "display": "本层总建筑面积：189.78m"
+        }
+      ],
+      "visibleChains": 25,
+      "visibleSegments": 95,
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261103-140600\\插件生成施工图_一层.dwg",
+      "SHA256": "EEF99BC31A593C80B439994426FA332579E7EF5C685F4A787499277DC9E41543"
+    },
+    {
+      "floor": 2,
+      "modelRoots": 229,
+      "removedBackgrounds": 13,
+      "allRemainingNonDimensionGripsMatch013": true,
+      "dimensionsWithUnchangedMeasures": 28,
+      "numbered": 19,
+      "areas": [
+        {
+          "text": "8528",
+          "sourceBody": "8619",
+          "areaM2": 5.961600000001006,
+          "display": "5.96m"
+        },
+        {
+          "text": "852A",
+          "sourceBody": "861B",
+          "areaM2": 4.305600000000727,
+          "display": "4.31m"
+        },
+        {
+          "text": "852C",
+          "sourceBody": "861D",
+          "areaM2": 15.566399999923979,
+          "display": "15.57m"
+        },
+        {
+          "text": "852E",
+          "sourceBody": "861F",
+          "areaM2": 32.88240000000987,
+          "display": "32.88m"
+        },
+        {
+          "text": "8530",
+          "sourceBody": "8621",
+          "areaM2": 17.884800000004024,
+          "display": "17.88m"
+        },
+        {
+          "text": "8532",
+          "sourceBody": "8623",
+          "areaM2": 14.137599999924275,
+          "display": "14.14m"
+        },
+        {
+          "text": "8534",
+          "sourceBody": "8625",
+          "areaM2": 15.566399999922227,
+          "display": "15.57m"
+        },
+        {
+          "text": "8536",
+          "sourceBody": "8627",
+          "areaM2": 17.884800000002013,
+          "display": "17.88m"
+        },
+        {
+          "text": "8539",
+          "sourceBody": "862B",
+          "areaM2": 5.197600000097072,
+          "display": "5.20m"
+        },
+        {
+          "text": "853C",
+          "sourceBody": "862E",
+          "areaM2": 153.48560000000901,
+          "display": "本层总建筑面积：153.49m"
+        }
+      ],
+      "visibleChains": 19,
+      "visibleSegments": 66,
+      "DWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261103-140600\\插件生成施工图_二层.dwg",
+      "SHA256": "2974D006B103E4FA4FE6A9F9142D6111E833DD151470F4469BEBDB71891E38CF"
+    }
+  ],
+  "legacy": {
+    "roots": 304,
+    "chains": 24,
+    "segments": 106,
+    "captions": 27,
+    "PUB_DIMUsed": true,
+    "DWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-rules-legacy-20261103-140755\\插件生成施工图.dwg",
+    "SHA256": "096A40100E80CA3CD0D6C1BA04BED4215821A982F0833FF93376AFA122B7AFDD"
+  },
+  "passed": true
+}

@@ -1,0 +1,298 @@
+{
+  "contract": "bce.m2-review-fix1-roundtrip.v1",
+  "reviewFinding": "Single P2: pre-save vs reopened material-field baseline missing",
+  "round": 1,
+  "phase": "GREEN actual73/73; ready for original reviewer scoped P2 confirmation",
+  "nativeExecuted": true,
+  "productionCoreChanged": false,
+  "baselineReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-203730-120-verified-reference-proof-ready-43394e7c\\receipt.json",
+  "candidateReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-210156-751-review-fix1-complete-roundtrip-green-055bdf65\\receipt.json",
+  "candidateBinary": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-210156-751-review-fix1-complete-roundtrip-green-055bdf65\\out\\ElevationMaterialTileCases.arx",
+  "candidateBinarySHA256": "648B9D2857E491E45ECAECEA15BD355BD9822A420FC8202B1D97CDE2376CA72C",
+  "changedCompiledInputs": [
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\material-tiles\\MaterialTileDriver.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-210156-751-review-fix1-complete-roundtrip-green-055bdf65\\src\\MaterialTileDriver.cpp",
+      "sha256": "D2781A30E6F94CEB7213A50EA514FA0DBF594DCACA7900335ABC7C450BB8A500"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\material-tiles\\MaterialTileFixtures.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-210156-751-review-fix1-complete-roundtrip-green-055bdf65\\src\\MaterialTileFixtures.h",
+      "sha256": "C644E186690B1CB44507B06192E82A03C285AB7E03DC5F377088A036B3BC3959"
+    }
+  ],
+  "unchangedCompiledInputCount": 14,
+  "expectedNative": {
+    "total": 73,
+    "expectedOnlyFailure": null,
+    "requiredNegativeSetup": "All-root actual public color mutation read back; identical aggregates; complete baseline equality must reject",
+    "snapshotFiles": "case/material-roundtrip-fields-0..4.json",
+    "acceptance": "rootHandles equality AND complete public fields equality AND original area/line checks; no ignored fields"
+  },
+  "buildCommand": "& tools/build_material_tiles.ps1 -Label review-fix1-complete-roundtrip-green",
+  "offline": {
+    "exitCode": 0,
+    "originAndCopySHACompared": 16,
+    "mismatches": 0,
+    "binaryAndProductAndApiSHAAllMatch": true,
+    "warning": "SDK rxapi PDB LNK4099 only"
+  },
+  "bound": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\M2-full-task-review-20261102.md",
+      "sha256": "84A2E68ACF2072A1196B3933F396A5EAA953C3EAEEEBF91180216F7337E592B9"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\M2-大区域原生填充分块简报.md",
+      "sha256": "61F1B4B0BA8B91F175B888D8BE7314F81AA4A7D19671E7AE826A4E09D7F3657E"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\M2-大区域材料准备报告.md",
+      "sha256": "D7495303ECC3A631A88BF728605802A0F043418E3C449CDFFCFB996C3A1F021B"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\material-tiles\\M2-fulltask-review-index.json",
+      "sha256": "77D4275F098AA2026431B1A7644536A4C6E45E850F7A8DE1BE8886E4DDA1F5E9"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\material-tiles\\M2-review-fix1-roundtrip.diff",
+      "sha256": "9DD2F0A8AF12AD92E1EC7F601866FEC6969CBAF5A447B87F509E1D38C8F26747"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-203730-120-verified-reference-proof-ready-43394e7c\\receipt.json",
+      "sha256": "BD38B6874BE00243C9214CBD319421D3F0D8D34EDB4EBDA6147C8FA046E4511B"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-205753-374-review-fix1-roundtrip-actual-red-ready-8e1f62fc\\receipt.json",
+      "sha256": "EFB98B4A3C25937489DC619FCD412B8D3F20383824B8DF0677A003975AA227D0"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-205753-374-review-fix1-roundtrip-actual-red-ready-8e1f62fc\\build-command.cmd",
+      "sha256": "9FED7645D08D830757DF2E6B55CC1C6F17049881DE529E6BCD978AB6972B4A27"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-205753-374-review-fix1-roundtrip-actual-red-ready-8e1f62fc\\build.log",
+      "sha256": "ECE32090B6D819B15565C9FD03D4F4582D7651162A44E57F4D2FB3CD2C357829"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-af1e6b04.json",
+      "sha256": "D28F615F0A936B40510C5D64852DE07F800D4064753229A695C01A3C34F87F40"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-210156-751-review-fix1-complete-roundtrip-green-055bdf65\\receipt.json",
+      "sha256": "F30E2E013140ED65D1B0DFFE44B06E727EBCFFA6B65F7D32EEB9A24CDFC41A65"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-210156-751-review-fix1-complete-roundtrip-green-055bdf65\\build-command.cmd",
+      "sha256": "9FED7645D08D830757DF2E6B55CC1C6F17049881DE529E6BCD978AB6972B4A27"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-210156-751-review-fix1-complete-roundtrip-green-055bdf65\\build.log",
+      "sha256": "C2EEB93A80A06A094FF1EE86EECD49EB2F8DC14ADF3E8450266687B681D09C2B"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\material-tiles\\M2-review-fix1-red-to-green.diff",
+      "sha256": "79F81D2A7C91E7C9FE3989C6F7AA08684EA407AB3BD3180C7F80919D93738A76"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-d4306e4d.json",
+      "sha256": "5039C7F2BBAF95793ECF3B6B72CAF79B4A570334C4989DFD9E0C54B18264E466"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210001-d4306e4d\\case\\native-case.json",
+      "sha256": "45A2D5238E5E30A48D91F00DD00C7818700CD8F62B7CFBF6AA5C26EA6DB84916"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210001-d4306e4d\\material-roundtrip-red-observation.json",
+      "sha256": "2B5817154309FB3C2A1A4AA81C133A6E496C2385C3697837ADDC7DA69D3CDD90"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210001-d4306e4d\\case\\material-roundtrip-fields-0.json",
+      "sha256": "6CBAC53E1F18F4A95AF76A1156C70703B4910A748DB969E75756BD5F678BF9DB"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210001-d4306e4d\\case\\material-roundtrip-fields-1.json",
+      "sha256": "3698D3BC8BBE1573B1CB678DF0BDDB63DEBFF4875572BB26BA4F2F3DF6DDBCA2"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210001-d4306e4d\\case\\material-roundtrip-fields-2.json",
+      "sha256": "B975F068E3DC9B04B7BFE0EA2196D8B206132F8C27243C41DB90E290E531EFB7"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210001-d4306e4d\\case\\material-roundtrip-fields-3.json",
+      "sha256": "349D2C645592920481697CC4BC917282CE185D21FE6332C25B069C1E9D024363"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210001-d4306e4d\\case\\material-roundtrip-fields-4.json",
+      "sha256": "EB0DCF2985A8A825778368EEEB17813584A62C485352C47639C8EEE438D6C542"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-96d3d8d0.json",
+      "sha256": "4E1CCCAC041E7DEAD8FAD5ADE9A8B42A565D2071CA1CDD7417D0BA8C5D8D3ED0"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210313-96d3d8d0\\case\\native-case.json",
+      "sha256": "CBEE831ED532E08780E6C9381C7383CE8DF7CBB6748C148E1916662E51D10D56"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210313-96d3d8d0\\material-roundtrip-green-observation.json",
+      "sha256": "7743C0F6CDC6A398D386B211236ACD322126E77E9CB012FE2E1A18E037FA3323"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210313-96d3d8d0\\native-result-closure.json",
+      "sha256": "F5EF5ECF5B4CE99F7AAFE996F9DB488F705C57E05A38AF325A30A58382315587"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210313-96d3d8d0\\reader-retirement.json",
+      "sha256": "6703189505DBA5C23E6CDF43E9985FD1EAF163C3CA7B85264A72B0945A7F145F"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210313-96d3d8d0\\isolation-final.json",
+      "sha256": "B23E212F20A2A7313A19B708E1A422E0FD129718F23A6A6B86E23A65FB440C98"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210313-96d3d8d0\\case\\material-roundtrip-fields-0.json",
+      "sha256": "64FB9DDBC24242E39A7DD7999A0E78B547354FA27E0CE42496648BCE5E1220BA"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210313-96d3d8d0\\case\\material-pattern-definitions-0.json",
+      "sha256": "3C3B0CE47B5AAFF9B7308B7F28A74901349192A6C5C91F94B580AD30BD832AE5"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210313-96d3d8d0\\case\\material-tiles-0.dwg",
+      "sha256": "CCA3F0BB618C37657867F7017D2CA195AB0D3BBB4939B5A263F1736F971C087D"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210313-96d3d8d0\\case\\material-roundtrip-fields-1.json",
+      "sha256": "D0645BF3D47C6D95A3CE5EA1460DA5F33172BD14B42DF20A455BE71AE06D1E8B"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210313-96d3d8d0\\case\\material-pattern-definitions-1.json",
+      "sha256": "88EF2787F12404E55828D2AEC9BF913E8E52612BD9B6FF25255D21A85A12911D"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210313-96d3d8d0\\case\\material-tiles-1.dwg",
+      "sha256": "3BF03260C2779265F1B3F0F75F34AC4D150D9FE89597EB20FB62F78A40E35470"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210313-96d3d8d0\\case\\material-roundtrip-fields-2.json",
+      "sha256": "DFDCF37DDF5DBC476AC6D6C4D7AF95EAA1FF6C4E3994486E1D8E17742EED8A36"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210313-96d3d8d0\\case\\material-pattern-definitions-2.json",
+      "sha256": "66E9DC912415BE6FD0F92B5DEFABAA7F1B074A2707E4337D9BFA96201250AB24"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210313-96d3d8d0\\case\\material-tiles-2.dwg",
+      "sha256": "DEDE2B439DE7614BA290931EAC58FA6268BDDAC81AE9A6CAC9EC9F96252114A6"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210313-96d3d8d0\\case\\material-roundtrip-fields-3.json",
+      "sha256": "7327F45CC2E02D3258656A26B583DCF3A1572F3AD28CDA312092ACA71D28D9A0"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210313-96d3d8d0\\case\\material-pattern-definitions-3.json",
+      "sha256": "6A2CFAADEF0ADA7DA5284BDE17A1C1319158056AF6FB4B3698A3EE2035E340FF"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210313-96d3d8d0\\case\\material-tiles-3.dwg",
+      "sha256": "4704717324C4E6EEF0E7C2D16126AED8DB31E1E8F34819BF17B3320EB641F1F2"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210313-96d3d8d0\\case\\material-roundtrip-fields-4.json",
+      "sha256": "4C1F59579DC083137B400613DEDA0892F3094ACBC103E62250053147D09404FC"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210313-96d3d8d0\\case\\material-pattern-definitions-4.json",
+      "sha256": "5D968A4252604FE5A1867044D1DBBCF4B5BA3A9F77611BA4A86BE89C90602A16"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210313-96d3d8d0\\case\\material-tiles-4.dwg",
+      "sha256": "6640DC12C39D960F5A3CDEF7F83809730CD689508CF6C841AA362F3E42474879"
+    }
+  ],
+  "next": "Original reviewer scoped P2/two changed tests only; no new fulltask review",
+  "limits": [
+    "Production core and14 non-test compiled inputs remain433 SHA",
+    "Negative fixture modified only independently reopened owned memory; savedBack=false",
+    "433/af1 native Plot is historical same-production-core verification; no repeated Plot on055",
+    "Original fulltask index/diff/history not rewritten; scoped manifest binds subsequent report/test evidence",
+    "No CurrentDoc writer/complex polygon/TCH private payload or whole-plugin completion claim"
+  ],
+  "validRed": {
+    "nonce": "d4306e4d6ec5434995cd7cac71d40ab1",
+    "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210001-d4306e4d",
+    "passed": 72,
+    "total": 73,
+    "onlyFailed": "SaveReopenUniformRootColorChangeRejected",
+    "errors": [],
+    "normalDifferenceCounts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "normalFieldCounts": [
+      9088,
+      9088,
+      13616,
+      13616,
+      9088
+    ],
+    "changedRoots": 8,
+    "changedFields": 16,
+    "aggregateArea": 58200000,
+    "aggregateLines": 115873,
+    "oldAcceptance": "accepted",
+    "savedBack": false
+  },
+  "finalGreen": {
+    "nonce": "96d3d8d0f4bd4a288a68d0ba7fcb6815",
+    "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-210313-96d3d8d0",
+    "passed": 73,
+    "total": 73,
+    "errors": [],
+    "reportSHA256": "CBEE831ED532E08780E6C9381C7383CE8DF7CBB6748C148E1916662E51D10D56",
+    "normalAccepted": [
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "normalDifferenceCounts": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "normalFieldCounts": [
+      9088,
+      9088,
+      13616,
+      13616,
+      9088
+    ],
+    "rootHandlesEqual": true,
+    "negativeChangedRoots": 8,
+    "negativeChangedFields": 16,
+    "negativeAccepted": false,
+    "negativeActualReadback": true,
+    "savedBack": false,
+    "unchangedNegativeArea": 58200000,
+    "unchangedNegativeLines": 115873,
+    "original67Retained": true,
+    "typedChecks": 10,
+    "faultChecks": 4,
+    "resourceConflictChecks": 8,
+    "patternDefinitionsEach": 67,
+    "nativeExecuted": true,
+    "repeatPlot": false,
+    "historicalPlotCandidate": "43394e7c/af1e6b04 same production core",
+    "normalQuit": false,
+    "forcedTermination": true,
+    "workerExitCode": 70
+  }
+}

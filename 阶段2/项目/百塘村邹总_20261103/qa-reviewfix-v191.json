@@ -1,0 +1,39 @@
+{
+  "sourcePreserved": true,
+  "unchangedOtherRootGrips": true,
+  "wallsPreserved": 126,
+  "addedNativeWindow": "401C",
+  "doorOffsets": [
+    600,
+    1000,
+    200
+  ],
+  "wholeDimensionChains": 59,
+  "topThirdChainSegments": 16,
+  "trimmedAxes": 6,
+  "nativeRoomTexts": 34,
+  "removedVectorGlyphs": 348,
+  "noModelWipeout": true,
+  "rootCount": 8525,
+  "actualSavedPublicRoomNamesVerified": 34,
+  "actualSavedWindowProperties": {
+    "DXF名称": "TCH_OPENING",
+    "对象句柄": "401C",
+    "图层": "A-WINDOW",
+    "颜色": "随层",
+    "比例": "100",
+    "门窗类型": "窗",
+    "门窗编号": "LC0918",
+    "宽度": "900.0000",
+    "高度": "1800.0000",
+    "离地高度": "900.0000",
+    "转角": "0",
+    "洞墙面积比": "0.102"
+  },
+  "visualCheckedFloors": [
+    1,
+    2,
+    3
+  ],
+  "PUB_DIMColor": 25
+}

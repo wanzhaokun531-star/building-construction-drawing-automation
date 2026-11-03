@@ -1,0 +1,10 @@
+{
+  "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm",
+  "entry": "AcGsDevice__setDisplayUpdateSuppressed@bool.html",
+  "sha256": "6F058C7D1ABF972AB5A70FC432ED08FCA74118EF56053D325DE2A67910A8B236",
+  "description": "For Autodesk internal use only.",
+  "falseSemanticsDocumented": false,
+  "publicInitializationContract": false,
+  "attempted": false,
+  "reason": "Internal-use marking, not absence of getter; receiver membership alone does not document false semantics"
+}

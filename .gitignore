@@ -53,3 +53,14 @@
 /阶段1/bin/*.exe
 /阶段2/bin/*.exe
 
+# 2026-11-03: local dependencies, render passes and disposable test output
+**/_deps/
+/docs/规则汇编_20261103/qa/
+/插件/tests/rules014-policy/
+/阶段2/项目/百塘村邹总_20261103/obj-analyse/
+/阶段2/项目/百塘村邹总_20261103/obj-native/
+/阶段2/项目/百塘村邹总_20261103/bin/
+/阶段2/项目/百塘村邹总_20261103/help-text/
+# Published release manifests include these validation logs.
+!/插件/交付/*/验证记录/*.log
+

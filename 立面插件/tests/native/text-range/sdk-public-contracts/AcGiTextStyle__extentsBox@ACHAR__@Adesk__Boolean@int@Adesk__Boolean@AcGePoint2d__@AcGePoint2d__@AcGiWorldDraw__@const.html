@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>AcGiTextStyle::extentsBox</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+<link rel="stylesheet" type="text/css" href="default_plus.css" media="screen, projection, tv " />
+<script language=javascript src="arxref.js"></script>
+<script language=javascript src="ac_common.js"></script>
+<script language=javascript src="ac.acad_ak.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="ObjectARX_Reference_Guide.html">ObjectARX Reference Guide</a> &gt; <a href="AcGi_Classes.html">AcGi Classes</a> &gt; <a href="AcGiTextStyle.html">AcGiTextStyle Class</a> &gt; <a href="!!MEMBERTYPE_Methods_AcGiTextStyle.html">AcGiTextStyle Methods</a> &gt; <a href="AcGiTextStyle__extentsBox@ACHAR__@Adesk__Boolean@int@Adesk__Boolean@AcGePoint2d__@AcGePoint2d__@AcGiWorldDraw__@const.html">extentsBox Method</a></div>
+<div class="Element92">
+<div class="Element5">
+AcGiTextStyle::extentsBox</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<div class="Element58">
+<a name="432B2B"></a><div class="Element99">
+C++</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #871F78">virtual</span></strong> Acad::ErrorStatus <strong><span style="color: #660000">extentsBox</span></strong>(
+    <strong><span style="color: #871F78">const</span></strong> ACHAR * <strong><span style="color: #660000">pStr</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> Adesk::Boolean <strong><span style="color: #660000">penups</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> <strong><span style="color: #871F78">int</span></strong> <strong><span style="color: #660000">len</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> Adesk::Boolean <strong><span style="color: #660000">raw</span></strong>, 
+    AcGePoint2d &amp; <strong><span style="color: #660000">extMin</span></strong>, 
+    AcGePoint2d &amp; <strong><span style="color: #660000">extMax</span></strong>, 
+    AcGiWorldDraw * <strong><span style="color: #660000">ctxt</span></strong> = NULL
+) <strong><span style="color: #871F78">const</span></strong>;</pre></div></div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element252">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element240" valign="top" width="50%">
+<div class="Element241">
+Parameters&nbsp;</div></td><td class="Element244" valign="top" width="50%">
+<div class="Element245">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+pStr&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input pointer to a text string for which the extents are to be determined&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+penups&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input Boolean indicating if leading and trailing spaces are to be included&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+len&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input text string length or -1 to indicate null-terminated string&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+raw&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input Boolean indicating if the AutoCAD escape sequences are to be interpreted&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+extMin&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Output lower-left corner of text extents box&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+extMax&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Output upper-right corner of text extents box&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+ctxt&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input pointer to AcGiWorldDraw; if NULL, the AutoCAD default regen pipeline is used to calculate extents&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="4465736372697074696F6E"></a><div class="Element14">
+Description</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This function provides the means to find out the extents of the text string <span class="Element146">pStr</span> when using the <span class="Element146">AcGiTextStyle</span>.&nbsp;</p>
+<p class="Element10">
+If <span class="Element146">penups</span> is <span class="Element146">Adesk::kTrue</span>, then any leading and trailing spaces are included in the extents calculation.&nbsp;</p>
+<p class="Element10">
+A value of -1 for <span class="Element146">len</span> indicates that the string is null-terminated. Any other value is interpreted as the length of the string pointed to by <span class="Element146">pStr</span> and only that many characters are used. <span class="Element146">len</span> must not be larger than the length of the string.&nbsp;</p>
+<p class="Element10">
+If <span class="Element146">raw</span> is <span class="Element146">Adesk::kTrue</span>, then any AutoCAD escape sequences in the string (such as <span class="Element146">%%U</span>, <span class="Element146">%%D</span>, <span class="Element146">%%P</span>, and <span class="Element146">%%nnn</span>) are left as is and not interpreted.&nbsp;</p>
+<p class="Element10">
+The <span class="Element146">AcGiTextStyle::loadStyleRec()</span> method must be called on the style before this method is executed. This call loads the current style data into the graphics system so that the proper extents will be calculated.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><div class="Element15">
+Note</div>
+<p class="Element10">
+In Object DBX, you must create a valid <span class="Element146">AcGiWorldDraw</span> and pass it in to this function in the <span class="Element146">ctxt</span> argument for the extent calculation to work.&nbsp;</p>
+<p class="Element10">
+<span class="Element146">extMin</span> is set to the lower-left corner of the extents box.&nbsp;</p>
+<p class="Element10">
+<span class="Element146">extMax</span> is set to the upper-right corner of the extents box.&nbsp;</p>
+<p class="Element10">
+<strong>Note </strong><span class="Element146">extMax - extMin</span> provides the same information as is returned by the <span class="Element146">extents()</span> function.&nbsp;</p>
+<p class="Element10">
+Returns <span class="Element146">Acad::eOk</span>.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p></div>
+</div>
+<a name="4C696E6B73"></a><div class="Element14">
+Links</div>
+<div class="Element11">
+<div class="Element10">
+<a href="AcGiTextStyle.html">AcGiTextStyle</a></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<table class=FooterTable width=100%><tr valign=top>
+<td>&nbsp;</td>
+<td align=right>&nbsp;<span class="CommentsLink" onclick="doComments();" title="Click here to send a comment about this topic.">Comments?</span>&nbsp;</td>
+</tr></table>
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

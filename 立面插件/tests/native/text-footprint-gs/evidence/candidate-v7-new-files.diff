@@ -1,0 +1,523 @@
+--- /dev/null
++++ b/tests/native/text-footprint-gs/NativeGsTextFootprint.cpp
+@@ -0,0 +1,272 @@
++#include "NativeEvidence.h"
++#include "TextOccupancy.h"
++#include <aced.h>
++#include <adscodes.h>
++#include <accmd.h>
++#include <acdocman.h>
++#include <dbapserv.h>
++#include <dbents.h>
++#include <dbsymtb.h>
++#include <dbsymutl.h>
++#include <acgi.h>
++#include <acgivisualstyle.h>
++#include <drawable.h>
++#include <rxregsvc.h>
++class CView;
++#include <acgs.h>
++#include <AcGsManager.h>
++#pragma warning(push)
++#pragma warning(disable:5033) // ATIL 2020 half.h uses register; retain /W4 /WX for our code.
++#include <Image.h>
++#include <ImageContext.h>
++#include <RgbModel.h>
++#pragma warning(pop)
++#include <algorithm>
++#include <array>
++#include <cmath>
++#include <iomanip>
++#include <locale>
++#include <memory>
++#include <sstream>
++#include <stdexcept>
++
++namespace {
++using namespace bce::native;
++HMODULE moduleHandle{};
++bool running{}, completed{};
++std::string q(const char* p){return quote(std::string(p));}
++std::string num(double d){require(std::isfinite(d),"nonfinite value");std::ostringstream o;o.imbue(std::locale::classic());o<<std::setprecision(17)<<d;return o.str();}
++std::string address(const void* p){return std::to_string(reinterpret_cast<std::uintptr_t>(p));}
++std::string matrix(const AcGeMatrix3d& m){std::vector<std::string> a;for(int r=0;r<4;++r)for(int c=0;c<4;++c)a.push_back(num(m(r,c)));return array(a);}
++std::string point(bce::Point2 p){return array({num(p.x),num(p.y)});}
++std::string bounds(const bce::Bounds2& b){return array({point(b.minimum),point(b.maximum)});}
++std::string affine(const bce::TextAffine2& m){return array({num(m.a),num(m.b),num(m.tx),num(m.c),num(m.d),num(m.ty)});}
++void ok(Acad::ErrorStatus s,const char* what){require(s==Acad::eOk,std::string(what)+" status="+std::to_string(s));}
++void save(const std::wstring& path,const std::string& bytes){auto f=create_new(path);write_flushed(f.get(),bytes);}
++struct Close{void operator()(AcDbObject* p)const noexcept{if(p)p->close();}};
++template<class T>std::unique_ptr<T,Close> open(AcDbObjectId id,AcDb::OpenMode mode=AcDb::kForRead){T* p{};auto s=acdbOpenObject(p,id,mode);std::unique_ptr<T,Close> v(p);ok(s,"open owned object");require(p!=nullptr,"null object");return v;}
++struct Control{const char* id;const wchar_t* text;AcGePoint3d position;double angle{},tracking{1},oblique{};bool backward{},nested{};};
++const std::array<Control,5> controls{{
++    {"digits",L"1234567890",{25,30,0}}, {"chinese",L"中文测试",{25,30,0}},
++    {"rotated-backward",L"123ABC",{88,28,0},0.47,1,0,true},
++    {"nested-nonuniform",L"1200中文",{4,6,0},0.18,1,0,false,true},
++    {"tracking-oblique",L"12中文ABC",{25,30,0},0,1.6,0.25}
++}};
++// Independent nontext colored squares. The five positions are asymmetric and noncollinear.
++const std::array<AcGePoint3d,5> calibration{{{10.17,11.31,0},{111.23,15.47,0},{14.39,81.19,0},{107.11,78.37,0},{67.43,43.29,0}}};
++const std::array<std::array<unsigned char,3>,5> colors{{{{255,0,0}},{{0,255,0}},{{0,0,255}},{{255,0,255}},{{0,255,255}}}};
++struct AmbientWatch final:AcDbDatabaseReactor{
++    unsigned opened{},modified{},appended{},erased{},headerWrites{};
++    void objectOpenedForModify(const AcDbDatabase*,const AcDbObject*)override{++opened;}
++    void objectModified(const AcDbDatabase*,const AcDbObject*)override{++modified;}
++    void objectAppended(const AcDbDatabase*,const AcDbObject*)override{++appended;}
++    void objectErased(const AcDbDatabase*,const AcDbObject*,Adesk::Boolean)override{++erased;}
++    void headerSysVarChanged(const AcDbDatabase*,const ACHAR*,Adesk::Boolean success)override{if(success)++headerWrites;}
++    std::string json()const{return object({{"openedForModify",std::to_string(opened)},{"modified",std::to_string(modified)},{"appended",std::to_string(appended)},{"erased",std::to_string(erased)},{"headerWrites",std::to_string(headerWrites)}});}
++    bool untouched()const{return opened==0&&modified==0&&appended==0&&erased==0&&headerWrites==0;}
++};
++struct Session;
++class Rule final:public AcGiDrawableOverrule{
++public:explicit Rule(Session& v):s(v){}
++    bool isApplicable(const AcRxObject*)const override;
++    Adesk::Boolean worldDraw(AcGiDrawable*,AcGiWorldDraw*)override;
++private:Session& s;
++};
++struct Session{
++    Config config;std::unique_ptr<Evidence> evidence;File trace;
++    AcApDocument* current{};AcApDocument* active{};AcDbDatabase* ambient{};AmbientWatch watch;bool watchAttached{},ambientInitialized{};int dbmodBefore{};
++    std::unique_ptr<AcDbDatabase> db;AcDbObjectId markerId;std::unique_ptr<AcDbPoint,Close> marker;
++    AcGsManager* manager{};AcGsGraphicsKernel* kernel{};AcGsModel* model{};AcGsModel* priorModel{};AcGsDevice* device{};AcGsView* view{};bool associated{};
++    std::unique_ptr<Rule> rule;bool ruleAttached{},priorOverruling{};
++    int sample{-1};unsigned callbacks{},frameCallbacks{};std::string callbackError,executionFailure;int faultPoint{};
++    std::wstring font,bigfont;std::string fontSHA,bigfontSHA;std::vector<std::string> frames;
++    void log(const char* event,Fields f={}){if(!trace.valid())return;f.push_back({"event",q(event)});write_flushed(trace.get(),object(f)+"\n");}
++    bool ambientSame()const{return current==acDocManager->curDocument()&&active==acDocManager->mdiActiveDocument()&&ambient==acdbHostApplicationServices()->workingDatabase();}
++    bool resourcesReleased()const noexcept{return !db&&!marker&&!kernel&&!model&&!device&&!view&&!associated&&!rule&&!ruleAttached&&!watchAttached;}
++    void cleanupLog(const char* event,Fields f={})noexcept{try{log(event,std::move(f));}catch(...){}}
++    bool cleanup(){
++        cleanupLog("cleanup.enter",{{"faultPoint",std::to_string(faultPoint)},{"view",address(view)},{"marker",address(marker.get())},{"model",address(model)},{"device",address(device)},{"kernel",address(kernel)},{"database",address(db.get())},{"ruleAttached",ruleAttached?"true":"false"}});
++        if(view){cleanupLog("view.eraseAll.before");view->eraseAll();cleanupLog("view.eraseAll.after");}
++        if(ruleAttached){cleanupLog("removeOverrule.before");const auto st=AcRxOverrule::removeOverrule(AcDbPoint::desc(),rule.get());cleanupLog("removeOverrule.after",{{"status",std::to_string(st)}});if(st!=Acad::eOk)return false;ruleAttached=false;cleanupLog("restoreOverruling.before");AcRxOverrule::setIsOverruling(priorOverruling);cleanupLog("restoreOverruling.after");}
++        cleanupLog("rule.reset.before");rule.reset();cleanupLog("rule.reset.after");
++        cleanupLog("marker.close.before");marker.reset();cleanupLog("marker.close.after");
++        if(view){cleanupLog("destroyView.before");manager->destroyView(view);view=nullptr;cleanupLog("destroyView.after");}
++        if(associated){cleanupLog("restoreOwnedDatabaseAssociation.before");kernel->associate(reinterpret_cast<Adesk::LongPtr>(db.get()),priorModel,AcGsModel::kMain);cleanupLog("restoreOwnedDatabaseAssociation.after");cleanupLog("restoredAssociation.find.before");const bool restored=kernel->find(reinterpret_cast<Adesk::LongPtr>(db.get()),AcGsModel::kMain)==priorModel;cleanupLog("restoredAssociation.find.after",{{"matches",restored?"true":"false"}});if(!restored)return false;associated=false;}
++        if(model){cleanupLog("destroyAutoCADModel.before");manager->destroyAutoCADModel(model);model=nullptr;cleanupLog("destroyAutoCADModel.after");}
++        if(device){cleanupLog("destroyAutoCADDevice.before");manager->destroyAutoCADDevice(device);device=nullptr;cleanupLog("destroyAutoCADDevice.after");}
++        if(kernel){cleanupLog("releaseGraphicsKernel.before");AcGsManager::releaseGraphicsKernel(kernel);kernel=nullptr;cleanupLog("releaseGraphicsKernel.after");}
++        if(db){cleanupLog("destroyOwnedDatabase.before");db.reset();cleanupLog("destroyOwnedDatabase.after");}
++        if(watchAttached){cleanupLog("ambient.removeReactor.before");ambient->removeReactor(&watch);watchAttached=false;cleanupLog("ambient.removeReactor.after");}
++        cleanupLog("cleanup.return",{{"resourcesReleased",resourcesReleased()?"true":"false"}});
++        return true;
++    }
++};
++std::unique_ptr<Session> session;
++std::vector<std::unique_ptr<Session>> lifecycleSessions;
++int dbmod(){resbuf value{};require(acedGetVar(L"DBMOD",&value)==RTNORM&&value.restype==RTSHORT,"DBMOD read failed");return value.resval.rint;}
++bool Rule::isApplicable(const AcRxObject* object)const{const auto* p=AcDbPoint::cast(object);return running&&p&&p->database()==s.db.get()&&p->objectId()==s.markerId;}
++Adesk::Boolean Rule::worldDraw(AcGiDrawable* drawable,AcGiWorldDraw* wd){
++    try{
++        auto* p=AcDbPoint::cast(drawable);++s.callbacks;++s.frameCallbacks;
++        s.log("realWorldDraw",{{"sample",std::to_string(s.sample)},{"context",address(wd?wd->context():nullptr)},{"contextDatabase",address(wd&&wd->context()?wd->context()->database():nullptr)},
++            {"entityDatabase",address(p?p->database():nullptr)},{"targetDatabase",address(s.db.get())},{"entityOldId",p?std::to_string(p->objectId().asOldId()):"0"},
++            {"expectedOldId",std::to_string(s.markerId.asOldId())},{"boundModel",address(s.kernel->find(reinterpret_cast<Adesk::LongPtr>(s.db.get()),AcGsModel::kMain))},{"expectedModel",address(s.model)}});
++        require(p&&p->database()==s.db.get()&&p->objectId()==s.markerId,"unexpected drawable");
++        require(wd&&wd->context()&&wd->context()->database()==s.db.get(),"real WorldDraw context database differs from owned SideDB");
++        require(s.kernel->find(reinterpret_cast<Adesk::LongPtr>(s.db.get()),AcGsModel::kMain)==s.model,"GS association changed");
++        require(s.callbacks<=300,"callback budget");
++        auto& g=wd->geometry();auto& traits=wd->subEntityTraits();traits.setLineWeight(AcDb::kLnWt000);
++        if(s.sample<0){
++            traits.setFillType(kAcGiFillAlways);
++            for(std::size_t i=0;i<calibration.size();++i){AcCmEntityColor color;color.setRGB(colors[i][0],colors[i][1],colors[i][2]);traits.setTrueColor(color);
++                const auto p0=calibration[i];const AcGePoint3d square[]{p0+AcGeVector3d(-0.7,-0.7,0),p0+AcGeVector3d(0.7,-0.7,0),p0+AcGeVector3d(0.7,0.7,0),p0+AcGeVector3d(-0.7,0.7,0)};
++                require(!g.polygon(4,square),"calibration polygon terminated");}
++            return Adesk::kTrue;
++        }
++        AcCmEntityColor black;black.setRGB(0,0,0);traits.setTrueColor(black);
++        const auto& c=controls.at(static_cast<std::size_t>(s.sample));
++        AcGiTextStyle style(s.font.c_str(),s.bigfont.c_str(),7,0.75,c.oblique,c.tracking,c.backward,false,false,false,false);
++        const int flags=style.loadStyleRec(s.db.get());
++        s.log("loadStyleRec",{{"id",q(c.id)},{"bits",std::to_string(flags)},{"fontAfter",quote(std::wstring(style.fileName()?style.fileName():L""))},{"bigfontAfter",quote(std::wstring(style.bigFontFileName()?style.bigFontFileName():L""))}});
++        require((flags&1)!=0&&(flags&30)==0,"controlled font missing or substituted");
++        require(style.fileName()&&style.bigFontFileName()&&_wcsicmp(style.fileName(),s.font.c_str())==0&&_wcsicmp(style.bigFontFileName(),s.bigfont.c_str())==0,"loaded font path differs");
++        require(sha256(s.font)==s.fontSHA&&sha256(s.bigfont)==s.bigfontSHA,"font changed");
++        unsigned pushed{};
++        struct Pop final{AcGiGeometry& g;unsigned& n;Session& s;~Pop(){while(n){const auto r=g.popModelTransform();--n;try{s.log("popModelTransform",{{"raw",r?"true":"false"}});}catch(...){}if(!r)s.callbackError="popModelTransform failed";}}} pop{g,pushed,s};
++        if(c.nested){AcGeMatrix3d outer,inner;outer.setCoordSystem({32,25,0},{1.4,0.3,0},{0.2,0.8,0},{0,0,1});inner.setCoordSystem({4,3,0},{0.8,0.25,0},{-0.15,1.1,0},{0,0,1});
++            require(g.pushModelTransform(outer),"push outer failed");++pushed;require(g.pushModelTransform(inner),"push inner failed");++pushed;}
++        AcGeMatrix3d net;g.getModelToWorldTransform(net);s.log("textRequest",{{"id",q(c.id)},{"modelToWorld",matrix(net)},{"height","7"},{"widthFactor","0.75"},{"tracking",num(c.tracking)},{"oblique",num(c.oblique)},{"backward",c.backward?"true":"false"}});
++        const auto raw=g.text(c.position,AcGeVector3d::kZAxis,{std::cos(c.angle),std::sin(c.angle),0},c.text,static_cast<int>(wcslen(c.text)),true,style);
++        s.log("textReturn",{{"raw",raw?"true":"false"},{"falseMeansStored","true"}});require(!raw,"text terminated");return Adesk::kTrue;
++    }catch(const std::exception& e){s.callbackError=e.what();return Adesk::kTrue;}catch(...){s.callbackError="unknown worldDraw exception";return Adesk::kTrue;}
++}
++std::wstring resolve(AcDbDatabase* db,const wchar_t* name){AcString p;ok(acdbHostApplicationServices()->findFile(p,name,db,AcDbHostApplicationServices::kFontFile),"resolve font");std::wstring result=p.kACharPtr();require(result.size()>3&&result[1]==L':'&&GetFileAttributesW(result.c_str())!=INVALID_FILE_ATTRIBUTES,"font path not existing absolute");return result;}
++std::vector<std::uint8_t> snapshot(Session& s,int w,int h){
++    Atil::RgbModel dm(Atil::RgbModelAttributes::k3Channels,Atil::DataModelAttributes::kRedGreenBlueAlpha);
++    Atil::ImagePixel white(Atil::DataModelAttributes::kData32);white.value.rgba=0xffffffff;
++    Atil::Image image(Atil::Size(w,h),&dm,white);s.device->getSnapShot(&image,AcGsDCPoint(0,0));
++    const auto order=image.dataModel().channelOrder();require(order==Atil::DataModelAttributes::kRedGreenBlueAlpha||order==Atil::DataModelAttributes::kBlueGreenRedAlpha,"unexpected ATIL channel order");
++    require(Atil::DataModel::bitsPerPixel(image.dataModel().bitsPerPixel())==32,"ATIL pixel not 32 bit");
++    s.log("snapshot",{{"channelOrder",order==Atil::DataModelAttributes::kRedGreenBlueAlpha?q("RGBA"):q("BGRA")},{"ATILRowOrigin",q("upper-left")},{"width",std::to_string(w)},{"height",std::to_string(h)}});
++    std::unique_ptr<Atil::ImageContext> ctx(image.createContext(Atil::ImageContext::kRead,Atil::Size(w,h),Atil::Offset(0,0)));require(ctx!=nullptr,"ATIL read context unavailable");
++    std::vector<std::uint8_t> row(static_cast<std::size_t>(w)*4),rgb(static_cast<std::size_t>(w)*h*3);
++    for(int y=0;y<h;++y){ctx->getRow(y,0,w,row.data());for(int x=0;x<w;++x){const auto a=static_cast<std::size_t>(x)*4,b=(static_cast<std::size_t>(y)*w+x)*3;rgb[b]=row[a+(order==Atil::DataModelAttributes::kRedGreenBlueAlpha?0:2)];rgb[b+1]=row[a+1];rgb[b+2]=row[a+(order==Atil::DataModelAttributes::kRedGreenBlueAlpha?2:0)];}}
++    return rgb;
++}
++struct Mapping{bce::TextAffine2 affine;double phase{};bool flipY{};};
++Mapping calibrate(Session& s,const std::vector<std::uint8_t>& rgb,int w,int h,const AcGeMatrix3d& m){
++    std::array<bce::Point2,5> observed{};std::array<std::size_t,5> count{};
++    for(int y=0;y<h;++y)for(int x=0;x<w;++x){const auto k=(static_cast<std::size_t>(y)*w+x)*3;for(std::size_t c=0;c<colors.size();++c)if(rgb[k]==colors[c][0]&&rgb[k+1]==colors[c][1]&&rgb[k+2]==colors[c][2]){observed[c].x+=x+0.5;observed[c].y+=y+0.5;++count[c];}}
++    for(std::size_t i=0;i<count.size();++i){require(count[i]>=16,"calibration color absent or too small");observed[i].x/=count[i];observed[i].y/=count[i];}
++    // Only documented row orientation alternatives and integer-vs-center phase are candidates.
++    // Fixed tolerance set before host run. No text fitting and no free affine fit.
++    double best=1e100;Mapping selected;std::vector<std::string> trials,points;
++    for(bool flip:{false,true})for(double phase:{0.0,0.5}){
++        double residual{};for(std::size_t i=0;i<3;++i){const auto p=m*calibration[i];const double ex=p.x+phase,ey=(flip?h-p.y:p.y)+phase;residual=std::max(residual,std::max(std::abs(ex-observed[i].x),std::abs(ey-observed[i].y)));}
++        trials.push_back(object({{"flipY",flip?"true":"false"},{"phase",num(phase)},{"maxCenterResidual",num(residual)}}));
++        if(residual<best){best=residual;selected={{m(0,0),m(0,1),m(0,3)+phase,flip?-m(1,0):m(1,0),flip?-m(1,1):m(1,1),(flip?h-m(1,3):m(1,3))+phase},phase,flip};}
++    }
++    double heldOut{};for(std::size_t i=0;i<count.size();++i){const auto p=m*calibration[i];const double dx=p.x+selected.phase-observed[i].x,dy=(selected.flipY?h-p.y:p.y)+selected.phase-observed[i].y;
++        if(i>=3)heldOut=std::max(heldOut,std::max(std::abs(dx),std::abs(dy)));
++        points.push_back(object({{"world",array({num(calibration[i].x),num(calibration[i].y)})},{"role",i<3?q("selection"):q("held-out")},{"observedPixelCellCenter",point(observed[i])},{"solidColorPixels",std::to_string(count[i])},{"selectedResidual",array({num(dx),num(dy)})}}));}
++    save(s.config.output+L"\\calibration-"+std::to_wstring(w)+L".json",object({{"worldToDevice",matrix(m)},{"points",array(points)},{"candidates",array(trials)},{"selectedWorldToPixel",affine(selected.affine)},{"selectionMaxResidual",num(best)},{"heldOutMaxResidual",num(heldOut)},{"fixedTolerancePixels","0.55"},{"selectedPhase",num(selected.phase)},{"flipY",selected.flipY?"true":"false"}}));
++    require(best<=0.55&&heldOut<=0.55,"GS/ATIL selection or independent held-out calibration failed fixed 0.55 pixel bound");return selected;
++}
++std::vector<std::uint8_t> render(Session& s,int w,int h,int sample){
++    s.sample=sample;s.frameCallbacks=0;s.callbackError.clear();s.view->eraseAll();require(s.view->add(s.marker.get(),s.model),"add owned persistent drawable failed");
++    s.model->invalidate(AcGsModel::kInvalidateAll);s.view->invalidate();s.device->invalidate();s.log("deviceUpdate.before",{{"sample",std::to_string(sample)},{"width",std::to_string(w)}});s.device->update();s.view->flush();
++    s.log("deviceUpdate.after",{{"callbacks",std::to_string(s.frameCallbacks)},{"callbackError",quote(s.callbackError)}});
++    require(s.callbackError.empty(),s.callbackError);require(s.frameCallbacks>0,"GS produced no real owned WorldDraw callback");return snapshot(s,w,h);
++}
++void execute(Session& s){
++    s.current=acDocManager->curDocument();s.active=acDocManager->mdiActiveDocument();s.ambient=acdbHostApplicationServices()->workingDatabase();
++    require(s.current&&s.active==s.current&&s.current->database()==s.ambient,"ambient identities inconsistent");s.dbmodBefore=dbmod();s.ambientInitialized=true;s.ambient->addReactor(&s.watch);s.watchAttached=true;
++    s.log("ambient.before",{{"current",address(s.current)},{"active",address(s.active)},{"workingDatabase",address(s.ambient)},{"dbmod",std::to_string(s.dbmodBefore)}});
++    s.db=std::make_unique<AcDbDatabase>(true,true);require(s.db.get()!=s.ambient,"owned database aliases ambient");
++    s.font=resolve(s.db.get(),L"simplex.shx");s.bigfont=resolve(s.db.get(),L"gbcbig.shx");s.fontSHA=sha256(s.font);s.bigfontSHA=sha256(s.bigfont);
++    save(s.config.output+L"\\fonts.json",object({{"font",quote(s.font)},{"fontSHA256",quote(s.fontSHA)},{"bigfont",quote(s.bigfont)},{"bigfontSHA256",quote(s.bigfontSHA)},{"height","7"},{"widthFactor","0.75"}}));
++    require(_wcsicmp(s.font.c_str(),L"C:\\users\\pc\\appdata\\roaming\\autodesk\\autocad 2020\\r23.1\\chs\\support\\simplex.shx")==0&&s.fontSHA=="30DC50FA379935E4D7EB6E60041FA070A11FBA6DEAC337A2FA9E34DCB5BFBCC1","simplex control differs from N9a identity");
++    require(_wcsicmp(s.bigfont.c_str(),L"D:\\cad2020\\autocad 2020\\fonts\\gbcbig.shx")==0&&s.bigfontSHA=="B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150","bigfont control differs from N9a identity");
++    {auto ms=open<AcDbBlockTableRecord>(acdbSymUtil()->blockModelSpaceId(s.db.get()),AcDb::kForWrite);auto p=std::make_unique<AcDbPoint>(AcGePoint3d(75,50,0));p->setDatabaseDefaults(s.db.get());ok(ms->appendAcDbEntity(s.markerId,p.get()),"append owned marker");p.release()->close();}
++    s.marker=open<AcDbPoint>(s.markerId);
++    s.manager=acgsGetGsManager();require(s.manager!=nullptr,"GS manager unavailable");AcGsKernelDescriptor descriptor;descriptor.addRequirement(AcGsKernelDescriptor::k3DDrawing);
++    s.log("acquireGraphicsKernel.before",{{"requirement",q("k3DDrawing")},{"capabilityAddress",address(AcGsKernelDescriptor::k3DDrawing)},{"descriptorRequires3D",descriptor.requires(AcGsKernelDescriptor::k3DDrawing)?"true":"false"}});
++    s.kernel=AcGsManager::acquireGraphicsKernel(descriptor);AcGsKernelDescriptor twoD;twoD.addRequirement(AcGsKernelDescriptor::k2DDrawing);
++    s.log("acquireGraphicsKernel.after",{{"kernel",address(s.kernel)},{"compatibleWith3D",s.kernel?(s.kernel->isCompatibleWith(descriptor)?"true":"false"):"null"},{"compatibleWith2D",s.kernel?(s.kernel->isCompatibleWith(twoD)?"true":"false"):"null"}});
++    require(s.kernel!=nullptr,"k3DDrawing kernel unavailable");require(s.kernel->isCompatibleWith(descriptor),"acquired kernel incompatible with requested k3DDrawing");
++    s.model=s.manager->createAutoCADModel(*s.kernel);require(s.model!=nullptr,"AutoCAD model unavailable");
++    const auto dbKey=reinterpret_cast<Adesk::LongPtr>(s.db.get());s.priorModel=s.kernel->find(dbKey,AcGsModel::kMain);s.kernel->associate(dbKey,s.model,AcGsModel::kMain);s.associated=true;
++    s.log("ownedModelBinding",{{"targetDatabase",address(s.db.get())},{"model",address(s.model)},{"priorModel",address(s.priorModel)},{"readBackModel",address(s.kernel->find(dbKey,AcGsModel::kMain))},{"route",q("manager.createAutoCADModel + kernel.associate; real context checked separately")}});
++    require(s.kernel->find(dbKey,AcGsModel::kMain)==s.model,"GS model binding readback failed");
++    if(s.faultPoint==1)throw std::runtime_error("injected-after-model-association");
++    s.device=s.manager->createAutoCADOffScreenDevice(*s.kernel);require(s.device!=nullptr,"offscreen device unavailable");require(s.device->setBackgroundColor({255,255,255,0}),"white background rejected");
++    const auto bg=s.device->getBackgroundColor();require(bg.m_red==255&&bg.m_green==255&&bg.m_blue==255,"background readback not white");
++    std::array<AcGsColor,256> palette{};for(auto& c:palette)c={0,0,0,0};palette[0]={255,255,255,0};s.device->setLogicalPalette(palette.data(),static_cast<int>(palette.size()));
++    s.view=s.manager->createView(s.device);require(s.view!=nullptr,"offscreen view unavailable");s.view->setViewport(AcGePoint2d(0,0),AcGePoint2d(1,1));s.view->setViewportBorderVisibility(false);
++    AcGiVisualStyle wireframe;require(wireframe.setType(AcGiVisualStyle::k3DWireframe),"prepare own k3DWireframe style failed");s.view->setVisualStyle(wireframe);AcGiVisualStyle readback;const bool styleSet=s.view->visualStyle(readback);
++    s.log("ownedViewVisualStyle",{{"requestedType",std::to_string(AcGiVisualStyle::k3DWireframe)},{"styleSet",styleSet?"true":"false"},{"actualType",styleSet?std::to_string(readback.type()):"null"}});require(styleSet&&readback.type()==AcGiVisualStyle::k3DWireframe,"own view visual style readback differs");
++    s.view->setEnableFrontClip(false);s.view->setEnableBackClip(false);
++    s.view->setView({75,50,100},{75,50,0},AcGeVector3d::kYAxis,150,112.5,AcGsView::kParallel);
++    s.log("ownedDeviceSettings",{{"backgroundRGB",array({std::to_string(bg.m_red),std::to_string(bg.m_green),std::to_string(bg.m_blue)})},{"foregroundRGB",array({"0","0","0"})},{"lineweight",q("AcDb::kLnWt000 hairline")},{"frontClip",s.view->isFrontClipped()?"true":"false"},{"backClip",s.view->isBackClipped()?"true":"false"},{"border",s.view->isViewportBorderVisible()?"true":"false"}});
++    s.rule=std::make_unique<Rule>(s);s.priorOverruling=AcRxOverrule::isOverruling();ok(AcRxOverrule::addOverrule(AcDbPoint::desc(),s.rule.get(),false),"add own overrule");s.ruleAttached=true;AcRxOverrule::setIsOverruling(true);
++    if(s.faultPoint==2)throw std::runtime_error("injected-after-overrule-install");
++    for(int scale:{1,2}){const int w=1024*scale,h=768*scale;s.device->onSize(w,h);
++        auto rgb=render(s,w,h,-1);save(s.config.output+L"\\calibration-"+std::to_wstring(w)+L".rgb",std::string(reinterpret_cast<const char*>(rgb.data()),rgb.size()));
++        const auto m=s.view->worldToDeviceMatrix();const auto mapping=calibrate(s,rgb,w,h,m);
++        s.log("viewMatrices",{{"width",std::to_string(w)},{"viewing",matrix(s.view->viewingMatrix())},{"projection",matrix(s.view->projectionMatrix())},{"screen",matrix(s.view->screenMatrix())},{"worldToDevice",matrix(m)},{"worldToPixel",affine(mapping.affine)},{"fieldWidth",num(s.view->fieldWidth())},{"fieldHeight",num(s.view->fieldHeight())},{"perspective",s.view->isPerspective()?"true":"false"},{"border",s.view->isViewportBorderVisible()?"true":"false"}});
++        for(std::size_t i=0;i<controls.size();++i){rgb=render(s,w,h,static_cast<int>(i));const auto id=std::string(controls[i].id)+"-"+std::to_string(w);const auto path=s.config.output+L"\\"+std::wstring(id.begin(),id.end())+L".rgb";
++            save(path,std::string(reinterpret_cast<const char*>(rgb.data()),rgb.size()));
++            bce::TextRenderContext context;context.deviceIdentity="AutoCAD2020/k3DDrawing/XY-k3DWireframe/owned-offscreen/"+std::to_string(w)+"x"+std::to_string(h);context.frameIdentity=utf8(s.config.nonce)+"/"+id;context.fontIdentity=s.fontSHA+"/"+s.bigfontSHA;context.sourceIdentity="owned-AcDbPoint/"+std::to_string(s.markerId.asOldId())+"/"+controls[i].id;
++            // Explicit control paper: view is 150 x 112.5 mm at 1:1. These are conversion values, not a printer capability claim.
++            context.dpiX=w*25.4/150.0;context.dpiY=h*25.4/112.5;context.pixelBoundaryPhase={mapping.phase,mapping.phase};
++            const auto result=bce::measureTextFootprint({rgb.data(),rgb.size(),static_cast<std::size_t>(w),static_cast<std::size_t>(h),static_cast<std::size_t>(w)*3},mapping.affine,context);
++            require(result.canCommit(),result.issues.empty()?"footprint absent":result.issues.front().code+": "+result.issues.front().message);const auto& v=*result.value;
++            std::vector<std::string> corners;for(const auto& p:v.world.corners)corners.push_back(point(p));
++            const auto json=object({{"id",quote(id)},{"text",quote(std::wstring(controls[i].text))},{"rgbPath",quote(path)},{"rgbSHA256",quote(sha256(path))},{"width",std::to_string(w)},{"height",std::to_string(h)},{"rowStride",std::to_string(w*3)},{"inkPixels",std::to_string(v.inkPixels)},{"deviceCellBounds",bounds(v.deviceCellBounds)},{"worldCorners",array(corners)},{"worldAABB",bounds(v.world.bounds)},{"worldToPixel",affine(v.worldToPixel)},{"deviceIdentity",quote(context.deviceIdentity)},{"frameIdentity",quote(context.frameIdentity)},{"fontIdentity",quote(context.fontIdentity)},{"sourceIdentity",quote(context.sourceIdentity)},{"dpiX",num(context.dpiX)},{"dpiY",num(context.dpiY)},{"controlPaperMm",array({"150","112.5"})},{"pixelBoundaryPhase",point(context.pixelBoundaryPhase)},{"glyphComplete","false"},{"capabilityUpgradeAllowed","false"}});
++            save(s.config.output+L"\\"+std::wstring(id.begin(),id.end())+L".json",json);s.frames.push_back(json);
++        }
++    }
++}
++void lifecycleControls(Session& primary){
++    std::vector<std::string> results;
++    for(int fault:{1,2}){
++        lifecycleSessions.push_back(std::make_unique<Session>());auto& s=*lifecycleSessions.back();s.config=primary.config;s.faultPoint=fault;
++        s.config.output+=L"\\lifecycle-"+std::to_wstring(fault);require(CreateDirectoryW(s.config.output.c_str(),nullptr)!=FALSE,"create lifecycle evidence directory");
++        s.trace=File(CreateFileW((s.config.output+L"\\gs-trace.jsonl").c_str(),GENERIC_WRITE,FILE_SHARE_READ,nullptr,CREATE_NEW,FILE_ATTRIBUTE_NORMAL|FILE_FLAG_WRITE_THROUGH,nullptr));require(s.trace.valid(),"lifecycle trace unavailable");
++        std::string observed;try{execute(s);}catch(const std::exception& e){observed=e.what();s.cleanupLog("execute.cppException.beforeCleanup",{{"message",quote(observed)}});}
++        const bool cleaned=s.cleanup();const auto after=s.ambientInitialized?dbmod():0;const bool stable=s.ambientInitialized&&s.ambientSame()&&s.watch.untouched()&&s.dbmodBefore==after;
++        const auto expected=fault==1?"injected-after-model-association":"injected-after-overrule-install";
++        const bool passed=observed==expected&&cleaned&&stable;
++        const auto record=object({{"faultPoint",q(expected)},{"faultReached",observed==expected?"true":"false"},{"observed",quote(observed)},{"cleanupComplete",cleaned?"true":"false"},{"ambientObserved",s.ambientInitialized?"true":"false"},{"ambientUnchanged",s.ambientInitialized?(stable?"true":"false"):"null"},{"ambientWriteEvents",s.ambientInitialized?s.watch.json():"null"},{"dbmodBefore",s.ambientInitialized?std::to_string(s.dbmodBefore):"null"},{"dbmodAfter",s.ambientInitialized?std::to_string(after):"null"},{"passed",passed?"true":"false"}});
++        save(s.config.output+L"\\result.json",record);results.push_back(record);require(passed,"real GS resource lifecycle fault control failed: "+observed);
++    }
++    save(primary.config.output+L"\\lifecycle-controls.json",array(results));
++}
++void run()noexcept{
++    if(running||completed)return;running=true;
++    try{
++        session=std::make_unique<Session>();auto& s=*session;s.config=load_config(moduleHandle);s.evidence=std::make_unique<Evidence>(s.config);validate_identity(s.config);require(s.config.caseName==L"NativeGsTextFootprint","case mismatch");
++        s.trace=File(CreateFileW((s.config.output+L"\\gs-trace.jsonl").c_str(),GENERIC_WRITE,FILE_SHARE_READ,nullptr,CREATE_NEW,FILE_ATTRIBUTE_NORMAL|FILE_FLAG_WRITE_THROUGH,nullptr));require(s.trace.valid(),"trace unavailable");
++        std::string failure;try{lifecycleControls(s);execute(s);}catch(const std::exception& e){failure=e.what();s.cleanupLog("execute.cppException.beforeCleanup",{{"message",quote(failure)}});}catch(...){failure="unknown native execution exception";s.cleanupLog("execute.unknownException.beforeCleanup");}
++        s.executionFailure=failure;
++        const bool primaryCleaned=s.cleanup();const bool cleaned=primaryCleaned&&s.resourcesReleased()&&std::all_of(lifecycleSessions.begin(),lifecycleSessions.end(),[](const auto& control){return control->resourcesReleased();});const bool ambientSame=s.ambientInitialized&&s.ambientSame();const auto dbmodAfter=s.ambientInitialized?dbmod():0;
++        const bool ambientStable=s.ambientInitialized&&ambientSame&&s.watch.untouched()&&s.dbmodBefore==dbmodAfter;const bool passed=failure.empty()&&cleaned&&ambientStable;
++        s.log("ambient.after",{{"observed",s.ambientInitialized?"true":"false"},{"observation",s.ambientInitialized?q("observed"):q("not-observed-main-not-entered")},{"current",s.ambientInitialized?address(acDocManager->curDocument()):"null"},{"active",s.ambientInitialized?address(acDocManager->mdiActiveDocument()):"null"},{"workingDatabase",s.ambientInitialized?address(acdbHostApplicationServices()->workingDatabase()):"null"},{"dbmod",s.ambientInitialized?std::to_string(dbmodAfter):"null"},{"writeEvents",s.ambientInitialized?s.watch.json():"null"}});
++        save(s.config.output+L"\\gs-result.json",object({{"status",passed?q("native-buffer-complete"):q("failed")},{"error",quote(failure)},{"cleanupComplete",cleaned?"true":"false"},{"ambientObserved",s.ambientInitialized?"true":"false"},{"ambientObservation",s.ambientInitialized?q("observed"):q("not-observed-main-not-entered")},{"ambientPointersUnchanged",s.ambientInitialized?(ambientSame?"true":"false"):"null"},{"ambientDBMODBefore",s.ambientInitialized?std::to_string(s.dbmodBefore):"null"},{"ambientDBMODAfter",s.ambientInitialized?std::to_string(dbmodAfter):"null"},{"ambientWriteEvents",s.ambientInitialized?s.watch.json():"null"},{"frames",array(s.frames)},{"glyphComplete","false"},{"capabilityUpgradeAllowed","false"},{"layoutIntegrated","false"}}));
++        if(!failure.empty())s.evidence->error(failure);
++        if(!cleaned)s.evidence->error("cleanup incomplete; module must remain loaded");
++        if(s.ambientInitialized&&!ambientStable)s.evidence->error("observed ambient identities, DBMOD or write events changed");
++        if(!s.ambientInitialized&&failure.empty())s.evidence->error("main ambient observation unavailable");
++        if(passed){s.evidence->step("nativeGSBuffer","passed","two independent resolutions, five controls each; same TextOccupancy.cpp; independent nontext calibration");s.evidence->capability(object({{"finiteNativeBuffer","true"},{"glyphComplete","false"},{"capabilityUpgradeAllowed","false"}}));}
++        s.evidence->finish(s.config,passed?"passed":"failed");s.evidence.reset();completed=true;
++    }catch(const std::exception& e){if(session&&session->evidence){auto terminal=std::move(session->evidence);try{if(!session->executionFailure.empty())terminal->error(session->executionFailure);terminal->error(e.what());terminal->finish(session->config,"failed");}catch(...){}}completed=true;}
++    catch(...){if(session&&session->evidence){auto terminal=std::move(session->evidence);try{if(!session->executionFailure.empty())terminal->error(session->executionFailure);terminal->error("unknown native command exception");terminal->finish(session->config,"failed");}catch(...){}}completed=true;}
++    running=false;
++}
++}
++BOOL APIENTRY DllMain(HMODULE h,DWORD reason,LPVOID){if(reason==DLL_PROCESS_ATTACH){moduleHandle=h;DisableThreadLibraryCalls(h);}return TRUE;}
++extern "C" __declspec(dllexport) AcRx::AppRetCode acrxEntryPoint(AcRx::AppMsgCode message,void* id){try{
++    if(message==AcRx::kInitAppMsg){acrxDynamicLinker->unlockApplication(id);acrxRegisterAppMDIAware(id);ok(acedRegCmds->addCommand(L"BCE_NATIVE_GS_TEXT",L"BCE_TEST_RUN",L"BCE_TEST_RUN",ACRX_CMD_MODAL,run),"register command");}
++    if(message==AcRx::kUnloadAppMsg){if(running)return AcRx::kRetError;for(const auto& s:lifecycleSessions)if(!s->cleanup())return AcRx::kRetError;if(session&&!session->cleanup())return AcRx::kRetError;lifecycleSessions.clear();session.reset();ok(acedRegCmds->removeGroup(L"BCE_NATIVE_GS_TEXT"),"remove commands");}
++    return AcRx::kRetOK;
++}catch(...){return AcRx::kRetError;}}
+--- /dev/null
++++ b/tests/native/text-footprint-gs/NativeGsTextFootprint.vcxproj
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="utf-8"?>
++<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <ItemGroup Label="ProjectConfigurations"><ProjectConfiguration Include="Release|x64"><Configuration>Release</Configuration><Platform>x64</Platform></ProjectConfiguration></ItemGroup>
++  <PropertyGroup Label="Globals"><ProjectGuid>{73FA09D0-3125-419D-898C-16A2CF42B55C}</ProjectGuid><RootNamespace>NativeGsTextFootprint</RootNamespace><WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion></PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
++  <PropertyGroup Label="Configuration"><ConfigurationType>DynamicLibrary</ConfigurationType><UseDebugLibraries>false</UseDebugLibraries><PlatformToolset>v141</PlatformToolset><CharacterSet>Unicode</CharacterSet></PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
++  <PropertyGroup><OutDir>..\out\</OutDir><IntDir>..\obj\</IntDir><TargetName>NativeGsTextFootprint</TargetName><TargetExt>.arx</TargetExt><ObjectArxSdk Condition="'$(ObjectArxSdk)'==''">C:\Autodesk\ObjectARX_for_AutoCAD_2020_Win_64_bit</ObjectArxSdk></PropertyGroup>
++  <ItemDefinitionGroup>
++    <ClCompile><WarningLevel>Level4</WarningLevel><TreatWarningAsError>true</TreatWarningAsError><SDLCheck>true</SDLCheck><ConformanceMode>true</ConformanceMode><LanguageStandard>stdcpp17</LanguageStandard><RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary><DisableSpecificWarnings>4828;%(DisableSpecificWarnings)</DisableSpecificWarnings><AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions><ExceptionHandling>Sync</ExceptionHandling><PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;UNICODE;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions><AdditionalIncludeDirectories>$(ObjectArxSdk)\utils\Atil\Inc;$(ObjectArxSdk)\inc;$(ObjectArxSdk)\inc-x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories></ClCompile>
++    <Link><SubSystem>Windows</SubSystem><ModuleDefinitionFile>$(ObjectArxSdk)\inc\AcRxDefault.def</ModuleDefinitionFile><AdditionalLibraryDirectories>$(ObjectArxSdk)\utils\Atil\Lib-x64;$(ObjectArxSdk)\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories><AdditionalDependencies>AcDrawBridge.lib;AdImaging.lib;AdIntImgServices.lib;rxapi.lib;acdb23.lib;acge23.lib;accore.lib;ac1st23.lib;Advapi32.lib;User32.lib;%(AdditionalDependencies)</AdditionalDependencies></Link>
++  </ItemDefinitionGroup>
++  <ItemGroup><ClCompile Include="NativeGsTextFootprint.cpp" /><ClCompile Include="NativeEvidence.cpp" /><ClCompile Include="TextOccupancy.cpp" /></ItemGroup>
++  
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
++</Project>
++
++
++
++
+--- /dev/null
++++ b/tests/native/text-footprint-gs/README.md
+@@ -0,0 +1,15 @@
++# NativeGsTextFootprint (N9c)
++
++Development-only AutoCAD 2020 / R23.1 x64 ARX. `BCE_TEST_RUN` synchronously creates an owned in-memory database, one persistent point control, one k3DDrawing GS kernel/model/offscreen device/view. The owned view is explicitly k3DWireframe with an orthographic XY camera; the kernel request follows the local 2020 SDK ARXDBG sample. There is one fixed request and no fallback loop. No working/current database switch, GUI view, DWG save, shared GS/profile modification, Plot, Python, or external converter occurs in the native command.
++
++The candidate uses `createAutoCADModel` and `kernel.associate(ownedDb, model, kMain)`; the association is only an attempted route. Every genuine WorldDraw independently records and checks its context database, entity database/ObjectId and model binding before drawing. An actual mismatch fails and is preserved in `gs-trace.jsonl`; it does not establish impossibility of other public routes.
++
++Five N9a controls use independently loaded simplex.shx / gbcbig.shx, height 7 and width factor .75. Each control gets a complete, separate 1024x768 and 2048x1536 RGB snapshot with the same 150x112.5 model field. Control-paper conversion is explicitly 150x112.5 mm, 1:1; dpiX/Y are this conversion, not printer specifications. Frame/phase/font/source identity binds each observation. No Layout translation invariance or glyph-complete claim.
++
++Before text, five colored nontext squares at asymmetric, noncollinear positions verify worldToDevice, ATIL upper-left row order, RGB channel conversion and pixel phase. The first three points select only y orientation and {0,.5} center conventions; the other two positions are held out and independently checked. Both groups have a fixed .55 pixel center residual bound. No text fit. All calibration attempts and the selected mapping are written. Unknown mappings fail.
++
++Native links an exact frozen copy of the existing `src/TextOccupancy.cpp` (SHA256 28D106F22219C8CCD6C0FBC9A6C16EC48296177F6DD0A3D1252C3D9ECF5F3520); no algorithm clone or alternate implementation. Files are frozen by `tools/build_text_footprint_gs.ps1` into the build receipt; the receipt is compatible with unchanged native_case_host.py and watch_native_case.py. Run case `NativeGsTextFootprint`; no capture helper or document OPEN needed. Only the independent controller starts/controls CAD.
++
++Outputs: native-case.json, gs-trace.jsonl, gs-result.json, fonts.json; calibration-W.json/.rgb and five ID-W.json/.rgb for each width. Tight RGB is top-to-bottom, three bytes/pixel. The offline verifier checks every nonwhite full cell against the C++ quadrilateral and exact frame mapping, and has shrink/missing-map/wrong-map negative controls. It never supplies buffers to the native command.
++
++Cleanup removes scene/overrule, closes own point, destroys view, restores only its own database association, destroys model/device, releases kernel, then deletes the owned database. An overrule-removal error retains live state and rejects module unload. Ambient write notifications and current/active/working identities are recorded separately. All work remains developer evidence, no production build eligibility.
+--- /dev/null
++++ b/tools/build_text_footprint_gs.ps1
+@@ -0,0 +1,44 @@
++param([string]$Label = 'candidate',[string]$CaseName = 'NativeGsTextFootprint')
++$ErrorActionPreference = 'Stop'
++$projectRoot = Split-Path $PSScriptRoot -Parent
++$buildName = 'n9c-' + (Get-Date -Format 'yyyyMMdd-HHmmss-fff') + '-' + ($Label -replace '[^A-Za-z0-9_-]', '_') + '-' + [Guid]::NewGuid().ToString('N').Substring(0,8)
++$buildRoot = Join-Path (Join-Path $projectRoot 'build') $buildName
++$sourceRoot = Join-Path $buildRoot 'src'
++$null = New-Item -ItemType Directory -Path $sourceRoot
++$receipt = [ordered]@{ contract='bce.text-footprint-gs-build.v1'; label=$Label; caseName=$CaseName; startedUtc=[DateTime]::UtcNow.ToString('o'); compiledSourcesDirectory=$sourceRoot; sourceFiles=[ordered]@{}; inputOrigins=@(); binary=$null; binarySHA256=$null; log=(Join-Path $buildRoot 'build.log'); exitCode=1; nativeExecuted=$false; toolchain='AutoCAD2020 SDK23.1 / v141 14.16.27023 / x64 / C++17' }
++$exitResult = 1
++try {
++    if ((Get-FileHash -LiteralPath (Join-Path $projectRoot 'src/TextOccupancy.cpp')).Hash -ne '28D106F22219C8CCD6C0FBC9A6C16EC48296177F6DD0A3D1252C3D9ECF5F3520') { throw 'N9b core SHA differs from reviewed input' }
++    $inputs = @('tests/native/NativeEvidence.h','tests/native/NativeEvidence.cpp','tests/native/text-footprint-gs/NativeGsTextFootprint.cpp','tests/native/text-footprint-gs/NativeGsTextFootprint.vcxproj','src/TextOccupancy.cpp','src/TextOccupancy.h','src/ElevationModel.h','tests/native/text-footprint-gs/README.md','tools/verify_text_footprint_gs.py')
++    foreach ($relative in $inputs) {
++        $source = Join-Path $projectRoot $relative
++        $destination = Join-Path $sourceRoot (Split-Path $relative -Leaf)
++        Copy-Item -LiteralPath $source -Destination $destination
++        $digest = (Get-FileHash -LiteralPath $destination -Algorithm SHA256).Hash
++        $receipt.sourceFiles[$destination] = $digest
++        $receipt.inputOrigins += [ordered]@{ origin=$source; compiledCopy=$destination; sha256=$digest }
++    }
++    Copy-Item -LiteralPath $PSCommandPath -Destination (Join-Path $buildRoot 'build_text_footprint_gs.ps1')
++    $receipt.sourceFiles[(Join-Path $buildRoot 'build_text_footprint_gs.ps1')] = (Get-FileHash -LiteralPath (Join-Path $buildRoot 'build_text_footprint_gs.ps1')).Hash
++    $vcvars = 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat'
++    $msbuild = 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe'
++    if (!(Test-Path -LiteralPath $vcvars) -or !(Test-Path -LiteralPath $msbuild)) { throw 'v141 build tools missing' }
++    $command = '@echo off' + "`r`n" + 'call "' + $vcvars + '" -vcvars_ver=14.16' + "`r`n" + 'if errorlevel 1 exit /b %errorlevel%' + "`r`n" + '"' + $msbuild + '" NativeGsTextFootprint.vcxproj /t:Rebuild /p:Configuration=Release /p:Platform=x64 /p:VCToolsVersion=14.16.27023 /m:1 /nologo /verbosity:normal' + "`r`n" + 'if errorlevel 1 exit /b %errorlevel%' + "`r`n" + 'exit /b %errorlevel%' + "`r`n"
++    $receipt.commandFile = Join-Path $buildRoot 'build-command.cmd'
++    Set-Content -LiteralPath $receipt.commandFile -Value $command -Encoding ascii
++    $receipt.commandSHA256 = (Get-FileHash -LiteralPath $receipt.commandFile).Hash
++    Push-Location $sourceRoot
++    try { & $env:ComSpec /d /c '..\build-command.cmd' > $receipt.log 2>&1; $exitResult = $LASTEXITCODE } finally { Pop-Location }
++    foreach ($entry in $receipt.inputOrigins) { if ((Get-FileHash -LiteralPath $entry.origin).Hash -ne $entry.sha256) { throw 'Live input changed during build' } }
++    if ($exitResult -eq 0) {
++        $receipt.binary = Join-Path $buildRoot 'out/NativeGsTextFootprint.arx'
++        $receipt.binarySHA256 = (Get-FileHash -LiteralPath $receipt.binary -Algorithm SHA256).Hash
++    }
++} catch { $receipt.error = $_.Exception.Message; $exitResult = 1 }
++finally {
++    $receipt.exitCode = $exitResult; $receipt.finishedUtc = [DateTime]::UtcNow.ToString('o')
++    $receipt | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath (Join-Path $buildRoot 'receipt.json') -Encoding utf8
++    Write-Output ('RECEIPT=' + (Join-Path $buildRoot 'receipt.json')); Write-Output ('EXIT_CODE=' + $exitResult)
++}
++exit $exitResult
++
+--- /dev/null
++++ b/tools/verify_text_footprint_gs.py
+@@ -0,0 +1,157 @@
++"""Offline N9c evidence verifier; never used by the ARX runtime."""
++import argparse
++import copy
++import hashlib
++import json
++import math
++from pathlib import Path
++
++
++def require(ok, message):
++    if not ok:
++        raise ValueError(message)
++
++
++def load(path):
++    return json.loads(Path(path).read_text(encoding='utf-8-sig'))
++
++
++def apply(m, p):
++    a, b, tx, c, d, ty = m
++    return a * p[0] + b * p[1] + tx, c * p[0] + d * p[1] + ty
++
++
++def inside(point, polygon):
++    signs = []
++    for i in range(4):
++        a, b = polygon[i], polygon[(i + 1) % 4]
++        signs.append((b[0] - a[0]) * (point[1] - a[1]) -
++                     (b[1] - a[1]) * (point[0] - a[0]))
++    return min(signs) >= -1e-8 or max(signs) <= 1e-8
++
++
++def verify_frame(frame, rgb, calibration_map):
++    w, h = frame['width'], frame['height']
++    require(frame['rowStride'] == w * 3 and len(rgb) == w * h * 3, 'RGB shape')
++    m = frame['worldToPixel']
++    require(len(m) == 6 and all(math.isfinite(x) for x in m), 'mapping missing/nonfinite')
++    require(max(abs(a - b) for a, b in zip(m, calibration_map)) <= 1e-10,
++            'mapping differs from independent calibration')
++    polygon = frame['worldCorners']
++    require(len(polygon) == 4, 'quadrilateral shape')
++    lo, hi = frame['deviceCellBounds']
++    expected = [(lo[0], lo[1]), (hi[0], lo[1]), (hi[0], hi[1]), (lo[0], hi[1])]
++    for p, e in zip(polygon, expected):
++        v = apply(m, p)
++        require(max(abs(v[k] - e[k]) for k in (0, 1)) <= 1e-8, 'corner/mapping mismatch')
++    determinant = m[0] * m[4] - m[1] * m[3]
++    require(abs(determinant) > 1e-12, 'singular mapping')
++
++    def inverse(p):
++        x, y = p[0] - m[2], p[1] - m[5]
++        return ((m[4] * x - m[1] * y) / determinant,
++                (-m[3] * x + m[0] * y) / determinant)
++
++    ink, minx, miny, maxx, maxy = 0, w, h, -1, -1
++    for y in range(h):
++        for x in range(w):
++            k = (y * w + x) * 3
++            if rgb[k:k+3] == b'\xff\xff\xff':
++                continue
++            ink += 1
++            minx, miny, maxx, maxy = min(minx, x), min(miny, y), max(maxx, x), max(maxy, y)
++            for cell in ((x, y), (x+1, y), (x+1, y+1), (x, y+1)):
++                require(inside(inverse(cell), polygon), 'nonwhite complete cell outside C++ world quad')
++    require(ink == frame['inkPixels'] and ink > 0, 'ink count')
++    require(minx > 0 and miny > 0 and maxx < w-1 and maxy < h-1, 'blank or edge')
++    require(lo == [minx, miny] and hi == [maxx+1, maxy+1], 'complete device bounds')
++    xs, ys = [p[0] for p in polygon], [p[1] for p in polygon]
++    expected_aabb = [[min(xs), min(ys)], [max(xs), max(ys)]]
++    require(all(abs(frame['worldAABB'][i][j]-expected_aabb[i][j]) <= 1e-10
++                for i in (0, 1) for j in (0, 1)), 'world AABB')
++    return {'inkPixels': ink, 'allNonwhiteFullCellsCovered': True}
++
++
++def negatives(frame, rgb, m):
++    results = []
++    for name in ('shrunken-quad', 'missing-mapping', 'wrong-mapping'):
++        bad = copy.deepcopy(frame)
++        if name == 'shrunken-quad':
++            # Preserve internal corner/mapping consistency, but omit part of the observed cells.
++            lo, hi = bad['deviceCellBounds']
++            lo[0] += .25
++            a, b, tx, c, d, ty = m
++            det = a*d-b*c
++            def inv(p):
++                x, y = p[0]-tx, p[1]-ty
++                return [(d*x-b*y)/det, (-c*x+a*y)/det]
++            bad['worldCorners'] = [inv(p) for p in ((lo[0], lo[1]), (hi[0], lo[1]),
++                                                   (hi[0], hi[1]), (lo[0], hi[1]))]
++            bad['worldAABB'] = [[min(p[k] for p in bad['worldCorners']) for k in (0, 1)],
++                                [max(p[k] for p in bad['worldCorners']) for k in (0, 1)]]
++        elif name == 'missing-mapping':
++            del bad['worldToPixel']
++        else:
++            bad['worldToPixel'][2] += 3
++        try:
++            verify_frame(bad, rgb, m)
++        except (ValueError, KeyError) as e:
++            results.append({'name': name, 'rejected': True, 'reason': str(e)})
++        else:
++            raise ValueError('negative control accepted: '+name)
++    return results
++
++
++def verify_directory(folder):
++    result = load(folder / 'gs-result.json')
++    require(result['status'] == 'native-buffer-complete', 'native GS execution did not complete')
++    require(result['cleanupComplete'] and result['ambientPointersUnchanged'], 'cleanup/ambient identity')
++    require(all(v == 0 for v in result['ambientWriteEvents'].values()), 'ambient write event')
++    require(len(result['frames']) == 10, 'expected 2 x 5 frames')
++    checks = []
++    for frame in result['frames']:
++        path = Path(frame['rgbPath'])
++        require(path.parent.resolve() == folder.resolve(), 'raw RGB must be in this case output')
++        rgb = path.read_bytes()
++        require(hashlib.sha256(rgb).hexdigest().upper() == frame['rgbSHA256'], 'RGB SHA')
++        calibration = load(folder / ('calibration-%d.json' % frame['width']))
++        m = calibration['selectedWorldToPixel']
++        require(calibration['selectionMaxResidual'] <= .55 and
++                calibration['heldOutMaxResidual'] <= .55, 'calibration residual')
++        verified = verify_frame(frame, rgb, m)
++        checks.append({'id': frame['id'], **verified, 'negativeControls': negatives(frame, rgb, m)})
++    return {'status': 'passed', 'checks': checks, 'glyphComplete': False, 'layoutIntegrated': False}
++
++
++def self_test():
++    # Verifier-only fixture. Not a native test or a second N9b implementation.
++    rgb = bytearray(b'\xff' * 8 * 8 * 3)
++    for y in (2, 3):
++        for x in (2, 3, 4):
++            rgb[(y*8+x)*3:(y*8+x)*3+3] = b'\0\0\0'
++    f = dict(width=8, height=8, rowStride=24, worldToPixel=[1, 0, 0, 0, 1, 0],
++             worldCorners=[[2, 2], [5, 2], [5, 4], [2, 4]],
++             worldAABB=[[2, 2], [5, 4]], deviceCellBounds=[[2, 2], [5, 4]], inkPixels=6)
++    positive = verify_frame(f, bytes(rgb), f['worldToPixel'])
++    return {'kind': 'offline-verifier-only', 'positive': positive,
++            'negativeControls': negatives(f, bytes(rgb), f['worldToPixel'])}
++
++
++if __name__ == '__main__':
++    p = argparse.ArgumentParser()
++    p.add_argument('case_output', nargs='?', type=Path)
++    p.add_argument('--self-test', action='store_true')
++    p.add_argument('--output', type=Path)
++    args = p.parse_args()
++    try:
++        require(args.self_test or args.case_output is not None, 'case_output or --self-test required')
++        report = self_test() if args.self_test else verify_directory(args.case_output)
++        code = 0
++    except (ValueError, KeyError, OSError) as e:
++        report, code = {'status': 'failed', 'error': str(e)}, 1
++    text = json.dumps(report, ensure_ascii=False, indent=2)
++    if args.output:
++        require(not args.output.exists(), 'output already exists')
++        args.output.write_text(text+'\n', encoding='utf-8')
++    print(text)
++    raise SystemExit(code)

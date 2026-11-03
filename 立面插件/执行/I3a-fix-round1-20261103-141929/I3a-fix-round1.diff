@@ -1,0 +1,87 @@
+--- a/src/ProjectFacts.cpp
++++ b/src/ProjectFacts.cpp
+@@ -133,9 +133,22 @@
+     std::array<FactPoint3, 4> result{{window.origin, corner(window.width, 0),
+         corner(window.width, window.height), corner(0, window.height)}};
+     for (const auto& point : result) { if (!finite(point)) { return std::nullopt; } }
+-    // Reject finite dimensions that disappear through floating-point rounding at a huge origin.
+-    if (samePoint(result[0], result[1]) || samePoint(result[0], result[3]) ||
+-        samePoint(result[1], result[2]) || samePoint(result[2], result[3])) { return std::nullopt; }
++    // Validate the represented edges, not just the ideal basis: translation/rounding
++    // can collapse one coordinate or distort a rectangle while all corners stay distinct.
++    const auto edge = [](FactPoint3 from, FactPoint3 to, double length) -> FactPoint3 {
++        return {(to.x - from.x) / length, (to.y - from.y) / length, 0.0};
++    };
++    const std::array<FactPoint3, 4> edges{{edge(result[0], result[1], window.width),
++        edge(result[3], result[2], window.width), edge(result[0], result[3], window.height),
++        edge(result[1], result[2], window.height)}};
++    for (std::size_t i = 0; i < edges.size(); ++i) {
++        const auto basis = i < 2 ? window.u : window.v;
++        if (!finite(edges[i]) || std::abs(edges[i].x - basis.x) > planeTolerance ||
++            std::abs(edges[i].y - basis.y) > planeTolerance) { return std::nullopt; }
++    }
++    const auto dot = edges[0].x * edges[2].x + edges[0].y * edges[2].y;
++    const auto area = edges[0].x * edges[2].y - edges[0].y * edges[2].x;
++    if (std::abs(dot) > 4 * planeTolerance || std::abs(area) < 1 - 8 * planeTolerance) { return std::nullopt; }
+     return result;
+ }
+ bool validUnits(const FactUnits& units) {
+@@ -254,10 +267,20 @@
+     const auto dx = point.x - facts.datumPoint.x;
+     const auto dy = point.y - facts.datumPoint.y;
+     const auto projected = dx * facts.unitHeightDirection.x + dy * facts.unitHeightDirection.y;
+-    const auto meters = facts.confirmed.datumMeters + projected * (facts.confirmed.units.mmPerInputUnit / 1000.0);
+-    if (!std::isfinite(dx) || !std::isfinite(dy) || !std::isfinite(projected) || !std::isfinite(meters)) {
++    if (!std::isfinite(dx) || !std::isfinite(dy) || !std::isfinite(projected)) {
+         return failed<double>(issue("FACT_DATUM_UNSUPPORTED", u8"实际高度换算超出有限数值范围。", "datum", facts.confirmed.read));
+     }
++    // Combine bounded mantissas before applying the joint exponent, so a tiny unit
++    // scale is not divided into zero before a large distance can balance it.
++    int distanceExponent = 0;
++    int unitExponent = 0;
++    const auto mantissa = std::frexp(projected, &distanceExponent) *
++        std::frexp(facts.confirmed.units.mmPerInputUnit, &unitExponent) / 1000.0;
++    const auto offsetMeters = std::scalbn(mantissa, distanceExponent + unitExponent);
++    const auto meters = facts.confirmed.datumMeters + offsetMeters;
++    if (!std::isfinite(offsetMeters) || (projected != 0.0 && offsetMeters == 0.0) || !std::isfinite(meters)) {
++        return failed<double>(issue("FACT_DATUM_UNSUPPORTED", u8"实际高度换算超出有限数值范围。", "datum", facts.confirmed.read));
++    }
+     return {meters, {}};
+ }
+ }
+--- a/tests/ProjectFactsTests.cpp
++++ b/tests/ProjectFactsTests.cpp
+@@ -85,6 +85,15 @@
+     const auto moved = projectFactElevationMeters(facts(input), {10294, -6592, 0});
+     require(moved.value && near(*moved.value, *elevation.value), "translation must retain actual elevation");
+     require(!projectFactElevationMeters(original, {294, 408, 1}).value, "off-plane measurement is unsupported");
++    input = confirmation();
++    input.units.mmPerInputUnit = 1e-321;
++    input.datumMeters = 0;
++    input.heightDirection = {1, 0, 0};
++    input.pointSelector = DatumPointSelector::lineStart;
++    std::get<FactLine>(input.datumSource.definition).start = {};
++    const auto tinyScale = projectFactElevationMeters(facts(input), {1e308, 0, 0});
++    require(tinyScale.value && std::abs(*tinyScale.value / 9.98012604599318e-17 - 1.0) < 1e-12,
++        "representable actual elevation must not become zero through intermediate unit underflow");
+ }
+ void factRotatedWindowRetainsFourCorners() {
+     const auto confirmed = facts(confirmation());
+@@ -95,6 +104,17 @@
+     auto input = confirmation();
+     input.window.v = input.window.u;
+     require(hasCode(confirmProjectFacts(input), "FACT_WINDOW_UNSUPPORTED"), "sheared/degenerate window rejected");
++    input = confirmation();
++    input.window.origin = {1e16, 0, 0};
++    input.window.width = 1; input.window.height = 1;
++    require(hasCode(confirmProjectFacts(input), "FACT_WINDOW_UNSUPPORTED"),
++        "four distinct adjacent corners that round to a line cannot form the selected rectangle");
++    input.window.width = 4; input.window.height = 4;
++    require(hasCode(confirmProjectFacts(input), "FACT_WINDOW_UNSUPPORTED"),
++        "noncollinear rounded corners must still retain the selected rectangle dimensions and directions");
++    input.window.u = {1, 0, 0}; input.window.v = {0, 1, 0};
++    input.window.width = 2; input.window.height = 2;
++    pointIs(facts(input).windowCorners[2], {1e16 + 2, 2, 0}, "exactly representable large-origin rectangle remains supported");
+ }
+ void factChangesLocateOnlyRequiredSubset() {
+     const auto input = confirmation();

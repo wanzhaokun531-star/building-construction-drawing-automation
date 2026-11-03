@@ -1,0 +1,15 @@
+{
+  "output": "D:\\Codex\\建筑施工图自动化\\阶段2\\交付\\百塘村邹总_标注深化_20261103\\百塘村邹总_三层平面_取消区域覆盖_v2.dwg",
+  "sha256": "3D96C9A892EDE6E40B6877D81B0F2AEF9B7A1C71F8E0757E1F757FEA06429FDA",
+  "qa": "qa-nomask-v187.json",
+  "removedWipeouts": 12,
+  "adjustedExteriorChains": 45,
+  "nativeWholeDimensionsPreserved": true,
+  "visualReviewFloors": [
+    1,
+    2,
+    3
+  ],
+  "normalQuit": true,
+  "releasedPluginChanged": false
+}

@@ -1,0 +1,281 @@
+{
+  "target": "CoreTests",
+  "label": "I3a-red",
+  "startedUtc": "2026-11-03T06:06:49.1509110Z",
+  "buildRoot": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\f1-20261103-140649-139-I3a-red-9cfd2cfc",
+  "inputs": [
+    {
+      "path": "src/ProjectFacts.h",
+      "sha256": "63E3F526ECFEA483BFDC2FFABD22187449D0D8248A6397396413C3358B7D302F"
+    },
+    {
+      "path": "src/ProjectFacts.cpp",
+      "sha256": "E07DE3F55E40EAB559B249A84E61798064B5013634E0BDC05554FEDAC359D340"
+    },
+    {
+      "path": "tests/ProjectFactsTests.cpp",
+      "sha256": "27298D1DBDAC8C7F44F5822DA18B9AB5AC73A8470F82948C536C4AA3DC6C68C1"
+    },
+    {
+      "path": "src/GenerationState.h",
+      "sha256": "AA941338FB2A763BBEEAA11A17D0ADD92CD707C9F9832B628C90024C45661AC2"
+    },
+    {
+      "path": "src/GenerationState.cpp",
+      "sha256": "22C2A864D07E6D498EC8047451333A7943814D8B896EAAC74301BF66218DB2EE"
+    },
+    {
+      "path": "tests/CommandStateTests.cpp",
+      "sha256": "29AB5EE58DDD9752839E9899D515D4715F8EA222C49D85E6B0AAD38E6C40D5E9"
+    },
+    {
+      "path": "src/ElevationModel.h",
+      "sha256": "094EAB9687EB8A761E012CE5EF1DC09661B37BA3309D360E268B6A8C1C96454B"
+    },
+    {
+      "path": "src/ElevationModel.cpp",
+      "sha256": "A7ECE83C56489793BBF1982F5EEDB7E1587AF360A91C985FF31BC367EDD29A90"
+    },
+    {
+      "path": "src/Recognition.h",
+      "sha256": "994C72FA6DB3BD5670F8FCE3E2B1E98897994168DF3781B1D2F230777413F09A"
+    },
+    {
+      "path": "src/Recognition.cpp",
+      "sha256": "50ED72F123EA1FF1CBAC85DCC56BD43A1C1C69FE686180DA43AD11C8D38CF63F"
+    },
+    {
+      "path": "src/RuleModel.h",
+      "sha256": "38B6FC7AFB44FDC5B8A75B89015A671BABE30083513BFD24D689BBCCD1852C5F"
+    },
+    {
+      "path": "src/AnnotationRules.h",
+      "sha256": "45451B524D67A071CD35F5533063CF9B4243369C5BF1075A6113E63BE77AC4BF"
+    },
+    {
+      "path": "src/AnnotationRules.cpp",
+      "sha256": "90AD0112BC53ACFE30024442E1A802D7D2A76AC6B2D8D99F2B57CA26E28CAF18"
+    },
+    {
+      "path": "src/MaterialRules.h",
+      "sha256": "B7A17F15731879F56F61BC67DEEA3B358EF293C1062F2216157FAF9E9D4E0053"
+    },
+    {
+      "path": "src/MaterialRules.cpp",
+      "sha256": "08F5B4562EA17387CA3B1973BFA1EE52EE5341E2169F335712A82DF4F8124BA6"
+    },
+    {
+      "path": "tests/AnnotationRulesTests.cpp",
+      "sha256": "D2D70DE19146096F4CD652D5719AA9F73D3923956FCA9C3BFAB7A5F54FE05E19"
+    },
+    {
+      "path": "tests/MaterialRulesTests.cpp",
+      "sha256": "E2F180D6E3B156137397F119AEF12827B53FD46300B6B0302B3500787E94FBD3"
+    },
+    {
+      "path": "src/WriteContracts.h",
+      "sha256": "FBF0C47C23C7C7FD33F7050F40403DC2BED9E3B499DB3B91CC629DE33A49CECB"
+    },
+    {
+      "path": "src/Layout.h",
+      "sha256": "9D7457E3ADC56223A945DEE0977E0A94B1D33747FA3901A65936CDDE209BE85F"
+    },
+    {
+      "path": "src/Layout.cpp",
+      "sha256": "63254A1238E99A43E9AEE3C11AA175571628AFCF04F29A6B6F9071511005527F"
+    },
+    {
+      "path": "tests/LayoutTests.cpp",
+      "sha256": "18EDFEE9FB1BE7709E6259858ED0AF8E031858ECAAF177B691AD4912E086D772"
+    },
+    {
+      "path": "tests/CoreTests.cpp",
+      "sha256": "29B3742D73D9E422B66535C3CA00EA9A20AC0517C4C28D59CC29779BD7A22661"
+    },
+    {
+      "path": "tests/RecognitionTests.cpp",
+      "sha256": "E647283CEF871BE487CE22BBFD58E2BFD42EA2D1DF15730497283C7F18C96A34"
+    },
+    {
+      "path": "tests/ReferenceTests.cpp",
+      "sha256": "060C7589F03BBAF6223CEC33999B0483608125515D62FCA47637BAE7C7290708"
+    },
+    {
+      "path": "tests/ScopeTests.cpp",
+      "sha256": "3DEF7064CE1FB4A383192D03BAE5EFB1B1E2E7BB6A53614350096799AE2E5582"
+    },
+    {
+      "path": "tests/TestSupport.h",
+      "sha256": "616B50BFE17D372AF2A0734616A8703340D2F167457D674B2CFD4995F541EDB2"
+    },
+    {
+      "path": "tests/ElevationCoreTests.vcxproj",
+      "sha256": "218215765378915EFC6C9A4EBF30FE312F94D90967A1744D4D8F0775611901BD"
+    },
+    {
+      "path": "tools/build.ps1",
+      "sha256": "97533F0C3D5A750B0ACCFBD9694F9B93587F746FC69BBB9813D0BC8772AA2AB1"
+    },
+    {
+      "path": "tests/fixtures/scheme-scene.tsv",
+      "sha256": "01B8B31AC1EF89E8C2678E84808CF12BC7207AA6AFE724105F666B38562D1C40"
+    },
+    {
+      "path": "tests/fixtures/scheme-expected.tsv",
+      "sha256": "E5D1C9E7D74909A2D7D95DE75D42F1DD7B2A3000B1AE6C051ED84551529723C2"
+    },
+    {
+      "path": "tests/fixtures/scheme-scene-manifest.json",
+      "sha256": "126F528EDF5B962D5B57CC2CFA1929E739D3400047BDDCCC4FF2A107AC2CEAC1"
+    }
+  ],
+  "commands": [
+    "cmd.exe /d /c ..\\..\\build-command.cmd (cwd=input/tests)",
+    "out/ElevationCoreTests.exe --all",
+    "out/ElevationCoreTests.exe --case UnknownCase (expected 2)"
+  ],
+  "outputs": [
+    {
+      "path": "build-command.cmd",
+      "sha256": "1DD6FB2C8AC8B59B1FAE90EBED5B3E7F35A17D2DA2C30B893F2B96FD9CFD0DE0"
+    },
+    {
+      "path": "build.log",
+      "sha256": "077A06D28CCF91E111E4E9A82FFF7DB5CC446362F1D71FF957E1BAA5FFBAB14F"
+    },
+    {
+      "path": "tests-all.log",
+      "sha256": "0E220848211C99F4C92BB8886FB29C58DCC003E226DB927E034886FCFF8EAF3F"
+    },
+    {
+      "path": "tests-unknown.log",
+      "sha256": "94CC7D056CD1100B3979D911714396EF3D95F6707D24998ABFCF654EADD995A1"
+    },
+    {
+      "path": "obj\\AnnotationRules.obj",
+      "sha256": "8D75417696EB645AD3627AC80C061D77114D182C27AE38B7C276DCC31F1AF355"
+    },
+    {
+      "path": "obj\\AnnotationRulesTests.obj",
+      "sha256": "D0BE835F58F95340FD0CD79BD8FC49789BC21612758506D8533488AD29E9A025"
+    },
+    {
+      "path": "obj\\CommandStateTests.obj",
+      "sha256": "6DB38B6A7E535E4519C98AE8288204FB82D219419CD68B3FFCBC9C7E7143A10D"
+    },
+    {
+      "path": "obj\\CoreTests.obj",
+      "sha256": "A2CE493633DA2DA1065581C1192FBB61165C5E7A898E6EB531116F3B778546BF"
+    },
+    {
+      "path": "obj\\ElevationCoreTests.Build.CppClean.log",
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "obj\\ElevationCoreTests.vcxproj.FileListAbsolute.txt",
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "obj\\ElevationModel.obj",
+      "sha256": "DECADB95242F497A9582C0EA21141927136D0CA1877747E8D0BA9A2F10E966FA"
+    },
+    {
+      "path": "obj\\GenerationState.obj",
+      "sha256": "79AE4E47F69DA352BC73132C94044A4C22423DAE2E61E5250CD45207FCAAABAC"
+    },
+    {
+      "path": "obj\\Layout.obj",
+      "sha256": "790979DAA31FD5315336826BC16351E78AA072F7ED1DC85E2BC4AE248A54987E"
+    },
+    {
+      "path": "obj\\LayoutTests.obj",
+      "sha256": "0F406FE37564B6CB7C946E2D604BD243129734D563A935695546B88227562286"
+    },
+    {
+      "path": "obj\\MaterialRules.obj",
+      "sha256": "0CC61C5277ADE3E0BBEA202150043A1570B6C169169236EF6B5356843C6628E3"
+    },
+    {
+      "path": "obj\\MaterialRulesTests.obj",
+      "sha256": "74FD4045744723D686FA8D98CE45A7AA60D84079DC69C096F484AB2F4243FF75"
+    },
+    {
+      "path": "obj\\ProjectFacts.obj",
+      "sha256": "89D96BDAC17C120A25F0498024867CE22ECB7C98E9FFA801C8E71CF50660EA67"
+    },
+    {
+      "path": "obj\\ProjectFactsTests.obj",
+      "sha256": "D096862FA3008864FB921B45089356E1802C8B12C42D3B88775ADDE6179CC416"
+    },
+    {
+      "path": "obj\\Recognition.obj",
+      "sha256": "2A7B38F195DAD93F99DFA727C01AB3AE63445062D7665C83A949CE95FE99C31C"
+    },
+    {
+      "path": "obj\\RecognitionTests.obj",
+      "sha256": "6D0CAA44285B8692739D1890E9C91870B17A1C57E56CB3776F6989DB2B2E95CF"
+    },
+    {
+      "path": "obj\\ReferenceTests.obj",
+      "sha256": "509B5CF8D508BCA4581892D3B6143281067986559F65BE00E5FE855C60FB2FFC"
+    },
+    {
+      "path": "obj\\ScopeTests.obj",
+      "sha256": "43D4724C36D08E37948D5942DCCCF2492E72B525353F109E11EDDAC6B98B6E85"
+    },
+    {
+      "path": "obj\\vc141.pdb",
+      "sha256": "C045B0A5397BD08DF72763EFB110E451477EACDFD855699A8AD62898B61432DA"
+    },
+    {
+      "path": "obj\\Elevatio.D31086B1.tlog\\CL.command.1.tlog",
+      "sha256": "48EE1F164FCB09CD9B5D5013573426F87DC6D9F29B3D39822E2849F9B7C70178"
+    },
+    {
+      "path": "obj\\Elevatio.D31086B1.tlog\\CL.read.1.tlog",
+      "sha256": "7371DEB70F16FFF2D1269315987839509BFF170ECE00818B5710972CB4C00D31"
+    },
+    {
+      "path": "obj\\Elevatio.D31086B1.tlog\\CL.write.1.tlog",
+      "sha256": "3E857EEB88F37FC8021540CAF3852391B16BB3727C71706EFEEC12A1C115FC20"
+    },
+    {
+      "path": "obj\\Elevatio.D31086B1.tlog\\ElevationCoreTests.lastbuildstate",
+      "sha256": "541589D41119286327F4472BD9774CE03A11D6F59DB8138F118FF7B01CCC8284"
+    },
+    {
+      "path": "obj\\Elevatio.D31086B1.tlog\\link.command.1.tlog",
+      "sha256": "F40C8AB3E5D257D26BB1B2467B39EE4C1DA9CD669456A84C0B7DAF4363B19910"
+    },
+    {
+      "path": "obj\\Elevatio.D31086B1.tlog\\link.read.1.tlog",
+      "sha256": "3FA872DDD00FBA154BCD54332E89742A891EB986278026984CC2FA8FC266D544"
+    },
+    {
+      "path": "obj\\Elevatio.D31086B1.tlog\\link.write.1.tlog",
+      "sha256": "0A931A10789C7D5A7AB990F9237E6752323E84C8CF6AA7B7D5B6A13D5AF1C287"
+    },
+    {
+      "path": "out\\ElevationCoreTests.exe",
+      "sha256": "3725C4692CD7A6399B7C510E03C1763C237AB5B30E533CC4E90AAEF602D12B51"
+    },
+    {
+      "path": "out\\ElevationCoreTests.ilk",
+      "sha256": "E2FC343FC4C5E43A894C270320443382A363E5C4F80C630D51DB0D1E230E644D"
+    },
+    {
+      "path": "out\\ElevationCoreTests.pdb",
+      "sha256": "1AD60C6E274FE3AEE5C2A3FA99A226EC7214415B47E395E2D6D8E5CA45FB2B3A"
+    },
+    {
+      "path": "out\\recognition-analysis.json",
+      "sha256": "45CB6EF230143278479176DA9F982612D1AE2C7DFE816300DEC3F188782C3ECD"
+    }
+  ],
+  "buildExitCode": 0,
+  "testExitCode": 1,
+  "unknownCaseExitCode": 2,
+  "exitCode": 1,
+  "fixtureSourceSHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1",
+  "finishedUtc": "2026-11-03T06:07:04.8065608Z"
+}

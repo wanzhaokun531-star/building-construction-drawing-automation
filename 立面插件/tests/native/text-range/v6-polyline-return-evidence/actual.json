@@ -1,0 +1,13 @@
+{
+  "pdf": "D:\\Codex\\\u5efa\u7b51\u65bd\u5de5\u56fe\u81ea\u52a8\u5316\\\u9636\u6bb51\\runs\\elevation-native-20261103-093339-fbac8c33\\case\\projection.pdf",
+  "pdfSHA256": "30E4F440A1C26C9E217919BCF2D24F81EFFAF60D0D476EB3848B24086F763A86",
+  "dpi": 144,
+  "inkPixels": 12,
+  "inkBox": [
+    164,
+    1514,
+    176,
+    1515
+  ],
+  "meaning": "actual failed v6 native PDF has one visible stored calibration primitive; not text-range RED"
+}

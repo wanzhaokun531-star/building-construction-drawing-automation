@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>AcGiGeometry::text</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+<link rel="stylesheet" type="text/css" href="default_plus.css" media="screen, projection, tv " />
+<script language=javascript src="arxref.js"></script>
+<script language=javascript src="ac_common.js"></script>
+<script language=javascript src="ac.acad_ak.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="ObjectARX_Reference_Guide.html">ObjectARX Reference Guide</a> &gt; <a href="AcGi_Classes.html">AcGi Classes</a> &gt; <a href="AcGiGeometry.html">AcGiGeometry Class</a> &gt; <a href="!!MEMBERTYPE_Methods_AcGiGeometry.html">AcGiGeometry Methods</a> &gt; <a href="!!OVERLOADED_text_AcGiGeometry.html">text Method</a> &gt; <a href="AcGiGeometry__text@AcGePoint3d_@AcGeVector3d_@AcGeVector3d_@ACHAR_@Adesk__Int32@Adesk__Boolean@AcGiTextStyle__@const.html">text(AcGePoint3d&amp;, AcGeVector3d&amp;, AcGeVector3d&amp;, ACHAR*, Adesk::Int32, Adesk::Boolean, AcGiTextStyle &amp;) Method</a></div>
+<div class="Element92">
+<div class="Element5">
+AcGiGeometry::text</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<div class="Element58">
+<a name="432B2B"></a><div class="Element99">
+C++</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #871F78">virtual</span></strong> Adesk::Boolean <strong><span style="color: #660000">text</span></strong>(
+    <strong><span style="color: #871F78">const</span></strong> AcGePoint3d&amp; <strong><span style="color: #660000">position</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> AcGeVector3d&amp; <strong><span style="color: #660000">normal</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> AcGeVector3d&amp; <strong><span style="color: #660000">direction</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> ACHAR* <strong><span style="color: #660000">pMsg</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> Adesk::Int32 <strong><span style="color: #660000">length</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> Adesk::Boolean <strong><span style="color: #660000">raw</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> AcGiTextStyle &amp; <strong><span style="color: #660000">pTextStyle</span></strong>
+) <strong><span style="color: #871F78">const</span></strong> = 0;</pre></div></div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element252">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element240" valign="top" width="50%">
+<div class="Element241">
+Parameters&nbsp;</div></td><td class="Element244" valign="top" width="50%">
+<div class="Element245">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+position&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input start or insertion point for the text&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+normal&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input normal for the plane to contain the text&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+direction&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input direction the text will go&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+pMsg&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input text string to display&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+length&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input length&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+raw&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input Boolean informing AutoCAD whether to interpret escape codes&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+pTextStyle&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input AcGiTextStyle object describing the desired text characteristics&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="4465736372697074696F6E"></a><div class="Element14">
+Description</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This function uses an <span class="Element146">AcGiTextStyle</span> object to determine the font, size, etc. to use for the text.&nbsp;</p>
+<p class="Element10">
+The position, normal, and direction can be thought of as the foundation for a coordinate system that orients the text in 3D world space, where the position is the origin, the direction is the <i>X</i> axis, and the normal is the <i>Z</i> axis.&nbsp;</p>
+<p class="Element10">
+A copy of the text string is used in <span class="Element146">pMsg</span>, so the calling application is responsible for the memory of the string passed in.&nbsp;</p>
+<p class="Element10">
+A <span class="Element146">length</span> value of -1 indicates that <span class="Element146">pMsg</span> is null terminated. A value greater than 0 indicates the length in bytes of <span class="Element146">pMsg</span>.&nbsp;</p>
+<p class="Element10">
+A <span class="Element146">raw</span> value of <span class="Element146">Adesk::kTrue</span> indicates that the AutoCAD escape codes {%%U, %%d, %%P, and %%nnn} should not be interpreted.&nbsp;</p>
+<p class="Element10">
+A return value of <span class="Element146">Adesk::kFalse</span> (that is, 0) indicates that the primitive has been successfully stored in the graphics database. A return value of <span class="Element146">Adesk::kTrue</span> indicates that the operation has been terminated and the application wants to get control back as soon as possible.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p></div>
+</div>
+<a name="4C696E6B73"></a><div class="Element14">
+Links</div>
+<div class="Element11">
+<div class="Element10">
+<a href="AcGiGeometry.html">AcGiGeometry</a></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<table class=FooterTable width=100%><tr valign=top>
+<td>&nbsp;</td>
+<td align=right>&nbsp;<span class="CommentsLink" onclick="doComments();" title="Click here to send a comment about this topic.">Comments?</span>&nbsp;</td>
+</tr></table>
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

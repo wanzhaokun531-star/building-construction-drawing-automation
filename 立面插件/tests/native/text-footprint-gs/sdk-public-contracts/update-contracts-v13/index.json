@@ -1,0 +1,12 @@
+{
+  "source": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm",
+  "chmSHA256": "92BB53D177903BB780329F5EBD5A72374C434F6DF4AF25CEB5449C90BB928BA2",
+  "originalByteEntries": {
+    "AcGsDevice__update@AcGsDCRect__.html": "94B7022AE3662F1F2F3A52FEBA0A98FAE8DB23CCF4EDA571ABE2F523C8812D4C",
+    "AcGsView__update.html": "68127C98DF921F4D1550B1E22641DE6A520E250E21B9DCBF811C665E23708307",
+    "AcGsView__flush.html": "CC709CCB42EF602049F0A77414D87D77183153A2A57B9E74E4A0D5DD3236C374",
+    "AcGsDevice__update@AcGsDCRect_@GS__SyncBehavior.html": "CDFE0D28A63252D722DAADB2CC429CB9E91FD1C64887EE00CF0529F07A313781",
+    "AcGsView__update@GS__SyncBehavior.html": "DB560DC2E26975D52E9E9AB4F865802ADF37E58C9B591097629D32FA53590B5A"
+  },
+  "interpretation": "ordinary device update not proved asynchronous; ordinary noninteractive view update documented; flush only during interactivity; both SyncBehavior overloads For Future Use, not invoked"
+}

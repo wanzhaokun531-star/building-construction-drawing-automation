@@ -1,0 +1,19 @@
+--- v4/NativeGsTextFootprint.cpp
++++ v5/NativeGsTextFootprint.cpp
+@@ -81,6 +81,7 @@
+     std::wstring font,bigfont;std::string fontSHA,bigfontSHA;std::vector<std::string> frames;
+     void log(const char* event,Fields f={}){if(!trace.valid())return;f.push_back({"event",q(event)});write_flushed(trace.get(),object(f)+"\n");}
+     bool ambientSame()const{return current==acDocManager->curDocument()&&active==acDocManager->mdiActiveDocument()&&ambient==acdbHostApplicationServices()->workingDatabase();}
++    bool resourcesReleased()const noexcept{return !db&&!marker&&!kernel&&!model&&!device&&!view&&!associated&&!rule&&!ruleAttached&&!watchAttached;}
+     void cleanupLog(const char* event,Fields f={})noexcept{try{log(event,std::move(f));}catch(...){}}
+     bool cleanup(){
+         if(view)view->eraseAll();
+@@ -238,7 +239,7 @@
+         session=std::make_unique<Session>();auto& s=*session;s.config=load_config(moduleHandle);s.evidence=std::make_unique<Evidence>(s.config);validate_identity(s.config);require(s.config.caseName==L"NativeGsTextFootprint","case mismatch");
+         s.trace=File(CreateFileW((s.config.output+L"\\gs-trace.jsonl").c_str(),GENERIC_WRITE,FILE_SHARE_READ,nullptr,CREATE_NEW,FILE_ATTRIBUTE_NORMAL|FILE_FLAG_WRITE_THROUGH,nullptr));require(s.trace.valid(),"trace unavailable");
+         std::string failure;try{lifecycleControls(s);execute(s);}catch(const std::exception& e){failure=e.what();}catch(...){failure="unknown native execution exception";}
+-        const bool cleaned=s.cleanup();const bool ambientSame=s.ambientSame();const auto dbmodAfter=dbmod();
++        const bool primaryCleaned=s.cleanup();const bool cleaned=primaryCleaned&&s.resourcesReleased()&&std::all_of(lifecycleSessions.begin(),lifecycleSessions.end(),[](const auto& control){return control->resourcesReleased();});const bool ambientSame=s.ambientSame();const auto dbmodAfter=dbmod();
+         s.log("ambient.after",{{"current",address(acDocManager->curDocument())},{"active",address(acDocManager->mdiActiveDocument())},{"workingDatabase",address(acdbHostApplicationServices()->workingDatabase())},{"dbmod",std::to_string(dbmodAfter)},{"writeEvents",s.watch.json()}});
+         save(s.config.output+L"\\gs-result.json",object({{"status",failure.empty()&&cleaned&&ambientSame&&s.watch.untouched()&&s.dbmodBefore==dbmodAfter?q("native-buffer-complete"):q("failed")},{"error",quote(failure)},{"cleanupComplete",cleaned?"true":"false"},{"ambientPointersUnchanged",ambientSame?"true":"false"},{"ambientDBMODBefore",std::to_string(s.dbmodBefore)},{"ambientDBMODAfter",std::to_string(dbmodAfter)},{"ambientWriteEvents",s.watch.json()},{"frames",array(s.frames)},{"glyphComplete","false"},{"capabilityUpgradeAllowed","false"},{"layoutIntegrated","false"}}));
+         require(cleaned,"cleanup incomplete; module must remain loaded");require(ambientSame,"ambient identities changed");require(s.watch.untouched(),"ambient database received write events");require(failure.empty(),failure);

@@ -1,0 +1,15 @@
+{
+  "originalReceipt": "build/n9b-20261103-101858-736-delivery-b2a48216/receipt.json",
+  "reportBeforeFixSHA256": "20CD14B99AFBDA1F9814AFC4E2C243FF38F7E87C1606E4111AD8E37755B913E5",
+  "originalIndexSHA256": "84699A9F1FB718C195792D5E3C14C2805973658602578F8703F3F8D6401AE695",
+  "changedFileBaselines": [
+    {
+      "path": "src/TextOccupancy.cpp",
+      "sha256": "7EBDEBF6F188F0560D32411B3B3BB6E4C4E191DE26D30739A582DC63776142F0"
+    },
+    {
+      "path": "tests/text-occupancy/TextOccupancyTests.cpp",
+      "sha256": "365B6C3625EB2684E0DFE25345B4067971EAB37CC5C6A6AA0C629DAEDB579580"
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+--- b2a48216/src/TextOccupancy.cpp
++++ fix-round1/src/TextOccupancy.cpp
+@@ -45,7 +45,29 @@
+         q.bounds.maximum.x=std::max(q.bounds.maximum.x,p.x);
+         q.bounds.maximum.y=std::max(q.bounds.maximum.y,p.y);
+     }
+-    return boundsValid(q.bounds);
++    if(!boundsValid(q.bounds)) return false;
++    // Validate the actual rounded corners, not just their AABB. Translate to
++    // adjacent edge vectors before cross products so a large world origin does
++    // not cancel the area. Normalize each edge to avoid product overflow; no
++    // geometric tolerance or margin turns a collapsed polygon into a success.
++    double firstTurn=0;
++    for(std::size_t k=0;k<q.corners.size();++k) {
++        const auto p=q.corners[k];
++        const auto next=q.corners[(k+1)%q.corners.size()];
++        const auto after=q.corners[(k+2)%q.corners.size()];
++        const Point2 edge={next.x-p.x,next.y-p.y};
++        const Point2 following={after.x-next.x,after.y-next.y};
++        if(!finite(edge) || !finite(following)) return false;
++        const double scale=std::max(std::abs(edge.x),std::abs(edge.y));
++        const double followingScale=std::max(std::abs(following.x),std::abs(following.y));
++        if(scale==0 || followingScale==0) return false;
++        const double turn=(edge.x/scale)*(following.y/followingScale)-
++            (edge.y/scale)*(following.x/followingScale);
++        if(!std::isfinite(turn) || turn==0) return false;
++        if(k==0) firstTurn=turn;
++        else if((turn>0)!=(firstTurn>0)) return false;
++    }
++    return true;
+ }
+ }
+ Result<TextQuadrilateral> transformTextRange(const TextRangeInput& i) {
+--- b2a48216/tests/text-occupancy/TextOccupancyTests.cpp
++++ fix-round1/tests/text-occupancy/TextOccupancyTests.cpp
+@@ -111,6 +111,26 @@
+     c=context();c.dpiX=0;require(!measureTextFootprint(b,{},c).canCommit(),"dpi");
+     c=context();c.pixelBoundaryPhase.y=std::numeric_limits<double>::quiet_NaN();require(!measureTextFootprint(b,{},c).canCommit(),"phase");
+ }
++void rejectRangeCollapsedByLargeTranslation() {
++    TextRangeInput i; i.localRange={{0,0},{4,0.1}};
++    i.coordinates=TextRangeCoordinates::afterDisplayBackward;
++    i.localX={1,1}; i.localY={1,-1}; i.position={1e16,1e16};
++    const auto collapsed=transformTextRange(i);
++    require(!collapsed.canCommit(),"large translation returned a collapsed range");
++    require(collapsed.issues[0].code=="TEXT_RANGE_NUMERIC","collapse must be numeric rejection");
++    // The same finite translation is valid when the actual corners retain area.
++    i.localRange.maximum.y=4;
++    require(transformTextRange(i).canCommit(),"representable large translated range rejected");
++}
++void rejectInversePixelMappingCollapse() {
++    std::vector<std::uint8_t> rgb(27,255); rgb[12]=0;
++    const TextRgbBuffer b={rgb.data(),rgb.size(),3,3,9};
++    const auto collapsed=measureTextFootprint(b,{0.125,0.125,-2.5e15,5,-5,0},context());
++    require(!collapsed.canCommit(),"inverse mapping returned a collapsed cell");
++    require(collapsed.issues[0].code=="TEXT_PIXEL_NUMERIC","inverse collapse must be numeric rejection");
++    require(measureTextFootprint(b,{0.125,0.125,-2.5e15,0.125,-0.125,0},context()).canCommit(),
++        "representable large inverse-mapped cell rejected");
++}
+ }
+ int main() {
+     const std::vector<std::pair<const char*, std::function<void()>>> tests={
+@@ -121,7 +141,9 @@
+         {"explicit sheared and reflected basis",shearAndReflectedBasis},
+         {"full scan padded RGB and four inverse corners",fullScanStrideAndInverseCorners},
+         {"blank and four buffer edges rejected",rejectBlankAndEachEdge},
+-        {"buffer length and overflow rejected",rejectBadBuffer},{"mapping and context rejected",rejectBadMappingAndContext}};
++        {"buffer length and overflow rejected",rejectBadBuffer},{"mapping and context rejected",rejectBadMappingAndContext},
++        {"large translated range collapse rejected",rejectRangeCollapsedByLargeTranslation},
++        {"inverse pixel mapping collapse rejected",rejectInversePixelMappingCollapse}};
+     int failed=0; for(const auto& t:tests){try{t.second();std::cout<<"PASS "<<t.first<<'\n';}
+         catch(const std::exception& e){++failed;std::cout<<"FAIL "<<t.first<<": "<<e.what()<<'\n';}}
+     std::cout<<tests.size()-failed<<'/'<<tests.size()<<" passed\n";return failed?1:0;

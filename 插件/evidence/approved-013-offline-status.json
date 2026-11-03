@@ -1,0 +1,18 @@
+{
+  "recorded": "2026-11-02T19:50:08.316798+08:00",
+  "candidate": "D:\\Codex\\建筑施工图自动化\\插件\\build\\candidate-013\\BuildingPlanPlugin2020.arx",
+  "ARXSHA256": "AA0B2FC30A55F7A23C725B6EDDDB8AE06A7BA8C0F927FB2CA49880BF9E7A82BF",
+  "buildPassed": true,
+  "pureAreaTests": 9,
+  "configurationTests": 6,
+  "actualWallAreaValues": 20,
+  "installerCoreTests": 6,
+  "nativeGenerationValidated": false,
+  "packageDelivered": false,
+  "existing012Unchanged": true,
+  "CADSessionPauseForPlatform": true,
+  "ownCADRunning": false,
+  "lastSession": "v165",
+  "lastSessionExitCode": 70,
+  "lastSessionNormalQUIT": false
+}

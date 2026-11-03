@@ -1,0 +1,138 @@
+{
+  "contract": "bce.native-gs-crash-owned-closure-audit.v1",
+  "recorded": "2026-11-03T11:01:41.563372+08:00",
+  "binding": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-44227fc6.json",
+  "bindingSHA256": "19B8EFA445FCA11E4A098DE3027679034ADFA507255168FD4DF969E00C365BDA",
+  "nonce": "44227fc6c4f64da9b4014000b7b3a8a7",
+  "processId": 25168,
+  "candidateSHA256": "D1D5E7F83D452E158AA3B242FCCC49B7C266E7E06EF85682B526C29FAC62121B",
+  "actualCandidateModulePath": "c:\\program files\\autodesk\\applicationplugins\\codexelevationstage1_44227fc6c4f64da9b4014000b7b3a8a7\\bcecase_44227fc6.arx",
+  "faultAddressRaw": "1352F0D7h",
+  "faultAddressCandidateModulesByLow32": [
+    {
+      "moduleName": "accore.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\accore.dll",
+      "baseAddressHex": "0x7FF913200000",
+      "moduleMemorySize": 14430208,
+      "offsetHex": "0x32f0d7",
+      "candidateFullAddressHex": "0x7ff91352f0d7",
+      "inference": "Window address treated as low 32 bits; candidate membership only, not a stack trace or proven full fault IP"
+    }
+  ],
+  "faultStackUnavailable": true,
+  "fatalText": "Unhandled Access Violation Reading 0x0000 Exception at 1352F0D7h",
+  "fatalDialogEvidence": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-105830-44227fc6\\owned-fatal-dialog-readonly.json",
+  "nativeCaseCommitComplete": false,
+  "rawNativeStatus": "failed",
+  "rawNativeErrors": [
+    "INCOMPLETE: command did not reach final evidence commit"
+  ],
+  "standardWatcherCompleted": false,
+  "watcherClosureCreated": false,
+  "cleanupRoute": "Exact StopOwnedWorker on own fatal modal after one read-only text/modules attempt; no button, recovery/save, settings or other process action; retirement used real supervisor final",
+  "gsResultPresent": false,
+  "lifecycle1": {
+    "faultPoint": "injected-after-model-association",
+    "faultReached": true,
+    "observed": "injected-after-model-association",
+    "cleanupComplete": true,
+    "ambientObserved": true,
+    "ambientUnchanged": true,
+    "ambientWriteEvents": {
+      "openedForModify": 0,
+      "modified": 0,
+      "appended": 0,
+      "erased": 0,
+      "headerWrites": 0
+    },
+    "dbmodBefore": 1,
+    "dbmodAfter": 1,
+    "passed": true
+  },
+  "lifecycle2ResultPresent": false,
+  "lifecycle2LastTrace": {
+    "event": "destroyView.before"
+  },
+  "lifecycle2LastCleanupEvents": [
+    {
+      "faultPoint": 2,
+      "view": 1882662863168,
+      "marker": 1883832328048,
+      "model": 1882662860688,
+      "device": 1882662861568,
+      "kernel": 1882662832224,
+      "database": 1883832325136,
+      "ruleAttached": false,
+      "event": "cleanup.enter"
+    },
+    {
+      "event": "view.eraseAll.before"
+    },
+    {
+      "event": "view.eraseAll.after"
+    },
+    {
+      "event": "rule.reset.before"
+    },
+    {
+      "event": "rule.reset.after"
+    },
+    {
+      "event": "marker.close.before"
+    },
+    {
+      "event": "marker.close.after"
+    },
+    {
+      "event": "destroyView.before"
+    }
+  ],
+  "mainTraceBytes": 0,
+  "mainSceneFramesProduced": 0,
+  "secondSessionSDKCleanupProven": false,
+  "validGlyphBehaviorResult": false,
+  "workerExitCode": 70,
+  "explicitStopRequested": true,
+  "forcedTermination": true,
+  "normalQuit": false,
+  "workerExited": true,
+  "desktopClosed": true,
+  "processHandlesClosed": true,
+  "stagedFilesRemoved": 4,
+  "sixInputSHAsUnchanged": true,
+  "ownActive": 0,
+  "remainingCadObserved": [
+    {
+      "ProcessId": 47676,
+      "CreationDate": "/Date(1793670634089)/",
+      "ExecutablePath": "D:\\CAD2020\\AutoCAD 2020\\acad.exe",
+      "CommandLine": "\"D:\\CAD2020\\AutoCAD 2020\\acad.exe\"  /p TArch20V8 /t \"C:\\Tangent\\TArchT20V8\\sys23x64\\acad.dwt\""
+    },
+    {
+      "ProcessId": 39832,
+      "CreationDate": "/Date(1793674892340)/",
+      "ExecutablePath": "D:\\CAD2020\\AutoCAD 2020\\acad.exe",
+      "CommandLine": "\"D:\\CAD2020\\AutoCAD 2020\\acad.exe\" /nologo /p \"CodexS1Native_6f6df19579f3\" /t \"C:\\Users\\PC\\AppData\\Local\\Autodesk\\AutoCAD 2020\\R23.1\\chs\\Template\\acadiso.dwt\" /ld \"C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexStage1Probe_0b6b3d80c69245f58f7c6e0e232aaa76\\S1Acad_0b6b3d80.arx\" /b \"D:\\Codex\\����ʩ��ͼ�Զ���\\�׶�1\\runs\\isolated-autocad-20261103-110131\\boot.scr\""
+    }
+  ],
+  "userCadTouched": false,
+  "ownedUserShows": 0,
+  "ownedForeground": 0,
+  "monitorError": null,
+  "inputDesktopReadErrors": 0,
+  "relatedCadEventsNeedReview": false,
+  "droppedEvents": 0,
+  "timedOut": false,
+  "evidenceSHA256": {
+    "case/native-case.json": "7A4028F43047E1C554BAE7E65A47D44861AA7A7F0EA89E7E72FF616A1969E811",
+    "case/gs-trace.jsonl": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "case/lifecycle-1/result.json": "AF114F5C97DE6623AE9C80C53958B7BA7C4F0629D1E8B5C5B905746A81A42315",
+    "case/lifecycle-1/gs-trace.jsonl": "34CB545A7A11C4F0C9AC375BC3AC616BA2BBA3397E8741DBC35E8157676FF446",
+    "case/lifecycle-2/gs-trace.jsonl": "FEDD0D08995D406AB1CDC1A235F1BFE7F98CCD3757D32E5D194CDC152E96D312",
+    "owned-fatal-dialog-readonly.json": "3BEB8B1BE515233F7BA59D8C89D4F549B883F526679F4645564BF00869F24A39",
+    "owned-process-modules.json": "2068704AE20E73C27EAD494894E8C111BC34BA65521A3C6DC994E7202C7C9666",
+    "isolation-final.json": "5A3C49FCA0DB0745BFDEE2BDBA6A78F140D866D9DF26C2FB855EEBD3C6661655",
+    "reader-retirement.json": "04418EC6A5DBD8EA23650459B72D9A6B4E629767EC56ACDBAA2035B6F2ACADA2"
+  },
+  "scope": "Bounded diagnostic run; exact before/after absence and modal evidence retained, no inferred unrecorded stack, no fabricated watch closure or normal QUIT"
+}

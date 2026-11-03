@@ -1,0 +1,2902 @@
+{
+  "contract": "bce.dimension-adapt-final-manifest.v1",
+  "recordedUtc": "2026-11-02T15:15:17.275955+00:00",
+  "implementationStatus": "DONE_WITH_CONCERNS",
+  "nativeStatus": "partial",
+  "fullTaskReviewPending": true,
+  "scope": "N8a isolated native dimension adaptation trial, not production service or current drawing submission",
+  "caseName": "DimensionAdaptMm100Nontrivial",
+  "implementationFiles": [
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/DimensionAdaptDriver.cpp",
+      "sha256": "95B520A1BE021C7C1D903C94FCAF0FEEDE25538B01D6278CFBA468F398846570",
+      "bytes": 17504,
+      "role": "frozen implementation input"
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/DimensionAdaptGreen.inc",
+      "sha256": "3C18EE165D8D1AC17772510175FDB499534B01E0825BB7F779ECCDDF13173D7C",
+      "bytes": 60915,
+      "role": "frozen implementation input"
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/DimensionTopology.h",
+      "sha256": "12E6C5EA8410910D5045AB217AAD073DCDB7246C8829D4991456DDC30C96939B",
+      "bytes": 3527,
+      "role": "frozen implementation input"
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/DimensionTopologyTests.cpp",
+      "sha256": "3D2518C314E7E4B63A9EAE896243908486C496083DCC00F2C55B53183AB6D80E",
+      "bytes": 1753,
+      "role": "frozen implementation input"
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/ElevationDimensionAdaptCases.vcxproj",
+      "sha256": "4396B9D93D7BFFBC518D3BADBD559DAFC67192BEA1E982B9399516BBCEBCAD41",
+      "bytes": 2566,
+      "role": "frozen implementation input"
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tools/build_dimension_adapt.ps1",
+      "sha256": "046037EDEC085BF8FFADCD6FD916828D4C7B90EF150BB719B4230059AE0B37C7",
+      "bytes": 4166,
+      "role": "frozen implementation input"
+    }
+  ],
+  "report": {
+    "path": "D:/Codex/建筑施工图自动化/立面插件/执行/N8a-尺寸链适配原生小试报告.md",
+    "sha256": "45124EB0EB6B2E5ABCE051DC8DA8EBE8F71D6B5540C5C068E169E1407B850ABE",
+    "bytes": 33264,
+    "role": "final implementation and self-review report"
+  },
+  "readOnlyBuildDependencies": [
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/NativeEvidence.h",
+      "sha256": "C6B083EE0346AA7CDB51090274CCCADCB2C6DE0AA92A196AD846E11C41C9EBB6",
+      "bytes": 2074
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/NativeEvidence.cpp",
+      "sha256": "1B3CA34A61CC2C2DB2C42A7FDFD01C029DE7BE82EAE6CE96D9DE1C3B363A8FE2",
+      "bytes": 16545
+    }
+  ],
+  "frozenBuild": {
+    "receipt": {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/build/n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f/receipt.json",
+      "sha256": "88149C27572D780786356914DC9B9043C5711A731A94F7A2A37DA6F36F94D720",
+      "bytes": 5833
+    },
+    "binary": {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/build/n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f/out/ElevationDimensionAdaptCases.arx",
+      "sha256": "A82B53196BCB171C12AE8B584A3D72F7CCF737C2516BCBBB13C2DF1F57463DF1",
+      "bytes": 576512
+    },
+    "compiledInputOrigins": [
+      {
+        "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\NativeEvidence.h",
+        "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\NativeEvidence.h",
+        "sha256": "C6B083EE0346AA7CDB51090274CCCADCB2C6DE0AA92A196AD846E11C41C9EBB6"
+      },
+      {
+        "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\NativeEvidence.cpp",
+        "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\NativeEvidence.cpp",
+        "sha256": "1B3CA34A61CC2C2DB2C42A7FDFD01C029DE7BE82EAE6CE96D9DE1C3B363A8FE2"
+      },
+      {
+        "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\dimension-adapt\\DimensionAdaptDriver.cpp",
+        "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\DimensionAdaptDriver.cpp",
+        "sha256": "95B520A1BE021C7C1D903C94FCAF0FEEDE25538B01D6278CFBA468F398846570"
+      },
+      {
+        "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\dimension-adapt\\DimensionAdaptGreen.inc",
+        "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\DimensionAdaptGreen.inc",
+        "sha256": "3C18EE165D8D1AC17772510175FDB499534B01E0825BB7F779ECCDDF13173D7C"
+      },
+      {
+        "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\dimension-adapt\\DimensionTopology.h",
+        "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\DimensionTopology.h",
+        "sha256": "12E6C5EA8410910D5045AB217AAD073DCDB7246C8829D4991456DDC30C96939B"
+      },
+      {
+        "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\dimension-adapt\\DimensionTopologyTests.cpp",
+        "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\DimensionTopologyTests.cpp",
+        "sha256": "3D2518C314E7E4B63A9EAE896243908486C496083DCC00F2C55B53183AB6D80E"
+      },
+      {
+        "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\dimension-adapt\\ElevationDimensionAdaptCases.vcxproj",
+        "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\ElevationDimensionAdaptCases.vcxproj",
+        "sha256": "4396B9D93D7BFFBC518D3BADBD559DAFC67192BEA1E982B9399516BBCEBCAD41"
+      }
+    ],
+    "compiledFiles": {
+      "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\NativeEvidence.h": "C6B083EE0346AA7CDB51090274CCCADCB2C6DE0AA92A196AD846E11C41C9EBB6",
+      "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\NativeEvidence.cpp": "1B3CA34A61CC2C2DB2C42A7FDFD01C029DE7BE82EAE6CE96D9DE1C3B363A8FE2",
+      "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\DimensionAdaptDriver.cpp": "95B520A1BE021C7C1D903C94FCAF0FEEDE25538B01D6278CFBA468F398846570",
+      "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\DimensionAdaptGreen.inc": "3C18EE165D8D1AC17772510175FDB499534B01E0825BB7F779ECCDDF13173D7C",
+      "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\DimensionTopology.h": "12E6C5EA8410910D5045AB217AAD073DCDB7246C8829D4991456DDC30C96939B",
+      "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\DimensionTopologyTests.cpp": "3D2518C314E7E4B63A9EAE896243908486C496083DCC00F2C55B53183AB6D80E",
+      "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\ElevationDimensionAdaptCases.vcxproj": "4396B9D93D7BFFBC518D3BADBD559DAFC67192BEA1E982B9399516BBCEBCAD41",
+      "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\build_dimension_adapt.ps1": "046037EDEC085BF8FFADCD6FD916828D4C7B90EF150BB719B4230059AE0B37C7"
+    },
+    "toolchain": "AutoCAD2020 SDK23.1 / v141 14.16.27023 / x64 / C++17",
+    "buildExitCode": 0,
+    "offlineTopologyTests": "actual stub RED then GREEN; final N8A_TOPOLOGY_TESTS_PASSED"
+  },
+  "effectiveNativeRed": {
+    "nativeCase": {
+      "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-223238-014cca66/case/native-case.json",
+      "sha256": "2AD1E6D882F6F7055C444CD8070FACE77B40B0E505AA6755BD415ABD610D66F9",
+      "bytes": 3419
+    },
+    "dimensionAdapt": {
+      "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-223238-014cca66/case/dimension-adapt.json",
+      "sha256": "070835DF91709805C5EEADC492724C22028699672CD50C3D726CAB0BDEFE3C8E",
+      "bytes": 7360
+    },
+    "reason": "native setup succeeded; unimplemented stub left real target stations and baseline unadapted"
+  },
+  "finalNativeRun": {
+    "session": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503",
+    "nonce": "03f2f503a06840348c8edb8416a06c9f",
+    "pid": 24672,
+    "nativeCase": {
+      "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/native-case.json",
+      "sha256": "EE7D547D1BDEBC650BBF3B8D219454452A3A6D8C59D0945936030BA104F907D4",
+      "bytes": 24915
+    },
+    "dimensionAdapt": {
+      "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/dimension-adapt.json",
+      "sha256": "A41089859BAC87875CAEF06BDCFAEF38AAD4A726BFDA9802C8CE902955E978BA",
+      "bytes": 876891
+    },
+    "stepCounts": {
+      "passed": 123,
+      "unsupported": 5
+    },
+    "errors": [],
+    "allNativeJsonFiles": [
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/binder-direct-rejection-controls.json",
+        "sha256": "402F6D3ED20F04542054B302C0E6D144C712287A1B66B2B1336762CC04289AEF",
+        "bytes": 8076
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-1.json",
+        "sha256": "E40C1BEB603A7ED8630DE5920BEA9FC044ADB00B523500CA63BF20E51C78F442",
+        "bytes": 105
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-10.json",
+        "sha256": "391BBEA466C92EFCFBE9A4391742FB0AC2664E828BB4C22442CFC60F5A9A05AE",
+        "bytes": 113
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-100.json",
+        "sha256": "4B2BF538BB8F1919DFE14507248253BF10BA1BCA691727F9FCE8D8CF5CB1DAC9",
+        "bytes": 115
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-101.json",
+        "sha256": "5544D1334B2C2111361D3D0E7BB77A166A8D64AAF6D68092F244A1214B1E1613",
+        "bytes": 115
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-102.json",
+        "sha256": "5382ADDAFE948EB88F964F2EDE7681FE2FB06AE7376E9E7F8CBE1045331413F8",
+        "bytes": 115
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-103.json",
+        "sha256": "0E52D54E30063D36E1672C12FC6E6D6132E9104CE1FEAE144997325815FD23FB",
+        "bytes": 115
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-104.json",
+        "sha256": "C7570DE072D0A37AC04689FEC69C5D3E0A9CA4803A7B16AE3AD6CA24B36378BD",
+        "bytes": 115
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-105.json",
+        "sha256": "DD004FF7D753710672056BA57A2C8EF9CFA2663E4D5877E2004B0C048D2958D8",
+        "bytes": 115
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-106.json",
+        "sha256": "0315EA7519F139B1F5A518CB9AA148BB62FA1A5E3DDF143DAACA066D5E5E5E3C",
+        "bytes": 115
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-107.json",
+        "sha256": "A3D0C1911CA3D77BB36EDB1C6370279E1018E1008729CFF30D1A00D324ABD38B",
+        "bytes": 115
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-108.json",
+        "sha256": "251FFBE50641C35505CB952CB1FAF01BFA2FBB901C3A3D9E0E57E0505D5B20A7",
+        "bytes": 116
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-109.json",
+        "sha256": "0913A45D92EF3DF9691D6667B5BE26CB0D449C0FA2C4A0D34130884FF9F8284F",
+        "bytes": 116
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-11.json",
+        "sha256": "DC8107EE098197C47AEC9910BC6F5329140CC243FEF27E7F117F665B0BA24542",
+        "bytes": 113
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-110.json",
+        "sha256": "201866DFDF98F8B7BDCD9DC85AC7238F4692DEE454F630487E91E710F9A6CE2A",
+        "bytes": 116
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-111.json",
+        "sha256": "57B2F6E1805613A73188C7474D58ABF4294C6D7E5D69EC11CC1DA24CA36858D3",
+        "bytes": 116
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-112.json",
+        "sha256": "309FE5EAAB7881FD86CE22581E1D4A1AC6509EFD07B5FC61AA4C4FCA64B673E7",
+        "bytes": 116
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-113.json",
+        "sha256": "850E2DD1EDB55E8344C8EC9C00C69097505A69ADF662E69049B297D008BC2096",
+        "bytes": 116
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-114.json",
+        "sha256": "F0A72EF92662EAE4E1E94E863FFD5BC6A35DD2C7217ED8B94D7C44D18C996D06",
+        "bytes": 116
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-115.json",
+        "sha256": "8D43C4D1B284C61FEB493454940BE668CF1BB8D908E293115E75EBC38586E4D0",
+        "bytes": 116
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-116.json",
+        "sha256": "3A6F6D1863461FD2DF8AB5B2C52D9660E2CD901E88673C149FE4C488F08A35FD",
+        "bytes": 116
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-117.json",
+        "sha256": "4B9F6AEE83973A07A3E8D0BC54B92EAE3784971D1C762138D9F3C9AEC7072DF7",
+        "bytes": 116
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-118.json",
+        "sha256": "DED78F0745D70A3F9432A66F62F7E894F41A462D680C414D2566042A12B60279",
+        "bytes": 116
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-119.json",
+        "sha256": "B941DE9AE7DA921D50778B9749AA8FAA80D66947E7C0630A7B7AED923FF18429",
+        "bytes": 116
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-12.json",
+        "sha256": "B60408E29B7B351B74B79E4915A70EE66265436D4B080524C01FDCBCB6E2F0D6",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-120.json",
+        "sha256": "3F14943926086FB17F61A3223B06E9ED1B586FBD3C62D5BEC689EA69DEFE4C28",
+        "bytes": 116
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-121.json",
+        "sha256": "82F7EB10EAD811E8B7F871653C5ADF6E36D7AD53782A0268445DFC5B6913CD94",
+        "bytes": 116
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-122.json",
+        "sha256": "F3BCD816C860C5AC72E6833F87E4778E1408C61FC7F45702AB0B2FF8A156EA18",
+        "bytes": 116
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-123.json",
+        "sha256": "F1AA89A3FE98ACB132447CA79C15E46FD58093F2AFF9F7A1B92BA12A98C72976",
+        "bytes": 116
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-124.json",
+        "sha256": "248F4E7AEAA73363CFEA9D5F46F90776F124374C160649635F360B3E2D041B29",
+        "bytes": 116
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-13.json",
+        "sha256": "4EC0605050204539C7FAE41869FBA8A333E8EFC265D64296EF2896B06850CB65",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-14.json",
+        "sha256": "23A40675C5B8129414CF82CB7F785E6DEEF42C66B1FC28176EA339CE316F1686",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-15.json",
+        "sha256": "A44C572DBD31F2C1F1C463D2A4DDA7F1B5331C7B0A815568265BA07C6D89372F",
+        "bytes": 117
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-16.json",
+        "sha256": "7DE1E3407F778E72DEAF438F2CBB1A2DF7B39BBBB59F419E8E498553B01B1106",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-17.json",
+        "sha256": "4A074124BC132FA6083945444AC1AE9B39828686D4B8D824B5CC9A3CCF3DBBBB",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-18.json",
+        "sha256": "839024373538AD76A5C16AEE45DB9D578B53AAE8B5E9CE651A9F2961A9836134",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-19.json",
+        "sha256": "E15778A9D191067A8943CECE617DECAAA06088AF0F7081F90300443558F461AE",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-2.json",
+        "sha256": "32F702BBF7CF27E579C03D95950E5369E174B28C476B532693C9A050C64FF723",
+        "bytes": 112
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-20.json",
+        "sha256": "D441EA408F7E7D2C1560351E7E8F9510A02D9661EA4CD77A5034FE4E1BC4B9F8",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-21.json",
+        "sha256": "3B4BC95B187E470B126BA152D269AB96F1EF3AA85B60E5624E42248896C6724F",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-22.json",
+        "sha256": "08F44AEEA165C9151819A64B42E4BFBCA57A79F3ABC36CAAC74378B61E86E81D",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-23.json",
+        "sha256": "32CDCF1EE851023FAB2514931627672BAFF4A0896323F40F354FD8F11390C9FE",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-24.json",
+        "sha256": "076AC8E0C172A50F29CB69756C53EFDB47E136DFC5036DF86FF7EB0FAA378C83",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-25.json",
+        "sha256": "760527A8383AEE7F5CF4ED9654D77A6AFFDDEAB0A5FFD4707DF70C863EC067A6",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-26.json",
+        "sha256": "C0D981DB2E3BF5A0AC4F934A2032346FE437F7DA00D28B2943A7EEB3F2DC7E62",
+        "bytes": 113
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-27.json",
+        "sha256": "6170939FF2A9E07346121A9637EF61A1D9F5996ADFF7D48589A184CDB1690269",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-28.json",
+        "sha256": "BD113BCDB296D55444A2A1D9E93F41B63FE528CC153709B18086FC605056F067",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-29.json",
+        "sha256": "25738C401645AEFE84D6BE62FE26B8127EA1D91AC80A43D44AEB49AAB73EBB5B",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-3.json",
+        "sha256": "1F5E30A69C335B64D6D10A3A86C598EAE0A4A0192C7C8CF7E317551790597328",
+        "bytes": 112
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-30.json",
+        "sha256": "29A1762EC6A9A39E6A5594EA4AEBE12621DDCAE715EE1B156A047D713BB5B962",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-31.json",
+        "sha256": "739E8B9AD5F15FBB4F0DAC836681D9DBC03D2B715C58E168230F0BCB7539A841",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-32.json",
+        "sha256": "01EE05C0D54364C1F08AB4C25D69D1A30D9AAA20CFD4F2690CA02ED9D8615D4F",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-33.json",
+        "sha256": "1FA35DA9D8AB71BC61E6F440FE2277862CCE1C49E324492A0F1A97993CF25D3B",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-34.json",
+        "sha256": "A8C6585B6F85AEDFEC668AB3852E29AEB9AB285F7D0D1025CF5C9AED73AFEBBB",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-35.json",
+        "sha256": "DE402B525147C00AF0020E29828DA87246CFBF50F559B714EE8D1FA615590637",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-36.json",
+        "sha256": "5C3669DAFCF2299A5E9676D6B799663CFD480122D23795AD443E7339B02982E2",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-37.json",
+        "sha256": "BDF94BF0E0B33B929C52F7F16C4BBEE16EF07C918F53D576AB1579713913DAFA",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-38.json",
+        "sha256": "4095BC3FF081BEEEE760C2CECC9E893B39E2E61C88BF5C70FF845F4F21B17D16",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-39.json",
+        "sha256": "5C0A238435149888D69F6355A4DA53139F06D8FB51812C51CDD2A4ADF218C3DB",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-4.json",
+        "sha256": "7F8B2B1CBE6B239F0276E384F80E03CE770650A8EB32F0761119F391A0B76EE8",
+        "bytes": 112
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-40.json",
+        "sha256": "8853CB58859790BD2307F028F68D7BF498820096B509432F5C803804A9D7531B",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-41.json",
+        "sha256": "4DD0851AD561F47986C444A3B443E5FC429C7A85A1AB3A4AF0E48267E03EB7E0",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-42.json",
+        "sha256": "1FDF2CA5AC70698234BA0DFEE54E123F8BD9FD6B3F413C871B97CFAC46737A2B",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-43.json",
+        "sha256": "C3E607919AE2F8E7E9C87BA2AA58C58AA7C24A4BB3432AE8B5FB1A32362622AE",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-44.json",
+        "sha256": "6F1E356BF8ECD4395D87DD95AD0332CBE1579954F95851214EE0280F6C015FB5",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-45.json",
+        "sha256": "5843563CB54B93E01D19C99F732C6F073A836C310D6C98691F1075AA5FF5167A",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-46.json",
+        "sha256": "661B059E9BDD18BC6163CCEAE28AFD3AE7D33F5FA2CF53D58148436F9591A870",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-47.json",
+        "sha256": "14B22429EA6159146F6D799BCEEB8B1215EF9162F719C31847F9CBC07D70B521",
+        "bytes": 120
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-48.json",
+        "sha256": "D81C9CBF2FA7783C616D90F2FEAB7E9CC98C3A9EC3537E540A06D6518E387A02",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-49.json",
+        "sha256": "7946BAB6275164E48B3FF9B7988D6B6059C1732D3118A831EDDB8966C9E42ADA",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-5.json",
+        "sha256": "70F0334F6505C4C2B41221E73C36E150817DE3A176BEA3677B42CAB4ADD99CB4",
+        "bytes": 112
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-50.json",
+        "sha256": "0FA56AD5CE21D6D6C560C1244325A1126BA1724E9314AA193164AEBF62D1086E",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-51.json",
+        "sha256": "B4C4886DF2A5046D6A35033B7DFC233AB4AEBAA3C1FD7A67AFA0A9DBBC772B48",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-52.json",
+        "sha256": "03B190E61600740723378757403F2115ADC5D6D23433067E93FF0AA50BB42EAE",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-53.json",
+        "sha256": "DA9FD4ADC6F5ACFEAE80757D09990DF1A92B7BC9A7AACB9D9D6FA1C844E71DFD",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-54.json",
+        "sha256": "D55AC3AD370A1147B164571A7716972D56EB7D3F6DD95C32CD3DE2EA82C44889",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-55.json",
+        "sha256": "640C790B048D929BEFC5E08127BE817ED853E1D5A35CA5E7F39B8C77C94935DF",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-56.json",
+        "sha256": "AA26995EB24520D6245C329F1AFCA7002537DBF87D0580F4C794D1B9E5AAB017",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-57.json",
+        "sha256": "539087E91EC8388ABD9C7EC7A6FFDC7DFFA071129C94B8C977358643EC060E94",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-58.json",
+        "sha256": "F615DC612C86C9E3E40D2C75034410EDB674B346DA0AFA092C9C41FE37BD7D46",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-59.json",
+        "sha256": "DD13B37850EABA065F171571FA9EBB0FAE8DD1582237FEBEA8E6C5EE815223E4",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-6.json",
+        "sha256": "6D99BFED85273A02252C9C4281A4F609336D3B82DC5EBF864813F0155851D8C0",
+        "bytes": 112
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-60.json",
+        "sha256": "A304C71BE36B6A4D9F050BB93673E4E3390D8A710FECE946B0766EC163C8F9BD",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-61.json",
+        "sha256": "5BBC5146F1D42047C085FBEEBA4FCE881F9F0F24376792A2438A20488A2E3D5C",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-62.json",
+        "sha256": "305F27433F139F903B32FA78B0732BD26DCA7F7D845F45B38104F84EA0C38B41",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-63.json",
+        "sha256": "5CD613FCEC1D47120E0CA72666421E8F73092DD83EBDE93D3DEAC62DEA5E338F",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-64.json",
+        "sha256": "5FF555C922AE1FE7A0F468E0846014729198319E105898C5BEB76EB41030192A",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-65.json",
+        "sha256": "723DA3084AAEE589AB99B10AF820D90E77865082B3506E19DE4BFE19832233A8",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-66.json",
+        "sha256": "8FBE4E6E6AFD9EFB75DD4198BC59E877DFFC6FC9366A5DA46C253A0254BE85CE",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-67.json",
+        "sha256": "696F814A80DB5A6FA723A22381129DDA15BE2B4E8EA08833E1F4D1826C69D5EC",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-68.json",
+        "sha256": "2062F16025880D9329BF1F963434798F55CA560ABB7B957C6B1E614FE6C1B105",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-69.json",
+        "sha256": "ECB3BAF59FD17F2361B9CE821B830EB016DD2737AC7DA4D5C90E19753D7C3243",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-7.json",
+        "sha256": "B4292DEE3E0052D5852447EECFEB175A2BAA9BD27D71D73D8B58911F2329DFF1",
+        "bytes": 112
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-70.json",
+        "sha256": "B40501BD103EDC02CF82FF8EC244368922F2B1BBE6CE09238EA696E9362F5EBA",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-71.json",
+        "sha256": "8BFF0F20A2F25187839E0B50B6E2B24B9AFB3F4698B9E3674B200B311300FF0E",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-72.json",
+        "sha256": "A757C08AD894CA1F61D9F8656B5C386AED483C847AF58861ADB0802B59715A6A",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-73.json",
+        "sha256": "14ABBFB9EC90880ABE1773B191B7245D808B5F5B90E361D20F46E138FB4A7454",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-74.json",
+        "sha256": "272FA20C24D3B805FFE1D85CE84FFAB7FD0430CE8ABA269D9865A740ACE53C43",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-75.json",
+        "sha256": "6BF0C9699DDD2B36037B0B6A359E1D45DF7054CFF04957C1939D169877C828A9",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-76.json",
+        "sha256": "28D921E416858C2571F1EF82FE703A696A734DDAA140C19C14ED689C8C5BFF7A",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-77.json",
+        "sha256": "8692C9F0967F4A4BE57C26FC199C68E140922C024F34474F7243F56F648A66AB",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-78.json",
+        "sha256": "F17410506D987E0020CDB698B07E50F8BFDDB1B0E8D8A618DE0FA5F260C64E9D",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-79.json",
+        "sha256": "15135FA3F682B90639B68856CE1DCDAB93B50CA485669137207E091851B678A9",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-8.json",
+        "sha256": "FF9E0BCCE9F64FB382EC52099CF63894B7BCBBA0F2E5852B0E33D6C666567C56",
+        "bytes": 112
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-80.json",
+        "sha256": "FDD078D48BED958EEB8E168AB03B3E4D93A8E98C311100C360DBC37BF67ACBEF",
+        "bytes": 112
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-81.json",
+        "sha256": "59F0DF825182CC0F88BA255987080A6A7C25310CB54103CD6143875FF387539A",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-82.json",
+        "sha256": "65844191DED8F9CD0223F7007560BCC15EE548E24A7B0EC3BAD39D87D84E8FBA",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-83.json",
+        "sha256": "674B916C29D47376996335BB13B42D4314308F13C389091E741B57F4351EF0BF",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-84.json",
+        "sha256": "4018AEDE776A03DFC4EB531E212BB94E88420B4C8F492BD967A6118D6ACE71B2",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-85.json",
+        "sha256": "F5D28FAED679B72471781BF16F4E102F68270369D97E7F66649FA5E5977E1134",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-86.json",
+        "sha256": "1E82849B940092F21BD494F7CC33E557EB1F94B836FAE9EC22740529C4495AEF",
+        "bytes": 111
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-87.json",
+        "sha256": "1BD64C24584B041E6F66C3CC9A06D5A90026488B73926962053DFE4C1FB73A32",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-88.json",
+        "sha256": "5B3CDD3A02AEF1E73A8053DC05D189664FE105726A0C3D7C62A38A5AF51D6F01",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-89.json",
+        "sha256": "47DEA1BB21285C304A66D0D504D44150D3D8076B37D178EBF439EB2B5BE41ACA",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-9.json",
+        "sha256": "A1FC16560D6FFCAE9ABF0D9C9E72B1374F6DF659FC97F529801800D7534137EC",
+        "bytes": 112
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-90.json",
+        "sha256": "E0BB54CD11C8DE9A66158A8419774624D1F9DCF72A9AB4B2B05579CE4E0BD56D",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-91.json",
+        "sha256": "5A8D69C9F8D49B11A8A5729630ED1CF7446EFFEA239AF89B019BAAAFD235312C",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-92.json",
+        "sha256": "FC557C3D807DA7FEDD525AB0752DC10C7EE580576161D0F7DAF56CD655BB075D",
+        "bytes": 115
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-93.json",
+        "sha256": "A83333DE630208BEA7BB31E5744A736B07F8BBD996FE18B4B3BD518DA66F2885",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-94.json",
+        "sha256": "16AB56201A79492187E597CB55B6827C4380D6EF2660194EB6E855E5D8833D00",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-95.json",
+        "sha256": "159BE7E9225F8AF25969891333A46C763DC36509715A3DBD1183875618824A14",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-96.json",
+        "sha256": "24ABF05D8FD971B3E5C0AD4D9037455B3518E2475410FD943806E7CC75E6FC08",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-97.json",
+        "sha256": "3354A87FB50C6CE5F83B09E198D7AADFC05B085FC78906A49C41B24ECDCC024F",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-98.json",
+        "sha256": "AFE9C3873B42BBAD1487D71474938EFD98146E960B2115432065F3CF9B494AB2",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/checkpoint-99.json",
+        "sha256": "7F67DA3BCBADBB6E7DB2C42FD20A9D93620EC7EFEC3F201BBF59F075647549AA",
+        "bytes": 114
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/dimension-adapt.json",
+        "sha256": "A41089859BAC87875CAEF06BDCFAEF38AAD4A726BFDA9802C8CE902955E978BA",
+        "bytes": 876891
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-1.json",
+        "sha256": "EFB9E8C278E49CE78E7F4B857E359F492EBEAEEA639109343EB5542CDEDC1BEF",
+        "bytes": 694
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-10.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-100.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-101.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-102.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-103.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-104.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-105.json",
+        "sha256": "EFB9E8C278E49CE78E7F4B857E359F492EBEAEEA639109343EB5542CDEDC1BEF",
+        "bytes": 694
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-106.json",
+        "sha256": "EFB9E8C278E49CE78E7F4B857E359F492EBEAEEA639109343EB5542CDEDC1BEF",
+        "bytes": 694
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-107.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-108.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-109.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-11.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-110.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-111.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-112.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-113.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-114.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-115.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-116.json",
+        "sha256": "EFB9E8C278E49CE78E7F4B857E359F492EBEAEEA639109343EB5542CDEDC1BEF",
+        "bytes": 694
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-12.json",
+        "sha256": "EFB9E8C278E49CE78E7F4B857E359F492EBEAEEA639109343EB5542CDEDC1BEF",
+        "bytes": 694
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-13.json",
+        "sha256": "F577D69297A882CF960ADD007116E8EBAC8479BCF2FCB6A1CDCFBCE07F941A83",
+        "bytes": 423
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-14.json",
+        "sha256": "B175E766AEA11E80EE3401D6A4430E10F62D48ACE3451EC571F9E7230CAC9E10",
+        "bytes": 421
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-15.json",
+        "sha256": "B175E766AEA11E80EE3401D6A4430E10F62D48ACE3451EC571F9E7230CAC9E10",
+        "bytes": 421
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-16.json",
+        "sha256": "B175E766AEA11E80EE3401D6A4430E10F62D48ACE3451EC571F9E7230CAC9E10",
+        "bytes": 421
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-17.json",
+        "sha256": "B175E766AEA11E80EE3401D6A4430E10F62D48ACE3451EC571F9E7230CAC9E10",
+        "bytes": 421
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-18.json",
+        "sha256": "B175E766AEA11E80EE3401D6A4430E10F62D48ACE3451EC571F9E7230CAC9E10",
+        "bytes": 421
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-19.json",
+        "sha256": "B175E766AEA11E80EE3401D6A4430E10F62D48ACE3451EC571F9E7230CAC9E10",
+        "bytes": 421
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-2.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-20.json",
+        "sha256": "B175E766AEA11E80EE3401D6A4430E10F62D48ACE3451EC571F9E7230CAC9E10",
+        "bytes": 421
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-21.json",
+        "sha256": "B175E766AEA11E80EE3401D6A4430E10F62D48ACE3451EC571F9E7230CAC9E10",
+        "bytes": 421
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-22.json",
+        "sha256": "F577D69297A882CF960ADD007116E8EBAC8479BCF2FCB6A1CDCFBCE07F941A83",
+        "bytes": 423
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-23.json",
+        "sha256": "A77BB6C64A4261597EA6FAD9AD2526CBA7795D8B72C9753E264A79B9EC41980E",
+        "bytes": 1773
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-24.json",
+        "sha256": "5A6E00688183F744B92B6FE94731C28E7BABAB145A0D43B18FB0F497F3033A31",
+        "bytes": 1771
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-25.json",
+        "sha256": "5A6E00688183F744B92B6FE94731C28E7BABAB145A0D43B18FB0F497F3033A31",
+        "bytes": 1771
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-26.json",
+        "sha256": "5A6E00688183F744B92B6FE94731C28E7BABAB145A0D43B18FB0F497F3033A31",
+        "bytes": 1771
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-27.json",
+        "sha256": "5A6E00688183F744B92B6FE94731C28E7BABAB145A0D43B18FB0F497F3033A31",
+        "bytes": 1771
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-28.json",
+        "sha256": "5A6E00688183F744B92B6FE94731C28E7BABAB145A0D43B18FB0F497F3033A31",
+        "bytes": 1771
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-29.json",
+        "sha256": "5A6E00688183F744B92B6FE94731C28E7BABAB145A0D43B18FB0F497F3033A31",
+        "bytes": 1771
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-3.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-30.json",
+        "sha256": "5A6E00688183F744B92B6FE94731C28E7BABAB145A0D43B18FB0F497F3033A31",
+        "bytes": 1771
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-31.json",
+        "sha256": "5A6E00688183F744B92B6FE94731C28E7BABAB145A0D43B18FB0F497F3033A31",
+        "bytes": 1771
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-32.json",
+        "sha256": "5A6E00688183F744B92B6FE94731C28E7BABAB145A0D43B18FB0F497F3033A31",
+        "bytes": 1771
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-33.json",
+        "sha256": "5A6E00688183F744B92B6FE94731C28E7BABAB145A0D43B18FB0F497F3033A31",
+        "bytes": 1771
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-34.json",
+        "sha256": "5A6E00688183F744B92B6FE94731C28E7BABAB145A0D43B18FB0F497F3033A31",
+        "bytes": 1771
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-35.json",
+        "sha256": "5A6E00688183F744B92B6FE94731C28E7BABAB145A0D43B18FB0F497F3033A31",
+        "bytes": 1771
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-36.json",
+        "sha256": "5A6E00688183F744B92B6FE94731C28E7BABAB145A0D43B18FB0F497F3033A31",
+        "bytes": 1771
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-37.json",
+        "sha256": "5A6E00688183F744B92B6FE94731C28E7BABAB145A0D43B18FB0F497F3033A31",
+        "bytes": 1771
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-38.json",
+        "sha256": "5A6E00688183F744B92B6FE94731C28E7BABAB145A0D43B18FB0F497F3033A31",
+        "bytes": 1771
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-39.json",
+        "sha256": "5A6E00688183F744B92B6FE94731C28E7BABAB145A0D43B18FB0F497F3033A31",
+        "bytes": 1771
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-4.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-40.json",
+        "sha256": "5A6E00688183F744B92B6FE94731C28E7BABAB145A0D43B18FB0F497F3033A31",
+        "bytes": 1771
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-41.json",
+        "sha256": "5A6E00688183F744B92B6FE94731C28E7BABAB145A0D43B18FB0F497F3033A31",
+        "bytes": 1771
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-42.json",
+        "sha256": "A77BB6C64A4261597EA6FAD9AD2526CBA7795D8B72C9753E264A79B9EC41980E",
+        "bytes": 1773
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-43.json",
+        "sha256": "81D307C4295C5C47C0C5D9B6BB9B659A6D80C47C9B87B59D36744CDAA3733A86",
+        "bytes": 3396
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-44.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-45.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-46.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-47.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-48.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-49.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-5.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-50.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-51.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-52.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-53.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-54.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-55.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-56.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-57.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-58.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-59.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-6.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-60.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-61.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-62.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-63.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-64.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-65.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-66.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-67.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-68.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-69.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-7.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-70.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-71.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-72.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-73.json",
+        "sha256": "24883E16D83CF19720AC7586CEAE052885718C5E77F4E27780EF02026A2C31D8",
+        "bytes": 3394
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-74.json",
+        "sha256": "81D307C4295C5C47C0C5D9B6BB9B659A6D80C47C9B87B59D36744CDAA3733A86",
+        "bytes": 3396
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-75.json",
+        "sha256": "EFB9E8C278E49CE78E7F4B857E359F492EBEAEEA639109343EB5542CDEDC1BEF",
+        "bytes": 694
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-76.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-77.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-78.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-79.json",
+        "sha256": "EFB9E8C278E49CE78E7F4B857E359F492EBEAEEA639109343EB5542CDEDC1BEF",
+        "bytes": 694
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-8.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-80.json",
+        "sha256": "EFB9E8C278E49CE78E7F4B857E359F492EBEAEEA639109343EB5542CDEDC1BEF",
+        "bytes": 694
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-81.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-82.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-83.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-84.json",
+        "sha256": "EFB9E8C278E49CE78E7F4B857E359F492EBEAEEA639109343EB5542CDEDC1BEF",
+        "bytes": 694
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-85.json",
+        "sha256": "EFB9E8C278E49CE78E7F4B857E359F492EBEAEEA639109343EB5542CDEDC1BEF",
+        "bytes": 694
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-86.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-87.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-88.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-89.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-9.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-90.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-91.json",
+        "sha256": "EFB9E8C278E49CE78E7F4B857E359F492EBEAEEA639109343EB5542CDEDC1BEF",
+        "bytes": 694
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-92.json",
+        "sha256": "EFB9E8C278E49CE78E7F4B857E359F492EBEAEEA639109343EB5542CDEDC1BEF",
+        "bytes": 694
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-93.json",
+        "sha256": "EFB9E8C278E49CE78E7F4B857E359F492EBEAEEA639109343EB5542CDEDC1BEF",
+        "bytes": 694
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-94.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-95.json",
+        "sha256": "EFB9E8C278E49CE78E7F4B857E359F492EBEAEEA639109343EB5542CDEDC1BEF",
+        "bytes": 694
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-96.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-97.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-98.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/explode-ownership-99.json",
+        "sha256": "8120DF4771ED5627D94D9C67FB5D0DF3C3C778D239E83511F999545A985B632C",
+        "bytes": 691
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/fault-source-scratch.json",
+        "sha256": "89B3F0B2D628DD8AB920169D230E44030950EEC2F75E0A66DAE5E7DFF45A3A3A",
+        "bytes": 171
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/native-case.json",
+        "sha256": "EE7D547D1BDEBC650BBF3B8D219454452A3A6D8C59D0945936030BA104F907D4",
+        "bytes": 24915
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/one_mm100_vertical_large-after-reopen.json",
+        "sha256": "4BED8CE8F0AF7EF31C2A44DAB7B7D9BD71F9CC4A098A8100656E47727E4D89E3",
+        "bytes": 6018
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/one_mm100_vertical_large-before-save.json",
+        "sha256": "4BED8CE8F0AF7EF31C2A44DAB7B7D9BD71F9CC4A098A8100656E47727E4D89E3",
+        "bytes": 6018
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/one_mm100_vertical_large-clone-public-baseline.json",
+        "sha256": "A5998508BC810D365CDD69D15E4A59F63061F431A2B022B303743349656B6BF2",
+        "bytes": 10217
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/one_mm100_vertical_large-observation-1.json",
+        "sha256": "947C40B9C045BCC5841CC15FBEC3414356C1BF1C2BF856DB0205E92D3EB9F3EF",
+        "bytes": 2796
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/one_mm100_vertical_large-observation-2.json",
+        "sha256": "8AC8CF5CB08096CA23A753798830C12C7364A0386D046AB45B1C16D08908C5CC",
+        "bytes": 2684
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/one_mm100_vertical_large-observation-3.json",
+        "sha256": "80C7667A0F6D28EB2A4DE4FBC9E4C95A063DE7AED7E3F9792ECC6474BA6911D0",
+        "bytes": 2618
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/one_mm100_vertical_large-resource-reference-0-dimensionStyle.json",
+        "sha256": "A29B146610B45006A75384CFDA9BC675EAC25D811B85873286D45932AE614BC6",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/one_mm100_vertical_large-resource-reference-0-effectiveTextStyle.json",
+        "sha256": "EC1340C662E595732D67046609F1D5B58702D7B8ABCA16B60514F2AF8726D2E4",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/one_mm100_vertical_large-roundtrip-comparison.json",
+        "sha256": "A15071F43BDA4A3F28F962C8C958A75AEFF6E18DD4F37B1AD800550C91BE6153",
+        "bytes": 61484
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/one_mm100_vertical_large-scene.json",
+        "sha256": "0330DD0A41DC2695AC691A84F90CF7BC33E4BAEDAA37285F9825CFE4B5DD0105",
+        "bytes": 74623
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/one_mm100_vertical_large-source-scratch.json",
+        "sha256": "62CB7DDB6E86B26A446E52034B2E0F0D60A3A83F57883288A8E5F8BC94629D1D",
+        "bytes": 7249520
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-after-reopen.json",
+        "sha256": "315AC8A8AFFBA617FCA8BF62A8C706A63665F8A293B9296972FF34AE37827AE9",
+        "bytes": 15634
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-before-save.json",
+        "sha256": "315AC8A8AFFBA617FCA8BF62A8C706A63665F8A293B9296972FF34AE37827AE9",
+        "bytes": 15634
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-clone-public-baseline.json",
+        "sha256": "920745DB551E054F14AC06A1400EBC7EB05F9410FAD2EFC649FDE8D20FD0F70F",
+        "bytes": 28876
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-observation-1.json",
+        "sha256": "13C4A0872229979C463C12EB232E48FD5F96C3BE76C9829A2C6798549598F658",
+        "bytes": 12360
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-observation-2.json",
+        "sha256": "0FADF8E058D12CB82B84307181B36A7D3F638F7E8DDF43AD45741073DEFBBE34",
+        "bytes": 12302
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-observation-3.json",
+        "sha256": "EDD73D25229BB544B7EFBC464328F001D5EB64D6C601F869D7D35363D61C0AA5",
+        "bytes": 12248
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-observation-4.json",
+        "sha256": "AF5B1B59C247DDA7A79C68C61DA1F488F19C981C54EADA23D2FA6DAC25267120",
+        "bytes": 12154
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-observation-5.json",
+        "sha256": "2667474DC0B1310FB3706545F7C9D909A3D1144912CC688C02FF3BE4D0460E15",
+        "bytes": 12073
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-observation-6.json",
+        "sha256": "3A6D75AEA6B22975C4AFEC5BC975D97B2763E17EF88EA47EA9287B558E3558C2",
+        "bytes": 11979
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-observation-7.json",
+        "sha256": "917FA0683D84E58B4245CABC1E3CD68294A8DACF6C5488A7BD9AE78B31CDD7F2",
+        "bytes": 12013
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-observation-8.json",
+        "sha256": "033B13C0A58FEDBD306E47C9DCC1A8B5DB49E9637209240240CBE43B27E2A4C9",
+        "bytes": 11807
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-resource-reference-0-dimensionStyle.json",
+        "sha256": "F771D16D4E62C7A44C9903FFA0DD1A746FEFADE64ED8C5DC9C3A34621A642819",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-resource-reference-0-effectiveTextStyle.json",
+        "sha256": "FE1CCD5D5DA695CE2A9873E8151C29685C8C8479A7C10232E1DBC8D0D9CABD0F",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-resource-reference-1-dimensionStyle.json",
+        "sha256": "24CE1F94A3C79483E736C70B03664EF91E64AA7944209FB089B1A37C03540028",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-resource-reference-1-effectiveTextStyle.json",
+        "sha256": "30BACD65DBA06FA466928EF7CCE118F32E907906BF15D8A4927672CD2EAE8E39",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-resource-reference-2-dimensionStyle.json",
+        "sha256": "58EB30F9D76897BC0BE1EA89558D673E564419DFE884D4733BD4C0D049560965",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-resource-reference-2-effectiveTextStyle.json",
+        "sha256": "2BDAC2FD5B5646ECAF361D893B1557B72A773AC515C4A888AFDF12BA6219094A",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-resource-reference-3-dimensionStyle.json",
+        "sha256": "135393E9FC02EA7BD3B7A2F232FEA2D462F3BABEB0A0A0D50F2F499BE64CF122",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-resource-reference-3-effectiveTextStyle.json",
+        "sha256": "BDFFD02FC5157A78D86A27EC63CB95ECD413C8245D07298D61DDEC9A207A011D",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-resource-reference-4-dimensionStyle.json",
+        "sha256": "6465163E751365992C7135A73C946C20668A13E09C801D9DD8E88F107AB59F04",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-resource-reference-4-effectiveTextStyle.json",
+        "sha256": "ADCACD517C76E55BF84F2645C7B6AAB84AF83CF730C626A0ADCE8CDF548BF807",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-resource-reference-5-dimensionStyle.json",
+        "sha256": "A0B10447CAC18DA8B221AB825858A5944CB090EA278DBD057B2FB113B46A2511",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-resource-reference-5-effectiveTextStyle.json",
+        "sha256": "9F8727824B287926F6B52654FBA2EB8A066565A8468FFC2F39107DB65DDC8061",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-roundtrip-comparison.json",
+        "sha256": "7F5A8BB5C99B262F6B35E85FA61E46C775C697CFF4D908F9D150AA910BEA46DF",
+        "bytes": 148115
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-scene.json",
+        "sha256": "11E851E4E97BC9391B723E142A9067452E9848F65C032D62E1D05D833BEB8394",
+        "bytes": 212370
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/six_mm100_horizontal-source-scratch.json",
+        "sha256": "6EA580A7C8A419C9660C575B5DB0CBC99F0C6080FC08DD816918E19A23669E77",
+        "bytes": 7249521
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/source-and-ambient-after.json",
+        "sha256": "4B707F32C9FAB78AF1D7118F78B16D5C40A9AE69187589DEA421A988EA4BE4E3",
+        "bytes": 3743893
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/source-and-ambient-before.json",
+        "sha256": "C34E5C319B7CFF7E72A981FD3EF9B78B716672E57CD77CE50FB3F02D75A8B4C1",
+        "bytes": 3743208
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-after-reopen.json",
+        "sha256": "E040C8291DE4C98F2FA447F9E93481AFD14CEA3E520AA6EF2FC2D4E8C5C2A979",
+        "bytes": 26487
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-before-save.json",
+        "sha256": "E040C8291DE4C98F2FA447F9E93481AFD14CEA3E520AA6EF2FC2D4E8C5C2A979",
+        "bytes": 26487
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-clone-public-baseline.json",
+        "sha256": "3AA205973E065209539B85E541417672824C1B2E78DAFC7ED145FB5C246695B7",
+        "bytes": 51450
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-observation-1.json",
+        "sha256": "515A1D2FC174FDFE830E3083B9E714451D1C5E3AA5A9A84BF1047AF9C75A8D38",
+        "bytes": 22664
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-observation-10.json",
+        "sha256": "50B25AACC26B7EC5AC9024B8CD69347FF271E07CAE4D1BD3096A214B440118D0",
+        "bytes": 22520
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-observation-11.json",
+        "sha256": "2B3CF5A733B67F5D51DB78D3B3618D49096559C56CE6AF52D30818AC95B8918C",
+        "bytes": 22651
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-observation-12.json",
+        "sha256": "31E384713FDA54903E484D709B25F65CEE524F4EB51CDB0FCF239870A94A2CCA",
+        "bytes": 22655
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-observation-13.json",
+        "sha256": "389238EE09E1038A6043355749AF7D6ECD4F9EDB26FB6A48A22E7B523BFE6B2C",
+        "bytes": 22349
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-observation-14.json",
+        "sha256": "A69B83CDBBF4F17A1BC38294B55A1A1033D119573443D9E11087242314AD8C75",
+        "bytes": 22346
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-observation-2.json",
+        "sha256": "275E504C0F176806A73ACBD90781E970C72D6A563636668B8E458CB8A77B75BA",
+        "bytes": 22717
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-observation-3.json",
+        "sha256": "6EA8F20DA06F1A729FD9D6789DD56ED6AD7C896876C1EF3E692651B0A177C7D3",
+        "bytes": 22682
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-observation-4.json",
+        "sha256": "F8373D179E3C016D8B8C93A97EA154F45E0CD8397FF8BCEA1F8DF129E210D5E4",
+        "bytes": 22607
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-observation-5.json",
+        "sha256": "54AF2467A72C3FE0C2916472E2D6C7D0071EB34B6FD87BBE8D38E6ECCE913F05",
+        "bytes": 22606
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-observation-6.json",
+        "sha256": "067EB867D4587ED22702F986EB3E181BD013986441C83E6163FF660BE912EBAF",
+        "bytes": 22588
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-observation-7.json",
+        "sha256": "47283B90F9CFB738A3506C215C05B09443311E884B3E5D2B5E73F4DA2436F952",
+        "bytes": 22608
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-observation-8.json",
+        "sha256": "E38AC339087F4627E356E1DAA19A0C6C99A629F9E3E420724BEB8C2BFDBD8780",
+        "bytes": 22427
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-observation-9.json",
+        "sha256": "A5B10E21D8D8B97EB17FE7220571891CEB95E4E3589FADFBC4E49BB42398D75D",
+        "bytes": 22499
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-resource-reference-0-dimensionStyle.json",
+        "sha256": "F771D16D4E62C7A44C9903FFA0DD1A746FEFADE64ED8C5DC9C3A34621A642819",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-resource-reference-0-effectiveTextStyle.json",
+        "sha256": "FE1CCD5D5DA695CE2A9873E8151C29685C8C8479A7C10232E1DBC8D0D9CABD0F",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-resource-reference-1-dimensionStyle.json",
+        "sha256": "24CE1F94A3C79483E736C70B03664EF91E64AA7944209FB089B1A37C03540028",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-resource-reference-1-effectiveTextStyle.json",
+        "sha256": "30BACD65DBA06FA466928EF7CCE118F32E907906BF15D8A4927672CD2EAE8E39",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-resource-reference-10-dimensionStyle.json",
+        "sha256": "C39BBDD611DB5EAA6B3E291BD5E4A515BAEC76C577716255B70C7979C61391B2",
+        "bytes": 5150
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-resource-reference-10-effectiveTextStyle.json",
+        "sha256": "22D79069164A0B2CAFDE9F5693A8CB88616E8A0100FDEC5DEFF35796201277DF",
+        "bytes": 2357
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-resource-reference-11-dimensionStyle.json",
+        "sha256": "A2CEDF8177520A3F8825ECA5707313326DF0D370C5E608180F6EE80B9132D74F",
+        "bytes": 5150
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-resource-reference-11-effectiveTextStyle.json",
+        "sha256": "B31C12E9335B19490DEB005A2850B922C9E8F97887F64C6AA6A96C96BD60619D",
+        "bytes": 2357
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-resource-reference-2-dimensionStyle.json",
+        "sha256": "58EB30F9D76897BC0BE1EA89558D673E564419DFE884D4733BD4C0D049560965",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-resource-reference-2-effectiveTextStyle.json",
+        "sha256": "2BDAC2FD5B5646ECAF361D893B1557B72A773AC515C4A888AFDF12BA6219094A",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-resource-reference-3-dimensionStyle.json",
+        "sha256": "135393E9FC02EA7BD3B7A2F232FEA2D462F3BABEB0A0A0D50F2F499BE64CF122",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-resource-reference-3-effectiveTextStyle.json",
+        "sha256": "BDFFD02FC5157A78D86A27EC63CB95ECD413C8245D07298D61DDEC9A207A011D",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-resource-reference-4-dimensionStyle.json",
+        "sha256": "6465163E751365992C7135A73C946C20668A13E09C801D9DD8E88F107AB59F04",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-resource-reference-4-effectiveTextStyle.json",
+        "sha256": "ADCACD517C76E55BF84F2645C7B6AAB84AF83CF730C626A0ADCE8CDF548BF807",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-resource-reference-5-dimensionStyle.json",
+        "sha256": "A0B10447CAC18DA8B221AB825858A5944CB090EA278DBD057B2FB113B46A2511",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-resource-reference-5-effectiveTextStyle.json",
+        "sha256": "9F8727824B287926F6B52654FBA2EB8A066565A8468FFC2F39107DB65DDC8061",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-resource-reference-6-dimensionStyle.json",
+        "sha256": "FE570677C3C05BBE3B7340FF6DA3C94CEA270DB1FBA0F506615001299A2B56D7",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-resource-reference-6-effectiveTextStyle.json",
+        "sha256": "B6F6010ADF9AEF75D5D5ACE4C910A9E818EC4A6C22B84A5B9662CD1EE44D11F4",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-resource-reference-7-dimensionStyle.json",
+        "sha256": "17D1AD4BB20362984A9F7DAAAEFC9D6544BA850CB0DBE2DB518BE38C2D918028",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-resource-reference-7-effectiveTextStyle.json",
+        "sha256": "10F4E70610A023F885BC4E20A12DC8C07D6C24EE50203C99AFA97A9061BCADDD",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-resource-reference-8-dimensionStyle.json",
+        "sha256": "1902D6B77B5274330CF9FD2620FD135233A236201A2976CB7F27BC9D374F1CB3",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-resource-reference-8-effectiveTextStyle.json",
+        "sha256": "2E2ED7A43E5A3F1C9BE04B3812F7750836744EB8854348230482BACF4DED65F7",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-resource-reference-9-dimensionStyle.json",
+        "sha256": "FC64D126E812D3E810DB3997401F3C54BECB6A6D84287D5102640F2E0BCE6BE1",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-resource-reference-9-effectiveTextStyle.json",
+        "sha256": "BC4FCFD6BA20A5F9F13AAF85D0F0D9F54623BC2FE1F893D0F760D7B1E069D675",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-roundtrip-comparison.json",
+        "sha256": "D6AAD11AC844CC70BFF1AD671D0308DAC16A523CAC1905F4C995AFFFAEEF21F8",
+        "bytes": 251083
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-scene.json",
+        "sha256": "2FE65A67F944ECB55D1E54A4409857BD9DA0D3AC642CDA9ACCD83F8A152A0247",
+        "bytes": 376187
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/twelve_mm100_vertical_large-source-scratch.json",
+        "sha256": "1D54BF85D212ACEA709D7E445B2823501F732ADDDC52FABB0935A70C4391D9BF",
+        "bytes": 7249521
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_m50_horizontal-clone-public-baseline.json",
+        "sha256": "19C60D8ADA8524CB2EC8F4D0A9B891E69D877D9DFCEACF57462D828E3A610011",
+        "bytes": 13985
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_m50_horizontal-observation-1.json",
+        "sha256": "0EE6D0CE1EF53EDD48ABA69231C35774ED33D16438F036744E2F3B669F01B3B5",
+        "bytes": 5293
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_m50_horizontal-resource-reference-0-dimensionStyle.json",
+        "sha256": "A29B146610B45006A75384CFDA9BC675EAC25D811B85873286D45932AE614BC6",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_m50_horizontal-resource-reference-0-effectiveTextStyle.json",
+        "sha256": "EC1340C662E595732D67046609F1D5B58702D7B8ABCA16B60514F2AF8726D2E4",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_m50_horizontal-resource-reference-1-dimensionStyle.json",
+        "sha256": "79001E3A311928BEC8ECF470361C12D3E2583AB287052589C96471F4264D047C",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_m50_horizontal-resource-reference-1-effectiveTextStyle.json",
+        "sha256": "B9A6E01D9F706F7432519BB3B8C652E58D3A3B5434696291E0017EF21A8F6960",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_m50_horizontal-scene.json",
+        "sha256": "8DD24B6683429E7A012D05C2028CB97970F2CA95EA2081B52946ECF46191E0D7",
+        "bytes": 18048
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_m50_horizontal-source-scratch.json",
+        "sha256": "1F18D53891F661C9C38A58F3F914C1C74BA7DB89D98AC005DC010936EF4D5BB7",
+        "bytes": 7249521
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal-after-reopen.json",
+        "sha256": "15A2004B70A545D2FE55F8F64812031004883E875CD15A1D4F8861E2E1702314",
+        "bytes": 8188
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal-before-save.json",
+        "sha256": "15A2004B70A545D2FE55F8F64812031004883E875CD15A1D4F8861E2E1702314",
+        "bytes": 8188
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal-clone-public-baseline.json",
+        "sha256": "AB784CA914EBF89356C816C9B6D6B184DC4937D7A3D67DA95C78EEF27CFADEBF",
+        "bytes": 13985
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal-observation-1.json",
+        "sha256": "6469FF53EAC4687A1985CEA21A9B06E8FA4D6FDB3F1E125B42C8C0C107D40AF4",
+        "bytes": 4686
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal-observation-2.json",
+        "sha256": "A456463ABD07DEE6A1BFDF5714A5A8DA1CD691CC7B964679BFA6CD1FA7006B49",
+        "bytes": 4733
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal-observation-3.json",
+        "sha256": "560F5707225498AD2B70D0F37D9EA72EF6D1C6F9F7474F219706FA32E64C8DE8",
+        "bytes": 4668
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal-observation-4.json",
+        "sha256": "43783CDB70F922BBCB1CAF61E0A5F0AC40C93FD9784D472C5CA8B3D5B145F098",
+        "bytes": 4638
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal-resource-reference-0-dimensionStyle.json",
+        "sha256": "A29B146610B45006A75384CFDA9BC675EAC25D811B85873286D45932AE614BC6",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal-resource-reference-0-effectiveTextStyle.json",
+        "sha256": "EC1340C662E595732D67046609F1D5B58702D7B8ABCA16B60514F2AF8726D2E4",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal-resource-reference-1-dimensionStyle.json",
+        "sha256": "79001E3A311928BEC8ECF470361C12D3E2583AB287052589C96471F4264D047C",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal-resource-reference-1-effectiveTextStyle.json",
+        "sha256": "B9A6E01D9F706F7432519BB3B8C652E58D3A3B5434696291E0017EF21A8F6960",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal-roundtrip-comparison.json",
+        "sha256": "DB582FEFC4A8F7CA2F43C7FA2E33FC97765553A0D9F56A1A9DE5068EE5C8FD26",
+        "bytes": 79275
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal-scene.json",
+        "sha256": "81CAE53CE3B3AE1382D4C84350B8C006E592D7E8BD76F9A7FFEF86C84EF35A5D",
+        "bytes": 102742
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal-source-scratch.json",
+        "sha256": "1F18D53891F661C9C38A58F3F914C1C74BA7DB89D98AC005DC010936EF4D5BB7",
+        "bytes": 7249521
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal_format-clone-public-baseline.json",
+        "sha256": "F424F761714426B6695C1CDA05E9C1452CA2D61504A39FE66B59FFCF63588DFB",
+        "bytes": 13985
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal_format-observation-1.json",
+        "sha256": "6469FF53EAC4687A1985CEA21A9B06E8FA4D6FDB3F1E125B42C8C0C107D40AF4",
+        "bytes": 4686
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal_format-observation-2.json",
+        "sha256": "A456463ABD07DEE6A1BFDF5714A5A8DA1CD691CC7B964679BFA6CD1FA7006B49",
+        "bytes": 4733
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal_format-observation-3.json",
+        "sha256": "560F5707225498AD2B70D0F37D9EA72EF6D1C6F9F7474F219706FA32E64C8DE8",
+        "bytes": 4668
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal_format-observation-4.json",
+        "sha256": "43783CDB70F922BBCB1CAF61E0A5F0AC40C93FD9784D472C5CA8B3D5B145F098",
+        "bytes": 4638
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal_format-resource-reference-0-dimensionStyle.json",
+        "sha256": "A29B146610B45006A75384CFDA9BC675EAC25D811B85873286D45932AE614BC6",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal_format-resource-reference-0-effectiveTextStyle.json",
+        "sha256": "EC1340C662E595732D67046609F1D5B58702D7B8ABCA16B60514F2AF8726D2E4",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal_format-resource-reference-1-dimensionStyle.json",
+        "sha256": "79001E3A311928BEC8ECF470361C12D3E2583AB287052589C96471F4264D047C",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal_format-resource-reference-1-effectiveTextStyle.json",
+        "sha256": "B9A6E01D9F706F7432519BB3B8C652E58D3A3B5434696291E0017EF21A8F6960",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal_format-scene.json",
+        "sha256": "46198E7E817189BC5E19A9C0157BEB6016CD255C066B4275E7622677B8C57D3D",
+        "bytes": 23306
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal_format-source-scratch.json",
+        "sha256": "1F18D53891F661C9C38A58F3F914C1C74BA7DB89D98AC005DC010936EF4D5BB7",
+        "bytes": 7249521
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal_measurement-clone-public-baseline.json",
+        "sha256": "19C60D8ADA8524CB2EC8F4D0A9B891E69D877D9DFCEACF57462D828E3A610011",
+        "bytes": 13985
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal_measurement-observation-1.json",
+        "sha256": "6469FF53EAC4687A1985CEA21A9B06E8FA4D6FDB3F1E125B42C8C0C107D40AF4",
+        "bytes": 4686
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal_measurement-observation-2.json",
+        "sha256": "A456463ABD07DEE6A1BFDF5714A5A8DA1CD691CC7B964679BFA6CD1FA7006B49",
+        "bytes": 4733
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal_measurement-observation-3.json",
+        "sha256": "560F5707225498AD2B70D0F37D9EA72EF6D1C6F9F7474F219706FA32E64C8DE8",
+        "bytes": 4668
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal_measurement-observation-4.json",
+        "sha256": "43783CDB70F922BBCB1CAF61E0A5F0AC40C93FD9784D472C5CA8B3D5B145F098",
+        "bytes": 4638
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal_measurement-resource-reference-0-dimensionStyle.json",
+        "sha256": "A29B146610B45006A75384CFDA9BC675EAC25D811B85873286D45932AE614BC6",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal_measurement-resource-reference-0-effectiveTextStyle.json",
+        "sha256": "EC1340C662E595732D67046609F1D5B58702D7B8ABCA16B60514F2AF8726D2E4",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal_measurement-resource-reference-1-dimensionStyle.json",
+        "sha256": "79001E3A311928BEC8ECF470361C12D3E2583AB287052589C96471F4264D047C",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal_measurement-resource-reference-1-effectiveTextStyle.json",
+        "sha256": "B9A6E01D9F706F7432519BB3B8C652E58D3A3B5434696291E0017EF21A8F6960",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal_measurement-scene.json",
+        "sha256": "8963BD3CD8639238F0FEA869FBD549C06C9EA02D2C5706E116B1DE40ED671474",
+        "bytes": 23341
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_horizontal_measurement-source-scratch.json",
+        "sha256": "1F18D53891F661C9C38A58F3F914C1C74BA7DB89D98AC005DC010936EF4D5BB7",
+        "bytes": 7249521
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_noncollinear-clone-public-baseline.json",
+        "sha256": "7C1E8E195A55CA5657BD4CCEFA48E170F7DE92D867110C76D4DEE0E0BB053E07",
+        "bytes": 13985
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_noncollinear-observation-1.json",
+        "sha256": "7FC70B11C3D2329BCE42E90C761284571752A530CBCBA14E611BF37944D925C1",
+        "bytes": 4655
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_noncollinear-observation-2.json",
+        "sha256": "9608EAC42CE01B7D0E1302560954AF270F235CA2665045E77C2327CC17A738F4",
+        "bytes": 4679
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_noncollinear-resource-reference-0-dimensionStyle.json",
+        "sha256": "A29B146610B45006A75384CFDA9BC675EAC25D811B85873286D45932AE614BC6",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_noncollinear-resource-reference-0-effectiveTextStyle.json",
+        "sha256": "EC1340C662E595732D67046609F1D5B58702D7B8ABCA16B60514F2AF8726D2E4",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_noncollinear-resource-reference-1-dimensionStyle.json",
+        "sha256": "79001E3A311928BEC8ECF470361C12D3E2583AB287052589C96471F4264D047C",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_noncollinear-resource-reference-1-effectiveTextStyle.json",
+        "sha256": "B9A6E01D9F706F7432519BB3B8C652E58D3A3B5434696291E0017EF21A8F6960",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_noncollinear-scene.json",
+        "sha256": "AA0B2B7D6D2669EC42FAA099D462A15C6B2F002651ECA68535080B13BCF21FB8",
+        "bytes": 18228
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm100_noncollinear-source-scratch.json",
+        "sha256": "1F18D53891F661C9C38A58F3F914C1C74BA7DB89D98AC005DC010936EF4D5BB7",
+        "bytes": 7249521
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm50_horizontal-clone-public-baseline.json",
+        "sha256": "AB784CA914EBF89356C816C9B6D6B184DC4937D7A3D67DA95C78EEF27CFADEBF",
+        "bytes": 13985
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm50_horizontal-observation-1.json",
+        "sha256": "35A93C034E66B03E3C7D3DA52DF9EBC5728EFF6AE121E0CD533C4215AE79439D",
+        "bytes": 4992
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm50_horizontal-resource-reference-0-dimensionStyle.json",
+        "sha256": "A29B146610B45006A75384CFDA9BC675EAC25D811B85873286D45932AE614BC6",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm50_horizontal-resource-reference-0-effectiveTextStyle.json",
+        "sha256": "EC1340C662E595732D67046609F1D5B58702D7B8ABCA16B60514F2AF8726D2E4",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm50_horizontal-resource-reference-1-dimensionStyle.json",
+        "sha256": "79001E3A311928BEC8ECF470361C12D3E2583AB287052589C96471F4264D047C",
+        "bytes": 5148
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm50_horizontal-resource-reference-1-effectiveTextStyle.json",
+        "sha256": "B9A6E01D9F706F7432519BB3B8C652E58D3A3B5434696291E0017EF21A8F6960",
+        "bytes": 2356
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm50_horizontal-scene.json",
+        "sha256": "8121E3DE603BDE173B10DCC131B487A9BF9FA57A3436EA4102D5DD29E161D405",
+        "bytes": 17933
+      },
+      {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/two_mm50_horizontal-source-scratch.json",
+        "sha256": "1F18D53891F661C9C38A58F3F914C1C74BA7DB89D98AC005DC010936EF4D5BB7",
+        "bytes": 7249521
+      }
+    ]
+  },
+  "scenes": [
+    {
+      "fixture": {
+        "name": "two_mm100_horizontal",
+        "seed": "10837",
+        "segmentCount": 2,
+        "origin": [
+          12000.375,
+          -3400.625,
+          0
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "coordinateInput": [
+          0,
+          512.375,
+          3001.125
+        ],
+        "projectedPoints": [
+          [
+            12000.375,
+            -3400.625,
+            0
+          ],
+          [
+            12512.75,
+            -3400.625,
+            0
+          ],
+          [
+            15001.5,
+            -3400.625,
+            0
+          ]
+        ],
+        "sourcePoints": [
+          [
+            12000.375,
+            -3400.625,
+            0
+          ],
+          [
+            12512.75,
+            -3400.625,
+            0
+          ],
+          [
+            15001.5,
+            -3400.625,
+            0
+          ]
+        ],
+        "lateralOffset": 800.5,
+        "baselinePoint": [
+          12000.375,
+          -2600.125,
+          0
+        ],
+        "unit": "mm",
+        "unitSource": "explicit project fixture",
+        "scaleDenominator": 100,
+        "placementSource": "explicit per-chain fixture",
+        "actualAnchorPolicy": "explicit fixture same-station source anchors; no projection replacement"
+      },
+      "support": "supported_public_observations",
+      "stage": "accepted_public_probe",
+      "diagnostic": "",
+      "setupPassed": true,
+      "candidateSaved": true,
+      "candidateFile": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-230616-03f2f503\\case\\two_mm100_horizontal-owned-candidate.dwg",
+      "candidateSHA256": "3DAE431EF31E4C2EE8099527209E51F38C5C21DEB103868DA52345E9394E73BE",
+      "roundtripFieldCount": 460,
+      "roundtripAllDeclaredFieldsEqual": true,
+      "supportInterpretation": "This observed adapter method and declared public fields only; not universal API support or glyph qualification"
+    },
+    {
+      "fixture": {
+        "name": "one_mm100_vertical_large",
+        "seed": "ACB0",
+        "segmentCount": 1,
+        "origin": [
+          1000000.375,
+          2000000.625,
+          0
+        ],
+        "direction": [
+          0,
+          1,
+          0
+        ],
+        "coordinateInput": [
+          0,
+          1876.625
+        ],
+        "projectedPoints": [
+          [
+            1000000.375,
+            2000000.625,
+            0
+          ],
+          [
+            1000000.375,
+            2001877.25,
+            0
+          ]
+        ],
+        "sourcePoints": [
+          [
+            1000000.375,
+            2000000.625,
+            0
+          ],
+          [
+            1000000.375,
+            2001877.25,
+            0
+          ]
+        ],
+        "lateralOffset": -700.125,
+        "baselinePoint": [
+          1000700.5,
+          2000000.625,
+          0
+        ],
+        "unit": "mm",
+        "unitSource": "explicit project fixture",
+        "scaleDenominator": 100,
+        "placementSource": "explicit per-chain fixture",
+        "actualAnchorPolicy": "explicit fixture same-station source anchors; no projection replacement"
+      },
+      "support": "supported_public_observations",
+      "stage": "accepted_public_probe",
+      "diagnostic": "",
+      "setupPassed": true,
+      "candidateSaved": true,
+      "candidateFile": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-230616-03f2f503\\case\\one_mm100_vertical_large-owned-candidate.dwg",
+      "candidateSHA256": "B0887D92A8950406CF906DD1F431AA7E85E202CFF4092D4288E1252D255A2C9A",
+      "roundtripFieldCount": 359,
+      "roundtripAllDeclaredFieldsEqual": true,
+      "supportInterpretation": "This observed adapter method and declared public fields only; not universal API support or glyph qualification"
+    },
+    {
+      "fixture": {
+        "name": "six_mm100_horizontal",
+        "seed": "AC83",
+        "segmentCount": 6,
+        "origin": [
+          -45000.375,
+          16000.625,
+          0
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "coordinateInput": [
+          0,
+          135.375,
+          630.125,
+          1250.875,
+          1999.25,
+          3201.5,
+          4450.625
+        ],
+        "projectedPoints": [
+          [
+            -45000.375,
+            16000.625,
+            0
+          ],
+          [
+            -44865,
+            16000.625,
+            0
+          ],
+          [
+            -44370.25,
+            16000.625,
+            0
+          ],
+          [
+            -43749.5,
+            16000.625,
+            0
+          ],
+          [
+            -43001.125,
+            16000.625,
+            0
+          ],
+          [
+            -41798.875,
+            16000.625,
+            0
+          ],
+          [
+            -40549.75,
+            16000.625,
+            0
+          ]
+        ],
+        "sourcePoints": [
+          [
+            -45000.375,
+            16000.625,
+            0
+          ],
+          [
+            -44865,
+            16000.625,
+            0
+          ],
+          [
+            -44370.25,
+            16000.625,
+            0
+          ],
+          [
+            -43749.5,
+            16000.625,
+            0
+          ],
+          [
+            -43001.125,
+            16000.625,
+            0
+          ],
+          [
+            -41798.875,
+            16000.625,
+            0
+          ],
+          [
+            -40549.75,
+            16000.625,
+            0
+          ]
+        ],
+        "lateralOffset": 900.375,
+        "baselinePoint": [
+          -45000.375,
+          16901,
+          0
+        ],
+        "unit": "mm",
+        "unitSource": "explicit project fixture",
+        "scaleDenominator": 100,
+        "placementSource": "explicit per-chain fixture",
+        "actualAnchorPolicy": "explicit fixture same-station source anchors; no projection replacement"
+      },
+      "support": "supported_public_observations",
+      "stage": "accepted_public_probe",
+      "diagnostic": "",
+      "setupPassed": true,
+      "candidateSaved": true,
+      "candidateFile": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-230616-03f2f503\\case\\six_mm100_horizontal-owned-candidate.dwg",
+      "candidateSHA256": "7CD8725E96A79AAE4E1E3F61C01D2264C18686F194934E0DB01F8253A8275F60",
+      "roundtripFieldCount": 864,
+      "roundtripAllDeclaredFieldsEqual": true,
+      "supportInterpretation": "This observed adapter method and declared public fields only; not universal API support or glyph qualification"
+    },
+    {
+      "fixture": {
+        "name": "twelve_mm100_vertical_large",
+        "seed": "CAF3",
+        "segmentCount": 12,
+        "origin": [
+          2356789.125,
+          -1456789.375,
+          0
+        ],
+        "direction": [
+          0,
+          1,
+          0
+        ],
+        "coordinateInput": [
+          0,
+          120.375,
+          555.625,
+          1110.875,
+          1875.125,
+          2720.375,
+          3650.625,
+          4700.875,
+          5861.125,
+          7130.375,
+          8510.625,
+          10000.875,
+          12020.375
+        ],
+        "projectedPoints": [
+          [
+            2356789.125,
+            -1456789.375,
+            0
+          ],
+          [
+            2356789.125,
+            -1456669,
+            0
+          ],
+          [
+            2356789.125,
+            -1456233.75,
+            0
+          ],
+          [
+            2356789.125,
+            -1455678.5,
+            0
+          ],
+          [
+            2356789.125,
+            -1454914.25,
+            0
+          ],
+          [
+            2356789.125,
+            -1454069,
+            0
+          ],
+          [
+            2356789.125,
+            -1453138.75,
+            0
+          ],
+          [
+            2356789.125,
+            -1452088.5,
+            0
+          ],
+          [
+            2356789.125,
+            -1450928.25,
+            0
+          ],
+          [
+            2356789.125,
+            -1449659,
+            0
+          ],
+          [
+            2356789.125,
+            -1448278.75,
+            0
+          ],
+          [
+            2356789.125,
+            -1446788.5,
+            0
+          ],
+          [
+            2356789.125,
+            -1444769,
+            0
+          ]
+        ],
+        "sourcePoints": [
+          [
+            2356789.125,
+            -1456789.375,
+            0
+          ],
+          [
+            2356789.125,
+            -1456669,
+            0
+          ],
+          [
+            2356789.125,
+            -1456233.75,
+            0
+          ],
+          [
+            2356789.125,
+            -1455678.5,
+            0
+          ],
+          [
+            2356789.125,
+            -1454914.25,
+            0
+          ],
+          [
+            2356789.125,
+            -1454069,
+            0
+          ],
+          [
+            2356789.125,
+            -1453138.75,
+            0
+          ],
+          [
+            2356789.125,
+            -1452088.5,
+            0
+          ],
+          [
+            2356789.125,
+            -1450928.25,
+            0
+          ],
+          [
+            2356789.125,
+            -1449659,
+            0
+          ],
+          [
+            2356789.125,
+            -1448278.75,
+            0
+          ],
+          [
+            2356789.125,
+            -1446788.5,
+            0
+          ],
+          [
+            2356789.125,
+            -1444769,
+            0
+          ]
+        ],
+        "lateralOffset": -1100.25,
+        "baselinePoint": [
+          2357889.375,
+          -1456789.375,
+          0
+        ],
+        "unit": "mm",
+        "unitSource": "explicit project fixture",
+        "scaleDenominator": 100,
+        "placementSource": "explicit per-chain fixture",
+        "actualAnchorPolicy": "explicit fixture same-station source anchors; no projection replacement"
+      },
+      "support": "supported_public_observations",
+      "stage": "accepted_public_probe",
+      "diagnostic": "",
+      "setupPassed": true,
+      "candidateSaved": true,
+      "candidateFile": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-230616-03f2f503\\case\\twelve_mm100_vertical_large-owned-candidate.dwg",
+      "candidateSHA256": "085A89488B417482B21C3850D86663108910C2314B7E4C17C8945084C62964F4",
+      "roundtripFieldCount": 1470,
+      "roundtripAllDeclaredFieldsEqual": true,
+      "supportInterpretation": "This observed adapter method and declared public fields only; not universal API support or glyph qualification"
+    },
+    {
+      "fixture": {
+        "name": "two_mm50_horizontal",
+        "seed": "10837",
+        "segmentCount": 2,
+        "origin": [
+          14200.125,
+          17200.375,
+          0
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "coordinateInput": [
+          0,
+          710.625,
+          3245.875
+        ],
+        "projectedPoints": [
+          [
+            14200.125,
+            17200.375,
+            0
+          ],
+          [
+            14910.75,
+            17200.375,
+            0
+          ],
+          [
+            17446,
+            17200.375,
+            0
+          ]
+        ],
+        "sourcePoints": [
+          [
+            14200.125,
+            17200.375,
+            0
+          ],
+          [
+            14910.75,
+            17200.375,
+            0
+          ],
+          [
+            17446,
+            17200.375,
+            0
+          ]
+        ],
+        "lateralOffset": 600.25,
+        "baselinePoint": [
+          14200.125,
+          17800.625,
+          0
+        ],
+        "unit": "mm",
+        "unitSource": "explicit project fixture",
+        "scaleDenominator": 50,
+        "placementSource": "explicit per-chain fixture",
+        "actualAnchorPolicy": "explicit fixture same-station source anchors; no projection replacement"
+      },
+      "support": "unsupported",
+      "stage": "native_adaptation",
+      "diagnostic": "measurement_does_not_match_station_projection",
+      "setupPassed": true,
+      "candidateSaved": false,
+      "candidateFile": null,
+      "candidateSHA256": null,
+      "supportInterpretation": "This observed adapter method and declared public fields only; not universal API support or glyph qualification"
+    },
+    {
+      "fixture": {
+        "name": "two_m50_horizontal",
+        "seed": "10837",
+        "segmentCount": 2,
+        "origin": [
+          12.000375,
+          -3.400625,
+          0
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "coordinateInput": [
+          0,
+          0.512375,
+          3.001125
+        ],
+        "projectedPoints": [
+          [
+            12.000375,
+            -3.400625,
+            0
+          ],
+          [
+            12.51275,
+            -3.400625,
+            0
+          ],
+          [
+            15.0015,
+            -3.400625,
+            0
+          ]
+        ],
+        "sourcePoints": [
+          [
+            12.000375,
+            -3.400625,
+            0
+          ],
+          [
+            12.51275,
+            -3.400625,
+            0
+          ],
+          [
+            15.0015,
+            -3.400625,
+            0
+          ]
+        ],
+        "lateralOffset": 0.40025,
+        "baselinePoint": [
+          12.000375,
+          -3.000375,
+          0
+        ],
+        "unit": "m",
+        "unitSource": "explicit project fixture",
+        "scaleDenominator": 50,
+        "placementSource": "explicit per-chain fixture",
+        "actualAnchorPolicy": "explicit fixture same-station source anchors; no projection replacement"
+      },
+      "support": "unsupported",
+      "stage": "native_adaptation",
+      "diagnostic": "measurement_does_not_match_station_projection",
+      "setupPassed": true,
+      "candidateSaved": false,
+      "candidateFile": null,
+      "candidateSHA256": null,
+      "supportInterpretation": "This observed adapter method and declared public fields only; not universal API support or glyph qualification"
+    },
+    {
+      "fixture": {
+        "name": "two_mm100_noncollinear",
+        "seed": "10837",
+        "segmentCount": 2,
+        "origin": [
+          22100.375,
+          6400.625,
+          0
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "coordinateInput": [
+          0,
+          512.375,
+          3001.125
+        ],
+        "projectedPoints": [
+          [
+            22100.375,
+            6400.625,
+            0
+          ],
+          [
+            22612.75,
+            6400.625,
+            0
+          ],
+          [
+            25101.5,
+            6400.625,
+            0
+          ]
+        ],
+        "sourcePoints": [
+          [
+            22100.375,
+            6400.625,
+            0
+          ],
+          [
+            22612.75,
+            6437.875,
+            0
+          ],
+          [
+            25101.5,
+            6400.625,
+            0
+          ]
+        ],
+        "lateralOffset": 800.5,
+        "baselinePoint": [
+          22100.375,
+          7201.125,
+          0
+        ],
+        "unit": "mm",
+        "unitSource": "explicit project fixture",
+        "scaleDenominator": 100,
+        "placementSource": "explicit per-chain fixture",
+        "actualAnchorPolicy": "explicit fixture same-station source anchors; no projection replacement"
+      },
+      "support": "unsupported",
+      "stage": "native_adaptation",
+      "diagnostic": "node move changed another actual measurement anchor",
+      "setupPassed": true,
+      "candidateSaved": false,
+      "candidateFile": null,
+      "candidateSHA256": null,
+      "supportInterpretation": "This observed adapter method and declared public fields only; not universal API support or glyph qualification"
+    }
+  ],
+  "supportedMm100RoundtripFieldCount": 3153,
+  "validRejectionControlCount": 15,
+  "sourceAmbientProtection": {
+    "complete": true,
+    "errors": [],
+    "allPreserved": true,
+    "schemeWrites": {
+      "openedForModify": 0,
+      "modified": 0,
+      "appended": 0,
+      "erased": 0,
+      "unappended": 0,
+      "reappended": 0,
+      "headerWillChange": 0
+    },
+    "referenceWrites": {
+      "openedForModify": 0,
+      "modified": 0,
+      "appended": 0,
+      "erased": 0,
+      "unappended": 0,
+      "reappended": 0,
+      "headerWillChange": 0
+    },
+    "ambientWrites": {
+      "openedForModify": 0,
+      "modified": 0,
+      "appended": 0,
+      "erased": 0,
+      "unappended": 0,
+      "reappended": 0,
+      "headerWillChange": 0
+    },
+    "currentActiveWorkingPreserved": true,
+    "rawAfter": {
+      "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/case/source-and-ambient-after.json",
+      "sha256": "4B707F32C9FAB78AF1D7118F78B16D5C40A9AE69187589DEA421A988EA4BE4E3",
+      "bytes": 3743893
+    },
+    "boundary": "Protected originals use safe common identity and symbol owner/key getters; dangerous public observation occurs only in separately monitored owned mutable scratch; no monitor reset"
+  },
+  "closureEvidence": [
+    {
+      "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/native-result-closure.json",
+      "sha256": "E8B3CA1BB230D70A52C7FE26510E5288BAE1C9510632F563A9267741EA24CA9A",
+      "bytes": 1500
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/reader-retirement.json",
+      "sha256": "0FF1348F75AD7EDD2B70EA3D9EB37ECD14A9C41608A3188B2938D3306195D569",
+      "bytes": 4545
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-230616-03f2f503/isolation-final.json",
+      "sha256": "EA07338FE5AC6B74E1BCB20E779EDE5F0B65BD6092B7E8E0859EF14E4E5A0609",
+      "bytes": 1776
+    }
+  ],
+  "closureInterpretation": "Root-controlled explicit stop 70, four staged files retired, six source SHAs preserved; normal QUIT not proven",
+  "priorNativeFailuresPreserved": [
+    {
+      "reason": "ownership setup failure, not target RED",
+      "nativeCase": {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-222423-7cc12dd8/case/native-case.json",
+        "sha256": "4D46A0642ACFBF77FB7DBFC4016262B171C494C1D27F8885D1D8772D3AAD1B23",
+        "bytes": 1722
+      },
+      "status": "failed",
+      "errors": [
+        "foreign persistent explode return rejected without delete"
+      ]
+    },
+    {
+      "reason": "ownership flag diagnostic failure, not target RED",
+      "nativeCase": {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-222913-7d6a8f4a/case/native-case.json",
+        "sha256": "4B7F55EC399215F1E1E7F8A303DE58C7D2E5E1F80FAED705DBA881B38FABEECE",
+        "bytes": 1940
+      },
+      "status": "failed",
+      "errors": [
+        "explode returned unresolved/duplicate/self/non-detached object; foreign objects not deleted"
+      ]
+    },
+    {
+      "reason": "derived resource identity setup failure; post-source observations incomplete",
+      "nativeCase": {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-224722-0627b51b/case/native-case.json",
+        "sha256": "9B1A1FA784FBA430EEAE81030C21C102942D479FCA5904C7A58515F9FC198092",
+        "bytes": 7331
+      },
+      "status": "failed",
+      "errors": [
+        "post_adapt_fault_did_not_reach_native_setup"
+      ]
+    },
+    {
+      "reason": "diagnostic node API success but real reference SideDB writes; not accepted",
+      "nativeCase": {
+        "path": "D:/Codex/建筑施工图自动化/阶段1/runs/elevation-native-20261102-225502-94c641fd/case/native-case.json",
+        "sha256": "5893CBACD98791C803BDA8D516FC72C94F7DBE6801855C477615E455AEA75188",
+        "bytes": 4014
+      },
+      "status": "failed",
+      "errors": [
+        "diagnostic_only_not_an_accepted_candidate"
+      ]
+    }
+  ],
+  "capabilities": {
+    "glyphComplete": false,
+    "capabilityUpgradeAllowed": false,
+    "currentDrawingSubmissionQualified": false,
+    "productionGenerationImplemented": false
+  },
+  "concerns": [
+    "1:50 uniform-transform observation disagrees between geometry, measurement, dimlfac and format; semantic cause/cache behavior unresolved; no substitute formula or universal unsupported claim",
+    "Meter-unit complete adaptation and true millimeter native display were not reached; this adapter rejects after transform",
+    "Non-collinear normal anchor target was not reached despite public move returning eOk; no projection replacement",
+    "No natural TCH host text request captured; public dimBlock texts absent",
+    "Declared public resource fields only; no unknown TCH private field or complete glyph claim"
+  ]
+}

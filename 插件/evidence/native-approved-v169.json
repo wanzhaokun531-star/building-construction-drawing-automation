@@ -1,0 +1,71 @@
+{
+  "version": "v169",
+  "job": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-200024",
+  "steps": [
+    {
+      "serial": "26a574018d6943a7aae4c2e77d30b611",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-200024\\dispatch_26a574018d6943a7aae4c2e77d30b611.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "488b46bed4724d1ca1c28fff7a3e9ffa",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-200024",
+        "processId": 12628,
+        "desktop": "CodexS1_488b46bed4724d1ca1c28fff7a3e9ffa",
+        "inputDesktop": "Default",
+        "serial": "26a574018d6943a7aae4c2e77d30b611",
+        "command": "S1OPENPROBECONTROL",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-200024",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-200024\\control.dwg",
+        "error": null
+      }
+    },
+    {
+      "serial": "288ffead670d4d04bb4b3d4b4b93ca72",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-200024\\dispatch_288ffead670d4d04bb4b3d4b4b93ca72.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "488b46bed4724d1ca1c28fff7a3e9ffa",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261102-200024",
+        "processId": 12628,
+        "desktop": "CodexS1_488b46bed4724d1ca1c28fff7a3e9ffa",
+        "inputDesktop": "Default",
+        "serial": "288ffead670d4d04bb4b3d4b4b93ca72",
+        "command": "S1PHASE2EXECUTE",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-200024",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-200024\\插件生成施工图_二层.dwg",
+        "error": null
+      }
+    }
+  ],
+  "error": null,
+  "result": {
+    "contract": "bcp.two-plan-result.v1",
+    "completed": true,
+    "sourceSHA256": "FD1F766C52E1D870F39D2C643857FD0A4EDE244837B1B2B62631F8EE69F44628",
+    "outputs": [
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-200024\\插件生成施工图_一层.dwg",
+        "SHA256": "D04B161FE40B2B50F32EEEA924A0538FC872E2F7E311B3D8011788AA0E8731C7"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261102-200024\\插件生成施工图_二层.dwg",
+        "SHA256": "972A956666A9BE5ECE327D921B991553AE5DF0ACB1EE11D9F4EE09DC4A06B738"
+      }
+    ],
+    "error": null
+  }
+}

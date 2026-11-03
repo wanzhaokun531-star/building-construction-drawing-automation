@@ -1,0 +1,15 @@
+# N9h一次完整限定复核
+
+读N9h-自有资源读取适配简报.md及同名报告/证据索引，Spec和Quality两verdict及全部可行动发现；输出N9h-full-task-review-20261103.md。只写复核报告，不改源码/Git/旧证据，不派代理/二审，不构建/开CAD或重跑全套；按review-agent与ObjectARX2020技能，具名风险/截断hunk才定点补读，勿扫描共享dirty树。
+
+base冻结v24 build/n9c-20261103-131202-815-n9g-model-factory-v24-frozen-34b66b1a/src；candidate冻结v27 build/n9c-20261103-133951-997-n9h-owned-resource-v27-frozen-9c7b8692/src。完整211行diff为v27的n9h-v24-owned-resource.diff；receipt2791F797A94FACE4774C95809633CC87797D99755BCF993CC7274EC9F2D4764E、ARX222B6D94D331B232599A730CAFB6765FBB45B60C43A27D2252E10E463FFB9D9F。v26未prepare/native。root已核10输入/live/frozen；v27冻结前唯一校正去掉未观察release→失败推断，保留真实unknown-release/underflow/unknown-get/IO/close等。
+
+唯一actual阶段1/runs/elevation-native-20261103-134059-1ce10761，PID49032，18等证据以N9h索引准确条目为准。报告SHA B3C3E48337F040A7B0C7D095A689629C7B60947C77CC51CFBEC6C7C768F1939A；索引D6C2B7FEB8A2888768941195CBF991DB896ECA8600CD10922C13295C1E43F98E。A/B及generic fault1各92 unique/readpins，真实model删后close92/eOk全部，ambient1→1零写。fault1本轮generic+完整cache的原after-model注入，旧manager fault1不声称重跑；fault3/2/main保留。
+
+关键限制：B实际get/release均0，matched0，没有实际角色命中或返回真drawable的动态证据。prep时序/cache同时改变，v24那次请求未重现，不能称动态已满足/根因解决。main/A/B仍failed/无WD/RGB。review应核实现/目录/生命周期及诚实边界，不以本轮未调用就推适配代码错误，也不能授完整采集/生产资格。
+
+重点核公开真实ID枚举/dedup/同库验证、read-open一次和close配对（驻库不能delete）、循环目录与alias、字典写前置避免eWasOpenForRead、callback只内存查表/返回真对象及线程/日志异常、借用和底层pin分离、model删除/撤provider/cache-close/db毁顺序、失败保活及terminal/unload包含cache。未见release只是事实，不伪造归还完成或新增无SDK保证门槛。未知/不可读条目保留unsupported，不从raw反构造ID或开foreign。
+
+closure6F07F81592829AD0AA694882A0C4419587FA056CC99C539F32CAED91761D6FB5；comparisonD222E391D4665DA15A5E3B7833101487D9B3E3600BCEB7E120366E458DD2404E；Btrace8D81CA88D5C7694CBF9F2E6B7A31A34E468CA91793D8A1042DFB581EE398A4B3。70强停forcedtrue/normalQuitfalse、4退役6保持own0/relatedReviewfalse，source失败保留。
+
+旧N9e/f/g已分别完整PASS，不重审；未来physical palette接口调查不在本增量。测试复用既有正常/fault事实，只有具体疑点未被回答才最小focused检查；未触发callback/异常分支只能静态核，不能扩大动态覆盖。

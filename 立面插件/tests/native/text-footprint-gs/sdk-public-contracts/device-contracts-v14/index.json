@@ -1,0 +1,12 @@
+{
+  "sourceCHM": "C:/Autodesk/ObjectARX_for_AutoCAD_2020_Win_64_bit/docs/arxref.chm",
+  "sourceSHA256": "92BB53D177903BB780329F5EBD5A72374C434F6DF4AF25CEB5449C90BB928BA2",
+  "originalByteEntries": {
+    "AcGsGraphicsKernel__createOffScreenDevice.html": "288B60C8F2B37E56E2394CDF2D5A538135A6ABD171BF4E89EC16D66B2744C1B9",
+    "AcGsGraphicsKernel__deleteDevice@AcGsDevice__.html": "E744DD9665A97DF93EFFC2E29ED23BFA6D44C0152A46113CB606DAEFEE2B821C",
+    "AcGsDevice__RendererType.html": "B0BDED3C21DAA31D3C08FEBD37D5B42C1C66C615E5D9EEDEB0E409AED79658D7",
+    "AcGsDevice__setDeviceRenderer@RendererType.html": "4ED72B8084F5E1C519C40760EDE8C9ADD13030F4A78CBE5190973BC147CB30A9",
+    "AcGsDevice__getDeviceRenderer.html": "BACE844CEF040E78F333BDB036D9EF73B857B4D94363E208C5D757A2C5D42150"
+  },
+  "scope": "kernel factory/delete pairing; renderer getter only, no renderer setter invoked; kFullRender not synonymous with kSoftware"
+}

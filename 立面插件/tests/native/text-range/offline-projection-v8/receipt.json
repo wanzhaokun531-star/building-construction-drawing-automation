@@ -1,0 +1,18 @@
+{
+  "contract": "bce.text-range-offline-projection.v1",
+  "nativeBuildReceipt": "D:\\Codex\\\u5efa\u7b51\u65bd\u5de5\u56fe\u81ea\u52a8\u5316\\\u7acb\u9762\u63d2\u4ef6\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\receipt.json",
+  "nativeBuildReceiptSHA256": "1D2DB75D4A8C70D151EDA20397936722161ACADF8299DD6BE56FE7FD74E3B31C",
+  "source": "D:\\Codex\\\u5efa\u7b51\u65bd\u5de5\u56fe\u81ea\u52a8\u5316\\\u7acb\u9762\u63d2\u4ef6\\tests\\native\\text-range\\offline-projection-v8\\verify_text_range.py",
+  "sourceSHA256": "9296A063343919A13C3A954CE855E239C706254A55063AB8B431DF21857B27F3",
+  "liveSource": "D:\\Codex\\\u5efa\u7b51\u65bd\u5de5\u56fe\u81ea\u52a8\u5316\\\u7acb\u9762\u63d2\u4ef6\\tools\\verify_text_range.py",
+  "nativeRebuilt": false,
+  "nativeReexecuted": false,
+  "unchangedFunctions": [
+    "full_cells",
+    "compare",
+    "bound_inputs",
+    "project",
+    "render"
+  ],
+  "scope": "offline measured actual PDF page mapping only; original native artifacts immutable"
+}

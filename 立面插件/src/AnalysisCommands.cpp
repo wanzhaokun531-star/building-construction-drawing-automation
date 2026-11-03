@@ -344,18 +344,18 @@ bool initialize() noexcept {
       return false;
     analyzeOwned =
         acedRegCmds->addCommand(group, L"BCE_ANALYZE", L"BCE_ANALYZE",
-                                ACRX_CMD_MODAL, analyze) == Acad::eOk;
+                                ACRX_CMD_MODAL | ACRX_CMD_NO_UNDO_MARKER, analyze) == Acad::eOk;
     if (!analyzeOwned)
       return false;
     infoOwned = acedRegCmds->addCommand(group, L"BCE_INFO", L"BCE_INFO",
-                                        ACRX_CMD_MODAL, info) == Acad::eOk;
+                                        ACRX_CMD_MODAL | ACRX_CMD_NO_UNDO_MARKER, info) == Acad::eOk;
     if (!infoOwned) {
       shutdown();
       return false;
     }
     issuesOwned =
         acedRegCmds->addCommand(group, L"BCE_ISSUES", L"BCE_ISSUES",
-                                ACRX_CMD_MODAL, issuesCommand) == Acad::eOk;
+                                ACRX_CMD_MODAL | ACRX_CMD_NO_UNDO_MARKER, issuesCommand) == Acad::eOk;
     if (!issuesOwned) {
       shutdown();
       return false;

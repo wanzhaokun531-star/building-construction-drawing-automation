@@ -9,6 +9,11 @@ struct MaterialTileRecord {
     int nativeLines{};
     unsigned depth{};
 };
+struct MaterialDatabaseDeleter { void operator()(AcDbDatabase*) const noexcept; };
+struct OwnedMaterialDatabase {
+    std::unique_ptr<AcDbDatabase,MaterialDatabaseDeleter> database;
+    AcDbObjectIdArray roots;
+};
 class PreparedMaterialTiles final {
 public:
     ~PreparedMaterialTiles();
@@ -21,7 +26,7 @@ public:
     const std::vector<MaterialTileRecord>& tiles() const;
     const MaterialPlan& parentPlan() const;
     bool intact() const noexcept;
-    Result<std::vector<AcDbObjectId>> cloneToEmpty(AcDbDatabase&) const;
+    Result<OwnedMaterialDatabase> cloneIntoNewOwnedDb() const;
 private:
     struct State;
     std::unique_ptr<State> state_;
@@ -29,4 +34,14 @@ private:
     friend Result<PreparedMaterialTiles> prepareMaterialTiles(const MaterialPlan&,const std::vector<ReferenceMaterialSeed>&,const MaterialPreparationOptions&,const MaterialTileLimits&);
 };
 [[nodiscard]] Result<PreparedMaterialTiles> prepareMaterialTiles(const MaterialPlan&,const std::vector<ReferenceMaterialSeed>&,const MaterialPreparationOptions&,const MaterialTileLimits& = {});
+#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
+namespace material_tiles_diagnostics {
+enum class OwnedFault { AfterFirstTile, AfterSecondTile, AfterExportClone, BeforeExportPublish };
+enum class ResourceConflict { LayerColor, DictionaryKey, XrecordPayload, XrecordPolicy, ReusedOwnedKey, ReusedOwnedPayload, ReusedOwnedOwner, ReferenceAlias };
+struct OwnedProbe {bool noResult{},destroyedAll{},workingRestored{},preflightUnchanged{};std::size_t created{},destroyed{};std::string issue,bindings;std::vector<std::pair<std::string,bool>> typedChecks;};
+OwnedProbe ownershipFault(const MaterialPlan&,const std::vector<ReferenceMaterialSeed>&,const MaterialPreparationOptions&,OwnedFault);
+OwnedProbe resourceConflict(const PreparedMaterialTiles&,ResourceConflict);
+OwnedProbe typedXrecordValues(const PreparedMaterialTiles&);
+}
+#endif
 }

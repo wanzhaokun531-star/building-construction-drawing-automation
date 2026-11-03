@@ -1,0 +1,63 @@
+{
+  "contract": "bce.dimension-adapt-build.v1",
+  "label": "green_scratch_derived_binding",
+  "caseName": "DimensionAdaptMm100Nontrivial",
+  "startedUtc": "2026-11-02T15:05:24.2803458Z",
+  "compiledSourcesDirectory": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src",
+  "sourceFiles": {
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\NativeEvidence.h": "C6B083EE0346AA7CDB51090274CCCADCB2C6DE0AA92A196AD846E11C41C9EBB6",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\NativeEvidence.cpp": "1B3CA34A61CC2C2DB2C42A7FDFD01C029DE7BE82EAE6CE96D9DE1C3B363A8FE2",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\DimensionAdaptDriver.cpp": "95B520A1BE021C7C1D903C94FCAF0FEEDE25538B01D6278CFBA468F398846570",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\DimensionAdaptGreen.inc": "3C18EE165D8D1AC17772510175FDB499534B01E0825BB7F779ECCDDF13173D7C",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\DimensionTopology.h": "12E6C5EA8410910D5045AB217AAD073DCDB7246C8829D4991456DDC30C96939B",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\DimensionTopologyTests.cpp": "3D2518C314E7E4B63A9EAE896243908486C496083DCC00F2C55B53183AB6D80E",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\ElevationDimensionAdaptCases.vcxproj": "4396B9D93D7BFFBC518D3BADBD559DAFC67192BEA1E982B9399516BBCEBCAD41",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\build_dimension_adapt.ps1": "046037EDEC085BF8FFADCD6FD916828D4C7B90EF150BB719B4230059AE0B37C7"
+  },
+  "inputOrigins": [
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\NativeEvidence.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\NativeEvidence.h",
+      "sha256": "C6B083EE0346AA7CDB51090274CCCADCB2C6DE0AA92A196AD846E11C41C9EBB6"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\NativeEvidence.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\NativeEvidence.cpp",
+      "sha256": "1B3CA34A61CC2C2DB2C42A7FDFD01C029DE7BE82EAE6CE96D9DE1C3B363A8FE2"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\dimension-adapt\\DimensionAdaptDriver.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\DimensionAdaptDriver.cpp",
+      "sha256": "95B520A1BE021C7C1D903C94FCAF0FEEDE25538B01D6278CFBA468F398846570"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\dimension-adapt\\DimensionAdaptGreen.inc",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\DimensionAdaptGreen.inc",
+      "sha256": "3C18EE165D8D1AC17772510175FDB499534B01E0825BB7F779ECCDDF13173D7C"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\dimension-adapt\\DimensionTopology.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\DimensionTopology.h",
+      "sha256": "12E6C5EA8410910D5045AB217AAD073DCDB7246C8829D4991456DDC30C96939B"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\dimension-adapt\\DimensionTopologyTests.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\DimensionTopologyTests.cpp",
+      "sha256": "3D2518C314E7E4B63A9EAE896243908486C496083DCC00F2C55B53183AB6D80E"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\dimension-adapt\\ElevationDimensionAdaptCases.vcxproj",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\src\\ElevationDimensionAdaptCases.vcxproj",
+      "sha256": "4396B9D93D7BFFBC518D3BADBD559DAFC67192BEA1E982B9399516BBCEBCAD41"
+    }
+  ],
+  "binary": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\out\\ElevationDimensionAdaptCases.arx",
+  "binarySHA256": "A82B53196BCB171C12AE8B584A3D72F7CCF737C2516BCBBB13C2DF1F57463DF1",
+  "log": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\build.log",
+  "exitCode": 0,
+  "nativeExecuted": false,
+  "toolchain": "AutoCAD2020 SDK23.1 / v141 14.16.27023 / x64 / C++17",
+  "commandFile": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f\\build-command.cmd",
+  "commandSHA256": "E34A5B3A2A21E8EE519F29D8C17799316173C6BFF504139B9C53AC80FFDD155E",
+  "finishedUtc": "2026-11-02T15:05:30.8076759Z"
+}

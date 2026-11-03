@@ -1,0 +1,9 @@
+# N9a controlled text range probe
+
+Only `BCE_TEST_RUN` prepares an empty, owned top-view target and installs the open/idle gate. The independent controller opens the byte-identical copy at `<session>/text-range-native-job/control.dwg` with the unchanged S1 bridge. After that exact successful S1OPENPROBECONTROL command and quiescence, the probe queues `BCE_TEXT_RANGE_CAPTURE` in that document.
+
+Capture adds one owned AcDbPoint and temporarily overrules only that exact persistent point in the exact control database. Public `geometry.text` produces the native PDF through the existing AcPl publish-engine sequence. Real WorldDraw context must report the control database. A separate five-line calibration page checks the validated plot-settings mapping, with two corner and one interior checks beyond the minimal affine basis. Each text page has no boxes or calibration marks. The point remains an in-memory change to this owned control document; no DWG save is performed.
+
+Run the comparator on the frozen binding after capture. It checks complete pixel cells at 144 and 288 dpi, using all non-white coverage (RGB<255), without a geometric margin. It preserves outliers. Shrink and omitted-net-transform controls use those same actual pixels. Overlay PNGs are separate products and never inputs to ink extraction. Finite raster evidence never grants glyph completeness or original TCH font identity.
+
+Supported candidate inputs: explicit simplex.shx/gbcbig.shx files, five fixed UTF-16 single-line strings; raw=true; finite orthogonal XY basis; digits, Chinese, rotated backward, positive-determinant nonuniform nested transforms, nondefault tracking and oblique. UpsideDown, outer reflection, fallback/missing glyphs, TTF, vertical/decorated text, full MText, unknown clip/annotation context and original TCH glyphs remain outside scope. Candidate support is distinct from actual containment results.

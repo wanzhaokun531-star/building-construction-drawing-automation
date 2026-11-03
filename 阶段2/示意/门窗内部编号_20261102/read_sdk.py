@@ -10,7 +10,7 @@ job=ROOT/'阶段1/runs'/('stage2-inspect-number-'+datetime.datetime.now().strfti
 ini=Path(b['sidecar']);before=ini.read_text(encoding='utf-16');lines=[]
 for line in before.splitlines():
  if line.startswith('receiptDirectory='):line='receiptDirectory='+str(job)
- elif line.startswith('testBehavior='):line='testBehavior=inspect-list'
+ elif line.startswith('testBehavior='):line='testBehavior='+(sys.argv[4] if len(sys.argv)>4 else 'inspect-list')
  elif line.startswith('testInput='):line='testInput='+str(job/'control.dwg')
  elif line.startswith('testOutput='):line='testOutput='+str(job/'DO_NOT_CREATE.dwg')
  lines.append(line)

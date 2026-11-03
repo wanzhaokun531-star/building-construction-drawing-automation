@@ -1,0 +1,114 @@
+{
+  "contract": "bce.n9g-model-factory-actual-index.v1",
+  "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-131409-216c3fca",
+  "nonce": "216c3fca96874bbeb653107f7363f3f9",
+  "processId": 54164,
+  "frozenReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-131202-815-n9g-model-factory-v24-frozen-34b66b1a\\receipt.json",
+  "binarySHA256": "F84E1C52799F675DDD32F83C88E0B266E2C4C6839AEA02F6B5105E58D36C561D",
+  "nativeStatus": "failed",
+  "sourceCaseFailedPreserved": true,
+  "qualification": false,
+  "comparisonProtectionVerified": false,
+  "actualProviderRequest": {
+    "line": 27,
+    "objectIdRaw": 3014301743760,
+    "bNeedsValidation": false,
+    "threadId": 20880,
+    "call": 1,
+    "status": "persistent-adapter-unavailable",
+    "returnDrawable": null,
+    "nullReturnHandlingGuaranteed": false,
+    "validationProtocolInferred": false,
+    "event": "modelProvider.get"
+  },
+  "provider": {
+    "installed": true,
+    "getFunction": "diagnosticGetInterface",
+    "releaseFunction": "diagnosticReleaseInterface",
+    "getCalls": 1,
+    "releaseCalls": 0,
+    "actualInvocation": "called",
+    "managerInternalCallbacksObserved": false,
+    "boundaryFailure": false,
+    "persistentAdapterUnavailable": true,
+    "observationFailed": false,
+    "logFailures": 0,
+    "orphanCalls": 0,
+    "providerStillRegistered": false,
+    "persistentAdapterImplemented": false,
+    "callbackCorrectnessProven": false,
+    "nullReturnHandlingGuaranteed": false
+  },
+  "requestIdentityComparisonOnly": {
+    "opaqueCookie": 3051711649328,
+    "markerOldId": 3014301739008,
+    "modelspaceOldId": 3014301744896,
+    "laterCreatedStyleOldId": 3014301739024,
+    "requestedResourceType": "unknown",
+    "rawIdDecoded": false
+  },
+  "controlsPassed": 3,
+  "worldDrawCalls": {
+    "A": 0,
+    "B": 0
+  },
+  "rawRGBObserved": false,
+  "allArmsCleanupComplete": true,
+  "allArmsAmbientUnchanged": true,
+  "allArmsDBMOD": [
+    1,
+    1
+  ],
+  "normalQuit": false,
+  "explicitStopRequested": true,
+  "forcedTermination": true,
+  "workerExitCode": 70,
+  "retiredFiles": 4,
+  "protectedInputChecks": 6,
+  "ownForegroundEvents": 0,
+  "ownUserDesktopShowEvents": 0,
+  "relatedCadEventsNeedReview": false,
+  "evidence": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-131409-216c3fca\\case\\model-factory-comparison.json",
+      "sha256": "85AAA61527E354FFCB9B757C60ACF22EE79C30D264BC0058626B5A355EFC1986"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-131409-216c3fca\\case\\nonpersistent-kernel-model-control\\gs-trace.jsonl",
+      "sha256": "72C72AEF9241936FF9A4312465403F1A19FFC6C681EEF8F018F1E3F72CB0B687"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-131409-216c3fca\\case\\nonpersistent-control\\result.json",
+      "sha256": "9031899DFAFFFC797D177FA96CD85525D2B17BF12F8880673DAFEF7AA64C4D8E"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-131409-216c3fca\\case\\nonpersistent-kernel-model-control\\result.json",
+      "sha256": "2D5C8FDABBB51F1B3DDA926FF94F08D832249FE5A850DBDF3CE3991E8855A2EC"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-131409-216c3fca\\case\\gs-result.json",
+      "sha256": "045B12FD8DE78E7B814B109EE2C2F02A3ED234C7E1BC208E72B796B22E55D4CD"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-131409-216c3fca\\case\\native-case.json",
+      "sha256": "F54377F67023E7FBBFDB513E11F45ED675C83F351D1C545CDAD97A1360C72A61"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-131409-216c3fca\\case\\lifecycle-controls.json",
+      "sha256": "092BB18D22FB42CB786A4D974D54D2AFE271A7CAC4E9BD73AFD4A6A6EE48D161"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-131409-216c3fca\\native-result-closure.json",
+      "sha256": "37C2B1D1534D3AC4B114BF28358970A9752F956337351970EA64282453702423"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-131409-216c3fca\\reader-retirement.json",
+      "sha256": "AD77919BA88F9FD19588520EA9D6B6A0B9D28125E492F58A3CBD00E4A1CB4625"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-131409-216c3fca\\isolation-final.json",
+      "sha256": "07A83AC5C7F9F4AE0A2436754732B2017FB6A2273487BBECE0E08898B9C44676"
+    }
+  ],
+  "interpretation": "Generic model constructed but made a real unsupported persistent request; this is not an ordinary zero-WD or a successful pure-pointer/model/glyph qualification. No resource type or cause inferred."
+}

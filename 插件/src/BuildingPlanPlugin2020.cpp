@@ -1,6 +1,11 @@
+#include "ThreeFloorContract.h"
+#include "GeometryComparison.h"
+#include "ApprovedLayoutContract.h"
 #include "PublicProperties.h"
 #include "ProductDiagnostics.h"
 #include "ProjectInput.h"
 #include "PluginPolicy.h"
+#include "dbmain.h"
+#include "dbhatch.h"
 #define BCP_PRODUCT_BUILD
 #include "../../阶段2/src/Stage2Arx.cpp"

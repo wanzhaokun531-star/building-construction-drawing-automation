@@ -1,0 +1,1074 @@
+{
+  "contract": "bce.text-occupancy-development-check.v1",
+  "kind": "observed device footprint",
+  "buildReceipt": {
+    "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9b-20261103-101733-036-final-b4c73e3a\\receipt.json",
+    "sha256": "F6D1447BBD8FE89E5A5447B86E17EF6965B5FE3168F3E07FE0A05A3A753762B8"
+  },
+  "executable": {
+    "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9b-20261103-101733-036-final-b4c73e3a\\out\\TextOccupancyAdapter.exe",
+    "sha256": "71D110D267A2E28E2EBF6E14744D10F70EAB383D3A1ED2ABADBFCC8748F07AAE"
+  },
+  "verifier": {
+    "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\verify_text_occupancy.py",
+    "sha256": "DEFB03300F29EAF12DF08275C14314DB6B83317723422AFC70A799B8EF1D09A5"
+  },
+  "nativeReport": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-093743-84f838a5\\case\\text-range.json",
+    "sha256": "05254B213DC3F1B0C5D20DF1F0C352E8D12D9281DF68B9180D010800EECF6CD1"
+  },
+  "preservedN9aComparison": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-093743-84f838a5\\case\\text-range-public-measured-v8\\comparison.json",
+    "sha256": "AF5062EB2194BD4F628215A4AF3BFB9756AE5FBC2865B48F7441508FC66931A8"
+  },
+  "preservedBackwardDiagnostic": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-093743-84f838a5\\case\\text-range-backward-basis-diagnostic-v8\\diagnostic.json",
+    "sha256": "A0A979A299B0F67F16F700993218D9941CBFF60D49918B0FF768107D854A3168"
+  },
+  "comparator": {
+    "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-range\\offline-projection-v8\\verify_text_range.py",
+    "sha256": "9296A063343919A13C3A954CE855E239C706254A55063AB8B431DF21857B27F3"
+  },
+  "sources": [
+    {
+      "path": "src/ElevationModel.h",
+      "sha256": "094EAB9687EB8A761E012CE5EF1DC09661B37BA3309D360E268B6A8C1C96454B"
+    },
+    {
+      "path": "src/TextOccupancy.h",
+      "sha256": "D3EC0CE9C4B6E4E651A3E0B195B687FD0BEF92E65005B515F4BC4F85C3E60340"
+    },
+    {
+      "path": "src/TextOccupancy.cpp",
+      "sha256": "7EBDEBF6F188F0560D32411B3B3BB6E4C4E191DE26D30739A582DC63776142F0"
+    },
+    {
+      "path": "tests/text-occupancy/TextOccupancyTests.cpp",
+      "sha256": "365B6C3625EB2684E0DFE25345B4067971EAB37CC5C6A6AA0C629DAEDB579580"
+    },
+    {
+      "path": "tools/build_text_occupancy.ps1",
+      "sha256": "060C35592457A5059BD5683EA9B15048AD92F5F13056FA1EA71AFD279E7C777D"
+    },
+    {
+      "path": "tests/text-occupancy/TextOccupancyAdapter.cpp",
+      "sha256": "AA0E1907259049FF44F5894577B2C6AF54CEF6E805765D5C4EF28C52AB3B8938"
+    },
+    {
+      "path": "tools/verify_text_occupancy.py",
+      "sha256": "DEFB03300F29EAF12DF08275C14314DB6B83317723422AFC70A799B8EF1D09A5"
+    }
+  ],
+  "pixelContract": "RGB any channel <255; complete [x,x+1] by [y,y+1]; y down; top-left boundary phase [0,0]",
+  "numericalComparisonTolerancePixel": 1e-08,
+  "geometricMarginPixel": 0,
+  "scope": "Exact existing 5 native scenes x 2 finite rasters and measured mappings; external scene completeness and Layout binding remain unestablished.",
+  "results": [
+    {
+      "id": "digits",
+      "dpi": 144,
+      "image": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-093743-84f838a5\\case\\text-range-public-measured-v8\\digits-144-ink.png",
+        "sha256": "6CB19D952F456C1357A6F85163D38E8BEA72F5008E3F34F16A47CFB6261D0251"
+      },
+      "decodedRGB": {
+        "sha256": "145A0CD6253567A77F244931BCE2CA510C8F63B462FE37EB12B815318F9AC921",
+        "bytes": 6011880,
+        "width": 1190,
+        "height": 1684,
+        "rowStride": 3570
+      },
+      "cpp": {
+        "kind": "observed device footprint",
+        "inkPixels": 880,
+        "deviceCellBounds": [
+          [
+            254,
+            1361
+          ],
+          [
+            525,
+            1401
+          ]
+        ],
+        "worldCorners": [
+          [
+            24.853231724527244,
+            37.01048598507762
+          ],
+          [
+            72.65876375952584,
+            37.01048598507762
+          ],
+          [
+            72.65876375952584,
+            29.952611413591427
+          ],
+          [
+            24.853231724527244,
+            29.952611413591427
+          ]
+        ],
+        "worldBounds": [
+          [
+            24.853231724527244,
+            29.952611413591427
+          ],
+          [
+            72.65876375952584,
+            37.01048598507762
+          ]
+        ],
+        "worldToPixel": [
+          5.668799999999999,
+          0,
+          113.112,
+          7.105427357601001e-16,
+          -5.667428571428567,
+          1570.7542857142855
+        ],
+        "context": {
+          "deviceIdentity": "Poppler-8A7C0AA1CB5B4DA26A922938693A87A6F9B5EE589AAECA705B8D44A42AAC1EB7",
+          "frameIdentity": "6CB19D952F456C1357A6F85163D38E8BEA72F5008E3F34F16A47CFB6261D0251",
+          "fontIdentity": "30DC50FA379935E4D7EB6E60041FA070A11FBA6DEAC337A2FA9E34DCB5BFBCC1-B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150",
+          "sourceIdentity": "05254B213DC3F1B0C5D20DF1F0C352E8D12D9281DF68B9180D010800EECF6CD1-digits",
+          "dpi": [
+            144,
+            144
+          ],
+          "pixelBoundaryPhase": [
+            0,
+            0
+          ]
+        }
+      },
+      "independentlyCheckedInkPixels": 880,
+      "outsidePixels": 0,
+      "maxOutsidePixel": 2.842170943040401e-14,
+      "negativeControls": [
+        {
+          "kind": "shrink-world-result-to-35-percent",
+          "outsidePixels": 764,
+          "maxOutsidePixel": 88.07500000000005
+        },
+        {
+          "kind": "wrong-mapping-translation",
+          "outsidePixels": 699,
+          "maxOutsidePixel": 50.0
+        },
+        {
+          "kind": "omitted-worldToPixel",
+          "outsidePixels": 880,
+          "maxOutsidePixel": 7543.615999999994
+        }
+      ],
+      "preservedOriginalRangeOutsidePixels": 160
+    },
+    {
+      "id": "chinese",
+      "dpi": 144,
+      "image": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-093743-84f838a5\\case\\text-range-public-measured-v8\\chinese-144-ink.png",
+        "sha256": "E38C6FB5783B3057D43EF8FE8A357F01C2FD4100DB62F0593C4D3871C6E03736"
+      },
+      "decodedRGB": {
+        "sha256": "14C52D320CEFE02FB8627D3798C002CCDE84E5EB4C79F14441F6517D9CE1A975",
+        "bytes": 6011880,
+        "width": 1190,
+        "height": 1684,
+        "rowStride": 3570
+      },
+      "cpp": {
+        "kind": "observed device footprint",
+        "inkPixels": 503,
+        "deviceCellBounds": [
+          [
+            258,
+            1363
+          ],
+          [
+            340,
+            1403
+          ]
+        ],
+        "worldCorners": [
+          [
+            25.55884843353091,
+            36.65759225650331
+          ],
+          [
+            40.02399096810613,
+            36.65759225650331
+          ],
+          [
+            40.02399096810613,
+            29.59971768501711
+          ],
+          [
+            25.55884843353091,
+            29.59971768501711
+          ]
+        ],
+        "worldBounds": [
+          [
+            25.55884843353091,
+            29.59971768501711
+          ],
+          [
+            40.02399096810613,
+            36.65759225650331
+          ]
+        ],
+        "worldToPixel": [
+          5.668799999999999,
+          0,
+          113.112,
+          7.105427357601001e-16,
+          -5.667428571428567,
+          1570.7542857142855
+        ],
+        "context": {
+          "deviceIdentity": "Poppler-8A7C0AA1CB5B4DA26A922938693A87A6F9B5EE589AAECA705B8D44A42AAC1EB7",
+          "frameIdentity": "E38C6FB5783B3057D43EF8FE8A357F01C2FD4100DB62F0593C4D3871C6E03736",
+          "fontIdentity": "30DC50FA379935E4D7EB6E60041FA070A11FBA6DEAC337A2FA9E34DCB5BFBCC1-B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150",
+          "sourceIdentity": "05254B213DC3F1B0C5D20DF1F0C352E8D12D9281DF68B9180D010800EECF6CD1-chinese",
+          "dpi": [
+            144,
+            144
+          ],
+          "pixelBoundaryPhase": [
+            0,
+            0
+          ]
+        }
+      },
+      "independentlyCheckedInkPixels": 503,
+      "outsidePixels": 0,
+      "maxOutsidePixel": -0.0,
+      "negativeControls": [
+        {
+          "kind": "shrink-world-result-to-35-percent",
+          "outsidePixels": 425,
+          "maxOutsidePixel": 26.649999999999977
+        },
+        {
+          "kind": "wrong-mapping-translation",
+          "outsidePixels": 479,
+          "maxOutsidePixel": 50.0
+        },
+        {
+          "kind": "omitted-worldToPixel",
+          "outsidePixels": 503,
+          "maxOutsidePixel": 7556.950857142851
+        }
+      ],
+      "preservedOriginalRangeOutsidePixels": 7
+    },
+    {
+      "id": "rotated-backward",
+      "dpi": 144,
+      "image": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-093743-84f838a5\\case\\text-range-public-measured-v8\\rotated-backward-144-ink.png",
+        "sha256": "7F789DCE8F2DC150C991FD233513B6DBF645830EFD9CD2AF1580607E707A4F86"
+      },
+      "decodedRGB": {
+        "sha256": "9238074B03C8CA96B5D4C1D130ED6D14BBAFD93D58871B1E22F57B25712EF43D",
+        "bytes": 6011880,
+        "width": 1190,
+        "height": 1684,
+        "rowStride": 3570
+      },
+      "cpp": {
+        "kind": "observed device footprint",
+        "inkPixels": 485,
+        "deviceCellBounds": [
+          [
+            453,
+            1379
+          ],
+          [
+            606,
+            1483
+          ]
+        ],
+        "worldCorners": [
+          [
+            59.95766299745979,
+            33.83444242790881
+          ],
+          [
+            86.94750211685015,
+            33.83444242790881
+          ],
+          [
+            86.94750211685015,
+            15.48396854204475
+          ],
+          [
+            59.95766299745979,
+            15.48396854204475
+          ]
+        ],
+        "worldBounds": [
+          [
+            59.95766299745979,
+            15.48396854204475
+          ],
+          [
+            86.94750211685015,
+            33.83444242790881
+          ]
+        ],
+        "worldToPixel": [
+          5.668799999999999,
+          0,
+          113.112,
+          7.105427357601001e-16,
+          -5.667428571428567,
+          1570.7542857142855
+        ],
+        "context": {
+          "deviceIdentity": "Poppler-8A7C0AA1CB5B4DA26A922938693A87A6F9B5EE589AAECA705B8D44A42AAC1EB7",
+          "frameIdentity": "7F789DCE8F2DC150C991FD233513B6DBF645830EFD9CD2AF1580607E707A4F86",
+          "fontIdentity": "30DC50FA379935E4D7EB6E60041FA070A11FBA6DEAC337A2FA9E34DCB5BFBCC1-B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150",
+          "sourceIdentity": "05254B213DC3F1B0C5D20DF1F0C352E8D12D9281DF68B9180D010800EECF6CD1-rotated-backward",
+          "dpi": [
+            144,
+            144
+          ],
+          "pixelBoundaryPhase": [
+            0,
+            0
+          ]
+        }
+      },
+      "independentlyCheckedInkPixels": 485,
+      "outsidePixels": 0,
+      "maxOutsidePixel": 2.2737367544323206e-13,
+      "negativeControls": [
+        {
+          "kind": "shrink-world-result-to-35-percent",
+          "outsidePixels": 362,
+          "maxOutsidePixel": 49.72500000000002
+        },
+        {
+          "kind": "wrong-mapping-translation",
+          "outsidePixels": 155,
+          "maxOutsidePixel": 50.00000000000001
+        },
+        {
+          "kind": "omitted-worldToPixel",
+          "outsidePixels": 485,
+          "maxOutsidePixel": 7727.629714285708
+        }
+      ],
+      "preservedOriginalRangeOutsidePixels": 485
+    },
+    {
+      "id": "nested-nonuniform",
+      "dpi": 144,
+      "image": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-093743-84f838a5\\case\\text-range-public-measured-v8\\nested-nonuniform-144-ink.png",
+        "sha256": "F34FF9D413FB358932EFD0EB29424CD84B84D55AC3F0DBD66B31B8C97F49B878"
+      },
+      "decodedRGB": {
+        "sha256": "C5287F8EFF488F7DB2669D3AC10E8417D959CB99223C103EA465501D22782B33",
+        "bytes": 6011880,
+        "width": 1190,
+        "height": 1684,
+        "rowStride": 3570
+      },
+      "cpp": {
+        "kind": "observed device footprint",
+        "inkPixels": 456,
+        "deviceCellBounds": [
+          [
+            350,
+            1262
+          ],
+          [
+            529,
+            1367
+          ]
+        ],
+        "worldCorners": [
+          [
+            41.78803274061531,
+            54.478725549505924
+          ],
+          [
+            73.36438046852952,
+            54.478725549505924
+          ],
+          [
+            73.36438046852952,
+            35.951804799354676
+          ],
+          [
+            41.78803274061531,
+            35.951804799354676
+          ]
+        ],
+        "worldBounds": [
+          [
+            41.78803274061531,
+            35.951804799354676
+          ],
+          [
+            73.36438046852952,
+            54.478725549505924
+          ]
+        ],
+        "worldToPixel": [
+          5.668799999999999,
+          0,
+          113.112,
+          7.105427357601001e-16,
+          -5.667428571428567,
+          1570.7542857142855
+        ],
+        "context": {
+          "deviceIdentity": "Poppler-8A7C0AA1CB5B4DA26A922938693A87A6F9B5EE589AAECA705B8D44A42AAC1EB7",
+          "frameIdentity": "F34FF9D413FB358932EFD0EB29424CD84B84D55AC3F0DBD66B31B8C97F49B878",
+          "fontIdentity": "30DC50FA379935E4D7EB6E60041FA070A11FBA6DEAC337A2FA9E34DCB5BFBCC1-B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150",
+          "sourceIdentity": "05254B213DC3F1B0C5D20DF1F0C352E8D12D9281DF68B9180D010800EECF6CD1-nested-nonuniform",
+          "dpi": [
+            144,
+            144
+          ],
+          "pixelBoundaryPhase": [
+            0,
+            0
+          ]
+        }
+      },
+      "independentlyCheckedInkPixels": 456,
+      "outsidePixels": 0,
+      "maxOutsidePixel": 2.2737367544323206e-13,
+      "negativeControls": [
+        {
+          "kind": "shrink-world-result-to-35-percent",
+          "outsidePixels": 332,
+          "maxOutsidePixel": 58.17500000000006
+        },
+        {
+          "kind": "wrong-mapping-translation",
+          "outsidePixels": 176,
+          "maxOutsidePixel": 50.0
+        },
+        {
+          "kind": "omitted-worldToPixel",
+          "outsidePixels": 456,
+          "maxOutsidePixel": 6948.540571428568
+        }
+      ],
+      "preservedOriginalRangeOutsidePixels": 25
+    },
+    {
+      "id": "tracking-oblique",
+      "dpi": 144,
+      "image": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-093743-84f838a5\\case\\text-range-public-measured-v8\\tracking-oblique-144-ink.png",
+        "sha256": "FF114B3A8F3A88F45E8A791DB88489F185B1AFF2C0064B954BF28CEC907F58CE"
+      },
+      "decodedRGB": {
+        "sha256": "E7069073B7D7369A239C5E1178423CB47DD7076A8C81C5104E16DAD23AF82F41",
+        "bytes": 6011880,
+        "width": 1190,
+        "height": 1684,
+        "rowStride": 3570
+      },
+      "cpp": {
+        "kind": "observed device footprint",
+        "inkPixels": 615,
+        "deviceCellBounds": [
+          [
+            262,
+            1361
+          ],
+          [
+            533,
+            1403
+          ]
+        ],
+        "worldCorners": [
+          [
+            26.26446514253458,
+            37.01048598507762
+          ],
+          [
+            74.06999717753318,
+            37.01048598507762
+          ],
+          [
+            74.06999717753318,
+            29.59971768501711
+          ],
+          [
+            26.26446514253458,
+            29.59971768501711
+          ]
+        ],
+        "worldBounds": [
+          [
+            26.26446514253458,
+            29.59971768501711
+          ],
+          [
+            74.06999717753318,
+            37.01048598507762
+          ]
+        ],
+        "worldToPixel": [
+          5.668799999999999,
+          0,
+          113.112,
+          7.105427357601001e-16,
+          -5.667428571428567,
+          1570.7542857142855
+        ],
+        "context": {
+          "deviceIdentity": "Poppler-8A7C0AA1CB5B4DA26A922938693A87A6F9B5EE589AAECA705B8D44A42AAC1EB7",
+          "frameIdentity": "FF114B3A8F3A88F45E8A791DB88489F185B1AFF2C0064B954BF28CEC907F58CE",
+          "fontIdentity": "30DC50FA379935E4D7EB6E60041FA070A11FBA6DEAC337A2FA9E34DCB5BFBCC1-B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150",
+          "sourceIdentity": "05254B213DC3F1B0C5D20DF1F0C352E8D12D9281DF68B9180D010800EECF6CD1-tracking-oblique",
+          "dpi": [
+            144,
+            144
+          ],
+          "pixelBoundaryPhase": [
+            0,
+            0
+          ]
+        }
+      },
+      "independentlyCheckedInkPixels": 615,
+      "outsidePixels": 0,
+      "maxOutsidePixel": 0.0,
+      "negativeControls": [
+        {
+          "kind": "shrink-world-result-to-35-percent",
+          "outsidePixels": 513,
+          "maxOutsidePixel": 88.07500000000005
+        },
+        {
+          "kind": "wrong-mapping-translation",
+          "outsidePixels": 477,
+          "maxOutsidePixel": 50.0
+        },
+        {
+          "kind": "omitted-worldToPixel",
+          "outsidePixels": 615,
+          "maxOutsidePixel": 7545.615999999994
+        }
+      ],
+      "preservedOriginalRangeOutsidePixels": 34
+    },
+    {
+      "id": "digits",
+      "dpi": 288,
+      "image": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-093743-84f838a5\\case\\text-range-public-measured-v8\\digits-288-ink.png",
+        "sha256": "B437C7ABA262187F14091898F2D0C252C59473B40A46428201751082D86F875C"
+      },
+      "decodedRGB": {
+        "sha256": "1C19FBCF36D8917A3BF1E20BF31F350BA7657D8894662CAB45C30C624FF55231",
+        "bytes": 24047520,
+        "width": 2380,
+        "height": 3368,
+        "rowStride": 7140
+      },
+      "cpp": {
+        "kind": "observed device footprint",
+        "inkPixels": 1720,
+        "deviceCellBounds": [
+          [
+            509,
+            2722
+          ],
+          [
+            1049,
+            2802
+          ]
+        ],
+        "worldCorners": [
+          [
+            24.941433813152702,
+            37.01048598507762
+          ],
+          [
+            72.57056167090039,
+            37.01048598507762
+          ],
+          [
+            72.57056167090039,
+            29.952611413591427
+          ],
+          [
+            24.941433813152702,
+            29.952611413591427
+          ]
+        ],
+        "worldBounds": [
+          [
+            24.941433813152702,
+            29.952611413591427
+          ],
+          [
+            72.57056167090039,
+            37.01048598507762
+          ]
+        ],
+        "worldToPixel": [
+          11.337599999999998,
+          0,
+          226.224,
+          1.4210854715202003e-15,
+          -11.334857142857134,
+          3141.508571428571
+        ],
+        "context": {
+          "deviceIdentity": "Poppler-8A7C0AA1CB5B4DA26A922938693A87A6F9B5EE589AAECA705B8D44A42AAC1EB7",
+          "frameIdentity": "B437C7ABA262187F14091898F2D0C252C59473B40A46428201751082D86F875C",
+          "fontIdentity": "30DC50FA379935E4D7EB6E60041FA070A11FBA6DEAC337A2FA9E34DCB5BFBCC1-B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150",
+          "sourceIdentity": "05254B213DC3F1B0C5D20DF1F0C352E8D12D9281DF68B9180D010800EECF6CD1-digits",
+          "dpi": [
+            288,
+            288
+          ],
+          "pixelBoundaryPhase": [
+            0,
+            0
+          ]
+        }
+      },
+      "independentlyCheckedInkPixels": 1720,
+      "outsidePixels": 0,
+      "maxOutsidePixel": -0.0,
+      "negativeControls": [
+        {
+          "kind": "shrink-world-result-to-35-percent",
+          "outsidePixels": 1489,
+          "maxOutsidePixel": 175.5
+        },
+        {
+          "kind": "wrong-mapping-translation",
+          "outsidePixels": 793,
+          "maxOutsidePixel": 50.0
+        },
+        {
+          "kind": "omitted-worldToPixel",
+          "outsidePixels": 1720,
+          "maxOutsidePixel": 30513.972571428545
+        }
+      ],
+      "preservedOriginalRangeOutsidePixels": 258
+    },
+    {
+      "id": "chinese",
+      "dpi": 288,
+      "image": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-093743-84f838a5\\case\\text-range-public-measured-v8\\chinese-288-ink.png",
+        "sha256": "ACBFEEA23B26AB5FE45E5F5C198B73FC56AE2CE489EB4E2B29C7CBD0E6A33AC5"
+      },
+      "decodedRGB": {
+        "sha256": "F1D1BF2678E2687C125F20F015AB00C4BCFE21286636048875A1B9E3A26E5335",
+        "bytes": 24047520,
+        "width": 2380,
+        "height": 3368,
+        "rowStride": 7140
+      },
+      "cpp": {
+        "kind": "observed device footprint",
+        "inkPixels": 992,
+        "deviceCellBounds": [
+          [
+            517,
+            2727
+          ],
+          [
+            680,
+            2806
+          ]
+        ],
+        "worldCorners": [
+          [
+            25.647050522156366,
+            36.569368824359714
+          ],
+          [
+            40.02399096810613,
+            36.569368824359714
+          ],
+          [
+            40.02399096810613,
+            29.59971768501711
+          ],
+          [
+            25.647050522156366,
+            29.59971768501711
+          ]
+        ],
+        "worldBounds": [
+          [
+            25.647050522156366,
+            29.59971768501711
+          ],
+          [
+            40.02399096810613,
+            36.569368824359714
+          ]
+        ],
+        "worldToPixel": [
+          11.337599999999998,
+          0,
+          226.224,
+          1.4210854715202003e-15,
+          -11.334857142857134,
+          3141.508571428571
+        ],
+        "context": {
+          "deviceIdentity": "Poppler-8A7C0AA1CB5B4DA26A922938693A87A6F9B5EE589AAECA705B8D44A42AAC1EB7",
+          "frameIdentity": "ACBFEEA23B26AB5FE45E5F5C198B73FC56AE2CE489EB4E2B29C7CBD0E6A33AC5",
+          "fontIdentity": "30DC50FA379935E4D7EB6E60041FA070A11FBA6DEAC337A2FA9E34DCB5BFBCC1-B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150",
+          "sourceIdentity": "05254B213DC3F1B0C5D20DF1F0C352E8D12D9281DF68B9180D010800EECF6CD1-chinese",
+          "dpi": [
+            288,
+            288
+          ],
+          "pixelBoundaryPhase": [
+            0,
+            0
+          ]
+        }
+      },
+      "independentlyCheckedInkPixels": 992,
+      "outsidePixels": 0,
+      "maxOutsidePixel": 4.547473508864641e-13,
+      "negativeControls": [
+        {
+          "kind": "shrink-world-result-to-35-percent",
+          "outsidePixels": 839,
+          "maxOutsidePixel": 52.97500000000002
+        },
+        {
+          "kind": "wrong-mapping-translation",
+          "outsidePixels": 573,
+          "maxOutsidePixel": 50.0
+        },
+        {
+          "kind": "omitted-worldToPixel",
+          "outsidePixels": 992,
+          "maxOutsidePixel": 30574.64685714283
+        }
+      ],
+      "preservedOriginalRangeOutsidePixels": 4
+    },
+    {
+      "id": "rotated-backward",
+      "dpi": 288,
+      "image": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-093743-84f838a5\\case\\text-range-public-measured-v8\\rotated-backward-288-ink.png",
+        "sha256": "822E25B759A5402D3584916DA07D0EF6A2254D840FBC455BB728FC9F5690BE29"
+      },
+      "decodedRGB": {
+        "sha256": "80E9F1A1989BAA29F3EBA46AF0583236F90370BC16F2CB6D49D80056342928B1",
+        "bytes": 24047520,
+        "width": 2380,
+        "height": 3368,
+        "rowStride": 7140
+      },
+      "cpp": {
+        "kind": "observed device footprint",
+        "inkPixels": 957,
+        "deviceCellBounds": [
+          [
+            907,
+            2759
+          ],
+          [
+            1212,
+            2965
+          ]
+        ],
+        "worldCorners": [
+          [
+            60.04586508608526,
+            33.74621899576525
+          ],
+          [
+            86.94750211685015,
+            33.74621899576525
+          ],
+          [
+            86.94750211685015,
+            15.572191974188286
+          ],
+          [
+            60.04586508608526,
+            15.572191974188286
+          ]
+        ],
+        "worldBounds": [
+          [
+            60.04586508608526,
+            15.572191974188286
+          ],
+          [
+            86.94750211685015,
+            33.74621899576525
+          ]
+        ],
+        "worldToPixel": [
+          11.337599999999998,
+          0,
+          226.224,
+          1.4210854715202003e-15,
+          -11.334857142857134,
+          3141.508571428571
+        ],
+        "context": {
+          "deviceIdentity": "Poppler-8A7C0AA1CB5B4DA26A922938693A87A6F9B5EE589AAECA705B8D44A42AAC1EB7",
+          "frameIdentity": "822E25B759A5402D3584916DA07D0EF6A2254D840FBC455BB728FC9F5690BE29",
+          "fontIdentity": "30DC50FA379935E4D7EB6E60041FA070A11FBA6DEAC337A2FA9E34DCB5BFBCC1-B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150",
+          "sourceIdentity": "05254B213DC3F1B0C5D20DF1F0C352E8D12D9281DF68B9180D010800EECF6CD1-rotated-backward",
+          "dpi": [
+            288,
+            288
+          ],
+          "pixelBoundaryPhase": [
+            0,
+            0
+          ]
+        }
+      },
+      "independentlyCheckedInkPixels": 957,
+      "outsidePixels": 0,
+      "maxOutsidePixel": 4.547473508864641e-13,
+      "negativeControls": [
+        {
+          "kind": "shrink-world-result-to-35-percent",
+          "outsidePixels": 716,
+          "maxOutsidePixel": 99.12500000000023
+        },
+        {
+          "kind": "wrong-mapping-translation",
+          "outsidePixels": 167,
+          "maxOutsidePixel": 49.99999999999977
+        },
+        {
+          "kind": "omitted-worldToPixel",
+          "outsidePixels": 957,
+          "maxOutsidePixel": 31096.362285714258
+        }
+      ],
+      "preservedOriginalRangeOutsidePixels": 957
+    },
+    {
+      "id": "nested-nonuniform",
+      "dpi": 288,
+      "image": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-093743-84f838a5\\case\\text-range-public-measured-v8\\nested-nonuniform-288-ink.png",
+        "sha256": "E404EEC31BFD7A7960287795F3E4ECFD008F931B9D7CD83819A8D36C47A63C3D"
+      },
+      "decodedRGB": {
+        "sha256": "1F652C8A41AA7F5C8DBB098D56220C2B206A4D03E56D13E741087D78A06A9686",
+        "bytes": 24047520,
+        "width": 2380,
+        "height": 3368,
+        "rowStride": 7140
+      },
+      "cpp": {
+        "kind": "observed device footprint",
+        "inkPixels": 895,
+        "deviceCellBounds": [
+          [
+            700,
+            2525
+          ],
+          [
+            1058,
+            2733
+          ]
+        ],
+        "worldCorners": [
+          [
+            41.78803274061531,
+            54.39050211736236
+          ],
+          [
+            73.36438046852952,
+            54.39050211736236
+          ],
+          [
+            73.36438046852952,
+            36.04002823149827
+          ],
+          [
+            41.78803274061531,
+            36.04002823149827
+          ]
+        ],
+        "worldBounds": [
+          [
+            41.78803274061531,
+            36.04002823149827
+          ],
+          [
+            73.36438046852952,
+            54.39050211736236
+          ]
+        ],
+        "worldToPixel": [
+          11.337599999999998,
+          0,
+          226.224,
+          1.4210854715202003e-15,
+          -11.334857142857134,
+          3141.508571428571
+        ],
+        "context": {
+          "deviceIdentity": "Poppler-8A7C0AA1CB5B4DA26A922938693A87A6F9B5EE589AAECA705B8D44A42AAC1EB7",
+          "frameIdentity": "E404EEC31BFD7A7960287795F3E4ECFD008F931B9D7CD83819A8D36C47A63C3D",
+          "fontIdentity": "30DC50FA379935E4D7EB6E60041FA070A11FBA6DEAC337A2FA9E34DCB5BFBCC1-B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150",
+          "sourceIdentity": "05254B213DC3F1B0C5D20DF1F0C352E8D12D9281DF68B9180D010800EECF6CD1-nested-nonuniform",
+          "dpi": [
+            288,
+            288
+          ],
+          "pixelBoundaryPhase": [
+            0,
+            0
+          ]
+        }
+      },
+      "independentlyCheckedInkPixels": 895,
+      "outsidePixels": 0,
+      "maxOutsidePixel": 4.547473508864641e-13,
+      "negativeControls": [
+        {
+          "kind": "shrink-world-result-to-35-percent",
+          "outsidePixels": 648,
+          "maxOutsidePixel": 116.35000000000015
+        },
+        {
+          "kind": "wrong-mapping-translation",
+          "outsidePixels": 156,
+          "maxOutsidePixel": 49.99999999999977
+        },
+        {
+          "kind": "omitted-worldToPixel",
+          "outsidePixels": 895,
+          "maxOutsidePixel": 28212.00571428569
+        }
+      ],
+      "preservedOriginalRangeOutsidePixels": 36
+    },
+    {
+      "id": "tracking-oblique",
+      "dpi": 288,
+      "image": {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-093743-84f838a5\\case\\text-range-public-measured-v8\\tracking-oblique-288-ink.png",
+        "sha256": "F78B7FE425698CA2EB4D09AA2D1547D498561B5F4D014408EFFA9776A141AF04"
+      },
+      "decodedRGB": {
+        "sha256": "10A8128B7DAA5B2913218A8B8FAC0EDAF07FAA249BCD86FBBDC5AE17A7EE7A4A",
+        "bytes": 24047520,
+        "width": 2380,
+        "height": 3368,
+        "rowStride": 7140
+      },
+      "cpp": {
+        "kind": "observed device footprint",
+        "inkPixels": 1213,
+        "deviceCellBounds": [
+          [
+            524,
+            2722
+          ],
+          [
+            1065,
+            2806
+          ]
+        ],
+        "worldCorners": [
+          [
+            26.26446514253458,
+            37.01048598507762
+          ],
+          [
+            73.98179508890773,
+            37.01048598507762
+          ],
+          [
+            73.98179508890773,
+            29.59971768501711
+          ],
+          [
+            26.26446514253458,
+            29.59971768501711
+          ]
+        ],
+        "worldBounds": [
+          [
+            26.26446514253458,
+            29.59971768501711
+          ],
+          [
+            73.98179508890773,
+            37.01048598507762
+          ]
+        ],
+        "worldToPixel": [
+          11.337599999999998,
+          0,
+          226.224,
+          1.4210854715202003e-15,
+          -11.334857142857134,
+          3141.508571428571
+        ],
+        "context": {
+          "deviceIdentity": "Poppler-8A7C0AA1CB5B4DA26A922938693A87A6F9B5EE589AAECA705B8D44A42AAC1EB7",
+          "frameIdentity": "F78B7FE425698CA2EB4D09AA2D1547D498561B5F4D014408EFFA9776A141AF04",
+          "fontIdentity": "30DC50FA379935E4D7EB6E60041FA070A11FBA6DEAC337A2FA9E34DCB5BFBCC1-B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150",
+          "sourceIdentity": "05254B213DC3F1B0C5D20DF1F0C352E8D12D9281DF68B9180D010800EECF6CD1-tracking-oblique",
+          "dpi": [
+            288,
+            288
+          ],
+          "pixelBoundaryPhase": [
+            0,
+            0
+          ]
+        }
+      },
+      "independentlyCheckedInkPixels": 1213,
+      "outsidePixels": 0,
+      "maxOutsidePixel": 0.0,
+      "negativeControls": [
+        {
+          "kind": "shrink-world-result-to-35-percent",
+          "outsidePixels": 1000,
+          "maxOutsidePixel": 175.82500000000005
+        },
+        {
+          "kind": "wrong-mapping-translation",
+          "outsidePixels": 516,
+          "maxOutsidePixel": 49.99999999999977
+        },
+        {
+          "kind": "omitted-worldToPixel",
+          "outsidePixels": 1213,
+          "maxOutsidePixel": 30517.972571428545
+        }
+      ],
+      "preservedOriginalRangeOutsidePixels": 56
+    }
+  ],
+  "summary": {
+    "images": 10,
+    "containedObservations": 10,
+    "rejectedNegativeResults": 30,
+    "preservedHistoricalStringRangeContainments": 0
+  }
+}

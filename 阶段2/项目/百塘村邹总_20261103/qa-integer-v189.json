@@ -1,0 +1,152 @@
+{
+  "walls": 126,
+  "openingGeometryPreservedExceptTranslation": 46,
+  "wholeDimensions": 59,
+  "integerSegments": 239,
+  "allDimensionChainsClosed": true,
+  "wallThicknessPreserved": true,
+  "noWipeout": true,
+  "unchangedOtherRootGrips": true,
+  "savedReadbackMatches": true,
+  "sourcePreserved": true,
+  "areas": [
+    {
+      "floor": 1,
+      "old": 89.64859153870528,
+      "new": 89.6577,
+      "kind": "room"
+    },
+    {
+      "floor": 1,
+      "old": 7.520289025759999,
+      "new": 7.517644,
+      "kind": "room"
+    },
+    {
+      "floor": 1,
+      "old": 5.899808219677605,
+      "new": 5.8992,
+      "kind": "room"
+    },
+    {
+      "floor": 1,
+      "old": 22.695335093855995,
+      "new": 22.689,
+      "kind": "room"
+    },
+    {
+      "floor": 1,
+      "old": 3.930862180896,
+      "new": 3.92964,
+      "kind": "room"
+    },
+    {
+      "floor": 1,
+      "old": 15.215085849671999,
+      "new": 15.2064,
+      "kind": "room"
+    },
+    {
+      "floor": 1,
+      "old": 181.55018383667692,
+      "new": 181.51600000000028,
+      "kind": "total"
+    },
+    {
+      "floor": 2,
+      "old": 5.903857139038692,
+      "new": 5.8992,
+      "kind": "room"
+    },
+    {
+      "floor": 2,
+      "old": 7.520285184491984,
+      "new": 7.517644,
+      "kind": "room"
+    },
+    {
+      "floor": 2,
+      "old": 54.63170622650151,
+      "new": 54.626101,
+      "kind": "room"
+    },
+    {
+      "floor": 2,
+      "old": 22.682781082352008,
+      "new": 22.68756,
+      "kind": "room"
+    },
+    {
+      "floor": 2,
+      "old": 31.83338703507203,
+      "new": 31.83336,
+      "kind": "room"
+    },
+    {
+      "floor": 2,
+      "old": 15.210906550088007,
+      "new": 15.2064,
+      "kind": "room"
+    },
+    {
+      "floor": 2,
+      "old": 4.116076279056001,
+      "new": 4.11528,
+      "kind": "room"
+    },
+    {
+      "floor": 2,
+      "old": 180.2996794538582,
+      "new": 180.2812400000002,
+      "kind": "total"
+    },
+    {
+      "floor": 3,
+      "old": 5.897623413368445,
+      "new": 5.8992,
+      "kind": "room"
+    },
+    {
+      "floor": 3,
+      "old": 54.6106132182119,
+      "new": 54.62696,
+      "kind": "room"
+    },
+    {
+      "floor": 3,
+      "old": 22.670854511667002,
+      "new": 22.6764,
+      "kind": "room"
+    },
+    {
+      "floor": 3,
+      "old": 31.822262248534955,
+      "new": 31.8288,
+      "kind": "room"
+    },
+    {
+      "floor": 3,
+      "old": 7.5217156767279905,
+      "new": 7.5178,
+      "kind": "room"
+    },
+    {
+      "floor": 3,
+      "old": 4.117936359209999,
+      "new": 4.12152,
+      "kind": "room"
+    },
+    {
+      "floor": 3,
+      "old": 15.205505989518008,
+      "new": 15.2064,
+      "kind": "room"
+    },
+    {
+      "floor": 3,
+      "old": 180.23870275030208,
+      "new": 180.26800000000026,
+      "kind": "total"
+    }
+  ]
+}

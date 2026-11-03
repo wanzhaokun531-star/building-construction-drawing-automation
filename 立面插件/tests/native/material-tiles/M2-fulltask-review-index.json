@@ -1,0 +1,357 @@
+{
+  "contract": "bce.m2-fulltask-review-index.v1",
+  "reviewDispatched": false,
+  "candidateNativeExecuted": true,
+  "naturalPlotVerified": true,
+  "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-203730-120-verified-reference-proof-ready-43394e7c\\receipt.json",
+  "receiptSHA256": "BD38B6874BE00243C9214CBD319421D3F0D8D34EDB4EBDA6147C8FA046E4511B",
+  "binary": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-203730-120-verified-reference-proof-ready-43394e7c\\out\\ElevationMaterialTileCases.arx",
+  "binarySHA256": "7DB61C67D516E79BED5078768AF60F8CBD3B0C11E514D89D7DE28D0377A81408",
+  "fullNewFileDiff": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\material-tiles\\M2-fulltask-current.diff",
+  "fullNewFileDiffSHA256": "C7E6864C92BDD0A03B4B6CFEC3FD8DCA024E747F8A95937989928B4DFB91270B",
+  "diffScope": "All M2 implementation, API, driver, fixtures, compile contract, project and builder files are new task files; full content review against absent pre-M2 implementation. Root QA tools and updated brief are read-only context, not implementer edits.",
+  "ownedFiles": [
+    {
+      "relativePath": "src/NativeMaterialTiles.h",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\NativeMaterialTiles.h",
+      "sha256": "9FF1D283306048193B9E08514AAA80DA6CAF3256D4768CA1143D674821A9BAB3",
+      "lines": 47
+    },
+    {
+      "relativePath": "src/NativeMaterialTiles.cpp",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\NativeMaterialTiles.cpp",
+      "sha256": "1E436E9EC208DC3C79D472B3F649000B7106CF55DCB8C99EE6D4B6913A5BB147",
+      "lines": 564
+    },
+    {
+      "relativePath": "tests/native/material-tiles/MaterialTileDriver.cpp",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\material-tiles\\MaterialTileDriver.cpp",
+      "sha256": "EA697AF6B23A794510958C0B3AC89FD012F7F51B92DCE75591627AD50A0644B3",
+      "lines": 62
+    },
+    {
+      "relativePath": "tests/native/material-tiles/MaterialTileFixtures.h",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\material-tiles\\MaterialTileFixtures.h",
+      "sha256": "D55D8ED8274DEBF65EB20A8DEEF2B9C1112CD9C920D55FC2A7561313EBAD571C",
+      "lines": 88
+    },
+    {
+      "relativePath": "tests/native/material-tiles/OwnedApiCompileCheck.cpp",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\material-tiles\\OwnedApiCompileCheck.cpp",
+      "sha256": "6BD85E261442245C18A2E2BD7902BCBCE71AF00928E36E5CE69B7434AEF91654",
+      "lines": 17
+    },
+    {
+      "relativePath": "tests/native/material-tiles/ElevationMaterialTileCases.vcxproj",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\material-tiles\\ElevationMaterialTileCases.vcxproj",
+      "sha256": "843E698B40F40C8005BB32E9A7D974A408DABCF8F147D0FC75F9A7498D123360",
+      "lines": 19
+    },
+    {
+      "relativePath": "tools/build_material_tiles.ps1",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\build_material_tiles.ps1",
+      "sha256": "95E6F17CBBC12B432E367AD1B4B93A3518CBA9C3FD03FEF4D3B5806BF79FFC78",
+      "lines": 70
+    }
+  ],
+  "context": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\M2-大区域原生填充分块简报.md",
+      "sha256": "61F1B4B0BA8B91F175B888D8BE7314F81AA4A7D19671E7AE826A4E09D7F3657E",
+      "role": "task specification or historical report"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\M2-大区域材料准备报告.md",
+      "sha256": "A6E6A88027DDB210E9FC67BD80CA9B96B24A6743FB9E4FCEB410540624E10F9E",
+      "role": "task specification or historical report"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\capture_material_tiles_preview.py",
+      "sha256": "0B4EC6EDD95FFD40B688783126DFEC5C54CA3C413EF66E2F508FA476350ED9C3",
+      "role": "root-authored read-only native Plot QA"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\inspect_material_tiles_preview.py",
+      "sha256": "6BB6B140E89959123910C4F5D32C5A68AED54C04B3110FB5D32727A1AC7F470A",
+      "role": "root-authored read-only native Plot QA"
+    }
+  ],
+  "m1ReadOnlyDependency": {
+    "sha256": "A898B95C981FD852953F8500FCBFC244201C022A102CEC28E0D69A511B587BE6",
+    "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\receipt.json"
+  },
+  "history": [
+    {
+      "nonce": "c7dc8b11",
+      "binding": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-c7dc8b11.json",
+      "bindingSHA256": "A28D45C4C576684F16E23F97986AFCC8E395A3BB2694148FF1E6500D0E9D3BA0",
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-220657-c7dc8b11",
+      "case": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261101-220657-c7dc8b11\\case\\native-case.json",
+      "casePresent": false,
+      "caseSHA256": null
+    },
+    {
+      "nonce": "ab61d588",
+      "binding": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-ab61d588.json",
+      "bindingSHA256": "AE199DA4302CBC3966A594BE0B89CAE7D958D9B998A6647FFE15E8699AA82C60",
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-193016-ab61d588",
+      "case": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-193016-ab61d588\\case\\native-case.json",
+      "casePresent": true,
+      "caseSHA256": "B6CE9DAA7453F33E786C24BF011F817EB286989560F47F145086B434FEDA7FA1"
+    },
+    {
+      "nonce": "fa3ccd02",
+      "binding": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-fa3ccd02.json",
+      "bindingSHA256": "7B5E76276B0AED2B3DAD4E1FB23EDB873A0C1B9C852FC83E93E8B3FE31BDBBC8",
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-195457-fa3ccd02",
+      "case": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-195457-fa3ccd02\\case\\native-case.json",
+      "casePresent": true,
+      "caseSHA256": "2E79D313689BFAEDF2B6D04EB8FB20A82ABA0EB6418C924D27D7D030BAE095D8"
+    },
+    {
+      "nonce": "52a6c8d4",
+      "binding": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-52a6c8d4.json",
+      "bindingSHA256": "A1D93862CA83FAADB90E106DB79C4702172223EAD19281ADF0D116FBE9E146AF",
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-200738-52a6c8d4",
+      "case": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-200738-52a6c8d4\\case\\native-case.json",
+      "casePresent": true,
+      "caseSHA256": "73860D3BC050BF7A8EDC6F1E081D943D833A8639DD35379F4A927CDE861B21C0"
+    },
+    {
+      "nonce": "48ae1983",
+      "binding": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-48ae1983.json",
+      "bindingSHA256": "14B4CCB1A1B14587EDAE48E626253F21724FC48116226A367CD9C5E7BAC10071",
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-202238-48ae1983",
+      "case": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-202238-48ae1983\\case\\native-case.json",
+      "casePresent": true,
+      "caseSHA256": "F73180132BC5F7F7F86B0BB90C27DECC718D41BF541A3A5F5EF625F24F68D1E1",
+      "summary": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-202238-48ae1983\\material-typed-xrecord-offset-observation.json",
+      "summarySHA256": "853252EED42DB644C1B63050A1BC8C2DDD5CD67DA4B4486D5BC06C68E55AE279"
+    },
+    {
+      "nonce": "e7c6786a",
+      "binding": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-e7c6786a.json",
+      "bindingSHA256": "4BA85B5F22C6111E2FE20AFCEC0DE011E672C4AD31D23FC4DA5FF0D8C957FA6A",
+      "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203107-e7c6786a",
+      "case": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203107-e7c6786a\\case\\native-case.json",
+      "casePresent": true,
+      "caseSHA256": "7A8012ADC9DFC41F1A0B583C237F29E5157E10FFBC3B56EA439863BCFD960D5D",
+      "summary": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203107-e7c6786a\\material-public-dxf-xrecord-observation.json",
+      "summarySHA256": "6CD91D73FCA59C93B2572D2283D7F79CBFF020F341B9A937B0187EFE642AD84B"
+    }
+  ],
+  "d3OriginalDefinitionEvidence": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-200738-52a6c8d4\\case\\material-pattern-definitions-0.json",
+      "sha256": "44CF4858974D4B6AA5172E9601901F386BA1FFF11DA3C5DCB9FF9D88CE40E24A"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-200738-52a6c8d4\\case\\material-pattern-definitions-1.json",
+      "sha256": "21D7309F8AB5B6D4A711CE4F1A8BD6801B39BC8DAE6E536446C1BB24CD70D710"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-200738-52a6c8d4\\case\\material-pattern-definitions-2.json",
+      "sha256": "C65A23A2AC00C00CD70050DD992A694F8483D68BAA1E7F501967220A4D928560"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-200738-52a6c8d4\\case\\material-pattern-definitions-3.json",
+      "sha256": "8EB0D4925C27997F9F3D8C1685FC0A9889D0704E11237E48703EFDFA461D7EA9"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-200738-52a6c8d4\\case\\material-pattern-definitions-4.json",
+      "sha256": "46249D7AEB125662FB6C9AA783476540D8FBDCDBCF58E36DC5343B040B160B3D"
+    }
+  ],
+  "offline": {
+    "exitCode": 0,
+    "inputCount": 16,
+    "originAndCompiledMismatchCount": 0,
+    "productObject": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-203730-120-verified-reference-proof-ready-43394e7c\\obj\\NativeMaterialTiles.product.obj",
+    "productSHA256": "FC890A90D0F64BB2D857F7C7DA6F4989C4B6B2DF31EF49FE9FFBA5C416B6B44C",
+    "apiObject": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-203730-120-verified-reference-proof-ready-43394e7c\\obj\\OwnedApiCompileCheck.obj",
+    "apiSHA256": "A770C26DCD290C525449ECE594456F5BC355D67916D08E605A3B29C95CF1D6E6",
+    "warning": "SDK rxapi.pdb LNK4099 only"
+  },
+  "pending": [
+    "Single independent fulltask review; current-document writer and whole-plugin integration remain outside M2"
+  ],
+  "limitations": [
+    "Axis aligned rectangle with strictly internal disjoint rectangular holes only",
+    "Owned new database preparation only; CurrentDoc writer not integrated",
+    "Exact public standard resource classes only; no TCH private payload completeness claim",
+    "Historical generic stub rejection does not prove specific negative branch"
+  ],
+  "finalActual": {
+    "nonce": "af1e6b04502849eaa6624fb51db69450",
+    "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04",
+    "status": "passed",
+    "passed": 67,
+    "total": 67,
+    "errors": [],
+    "reportSHA256": "1E50ACA5C73335525DC5050AB19445490CC47E125EE3725E569D23D208180500",
+    "sourceFilesUnchanged": true,
+    "scenarios": [
+      {
+        "scenario": "WholeWall58M",
+        "tiles": 8,
+        "nativeArea": 58200000,
+        "nativeLines": 115873,
+        "seams": 8,
+        "contacts": 374
+      },
+      {
+        "scenario": "TranslatedNoninteger",
+        "tiles": 8,
+        "nativeArea": 58200000,
+        "nativeLines": 115873,
+        "seams": 8,
+        "contacts": 374
+      },
+      {
+        "scenario": "PaperScale50",
+        "tiles": 12,
+        "nativeArea": 58200000,
+        "nativeLines": 463798,
+        "seams": 16,
+        "contacts": 819
+      },
+      {
+        "scenario": "MetersPaper50",
+        "tiles": 12,
+        "nativeArea": 58.20000000000001,
+        "nativeLines": 463798,
+        "seams": 16,
+        "contacts": 819
+      },
+      {
+        "scenario": "Direction90",
+        "tiles": 8,
+        "nativeArea": 58200000,
+        "nativeLines": 115970,
+        "seams": 8,
+        "contacts": 170
+      }
+    ],
+    "typedChecks": 10,
+    "ownedFaultChecks": 4,
+    "resourceConflictChecks": 8,
+    "patternDefinitionsPerScenario": 67,
+    "visualInspector": "root/controller; three actual crop views",
+    "visualInspectionCompleted": true,
+    "PDFSHA256": "91B6F6BAB4FD7F614C3CDF0677E05F2C32A596003C52A620104A716C08BE3764",
+    "metadataWarning": "pypdf reported duplicate /PageMode dictionary key at byte 0xa0270; original AutoCAD PDF preserved unchanged. Poppler rendered successfully; one page has 3012857 content bytes.",
+    "normalQuit": false,
+    "forcedTermination": true,
+    "workerExitCode": 70,
+    "artifacts": [
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-af1e6b04.json",
+        "sha256": "D28F615F0A936B40510C5D64852DE07F800D4064753229A695C01A3C34F87F40"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\case\\native-case.json",
+        "sha256": "1E50ACA5C73335525DC5050AB19445490CC47E125EE3725E569D23D208180500"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\material-verified-reference-observation.json",
+        "sha256": "B76199601BC39DE06EC85380D28CD2ECB5AE7E3FD6B21713B0D74034B41D0060"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\case\\material-tiles-case.json",
+        "sha256": "03A7261BA86210D015BA6F80142B33FF3BB9AE230AAEE1FC5055682AC6D958F1"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\native-result-closure.json",
+        "sha256": "9384BBB175BBDB12D569D934AB97C012DB6BC572A740A15A91F77D39053C1743"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\reader-retirement.json",
+        "sha256": "E190396E007D717F77BCC7213CECF543C924C6271C5F6F3F728C6564C340B845"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\isolation-final.json",
+        "sha256": "3EDCF7740DF8F384513D4A8E9DCAAE4E6EA3AC0C5BF4E4BA6FCC3FFD04213B32"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\case\\material-tiles-0.dwg",
+        "sha256": "A7F3E6664770D7051A9801584E2EA52F3A5195CB959F24EA6D511E4BD111DB9D"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\case\\material-pattern-definitions-0.json",
+        "sha256": "3C3B0CE47B5AAFF9B7308B7F28A74901349192A6C5C91F94B580AD30BD832AE5"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\case\\material-tiles-1.dwg",
+        "sha256": "C2B352F23F56BB9CC4A3E9A15C653C52E6DB25AA390BA338F3B0B9D327CB7631"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\case\\material-pattern-definitions-1.json",
+        "sha256": "88EF2787F12404E55828D2AEC9BF913E8E52612BD9B6FF25255D21A85A12911D"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\case\\material-tiles-2.dwg",
+        "sha256": "07D24ED7D9CB69C69A0C02340088F5ABD424D2BAAB442AA30C85B98041746B13"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\case\\material-pattern-definitions-2.json",
+        "sha256": "66E9DC912415BE6FD0F92B5DEFABAA7F1B074A2707E4337D9BFA96201250AB24"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\case\\material-tiles-3.dwg",
+        "sha256": "FB6AB3605CE5DB24983E9ADE76868A4E4268631BF582068555FB801A56DA7FB9"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\case\\material-pattern-definitions-3.json",
+        "sha256": "6A2CFAADEF0ADA7DA5284BDE17A1C1319158056AF6FB4B3698A3EE2035E340FF"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\case\\material-tiles-4.dwg",
+        "sha256": "C0956E5917F90FCBC882B33A61FBE1A57E02AB9A502C749EC85A6C5D049AAD15"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\case\\material-pattern-definitions-4.json",
+        "sha256": "5D968A4252604FE5A1867044D1DBBCF4B5BA3A9F77611BA4A86BE89C90602A16"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\material-tiles-native-preview\\material-tiles-natural-preview.json",
+        "sha256": "8FB50CD19E4D450D51A4BF82441660CC22814D1C2AF9C42499E03AFDDCCEB8C6"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\material-tiles-native-preview\\stage2-preview-native.json",
+        "sha256": "E28BEEAE29F88CA1AB716426F06286BAEF8AF6667EF35E907D836E6FF56527AD"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\material-tiles-native-preview\\stage2-A2-1-100.pdf",
+        "sha256": "91B6F6BAB4FD7F614C3CDF0677E05F2C32A596003C52A620104A716C08BE3764"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\material-tiles-native-preview\\material-tiles-natural.png",
+        "sha256": "6782762DB4E81A9B2DBD9DEDCE49E105ED9857302B7FD83D487852C60817CE64"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\material-tiles-native-preview\\root-raster-qa.json",
+        "sha256": "F46D50876B4D3E7D3AF4C06D837629A122A807852AE4791970130E3872134986"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\material-tiles-native-preview\\root-pdf-content-qa.json",
+        "sha256": "233A791DEF5396243F853D87FC932EF0AB351ECB2562ADA1B3BE53A36F232793"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\material-tiles-native-preview\\root-visual-qa.json",
+        "sha256": "A05369F33F8FD9A7647FCF0619261B646900C4A09B58EA2BAD041ADCDB860E44"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\material-tiles-native-preview\\material-whole-wall-crop.png",
+        "sha256": "789F7D8429E00B2AC4B6117DABA6540F4BF68C3298AE187AADF52178C3CACCFF"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\material-tiles-native-preview\\material-opening-crop.png",
+        "sha256": "A3BEA90C30FABCC9F96152A7C4E5911A935BD242C3CAD777F1D0859E6848A486"
+      },
+      {
+        "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-203844-af1e6b04\\material-tiles-native-preview\\material-seam-crop.png",
+        "sha256": "07902449871AA100F50269DD284F4B72AF48DF82B3581928723E34CC27AAAB96"
+      }
+    ]
+  }
+}

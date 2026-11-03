@@ -17,5 +17,6 @@ struct Result {
 };
 Result capture(const bce::native::Config&, bce::native::Evidence&);
 void prepare(const bce::native::Config&, bce::native::Evidence&);
+void acceptPreparedReplay(const bce::native::Config&);
 bool cleanup() noexcept;
 }

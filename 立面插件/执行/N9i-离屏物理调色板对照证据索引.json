@@ -1,0 +1,153 @@
+{
+  "contract": "bce.n9i-actual-evidence-index.v1",
+  "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-135723-9dedc08f",
+  "nonce": "9dedc08f6bdb473a98ca77f892747e64",
+  "processId": 47348,
+  "binding": {
+    "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-9dedc08f.json",
+    "sha256": "2A95C0EAA90DF046B799971051CF81844E3A8B6863E751E75C60DD03F1BA58CE"
+  },
+  "buildReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-135519-503-n9i-physical-palette-v28-frozen-b3b0a246\\receipt.json",
+  "binarySHA256": "71EF519F266414AE49750074FEE704B3A2BE6F95F2CF20E09F5EAFF515B698AF",
+  "smallDiff": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-135519-503-n9i-physical-palette-v28-frozen-b3b0a246\\n9i-v27-v28-small.diff",
+  "selfReviewFreeze": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-135519-503-n9i-physical-palette-v28-frozen-b3b0a246\\n9i-self-review-freeze.json",
+  "facts": {
+    "captureCalls": 1,
+    "mainStatus": "failed",
+    "allWorldDrawCalls": 0,
+    "actualContextObserved": false,
+    "rawRGBObserved": false,
+    "bothArmsManagerValue": true,
+    "BPhysicalReturned": true,
+    "BPaletteInputAddress": 2649101127306,
+    "BPaletteCount": 256,
+    "physicalAdoptionVerified": false,
+    "qualification": false,
+    "allThreeFaultsReachedAndCleaned": true,
+    "eachCatalogPinsAcquiredAndClosed": 92,
+    "ambientDBMOD": [
+      1,
+      1
+    ],
+    "ambientWriteEvents": 0,
+    "workerExitCode": 70,
+    "explicitStopRequested": true,
+    "forcedTermination": false,
+    "normalQuit": false,
+    "nativeQuitConfirmed": false,
+    "retiredFiles": 4,
+    "protectedInputHashesRechecked": 6,
+    "ownedShowEvents": 0,
+    "ownedForegroundEvents": 0,
+    "inputDesktopReadErrors": 0,
+    "relatedCadEventsNeedReview": false
+  },
+  "traceLines1Based": {
+    "main": {
+      "ownedDevice.setLogicalPalette.before": 14,
+      "ownedDevice.setLogicalPalette.after": 15,
+      "kernel.createView.before": 16,
+      "deviceUpdate.after": 48,
+      "viewUpdate.after": 53,
+      "destroyAutoCADModel.after": 80,
+      "destroyOwnedDatabase.after": 86,
+      "cleanup.return": 89
+    },
+    "nonpersistent-control/": {
+      "ownedResourceCatalog.ready": 99,
+      "ownedDevice.setLogicalPalette.before": 114,
+      "ownedDevice.setLogicalPalette.after": 115,
+      "kernel.createView.before": 116,
+      "deviceUpdate.after": 145,
+      "viewUpdate.after": 150,
+      "destroyAutoCADModel.after": 173,
+      "ownedResourceCache.close.begin": 174,
+      "ownedResourceCache.close.end": 267,
+      "destroyOwnedDatabase.after": 275,
+      "cleanup.return": 278
+    },
+    "nonpersistent-physical-palette-control/": {
+      "ownedResourceCatalog.ready": 99,
+      "ownedDevice.setLogicalPalette.before": 114,
+      "ownedDevice.setLogicalPalette.after": 115,
+      "ownedDevice.setPhysicalPalette.before": 116,
+      "ownedDevice.setPhysicalPalette.after": 117,
+      "kernel.createView.before": 118,
+      "deviceUpdate.after": 147,
+      "viewUpdate.after": 152,
+      "destroyAutoCADModel.after": 175,
+      "ownedResourceCache.close.begin": 176,
+      "ownedResourceCache.close.end": 269,
+      "destroyOwnedDatabase.after": 277,
+      "cleanup.return": 280
+    },
+    "lifecycle-1/": {
+      "ownedResourceCatalog.ready": 98,
+      "kernel.deleteModel.after": 125,
+      "modelProvider.withdrawn": 126,
+      "ownedResourceCache.close.begin": 127,
+      "ownedResourceCache.close.end": 220,
+      "destroyOwnedDatabase.after": 226,
+      "cleanup.return": 229
+    }
+  },
+  "evidence": [
+    {
+      "relativeToSession": "case/native-case.json",
+      "sha256": "CA16E7684A87E5237DC6F5FE31AEE6C5E5157B3C1E5BE4B5CAE1DACD285EF9D2"
+    },
+    {
+      "relativeToSession": "case/gs-result.json",
+      "sha256": "2DDDDF37A545AD1B9E8701B9F3AC0BF7BB532DC8DA52642CF42116E36B904B98"
+    },
+    {
+      "relativeToSession": "case/dispatch-state.json",
+      "sha256": "DDD6DA400E0484F3FB13933375914F1C8AED468917E0E1DD5F7D0318D1B3F22C"
+    },
+    {
+      "relativeToSession": "case/gs-trace.jsonl",
+      "sha256": "203BEB8CB225BC61C2684E774725E05B61D1AE642D3C6EBCBDB0FA93A915AEAC"
+    },
+    {
+      "relativeToSession": "case/physical-palette-comparison.json",
+      "sha256": "58952E13A957ECBEFC847F8ECA74E4C40EBB1FF29854DB468852C9F95D319EB8"
+    },
+    {
+      "relativeToSession": "case/lifecycle-controls.json",
+      "sha256": "FE27A39C28A029FC1573A3E3EEDA8D85F79E156C912F6770B959E6F2F900FCFF"
+    },
+    {
+      "relativeToSession": "case/nonpersistent-control/gs-trace.jsonl",
+      "sha256": "EAA51B960A02E15870A50B4CB7A2F92ECA8B514E2F132BA4EA005C8D4B080EC3"
+    },
+    {
+      "relativeToSession": "case/nonpersistent-physical-palette-control/gs-trace.jsonl",
+      "sha256": "98CB1B98A3726C35328671640771A766131820BB27E897E116F1384FBAD3FC95"
+    },
+    {
+      "relativeToSession": "case/nonpersistent-control/owned-resource-catalog.json",
+      "sha256": "424FE1E4754FBFA526E1E98B97D8BA7DED07725A769DAC32C9625DF7DF319311"
+    },
+    {
+      "relativeToSession": "case/nonpersistent-physical-palette-control/owned-resource-catalog.json",
+      "sha256": "49E8C36649D89B82AB713C81A7FAB360A4E5AD3307718879B8635DFD21E71BBD"
+    },
+    {
+      "relativeToSession": "case/lifecycle-1/gs-trace.jsonl",
+      "sha256": "4EABAFF5D87BD60DF152EAE61367AEDFEF4FBF2267F8978BC5C8B9C72E44BB50"
+    },
+    {
+      "relativeToSession": "native-result-closure.json",
+      "sha256": "06B3825A4922D7DC57D7308670AB9F120944739130182FAD6541C821396BDAB6"
+    },
+    {
+      "relativeToSession": "isolation-final.json",
+      "sha256": "A54F37BB1D504396C9E062505A9499C794B46319D7BAF8BC3F2C1DF74A74C5B4"
+    },
+    {
+      "relativeToSession": "reader-retirement.json",
+      "sha256": "E3D54AAE99AA923DB4DB3D257B63D95D8D04AA7BE9E3A3E40D211B4F0AEA4187"
+    }
+  ],
+  "scope": "Read-only original-file verification; only this index and N9i report updated; no source change, build, CAD control or delegated review"
+}

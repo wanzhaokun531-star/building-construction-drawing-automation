@@ -1,0 +1,66 @@
+{
+  "version": "v196",
+  "job": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-document-negative-20261103-143209",
+  "steps": [
+    {
+      "serial": "19da8ead2bde40d0b54990637ba28f5c",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261103-143003\\dispatch_19da8ead2bde40d0b54990637ba28f5c.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "4f8d504d10c842f7852ef5a62525c996",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261103-143003",
+        "processId": 16988,
+        "desktop": "CodexS1_4f8d504d10c842f7852ef5a62525c996",
+        "inputDesktop": "Default",
+        "serial": "19da8ead2bde40d0b54990637ba28f5c",
+        "command": "S1OPENPROBECONTROL",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-document-negative-20261103-143209",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-document-negative-20261103-143209\\control.dwg",
+        "error": null
+      }
+    },
+    {
+      "serial": "163b2fbe17a64b029c8a47e0cbc5ecaf",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261103-143003\\dispatch_163b2fbe17a64b029c8a47e0cbc5ecaf.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "4f8d504d10c842f7852ef5a62525c996",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261103-143003",
+        "processId": 16988,
+        "desktop": "CodexS1_4f8d504d10c842f7852ef5a62525c996",
+        "inputDesktop": "Default",
+        "serial": "163b2fbe17a64b029c8a47e0cbc5ecaf",
+        "command": "S1PHASE2EXECUTE",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-document-negative-20261103-143209",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-document-negative-20261103-143209\\control.dwg",
+        "error": null
+      }
+    }
+  ],
+  "passed": true,
+  "result": {
+    "completed": false,
+    "error": "E_DOCUMENT_MODIFIED：图纸有未保存的内容，请先按 Ctrl+S 保存，再输入 BCP。DBMOD=1"
+  },
+  "probe": {
+    "before": 0,
+    "after": 1,
+    "aliasSameFunction": true,
+    "savedFileUnchanged": true,
+    "sourceSHA256": "0DC6A390DDB022241F69698D5FC18FDEEFAC6DA1303893CAE32BF1D23661E205"
+  }
+}

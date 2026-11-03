@@ -1,0 +1,61 @@
+--- v8/NativeGsTextFootprint.cpp
++++ v9/NativeGsTextFootprint.cpp
+@@ -125,11 +125,25 @@
+         {kEdgeModel,"edgeModel"},{kEdgeStyles,"edgeStyles"},{kEdgeModifiers,"edgeModifiers"},{kEdgeColor,"edgeColor"},{kEdgeOpacity,"edgeOpacity"},{kEdgeWidth,"edgeWidth"},
+         {kDisplayStyles,"displayStyles"},{kDisplayBrightness,"displayBrightness"},{kUseDrawOrder,"useDrawOrder"},{kViewportTransparency,"viewportTransparency"},{kLightingEnabled,"lightingEnabled"},{kFaceModifiers,"faceModifiers"}
+     }};
+-    bool equal=true;std::vector<std::string> traits;
+-    for(const auto& p:properties){AcGiVisualStyle::Operation expectedOp,actualOp;const auto& expected=requested.trait(p.first,&expectedOp);const auto& observed=actual.trait(p.first,&actualOp);const bool same=expected==observed&&expectedOp==actualOp;equal=equal&&same;
+-        traits.push_back(object({{"property",q(p.second)},{"propertyId",std::to_string(p.first)},{"expected",variant(expected)},{"actual",variant(observed)},{"expectedOperation",std::to_string(expectedOp)},{"actualOperation",std::to_string(actualOp)},{"equivalent",same?"true":"false"}}));}
+-    s.log("ownedViewVisualStyle",{{"requestedType",std::to_string(requested.type())},{"styleSet",styleSet?"true":"false"},{"actualType",styleSet?std::to_string(actual.type()):"null"},{"drawingPropertiesEquivalent",equal?"true":"false"},{"properties",array(traits)}});
+-    require(styleSet&&equal,"own view visual style drawing properties differ");
++    const auto& expectedFaces=requested.trait(kFaceLightingModel);const auto& actualFaces=actual.trait(kFaceLightingModel);
++    const bool facesInvisible=expectedFaces.type()==AcGiVariant::kInt&&actualFaces.type()==AcGiVariant::kInt&&expectedFaces.asInt()==kInvisible&&actualFaces.asInt()==kInvisible&&requested.operation(kFaceLightingModel)==AcGiVisualStyleOperations::kSet&&actual.operation(kFaceLightingModel)==AcGiVisualStyleOperations::kSet;
++    bool activeEqual=true,rawEqual=true;std::vector<std::string> traits;
++    for(const auto& p:properties){AcGiVisualStyle::Operation expectedOp,actualOp;const auto& expected=requested.trait(p.first,&expectedOp);const auto& observed=actual.trait(p.first,&actualOp);const bool same=expected==observed&&expectedOp==actualOp;
++        const bool applicable=!(facesInvisible&&(p.first==kFaceLightingQuality||p.first==kFaceColorMode||p.first==kFaceOpacity));rawEqual=rawEqual&&same;if(applicable)activeEqual=activeEqual&&same;
++        traits.push_back(object({{"property",q(p.second)},{"propertyId",std::to_string(p.first)},{"expected",variant(expected)},{"actual",variant(observed)},{"expectedOperation",std::to_string(expectedOp)},{"actualOperation",std::to_string(actualOp)},{"equivalent",same?"true":"false"},{"applicable",applicable?"true":"false"},{"inapplicableReason",applicable?"null":q("kInvisible means faces are not drawn")}}));}
++    s.log("ownedViewVisualStyle",{{"contract",q("XY-custom-invisible-faces-object-color-edges-v1")},{"requestedType",std::to_string(requested.type())},{"styleSet",styleSet?"true":"false"},{"actualType",styleSet?std::to_string(actual.type()):"null"},{"allRawPropertiesEquivalent",rawEqual?"true":"false"},{"activeDrawingPropertiesEquivalent",activeEqual?"true":"false"},{"properties",array(traits)}});
++    require(styleSet&&activeEqual,"own view active custom drawing contract differs");
++}
++void configureStyle(AcGiVisualStyle& style){
++    using namespace AcGiVisualStyleProperties;const auto set=AcGiVisualStyleOperations::kSet;
++    require(style.setType(AcGiVisualStyle::kCustom),"prepare own custom style failed");
++    auto integer=[&](Property p,int value){require(style.setTrait(p,value,set),"custom integer style trait failed: "+std::to_string(p));};
++    auto real=[&](Property p,double value){require(style.setTrait(p,value,set),"custom real style trait failed: "+std::to_string(p));};
++    auto boolean=[&](Property p,bool value){require(style.setTrait(p,value,set),"custom boolean style trait failed: "+std::to_string(p));};
++    integer(kFaceLightingModel,kInvisible);integer(kFaceLightingQuality,kNoLighting);integer(kFaceColorMode,kObjectColor);integer(kFaceModifiers,kNoFaceModifiers);real(kFaceOpacity,1.0);
++    integer(kEdgeModel,kIsolines);integer(kEdgeStyles,kVisibleFlag|kObscuredFlag);integer(kEdgeModifiers,kNoEdgeModifiers);real(kEdgeOpacity,1.0);integer(kEdgeWidth,1);
++    AcCmColor unusedEdgeColor;ok(unusedEdgeColor.setColorIndex(256),"prepare inactive edge color");require(style.setTrait(kEdgeColor,&unusedEdgeColor,set),"custom edge color trait failed");
++    integer(kDisplayStyles,kBackgroundsFlag);real(kDisplayBrightness,0.0);boolean(kUseDrawOrder,false);boolean(kViewportTransparency,false);boolean(kLightingEnabled,false);
+ }
+ bool Rule::isApplicable(const AcRxObject* object)const{const auto* p=AcDbPoint::cast(object);return running&&p&&p->database()==s.db.get()&&p->objectId()==s.markerId;}
+ Adesk::Boolean Rule::worldDraw(AcGiDrawable* drawable,AcGiWorldDraw* wd){
+@@ -233,7 +247,7 @@
+     s.log("device.addView.before");s.viewAttached=s.device->add(s.view);s.log("device.addView.after",{{"added",s.viewAttached?"true":"false"}});require(s.viewAttached,"attach owned kernel view failed");
+     if(s.faultPoint==3)throw std::runtime_error("injected-after-view-attached-before-style-camera");
+     s.view->setViewport(AcGePoint2d(0,0),AcGePoint2d(1,1));s.view->setViewportBorderVisibility(false);
+-    AcGiVisualStyle wireframe;require(wireframe.setType(AcGiVisualStyle::k3DWireframe),"prepare own k3DWireframe style failed");s.view->setVisualStyle(wireframe);AcGiVisualStyle readback;const bool styleSet=s.view->visualStyle(readback);
++    AcGiVisualStyle wireframe;configureStyle(wireframe);s.view->setVisualStyle(wireframe);AcGiVisualStyle readback;const bool styleSet=s.view->visualStyle(readback);
+     verifyStyle(s,wireframe,readback,styleSet);
+     s.view->setEnableFrontClip(false);s.view->setEnableBackClip(false);
+     s.view->setView({75,50,100},{75,50,0},AcGeVector3d::kYAxis,150,112.5,AcGsView::kParallel);
+@@ -246,7 +260,7 @@
+         s.log("viewMatrices",{{"width",std::to_string(w)},{"viewing",matrix(s.view->viewingMatrix())},{"projection",matrix(s.view->projectionMatrix())},{"screen",matrix(s.view->screenMatrix())},{"worldToDevice",matrix(m)},{"worldToPixel",affine(mapping.affine)},{"fieldWidth",num(s.view->fieldWidth())},{"fieldHeight",num(s.view->fieldHeight())},{"perspective",s.view->isPerspective()?"true":"false"},{"border",s.view->isViewportBorderVisible()?"true":"false"}});
+         for(std::size_t i=0;i<controls.size();++i){rgb=render(s,w,h,static_cast<int>(i));const auto id=std::string(controls[i].id)+"-"+std::to_string(w);const auto path=s.config.output+L"\\"+std::wstring(id.begin(),id.end())+L".rgb";
+             save(path,std::string(reinterpret_cast<const char*>(rgb.data()),rgb.size()));
+-            bce::TextRenderContext context;context.deviceIdentity="AutoCAD2020/k3DDrawing/XY-k3DWireframe/owned-offscreen/"+std::to_string(w)+"x"+std::to_string(h);context.frameIdentity=utf8(s.config.nonce)+"/"+id;context.fontIdentity=s.fontSHA+"/"+s.bigfontSHA;context.sourceIdentity="owned-AcDbPoint/"+std::to_string(s.markerId.asOldId())+"/"+controls[i].id;
++            bce::TextRenderContext context;context.deviceIdentity="AutoCAD2020/k3DDrawing/XY-custom-invisible-faces-object-color-edges-v1/owned-offscreen/"+std::to_string(w)+"x"+std::to_string(h);context.frameIdentity=utf8(s.config.nonce)+"/"+id;context.fontIdentity=s.fontSHA+"/"+s.bigfontSHA;context.sourceIdentity="owned-AcDbPoint/"+std::to_string(s.markerId.asOldId())+"/"+controls[i].id;
+             // Explicit control paper: view is 150 x 112.5 mm at 1:1. These are conversion values, not a printer capability claim.
+             context.dpiX=w*25.4/150.0;context.dpiY=h*25.4/112.5;context.pixelBoundaryPhase={mapping.phase,mapping.phase};
+             const auto result=bce::measureTextFootprint({rgb.data(),rgb.size(),static_cast<std::size_t>(w),static_cast<std::size_t>(h),static_cast<std::size_t>(w)*3},mapping.affine,context);
+--- v8/README.md
++++ v9/README.md
+@@ -1,6 +1,6 @@
+ # NativeGsTextFootprint (N9c)
+ 
+-Development-only AutoCAD 2020 / R23.1 x64 ARX. `BCE_TEST_RUN` synchronously creates an owned in-memory database, one persistent point control, one k3DDrawing GS kernel/model/offscreen device/view. The owned view is explicitly k3DWireframe with an orthographic XY camera; the kernel request follows the local 2020 SDK ARXDBG sample. There is one fixed request and no fallback loop. No working/current database switch, GUI view, DWG save, shared GS/profile modification, Plot, Python, or external converter occurs in the native command.
++Development-only AutoCAD 2020 / R23.1 x64 ARX. `BCE_TEST_RUN` synchronously creates an owned in-memory database, one persistent point control, one k3DDrawing GS kernel/model/offscreen device/view. The owned view uses an explicit custom value style and orthographic XY camera: invisible faces, drawable-color edges without edge modifiers, opaque, no lighting/transparency, fixed width/display mask. Sixteen requested/read-back trait values and operations are retained; active properties require exact equality. Face lighting quality/color/opacity are marked inapplicable only when both sides explicitly use kInvisible/kSet (SDK: faces are not drawn). Kernel createView/device.add pairs with eraseAll/device.erase/kernel.deleteView, including a just-attached-before-style/camera exception regression. The kernel request follows the local 2020 SDK ARXDBG sample. There is one fixed request and no fallback loop. No working/current database switch, GUI view, DWG save, shared GS/profile modification, Plot, Python, or external converter occurs in the native command.
+ 
+ The candidate uses `createAutoCADModel` and `kernel.associate(ownedDb, model, kMain)`; the association is only an attempted route. Every genuine WorldDraw independently records and checks its context database, entity database/ObjectId and model binding before drawing. An actual mismatch fails and is preserved in `gs-trace.jsonl`; it does not establish impossibility of other public routes.
+ 

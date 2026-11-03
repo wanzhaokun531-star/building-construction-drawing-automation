@@ -1,0 +1,81 @@
+{
+  "contract": "bce.dimension-adapt-build.v1",
+  "label": "fix1_rejection_focused_green",
+  "caseName": "DimensionAdaptSourceBindingFocused",
+  "startedUtc": "2026-11-02T15:26:50.9743067Z",
+  "compiledSourcesDirectory": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\src",
+  "sourceFiles": {
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\src\\NativeEvidence.h": "C6B083EE0346AA7CDB51090274CCCADCB2C6DE0AA92A196AD846E11C41C9EBB6",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\src\\NativeEvidence.cpp": "1B3CA34A61CC2C2DB2C42A7FDFD01C029DE7BE82EAE6CE96D9DE1C3B363A8FE2",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\src\\DimensionAdaptDriver.cpp": "85B543AA75E780DAECF107D17AFEB0690BBFBC4A573BBEAC6CE1F975DABFA0ED",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\src\\DimensionAdaptGreen.inc": "53BBDF2890D3F2D7D5C02CDE577BFA38845B0E4ED7C1EFEBFCFF2C4500BA5145",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\src\\DimensionTopology.h": "12E6C5EA8410910D5045AB217AAD073DCDB7246C8829D4991456DDC30C96939B",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\src\\DimensionTopologyTests.cpp": "3D2518C314E7E4B63A9EAE896243908486C496083DCC00F2C55B53183AB6D80E",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\src\\RejectionAcceptance.h": "61ACDCB41D353450B4051D316B42F074299225B8C9D207EF88B24BC1C6F1B858",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\src\\RejectionAcceptanceTests.cpp": "95F0AAD327D4AC7DCEE443963930BA7B6AF37EFA17C2AD9C68006E229912027E",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\src\\RejectionFocus.inc": "E4D1F2A89210526E1D86D4D8D260EAF2C162C86B3D15C5EABCE75BD8614C6739",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\src\\ElevationDimensionAdaptCases.vcxproj": "4396B9D93D7BFFBC518D3BADBD559DAFC67192BEA1E982B9399516BBCEBCAD41",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\build_dimension_adapt.ps1": "F082575A0664419340CE2DB491F04352227DF9C4A2A8E47A5253DD5ADB789D96"
+  },
+  "inputOrigins": [
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\NativeEvidence.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\src\\NativeEvidence.h",
+      "sha256": "C6B083EE0346AA7CDB51090274CCCADCB2C6DE0AA92A196AD846E11C41C9EBB6"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\NativeEvidence.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\src\\NativeEvidence.cpp",
+      "sha256": "1B3CA34A61CC2C2DB2C42A7FDFD01C029DE7BE82EAE6CE96D9DE1C3B363A8FE2"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\dimension-adapt\\DimensionAdaptDriver.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\src\\DimensionAdaptDriver.cpp",
+      "sha256": "85B543AA75E780DAECF107D17AFEB0690BBFBC4A573BBEAC6CE1F975DABFA0ED"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\dimension-adapt\\DimensionAdaptGreen.inc",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\src\\DimensionAdaptGreen.inc",
+      "sha256": "53BBDF2890D3F2D7D5C02CDE577BFA38845B0E4ED7C1EFEBFCFF2C4500BA5145"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\dimension-adapt\\DimensionTopology.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\src\\DimensionTopology.h",
+      "sha256": "12E6C5EA8410910D5045AB217AAD073DCDB7246C8829D4991456DDC30C96939B"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\dimension-adapt\\DimensionTopologyTests.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\src\\DimensionTopologyTests.cpp",
+      "sha256": "3D2518C314E7E4B63A9EAE896243908486C496083DCC00F2C55B53183AB6D80E"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\dimension-adapt\\RejectionAcceptance.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\src\\RejectionAcceptance.h",
+      "sha256": "61ACDCB41D353450B4051D316B42F074299225B8C9D207EF88B24BC1C6F1B858"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\dimension-adapt\\RejectionAcceptanceTests.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\src\\RejectionAcceptanceTests.cpp",
+      "sha256": "95F0AAD327D4AC7DCEE443963930BA7B6AF37EFA17C2AD9C68006E229912027E"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\dimension-adapt\\RejectionFocus.inc",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\src\\RejectionFocus.inc",
+      "sha256": "E4D1F2A89210526E1D86D4D8D260EAF2C162C86B3D15C5EABCE75BD8614C6739"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\dimension-adapt\\ElevationDimensionAdaptCases.vcxproj",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\src\\ElevationDimensionAdaptCases.vcxproj",
+      "sha256": "4396B9D93D7BFFBC518D3BADBD559DAFC67192BEA1E982B9399516BBCEBCAD41"
+    }
+  ],
+  "binary": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\out\\ElevationDimensionAdaptCases.arx",
+  "binarySHA256": "BC0EEB29B77CE4C16F950BFE1CD0B8709EFC572760D38CDD20D3787EBD730885",
+  "log": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\build.log",
+  "exitCode": 0,
+  "nativeExecuted": false,
+  "toolchain": "AutoCAD2020 SDK23.1 / v141 14.16.27023 / x64 / C++17",
+  "commandFile": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532\\build-command.cmd",
+  "commandSHA256": "8C5D8D5CCE970D87F11B3665B58C7A6863115C7578B850ED7389965CBBA7BF09",
+  "finishedUtc": "2026-11-02T15:26:57.5037111Z"
+}

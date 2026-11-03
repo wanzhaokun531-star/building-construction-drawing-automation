@@ -1,0 +1,154 @@
+--- v11/NativeGsTextFootprint.cpp
++++ v12/NativeGsTextFootprint.cpp
+@@ -71,26 +71,29 @@
+ class Rule final:public AcGiDrawableOverrule{
+ public:explicit Rule(Session& v):s(v){}
+     bool isApplicable(const AcRxObject*)const override;
++    Adesk::UInt32 setAttributes(AcGiDrawable*,AcGiDrawableTraits*)override;
+     Adesk::Boolean worldDraw(AcGiDrawable*,AcGiWorldDraw*)override;
++    void viewportDraw(AcGiDrawable*,AcGiViewportDraw*)override;
+ private:Session& s;
+ };
+ struct Session{
+     Config config;std::unique_ptr<Evidence> evidence;File trace;
+     AcApDocument* current{};AcApDocument* active{};AcDbDatabase* ambient{};AmbientWatch watch;bool watchAttached{},ambientInitialized{};int dbmodBefore{};
+-    std::unique_ptr<AcDbDatabase> db;AcDbObjectId markerId,styleId;std::unique_ptr<AcDbPoint,Close> marker;bool styleBound{},styleQualified{},diagnosticOnly{};
++    std::unique_ptr<AcDbDatabase> db;AcDbObjectId markerId,styleId,rootId;std::unique_ptr<AcDbPoint,Close> marker;std::unique_ptr<AcDbBlockTableRecord,Close> sceneRoot;bool styleBound{},styleQualified{},diagnosticOnly{};
+     AcGsManager* manager{};AcGsGraphicsKernel* kernel{};AcGsModel* model{};AcGsModel* priorModel{};AcGsDevice* device{};AcGsView* view{};bool associated{},viewAttached{};
+     std::unique_ptr<Rule> rule;bool ruleAttached{},priorOverruling{};
+-    int sample{-1};unsigned callbacks{},frameCallbacks{};std::string callbackError,executionFailure;int faultPoint{};
++    int sample{-1};unsigned callbacks{},frameCallbacks{},applicableCalls{},ownedApplicableCalls{},attributeCalls{},viewportCalls{};std::string callbackError,executionFailure;int faultPoint{};
+     std::wstring font,bigfont;std::string fontSHA,bigfontSHA;std::vector<std::string> frames;
+     void log(const char* event,Fields f={}){if(!trace.valid())return;f.push_back({"event",q(event)});write_flushed(trace.get(),object(f)+"\n");}
+     bool ambientSame()const{return current==acDocManager->curDocument()&&active==acDocManager->mdiActiveDocument()&&ambient==acdbHostApplicationServices()->workingDatabase();}
+-    bool resourcesReleased()const noexcept{return !db&&!marker&&!kernel&&!model&&!device&&!view&&!associated&&!viewAttached&&!rule&&!ruleAttached&&!watchAttached&&!styleBound&&styleId.isNull();}
++    bool resourcesReleased()const noexcept{return !db&&!marker&&!sceneRoot&&!kernel&&!model&&!device&&!view&&!associated&&!viewAttached&&!rule&&!ruleAttached&&!watchAttached&&!styleBound&&styleId.isNull()&&rootId.isNull();}
+     void cleanupLog(const char* event,Fields f={})noexcept{try{log(event,std::move(f));}catch(...){}}
+     bool cleanup(){
+         cleanupLog("cleanup.enter",{{"faultPoint",std::to_string(faultPoint)},{"view",address(view)},{"marker",address(marker.get())},{"model",address(model)},{"device",address(device)},{"kernel",address(kernel)},{"database",address(db.get())},{"ruleAttached",ruleAttached?"true":"false"}});
+         if(view){cleanupLog("view.eraseAll.before");view->eraseAll();cleanupLog("view.eraseAll.after");}
+         if(ruleAttached){cleanupLog("removeOverrule.before");const auto st=AcRxOverrule::removeOverrule(AcDbPoint::desc(),rule.get());cleanupLog("removeOverrule.after",{{"status",std::to_string(st)}});if(st!=Acad::eOk)return false;ruleAttached=false;cleanupLog("restoreOverruling.before");AcRxOverrule::setIsOverruling(priorOverruling);cleanupLog("restoreOverruling.after");}
+         cleanupLog("rule.reset.before");rule.reset();cleanupLog("rule.reset.after");
++        cleanupLog("sceneRoot.close.before");sceneRoot.reset();cleanupLog("sceneRoot.close.after");
+         cleanupLog("marker.close.before");marker.reset();cleanupLog("marker.close.after");
+         if(viewAttached){cleanupLog("device.eraseView.before");const bool erased=device->erase(view);cleanupLog("device.eraseView.after",{{"removed",erased?"true":"false"}});if(!erased)return false;viewAttached=false;}
+         if(view){cleanupLog("kernel.deleteView.before");kernel->deleteView(view);view=nullptr;styleBound=false;cleanupLog("kernel.deleteView.after");}
+@@ -98,7 +101,7 @@
+         if(model){cleanupLog("destroyAutoCADModel.before");manager->destroyAutoCADModel(model);model=nullptr;cleanupLog("destroyAutoCADModel.after");}
+         if(device){cleanupLog("destroyAutoCADDevice.before");manager->destroyAutoCADDevice(device);device=nullptr;cleanupLog("destroyAutoCADDevice.after");}
+         if(kernel){cleanupLog("releaseGraphicsKernel.before");AcGsManager::releaseGraphicsKernel(kernel);kernel=nullptr;cleanupLog("releaseGraphicsKernel.after");}
+-        if(db){cleanupLog("destroyOwnedDatabase.before");db.reset();styleId.setNull();cleanupLog("destroyOwnedDatabase.after");}
++        if(db){cleanupLog("destroyOwnedDatabase.before");db.reset();styleId.setNull();rootId.setNull();cleanupLog("destroyOwnedDatabase.after");}
+         if(watchAttached){cleanupLog("ambient.removeReactor.before");ambient->removeReactor(&watch);watchAttached=false;cleanupLog("ambient.removeReactor.after");}
+         cleanupLog("cleanup.return",{{"resourcesReleased",resourcesReleased()?"true":"false"}});
+         return true;
+@@ -128,13 +131,18 @@
+         {kEdgeModel,"edgeModel"},{kEdgeStyles,"edgeStyles"},{kEdgeModifiers,"edgeModifiers"},{kEdgeColor,"edgeColor"},{kEdgeOpacity,"edgeOpacity"},{kEdgeWidth,"edgeWidth"},
+         {kDisplayStyles,"displayStyles"},{kDisplayBrightness,"displayBrightness"},{kUseDrawOrder,"useDrawOrder"},{kViewportTransparency,"viewportTransparency"},{kLightingEnabled,"lightingEnabled"},{kFaceModifiers,"faceModifiers"}
+     }};
++    if(!styleSet){
++        std::vector<std::string> unavailable;for(const auto& p:properties){AcGiVisualStyle::Operation expectedOp;const auto& expected=requested.trait(p.first,&expectedOp);
++            unavailable.push_back(object({{"property",q(p.second)},{"propertyId",std::to_string(p.first)},{"expected",variant(expected)},{"actual","null"},{"expectedOperation",std::to_string(expectedOp)},{"actualOperation","null"},{"equivalent","null"},{"applicable","null"},{"inapplicableReason",q("value getter returned false; output is not an observation")}}));}
++        s.log("ownedViewVisualStyle",{{"contract",q("XY-custom-invisible-faces-object-color-edges-v1")},{"stage",q(stage)},{"actualOrigin",q(origin)},{"observationAvailable","false"},{"gateApplied",gateApplied?"true":"false"},{"requestedType",std::to_string(requested.type())},{"styleSet","false"},{"actualType","null"},{"allRawPropertiesEquivalent","null"},{"activeDrawingPropertiesEquivalent","null"},{"properties",array(unavailable)}});return {};
++    }
+     const auto& expectedFaces=requested.trait(kFaceLightingModel);const auto& actualFaces=actual.trait(kFaceLightingModel);
+     const bool facesInvisible=expectedFaces.type()==AcGiVariant::kInt&&actualFaces.type()==AcGiVariant::kInt&&expectedFaces.asInt()==kInvisible&&actualFaces.asInt()==kInvisible&&requested.operation(kFaceLightingModel)==AcGiVisualStyleOperations::kSet&&actual.operation(kFaceLightingModel)==AcGiVisualStyleOperations::kSet;
+     bool activeEqual=true,rawEqual=true;std::vector<std::string> traits;
+     for(const auto& p:properties){AcGiVisualStyle::Operation expectedOp,actualOp;const auto& expected=requested.trait(p.first,&expectedOp);const auto& observed=actual.trait(p.first,&actualOp);const bool same=expected==observed&&expectedOp==actualOp;
+         const bool applicable=!(facesInvisible&&(p.first==kFaceLightingQuality||p.first==kFaceColorMode||p.first==kFaceOpacity));rawEqual=rawEqual&&same;if(applicable)activeEqual=activeEqual&&same;
+         traits.push_back(object({{"property",q(p.second)},{"propertyId",std::to_string(p.first)},{"expected",variant(expected)},{"actual",variant(observed)},{"expectedOperation",std::to_string(expectedOp)},{"actualOperation",std::to_string(actualOp)},{"equivalent",same?"true":"false"},{"applicable",applicable?"true":"false"},{"inapplicableReason",applicable?"null":q("kInvisible means faces are not drawn")}}));}
+-    s.log("ownedViewVisualStyle",{{"contract",q("XY-custom-invisible-faces-object-color-edges-v1")},{"stage",q(stage)},{"actualOrigin",q(origin)},{"gateApplied",gateApplied?"true":"false"},{"requestedType",std::to_string(requested.type())},{"styleSet",styleSet?"true":"false"},{"actualType",styleSet?std::to_string(actual.type()):"null"},{"allRawPropertiesEquivalent",rawEqual?"true":"false"},{"activeDrawingPropertiesEquivalent",activeEqual?"true":"false"},{"properties",array(traits)}});
++    s.log("ownedViewVisualStyle",{{"contract",q("XY-custom-invisible-faces-object-color-edges-v1")},{"stage",q(stage)},{"actualOrigin",q(origin)},{"observationAvailable","true"},{"gateApplied",gateApplied?"true":"false"},{"requestedType",std::to_string(requested.type())},{"styleSet",styleSet?"true":"false"},{"actualType",styleSet?std::to_string(actual.type()):"null"},{"allRawPropertiesEquivalent",rawEqual?"true":"false"},{"activeDrawingPropertiesEquivalent",activeEqual?"true":"false"},{"properties",array(traits)}});
+     return {styleSet&&rawEqual,styleSet&&activeEqual};
+ }
+ void configureStyle(AcGiVisualStyle& style){
+@@ -148,22 +156,38 @@
+     AcCmColor unusedEdgeColor;ok(unusedEdgeColor.setColorIndex(256),"prepare inactive edge color");require(style.setTrait(kEdgeColor,&unusedEdgeColor,set),"custom edge color trait failed");
+     integer(kDisplayStyles,kBackgroundsFlag);real(kDisplayBrightness,0.0);boolean(kUseDrawOrder,false);boolean(kViewportTransparency,false);boolean(kLightingEnabled,false);
+ }
++void verifyOwnedStyleSource(Session& s,const AcGiVisualStyle& requested,const char* stage){
++    auto reopened=open<AcDbVisualStyle>(s.styleId);require(reopened->database()==s.db.get()&&reopened->objectId()==s.styleId,"persistent style ownership mismatch");AcGiVisualStyle stored;ok(reopened->copyTo(&stored),"copy reopened own style to value");
++    s.log("ownedPersistentStyle",{{"stage",q(stage)},{"styleOldId",std::to_string(s.styleId.asOldId())},{"styleDatabase",address(reopened->database())},{"targetDatabase",address(s.db.get())},{"styleObjectIdDatabase",address(s.styleId.database())}});
++    require(inspectStyle(s,requested,stored,true,stage,true,"owned-AcDbVisualStyle-copyTo").raw,"owned persistent style roundtrip differs in raw values or operations");
++}
+ void createOwnedStyle(Session& s,const AcGiVisualStyle& requested){
+     AcDbDictionary* dictionary{};ok(s.db->getVisualStyleDictionary(dictionary,AcDb::kForWrite),"open own visual style dictionary");std::unique_ptr<AcDbDictionary,Close> ownedDictionary(dictionary);require(dictionary&&dictionary->database()==s.db.get(),"visual style dictionary database mismatch");
+     auto style=std::make_unique<AcDbVisualStyle>();ok(style->copyFrom(&requested),"copy custom value to own AcDbVisualStyle");
+-    ok(dictionary->setAt(L"N9C_OWNED_XY_CUSTOM",style.get(),s.styleId),"post owned visual style");auto* posted=style.release();ok(posted->close(),"close posted owned visual style");ownedDictionary.reset();
+-    auto reopened=open<AcDbVisualStyle>(s.styleId);require(reopened->database()==s.db.get()&&reopened->objectId()==s.styleId,"persistent style ownership mismatch");AcGiVisualStyle stored;ok(reopened->copyTo(&stored),"copy reopened own style to value");
+-    s.log("ownedPersistentStyle",{{"styleOldId",std::to_string(s.styleId.asOldId())},{"styleDatabase",address(reopened->database())},{"targetDatabase",address(s.db.get())},{"styleObjectIdDatabase",address(s.styleId.database())}});
+-    require(inspectStyle(s,requested,stored,true,"owned-db-close-reopen-copyTo",true,"owned-AcDbVisualStyle-copyTo").raw,"owned persistent style roundtrip differs in raw values or operations");
++    ok(dictionary->setAt(L"N9C_OWNED_XY_CUSTOM",style.get(),s.styleId),"post owned visual style");auto* posted=style.release();ok(posted->close(),"close posted owned visual style");ownedDictionary.reset();verifyOwnedStyleSource(s,requested,"owned-db-close-reopen-copyTo");
+ }
+ bool bindOwnedStyle(Session& s,const AcGiVisualStyle& requested,const char* stage){
+     require(!s.styleId.isNull()&&s.styleId.database()==s.db.get(),"owned style ID database mismatch");
++    verifyOwnedStyleSource(s,requested,"frame-owned-source-reopened");
+     // Caller has already successfully added the exact marker/model to this view.
+     s.log("view.setOwnedStyleId.before",{{"stage",q(stage)},{"styleOldId",std::to_string(s.styleId.asOldId())}});s.view->setVisualStyle(s.styleId);const auto observedId=s.view->visualStyle();s.styleBound=observedId==s.styleId;
+     s.log("view.setOwnedStyleId.after",{{"stage",q(stage)},{"requestedOldId",std::to_string(s.styleId.asOldId())},{"actualOldId",std::to_string(observedId.asOldId())},{"actualDatabase",address(observedId.database())},{"targetDatabase",address(s.db.get())},{"bound",s.styleBound?"true":"false"}});
+-    require(s.styleBound&&observedId.database()==s.db.get(),"view persistent style ID binding mismatch");AcGiVisualStyle observed;const bool styleSet=s.view->visualStyle(observed);return inspectStyle(s,requested,observed,styleSet,stage,false,"view-value-getter-after-owned-ObjectId-setter").active;
+-}
+-bool Rule::isApplicable(const AcRxObject* object)const{const auto* p=AcDbPoint::cast(object);return running&&p&&p->database()==s.db.get()&&p->objectId()==s.markerId;}
++    require(s.styleBound&&observedId.database()==s.db.get(),"view persistent style ID binding mismatch");AcGiVisualStyle observed;const bool styleSet=s.view->visualStyle(observed);const auto value=inspectStyle(s,requested,observed,styleSet,stage,styleSet,"view-value-getter-after-owned-ObjectId-setter");
++    s.log("ownedIdStyleConfiguration",{{"sourceAndIdVerified","true"},{"valueObservationAvailable",styleSet?"true":"false"},{"valueContradiction",styleSet&&!value.active?"true":"false"},{"rendererConsistencyClaimed","false"}});return !styleSet||value.active;
++}
++bool Rule::isApplicable(const AcRxObject* object)const{
++    ++s.applicableCalls;const auto* p=AcDbPoint::cast(object);const bool owned=p&&p->database()==s.db.get()&&p->objectId()==s.markerId;
++    if(owned&&++s.ownedApplicableCalls<=64){try{s.log("ownedMarker.isApplicable",{{"running",running?"true":"false"},{"objectOldId",std::to_string(p->objectId().asOldId())},{"database",address(p->database())},{"ownedCall",std::to_string(s.ownedApplicableCalls)}});}catch(...){s.callbackError="isApplicable observation log failed";}}
++    return running&&owned;
++}
++Adesk::UInt32 Rule::setAttributes(AcGiDrawable* drawable,AcGiDrawableTraits* traits){
++    const auto flags=AcGiDrawableOverrule::setAttributes(drawable,traits);++s.attributeCalls;
++    if(s.attributeCalls<=64){try{s.log("ownedMarker.setAttributes",{{"flags",std::to_string(flags)},{"viewIndependentViewportDraw",(flags&AcGiDrawable::kDrawableViewIndependentViewportDraw)?"true":"false"},{"regenDraw",(flags&AcGiDrawable::kDrawableRegenDraw)?"true":"false"}});}catch(...){s.callbackError="setAttributes observation log failed";}}return flags;
++}
++void Rule::viewportDraw(AcGiDrawable* drawable,AcGiViewportDraw* vd){
++    ++s.viewportCalls;if(s.viewportCalls<=64){try{s.log("ownedMarker.viewportDraw",{{"context",address(vd?vd->context():nullptr)},{"contextDatabase",address(vd&&vd->context()?vd->context()->database():nullptr)}});}catch(...){s.callbackError="viewportDraw observation log failed";}}
++    AcGiDrawableOverrule::viewportDraw(drawable,vd);
++}
+ Adesk::Boolean Rule::worldDraw(AcGiDrawable* drawable,AcGiWorldDraw* wd){
+     try{
+         auto* p=AcDbPoint::cast(drawable);++s.callbacks;++s.frameCallbacks;
+@@ -232,10 +256,11 @@
+     require(best<=0.55&&heldOut<=0.55,"GS/ATIL selection or independent held-out calibration failed fixed 0.55 pixel bound");return selected;
+ }
+ std::vector<std::uint8_t> render(Session& s,int w,int h,int sample,const AcGiVisualStyle& requested,bool diagnosticOnly=false){
+-    s.sample=sample;s.frameCallbacks=0;s.callbackError.clear();s.view->eraseAll();require(s.view->add(s.marker.get(),s.model),"add owned persistent drawable failed");
++    s.sample=sample;s.frameCallbacks=0;s.callbackError.clear();s.view->eraseAll();require(s.view->add(s.sceneRoot.get(),s.model),"add owned persistent scene root failed");
+     const bool styleMatches=bindOwnedStyle(s,requested,"frame-after-erase-readd-model");s.log("frameStyleQualification",{{"diagnosticOnly",diagnosticOnly?"true":"false"},{"activeContractSatisfied",styleMatches?"true":"false"}});if(!diagnosticOnly)require(styleMatches,"active style contract changed after erase/readd");
++    AcGsDCRect viewport;s.view->getViewport(viewport);s.log("ownedViewState",{{"visible",s.view->isVisible()?"true":"false"},{"viewValid",s.view->isValid()?"true":"false"},{"deviceValid",s.device->isValid()?"true":"false"},{"viewDevice",address(s.view->getDevice())},{"expectedDevice",address(s.device)},{"rootModel",address(s.view->getModel(s.sceneRoot.get()))},{"expectedModel",address(s.model)},{"markerPointInView",s.view->pointInView(s.marker->position())?"true":"false"},{"viewport",array({std::to_string(viewport.m_min.x),std::to_string(viewport.m_min.y),std::to_string(viewport.m_max.x),std::to_string(viewport.m_max.y)})},{"worldToDevice",matrix(s.view->worldToDeviceMatrix())},{"updateSuppressedObservation","null"}});
+     s.model->invalidate(AcGsModel::kInvalidateAll);s.view->invalidate();s.device->invalidate();s.log("deviceUpdate.before",{{"sample",std::to_string(sample)},{"width",std::to_string(w)}});s.device->update();s.view->flush();
+-    s.log("deviceUpdate.after",{{"callbacks",std::to_string(s.frameCallbacks)},{"callbackError",quote(s.callbackError)}});
++    s.log("deviceUpdate.after",{{"callbacks",std::to_string(s.frameCallbacks)},{"isApplicableCalls",std::to_string(s.applicableCalls)},{"ownedIsApplicableCalls",std::to_string(s.ownedApplicableCalls)},{"attributeCalls",std::to_string(s.attributeCalls)},{"viewportDrawCalls",std::to_string(s.viewportCalls)},{"viewVisible",s.view->isVisible()?"true":"false"},{"viewValid",s.view->isValid()?"true":"false"},{"deviceValid",s.device->isValid()?"true":"false"},{"callbackError",quote(s.callbackError)}});
+     require(s.callbackError.empty(),s.callbackError);require(s.frameCallbacks>0,"GS produced no real owned WorldDraw callback");return snapshot(s,w,h);
+ }
+ void styleMismatchDiagnostic(Session& s,const AcGiVisualStyle& requested){
+@@ -258,6 +283,9 @@
+     require(_wcsicmp(s.bigfont.c_str(),L"D:\\cad2020\\autocad 2020\\fonts\\gbcbig.shx")==0&&s.bigfontSHA=="B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150","bigfont control differs from N9a identity");
+     {auto ms=open<AcDbBlockTableRecord>(acdbSymUtil()->blockModelSpaceId(s.db.get()),AcDb::kForWrite);auto p=std::make_unique<AcDbPoint>(AcGePoint3d(75,50,0));p->setDatabaseDefaults(s.db.get());ok(ms->appendAcDbEntity(s.markerId,p.get()),"append owned marker");p.release()->close();}
+     s.marker=open<AcDbPoint>(s.markerId);
++    s.rootId=acdbSymUtil()->blockModelSpaceId(s.db.get());s.sceneRoot=open<AcDbBlockTableRecord>(s.rootId);require(s.sceneRoot->database()==s.db.get(),"owned scene root database mismatch");
++    {AcDbBlockTableRecordIterator* raw{};ok(s.sceneRoot->newIterator(raw),"iterate owned scene root");std::unique_ptr<AcDbBlockTableRecordIterator> it(raw);unsigned roots{};for(;!it->done();it->step()){AcDbObjectId id;ok(it->getEntityId(id),"read owned root child");require(id==s.markerId,"unexpected owned modelspace child");++roots;}require(roots==1,"owned root must contain exact marker only");}
++    s.log("ownedSceneRoot",{{"type",q("AcDbBlockTableRecord modelspace")},{"rootOldId",std::to_string(s.rootId.asOldId())},{"rootDatabase",address(s.sceneRoot->database())},{"markerOldId",std::to_string(s.markerId.asOldId())},{"children","1"}});
+     s.manager=acgsGetGsManager();require(s.manager!=nullptr,"GS manager unavailable");AcGsKernelDescriptor descriptor;descriptor.addRequirement(AcGsKernelDescriptor::k3DDrawing);
+     s.log("acquireGraphicsKernel.before",{{"requirement",q("k3DDrawing")},{"capabilityAddress",address(AcGsKernelDescriptor::k3DDrawing)},{"descriptorRequires3D",descriptor.requires(AcGsKernelDescriptor::k3DDrawing)?"true":"false"}});
+     s.kernel=AcGsManager::acquireGraphicsKernel(descriptor);AcGsKernelDescriptor twoD;twoD.addRequirement(AcGsKernelDescriptor::k2DDrawing);
+@@ -279,7 +307,7 @@
+     s.device->onSize(1024,768);
+     s.view->setEnableFrontClip(false);s.view->setEnableBackClip(false);
+     s.view->setView({75,50,100},{75,50,0},AcGeVector3d::kYAxis,150,112.5,AcGsView::kParallel);
+-    require(s.view->add(s.marker.get(),s.model),"add owned marker/model before style ID setter failed");s.styleQualified=bindOwnedStyle(s,wireframe,"initial-after-owned-model-added");
++    require(s.view->add(s.sceneRoot.get(),s.model),"add owned BTR/model before style ID setter failed");s.styleQualified=bindOwnedStyle(s,wireframe,"initial-after-owned-BTR-model-added");
+     s.log("ownedDeviceSettings",{{"backgroundRGB",array({std::to_string(bg.m_red),std::to_string(bg.m_green),std::to_string(bg.m_blue)})},{"foregroundRGB",array({"0","0","0"})},{"lineweight",q("AcDb::kLnWt000 hairline")},{"frontClip",s.view->isFrontClipped()?"true":"false"},{"backClip",s.view->isBackClipped()?"true":"false"},{"border",s.view->isViewportBorderVisible()?"true":"false"}});
+     s.rule=std::make_unique<Rule>(s);s.priorOverruling=AcRxOverrule::isOverruling();ok(AcRxOverrule::addOverrule(AcDbPoint::desc(),s.rule.get(),false),"add own overrule");s.ruleAttached=true;AcRxOverrule::setIsOverruling(true);
+     if(!s.styleQualified)styleMismatchDiagnostic(s,wireframe);
+--- v11/README.md
++++ v12/README.md
+@@ -2,7 +2,7 @@
+ 
+ Development-only AutoCAD 2020 / R23.1 x64 ARX. `BCE_TEST_RUN` synchronously creates an owned in-memory database, one persistent point control, one k3DDrawing GS kernel/model/offscreen device/view. The owned view uses an explicit custom value style and orthographic XY camera: invisible faces, drawable-color edges without edge modifiers, opaque, no lighting/transparency, fixed width/display mask. Sixteen requested/read-back trait values and operations are retained; active properties require exact equality. Face lighting quality/color/opacity are marked inapplicable only when both sides explicitly use kInvisible/kSet (SDK: faces are not drawn). Kernel createView/device.add pairs with eraseAll/device.erase/kernel.deleteView, including a just-attached-before-style/camera exception regression. The kernel request follows the local 2020 SDK ARXDBG sample. There is one fixed request and no fallback loop. No working/current database switch, GUI view, DWG save, shared GS/profile modification, Plot, Python, or external converter occurs in the native command.
+ 
+-The candidate uses `createAutoCADModel` and `kernel.associate(ownedDb, model, kMain)`; the association is only an attempted route. Every genuine WorldDraw independently records and checks its context database, entity database/ObjectId and model binding before drawing. An actual mismatch fails and is preserved in `gs-trace.jsonl`; it does not establish impossibility of other public routes. The finite custom value style is copied into an AcDbVisualStyle in this same owned database's style dictionary, closed/reopened and copied back with strict equality of all sixteen raw values/operations. The exact marker/model is added to the view before setting the owned style ObjectId, as the 2020 ObjectId-overload contract requires. ObjectId/database binding is checked initially and after every frame's erase/readd, alongside actual value readback. If ID binding succeeds but the active value contract differs, lifecycle2 can attempt only one explicitly unqualified, nontext WorldDraw/raw RGB calibration diagnostic and then fail; fault2 remains not reached/failed, the main text matrix does not run, and qualification remains false. No A/B/C retry is retained: v10 actual evidence excluded that timing hypothesis.
++The candidate uses `createAutoCADModel` and `kernel.associate(ownedDb, model, kMain)`; the association is only an attempted route. The sole scene graph root is the owned modelspace AcDbBlockTableRecord containing only the exact point marker; only that marker is overruled. Every genuine WorldDraw independently records and checks its context database, entity database/ObjectId and model binding before drawing. An actual mismatch fails and is preserved in `gs-trace.jsonl`; it does not establish impossibility of other public routes. The finite custom value style is copied into an AcDbVisualStyle in this same owned database's style dictionary, closed/reopened and copied back with strict equality of all sixteen raw values/operations. The owned BTR/model is added before setting the owned style ObjectId, as the 2020 ObjectId-overload contract requires. ObjectId/database and reopened persistent source are checked initially and after every frame's erase/readd. A false value-getter return is observation unavailable (actual values/operations are null), not a contradictory default output or a requirement that this other overload resolve the ID; it makes no renderer-consistency claim. A true value-getter observation must meet the active contract. A real contradiction permits only the explicit unqualified lifecycle2 nontext diagnostic and then failure, without the five-text matrix. Bounded applicability/attribute flags/viewportDraw observations preserve base behavior, and visible/valid/device/model/viewport state is read without show, flag changes or suppression/global settings. No A/B/C retry is retained: v10 actual evidence excluded that timing hypothesis.
+ 
+ Five N9a controls use independently loaded simplex.shx / gbcbig.shx, height 7 and width factor .75. Each control gets a complete, separate 1024x768 and 2048x1536 RGB snapshot with the same 150x112.5 model field. Control-paper conversion is explicitly 150x112.5 mm, 1:1; dpiX/Y are this conversion, not printer specifications. Frame/phase/font/source identity binds each observation. No Layout translation invariance or glyph-complete claim.
+ 

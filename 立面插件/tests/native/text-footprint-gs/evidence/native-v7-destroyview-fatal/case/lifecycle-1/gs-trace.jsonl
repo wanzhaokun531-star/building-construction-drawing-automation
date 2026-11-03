@@ -1,0 +1,23 @@
+{"current":1881456759952,"active":1881456759952,"workingDatabase":1881462421552,"dbmod":1,"event":"ambient.before"}
+{"requirement":"k3DDrawing","capabilityAddress":1879704949664,"descriptorRequires3D":true,"event":"acquireGraphicsKernel.before"}
+{"kernel":1882662832224,"compatibleWith3D":true,"compatibleWith2D":false,"event":"acquireGraphicsKernel.after"}
+{"targetDatabase":1881466261568,"model":1882662860688,"priorModel":0,"readBackModel":1882662860688,"route":"manager.createAutoCADModel + kernel.associate; real context checked separately","event":"ownedModelBinding"}
+{"message":"injected-after-model-association","event":"execute.cppException.beforeCleanup"}
+{"faultPoint":1,"view":0,"marker":1883832323920,"model":1882662860688,"device":0,"kernel":1882662832224,"database":1881466261568,"ruleAttached":false,"event":"cleanup.enter"}
+{"event":"rule.reset.before"}
+{"event":"rule.reset.after"}
+{"event":"marker.close.before"}
+{"event":"marker.close.after"}
+{"event":"restoreOwnedDatabaseAssociation.before"}
+{"event":"restoreOwnedDatabaseAssociation.after"}
+{"event":"restoredAssociation.find.before"}
+{"matches":true,"event":"restoredAssociation.find.after"}
+{"event":"destroyAutoCADModel.before"}
+{"event":"destroyAutoCADModel.after"}
+{"event":"releaseGraphicsKernel.before"}
+{"event":"releaseGraphicsKernel.after"}
+{"event":"destroyOwnedDatabase.before"}
+{"event":"destroyOwnedDatabase.after"}
+{"event":"ambient.removeReactor.before"}
+{"event":"ambient.removeReactor.after"}
+{"resourcesReleased":true,"event":"cleanup.return"}

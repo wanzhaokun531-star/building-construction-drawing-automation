@@ -1,0 +1,15 @@
+{
+  "reviewer": "rules014_final_review",
+  "readOnly": true,
+  "findings": [
+    {
+      "severity": "P2",
+      "issue": "three-floor native business parameters omitted",
+      "resolution": "Source public width/height/elevation/rotation and left/right wall thickness are now recorded and checked before modification.",
+      "red": "changed opening/wall parameter was accepted",
+      "green": "Three-floor contracts and geometry-dependent area checks passed"
+    }
+  ],
+  "allActionableFindingsAddressed": true,
+  "secondReviewDispatched": false
+}

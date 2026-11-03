@@ -1,0 +1,53 @@
+--- D:/Codex/建筑施工图自动化/立面插件/build/n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f/src/DimensionAdaptDriver.cpp
++++ D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/DimensionAdaptDriver.cpp
+@@ -1,6 +1,7 @@
+ // N8a isolated native probe. RED deliberately leaves the real TCH seed unadapted.
+ #include "NativeEvidence.h"
+ #include "DimensionTopology.h"
++#include "RejectionAcceptance.h"
+ #include <aced.h>
+ #include <adscodes.h>
+ #include <acutmem.h>
+@@ -205,6 +206,7 @@
+         {"sourceLinetypeId", handle(before.linetype)}, {"targetLinetypeId", handle(after.linetype)}, {"linetypeMappingVerified", "true"}});
+ }
+ #include "DimensionAdaptGreen.inc"
++#include "RejectionFocus.inc"
+ void run_case() noexcept {
+     Config config; std::unique_ptr<Evidence> evidence;
+     auto* originalWorking = acdbHostApplicationServices()->workingDatabase();
+@@ -212,8 +214,8 @@
+     try {
+         config = load_config(moduleHandle); evidence = std::make_unique<Evidence>(config);
+         evidence->checkpoint("before-identity-validation"); validate_identity(config);
+-        require(config.caseName == L"DimensionAdaptMm100Nontrivial", "unsupported N8a case");
+-        const bool passed = probe(config, *evidence);
++        require(config.caseName == L"DimensionAdaptMm100Nontrivial"||config.caseName==L"DimensionAdaptSourceBindingFocused", "unsupported N8a case");
++        const bool passed = config.caseName==L"DimensionAdaptSourceBindingFocused"?rejection_focus(config,*evidence):probe(config, *evidence);
+         require(originalWorking == acdbHostApplicationServices()->workingDatabase() && originalCurrent == acDocManager->curDocument() && originalActive == acDocManager->mdiActiveDocument(), "ambient current/active/working changed");
+         evidence->step("ambientPointers", "passed", "current document, active document and working database preserved; no globals are set");
+         evidence->capability(object({{"dimensionAdapt", quote(std::string("partial"))}, {"glyphComplete", "false"}, {"capabilityUpgradeAllowed", "false"}}));
+
+--- D:/Codex/建筑施工图自动化/立面插件/build/n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f/src/DimensionAdaptGreen.inc
++++ D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/DimensionAdaptGreen.inc
+@@ -184,8 +184,9 @@
+     for(std::size_t i=0;i<path.segments.size();++i){const auto& part=actual.segments[path.segments[i]];require(part.overrideText.empty(),"native_unexpected_dimension_text_override");require(std::abs(part.factor-fixture.unitToMm)<=tolerance,"native_display_factor_unsupported_no_public_root_dimlfac_method");const double expected=std::floor((fixture.stations[i+1]-fixture.stations[i])*fixture.unitToMm+.5)+faultDelta;require(std::abs(formatted_number(part.formatted)-expected)<=tolerance,"native_format_mismatch");}
+ }
+ std::string expect_reject(const std::string& name,const std::string& stage,const std::function<void()>& operation,const std::string& expected) {
+-    try{operation();throw std::runtime_error("fault_was_not_rejected:"+name);}catch(const std::exception& failure){const std::string message=failure.what();require(message.find(expected)!=std::string::npos,"fault failed before intended stage "+name+": "+message);return object({{"name",quote(name)},{"reachedStage",quote(stage)},{"rejected", "true"},{"diagnostic",quote(message)},{"candidateReturned","false"},{"candidateSaved","false"}});}
+-}
++    const auto message=n8a::expected_rejection(name,operation,expected);return object({{"name",quote(name)},{"reachedStage",quote(stage)},{"rejected", "true"},{"diagnostic",quote(message)},{"candidateReturned","false"},{"candidateSaved","false"}});
++}
++std::string formal_source_sha_rejection(const Config& config,Evidence& evidence);
+ AcDbObjectId clone_seed(AcDbDatabase& source,AcDbDatabase& candidate,AcDbObjectId seed,AcDbIdMapping& mapping) {
+     require(&source!=&candidate && &candidate!=acDocManager->curDocument()->database(),"candidate must be independent owned database");AcDbObjectIdArray ids;ids.append(seed);
+     check(source.wblockCloneObjects(ids,acdbSymUtil()->blockModelSpaceId(&candidate),mapping,AcDb::kDrcMangleName),"clone owned seed");AcDbIdPair pair;pair.setKey(seed);require(mapping.compute(pair)&&pair.isCloned()&&!pair.value().isNull()&&pair.value().database()==&candidate,"primary mapping invalid");return pair.value();
+@@ -320,7 +321,7 @@
+     bad=matrix.front();bad.stations[1]=bad.stations.back()+1;faults.push_back(expect_reject("descending_stations","request",[&]{validate_fixture(bad);},"request_duplicate_or_descending_station"));
+     bad=matrix.front();bad.placementSource.clear();faults.push_back(expect_reject("missing_placement","request",[&]{validate_fixture(bad);},"request_missing_placement"));
+     bad=matrix.front();bad.unitSource.clear();faults.push_back(expect_reject("missing_unit_source","request",[&]{validate_fixture(bad);},"request_missing_unit_source"));
+-    faults.push_back(expect_reject("source_sha_mismatch","source_binding",[&]{require(sha256(config.reference)==std::string(64,'0'),"source_sha_mismatch");},"source_sha_mismatch"));
++    faults.push_back(formal_source_sha_rejection(config,evidence));
+     {auto faultScratch=std::make_unique<AcDbDatabase>(false,true);check(faultScratch->readDwgFile(config.reference.c_str(),AcDbDatabase::kForReadAndAllShare,false),"fault scratch read");check(faultScratch->closeInput(true),"fault scratch close");WriteMonitor faultScratchMonitor(*faultScratch);Working scope(faultScratch.get());AcDbObjectId id;check(faultScratch->getAcDbObjectId(id,false,AcDbHandle(L"10837")),"fault seed");const auto actual=observe(id,observations);faults.push_back(expect_reject("wrong_seed_segment_count","native_snapshot_actual_count",[&]{require(actual.segments.size()==3,"seed_actual_segment_count_mismatch");},"seed_actual_segment_count_mismatch"));const auto path=topology(actual,source_direction(actual));auto grips=plain_grips(actual);grips.push_back(path.nodes.front());faults.push_back(expect_reject("ambiguous_node_match","actual_native_grips_then_explicit_duplicate_fault",[&]{n8a::unique_grip(path.nodes.front(),grips);},"node grip is not unique"));AcDbObjectId missing;faults.push_back(expect_reject("absent_seed_handle","native_seed_resolution",[&]{const auto status=faultScratch->getAcDbObjectId(missing,false,AcDbHandle(L"FFFFFFFFFFFF"));require(status==Acad::eOk,"missing_seed_resolution_rejected");},"missing_seed_resolution_rejected"));report_file(config,L"fault-source-scratch.json",object({{"allowedScratchWrites",faultScratchMonitor.json()},{"protectedSourceWasNotObserved","true"}}));}
+     const auto directBinderControls=binder_controls(config,observations,evidence);faults.insert(faults.end(),directBinderControls.begin(),directBinderControls.end());
+     for(const auto& fault:{std::string("measurement"),std::string("format")}){const auto result=run_scene(*reference,matrix.front(),observations,config,evidence,fault);require(result.setupPassed&&!result.supported,"post_adapt_fault_did_not_reach_native_setup");const auto wanted=fault=="measurement"?"native_measurement_mismatch":"native_format_mismatch";require(result.json.find(wanted)!=std::string::npos,"post_adapt_fault_wrong_stage");faults.push_back(result.json);}

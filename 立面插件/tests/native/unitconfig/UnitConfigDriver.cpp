@@ -1,5 +1,6 @@
 #include "AnalysisCommandAbi.h"
-#include "CommandTranscript.h"
+#include "UnitConfigTranscript.h"
+#include "PrintedCommandAcceptance.h"
 #include "ExpectedMembership.h"
 #include "NativeEvidence.h"
 #include "ProductBinding.h"
@@ -163,12 +164,12 @@ struct PrintedCommand {
 PrintedCommand printedCommand(const wchar_t *command,
                               const std::wstring &folder, AcDbDatabase &db) {
   using namespace bce::native;
-  const auto mode = bce::command_test::Transcript::mode();
-  const auto oldPath = bce::command_test::Transcript::pathVar(L"LOGFILEPATH");
+  const auto mode = bce::unitconfig_test::Transcript::mode();
+  const auto oldPath = bce::unitconfig_test::Transcript::pathVar(L"LOGFILEPATH");
   const auto outerGlobals = globals();
-  bce::command_test::Transcript transcript(folder);
+  bce::unitconfig_test::Transcript transcript(folder);
   const auto capturePath =
-      bce::command_test::Transcript::pathVar(L"LOGFILEPATH");
+      bce::unitconfig_test::Transcript::pathVar(L"LOGFILEPATH");
   const auto preGlobals = globals(), preResources = resources(db),
              preNod = nod(db);
   const auto preRoots = roots(db);
@@ -182,24 +183,35 @@ PrintedCommand printedCommand(const wchar_t *command,
       preGlobals == globals() && preResources == resources(db) &&
       preNod == nod(db) && doc == acDocManager->curDocument() &&
       working == acdbHostApplicationServices()->workingDatabase() &&
-      bce::command_test::Transcript::mode() == 1 &&
-      bce::command_test::Transcript::sameFolder(
-          bce::command_test::Transcript::pathVar(L"LOGFILEPATH"), capturePath);
+      bce::unitconfig_test::Transcript::mode() == 1 &&
+      bce::unitconfig_test::Transcript::sameFolder(
+          bce::unitconfig_test::Transcript::pathVar(L"LOGFILEPATH"), capturePath);
   result.text = transcript.stop();
   result.path = transcript.file();
   result.restored =
-      mode == bce::command_test::Transcript::mode() &&
-      bce::command_test::Transcript::sameFolder(
-          bce::command_test::Transcript::pathVar(L"LOGFILEPATH"), oldPath) &&
+      mode == bce::unitconfig_test::Transcript::mode() &&
+      bce::unitconfig_test::Transcript::sameFolder(
+          bce::unitconfig_test::Transcript::pathVar(L"LOGFILEPATH"), oldPath) &&
       outerGlobals == globals();
   return result;
 }
-void recordPrinted(bce::native::Evidence &evidence,
-                   const PrintedCommand &result, const std::string &command) {
+bool recordPrinted(bce::native::Evidence &evidence,
+                   const PrintedCommand &result, const std::string &command,
+                   bool expectedText) {
   using namespace bce::native;
+  const auto boolean = [](bool value) { return value ? "true" : "false"; };
+  const bool accepted = bce::unitconfig_test::acceptPrintedCommand(
+      result.status, RTNORM, result.readOnly, result.restored, expectedText);
   evidence.capability(object({{"ordinaryCommand", quote(command)},
+                              {"status", std::to_string(result.status)},
+                              {"successStatus", std::to_string(RTNORM)},
+                              {"readOnly", boolean(result.readOnly)},
+                              {"restored", boolean(result.restored)},
+                              {"expectedText", boolean(expectedText)},
+                              {"accepted", boolean(accepted)},
                               {"transcript", quote(result.path)},
                               {"SHA256", quote(sha256(result.path))}}));
+  return accepted;
 }
 void foreignCommand() noexcept {}
 
@@ -237,7 +249,7 @@ struct State {
  std::string shape,settings,resourceState,nodState,oldBytes,persistentId,originSource,escapeBytes;
  unsigned configCancelled{};
  std::unique_ptr<ChangeWatch> watch;std::unique_ptr<UndoWatch> undo;
- std::unique_ptr<bce::command_test::Transcript> transcript;
+ std::unique_ptr<bce::unitconfig_test::Transcript> transcript;
  AcDbObjectId marker;
 };
 std::unique_ptr<State> state;
@@ -322,13 +334,28 @@ bool logContainsUnicode(const std::string& bytes, const std::wstring& expected) 
  state->evidence->capability(bce::native::object({{"infoAssertionCodePage",std::to_string(page)},{"strictRoundtrip", "true"}}));
  return wide.find(expected)!=std::wstring::npos;
 }
-void finish(){
- using namespace bce::native;if(terminal){trace("duplicate-finish-ignored");return;}auto& s=*state;trace("finish-begin");s.watch.reset();s.undo.reset();
- closeTranscript();
- if(s.loaded){const bool unloaded=acrxDynamicLinker->unloadModule(s.product.c_str(),true);s.loaded=!unloaded;expect("FourCommandsUnloadOwnedOnly",unloaded&&!acedRegCmds->lookupGlobalCmd(L"BCE_CONFIG")&&!acedRegCmds->lookupGlobalCmd(L"BCE_ANALYZE")&&!acedRegCmds->lookupGlobalCmd(L"BCE_INFO")&&!acedRegCmds->lookupGlobalCmd(L"BCE_ISSUES"),"SDK unload four command callbacks");}
- expect("FrozenSourcesUnchanged",sha256(s.config.scheme)==s.config.schemeSHA256&&sha256(s.config.reference)==s.config.referenceSHA256,"source/reference hash readback; supervisor checks six sources");
- s.evidence->finish(s.config,s.pass?"passed":"failed");
- s.evidence.reset();terminal=true;pendingCommands.clear();trace("finish-report-closed");
+void finish() noexcept {
+ using namespace bce::native;
+ if(!state||terminal){trace("duplicate-finish-ignored");return;}
+ auto& s=*state;terminal=true;trace("finish-begin");s.watch.reset();s.undo.reset();
+ const auto cleanupError=[&](const std::string& message) noexcept {
+  s.pass=false;trace("cleanup-error:"+message);
+  try{if(s.evidence)s.evidence->error("cleanup: "+message);}catch(...){}
+ };
+ try{closeTranscript();}catch(const std::exception& e){cleanupError(e.what());}
+ catch(...){cleanupError("unknown transcript failure");}
+ // The logger destructor attempts its strict restore again; failure is already
+ // recorded above. It must not prevent the report handle from being closed.
+ s.transcript.reset();
+ try{
+  if(s.loaded){const bool unloaded=acrxDynamicLinker->unloadModule(s.product.c_str(),true);s.loaded=!unloaded;
+   expect("FourCommandsUnloadOwnedOnly",unloaded&&!acedRegCmds->lookupGlobalCmd(L"BCE_CONFIG")&&!acedRegCmds->lookupGlobalCmd(L"BCE_ANALYZE")&&!acedRegCmds->lookupGlobalCmd(L"BCE_INFO")&&!acedRegCmds->lookupGlobalCmd(L"BCE_ISSUES"),"SDK unload four command callbacks");}
+ }catch(const std::exception& e){cleanupError(std::string("product unload: ")+e.what());}catch(...){cleanupError("product unload unknown");}
+ try{expect("FrozenSourcesUnchanged",sha256(s.config.scheme)==s.config.schemeSHA256&&sha256(s.config.reference)==s.config.referenceSHA256,"source/reference hash readback; supervisor checks six sources");}
+ catch(const std::exception& e){cleanupError(std::string("source hash: ")+e.what());}catch(...){cleanupError("source hash unknown");}
+ try{if(s.evidence)s.evidence->finish(s.config,s.pass?"passed":"failed");}
+ catch(const std::exception& e){trace(std::string("report-finalization-error:")+e.what());}catch(...){trace("report-finalization-error:unknown");}
+ s.evidence.reset();pendingCommands.clear();trace("finish-report-closed");
 }
 template<class F>void boundary(F f)noexcept{try{f();}catch(const std::exception& e){try{if(state&&!terminal){trace(std::string("boundary-exception:")+e.what());state->pass=false;state->evidence->error(e.what());finish();}}catch(...){}}catch(...){try{if(state&&!terminal){trace("boundary-exception:unknown");state->pass=false;state->evidence->error("unknown unitconfig driver exception");finish();}}catch(...){}}}
 std::string raw(){const auto r=bce::readProjectStoreBytes(db());bce::native::require(r.canCommit(),"read raw archive");return *r.value;}
@@ -413,24 +440,25 @@ void run()noexcept{if(state){trace("BCE_TEST_RUN-duplicate-entry-rejected");retu
   trace("zero-revision-negative-control-complete");
  }
  t.shape=shape(db());t.settings=globals();t.resourceState=resources(db());t.nodState=nod(db());
- t.transcript=std::make_unique<bce::command_test::Transcript>(t.config.output+L"/ordinary-unitconfig-output");
+ t.transcript=std::make_unique<bce::unitconfig_test::Transcript>(t.config.output+L"/ordinary-unitconfig-output");
  analyze();expect("InitialAnalyzeRequiresUnits",report().find("UNIT_REQUIRED")!=std::string::npos,"no config assumption");
- t.watch=std::make_unique<ChangeWatch>(db());t.phase=1;queue(L"BCE_CONFIG\n1\nBCE_I2_STEP\n");
+ t.watch=std::make_unique<ChangeWatch>(db());t.phase=1;queue(L"BCE_CONFIG\n1\nBCE_I2_VERIFY\n");
  });}
+void cloneProjectRecordForTest(AcDbDatabase&,AcDbDatabase&);
 void step()noexcept{trace("BCE_I2_STEP-entry");pendingCommands.clear();if(terminal)return;boundary([]{
  using namespace bce;using namespace bce::native;auto& s=*state;require(acDocManager->curDocument()==s.original,"original current");
  if(s.phase==1){
    const auto a=readProjectStore(db());auto q=query();const bool saved=a.readable()&&a.value->project.config.units.confirmedMmPerInputUnit==std::optional<double>(1)&&!a.value->project.config.unitConfirmationSource.empty();
    expect("OrdinaryConfigPersistsExplicitUnit",saved,"ordinary BCE_CONFIG input 1, G2 archive readback");expect("ConfigInvalidatesAnalysisAndPages",s.copy(&q,nullptr,0)==1,"old read-only report no longer available");expect("OnlyProjectDictionaryWritten",s.watch&&s.watch->onlyStore(),"event whitelist NOD + exact owned dictionary/record; zero global writes");s.watch.reset();expect("All741AndUnsavedChineseResourcesUnchanged",preserved(),"all canonical root/leaf geometry, text, resources and global values");
    if(!saved){finish();return;}
-   closeTranscript();
    s.persistentId=a.value->project.persistentProjectId;s.originSource=a.value->project.config.unitConfirmationSource;s.oldBytes=raw();
-   const auto stale=printedCommand(L"BCE_ISSUES",s.config.output+L"/issues-after-config",db());recordPrinted(*s.evidence,stale,"BCE_ISSUES after CONFIG");expect("ConfigInvalidatesOrdinaryIssuePages",stale.text.find("[1/")==std::string::npos&&stale.text.find("BCE_ANALYZE")!=std::string::npos,"actual output");
-   analyze();const auto body=report();s.evidence->capability(object({{"configuredAnalysis",quote(body)}}));expect("AnalyzeConsumesOnlyExplicitUnit",body.find("UNIT_REQUIRED")==std::string::npos&&body.find("unitMmPerInputUnit\t1\n")!=std::string::npos&&body.find("unitSource\tBCE_CONFIG")!=std::string::npos&&body.find("PLAN_REQUIRED")!=std::string::npos&&body.find("generationAuthorized\tfalse")!=std::string::npos,"unit provenance + missing plan + false authorization");expect("RecognizesFourElevationsTwoSectionsAndChinese",body.find("elevations\t4\n")!=std::string::npos&&body.find("sections\t2\n")!=std::string::npos&&body.find(u8"I2未保存中文内容")!=std::string::npos,"current memory, no save");
    s.undo=std::make_unique<UndoWatch>();recordState("before-first-U",db());s.phase=2;queue(L"_.U\nBCE_I2_STEP\n");return;
  }
- if(s.phase==2){recordState("after-first-U",db());const auto a=readProjectStore(db());expect("OneActualUndoRemovesOnlyNewConfig",s.undo&&s.undo->started==1&&s.undo->ended==1&&s.undo->failed==0&&!a.readable()&&nod(db())==s.nodState&&preserved(),"real U after config; 741 roots and prior Chinese edit retained");s.undo.reset();s.phase=3;queue(L"BCE_CONFIG\n1\nBCE_I2_STEP\n");return;}
- if(s.phase==3){s.oldBytes=raw();s.persistentId=archive().project.persistentProjectId;s.originSource=archive().project.config.unitConfirmationSource;analyze();s.phase=4;queue(L"BCE_CONFIG\n2\nBCE_I2_STEP\n");return;}
+ if(s.phase==2){recordState("after-first-U",db());closeTranscript();const auto a=readProjectStore(db());expect("OneActualUndoRemovesOnlyNewConfig",s.undo&&s.undo->started==1&&s.undo->ended==1&&s.undo->failed==0&&!a.readable()&&nod(db())==s.nodState&&preserved(),"real U after config; 741 roots and prior Chinese edit retained");s.undo.reset();s.phase=3;queue(L"BCE_CONFIG\n1\nBCE_I2_STEP\n");return;}
+ if(s.phase==3){s.oldBytes=raw();s.persistentId=archive().project.persistentProjectId;s.originSource=archive().project.config.unitConfirmationSource;
+   const auto stale=printedCommand(L"BCE_ISSUES",s.config.output+L"/issues-after-config",db());expect("ConfigInvalidatesOrdinaryIssuePages",recordPrinted(*s.evidence,stale,"BCE_ISSUES after CONFIG",stale.text.find("[1/")==std::string::npos&&stale.text.find("BCE_ANALYZE")!=std::string::npos),"actual output");
+   analyze();const auto body=report();s.evidence->capability(object({{"configuredAnalysis",quote(body)}}));expect("AnalyzeConsumesOnlyExplicitUnit",body.find("UNIT_REQUIRED")==std::string::npos&&body.find("unitMmPerInputUnit\t1\n")!=std::string::npos&&body.find("unitSource\tBCE_CONFIG")!=std::string::npos&&body.find("PLAN_REQUIRED")!=std::string::npos&&body.find("generationAuthorized\tfalse")!=std::string::npos,"unit provenance + missing plan + false authorization");expect("RecognizesFourElevationsTwoSectionsAndChinese",body.find("elevations\t4\n")!=std::string::npos&&body.find("sections\t2\n")!=std::string::npos&&body.find(u8"I2未保存中文内容")!=std::string::npos,"current memory, no save");
+s.phase=4;queue(L"BCE_CONFIG\n2\nBCE_I2_VERIFY\n");return;}
  if(s.phase==4){const auto a=archive();auto q=query();expect("UpdatePreservesProjectIdRefreshesConfirmation",a.project.persistentProjectId==s.persistentId&&a.project.config.units.confirmedMmPerInputUnit==std::optional<double>(2)&&a.project.config.unitConfirmationSource!=s.originSource&&s.copy(&q,nullptr,0)==1&&preserved(),"explicit input 2; no geometry authorization");s.undo=std::make_unique<UndoWatch>();recordState("before-update-U",db());s.phase=5;queue(L"_.U\nBCE_I2_STEP\n");return;}
  if(s.phase==5){recordState("after-update-U",db());expect("OneActualUndoRestoresOldUnitBytes",s.undo&&s.undo->started==1&&s.undo->ended==1&&s.undo->failed==0&&raw()==s.oldBytes&&preserved(),"one U restores exact previous archive and prior unsaved edits");s.undo.reset();
    for(double n:{0.0,-1.0}){ChangeWatch w(db());const auto old=raw();analyze();configInput(n);auto q=query();expect("InvalidNumericInputWritesNothing",raw()==old&&w.modified.empty()&&w.headers==0&&s.copy(&q,nullptr,0)==1,"input="+std::to_string(n));}
@@ -450,19 +478,45 @@ void step()noexcept{trace("BCE_I2_STEP-entry");pendingCommands.clear();if(termin
    s.escapeBytes=raw();recordState("before-Esc",db());s.phase=6;queue(L"BCE_CONFIG\n\x03" L"BCE_I2_STEP\n");return;
  }
  if(s.phase==6){recordState("after-Esc",db());expect("EscapeCancelPreservesArchive",raw()==s.oldBytes&&preserved(),"actual queued Esc");rejectFixtures();expect("HistoryTestsPreserveCurrentDrawing",preserved(),"test archive restored; geometry unchanged");
-   recordState("before-clone",db());AcDbDatabase* cloneRaw{};const auto cloneStatus=db().wblock(cloneRaw);require(cloneStatus==Acad::eOk&&cloneRaw,"test-only independent database clone status="+std::to_string(cloneStatus));std::unique_ptr<AcDbDatabase> clone(cloneRaw);recordState("clone-before-save",*clone,static_cast<int>(cloneStatus));const auto path=s.config.output+L"/unit-config-copy.dwg";require(GetFileAttributesW(path.c_str())==INVALID_FILE_ATTRIBUTES,"new test path");require(clone->saveAs(path.c_str())==Acad::eOk,"test-only clone save");clone.reset();AcDbDatabase reopened(false,true);const auto reopenStatus=reopened.readDwgFile(path.c_str(),AcDbDatabase::kForReadAndReadShare,false);require(reopenStatus==Acad::eOk,"independent reopen status="+std::to_string(reopenStatus));reopened.closeInput(true);recordState("reopened-copy",reopened,static_cast<int>(reopenStatus));recordState("current-after-reopen",db());const auto r=readProjectStore(reopened);expect("IndependentReopenKeepsUnitWithoutAuthority",r.readable()&&!r.canCommit()&&!r.value->bound&&r.value->project.persistentProjectId==s.persistentId&&r.value->project.config.units.confirmedMmPerInputUnit==std::optional<double>(1)&&r.value->project.generation.views.empty(),"copy only; current unsaved document never saved/closed/reopened");
+   recordState("before-clone",db());AcDbDatabase* cloneRaw{};const auto cloneStatus=db().wblock(cloneRaw);require(cloneStatus==Acad::eOk&&cloneRaw,"test-only independent database clone status="+std::to_string(cloneStatus));std::unique_ptr<AcDbDatabase> clone(cloneRaw);recordState("clone-before-explicit-project-copy",*clone,static_cast<int>(cloneStatus));cloneProjectRecordForTest(db(),*clone);recordState("clone-before-save",*clone,static_cast<int>(cloneStatus));const auto path=s.config.output+L"/unit-config-copy.dwg";require(GetFileAttributesW(path.c_str())==INVALID_FILE_ATTRIBUTES,"new test path");require(clone->saveAs(path.c_str())==Acad::eOk,"test-only clone save");clone.reset();AcDbDatabase reopened(false,true);const auto reopenStatus=reopened.readDwgFile(path.c_str(),AcDbDatabase::kForReadAndReadShare,false);require(reopenStatus==Acad::eOk,"independent reopen status="+std::to_string(reopenStatus));reopened.closeInput(true);recordState("reopened-copy",reopened,static_cast<int>(reopenStatus));recordState("current-after-reopen",db());const auto r=readProjectStore(reopened);expect("IndependentReopenKeepsUnitWithoutAuthority",r.readable()&&!r.canCommit()&&!r.value->bound&&r.value->project.persistentProjectId==s.persistentId&&r.value->project.config.units.confirmedMmPerInputUnit==std::optional<double>(1)&&r.value->project.generation.views.empty(),"copy only; current unsaved document never saved/closed/reopened");
    analyze();queue(L"BCE_I2_NEW\n");return;
  }
  });}
+void verifyBeforeUndo() noexcept {
+ if(!state || (state->phase!=1 && state->phase!=4)) {
+   boundary([]{bce::native::require(false,"read-only undo verification phase mismatch");});return;
+ }
+ step();
+}
+void cloneProjectRecordForTest(AcDbDatabase& source,AcDbDatabase& target) {
+ using namespace bce;using namespace bce::native;
+ AcDbObjectId sourceDictionary,sourceRecord;
+ {Open<AcDbDictionary> nod(source.namedObjectsDictionaryId());require(nod.p->getAt(projectStoreDictionary,sourceDictionary)==Acad::eOk,"source project dictionary");}
+ {Open<AcDbDictionary> dict(sourceDictionary);require(dict.p->getAt(projectStoreRecord,sourceRecord)==Acad::eOk,"source project record");}
+ AcDbObjectId targetDictionary;
+ {Open<AcDbDictionary> nod(target.namedObjectsDictionaryId(),AcDb::kForWrite);
+  require(!nod.p->has(projectStoreDictionary),"test target project dictionary unexpectedly exists");
+  auto dict=std::make_unique<AcDbDictionary>();require(nod.p->setAt(projectStoreDictionary,dict.get(),targetDictionary)==Acad::eOk,"test target dictionary create");dict.release()->close();}
+ AcDbObjectIdArray ids;ids.append(sourceRecord);AcDbIdMapping mapping;
+ const auto status=source.wblockCloneObjects(ids,targetDictionary,mapping,AcDb::kDrcIgnore);
+ require(status==Acad::eOk,"test project record clone status="+std::to_string(status));
+ AcDbIdPair pair;pair.setKey(sourceRecord);require(mapping.compute(pair)&&pair.isCloned(),"project record mapping");
+ {Open<AcDbDictionary> dict(targetDictionary,AcDb::kForWrite);
+  std::unique_ptr<AcDbDictionaryIterator> it(dict.p->newIterator());std::wstring actualName;
+  for(;!it->done();it->next())if(it->objectId()==pair.value())actualName=it->name();
+  require(!actualName.empty(),"cloned record destination name");
+  if(actualName!=projectStoreRecord)require(dict.p->setName(actualName.c_str(),projectStoreRecord),"rename cloned anonymous record");}
+ require(readProjectStoreBytes(source).value==readProjectStoreBytes(target).value,"test cloned record bytes differ");
+}
 void newDocument()noexcept{boundary([]{using namespace bce::native;auto& s=*state;require(acDocManager->isApplicationContext()&&acDocManager->curDocument()==s.original,"owned application context");std::unique_ptr<AcApDocumentIterator> it(acDocManager->newAcApDocumentIterator());for(;!it->done();it->step()){s.previousDocs.insert(it->document());s.previousDbs.insert(it->document()->database());}require(acDocManager->appContextNewDocument(L"C:/Users/PC/AppData/Local/Autodesk/AutoCAD 2020/R23.1/chs/Template/acadiso.dwt")==Acad::eOk,"new owned project");s.second=acDocManager->curDocument();s.secondDb=s.second->database();require(!s.previousDocs.count(s.second)&&!s.previousDbs.count(s.secondDb),"fresh owned doc/db");auto q=query();expect("ActualSwitchInvalidatesReport",s.copy(&q,nullptr,0)==1,"new current doc");queue(L"BCE_I2_SECOND\n");});}
-void second()noexcept{boundary([]{using namespace bce::native;auto& s=*state;require(acDocManager->curDocument()==s.second&&&db()==s.secondDb,"owned second doc");const auto stale=printedCommand(L"BCE_ISSUES",s.config.output+L"/issues-after-switch",db());recordPrinted(*s.evidence,stale,"BCE_ISSUES after switch");expect("SwitchInvalidatesOrdinaryIssuePages",stale.text.find("[1/")==std::string::npos&&stale.text.find("BCE_ANALYZE")!=std::string::npos,"ordinary output");configInput(1000);const auto a=archive();expect("IndependentProjectGetsOwnIdAndUnit",a.project.persistentProjectId!=s.persistentId&&a.project.config.units.confirmedMmPerInputUnit==std::optional<double>(1000),"second project explicit input 1000");analyze();const auto body=report();expect("SecondAnalysisDoesNotReuseFirstUnit",body.find("unitMmPerInputUnit\t1000\n")!=std::string::npos&&body.find("generationAuthorized\tfalse")!=std::string::npos,"actual second document report");
+void second()noexcept{boundary([]{using namespace bce::native;auto& s=*state;require(acDocManager->curDocument()==s.second&&&db()==s.secondDb,"owned second doc");const auto stale=printedCommand(L"BCE_ISSUES",s.config.output+L"/issues-after-switch",db());expect("SwitchInvalidatesOrdinaryIssuePages",recordPrinted(*s.evidence,stale,"BCE_ISSUES after switch",stale.text.find("[1/")==std::string::npos&&stale.text.find("BCE_ANALYZE")!=std::string::npos),"ordinary output");configInput(1000);const auto a=archive();expect("IndependentProjectGetsOwnIdAndUnit",a.project.persistentProjectId!=s.persistentId&&a.project.config.units.confirmedMmPerInputUnit==std::optional<double>(1000),"second project explicit input 1000");analyze();const auto body=report();expect("SecondAnalysisDoesNotReuseFirstUnit",body.find("unitMmPerInputUnit\t1000\n")!=std::string::npos&&body.find("generationAuthorized\tfalse")!=std::string::npos,"actual second document report");
  if(static_cast<int>(db().insunits())==4)expect("ActualInsunitsConflictIsDiagnosed",body.find("UNIT_CONFLICT")!=std::string::npos&&body.find("unitResolved\tfalse")!=std::string::npos,"actual template INSUNITS 4 vs explicit 1000; global remains unchanged");queue(L"BCE_I2_RETURN\n");});}
 void returnDocument()noexcept{boundary([]{using namespace bce::native;auto& s=*state;require(acDocManager->isApplicationContext()&&acDocManager->curDocument()==s.second&&s.second->database()==s.secondDb,"second owned session context");require(acDocManager->setCurDocument(s.original,AcAp::kNone,true)==Acad::eOk,"return original");require(acDocManager->curDocument()==s.original,"original now current");queue(L"BCE_I2_FINISH\n");});}
-void finalCheck()noexcept{boundary([]{using namespace bce::native;auto& s=*state;recordState("returned-original-before-analyze",db());auto q=query();expect("ReturnInvalidatesReportAndPreservesUnit",s.copy(&q,nullptr,0)==1&&raw()==s.oldBytes&&preserved(),"switch back; no current file save/close");analyze();s.evidence->capability(object({{"returnedAnalysis",quote(report())}}));expect("ReturnAnalysisUsesOriginalUnit",report().find("unitMmPerInputUnit\t1\n")!=std::string::npos,"no cross-document scale cache");const auto infoResult=printedCommand(L"BCE_INFO",s.config.output+L"/info",db());recordPrinted(*s.evidence,infoResult,"BCE_INFO");expect("InfoDisclosesUnitOnlyScope",infoResult.text.find("BCE_CONFIG")!=std::string::npos&&logContainsUnicode(infoResult.text,L"仅配置"),"ordinary info output");require(acrxDynamicLinker->unloadModule(s.product.c_str(),true),"unload before conflict");s.loaded=false;
+void finalCheck()noexcept{boundary([]{using namespace bce::native;auto& s=*state;recordState("returned-original-before-analyze",db());auto q=query();expect("ReturnInvalidatesReportAndPreservesUnit",s.copy(&q,nullptr,0)==1&&raw()==s.oldBytes&&preserved(),"switch back; no current file save/close");analyze();s.evidence->capability(object({{"returnedAnalysis",quote(report())}}));expect("ReturnAnalysisUsesOriginalUnit",report().find("unitMmPerInputUnit\t1\n")!=std::string::npos,"no cross-document scale cache");const auto infoResult=printedCommand(L"BCE_INFO",s.config.output+L"/info",db());expect("InfoDisclosesUnitOnlyScope",recordPrinted(*s.evidence,infoResult,"BCE_INFO",infoResult.text.find("BCE_CONFIG")!=std::string::npos&&logContainsUnicode(infoResult.text,L"仅配置")),"ordinary info output");require(acrxDynamicLinker->unloadModule(s.product.c_str(),true),"unload before conflict");s.loaded=false;
  require(acedRegCmds->addCommand(L"BCE_I2_FOREIGN",L"BCE_CONFIG",L"BCE_CONFIG",ACRX_CMD_MODAL,foreignCommand)==Acad::eOk,"register foreign config");const bool loaded=acrxDynamicLinker->loadModule(s.product.c_str(),false,true);auto* foreign=acedRegCmds->lookupGlobalCmd(L"BCE_CONFIG");expect("ForeignConfigConflictIsPreserved",!loaded&&foreign&&foreign->functionAddr()==foreignCommand&&!acedRegCmds->lookupGlobalCmd(L"BCE_ANALYZE")&&!acedRegCmds->lookupGlobalCmd(L"BCE_INFO")&&!acedRegCmds->lookupGlobalCmd(L"BCE_ISSUES"),"failed product load preserves foreign callback and registers no partial commands");if(loaded){s.loaded=true;require(acrxDynamicLinker->unloadModule(s.product.c_str(),true),"unexpected module unload");s.loaded=false;}require(acedRegCmds->removeCmd(L"BCE_I2_FOREIGN",L"BCE_CONFIG")==Acad::eOk,"remove own foreign fixture");s.loaded=acrxDynamicLinker->loadModule(s.product.c_str(),false,true);expect("ReloadAfterConflictRestoresFourCommands",s.loaded&&commandOwnedBy(L"BCE_CONFIG",GetModuleHandleW(s.product.c_str())),"ordinary SDK reload");finish();});}
 } // namespace
 BOOL APIENTRY DllMain(HMODULE module,DWORD reason,LPVOID){if(reason==DLL_PROCESS_ATTACH){moduleHandle=module;DisableThreadLibraryCalls(module);}return TRUE;}
 extern "C" __declspec(dllexport) AcRx::AppRetCode acrxEntryPoint(AcRx::AppMsgCode message,void* id)noexcept{
- try{if(message==AcRx::kInitAppMsg){acrxDynamicLinker->unlockApplication(id);acrxRegisterAppMDIAware(id);struct Entry{const wchar_t* name;Adesk::Int32 flags;AcRxFunctionPtr callback;};const Entry entries[]={{L"BCE_TEST_RUN",ACRX_CMD_MODAL,run},{L"BCE_I2_STEP",ACRX_CMD_MODAL,step},{L"BCE_I2_NEW",ACRX_CMD_SESSION,newDocument},{L"BCE_I2_SECOND",ACRX_CMD_MODAL,second},{L"BCE_I2_RETURN",ACRX_CMD_SESSION,returnDocument},{L"BCE_I2_FINISH",ACRX_CMD_MODAL,finalCheck}};for(const auto& e:entries)if(acedRegCmds->lookupGlobalCmd(e.name))return AcRx::kRetError;for(const auto& e:entries)if(acedRegCmds->addCommand(L"BCE_I2_CASES",e.name,e.name,e.flags,e.callback)!=Acad::eOk){acedRegCmds->removeGroup(L"BCE_I2_CASES");return AcRx::kRetError;}}
+ try{if(message==AcRx::kInitAppMsg){acrxDynamicLinker->unlockApplication(id);acrxRegisterAppMDIAware(id);struct Entry{const wchar_t* name;Adesk::Int32 flags;AcRxFunctionPtr callback;};const Entry entries[]={{L"BCE_TEST_RUN",ACRX_CMD_MODAL,run},{L"BCE_I2_STEP",ACRX_CMD_MODAL,step},{L"BCE_I2_VERIFY",ACRX_CMD_MODAL | ACRX_CMD_NO_UNDO_MARKER,verifyBeforeUndo},{L"BCE_I2_NEW",ACRX_CMD_SESSION,newDocument},{L"BCE_I2_SECOND",ACRX_CMD_MODAL,second},{L"BCE_I2_RETURN",ACRX_CMD_SESSION,returnDocument},{L"BCE_I2_FINISH",ACRX_CMD_MODAL,finalCheck}};for(const auto& e:entries)if(acedRegCmds->lookupGlobalCmd(e.name))return AcRx::kRetError;for(const auto& e:entries)if(acedRegCmds->addCommand(L"BCE_I2_CASES",e.name,e.name,e.flags,e.callback)!=Acad::eOk){acedRegCmds->removeGroup(L"BCE_I2_CASES");return AcRx::kRetError;}}
  else if(message==AcRx::kUnloadAppMsg){if(state&&state->loaded)return AcRx::kRetError;commandTrace.reset();state.reset();return acedRegCmds->removeGroup(L"BCE_I2_CASES")==Acad::eOk?AcRx::kRetOK:AcRx::kRetError;}return AcRx::kRetOK;}catch(...){return AcRx::kRetError;}
 }

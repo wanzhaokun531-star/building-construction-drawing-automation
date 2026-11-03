@@ -1,0 +1,175 @@
+--- a/tests/native/dimension-adapt/DimensionAdaptDriver.cpp
++++ b/tests/native/dimension-adapt/DimensionAdaptDriver.cpp
+@@ -1,6 +1,7 @@
+ // N8a isolated native probe. RED deliberately leaves the real TCH seed unadapted.
+ #include "NativeEvidence.h"
+ #include "DimensionTopology.h"
++#include "RejectionAcceptance.h"
+ #include <aced.h>
+ #include <adscodes.h>
+ #include <acutmem.h>
+@@ -205,6 +206,7 @@
+         {"sourceLinetypeId", handle(before.linetype)}, {"targetLinetypeId", handle(after.linetype)}, {"linetypeMappingVerified", "true"}});
+ }
+ #include "DimensionAdaptGreen.inc"
++#include "RejectionFocus.inc"
+ void run_case() noexcept {
+     Config config; std::unique_ptr<Evidence> evidence;
+     auto* originalWorking = acdbHostApplicationServices()->workingDatabase();
+@@ -212,8 +214,8 @@
+     try {
+         config = load_config(moduleHandle); evidence = std::make_unique<Evidence>(config);
+         evidence->checkpoint("before-identity-validation"); validate_identity(config);
+-        require(config.caseName == L"DimensionAdaptMm100Nontrivial", "unsupported N8a case");
+-        const bool passed = probe(config, *evidence);
++        require(config.caseName == L"DimensionAdaptMm100Nontrivial"||config.caseName==L"DimensionAdaptSourceBindingFocused", "unsupported N8a case");
++        const bool passed = config.caseName==L"DimensionAdaptSourceBindingFocused"?rejection_focus(config,*evidence):probe(config, *evidence);
+         require(originalWorking == acdbHostApplicationServices()->workingDatabase() && originalCurrent == acDocManager->curDocument() && originalActive == acDocManager->mdiActiveDocument(), "ambient current/active/working changed");
+         evidence->step("ambientPointers", "passed", "current document, active document and working database preserved; no globals are set");
+         evidence->capability(object({{"dimensionAdapt", quote(std::string("partial"))}, {"glyphComplete", "false"}, {"capabilityUpgradeAllowed", "false"}}));
+--- a/tests/native/dimension-adapt/DimensionAdaptGreen.inc
++++ b/tests/native/dimension-adapt/DimensionAdaptGreen.inc
+@@ -184,8 +184,9 @@
+     for(std::size_t i=0;i<path.segments.size();++i){const auto& part=actual.segments[path.segments[i]];require(part.overrideText.empty(),"native_unexpected_dimension_text_override");require(std::abs(part.factor-fixture.unitToMm)<=tolerance,"native_display_factor_unsupported_no_public_root_dimlfac_method");const double expected=std::floor((fixture.stations[i+1]-fixture.stations[i])*fixture.unitToMm+.5)+faultDelta;require(std::abs(formatted_number(part.formatted)-expected)<=tolerance,"native_format_mismatch");}
+ }
+ std::string expect_reject(const std::string& name,const std::string& stage,const std::function<void()>& operation,const std::string& expected) {
+-    try{operation();throw std::runtime_error("fault_was_not_rejected:"+name);}catch(const std::exception& failure){const std::string message=failure.what();require(message.find(expected)!=std::string::npos,"fault failed before intended stage "+name+": "+message);return object({{"name",quote(name)},{"reachedStage",quote(stage)},{"rejected", "true"},{"diagnostic",quote(message)},{"candidateReturned","false"},{"candidateSaved","false"}});}
+-}
++    const auto message=n8a::expected_rejection(name,operation,expected);return object({{"name",quote(name)},{"reachedStage",quote(stage)},{"rejected", "true"},{"diagnostic",quote(message)},{"candidateReturned","false"},{"candidateSaved","false"}});
++}
++std::string formal_source_sha_rejection(const Config& config,Evidence& evidence);
+ AcDbObjectId clone_seed(AcDbDatabase& source,AcDbDatabase& candidate,AcDbObjectId seed,AcDbIdMapping& mapping) {
+     require(&source!=&candidate && &candidate!=acDocManager->curDocument()->database(),"candidate must be independent owned database");AcDbObjectIdArray ids;ids.append(seed);
+     check(source.wblockCloneObjects(ids,acdbSymUtil()->blockModelSpaceId(&candidate),mapping,AcDb::kDrcMangleName),"clone owned seed");AcDbIdPair pair;pair.setKey(seed);require(mapping.compute(pair)&&pair.isCloned()&&!pair.value().isNull()&&pair.value().database()==&candidate,"primary mapping invalid");return pair.value();
+@@ -320,7 +321,7 @@
+     bad=matrix.front();bad.stations[1]=bad.stations.back()+1;faults.push_back(expect_reject("descending_stations","request",[&]{validate_fixture(bad);},"request_duplicate_or_descending_station"));
+     bad=matrix.front();bad.placementSource.clear();faults.push_back(expect_reject("missing_placement","request",[&]{validate_fixture(bad);},"request_missing_placement"));
+     bad=matrix.front();bad.unitSource.clear();faults.push_back(expect_reject("missing_unit_source","request",[&]{validate_fixture(bad);},"request_missing_unit_source"));
+-    faults.push_back(expect_reject("source_sha_mismatch","source_binding",[&]{require(sha256(config.reference)==std::string(64,'0'),"source_sha_mismatch");},"source_sha_mismatch"));
++    faults.push_back(formal_source_sha_rejection(config,evidence));
+     {auto faultScratch=std::make_unique<AcDbDatabase>(false,true);check(faultScratch->readDwgFile(config.reference.c_str(),AcDbDatabase::kForReadAndAllShare,false),"fault scratch read");check(faultScratch->closeInput(true),"fault scratch close");WriteMonitor faultScratchMonitor(*faultScratch);Working scope(faultScratch.get());AcDbObjectId id;check(faultScratch->getAcDbObjectId(id,false,AcDbHandle(L"10837")),"fault seed");const auto actual=observe(id,observations);faults.push_back(expect_reject("wrong_seed_segment_count","native_snapshot_actual_count",[&]{require(actual.segments.size()==3,"seed_actual_segment_count_mismatch");},"seed_actual_segment_count_mismatch"));const auto path=topology(actual,source_direction(actual));auto grips=plain_grips(actual);grips.push_back(path.nodes.front());faults.push_back(expect_reject("ambiguous_node_match","actual_native_grips_then_explicit_duplicate_fault",[&]{n8a::unique_grip(path.nodes.front(),grips);},"node grip is not unique"));AcDbObjectId missing;faults.push_back(expect_reject("absent_seed_handle","native_seed_resolution",[&]{const auto status=faultScratch->getAcDbObjectId(missing,false,AcDbHandle(L"FFFFFFFFFFFF"));require(status==Acad::eOk,"missing_seed_resolution_rejected");},"missing_seed_resolution_rejected"));report_file(config,L"fault-source-scratch.json",object({{"allowedScratchWrites",faultScratchMonitor.json()},{"protectedSourceWasNotObserved","true"}}));}
+     const auto directBinderControls=binder_controls(config,observations,evidence);faults.insert(faults.end(),directBinderControls.begin(),directBinderControls.end());
+     for(const auto& fault:{std::string("measurement"),std::string("format")}){const auto result=run_scene(*reference,matrix.front(),observations,config,evidence,fault);require(result.setupPassed&&!result.supported,"post_adapt_fault_did_not_reach_native_setup");const auto wanted=fault=="measurement"?"native_measurement_mismatch":"native_format_mismatch";require(result.json.find(wanted)!=std::string::npos,"post_adapt_fault_wrong_stage");faults.push_back(result.json);}
+--- /dev/null
++++ b/tests/native/dimension-adapt/RejectionAcceptance.h
+@@ -0,0 +1,18 @@
++#pragma once
++#include <functional>
++#include <stdexcept>
++#include <string>
++
++namespace n8a {
++// Catch only an exception originating in the operation. A normal return is a
++// failed rejection test, even when its name happens to equal the expected text.
++inline std::string expected_rejection(const std::string& name,const std::function<void()>& operation,const std::string& expected) {
++    try { operation(); }
++    catch(const std::exception& failure) {
++        const std::string message=failure.what();
++        if(message.find(expected)==std::string::npos)throw std::runtime_error("fault failed before intended stage "+name+": "+message);
++        return message;
++    }
++    throw std::runtime_error("fault_was_not_rejected:"+name);
++}
++}
+--- /dev/null
++++ b/tests/native/dimension-adapt/RejectionAcceptanceTests.cpp
+@@ -0,0 +1,19 @@
++#include "RejectionAcceptance.h"
++#include <iostream>
++
++void require_test(bool value,const char* message){if(!value)throw std::runtime_error(message);}
++int main(){
++    try {
++        bool normalRejected=false;
++        try {n8a::expected_rejection("source_sha_mismatch",[]{},"source_sha_mismatch");}
++        catch(const std::runtime_error& failure){normalRejected=std::string(failure.what()).find("fault_was_not_rejected:")==0;}
++        require_test(normalRejected,"helper accepted normal return when name equals expected");
++        const auto expected=n8a::expected_rejection("formal_source_control",[]{throw std::runtime_error("reference source SHA mismatch");},"reference source SHA mismatch");
++        require_test(expected=="reference source SHA mismatch","helper must retain the actual operation exception");
++        bool wrongStageRejected=false;
++        try {n8a::expected_rejection("formal_source_control",[]{throw std::runtime_error("module SHA mismatch");},"reference source SHA mismatch");}
++        catch(const std::runtime_error& failure){wrongStageRejected=std::string(failure.what()).find("fault failed before intended stage")==0;}
++        require_test(wrongStageRejected,"helper accepted an exception from the wrong stage");
++        std::cout<<"N8A_REJECTION_ACCEPTANCE_TESTS_PASSED: normal return rejected; expected exception retained; wrong stage rejected\n";return 0;
++    }catch(const std::exception& failure){std::cerr<<"N8A_REJECTION_ACCEPTANCE_TESTS_FAILED: "<<failure.what()<<'\n';return 1;}
++}
+--- /dev/null
++++ b/tests/native/dimension-adapt/RejectionFocus.inc
+@@ -0,0 +1,48 @@
++// N8a fix round 1: real formal source binding and rejection-harness controls.
++// No geometry, resource binding, paper adaptation, or roundtrip work runs here.
++std::string formal_source_sha_rejection(const Config& config,Evidence& evidence) {
++    auto healthy=config;validate_identity(healthy);
++    evidence.step("healthyFormalIdentity","passed","Unchanged NativeEvidence.validate_identity accepted the bound original module/INI/scheme/reference");
++    const auto badPath=config.output+L"\\rejection-focus-bad-reference.dwg";
++    std::size_t copiedBytes{};
++    {
++        File input(CreateFileW(config.reference.c_str(),GENERIC_READ,FILE_SHARE_READ,nullptr,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,nullptr));
++        require(input.valid(),"bad source control copy input open failed");auto output=create_new(badPath);std::vector<char> buffer(65536);
++        for(;;){DWORD read{};require(ReadFile(input.get(),buffer.data(),static_cast<DWORD>(buffer.size()),&read,nullptr)!=FALSE,"bad source control copy read failed");if(!read)break;write_flushed(output.get(),std::string(buffer.data(),read));copiedBytes+=read;}
++        write_flushed(output.get(),"\nN8A_FIX_ROUND1_INTENTIONAL_BAD_SOURCE_SHA\n");
++    }
++    const auto actualBadSHA=sha256(badPath);require(actualBadSHA!=config.referenceSHA256,"bad source control did not change bytes");
++    auto bad=config;bad.reference=badPath;
++    evidence.checkpoint("before-original-formal-validate-identity-with-real-bad-source-copy");
++    const auto rejection=expect_reject("source_sha_mismatch","NativeEvidence.validate_identity.reference_source_SHA",[&]{validate_identity(bad);},"reference source SHA mismatch");
++    require(sha256(config.reference)==config.referenceSHA256&&sha256(config.scheme)==config.schemeSHA256,"original source changed during focused binding test");
++    const auto result=object({{"name",quote(std::string("source_sha_mismatch_formal_entry"))},{"formalFunction",quote(std::string("unchanged bce::native::validate_identity"))},
++        {"healthyIdentityPassed","true"},{"badReferencePath",quote(badPath)},{"badReferenceSHA256",quote(actualBadSHA)},
++        {"copiedOriginalBytes",std::to_string(copiedBytes)},{"alteration",quote(std::string("Appended explicit rejection-control marker to independently created output copy; no CAD open/save"))},
++        {"originalReferencePath",quote(config.reference)},{"originalReferenceSHA256",quote(config.referenceSHA256)},
++        {"actualFormalRejection",rejection},{"rejected","true"},{"candidateReturned","false"},{"candidateSaved","false"}});
++    report_file(config,L"formal-source-sha-rejection.json",result);evidence.step("formalBadSourceSHARejected","passed","Actual bad output copy reached original validate_identity and raised reference source SHA mismatch");return result;
++}
++bool rejection_focus(const Config& config,Evidence& evidence) {
++    auto* working=acdbHostApplicationServices()->workingDatabase();auto* current=acDocManager->curDocument();auto* active=acDocManager->mdiActiveDocument();const auto globalsBefore=ambient_globals();
++    bool normalReturnRejected=false,wrongStageRejected=false;std::string normalDiagnostic,wrongDiagnostic;
++    try {n8a::expected_rejection("source_sha_mismatch",[]{},"source_sha_mismatch");}
++    catch(const std::runtime_error& failure){normalDiagnostic=failure.what();normalReturnRejected=normalDiagnostic=="fault_was_not_rejected:source_sha_mismatch";}
++    require(normalReturnRejected,"focused helper incorrectly accepted normal return with identical name/expected");
++    const auto genuine=n8a::expected_rejection("formal_source_control",[]{throw std::runtime_error("reference source SHA mismatch");},"reference source SHA mismatch");
++    require(genuine=="reference source SHA mismatch","focused helper lost expected operation exception");
++    try {n8a::expected_rejection("formal_source_control",[]{throw std::runtime_error("module SHA mismatch");},"reference source SHA mismatch");}
++    catch(const std::runtime_error& failure){wrongDiagnostic=failure.what();wrongStageRejected=wrongDiagnostic.find("fault failed before intended stage")==0;}
++    require(wrongStageRejected,"focused helper incorrectly accepted wrong-stage exception");
++    evidence.step("rejectionHelperControls","passed","Normal return rejected with name==expected; expected exception accepted; wrong stage rejected");
++    const auto actual=formal_source_sha_rejection(config,evidence);const auto globalsAfter=ambient_globals();
++    const bool pointers=working==acdbHostApplicationServices()->workingDatabase()&&current==acDocManager->curDocument()&&active==acDocManager->mdiActiveDocument();
++    require(pointers&&globalsBefore==globalsAfter,"focused source binding changed ambient context/globals");
++    require(sha256(config.reference)==config.referenceSHA256&&sha256(config.scheme)==config.schemeSHA256,"focused original source hashes changed");
++    report_file(config,L"rejection-focused.json",object({{"contract",quote(std::string("bce.dimension-rejection-focused.v1"))},{"caseName",quote(config.caseName)},{"moduleSHA256",quote(config.moduleSHA256)},
++        {"normalReturnNameEqualsExpectedRejected",truth(normalReturnRejected)},{"normalReturnDiagnostic",quote(normalDiagnostic)},
++        {"genuineExpectedExceptionAccepted","true"},{"wrongStageExceptionRejected",truth(wrongStageRejected)},{"wrongStageDiagnostic",quote(wrongDiagnostic)},
++        {"formalBadSourceControl",actual},{"currentActiveWorkingPreserved",truth(pointers)},{"globalsBefore",globalsBefore},{"globalsAfter",globalsAfter},
++        {"originalSourceSHAsPreserved","true"},{"fullDimensionMatrixRerun","false"},{"old03f2EvidenceRewritten","false"},{"glyphComplete","false"},{"capabilityUpgradeAllowed","false"}}));
++    return true;
++}
+--- a/tools/build_dimension_adapt.ps1
++++ b/tools/build_dimension_adapt.ps1
+@@ -1,14 +1,14 @@
+-param([string]$Label = 'red')
++param([string]$Label = 'red',[string]$CaseName = 'DimensionAdaptMm100Nontrivial')
+ $ErrorActionPreference = 'Stop'
+ $projectRoot = Split-Path $PSScriptRoot -Parent
+ $buildName = 'n8a-' + (Get-Date -Format 'yyyyMMdd-HHmmss-fff') + '-' + ($Label -replace '[^A-Za-z0-9_-]', '_') + '-' + [Guid]::NewGuid().ToString('N').Substring(0,8)
+ $buildRoot = Join-Path (Join-Path $projectRoot 'build') $buildName
+ $sourceRoot = Join-Path $buildRoot 'src'
+ $null = New-Item -ItemType Directory -Path $sourceRoot
+-$receipt = [ordered]@{ contract='bce.dimension-adapt-build.v1'; label=$Label; caseName='DimensionAdaptMm100Nontrivial'; startedUtc=[DateTime]::UtcNow.ToString('o'); compiledSourcesDirectory=$sourceRoot; sourceFiles=[ordered]@{}; inputOrigins=@(); binary=$null; binarySHA256=$null; log=(Join-Path $buildRoot 'build.log'); exitCode=1; nativeExecuted=$false; toolchain='AutoCAD2020 SDK23.1 / v141 14.16.27023 / x64 / C++17' }
++$receipt = [ordered]@{ contract='bce.dimension-adapt-build.v1'; label=$Label; caseName=$CaseName; startedUtc=[DateTime]::UtcNow.ToString('o'); compiledSourcesDirectory=$sourceRoot; sourceFiles=[ordered]@{}; inputOrigins=@(); binary=$null; binarySHA256=$null; log=(Join-Path $buildRoot 'build.log'); exitCode=1; nativeExecuted=$false; toolchain='AutoCAD2020 SDK23.1 / v141 14.16.27023 / x64 / C++17' }
+ $exitResult = 1
+ try {
+-    $inputs = @('tests/native/NativeEvidence.h','tests/native/NativeEvidence.cpp','tests/native/dimension-adapt/DimensionAdaptDriver.cpp','tests/native/dimension-adapt/DimensionAdaptGreen.inc','tests/native/dimension-adapt/DimensionTopology.h','tests/native/dimension-adapt/DimensionTopologyTests.cpp','tests/native/dimension-adapt/ElevationDimensionAdaptCases.vcxproj')
++    $inputs = @('tests/native/NativeEvidence.h','tests/native/NativeEvidence.cpp','tests/native/dimension-adapt/DimensionAdaptDriver.cpp','tests/native/dimension-adapt/DimensionAdaptGreen.inc','tests/native/dimension-adapt/DimensionTopology.h','tests/native/dimension-adapt/DimensionTopologyTests.cpp','tests/native/dimension-adapt/RejectionAcceptance.h','tests/native/dimension-adapt/RejectionAcceptanceTests.cpp','tests/native/dimension-adapt/RejectionFocus.inc','tests/native/dimension-adapt/ElevationDimensionAdaptCases.vcxproj')
+     foreach ($relative in $inputs) {
+         $source = Join-Path $projectRoot $relative
+         $destination = Join-Path $sourceRoot (Split-Path $relative -Leaf)
+@@ -22,7 +22,7 @@
+     $vcvars = 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat'
+     $msbuild = 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe'
+     if (!(Test-Path -LiteralPath $vcvars) -or !(Test-Path -LiteralPath $msbuild)) { throw 'v141 build tools missing' }
+-    $command = '@echo off' + "`r`n" + 'call "' + $vcvars + '" -vcvars_ver=14.16' + "`r`n" + 'if errorlevel 1 exit /b %errorlevel%' + "`r`n" + '"' + $msbuild + '" ElevationDimensionAdaptCases.vcxproj /t:Rebuild /p:Configuration=Release /p:Platform=x64 /p:VCToolsVersion=14.16.27023 /m:1 /nologo /verbosity:normal' + "`r`n" + 'if errorlevel 1 exit /b %errorlevel%' + "`r`n" + 'cl /nologo /std:c++17 /EHsc /MD /W4 /WX /utf-8 DimensionTopologyTests.cpp /Fe"..\out\DimensionTopologyTests.exe"' + "`r`n" + 'if errorlevel 1 exit /b %errorlevel%' + "`r`n" + '"..\out\DimensionTopologyTests.exe"' + "`r`n" + 'exit /b %errorlevel%' + "`r`n"
++    $command = '@echo off' + "`r`n" + 'call "' + $vcvars + '" -vcvars_ver=14.16' + "`r`n" + 'if errorlevel 1 exit /b %errorlevel%' + "`r`n" + '"' + $msbuild + '" ElevationDimensionAdaptCases.vcxproj /t:Rebuild /p:Configuration=Release /p:Platform=x64 /p:VCToolsVersion=14.16.27023 /m:1 /nologo /verbosity:normal' + "`r`n" + 'if errorlevel 1 exit /b %errorlevel%' + "`r`n" + 'cl /nologo /std:c++17 /EHsc /MD /W4 /WX /utf-8 DimensionTopologyTests.cpp /Fe"..\out\DimensionTopologyTests.exe"' + "`r`n" + 'if errorlevel 1 exit /b %errorlevel%' + "`r`n" + '"..\out\DimensionTopologyTests.exe"' + "`r`n" + 'if errorlevel 1 exit /b %errorlevel%' + "`r`n" + 'cl /nologo /std:c++17 /EHsc /MD /W4 /WX /utf-8 RejectionAcceptanceTests.cpp /Fe"..\out\RejectionAcceptanceTests.exe"' + "`r`n" + 'if errorlevel 1 exit /b %errorlevel%' + "`r`n" + '"..\out\RejectionAcceptanceTests.exe"' + "`r`n" + 'exit /b %errorlevel%' + "`r`n"
+     $receipt.commandFile = Join-Path $buildRoot 'build-command.cmd'
+     Set-Content -LiteralPath $receipt.commandFile -Value $command -Encoding ascii
+     $receipt.commandSHA256 = (Get-FileHash -LiteralPath $receipt.commandFile).Hash

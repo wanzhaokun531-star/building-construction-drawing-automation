@@ -1,0 +1,34 @@
+--- previous-red/tests/native/project-facts/ProjectFactsFixture.h
++++ fixture-fix/tests/native/project-facts/ProjectFactsFixture.h
+@@ -30,7 +30,10 @@
+ };
+ inline AcDbObjectId append(AcDbObjectId owner, std::unique_ptr<AcDbEntity> entity) {
+     Open<AcDbBlockTableRecord> space(owner,AcDb::kForWrite); AcDbObjectId id;
+-    ok(space->appendAcDbEntity(id,entity.get()),"fixture append"); entity.release()->close(); return id;
++    const auto detail=std::string("fixture append class=")+native_scene::utf8(entity->isA()->name())+
++        " owner="+native_scene::handle(owner)+" ownerClass="+native_scene::utf8(space->isA()->name());
++    const auto status=space->appendAcDbEntity(id,entity.get());
++    native::require(status==Acad::eOk,detail+" status="+std::to_string(status)); entity.release()->close(); return id;
+ }
+ inline AcDbObjectId layer(AcDbDatabase& db,const wchar_t* name,bool off,bool frozen) {
+     Open<AcDbLayerTable> table(db.layerTableId(),AcDb::kForWrite);
+--- previous-red/tests/native/project-facts/ProjectFactsDriver.cpp
++++ fixture-fix/tests/native/project-facts/ProjectFactsDriver.cpp
+@@ -52,7 +52,7 @@
+             auto frozenLine=std::make_unique<AcDbLine>(AcGePoint3d(1,2,0),AcGePoint3d(3,4,0)); ok(frozenLine->setLayer(frozen),"frozen layer assignment"); const auto frozenId=append(model,std::move(frozenLine));
+             const auto nestedOwner=block(*db); const auto nested=append(nestedOwner,std::make_unique<AcDbLine>(AcGePoint3d(1,2,0),AcGePoint3d(3,4,0)));
+             const auto blockRef=append(model,std::make_unique<AcDbBlockReference>(AcGePoint3d(200,300,0),nestedOwner));
+-            const auto attribute=append(model,std::make_unique<AcDbAttribute>());
++            const auto attribute=append(model,std::make_unique<AcDbAttributeDefinition>(AcGePoint3d(5,6,0),L"exact-class fixture",L"I3B_TAG",L"I3B_PROMPT",db->textstyle()));
+             const auto mtext=append(model,std::make_unique<AcDbMText>());
+             const auto fieldText=append(model,std::make_unique<AcDbText>(AcGePoint3d(0,0,0),L"field",db->textstyle(),2));
+             {
+@@ -117,7 +117,7 @@
+             for(const auto id:{hidden,offId,frozenId}) { const auto* s=find(boundaries,native_scene::handle(id)); expect("EffectiveHidden_"+native_scene::handle(id),s && s->directRoot && !s->effectiveVisible && std::holds_alternative<FactLine>(s->definition),"entity hidden or own layer off/frozen retains typed source but is effectively hidden"); }
+             const auto nh=native_scene::handle(nested); const auto* ns=find(boundaries,nh);
+             expect("NonDirectOwnerLocated",ns && !ns->directRoot && ns->ownerHandle==native_scene::handle(nestedOwner) && ns->exactClass=="AcDbLine" && std::holds_alternative<std::monostate>(ns->definition) && issue(boundaries,"FACT_SOURCE_NON_DIRECT",nh),"actual block-definition member remains non-direct");
+-            for(const auto id:{blockRef,attribute,mtext}) { const auto h=native_scene::handle(id); const auto* s=find(boundaries,h); Open<AcDbEntity> actual(id); expect("UnsupportedExactClass_"+h,s && s->exactClass==native_scene::utf8(actual->isA()->name()) && std::holds_alternative<std::monostate>(s->definition) && issue(boundaries,"FACT_SOURCE_UNSUPPORTED",h),"real exact class retained; Attribute must not pass Text cast"); }
++            for(const auto id:{blockRef,attribute,mtext}) { const auto h=native_scene::handle(id); const auto* s=find(boundaries,h); Open<AcDbEntity> actual(id); expect("UnsupportedExactClass_"+h,s && s->exactClass==native_scene::utf8(actual->isA()->name()) && std::holds_alternative<std::monostate>(s->definition) && issue(boundaries,"FACT_SOURCE_UNSUPPORTED",h),"real exact class retained; AttributeDefinition must not pass Text cast"); }
+             const auto fh=native_scene::handle(fieldText); const auto* fs=find(boundaries,fh); const auto* ft=fs?std::get_if<FactText>(&fs->definition):nullptr;
+             expect("FieldPresencePreserved",ft && ft->hasFields && issue(boundaries,"FACT_SOURCE_FIELD",fh),"public hasFields preserved without evaluation; core remains responsible for unsupported field semantics");
+             expect("ProvenMissingLocated",boundaries.value && boundaries.value->readCompleted && !find(boundaries,erasedHandle) && !find(boundaries,"FFFFFFFFFFFFFFFE") && issue(boundaries,"FACT_SOURCE_MISSING",erasedHandle) && issue(boundaries,"FACT_SOURCE_MISSING","FFFFFFFFFFFFFFFE"),"known erased and unresolved valid handle are proven missing, never substituted");

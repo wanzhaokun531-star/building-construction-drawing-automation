@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "installerSHA256": "E30B8730AA0DFA7B087663ECAC4679D522B1CEF7E2EDE1C228FD8020E002BEBD",
+  "ARXSHA256": "1DD46E3986BF78F85358484206DC32F21FA93E5F1ADC24582FE573F03D47DD43",
+  "payloadFiles": 22,
+  "allPEResourcesMatchPayload": true,
+  "allRuntimeResourcesMatchNativeV170": true,
+  "nativeInstallerTestsPassed": 6,
+  "PEMachine": "x64",
+  "CLR": false,
+  "realAppDataInstalled": false,
+  "GUIAppearanceTested": false
+}

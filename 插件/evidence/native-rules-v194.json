@@ -1,0 +1,60 @@
+{
+  "version": "v194",
+  "steps": [
+    {
+      "serial": "3d6b4e2b328b4fadb823b9a7ae325ea0",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261103-135817\\dispatch_3d6b4e2b328b4fadb823b9a7ae325ea0.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "9c73209865f8431ea64edd162ca7dce5",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261103-135817",
+        "processId": 46100,
+        "desktop": "CodexS1_9c73209865f8431ea64edd162ca7dce5",
+        "inputDesktop": "Default",
+        "serial": "3d6b4e2b328b4fadb823b9a7ae325ea0",
+        "command": "S1OPENPROBECONTROL",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261103-135817",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261103-135817\\control.dwg",
+        "error": null
+      }
+    },
+    {
+      "serial": "8cdae5fdab48460da5aaa298703ea456",
+      "dispatch": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261103-135817\\dispatch_8cdae5fdab48460da5aaa298703ea456.json",
+      "idleState": {
+        "contract": "stage1.quiet-worker-state.v1",
+        "nonce": "9c73209865f8431ea64edd162ca7dce5",
+        "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261103-135817",
+        "processId": 46100,
+        "desktop": "CodexS1_9c73209865f8431ea64edd162ca7dce5",
+        "inputDesktop": "Default",
+        "serial": "8cdae5fdab48460da5aaa298703ea456",
+        "command": "S1PHASE2EXECUTE",
+        "run": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261103-135817",
+        "phase": "idle",
+        "commandStarted": true,
+        "commandEnded": true,
+        "commandFailed": false,
+        "cmdActive": 0,
+        "inputPending": 0,
+        "nativePending": false,
+        "currentDWG": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\stage2-product-20261103-135817\\插件生成施工图_一层_生成记录_46100_670011343\\过程\\join\\control.dwg",
+        "error": null
+      }
+    }
+  ],
+  "error": "AssertionError({'contract': 'bcp.product-result.v1', 'version': '0.1.4', 'completed': False, 'error': 'approved result changed on save/reopen'})",
+  "result": {
+    "contract": "bcp.product-result.v1",
+    "version": "0.1.4",
+    "completed": false,
+    "error": "approved result changed on save/reopen"
+  }
+}

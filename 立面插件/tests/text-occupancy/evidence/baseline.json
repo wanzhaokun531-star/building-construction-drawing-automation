@@ -1,0 +1,422 @@
+[
+  {
+    "path": "src/AnalysisCommandAbi.h",
+    "sha256": "6C36DEF164CF1D0A505F43236B5FB9507D0AD9A5C1A9BB4F728855814CA89197"
+  },
+  {
+    "path": "src/AnalysisCommands.cpp",
+    "sha256": "04A605D5045BA7C384E59E061865DB230F1CA84FADC1DBF880E23037152E28DB"
+  },
+  {
+    "path": "src/AnalysisCommands.h",
+    "sha256": "B60F9EDA3AE4E1C285E859577ADC346AE3FD13F1A6E76021158CE87DA3E7EC94"
+  },
+  {
+    "path": "src/AnalysisReader.cpp",
+    "sha256": "471BD590A70377D69215921AAC839D028A35DB395BF744764868CDA9173148E9"
+  },
+  {
+    "path": "src/AnalysisReader.h",
+    "sha256": "D8AB3EDC592127193154AC440B9B49CF6E00A34E83B43E6BE3F6E61552ADC655"
+  },
+  {
+    "path": "src/AnnotationRules.cpp",
+    "sha256": "90AD0112BC53ACFE30024442E1A802D7D2A76AC6B2D8D99F2B57CA26E28CAF18"
+  },
+  {
+    "path": "src/AnnotationRules.h",
+    "sha256": "45451B524D67A071CD35F5533063CF9B4243369C5BF1075A6113E63BE77AC4BF"
+  },
+  {
+    "path": "src/BuildingElevation2020.vcxproj",
+    "sha256": "A7C441D891F7041151A0C0740F0435CF3C7E24724A7EF578A2D3585CC0EABC47"
+  },
+  {
+    "path": "src/ConfigCommands.cpp",
+    "sha256": "B73E336BBBE8D303591B366437216091D8B5D21B520AB068F986A66FD4A5598D"
+  },
+  {
+    "path": "src/ConfigCommands.h",
+    "sha256": "41AB6AA9A0762032DAF1C85141842151DFA2D03E27FC346402D381DD2C00668C"
+  },
+  {
+    "path": "src/ElevationArx.cpp",
+    "sha256": "BCFF1F37E4559C548DB266815FC54F9CEBAD0694C77927BF02D5A361738BF4AA"
+  },
+  {
+    "path": "src/ElevationModel.cpp",
+    "sha256": "A7ECE83C56489793BBF1982F5EEDB7E1587AF360A91C985FF31BC367EDD29A90"
+  },
+  {
+    "path": "src/ElevationModel.h",
+    "sha256": "094EAB9687EB8A761E012CE5EF1DC09661B37BA3309D360E268B6A8C1C96454B"
+  },
+  {
+    "path": "src/GenerationState.cpp",
+    "sha256": "22C2A864D07E6D498EC8047451333A7943814D8B896EAAC74301BF66218DB2EE"
+  },
+  {
+    "path": "src/GenerationState.h",
+    "sha256": "AA941338FB2A763BBEEAA11A17D0ADD92CD707C9F9832B628C90024C45661AC2"
+  },
+  {
+    "path": "src/InPlaceWriter.cpp",
+    "sha256": "8AAC17871827E3CB6F78160F5A13812517D4A415B72F6FDC0627A6732357F7D4"
+  },
+  {
+    "path": "src/InPlaceWriter.h",
+    "sha256": "CDB6AAD0CFACE5F4BC5154D11A7E2C55329AA30BB5EA594C74F967B480E2C33E"
+  },
+  {
+    "path": "src/Layout.cpp",
+    "sha256": "63254A1238E99A43E9AEE3C11AA175571628AFCF04F29A6B6F9071511005527F"
+  },
+  {
+    "path": "src/Layout.h",
+    "sha256": "9D7457E3ADC56223A945DEE0977E0A94B1D33747FA3901A65936CDDE209BE85F"
+  },
+  {
+    "path": "src/MaterialRules.cpp",
+    "sha256": "08F5B4562EA17387CA3B1973BFA1EE52EE5341E2169F335712A82DF4F8124BA6"
+  },
+  {
+    "path": "src/MaterialRules.h",
+    "sha256": "B7A17F15731879F56F61BC67DEEA3B358EF293C1062F2216157FAF9E9D4E0053"
+  },
+  {
+    "path": "src/NativeMaterials.cpp",
+    "sha256": "771336F29B0152D175B8B17024355C2DC635AF09E616A7E23BA7C81423AAECA8"
+  },
+  {
+    "path": "src/NativeMaterials.h",
+    "sha256": "BBE24E0A2A387585F609B9D4B45A51CC1782AD888912BE314DC9063A03C2F542"
+  },
+  {
+    "path": "src/NativeMaterialTiles.cpp",
+    "sha256": "1E436E9EC208DC3C79D472B3F649000B7106CF55DCB8C99EE6D4B6913A5BB147"
+  },
+  {
+    "path": "src/NativeMaterialTiles.h",
+    "sha256": "9FF1D283306048193B9E08514AAA80DA6CAF3256D4768CA1143D674821A9BAB3"
+  },
+  {
+    "path": "src/PreparedBatch.cpp",
+    "sha256": "BDC6E3E131023F352236F4E1AF67F5379FA55CDA57D0A0D371C0B802E6BE31FD"
+  },
+  {
+    "path": "src/PreparedBatch.h",
+    "sha256": "5FC2F79CF1D81C8BDDC27E2C9DF2B7C8E65EE98C7E5D9E62D67B32D71F2437C9"
+  },
+  {
+    "path": "src/ProjectStore.cpp",
+    "sha256": "C3BCDEFCE74F4946185307C80C8DABB2B3107D7D68BDD6BFF79F2997606B59B1"
+  },
+  {
+    "path": "src/ProjectStore.h",
+    "sha256": "B0123C7CB95A3B9D4C06D8707BA13C56E69E341A01FFEAB599020E4287B4CCD7"
+  },
+  {
+    "path": "src/ProjectStoreCodec.cpp",
+    "sha256": "2C9CB728BF14935122A19D788A38EDA9E2E12E6C21FDD4BF0DE0136ABF985B68"
+  },
+  {
+    "path": "src/ProjectStoreCodec.h",
+    "sha256": "0253AF204E06AEE0D4995ADC96237AD08816D60ADB2A8A26FE182A3238FA757C"
+  },
+  {
+    "path": "src/Recognition.cpp",
+    "sha256": "50ED72F123EA1FF1CBAC85DCC56BD43A1C1C69FE686180DA43AD11C8D38CF63F"
+  },
+  {
+    "path": "src/Recognition.h",
+    "sha256": "994C72FA6DB3BD5670F8FCE3E2B1E98897994168DF3781B1D2F230777413F09A"
+  },
+  {
+    "path": "src/RuleModel.h",
+    "sha256": "38B6FC7AFB44FDC5B8A75B89015A671BABE30083513BFD24D689BBCCD1852C5F"
+  },
+  {
+    "path": "src/SceneReader.cpp",
+    "sha256": "4005AB1E68308623578E519AE997EAE97E87268CAB1C0F155A0418C11D2C5198"
+  },
+  {
+    "path": "src/SceneReader.h",
+    "sha256": "A13F48D79F1BB82895A431F25B18116AEC13D5D6F7F69F6CBD98CC32C55BAC2C"
+  },
+  {
+    "path": "src/UnitConfig.cpp",
+    "sha256": "4413CE7249AAB5F505208AF07157B11C2F9C3FB007C2A0BF5541B8BD81353A47"
+  },
+  {
+    "path": "src/UnitConfig.h",
+    "sha256": "89D05641E90F3BF48EC3A6AD13013FE7843C42FE53BA57EB88451B8903B6EE3F"
+  },
+  {
+    "path": "src/WriteContracts.h",
+    "sha256": "FBF0C47C23C7C7FD33F7050F40403DC2BED9E3B499DB3B91CC629DE33A49CECB"
+  },
+  {
+    "path": "tests/native/text-range/ElevationTextRangeCases.vcxproj",
+    "sha256": "17ADC4E4901C4A5E59459F9B0DF2F43882CD5F4D80E28F270CF1F6842605779D"
+  },
+  {
+    "path": "tests/native/text-range/gate-v4-v3.diff",
+    "sha256": "959556F09E2C0AB4D3A45A576838C0C407C318C99E55E4CD30448D6477B7D1A9"
+  },
+  {
+    "path": "tests/native/text-range/N9a-outcome.json",
+    "sha256": "4D40387B178A902B3BF53CBC59364B3AA7E3235A39F5AB6C5BC1860EAD1556E9"
+  },
+  {
+    "path": "tests/native/text-range/owned-read-v6-v5.diff",
+    "sha256": "3470422FA59DB6DA06A2C18359779C1DF35BF1D9AACC71A695060E657285008D"
+  },
+  {
+    "path": "tests/native/text-range/OwnedTextControlFile.cpp",
+    "sha256": "64EB2527F536B840550488BAD905195F1858C98FB69820FB8F61AB1E5271E9BD"
+  },
+  {
+    "path": "tests/native/text-range/OwnedTextControlFile.h",
+    "sha256": "AFE549CC0482FFBC4B509593836222F24413C96AF60754A196BE3C0CCC2A5086"
+  },
+  {
+    "path": "tests/native/text-range/pending-replay-v5-v3.diff",
+    "sha256": "5542865B996D8C3EF05780A0F59491B077565BD237B66000761DA2ED23C036A4"
+  },
+  {
+    "path": "tests/native/text-range/primitive-contract-v7-v6.diff",
+    "sha256": "7B4A9DA13665E5B331A026C3B8415EAF15562441D12A7C5840CEF4E1FC41F6FF"
+  },
+  {
+    "path": "tests/native/text-range/README.md",
+    "sha256": "372397D77EF3965E2425423808638681F2CA188EFD82CF3F21F955BCDABF7930"
+  },
+  {
+    "path": "tests/native/text-range/TextRangeDriver.cpp",
+    "sha256": "A3185E8B1FBAD59E87D77A0169A9B582C34EC81075E309AE9CAD1B69232AB874"
+  },
+  {
+    "path": "tests/native/text-range/TextRangePlot.inc",
+    "sha256": "36A6CB2CD14ED28F6FA0542FA8FF7F9C9E1BBB47519A58E750C3BE092F9F8907"
+  },
+  {
+    "path": "tests/native/text-range/TextRangeReplayPolicy.h",
+    "sha256": "0B837D9698F3FA4BB180ED9255548C14DC9DD340C9D00B22D17F5985770B14E3"
+  },
+  {
+    "path": "tests/native/text-range/TextRangeReplayPolicyTests.cpp",
+    "sha256": "EE5266300439B15506642C042874F435C2018C696C155319F726942CC58BF2E8"
+  },
+  {
+    "path": "tests/native/text-range/offline-projection-v8/execution.json",
+    "sha256": "84F672A77C53C240CE859D59449C6FA02A94F195E00EE7C6C9D54C9E9793B6E1"
+  },
+  {
+    "path": "tests/native/text-range/offline-projection-v8/receipt.json",
+    "sha256": "15FC2FA85763A7C594375C293D82685879F504BE8E7A16D4284919954876DE9F"
+  },
+  {
+    "path": "tests/native/text-range/offline-projection-v8/v8-v7.diff",
+    "sha256": "DC926CC0BD8D2ED839A3C62617689D295DCE93FF9E99874CE895B7683AB9F9B0"
+  },
+  {
+    "path": "tests/native/text-range/offline-projection-v8/verify_text_range.py",
+    "sha256": "9296A063343919A13C3A954CE855E239C706254A55063AB8B431DF21857B27F3"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/commands.md",
+    "sha256": "E926F20966458C25882AA62BAE0CF8803E7EB8390521730D6AF21CEF75DC70A7"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/evidence-index.json",
+    "sha256": "8C0D77853753A3662F902A2ECE523C921E34F1E25687C85664718AC525D87B02"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/full-task-from-empty.diff",
+    "sha256": "C75CB97EBE73B91794658654C1BFE6A47DC5730FE8C96C989590F76C064E33D4"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/review-context.md",
+    "sha256": "0EECA5D18FFA7C60F7E9D3ACA02C79C53F319085E8562A49946096935B9E9959"
+  },
+  {
+    "path": "tests/native/text-range/sdk-public-contracts/AcGiGeometry__polyline@Adesk__UInt32@AcGePoint3d_@AcGeVector3d_@Adesk__LongPtr@const.html",
+    "sha256": "3844C2AD57FA4A00F57C13173BFF8C0D29D7645A114A1019206F613E1A970F1D"
+  },
+  {
+    "path": "tests/native/text-range/sdk-public-contracts/AcGiGeometry__popModelTransform.html",
+    "sha256": "606963FE110B7A08081E4760ACEF75971F38C74BC822EE89D973C6302686435D"
+  },
+  {
+    "path": "tests/native/text-range/sdk-public-contracts/AcGiGeometry__pushModelTransform@AcGeMatrix3d__.html",
+    "sha256": "324EA106BD558EDE51AB4DD197CB6E218A89BB72708BBF6C94BFAB347752BEBF"
+  },
+  {
+    "path": "tests/native/text-range/sdk-public-contracts/AcGiGeometry__text@AcGePoint3d_@AcGeVector3d_@AcGeVector3d_@ACHAR_@Adesk__Int32@Adesk__Boolean@AcGiTextStyle__@const.html",
+    "sha256": "8BA0382FD9875AF021402234F08BE5D8DC23BB74C4FDFE9C3B67E2CD2EEBAB7F"
+  },
+  {
+    "path": "tests/native/text-range/sdk-public-contracts/AcGiTextStyle__extentsBox@ACHAR__@Adesk__Boolean@int@Adesk__Boolean@AcGePoint2d__@AcGePoint2d__@AcGiWorldDraw__@const.html",
+    "sha256": "7A4A4C43B52F0B39547690A06F9BBD8CCDE2922D4B3F5E373C55FBDB0B70CE98"
+  },
+  {
+    "path": "tests/native/text-range/sdk-public-contracts/AcGiTextStyle__isBackward.html",
+    "sha256": "ADDDCE1D0667A3429BA9224890DEF21F0842DCD9EE97EE9530403AF6BA7E2BF0"
+  },
+  {
+    "path": "tests/native/text-range/sdk-public-contracts/AcGiTextStyle__setBackward@Adesk__Boolean.html",
+    "sha256": "5B50438026006D6FA7CFE1FFF69DEA737EC6EE722FA630A7B70A25B5C90FB6DA"
+  },
+  {
+    "path": "tests/native/text-range/sdk-public-contracts/GUID-08C2378E-7F25-4DF9-8960-1B38A3035783.htm",
+    "sha256": "524EAEDA122DCE822577E5E413F351DEE4120F89B08F4F027B73DCEAC2D2971F"
+  },
+  {
+    "path": "tests/native/text-range/sdk-public-contracts/source.json",
+    "sha256": "4310F836A96EFC90FED0491FD85223CBA7C5E7A399D55B5E57BB612C48E16D17"
+  },
+  {
+    "path": "tests/native/text-range/sdk-public-contracts/text-extents-source.json",
+    "sha256": "B983C844C748F884B551B29EC9551FEF5BC37A9675CA1AA48A9823F0B6664AAB"
+  },
+  {
+    "path": "tests/native/text-range/v6-polyline-return-evidence/actual.json",
+    "sha256": "668D7AB2D34A5F0D4DDD23CD39DF649DF1D2487E88804EDC026C9E8F12F0845C"
+  },
+  {
+    "path": "tests/native/text-range/v6-polyline-return-evidence/projection-144.png",
+    "sha256": "6919CABAE11B3671D16726B38F3EE57C7D09B97675B181D95B17F8F9A430C62E"
+  },
+  {
+    "path": "tests/native/text-range/v6-polyline-return-evidence/projection-first-line-crop.png",
+    "sha256": "6131AC5E1244A41B6DDF3A0D9F3C12E6FC2B74543CD82BD9EB3EF4B7A91A95C5"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/native-v7-source/build_text_range.ps1",
+    "sha256": "F18AA17CD0F478B5A95FC6BF4E8480A756EAFEC87A27B03815D6EA801C25D312"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/native-v7-source/capture_text_range_case.py",
+    "sha256": "5B4995BCAB9272D0F7807CFFF58735C03A63ABA171F763EA89E10F0B0DF49606"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/native-v7-source/ElevationTextRangeCases.vcxproj",
+    "sha256": "17ADC4E4901C4A5E59459F9B0DF2F43882CD5F4D80E28F270CF1F6842605779D"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/native-v7-source/NativeEvidence.cpp",
+    "sha256": "1B3CA34A61CC2C2DB2C42A7FDFD01C029DE7BE82EAE6CE96D9DE1C3B363A8FE2"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/native-v7-source/NativeEvidence.h",
+    "sha256": "C6B083EE0346AA7CDB51090274CCCADCB2C6DE0AA92A196AD846E11C41C9EBB6"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/native-v7-source/OwnedTextControlFile.cpp",
+    "sha256": "64EB2527F536B840550488BAD905195F1858C98FB69820FB8F61AB1E5271E9BD"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/native-v7-source/OwnedTextControlFile.h",
+    "sha256": "AFE549CC0482FFBC4B509593836222F24413C96AF60754A196BE3C0CCC2A5086"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/native-v7-source/README.md",
+    "sha256": "372397D77EF3965E2425423808638681F2CA188EFD82CF3F21F955BCDABF7930"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/native-v7-source/TextRangeDriver.cpp",
+    "sha256": "A3185E8B1FBAD59E87D77A0169A9B582C34EC81075E309AE9CAD1B69232AB874"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/native-v7-source/TextRangePlot.inc",
+    "sha256": "36A6CB2CD14ED28F6FA0542FA8FF7F9C9E1BBB47519A58E750C3BE092F9F8907"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/native-v7-source/TextRangeReplayPolicy.h",
+    "sha256": "0B837D9698F3FA4BB180ED9255548C14DC9DD340C9D00B22D17F5985770B14E3"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/native-v7-source/TextRangeReplayPolicyTests.cpp",
+    "sha256": "EE5266300439B15506642C042874F435C2018C696C155319F726942CC58BF2E8"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/native-v7-source/verify_text_range.py",
+    "sha256": "E71CCC9A0FC88F09CFBF08953C0921192A4AC6A17B8D2B4CB264486BD0026E1D"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/offline-v8-source/verify_text_range.py",
+    "sha256": "9296A063343919A13C3A954CE855E239C706254A55063AB8B431DF21857B27F3"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/receipts/native-v7.json",
+    "sha256": "1D2DB75D4A8C70D151EDA20397936722161ACADF8299DD6BE56FE7FD74E3B31C"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/receipts/offline-execution.json",
+    "sha256": "84F672A77C53C240CE859D59449C6FA02A94F195E00EE7C6C9D54C9E9793B6E1"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/receipts/offline-v8.json",
+    "sha256": "15FC2FA85763A7C594375C293D82685879F504BE8E7A16D4284919954876DE9F"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/final-source/tools/build_text_range.ps1",
+    "sha256": "F18AA17CD0F478B5A95FC6BF4E8480A756EAFEC87A27B03815D6EA801C25D312"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/final-source/tools/capture_text_range_case.py",
+    "sha256": "5B4995BCAB9272D0F7807CFFF58735C03A63ABA171F763EA89E10F0B0DF49606"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/final-source/tools/verify_text_range.py",
+    "sha256": "9296A063343919A13C3A954CE855E239C706254A55063AB8B431DF21857B27F3"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/final-source/执行/N9a-受控文字范围验证报告.md",
+    "sha256": "1363BC1D4065E7A46F4C61736D8750FE6B2BBD8C885CB22A2F3EEB3A20C7B29E"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/final-source/tests/native/text-range/ElevationTextRangeCases.vcxproj",
+    "sha256": "17ADC4E4901C4A5E59459F9B0DF2F43882CD5F4D80E28F270CF1F6842605779D"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/final-source/tests/native/text-range/OwnedTextControlFile.cpp",
+    "sha256": "64EB2527F536B840550488BAD905195F1858C98FB69820FB8F61AB1E5271E9BD"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/final-source/tests/native/text-range/OwnedTextControlFile.h",
+    "sha256": "AFE549CC0482FFBC4B509593836222F24413C96AF60754A196BE3C0CCC2A5086"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/final-source/tests/native/text-range/README.md",
+    "sha256": "372397D77EF3965E2425423808638681F2CA188EFD82CF3F21F955BCDABF7930"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/final-source/tests/native/text-range/TextRangeDriver.cpp",
+    "sha256": "A3185E8B1FBAD59E87D77A0169A9B582C34EC81075E309AE9CAD1B69232AB874"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/final-source/tests/native/text-range/TextRangePlot.inc",
+    "sha256": "36A6CB2CD14ED28F6FA0542FA8FF7F9C9E1BBB47519A58E750C3BE092F9F8907"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/final-source/tests/native/text-range/TextRangeReplayPolicy.h",
+    "sha256": "0B837D9698F3FA4BB180ED9255548C14DC9DD340C9D00B22D17F5985770B14E3"
+  },
+  {
+    "path": "tests/native/text-range/review-fulltask-v7-v8-20261103/final-source/tests/native/text-range/TextRangeReplayPolicyTests.cpp",
+    "sha256": "EE5266300439B15506642C042874F435C2018C696C155319F726942CC58BF2E8"
+  },
+  {
+    "path": "tools/verify_text_range.py",
+    "sha256": "9296A063343919A13C3A954CE855E239C706254A55063AB8B431DF21857B27F3"
+  },
+  {
+    "path": "执行/N9a-受控文字范围验证报告.md",
+    "sha256": "1363BC1D4065E7A46F4C61736D8750FE6B2BBD8C885CB22A2F3EEB3A20C7B29E"
+  },
+  {
+    "path": "执行进度.md",
+    "sha256": "1FC0CC94F1BBE92DE0F14A0C863F391E7C4861A0E578CB427FC98E7010FF8B51"
+  }
+]

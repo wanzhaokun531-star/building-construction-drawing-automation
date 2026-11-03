@@ -1,0 +1,35 @@
+--- v6/TextRangeDriver.cpp
++++ v7/TextRangeDriver.cpp
+@@ -123,7 +123,7 @@
+             require(wd&&wd->context()&&wd->context()->database()==s.target,"real context database mismatch");require(++s.callbacks<=2000,"callback budget");
+             wd->subEntityTraits().setColor(7);wd->subEntityTraits().setLineWeight(AcDb::kLnWt000);
+             auto& g=wd->geometry();
+-            if(s.active<0){for(const auto& c:calibration){AcGePoint3d line[]{c-AcGeVector3d(1,0,0),c+AcGeVector3d(1,0,0)};require(g.polyline(2,line),"calibration polyline failed");}return Adesk::kTrue;}
++            if(s.active<0){for(const auto& c:calibration){AcGePoint3d line[]{c-AcGeVector3d(1,0,0),c+AcGeVector3d(1,0,0)};const auto raw=g.polyline(2,line);traceGate(s,"gi.polyline.return",{{"center",pt(c)},{"rawReturn",raw?"true":"false"},{"falseMeansStored","true"}});require(!raw,"calibration polyline terminated");}return Adesk::kTrue;}
+             const auto& c=controls.at(static_cast<std::size_t>(s.active));
+             AcGiTextStyle style(s.font.c_str(),s.bigfont.c_str(),7,0.75,c.oblique,c.tracking,c.backward,false,false,false,false);
+             const auto beforeFont=ws(style.fileName()),beforeBig=ws(style.bigFontFileName());
+@@ -135,11 +135,12 @@
+             require(_wcsicmp(style.fileName(),s.font.c_str())==0&&_wcsicmp(style.bigFontFileName(),s.bigfont.c_str())==0,"controlled font changed after load");
+             require(sha256(s.font)==s.fontSHA&&sha256(s.bigfont)==s.bigfontSHA,"font bytes changed");
+             AcGeMatrix3d outer,inner;int pushed{};
+-            struct Pop{AcGiGeometry& g;int& count;~Pop(){while(count>0){g.popModelTransform();--count;}}} pop{g,pushed};
++            struct Pop{AcGiGeometry& g;int& count;Session& s;~Pop(){while(count>0){const auto raw=g.popModelTransform();traceGate(s,"gi.popModelTransform.return",{{"rawReturn",raw?"true":"false"},{"trueMeansSuccess","true"}});if(!raw&&s.error.empty())s.error="popModelTransform failed";--count;}}} pop{g,pushed,s};
+             if(c.nested){
+                 outer.setCoordSystem({32,25,0},{1.4,0.3,0},{0.2,0.8,0},{0,0,1});
+                 inner.setCoordSystem({4,3,0},{0.8,0.25,0},{-0.15,1.1,0},{0,0,1});
+-                require(g.pushModelTransform(outer),"push outer failed");++pushed;require(g.pushModelTransform(inner),"push inner failed");++pushed;
++                const auto outerRaw=g.pushModelTransform(outer);traceGate(s,"gi.pushModelTransform.return",{{"level",q("outer")},{"rawReturn",outerRaw?"true":"false"},{"trueMeansSuccess","true"}});require(outerRaw,"push outer failed");++pushed;
++                const auto innerRaw=g.pushModelTransform(inner);traceGate(s,"gi.pushModelTransform.return",{{"level",q("inner")},{"rawReturn",innerRaw?"true":"false"},{"trueMeansSuccess","true"}});require(innerRaw,"push inner failed");++pushed;
+             }
+             AcGeMatrix3d net;g.getModelToWorldTransform(net);
+             const AcGeVector3d normal=AcGeVector3d::kZAxis,direction(std::cos(c.angle),std::sin(c.angle),0),y=normal.crossProduct(direction);
+@@ -163,7 +164,7 @@
+                 {"stringRangeComputed","true"},{"renderContainmentVerified","false"},{"glyphComplete","false"},{"capabilityUpgradeAllowed","false"}};
+             const auto observed=object(f);if(s.observed.empty())s.observed=observed;else require(s.observed==observed,"same plot callback changed text/range/context");
+             s.callbackRecords.push_back(object({{"id",q(c.id)},{"contextAddress",std::to_string(reinterpret_cast<std::uintptr_t>(wd->context()))},{"regenType",std::to_string(wd->regenType())},{"modelToWorld",mat(net)},{"contextDatabaseMatchesTarget","true"},{"loadStyleRecBits",std::to_string(flags)}}));
+-            require(g.text(c.position,normal,direction,c.text,count,true,style),"native text request failed");return Adesk::kTrue;
++            const auto raw=g.text(c.position,normal,direction,c.text,count,true,style);traceGate(s,"gi.text.return",{{"id",q(c.id)},{"rawReturn",raw?"true":"false"},{"falseMeansStored","true"}});require(!raw,"native text request terminated");return Adesk::kTrue;
+         }catch(const std::exception& e){s.error=e.what();return Adesk::kTrue;}catch(...){s.error="draw callback unknown exception";return Adesk::kTrue;}
+     }
+ private:Session& s;

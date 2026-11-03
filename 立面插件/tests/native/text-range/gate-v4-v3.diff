@@ -1,0 +1,94 @@
+--- v3/TextRangeDriver.cpp
++++ v4/TextRangeDriver.cpp
+@@ -60,6 +60,8 @@
+     explicit Gate(Session& v):s(v){}
+     void commandWillStart(AcEdCommand*,AcEdCommandEventArgs*)override;
+     void commandEnded(AcEdCommand*,AcEdCommandEventArgs*)override;
++    void documentBecameCurrent(AcApDocument*)override;
++    void documentToBeDestroyed(AcApDocument*)override;
+     Session& s;
+ };
+ struct Session{
+@@ -69,6 +71,7 @@
+     std::string error,targetSHA,readySHA;std::wstring font,bigfont;std::string fontSHA,bigfontSHA;
+     int active{-1};std::vector<std::string> samples,pages,callbackRecords;std::string observed;
+     unsigned callbacks{};
++    File gateLog;unsigned gateSequence{},idleCalls{};std::string lastIdleSnapshot;bool prepareDocDestroyed{};
+     std::wstring controlPath()const{return config.session+L"\\text-range-native-job\\control.dwg";}
+     bool ownsCurrent()const{
+         auto* d=acDocManager->curDocument();if(!d||d!=acDocManager->mdiActiveDocument()||d==prepareDoc)return false;
+@@ -79,13 +82,29 @@
+     ~Session(){detach();}
+ };
+ std::unique_ptr<Session> session;
+-void Gate::commandWillStart(AcEdCommand* c,AcEdCommandEventArgs*){if(c&&c->globalName()&&_wcsicmp(c->globalName(),L"S1OPENPROBECONTROL")==0)s.openStarted=true;}
+-void Gate::commandEnded(AcEdCommand* c,AcEdCommandEventArgs* a){if(c&&c->globalName()&&_wcsicmp(c->globalName(),L"S1OPENPROBECONTROL")==0)s.openEnded=s.openStarted&&a&&a->status()==kCmdStatusNone;}
++std::string address(const void* p){return std::to_string(reinterpret_cast<std::uintptr_t>(p));}
++std::string gateSnapshot(Session& s){
++    auto* current=acDocManager->curDocument();auto* active=acDocManager->mdiActiveDocument();auto* working=acdbHostApplicationServices()->workingDatabase();
++    const ACHAR* name{};const auto status=current&&current->database()?current->database()->getFilename(name):Acad::eNoDatabase;
++    return object({{"openStarted",s.openStarted?"true":"false"},{"openEnded",s.openEnded?"true":"false"},{"queued",s.queued?"true":"false"},{"capturing",s.capturing?"true":"false"},
++        {"prepareDoc",address(s.prepareDoc)},{"prepareDocDestroyed",s.prepareDocDestroyed?"true":"false"},{"currentDoc",address(current)},{"activeDoc",address(active)},
++        {"ambientDatabase",address(s.ambient)},{"currentDatabase",address(current?current->database():nullptr)},{"workingDatabase",address(working)},
++        {"filenameStatus",std::to_string(status)},{"currentPath",quote(ws(name))},{"expectedPath",quote(s.controlPath())},{"pathMatches",name&&_wcsicmp(name,s.controlPath().c_str())==0?"true":"false"},
++        {"ownsCurrent",s.ownsCurrent()?"true":"false"},{"quiescent",current&&current->isQuiescent()?"true":"false"},{"inputPending",current?std::to_string(acDocManager->inputPending(current)):"null"}});
++}
++void traceGate(Session& s,const char* event,Fields fields={})noexcept{try{
++    require(s.gateLog.valid()&&++s.gateSequence<=10000,"gate log unavailable/budget");fields.push_back({"event",q(event)});fields.push_back({"sequence",std::to_string(s.gateSequence)});fields.push_back({"pid",std::to_string(GetCurrentProcessId())});fields.push_back({"nonce",quote(s.config.nonce)});fields.push_back({"state",gateSnapshot(s)});write_flushed(s.gateLog.get(),object(fields)+"\n");
++}catch(...){s.error="gate trace failed";}}
++void Gate::commandWillStart(AcEdCommand* c,AcEdCommandEventArgs* a){if(c&&c->globalName()&&_wcsicmp(c->globalName(),L"S1OPENPROBECONTROL")==0)s.openStarted=true;traceGate(s,"commandWillStart",{{"globalName",quote(ws(c?c->globalName():nullptr))},{"groupName",quote(ws(a?a->groupName():nullptr))},{"status",a?std::to_string(a->status()):"null"}});}
++void Gate::commandEnded(AcEdCommand* c,AcEdCommandEventArgs* a){if(c&&c->globalName()&&_wcsicmp(c->globalName(),L"S1OPENPROBECONTROL")==0)s.openEnded=s.openStarted&&a&&a->status()==kCmdStatusNone;traceGate(s,"commandEnded",{{"globalName",quote(ws(c?c->globalName():nullptr))},{"groupName",quote(ws(a?a->groupName():nullptr))},{"status",a?std::to_string(a->status()):"null"}});}
++void Gate::documentBecameCurrent(AcApDocument* d){traceGate(s,"documentBecameCurrent",{{"eventDocument",address(d)},{"eventPath",quote(ws(d?d->fileName():nullptr))}});}
++void Gate::documentToBeDestroyed(AcApDocument* d){if(d==s.prepareDoc)s.prepareDocDestroyed=true;traceGate(s,"documentToBeDestroyed",{{"eventDocument",address(d)},{"eventPath",quote(ws(d?d->fileName():nullptr))},{"isPrepareDoc",d==s.prepareDoc?"true":"false"}});}
+ void onIdle(){
+-    if(!session)return;auto& s=*session;if(s.queued||s.capturing||!s.openEnded||!s.ownsCurrent())return;
++    if(!session)return;auto& s=*session;++s.idleCalls;try{const auto state=gateSnapshot(s);if(state!=s.lastIdleSnapshot){s.lastIdleSnapshot=state;traceGate(s,"idle.state",{{"idleCall",std::to_string(s.idleCalls)}});}}catch(...){s.error="idle diagnostic failed";}
++    if(s.queued||s.capturing||!s.openEnded||!s.ownsCurrent())return;
+     auto* d=acDocManager->curDocument();if(!d->isQuiescent()||acDocManager->inputPending(d)!=0)return;
+-    s.queued=true;const auto status=acDocManager->sendStringToExecute(d,L"BCE_TEXT_RANGE_CAPTURE\n",false,false,false);
+-    if(status!=Acad::eOk){s.error="idle capture queue failed";try{s.evidence->error(s.error);s.evidence->finish(s.config,"failed");}catch(...){}}
++    s.queued=true;traceGate(s,"idle.queue.before");const auto status=acDocManager->sendStringToExecute(d,L"BCE_TEXT_RANGE_CAPTURE\n",false,false,false);traceGate(s,"idle.queue.after",{{"status",std::to_string(status)}});
++    if(status!=Acad::eOk){s.error="idle capture queue failed";try{s.evidence->error(s.error);s.evidence->finish(s.config,"failed");s.evidence.reset();s.finished=true;}catch(...){}}
+ }
+ std::wstring findFont(AcDbDatabase* db,const wchar_t* name){AcString path;ok(acdbHostApplicationServices()->findFile(path,name,db,AcDbHostApplicationServices::kFontFile),"resolve controlled font");std::wstring p=path.kACharPtr();require(p.size()>3&&p[1]==L':'&&GetFileAttributesW(p.c_str())!=INVALID_FILE_ATTRIBUTES,"font must be existing absolute file");return p;}
+ 
+@@ -155,6 +174,7 @@
+ 
+ void capture()noexcept{
+     if(!session)return;auto& s=*session;
++    traceGate(s,"capture.enter");
+     try{
+         require(!s.capturing&&!s.finished&&s.queued&&s.openEnded&&s.ownsCurrent(),"capture gate/phase invalid");
+         validate_identity(s.config);require(sha256(s.config.output+L"\\prepare-ready.json")==s.readySHA&&sha256(s.controlPath())==s.targetSHA,"prepared control changed before capture");
+@@ -182,25 +202,26 @@
+             {"glyphComplete","false"},{"capabilityUpgradeAllowed","false"},{"renderContainmentVerified","false"},{"status",q("native-output-awaiting-offline-ink-comparison")}}));
+         s.evidence->step("controlledNativePlot","passed","5 text-only native PDF pages and independent 5-line projection page; owned control modified in memory only");
+         s.evidence->capability(object({{"stringRangeComputed","true"},{"renderContainmentVerified","false"},{"glyphComplete","false"},{"capabilityUpgradeAllowed","false"}}));
+-        s.evidence->finish(s.config,"partial");s.finished=true;s.capturing=false;s.detach();
+-    }catch(const std::exception& e){s.capturing=false;s.finished=true;s.detach();try{s.evidence->error(e.what());s.evidence->finish(s.config,"failed");}catch(...){}}
+-    catch(...){s.capturing=false;s.finished=true;s.detach();try{s.evidence->error("capture unknown exception");s.evidence->finish(s.config,"failed");}catch(...){}}
++        s.evidence->finish(s.config,"partial");s.evidence.reset();s.finished=true;s.capturing=false;traceGate(s,"capture.complete");s.detach();
++    }catch(const std::exception& e){s.capturing=false;s.finished=true;traceGate(s,"capture.failed",{{"error",q(e.what())}});s.detach();try{if(s.evidence){s.evidence->error(e.what());s.evidence->finish(s.config,"failed");s.evidence.reset();}}catch(...){}}
++    catch(...){s.capturing=false;s.finished=true;traceGate(s,"capture.failedUnknown");s.detach();try{if(s.evidence){s.evidence->error("capture unknown exception");s.evidence->finish(s.config,"failed");s.evidence.reset();}}catch(...){}}
+ }
+ void prepare()noexcept{
+     try{
+         require(!session,"already prepared");session=std::make_unique<Session>();auto& s=*session;s.config=load_config(moduleHandle);s.evidence=std::make_unique<Evidence>(s.config);validate_identity(s.config);
+         require(s.config.caseName==L"ControlledTextRange","unsupported N9a case");s.prepareDoc=acDocManager->curDocument();s.ambient=acdbHostApplicationServices()->workingDatabase();require(s.prepareDoc&&s.prepareDoc==acDocManager->mdiActiveDocument()&&s.prepareDoc->database()==s.ambient,"prepare ambient mismatch");
++        s.gateLog=File(CreateFileW((s.config.output+L"\\text-range-gate.jsonl").c_str(),GENERIC_WRITE,FILE_SHARE_READ,nullptr,CREATE_NEW,FILE_ATTRIBUTE_NORMAL|FILE_FLAG_WRITE_THROUGH,nullptr));require(s.gateLog.valid(),"create shared-read gate log");traceGate(s,"prepare.ambient");
+         const auto target=s.config.output+L"\\text-range-target.dwg";
+         {AcDbDatabase db(true,true);AcDbViewportTable* vt{};ok(db.getViewportTable(vt,AcDb::kForRead),"viewport table");std::unique_ptr<AcDbViewportTable,Close> table(vt);AcDbObjectId id;ok(vt->getAt(L"*Active",id),"active viewport id");auto view=opened<AcDbViewportTableRecord>(id,AcDb::kForWrite);view->setViewDirection(AcGeVector3d::kZAxis);view->setTarget(AcGePoint3d::kOrigin);view->setViewTwist(0);view->setCenterPoint({75,50});view->setHeight(100);view->setWidth(150);view->setPerspectiveEnabled(false);view.reset();table.reset();require(GetFileAttributesW(target.c_str())==INVALID_FILE_ATTRIBUTES,"target already exists");ok(db.saveAs(target.c_str()),"save new owned empty target");}
+         s.targetSHA=sha256(target);s.gate=std::make_unique<Gate>(s);acDocManager->addReactor(s.gate.get());s.docAttached=true;acedRegCmds->addReactor(s.gate.get());s.commandAttached=true;require(acedRegisterOnIdleWinMsg(onIdle),"idle registration failed");s.idleAttached=true;
+         saveNew(s.config.output+L"\\prepare-ready.json",object({{"contract",q("bce.text-range-prepare.v1")},{"nonce",quote(s.config.nonce)},{"pid",std::to_string(GetCurrentProcessId())},{"targetPath",quote(target)},{"targetSHA256",q(s.targetSHA.c_str())},{"modelRootCount","0"},{"sourceSHA",object({{"scheme",q(s.config.schemeSHA256.c_str())},{"reference",q(s.config.referenceSHA256.c_str())}})}}));
+         s.readySHA=sha256(s.config.output+L"\\prepare-ready.json");s.evidence->step("prepare","passed","new owned empty top-view target; awaiting independent controller open");s.evidence->finish(s.config,"prepared");
+-    }catch(const std::exception& e){if(session){session->detach();try{if(session->evidence){session->evidence->error(e.what());session->evidence->finish(session->config,"failed");}}catch(...){}}}catch(...){}
++    }catch(const std::exception& e){if(session){session->detach();try{if(session->evidence){session->evidence->error(e.what());session->evidence->finish(session->config,"failed");session->evidence.reset();}}catch(...){}}}catch(...){}
+ }
+ }
+ BOOL APIENTRY DllMain(HMODULE h,DWORD reason,LPVOID){if(reason==DLL_PROCESS_ATTACH){moduleHandle=h;DisableThreadLibraryCalls(h);}return TRUE;}
+ extern "C" __declspec(dllexport) AcRx::AppRetCode acrxEntryPoint(AcRx::AppMsgCode message,void* id){try{
+     if(message==AcRx::kInitAppMsg){acrxDynamicLinker->unlockApplication(id);acrxRegisterAppMDIAware(id);ok(acedRegCmds->addCommand(L"BCE_TEXT_RANGE",L"BCE_TEST_RUN",L"BCE_TEST_RUN",ACRX_CMD_MODAL,prepare),"register prepare");ok(acedRegCmds->addCommand(L"BCE_TEXT_RANGE",L"BCE_TEXT_RANGE_CAPTURE",L"BCE_TEXT_RANGE_CAPTURE",ACRX_CMD_MODAL,capture),"register capture");}
+-    if(message==AcRx::kUnloadAppMsg){if((session&&session->capturing)||!removeRule())return AcRx::kRetError;session.reset();ok(acedRegCmds->removeGroup(L"BCE_TEXT_RANGE"),"remove commands");}
++    if(message==AcRx::kUnloadAppMsg){if((session&&session->capturing)||!removeRule())return AcRx::kRetError;if(session&&session->evidence){session->evidence->error("unload before capture completion");session->evidence->finish(session->config,"failed");session->evidence.reset();traceGate(*session,"unload.incomplete");}session.reset();ok(acedRegCmds->removeGroup(L"BCE_TEXT_RANGE"),"remove commands");}
+     return AcRx::kRetOK;
+ }catch(...){return AcRx::kRetError;}}

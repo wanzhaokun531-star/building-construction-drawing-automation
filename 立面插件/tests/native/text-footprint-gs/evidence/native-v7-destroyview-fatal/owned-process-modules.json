@@ -1,0 +1,2846 @@
+{
+  "contract": "owned-process-module-readonly.v1",
+  "recorded": "2026-11-03T11:00:23.2887405+08:00",
+  "nonce": "44227fc6c4f64da9b4014000b7b3a8a7",
+  "pid": 25168,
+  "creationFileTime": "134381483124050078",
+  "desktop": "CodexS1_44227fc6c4f64da9b4014000b7b3a8a7",
+  "attemptCount": 1,
+  "error": null,
+  "modules": [
+    {
+      "moduleName": "acad.exe",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acad.exe",
+      "baseAddress": 140697000214528,
+      "baseAddressHex": "0x7FF692B80000",
+      "moduleMemorySize": 5873664,
+      "endAddressExclusive": 140697006088192
+    },
+    {
+      "moduleName": "ntdll.dll",
+      "path": "C:\\windows\\SYSTEM32\\ntdll.dll",
+      "baseAddress": 140711105593344,
+      "baseAddressHex": "0x7FF9DB770000",
+      "moduleMemorySize": 2064384,
+      "endAddressExclusive": 140711107657728
+    },
+    {
+      "moduleName": "KERNEL32.DLL",
+      "path": "C:\\windows\\System32\\KERNEL32.DLL",
+      "baseAddress": 140711103168512,
+      "baseAddressHex": "0x7FF9DB520000",
+      "moduleMemorySize": 794624,
+      "endAddressExclusive": 140711103963136
+    },
+    {
+      "moduleName": "KERNELBASE.dll",
+      "path": "C:\\windows\\System32\\KERNELBASE.dll",
+      "baseAddress": 140711068106752,
+      "baseAddressHex": "0x7FF9D93B0000",
+      "moduleMemorySize": 3141632,
+      "endAddressExclusive": 140711071248384
+    },
+    {
+      "moduleName": "apphelp.dll",
+      "path": "C:\\windows\\SYSTEM32\\apphelp.dll",
+      "baseAddress": 140711015022592,
+      "baseAddressHex": "0x7FF9D6110000",
+      "moduleMemorySize": 606208,
+      "endAddressExclusive": 140711015628800
+    },
+    {
+      "moduleName": "IMM32.dll",
+      "path": "C:\\windows\\System32\\IMM32.dll",
+      "baseAddress": 140711074725888,
+      "baseAddressHex": "0x7FF9D9A00000",
+      "moduleMemorySize": 192512,
+      "endAddressExclusive": 140711074918400
+    },
+    {
+      "moduleName": "USER32.dll",
+      "path": "C:\\windows\\System32\\USER32.dll",
+      "baseAddress": 140711091634176,
+      "baseAddressHex": "0x7FF9DAA20000",
+      "moduleMemorySize": 1691648,
+      "endAddressExclusive": 140711093325824
+    },
+    {
+      "moduleName": "gdiplus.dll",
+      "path": "C:\\windows\\WinSxS\\amd64_microsoft.windows.gdiplus_6595b64144ccf1df_1.1.19041.5369_none_91a453e0cc8824e6\\gdiplus.dll",
+      "baseAddress": 140710562824192,
+      "baseAddressHex": "0x7FF9BB1D0000",
+      "moduleMemorySize": 1736704,
+      "endAddressExclusive": 140710564560896
+    },
+    {
+      "moduleName": "win32u.dll",
+      "path": "C:\\windows\\System32\\win32u.dll",
+      "baseAddress": 140711071907840,
+      "baseAddressHex": "0x7FF9D9750000",
+      "moduleMemorySize": 139264,
+      "endAddressExclusive": 140711072047104
+    },
+    {
+      "moduleName": "msvcrt.dll",
+      "path": "C:\\windows\\System32\\msvcrt.dll",
+      "baseAddress": 140711104479232,
+      "baseAddressHex": "0x7FF9DB660000",
+      "moduleMemorySize": 647168,
+      "endAddressExclusive": 140711105126400
+    },
+    {
+      "moduleName": "GDI32.dll",
+      "path": "C:\\windows\\System32\\GDI32.dll",
+      "baseAddress": 140711105134592,
+      "baseAddressHex": "0x7FF9DB700000",
+      "moduleMemorySize": 176128,
+      "endAddressExclusive": 140711105310720
+    },
+    {
+      "moduleName": "MSIMG32.dll",
+      "path": "C:\\windows\\SYSTEM32\\MSIMG32.dll",
+      "baseAddress": 140710564724736,
+      "baseAddressHex": "0x7FF9BB3A0000",
+      "moduleMemorySize": 28672,
+      "endAddressExclusive": 140710564753408
+    },
+    {
+      "moduleName": "gdi32full.dll",
+      "path": "C:\\windows\\System32\\gdi32full.dll",
+      "baseAddress": 140711064502272,
+      "baseAddressHex": "0x7FF9D9040000",
+      "moduleMemorySize": 1142784,
+      "endAddressExclusive": 140711065645056
+    },
+    {
+      "moduleName": "combase.dll",
+      "path": "C:\\windows\\System32\\combase.dll",
+      "baseAddress": 140711099629568,
+      "baseAddressHex": "0x7FF9DB1C0000",
+      "moduleMemorySize": 3493888,
+      "endAddressExclusive": 140711103123456
+    },
+    {
+      "moduleName": "ucrtbase.dll",
+      "path": "C:\\windows\\System32\\ucrtbase.dll",
+      "baseAddress": 140711063453696,
+      "baseAddressHex": "0x7FF9D8F40000",
+      "moduleMemorySize": 1048576,
+      "endAddressExclusive": 140711064502272
+    },
+    {
+      "moduleName": "msvcp_win.dll",
+      "path": "C:\\windows\\System32\\msvcp_win.dll",
+      "baseAddress": 140711071252480,
+      "baseAddressHex": "0x7FF9D96B0000",
+      "moduleMemorySize": 643072,
+      "endAddressExclusive": 140711071895552
+    },
+    {
+      "moduleName": "ac1st23.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ac1st23.dll",
+      "baseAddress": 140710440337408,
+      "baseAddressHex": "0x7FF9B3D00000",
+      "moduleMemorySize": 450560,
+      "endAddressExclusive": 140710440787968
+    },
+    {
+      "moduleName": "AcGe23.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcGe23.dll",
+      "baseAddress": 140709235326976,
+      "baseAddressHex": "0x7FF96BFD0000",
+      "moduleMemorySize": 1576960,
+      "endAddressExclusive": 140709236903936
+    },
+    {
+      "moduleName": "RPCRT4.dll",
+      "path": "C:\\windows\\System32\\RPCRT4.dll",
+      "baseAddress": 140711096877056,
+      "baseAddressHex": "0x7FF9DAF20000",
+      "moduleMemorySize": 1191936,
+      "endAddressExclusive": 140711098068992
+    },
+    {
+      "moduleName": "WINTRUST.dll",
+      "path": "C:\\windows\\System32\\WINTRUST.dll",
+      "baseAddress": 140711067648000,
+      "baseAddressHex": "0x7FF9D9340000",
+      "moduleMemorySize": 430080,
+      "endAddressExclusive": 140711068078080
+    },
+    {
+      "moduleName": "acdb23.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acdb23.dll",
+      "baseAddress": 140707761160192,
+      "baseAddressHex": "0x7FF9141F0000",
+      "moduleMemorySize": 22282240,
+      "endAddressExclusive": 140707783442432
+    },
+    {
+      "moduleName": "COMDLG32.dll",
+      "path": "C:\\windows\\System32\\COMDLG32.dll",
+      "baseAddress": 140711093338112,
+      "baseAddressHex": "0x7FF9DABC0000",
+      "moduleMemorySize": 892928,
+      "endAddressExclusive": 140711094231040
+    },
+    {
+      "moduleName": "ole32.dll",
+      "path": "C:\\windows\\System32\\ole32.dll",
+      "baseAddress": 140711094910976,
+      "baseAddressHex": "0x7FF9DAD40000",
+      "moduleMemorySize": 1224704,
+      "endAddressExclusive": 140711096135680
+    },
+    {
+      "moduleName": "shcore.dll",
+      "path": "C:\\windows\\System32\\shcore.dll",
+      "baseAddress": 140711076495360,
+      "baseAddressHex": "0x7FF9D9BB0000",
+      "moduleMemorySize": 708608,
+      "endAddressExclusive": 140711077203968
+    },
+    {
+      "moduleName": "OLEAUT32.dll",
+      "path": "C:\\windows\\System32\\OLEAUT32.dll",
+      "baseAddress": 140711073873920,
+      "baseAddressHex": "0x7FF9D9930000",
+      "moduleMemorySize": 839680,
+      "endAddressExclusive": 140711074713600
+    },
+    {
+      "moduleName": "SHLWAPI.dll",
+      "path": "C:\\windows\\System32\\SHLWAPI.dll",
+      "baseAddress": 140711090126848,
+      "baseAddressHex": "0x7FF9DA8B0000",
+      "moduleMemorySize": 348160,
+      "endAddressExclusive": 140711090475008
+    },
+    {
+      "moduleName": "ADVAPI32.dll",
+      "path": "C:\\windows\\System32\\ADVAPI32.dll",
+      "baseAddress": 140711098843136,
+      "baseAddressHex": "0x7FF9DB100000",
+      "moduleMemorySize": 724992,
+      "endAddressExclusive": 140711099568128
+    },
+    {
+      "moduleName": "sechost.dll",
+      "path": "C:\\windows\\System32\\sechost.dll",
+      "baseAddress": 140711090978816,
+      "baseAddressHex": "0x7FF9DA980000",
+      "moduleMemorySize": 651264,
+      "endAddressExclusive": 140711091630080
+    },
+    {
+      "moduleName": "SHELL32.dll",
+      "path": "C:\\windows\\System32\\SHELL32.dll",
+      "baseAddress": 140711082328064,
+      "baseAddressHex": "0x7FF9DA140000",
+      "moduleMemorySize": 7790592,
+      "endAddressExclusive": 140711090118656
+    },
+    {
+      "moduleName": "bcrypt.dll",
+      "path": "C:\\windows\\System32\\bcrypt.dll",
+      "baseAddress": 140711067123712,
+      "baseAddressHex": "0x7FF9D92C0000",
+      "moduleMemorySize": 159744,
+      "endAddressExclusive": 140711067283456
+    },
+    {
+      "moduleName": "CRYPT32.dll",
+      "path": "C:\\windows\\System32\\CRYPT32.dll",
+      "baseAddress": 140711065681920,
+      "baseAddressHex": "0x7FF9D9160000",
+      "moduleMemorySize": 1425408,
+      "endAddressExclusive": 140711067107328
+    },
+    {
+      "moduleName": "acui23.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acui23.dll",
+      "baseAddress": 140709514313728,
+      "baseAddressHex": "0x7FF97C9E0000",
+      "moduleMemorySize": 331776,
+      "endAddressExclusive": 140709514645504
+    },
+    {
+      "moduleName": "adui23.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\adui23.dll",
+      "baseAddress": 140709233819648,
+      "baseAddressHex": "0x7FF96BE60000",
+      "moduleMemorySize": 1482752,
+      "endAddressExclusive": 140709235302400
+    },
+    {
+      "moduleName": "anav.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\anav.dll",
+      "baseAddress": 140709233229824,
+      "baseAddressHex": "0x7FF96BDD0000",
+      "moduleMemorySize": 557056,
+      "endAddressExclusive": 140709233786880
+    },
+    {
+      "moduleName": "dswhip.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\dswhip.dll",
+      "baseAddress": 140707829121024,
+      "baseAddressHex": "0x7FF9182C0000",
+      "moduleMemorySize": 1490944,
+      "endAddressExclusive": 140707830611968
+    },
+    {
+      "moduleName": "heidi15.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\heidi15.dll",
+      "baseAddress": 140707785277440,
+      "baseAddressHex": "0x7FF9158F0000",
+      "moduleMemorySize": 1470464,
+      "endAddressExclusive": 140707786747904
+    },
+    {
+      "moduleName": "UserData.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\UserData.dll",
+      "baseAddress": 140710966460416,
+      "baseAddressHex": "0x7FF9D32C0000",
+      "moduleMemorySize": 114688,
+      "endAddressExclusive": 140710966575104
+    },
+    {
+      "moduleName": "acbol.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acbol.dll",
+      "baseAddress": 140709232508928,
+      "baseAddressHex": "0x7FF96BD20000",
+      "moduleMemorySize": 720896,
+      "endAddressExclusive": 140709233229824
+    },
+    {
+      "moduleName": "MPR.dll",
+      "path": "C:\\windows\\SYSTEM32\\MPR.dll",
+      "baseAddress": 140710546571264,
+      "baseAddressHex": "0x7FF9BA250000",
+      "moduleMemorySize": 118784,
+      "endAddressExclusive": 140710546690048
+    },
+    {
+      "moduleName": "adhostableui.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\adhostableui.dll",
+      "baseAddress": 140710596902912,
+      "baseAddressHex": "0x7FF9BD250000",
+      "moduleMemorySize": 73728,
+      "endAddressExclusive": 140710596976640
+    },
+    {
+      "moduleName": "WTSAPI32.dll",
+      "path": "C:\\windows\\SYSTEM32\\WTSAPI32.dll",
+      "baseAddress": 140710979371008,
+      "baseAddressHex": "0x7FF9D3F10000",
+      "moduleMemorySize": 81920,
+      "endAddressExclusive": 140710979452928
+    },
+    {
+      "moduleName": "AcPal.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcPal.dll",
+      "baseAddress": 140707758931968,
+      "baseAddressHex": "0x7FF913FD0000",
+      "moduleMemorySize": 2195456,
+      "endAddressExclusive": 140707761127424
+    },
+    {
+      "moduleName": "AcUt.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcUt.dll",
+      "baseAddress": 140710440206336,
+      "baseAddressHex": "0x7FF9B3CE0000",
+      "moduleMemorySize": 110592,
+      "endAddressExclusive": 140710440316928
+    },
+    {
+      "moduleName": "ADCtrls.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ADCtrls.dll",
+      "baseAddress": 140709482659840,
+      "baseAddressHex": "0x7FF97ABB0000",
+      "moduleMemorySize": 159744,
+      "endAddressExclusive": 140709482819584
+    },
+    {
+      "moduleName": "UIAutomationCore.DLL",
+      "path": "C:\\windows\\SYSTEM32\\UIAutomationCore.DLL",
+      "baseAddress": 140710349176832,
+      "baseAddressHex": "0x7FF9AE610000",
+      "moduleMemorySize": 3100672,
+      "endAddressExclusive": 140710352277504
+    },
+    {
+      "moduleName": "accore.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\accore.dll",
+      "baseAddress": 140707744448512,
+      "baseAddressHex": "0x7FF913200000",
+      "moduleMemorySize": 14430208,
+      "endAddressExclusive": 140707758878720
+    },
+    {
+      "moduleName": "MSVCP140.dll",
+      "path": "C:\\windows\\SYSTEM32\\MSVCP140.dll",
+      "baseAddress": 140710366674944,
+      "baseAddressHex": "0x7FF9AF6C0000",
+      "moduleMemorySize": 577536,
+      "endAddressExclusive": 140710367252480
+    },
+    {
+      "moduleName": "mfc140u.dll",
+      "path": "C:\\windows\\SYSTEM32\\mfc140u.dll",
+      "baseAddress": 140710370017280,
+      "baseAddressHex": "0x7FF9AF9F0000",
+      "moduleMemorySize": 5681152,
+      "endAddressExclusive": 140710375698432
+    },
+    {
+      "moduleName": "AcDs.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcDs.dll",
+      "baseAddress": 140707895246848,
+      "baseAddressHex": "0x7FF91C1D0000",
+      "moduleMemorySize": 348160,
+      "endAddressExclusive": 140707895595008
+    },
+    {
+      "moduleName": "VCOMP140.DLL",
+      "path": "C:\\windows\\SYSTEM32\\VCOMP140.DLL",
+      "baseAddress": 140709232312320,
+      "baseAddressHex": "0x7FF96BCF0000",
+      "moduleMemorySize": 196608,
+      "endAddressExclusive": 140709232508928
+    },
+    {
+      "moduleName": "mscoree.dll",
+      "path": "C:\\windows\\SYSTEM32\\mscoree.dll",
+      "baseAddress": 140709901434880,
+      "baseAddressHex": "0x7FF993B10000",
+      "moduleMemorySize": 413696,
+      "endAddressExclusive": 140709901848576
+    },
+    {
+      "moduleName": "VCRUNTIME140.dll",
+      "path": "C:\\windows\\SYSTEM32\\VCRUNTIME140.dll",
+      "baseAddress": 140710375718912,
+      "baseAddressHex": "0x7FF9AFF60000",
+      "moduleMemorySize": 122880,
+      "endAddressExclusive": 140710375841792
+    },
+    {
+      "moduleName": "COMCTL32.dll",
+      "path": "C:\\windows\\WinSxS\\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.4355_none_60b8b9eb71f62e16\\COMCTL32.dll",
+      "baseAddress": 140710560071680,
+      "baseAddressHex": "0x7FF9BAF30000",
+      "moduleMemorySize": 2727936,
+      "endAddressExclusive": 140710562799616
+    },
+    {
+      "moduleName": "oledlg.dll",
+      "path": "C:\\windows\\SYSTEM32\\oledlg.dll",
+      "baseAddress": 140710590087168,
+      "baseAddressHex": "0x7FF9BCBD0000",
+      "moduleMemorySize": 229376,
+      "endAddressExclusive": 140710590316544
+    },
+    {
+      "moduleName": "CRYPTUI.dll",
+      "path": "C:\\windows\\SYSTEM32\\CRYPTUI.dll",
+      "baseAddress": 140709496619008,
+      "baseAddressHex": "0x7FF97B900000",
+      "moduleMemorySize": 331776,
+      "endAddressExclusive": 140709496950784
+    },
+    {
+      "moduleName": "VERSION.dll",
+      "path": "C:\\windows\\SYSTEM32\\VERSION.dll",
+      "baseAddress": 140711058866176,
+      "baseAddressHex": "0x7FF9D8AE0000",
+      "moduleMemorySize": 40960,
+      "endAddressExclusive": 140711058907136
+    },
+    {
+      "moduleName": "UxTheme.dll",
+      "path": "C:\\windows\\SYSTEM32\\UxTheme.dll",
+      "baseAddress": 140711020789760,
+      "baseAddressHex": "0x7FF9D6690000",
+      "moduleMemorySize": 647168,
+      "endAddressExclusive": 140711021436928
+    },
+    {
+      "moduleName": "USP10.dll",
+      "path": "C:\\windows\\SYSTEM32\\USP10.dll",
+      "baseAddress": 140710982516736,
+      "baseAddressHex": "0x7FF9D4210000",
+      "moduleMemorySize": 102400,
+      "endAddressExclusive": 140710982619136
+    },
+    {
+      "moduleName": "PROPSYS.dll",
+      "path": "C:\\windows\\SYSTEM32\\PROPSYS.dll",
+      "baseAddress": 140710969933824,
+      "baseAddressHex": "0x7FF9D3610000",
+      "moduleMemorySize": 1007616,
+      "endAddressExclusive": 140710970941440
+    },
+    {
+      "moduleName": "Secur32.dll",
+      "path": "C:\\windows\\SYSTEM32\\Secur32.dll",
+      "baseAddress": 140710601883648,
+      "baseAddressHex": "0x7FF9BD710000",
+      "moduleMemorySize": 49152,
+      "endAddressExclusive": 140710601932800
+    },
+    {
+      "moduleName": "VCRUNTIME140_1.dll",
+      "path": "C:\\windows\\SYSTEM32\\VCRUNTIME140_1.dll",
+      "baseAddress": 140710369951744,
+      "baseAddressHex": "0x7FF9AF9E0000",
+      "moduleMemorySize": 49152,
+      "endAddressExclusive": 140710370000896
+    },
+    {
+      "moduleName": "WINSPOOL.DRV",
+      "path": "C:\\windows\\SYSTEM32\\WINSPOOL.DRV",
+      "baseAddress": 140710559350784,
+      "baseAddressHex": "0x7FF9BAE80000",
+      "moduleMemorySize": 671744,
+      "endAddressExclusive": 140710560022528
+    },
+    {
+      "moduleName": "acismobj23.dbx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acismobj23.dbx",
+      "baseAddress": 140707784818688,
+      "baseAddressHex": "0x7FF915880000",
+      "moduleMemorySize": 405504,
+      "endAddressExclusive": 140707785224192
+    },
+    {
+      "moduleName": "AdIntImgServices.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AdIntImgServices.dll",
+      "baseAddress": 140707828858880,
+      "baseAddressHex": "0x7FF918280000",
+      "moduleMemorySize": 208896,
+      "endAddressExclusive": 140707829067776
+    },
+    {
+      "moduleName": "AdImaging.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AdImaging.dll",
+      "baseAddress": 140707737370624,
+      "baseAddressHex": "0x7FF912B40000",
+      "moduleMemorySize": 7053312,
+      "endAddressExclusive": 140707744423936
+    },
+    {
+      "moduleName": "SSPICLI.DLL",
+      "path": "C:\\windows\\SYSTEM32\\SSPICLI.DLL",
+      "baseAddress": 140711060963328,
+      "baseAddressHex": "0x7FF9D8CE0000",
+      "moduleMemorySize": 204800,
+      "endAddressExclusive": 140711061168128
+    },
+    {
+      "moduleName": "tbb.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\tbb.dll",
+      "baseAddress": 140707827744768,
+      "baseAddressHex": "0x7FF918170000",
+      "moduleMemorySize": 278528,
+      "endAddressExclusive": 140707828023296
+    },
+    {
+      "moduleName": "MSASN1.dll",
+      "path": "C:\\windows\\SYSTEM32\\MSASN1.dll",
+      "baseAddress": 140711056900096,
+      "baseAddressHex": "0x7FF9D8900000",
+      "moduleMemorySize": 73728,
+      "endAddressExclusive": 140711056973824
+    },
+    {
+      "moduleName": "CRYPTBASE.DLL",
+      "path": "C:\\windows\\SYSTEM32\\CRYPTBASE.DLL",
+      "baseAddress": 140711054540800,
+      "baseAddressHex": "0x7FF9D86C0000",
+      "moduleMemorySize": 49152,
+      "endAddressExclusive": 140711054589952
+    },
+    {
+      "moduleName": "bcryptPrimitives.dll",
+      "path": "C:\\windows\\System32\\bcryptPrimitives.dll",
+      "baseAddress": 140711062863872,
+      "baseAddressHex": "0x7FF9D8EB0000",
+      "moduleMemorySize": 532480,
+      "endAddressExclusive": 140711063396352
+    },
+    {
+      "moduleName": "mscoreei.dll",
+      "path": "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\mscoreei.dll",
+      "baseAddress": 140709288345600,
+      "baseAddressHex": "0x7FF96F260000",
+      "moduleMemorySize": 692224,
+      "endAddressExclusive": 140709289037824
+    },
+    {
+      "moduleName": "kernel.appcore.dll",
+      "path": "C:\\windows\\SYSTEM32\\kernel.appcore.dll",
+      "baseAddress": 140711026622464,
+      "baseAddressHex": "0x7FF9D6C20000",
+      "moduleMemorySize": 73728,
+      "endAddressExclusive": 140711026696192
+    },
+    {
+      "moduleName": "acadres.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\zh-CN\\acadres.dll",
+      "baseAddress": 1879741366272,
+      "baseAddressHex": "0x1B5A9510000",
+      "moduleMemorySize": 2576384,
+      "endAddressExclusive": 1879743942656
+    },
+    {
+      "moduleName": "AcBrandRes.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcBrandRes.dll",
+      "baseAddress": 1879758274560,
+      "baseAddressHex": "0x1B5AA530000",
+      "moduleMemorySize": 2748416,
+      "endAddressExclusive": 1879761022976
+    },
+    {
+      "moduleName": "MSCTF.dll",
+      "path": "C:\\windows\\System32\\MSCTF.dll",
+      "baseAddress": 140711075315712,
+      "baseAddressHex": "0x7FF9D9A90000",
+      "moduleMemorySize": 1134592,
+      "endAddressExclusive": 140711076450304
+    },
+    {
+      "moduleName": "windows.storage.dll",
+      "path": "C:\\windows\\SYSTEM32\\windows.storage.dll",
+      "baseAddress": 140711028719616,
+      "baseAddressHex": "0x7FF9D6E20000",
+      "moduleMemorySize": 8011776,
+      "endAddressExclusive": 140711036731392
+    },
+    {
+      "moduleName": "Wldp.dll",
+      "path": "C:\\windows\\SYSTEM32\\Wldp.dll",
+      "baseAddress": 140711055261696,
+      "baseAddressHex": "0x7FF9D8770000",
+      "moduleMemorySize": 192512,
+      "endAddressExclusive": 140711055454208
+    },
+    {
+      "moduleName": "profapi.dll",
+      "path": "C:\\windows\\SYSTEM32\\profapi.dll",
+      "baseAddress": 140711061291008,
+      "baseAddressHex": "0x7FF9D8D30000",
+      "moduleMemorySize": 147456,
+      "endAddressExclusive": 140711061438464
+    },
+    {
+      "moduleName": "CRYPTSP.dll",
+      "path": "C:\\windows\\SYSTEM32\\CRYPTSP.dll",
+      "baseAddress": 140711054606336,
+      "baseAddressHex": "0x7FF9D86D0000",
+      "moduleMemorySize": 98304,
+      "endAddressExclusive": 140711054704640
+    },
+    {
+      "moduleName": "rsaenh.dll",
+      "path": "C:\\windows\\system32\\rsaenh.dll",
+      "baseAddress": 140711045103616,
+      "baseAddressHex": "0x7FF9D7DC0000",
+      "moduleMemorySize": 212992,
+      "endAddressExclusive": 140711045316608
+    },
+    {
+      "moduleName": "plotcfg15.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\plotcfg15.dll",
+      "baseAddress": 140707736322048,
+      "baseAddressHex": "0x7FF912A40000",
+      "moduleMemorySize": 1019904,
+      "endAddressExclusive": 140707737341952
+    },
+    {
+      "moduleName": "plcfmgr.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\plcfmgr.dll",
+      "baseAddress": 140709486198784,
+      "baseAddressHex": "0x7FF97AF10000",
+      "moduleMemorySize": 704512,
+      "endAddressExclusive": 140709486903296
+    },
+    {
+      "moduleName": "plcferr.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\plcferr.dll",
+      "baseAddress": 1879736385536,
+      "baseAddressHex": "0x1B5A9050000",
+      "moduleMemorySize": 12288,
+      "endAddressExclusive": 1879736397824
+    },
+    {
+      "moduleName": "pm15.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\pm15.dll",
+      "baseAddress": 140707784359936,
+      "baseAddressHex": "0x7FF915810000",
+      "moduleMemorySize": 397312,
+      "endAddressExclusive": 140707784757248
+    },
+    {
+      "moduleName": "pmutil15.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\pmutil15.dll",
+      "baseAddress": 140707735928832,
+      "baseAddressHex": "0x7FF9129E0000",
+      "moduleMemorySize": 344064,
+      "endAddressExclusive": 140707736272896
+    },
+    {
+      "moduleName": "hcreg15.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\hcreg15.dll",
+      "baseAddress": 140710595264512,
+      "baseAddressHex": "0x7FF9BD0C0000",
+      "moduleMemorySize": 90112,
+      "endAddressExclusive": 140710595354624
+    },
+    {
+      "moduleName": "adui23res.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\adui23res.dll",
+      "baseAddress": 1879736778752,
+      "baseAddressHex": "0x1B5A90B0000",
+      "moduleMemorySize": 450560,
+      "endAddressExclusive": 1879737229312
+    },
+    {
+      "moduleName": "acui23res.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\acui23res.dll",
+      "baseAddress": 1879737303040,
+      "baseAddressHex": "0x1B5A9130000",
+      "moduleMemorySize": 495616,
+      "endAddressExclusive": 1879737798656
+    },
+    {
+      "moduleName": "clr.dll",
+      "path": "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\clr.dll",
+      "baseAddress": 140708136091648,
+      "baseAddressHex": "0x7FF92A780000",
+      "moduleMemorySize": 11300864,
+      "endAddressExclusive": 140708147392512
+    },
+    {
+      "moduleName": "ucrtbase_clr0400.dll",
+      "path": "C:\\windows\\SYSTEM32\\ucrtbase_clr0400.dll",
+      "baseAddress": 140709287559168,
+      "baseAddressHex": "0x7FF96F1A0000",
+      "moduleMemorySize": 774144,
+      "endAddressExclusive": 140709288333312
+    },
+    {
+      "moduleName": "VCRUNTIME140_CLR0400.dll",
+      "path": "C:\\windows\\SYSTEM32\\VCRUNTIME140_CLR0400.dll",
+      "baseAddress": 140710439682048,
+      "baseAddressHex": "0x7FF9B3C60000",
+      "moduleMemorySize": 90112,
+      "endAddressExclusive": 140710439772160
+    },
+    {
+      "moduleName": "psapi.dll",
+      "path": "C:\\windows\\System32\\psapi.dll",
+      "baseAddress": 140711104020480,
+      "baseAddressHex": "0x7FF9DB5F0000",
+      "moduleMemorySize": 32768,
+      "endAddressExclusive": 140711104053248
+    },
+    {
+      "moduleName": "clrjit.dll",
+      "path": "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\clrjit.dll",
+      "baseAddress": 140708134715392,
+      "baseAddressHex": "0x7FF92A630000",
+      "moduleMemorySize": 1372160,
+      "endAddressExclusive": 140708136087552
+    },
+    {
+      "moduleName": "Acdbmgd.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\Acdbmgd.dll",
+      "baseAddress": 140707729506304,
+      "baseAddressHex": "0x7FF9123C0000",
+      "moduleMemorySize": 6369280,
+      "endAddressExclusive": 140707735875584
+    },
+    {
+      "moduleName": "clbcatq.dll",
+      "path": "C:\\windows\\System32\\clbcatq.dll",
+      "baseAddress": 140711096156160,
+      "baseAddressHex": "0x7FF9DAE70000",
+      "moduleMemorySize": 692224,
+      "endAddressExclusive": 140711096848384
+    },
+    {
+      "moduleName": "AcDrawBridge.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcDrawBridge.dll",
+      "baseAddress": 140707728850944,
+      "baseAddressHex": "0x7FF912320000",
+      "moduleMemorySize": 618496,
+      "endAddressExclusive": 140707729469440
+    },
+    {
+      "moduleName": "OGSObjects.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\OGSObjects.dll",
+      "baseAddress": 140707727015936,
+      "baseAddressHex": "0x7FF912160000",
+      "moduleMemorySize": 1785856,
+      "endAddressExclusive": 140707728801792
+    },
+    {
+      "moduleName": "OGSGlobals.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\OGSGlobals.dll",
+      "baseAddress": 140711018299392,
+      "baseAddressHex": "0x7FF9D6430000",
+      "moduleMemorySize": 61440,
+      "endAddressExclusive": 140711018360832
+    },
+    {
+      "moduleName": "D3DCOMPILER_47.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\D3DCOMPILER_47.dll",
+      "baseAddress": 140707722756096,
+      "baseAddressHex": "0x7FF911D50000",
+      "moduleMemorySize": 4210688,
+      "endAddressExclusive": 140707726966784
+    },
+    {
+      "moduleName": "Effects11.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\Effects11.dll",
+      "baseAddress": 140707722428416,
+      "baseAddressHex": "0x7FF911D00000",
+      "moduleMemorySize": 290816,
+      "endAddressExclusive": 140707722719232
+    },
+    {
+      "moduleName": "dxgi.dll",
+      "path": "C:\\windows\\SYSTEM32\\dxgi.dll",
+      "baseAddress": 140711037042688,
+      "baseAddressHex": "0x7FF9D7610000",
+      "moduleMemorySize": 1007616,
+      "endAddressExclusive": 140711038050304
+    },
+    {
+      "moduleName": "tbbmalloc.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\tbbmalloc.dll",
+      "baseAddress": 140707715612672,
+      "baseAddressHex": "0x7FF911680000",
+      "moduleMemorySize": 278528,
+      "endAddressExclusive": 140707715891200
+    },
+    {
+      "moduleName": "d3d11.dll",
+      "path": "C:\\windows\\SYSTEM32\\d3d11.dll",
+      "baseAddress": 140710998900736,
+      "baseAddressHex": "0x7FF9D51B0000",
+      "moduleMemorySize": 2502656,
+      "endAddressExclusive": 140711001403392
+    },
+    {
+      "moduleName": "OGSDevices.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\OGSDevices.dll",
+      "baseAddress": 140707700998144,
+      "baseAddressHex": "0x7FF910890000",
+      "moduleMemorySize": 13414400,
+      "endAddressExclusive": 140707714412544
+    },
+    {
+      "moduleName": "OGSGraphics.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\OGSGraphics.dll",
+      "baseAddress": 140707715940352,
+      "baseAddressHex": "0x7FF9116D0000",
+      "moduleMemorySize": 6488064,
+      "endAddressExclusive": 140707722428416
+    },
+    {
+      "moduleName": "WS2_32.dll",
+      "path": "C:\\windows\\System32\\WS2_32.dll",
+      "baseAddress": 140711090520064,
+      "baseAddressHex": "0x7FF9DA910000",
+      "moduleMemorySize": 438272,
+      "endAddressExclusive": 140711090958336
+    },
+    {
+      "moduleName": "dwrite.dll",
+      "path": "C:\\windows\\SYSTEM32\\dwrite.dll",
+      "baseAddress": 140710848430080,
+      "baseAddressHex": "0x7FF9CC230000",
+      "moduleMemorySize": 2617344,
+      "endAddressExclusive": 140710851047424
+    },
+    {
+      "moduleName": "wpfgfx_v0400.dll",
+      "path": "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\WPF\\wpfgfx_v0400.dll",
+      "baseAddress": 140707698900992,
+      "baseAddressHex": "0x7FF910690000",
+      "moduleMemorySize": 2060288,
+      "endAddressExclusive": 140707700961280
+    },
+    {
+      "moduleName": "MSVCP140_CLR0400.dll",
+      "path": "C:\\windows\\SYSTEM32\\MSVCP140_CLR0400.dll",
+      "baseAddress": 140707714957312,
+      "baseAddressHex": "0x7FF9115E0000",
+      "moduleMemorySize": 630784,
+      "endAddressExclusive": 140707715588096
+    },
+    {
+      "moduleName": "PresentationNative_v0400.dll",
+      "path": "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\WPF\\PresentationNative_v0400.dll",
+      "baseAddress": 140707697721344,
+      "baseAddressHex": "0x7FF910570000",
+      "moduleMemorySize": 1175552,
+      "endAddressExclusive": 140707698896896
+    },
+    {
+      "moduleName": "AdApplicationFrame.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AdApplicationFrame.dll",
+      "baseAddress": 140707697131520,
+      "baseAddressHex": "0x7FF9104E0000",
+      "moduleMemorySize": 548864,
+      "endAddressExclusive": 140707697680384
+    },
+    {
+      "moduleName": "acadbtn.xmx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acadbtn.xmx",
+      "baseAddress": 1879743987712,
+      "baseAddressHex": "0x1B5A9790000",
+      "moduleMemorySize": 14249984,
+      "endAddressExclusive": 1879758237696
+    },
+    {
+      "moduleName": "windowscodecs.dll",
+      "path": "C:\\windows\\system32\\windowscodecs.dll",
+      "baseAddress": 140711018364928,
+      "baseAddressHex": "0x7FF9D6440000",
+      "moduleMemorySize": 1785856,
+      "endAddressExclusive": 140711020150784
+    },
+    {
+      "moduleName": "mscms.dll",
+      "path": "C:\\windows\\SYSTEM32\\mscms.dll",
+      "baseAddress": 140710880935936,
+      "baseAddressHex": "0x7FF9CE130000",
+      "moduleMemorySize": 712704,
+      "endAddressExclusive": 140710881648640
+    },
+    {
+      "moduleName": "ColorAdapterClient.dll",
+      "path": "C:\\windows\\SYSTEM32\\ColorAdapterClient.dll",
+      "baseAddress": 140710880804864,
+      "baseAddressHex": "0x7FF9CE110000",
+      "moduleMemorySize": 69632,
+      "endAddressExclusive": 140710880874496
+    },
+    {
+      "moduleName": "USERENV.dll",
+      "path": "C:\\windows\\SYSTEM32\\USERENV.dll",
+      "baseAddress": 140711060766720,
+      "baseAddressHex": "0x7FF9D8CB0000",
+      "moduleMemorySize": 188416,
+      "endAddressExclusive": 140711060955136
+    },
+    {
+      "moduleName": "WINSTA.dll",
+      "path": "C:\\windows\\SYSTEM32\\WINSTA.dll",
+      "baseAddress": 140711041433600,
+      "baseAddressHex": "0x7FF9D7A40000",
+      "moduleMemorySize": 372736,
+      "endAddressExclusive": 140711041806336
+    },
+    {
+      "moduleName": "powrprof.dll",
+      "path": "C:\\windows\\SYSTEM32\\powrprof.dll",
+      "baseAddress": 140711050412032,
+      "baseAddressHex": "0x7FF9D82D0000",
+      "moduleMemorySize": 307200,
+      "endAddressExclusive": 140711050719232
+    },
+    {
+      "moduleName": "UMPDC.dll",
+      "path": "C:\\windows\\SYSTEM32\\UMPDC.dll",
+      "baseAddress": 140711049035776,
+      "baseAddressHex": "0x7FF9D8180000",
+      "moduleMemorySize": 73728,
+      "endAddressExclusive": 140711049109504
+    },
+    {
+      "moduleName": "DWMAPI.dll",
+      "path": "C:\\windows\\SYSTEM32\\DWMAPI.dll",
+      "baseAddress": 140711025508352,
+      "baseAddressHex": "0x7FF9D6B10000",
+      "moduleMemorySize": 192512,
+      "endAddressExclusive": 140711025700864
+    },
+    {
+      "moduleName": "d3d9.dll",
+      "path": "C:\\windows\\SYSTEM32\\d3d9.dll",
+      "baseAddress": 140709494456320,
+      "baseAddressHex": "0x7FF97B6F0000",
+      "moduleMemorySize": 1904640,
+      "endAddressExclusive": 140709496360960
+    },
+    {
+      "moduleName": "nvldumdx.dll",
+      "path": "C:\\windows\\System32\\DriverStore\\FileRepository\\nv_dispsi.inf_amd64_ccd7fbb71bb72370\\nvldumdx.dll",
+      "baseAddress": 140710854656000,
+      "baseAddressHex": "0x7FF9CC820000",
+      "moduleMemorySize": 843776,
+      "endAddressExclusive": 140710855499776
+    },
+    {
+      "moduleName": "cryptnet.dll",
+      "path": "C:\\windows\\SYSTEM32\\cryptnet.dll",
+      "baseAddress": 140710968950784,
+      "baseAddressHex": "0x7FF9D3520000",
+      "moduleMemorySize": 200704,
+      "endAddressExclusive": 140710969151488
+    },
+    {
+      "moduleName": "drvstore.dll",
+      "path": "C:\\windows\\SYSTEM32\\drvstore.dll",
+      "baseAddress": 140710966853632,
+      "baseAddressHex": "0x7FF9D3320000",
+      "moduleMemorySize": 1339392,
+      "endAddressExclusive": 140710968193024
+    },
+    {
+      "moduleName": "devobj.dll",
+      "path": "C:\\windows\\SYSTEM32\\devobj.dll",
+      "baseAddress": 140711059193856,
+      "baseAddressHex": "0x7FF9D8B30000",
+      "moduleMemorySize": 208896,
+      "endAddressExclusive": 140711059402752
+    },
+    {
+      "moduleName": "cfgmgr32.dll",
+      "path": "C:\\windows\\System32\\cfgmgr32.dll",
+      "baseAddress": 140711067320320,
+      "baseAddressHex": "0x7FF9D92F0000",
+      "moduleMemorySize": 319488,
+      "endAddressExclusive": 140711067639808
+    },
+    {
+      "moduleName": "imagehlp.dll",
+      "path": "C:\\windows\\System32\\imagehlp.dll",
+      "baseAddress": 140711098712064,
+      "baseAddressHex": "0x7FF9DB0E0000",
+      "moduleMemorySize": 118784,
+      "endAddressExclusive": 140711098830848
+    },
+    {
+      "moduleName": "nvgpucomp64.dll",
+      "path": "C:\\windows\\System32\\DriverStore\\FileRepository\\nv_dispsi.inf_amd64_ccd7fbb71bb72370\\nvgpucomp64.dll",
+      "baseAddress": 140710735839232,
+      "baseAddressHex": "0x7FF9C56D0000",
+      "moduleMemorySize": 110788608,
+      "endAddressExclusive": 140710846627840
+    },
+    {
+      "moduleName": "NvMessageBus.dll",
+      "path": "C:\\windows\\System32\\DriverStore\\FileRepository\\nv_dispsi.inf_amd64_ccd7fbb71bb72370\\Display.NvContainer\\NvMessageBus.dll",
+      "baseAddress": 140710851051520,
+      "baseAddressHex": "0x7FF9CC4B0000",
+      "moduleMemorySize": 3555328,
+      "endAddressExclusive": 140710854606848
+    },
+    {
+      "moduleName": "NvMemMapStoragex.dll",
+      "path": "C:\\windows\\System32\\DriverStore\\FileRepository\\nv_dispsi.inf_amd64_ccd7fbb71bb72370\\NvMemMapStoragex.dll",
+      "baseAddress": 140710728499200,
+      "baseAddressHex": "0x7FF9C4FD0000",
+      "moduleMemorySize": 1421312,
+      "endAddressExclusive": 140710729920512
+    },
+    {
+      "moduleName": "WINMM.dll",
+      "path": "C:\\windows\\SYSTEM32\\WINMM.dll",
+      "baseAddress": 140710931005440,
+      "baseAddressHex": "0x7FF9D10F0000",
+      "moduleMemorySize": 159744,
+      "endAddressExclusive": 140710931165184
+    },
+    {
+      "moduleName": "nvd3dumx.dll",
+      "path": "C:\\windows\\System32\\DriverStore\\FileRepository\\nv_dispsi.inf_amd64_ccd7fbb71bb72370\\nvd3dumx.dll",
+      "baseAddress": 140707613376512,
+      "baseAddressHex": "0x7FF90B500000",
+      "moduleMemorySize": 43544576,
+      "endAddressExclusive": 140707656921088
+    },
+    {
+      "moduleName": "dataexchange.dll",
+      "path": "C:\\windows\\system32\\dataexchange.dll",
+      "baseAddress": 140710428082176,
+      "baseAddressHex": "0x7FF9B3150000",
+      "moduleMemorySize": 253952,
+      "endAddressExclusive": 140710428336128
+    },
+    {
+      "moduleName": "dcomp.dll",
+      "path": "C:\\windows\\system32\\dcomp.dll",
+      "baseAddress": 140711001456640,
+      "baseAddressHex": "0x7FF9D5420000",
+      "moduleMemorySize": 1982464,
+      "endAddressExclusive": 140711003439104
+    },
+    {
+      "moduleName": "twinapi.appcore.dll",
+      "path": "C:\\windows\\system32\\twinapi.appcore.dll",
+      "baseAddress": 140710908985344,
+      "baseAddressHex": "0x7FF9CFBF0000",
+      "moduleMemorySize": 2109440,
+      "endAddressExclusive": 140710911094784
+    },
+    {
+      "moduleName": "urlmon.dll",
+      "path": "C:\\windows\\SYSTEM32\\urlmon.dll",
+      "baseAddress": 140710872350720,
+      "baseAddressHex": "0x7FF9CD900000",
+      "moduleMemorySize": 2035712,
+      "endAddressExclusive": 140710874386432
+    },
+    {
+      "moduleName": "iertutil.dll",
+      "path": "C:\\windows\\SYSTEM32\\iertutil.dll",
+      "baseAddress": 140710877921280,
+      "baseAddressHex": "0x7FF9CDE50000",
+      "moduleMemorySize": 2879488,
+      "endAddressExclusive": 140710880800768
+    },
+    {
+      "moduleName": "srvcli.dll",
+      "path": "C:\\windows\\SYSTEM32\\srvcli.dll",
+      "baseAddress": 140710876741632,
+      "baseAddressHex": "0x7FF9CDD30000",
+      "moduleMemorySize": 163840,
+      "endAddressExclusive": 140710876905472
+    },
+    {
+      "moduleName": "netutils.dll",
+      "path": "C:\\windows\\SYSTEM32\\netutils.dll",
+      "baseAddress": 140711050346496,
+      "baseAddressHex": "0x7FF9D82C0000",
+      "moduleMemorySize": 49152,
+      "endAddressExclusive": 140711050395648
+    },
+    {
+      "moduleName": "TextShaping.dll",
+      "path": "C:\\windows\\SYSTEM32\\TextShaping.dll",
+      "baseAddress": 140710629736448,
+      "baseAddressHex": "0x7FF9BF1A0000",
+      "moduleMemorySize": 712704,
+      "endAddressExclusive": 140710630449152
+    },
+    {
+      "moduleName": "msxml6.dll",
+      "path": "C:\\Windows\\System32\\msxml6.dll",
+      "baseAddress": 140710458556416,
+      "baseAddressHex": "0x7FF9B4E60000",
+      "moduleMemorySize": 2486272,
+      "endAddressExclusive": 140710461042688
+    },
+    {
+      "moduleName": "AdAppMgrSvcInt.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AdAppMgrSvcInt.dll",
+      "baseAddress": 140707696672768,
+      "baseAddressHex": "0x7FF910470000",
+      "moduleMemorySize": 409600,
+      "endAddressExclusive": 140707697082368
+    },
+    {
+      "moduleName": "MSVCR110.dll",
+      "path": "C:\\windows\\SYSTEM32\\MSVCR110.dll",
+      "baseAddress": 140707695034368,
+      "baseAddressHex": "0x7FF9102E0000",
+      "moduleMemorySize": 868352,
+      "endAddressExclusive": 140707695902720
+    },
+    {
+      "moduleName": "MSVCP110.dll",
+      "path": "C:\\windows\\SYSTEM32\\MSVCP110.dll",
+      "baseAddress": 140707695951872,
+      "baseAddressHex": "0x7FF9103C0000",
+      "moduleMemorySize": 684032,
+      "endAddressExclusive": 140707696635904
+    },
+    {
+      "moduleName": "upi2.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\upi2.dll",
+      "baseAddress": 140707693985792,
+      "baseAddressHex": "0x7FF9101E0000",
+      "moduleMemorySize": 1036288,
+      "endAddressExclusive": 140707695022080
+    },
+    {
+      "moduleName": "msi.dll",
+      "path": "C:\\windows\\SYSTEM32\\msi.dll",
+      "baseAddress": 140709322358784,
+      "baseAddressHex": "0x7FF9712D0000",
+      "moduleMemorySize": 3391488,
+      "endAddressExclusive": 140709325750272
+    },
+    {
+      "moduleName": "acmgd.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acmgd.dll",
+      "baseAddress": 140707691298816,
+      "baseAddressHex": "0x7FF90FF50000",
+      "moduleMemorySize": 2658304,
+      "endAddressExclusive": 140707693957120
+    },
+    {
+      "moduleName": "accoremgd.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\accoremgd.dll",
+      "baseAddress": 140707690315776,
+      "baseAddressHex": "0x7FF90FE60000",
+      "moduleMemorySize": 929792,
+      "endAddressExclusive": 140707691245568
+    },
+    {
+      "moduleName": "msxml3.dll",
+      "path": "C:\\windows\\System32\\msxml3.dll",
+      "baseAddress": 140709506383872,
+      "baseAddressHex": "0x7FF97C250000",
+      "moduleMemorySize": 2146304,
+      "endAddressExclusive": 140709508530176
+    },
+    {
+      "moduleName": "diasymreader.dll",
+      "path": "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\diasymreader.dll",
+      "baseAddress": 140707688808448,
+      "baseAddressHex": "0x7FF90FCF0000",
+      "moduleMemorySize": 1482752,
+      "endAddressExclusive": 140707690291200
+    },
+    {
+      "moduleName": "acapp.arx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acapp.arx",
+      "baseAddress": 140707541811200,
+      "baseAddressHex": "0x7FF9070C0000",
+      "moduleMemorySize": 577536,
+      "endAddressExclusive": 140707542388736
+    },
+    {
+      "moduleName": "acapp.crx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acapp.crx",
+      "baseAddress": 140707540172800,
+      "baseAddressHex": "0x7FF906F30000",
+      "moduleMemorySize": 802816,
+      "endAddressExclusive": 140707540975616
+    },
+    {
+      "moduleName": "acappRes.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\acappRes.dll",
+      "baseAddress": 1881415090176,
+      "baseAddressHex": "0x1B60D140000",
+      "moduleMemorySize": 622592,
+      "endAddressExclusive": 1881415712768
+    },
+    {
+      "moduleName": "NETAPI32.DLL",
+      "path": "C:\\windows\\SYSTEM32\\NETAPI32.DLL",
+      "baseAddress": 140710527500288,
+      "baseAddressHex": "0x7FF9B9020000",
+      "moduleMemorySize": 102400,
+      "endAddressExclusive": 140710527602688
+    },
+    {
+      "moduleName": "acautoloader.crx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acautoloader.crx",
+      "baseAddress": 140707539845120,
+      "baseAddressHex": "0x7FF906EE0000",
+      "moduleMemorySize": 274432,
+      "endAddressExclusive": 140707540119552
+    },
+    {
+      "moduleName": "AcAutoLoaderRes.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\AcAutoLoaderRes.dll",
+      "baseAddress": 1881404538880,
+      "baseAddressHex": "0x1B60C730000",
+      "moduleMemorySize": 12288,
+      "endAddressExclusive": 1881404551168
+    },
+    {
+      "moduleName": "acautoloader.arx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acautoloader.arx",
+      "baseAddress": 140709344641024,
+      "baseAddressHex": "0x7FF972810000",
+      "moduleMemorySize": 36864,
+      "endAddressExclusive": 140709344677888
+    },
+    {
+      "moduleName": "acexperience.arx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acexperience.arx",
+      "baseAddress": 140707539124224,
+      "baseAddressHex": "0x7FF906E30000",
+      "moduleMemorySize": 253952,
+      "endAddressExclusive": 140707539378176
+    },
+    {
+      "moduleName": "UPIBridge.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\UPIBridge.dll",
+      "baseAddress": 140707538993152,
+      "baseAddressHex": "0x7FF906E10000",
+      "moduleMemorySize": 86016,
+      "endAddressExclusive": 140707539079168
+    },
+    {
+      "moduleName": "AdpSDKWrapper.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AdpSDKWrapper.dll",
+      "baseAddress": 140707472277504,
+      "baseAddressHex": "0x7FF902E70000",
+      "moduleMemorySize": 573440,
+      "endAddressExclusive": 140707472850944
+    },
+    {
+      "moduleName": "AdpSDKCore.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AdpSDKCore.dll",
+      "baseAddress": 140707468148736,
+      "baseAddressHex": "0x7FF902A80000",
+      "moduleMemorySize": 741376,
+      "endAddressExclusive": 140707468890112
+    },
+    {
+      "moduleName": "acpublish.arx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acpublish.arx",
+      "baseAddress": 140707467558912,
+      "baseAddressHex": "0x7FF9029F0000",
+      "moduleMemorySize": 548864,
+      "endAddressExclusive": 140707468107776
+    },
+    {
+      "moduleName": "acpublish.crx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acpublish.crx",
+      "baseAddress": 140707463561216,
+      "baseAddressHex": "0x7FF902620000",
+      "moduleMemorySize": 3956736,
+      "endAddressExclusive": 140707467517952
+    },
+    {
+      "moduleName": "AcPltRes.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\AcPltRes.dll",
+      "baseAddress": 1881414500352,
+      "baseAddressHex": "0x1B60D0B0000",
+      "moduleMemorySize": 471040,
+      "endAddressExclusive": 1881414971392
+    },
+    {
+      "moduleName": "AcPi.arx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcPi.arx",
+      "baseAddress": 140707462971392,
+      "baseAddressHex": "0x7FF902590000",
+      "moduleMemorySize": 544768,
+      "endAddressExclusive": 140707463516160
+    },
+    {
+      "moduleName": "AcPiRes.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\AcPiRes.dll",
+      "baseAddress": 1881408864256,
+      "baseAddressHex": "0x1B60CB50000",
+      "moduleMemorySize": 24576,
+      "endAddressExclusive": 1881408888832
+    },
+    {
+      "moduleName": "msctfmonitor.dll",
+      "path": "C:\\windows\\system32\\msctfmonitor.dll",
+      "baseAddress": 140710477299712,
+      "baseAddressHex": "0x7FF9B6040000",
+      "moduleMemorySize": 114688,
+      "endAddressExclusive": 140710477414400
+    },
+    {
+      "moduleName": "MSUTB.dll",
+      "path": "C:\\windows\\system32\\MSUTB.dll",
+      "baseAddress": 140710450561024,
+      "baseAddressHex": "0x7FF9B46C0000",
+      "moduleMemorySize": 282624,
+      "endAddressExclusive": 140710450843648
+    },
+    {
+      "moduleName": "textinputframework.dll",
+      "path": "C:\\windows\\SYSTEM32\\textinputframework.dll",
+      "baseAddress": 140710913900544,
+      "baseAddressHex": "0x7FF9D00A0000",
+      "moduleMemorySize": 1019904,
+      "endAddressExclusive": 140710914920448
+    },
+    {
+      "moduleName": "CoreMessaging.dll",
+      "path": "C:\\windows\\SYSTEM32\\CoreMessaging.dll",
+      "baseAddress": 140711010762752,
+      "baseAddressHex": "0x7FF9D5D00000",
+      "moduleMemorySize": 991232,
+      "endAddressExclusive": 140711011753984
+    },
+    {
+      "moduleName": "CoreUIComponents.dll",
+      "path": "C:\\windows\\SYSTEM32\\CoreUIComponents.dll",
+      "baseAddress": 140711007223808,
+      "baseAddressHex": "0x7FF9D59A0000",
+      "moduleMemorySize": 3518464,
+      "endAddressExclusive": 140711010742272
+    },
+    {
+      "moduleName": "ntmarta.dll",
+      "path": "C:\\windows\\SYSTEM32\\ntmarta.dll",
+      "baseAddress": 140711047528448,
+      "baseAddressHex": "0x7FF9D8010000",
+      "moduleMemorySize": 208896,
+      "endAddressExclusive": 140711047737344
+    },
+    {
+      "moduleName": "wintypes.dll",
+      "path": "C:\\windows\\SYSTEM32\\wintypes.dll",
+      "baseAddress": 140710986842112,
+      "baseAddressHex": "0x7FF9D4630000",
+      "moduleMemorySize": 1404928,
+      "endAddressExclusive": 140710988247040
+    },
+    {
+      "moduleName": "msctfp.dll",
+      "path": "C:\\windows\\system32\\msctfp.dll",
+      "baseAddress": 140710617546752,
+      "baseAddressHex": "0x7FF9BE600000",
+      "moduleMemorySize": 237568,
+      "endAddressExclusive": 140710617784320
+    },
+    {
+      "moduleName": "InputSwitch.dll",
+      "path": "C:\\Windows\\System32\\InputSwitch.dll",
+      "baseAddress": 140710623838208,
+      "baseAddressHex": "0x7FF9BEC00000",
+      "moduleMemorySize": 552960,
+      "endAddressExclusive": 140710624391168
+    },
+    {
+      "moduleName": "Bcp47Langs.dll",
+      "path": "C:\\Windows\\System32\\Bcp47Langs.dll",
+      "baseAddress": 140710947651584,
+      "baseAddressHex": "0x7FF9D20D0000",
+      "moduleMemorySize": 372736,
+      "endAddressExclusive": 140710948024320
+    },
+    {
+      "moduleName": "WININET.dll",
+      "path": "C:\\Windows\\System32\\WININET.dll",
+      "baseAddress": 140710618726400,
+      "baseAddressHex": "0x7FF9BE720000",
+      "moduleMemorySize": 5083136,
+      "endAddressExclusive": 140710623809536
+    },
+    {
+      "moduleName": "DUI70.dll",
+      "path": "C:\\Windows\\System32\\DUI70.dll",
+      "baseAddress": 140710575996928,
+      "baseAddressHex": "0x7FF9BBE60000",
+      "moduleMemorySize": 1761280,
+      "endAddressExclusive": 140710577758208
+    },
+    {
+      "moduleName": "DUser.dll",
+      "path": "C:\\Windows\\System32\\DUser.dll",
+      "baseAddress": 140710592249856,
+      "baseAddressHex": "0x7FF9BCDE0000",
+      "moduleMemorySize": 610304,
+      "endAddressExclusive": 140710592860160
+    },
+    {
+      "moduleName": "UIAnimation.dll",
+      "path": "C:\\windows\\System32\\UIAnimation.dll",
+      "baseAddress": 140710899679232,
+      "baseAddressHex": "0x7FF9CF310000",
+      "moduleMemorySize": 290816,
+      "endAddressExclusive": 140710899970048
+    },
+    {
+      "moduleName": "D3D10Warp.dll",
+      "path": "C:\\windows\\SYSTEM32\\D3D10Warp.dll",
+      "baseAddress": 140710865010688,
+      "baseAddressHex": "0x7FF9CD200000",
+      "moduleMemorySize": 7299072,
+      "endAddressExclusive": 140710872309760
+    },
+    {
+      "moduleName": "dxcore.dll",
+      "path": "C:\\windows\\SYSTEM32\\dxcore.dll",
+      "baseAddress": 140710863765504,
+      "baseAddressHex": "0x7FF9CD0D0000",
+      "moduleMemorySize": 241664,
+      "endAddressExclusive": 140710864007168
+    },
+    {
+      "moduleName": "AcIpc_2_x64.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcIpc_2_x64.dll",
+      "baseAddress": 140709232181248,
+      "baseAddressHex": "0x7FF96BCD0000",
+      "moduleMemorySize": 114688,
+      "endAddressExclusive": 140709232295936
+    },
+    {
+      "moduleName": "acjscorestub.crx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acjscorestub.crx",
+      "baseAddress": 140707685662720,
+      "baseAddressHex": "0x7FF90F9F0000",
+      "moduleMemorySize": 782336,
+      "endAddressExclusive": 140707686445056
+    },
+    {
+      "moduleName": "AcDrawStream.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcDrawStream.dll",
+      "baseAddress": 140707685400576,
+      "baseAddressHex": "0x7FF90F9B0000",
+      "moduleMemorySize": 212992,
+      "endAddressExclusive": 140707685613568
+    },
+    {
+      "moduleName": "AcJsCoreStubRes.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\AcJsCoreStubRes.dll",
+      "baseAddress": 1881473089536,
+      "baseAddressHex": "0x1B610890000",
+      "moduleMemorySize": 12288,
+      "endAddressExclusive": 1881473101824
+    },
+    {
+      "moduleName": "OGSCertificationUtility.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\OGSCertificationUtility.dll",
+      "baseAddress": 140707688480768,
+      "baseAddressHex": "0x7FF90FCA0000",
+      "moduleMemorySize": 294912,
+      "endAddressExclusive": 140707688775680
+    },
+    {
+      "moduleName": "adp_core-6_1.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\adp_core-6_1.dll",
+      "baseAddress": 140707686842368,
+      "baseAddressHex": "0x7FF90FB10000",
+      "moduleMemorySize": 1585152,
+      "endAddressExclusive": 140707688427520
+    },
+    {
+      "moduleName": "Qt5Core_Ad_5_9.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\Qt5Core_Ad_5_9.dll",
+      "baseAddress": 1458765824,
+      "baseAddressHex": "0x56F30000",
+      "moduleMemorySize": 5373952,
+      "endAddressExclusive": 1464139776
+    },
+    {
+      "moduleName": "Qt5Xml_Ad_5_9.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\Qt5Xml_Ad_5_9.dll",
+      "baseAddress": 1458503680,
+      "baseAddressHex": "0x56EF0000",
+      "moduleMemorySize": 217088,
+      "endAddressExclusive": 1458720768
+    },
+    {
+      "moduleName": "Qt5Network_Ad_5_9.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\Qt5Network_Ad_5_9.dll",
+      "baseAddress": 1457127424,
+      "baseAddressHex": "0x56DA0000",
+      "moduleMemorySize": 1331200,
+      "endAddressExclusive": 1458458624
+    },
+    {
+      "moduleName": "WLDAP32.dll",
+      "path": "C:\\windows\\System32\\WLDAP32.dll",
+      "baseAddress": 140711074922496,
+      "baseAddressHex": "0x7FF9D9A30000",
+      "moduleMemorySize": 385024,
+      "endAddressExclusive": 140711075307520
+    },
+    {
+      "moduleName": "Normaliz.dll",
+      "path": "C:\\windows\\System32\\Normaliz.dll",
+      "baseAddress": 140711098646528,
+      "baseAddressHex": "0x7FF9DB0D0000",
+      "moduleMemorySize": 32768,
+      "endAddressExclusive": 140711098679296
+    },
+    {
+      "moduleName": "icuin55.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\icuin55.dll",
+      "baseAddress": 1455095808,
+      "baseAddressHex": "0x56BB0000",
+      "moduleMemorySize": 2007040,
+      "endAddressExclusive": 1457102848
+    },
+    {
+      "moduleName": "icuuc55.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\icuuc55.dll",
+      "baseAddress": 1453654016,
+      "baseAddressHex": "0x56A50000",
+      "moduleMemorySize": 1421312,
+      "endAddressExclusive": 1455075328
+    },
+    {
+      "moduleName": "DNSAPI.dll",
+      "path": "C:\\windows\\SYSTEM32\\DNSAPI.dll",
+      "baseAddress": 140711049166848,
+      "baseAddressHex": "0x7FF9D81A0000",
+      "moduleMemorySize": 827392,
+      "endAddressExclusive": 140711049994240
+    },
+    {
+      "moduleName": "IPHLPAPI.DLL",
+      "path": "C:\\windows\\SYSTEM32\\IPHLPAPI.DLL",
+      "baseAddress": 140711058931712,
+      "baseAddressHex": "0x7FF9D8AF0000",
+      "moduleMemorySize": 241664,
+      "endAddressExclusive": 140711059173376
+    },
+    {
+      "moduleName": "icudt55.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\icudt55.dll",
+      "baseAddress": 1881527877632,
+      "baseAddressHex": "0x1B613CD0000",
+      "moduleMemorySize": 25919488,
+      "endAddressExclusive": 1881553797120
+    },
+    {
+      "moduleName": "NSI.dll",
+      "path": "C:\\windows\\System32\\NSI.dll",
+      "baseAddress": 140711094845440,
+      "baseAddressHex": "0x7FF9DAD30000",
+      "moduleMemorySize": 32768,
+      "endAddressExclusive": 140711094878208
+    },
+    {
+      "moduleName": "nvwgf2umx.dll",
+      "path": "C:\\windows\\System32\\DriverStore\\FileRepository\\nv_dispsi.inf_amd64_ccd7fbb71bb72370\\nvwgf2umx.dll",
+      "baseAddress": 140710635503616,
+      "baseAddressHex": "0x7FF9BF720000",
+      "moduleMemorySize": 90284032,
+      "endAddressExclusive": 140710725787648
+    },
+    {
+      "moduleName": "nvppex.dll",
+      "path": "C:\\windows\\System32\\DriverStore\\FileRepository\\nv_dispsi.inf_amd64_ccd7fbb71bb72370\\nvppex.dll",
+      "baseAddress": 140709545508864,
+      "baseAddressHex": "0x7FF97E7A0000",
+      "moduleMemorySize": 7499776,
+      "endAddressExclusive": 140709553008640
+    },
+    {
+      "moduleName": "wbemprox.dll",
+      "path": "C:\\windows\\system32\\wbem\\wbemprox.dll",
+      "baseAddress": 140710948241408,
+      "baseAddressHex": "0x7FF9D2160000",
+      "moduleMemorySize": 69632,
+      "endAddressExclusive": 140710948311040
+    },
+    {
+      "moduleName": "wbemcomn.dll",
+      "path": "C:\\windows\\SYSTEM32\\wbemcomn.dll",
+      "baseAddress": 140710730727424,
+      "baseAddressHex": "0x7FF9C51F0000",
+      "moduleMemorySize": 589824,
+      "endAddressExclusive": 140710731317248
+    },
+    {
+      "moduleName": "wbemsvc.dll",
+      "path": "C:\\windows\\system32\\wbem\\wbemsvc.dll",
+      "baseAddress": 140710962069504,
+      "baseAddressHex": "0x7FF9D2E90000",
+      "moduleMemorySize": 81920,
+      "endAddressExclusive": 140710962151424
+    },
+    {
+      "moduleName": "fastprox.dll",
+      "path": "C:\\windows\\system32\\wbem\\fastprox.dll",
+      "baseAddress": 140710553714688,
+      "baseAddressHex": "0x7FF9BA920000",
+      "moduleMemorySize": 1097728,
+      "endAddressExclusive": 140710554812416
+    },
+    {
+      "moduleName": "amsi.dll",
+      "path": "C:\\windows\\SYSTEM32\\amsi.dll",
+      "baseAddress": 140710546112512,
+      "baseAddressHex": "0x7FF9BA1E0000",
+      "moduleMemorySize": 126976,
+      "endAddressExclusive": 140710546239488
+    },
+    {
+      "moduleName": "acgs.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acgs.dll",
+      "baseAddress": 140707683696640,
+      "baseAddressHex": "0x7FF90F810000",
+      "moduleMemorySize": 1658880,
+      "endAddressExclusive": 140707685355520
+    },
+    {
+      "moduleName": "gdi15.hdi",
+      "path": "d:\\cad2020\\autocad 2020\\drv\\gdi15.hdi",
+      "baseAddress": 140710500499456,
+      "baseAddressHex": "0x7FF9B7660000",
+      "moduleMemorySize": 172032,
+      "endAddressExclusive": 140710500671488
+    },
+    {
+      "moduleName": "gdi15Res.dll",
+      "path": "d:\\cad2020\\autocad 2020\\drv\\zh-CN\\gdi15Res.dll",
+      "baseAddress": 1881474072576,
+      "baseAddressHex": "0x1B610980000",
+      "moduleMemorySize": 12288,
+      "endAddressExclusive": 1881474084864
+    },
+    {
+      "moduleName": "szb15.hdi",
+      "path": "d:\\cad2020\\autocad 2020\\drv\\szb15.hdi",
+      "baseAddress": 140707682254848,
+      "baseAddressHex": "0x7FF90F6B0000",
+      "moduleMemorySize": 1392640,
+      "endAddressExclusive": 140707683647488
+    },
+    {
+      "moduleName": "rblast15.hdi",
+      "path": "d:\\cad2020\\autocad 2020\\drv\\rblast15.hdi",
+      "baseAddress": 140710978322432,
+      "baseAddressHex": "0x7FF9D3E10000",
+      "moduleMemorySize": 53248,
+      "endAddressExclusive": 140710978375680
+    },
+    {
+      "moduleName": "gdifont15.hdi",
+      "path": "d:\\cad2020\\autocad 2020\\drv\\gdifont15.hdi",
+      "baseAddress": 140707686580224,
+      "baseAddressHex": "0x7FF90FAD0000",
+      "moduleMemorySize": 208896,
+      "endAddressExclusive": 140707686789120
+    },
+    {
+      "moduleName": "OGSIOIntegration.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\OGSIOIntegration.dll",
+      "baseAddress": 140710595198976,
+      "baseAddressHex": "0x7FF9BD0B0000",
+      "moduleMemorySize": 57344,
+      "endAddressExclusive": 140710595256320
+    },
+    {
+      "moduleName": "s1read_44227fc6.arx",
+      "path": "c:\\program files\\autodesk\\applicationplugins\\codexelevationstage1_44227fc6c4f64da9b4014000b7b3a8a7\\s1read_44227fc6.arx",
+      "baseAddress": 140706729623552,
+      "baseAddressHex": "0x7FF8D6A30000",
+      "moduleMemorySize": 2588672,
+      "endAddressExclusive": 140706732212224
+    },
+    {
+      "moduleName": "axdb.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\axdb.dll",
+      "baseAddress": 140707675176960,
+      "baseAddressHex": "0x7FF90EFF0000",
+      "moduleMemorySize": 7045120,
+      "endAddressExclusive": 140707682222080
+    },
+    {
+      "moduleName": "acvmtools.crx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acvmtools.crx",
+      "baseAddress": 140707673735168,
+      "baseAddressHex": "0x7FF90EE90000",
+      "moduleMemorySize": 1392640,
+      "endAddressExclusive": 140707675127808
+    },
+    {
+      "moduleName": "AcSceneOE.dbx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcSceneOE.dbx",
+      "baseAddress": 140707672948736,
+      "baseAddressHex": "0x7FF90EDD0000",
+      "moduleMemorySize": 761856,
+      "endAddressExclusive": 140707673710592
+    },
+    {
+      "moduleName": "OPENGL32.dll",
+      "path": "C:\\windows\\SYSTEM32\\OPENGL32.dll",
+      "baseAddress": 140710429523968,
+      "baseAddressHex": "0x7FF9B32B0000",
+      "moduleMemorySize": 1212416,
+      "endAddressExclusive": 140710430736384
+    },
+    {
+      "moduleName": "GLU32.dll",
+      "path": "C:\\windows\\SYSTEM32\\GLU32.dll",
+      "baseAddress": 140710441123840,
+      "baseAddressHex": "0x7FF9B3DC0000",
+      "moduleMemorySize": 180224,
+      "endAddressExclusive": 140710441304064
+    },
+    {
+      "moduleName": "AcVmToolsRes.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\AcVmToolsRes.dll",
+      "baseAddress": 1882664992768,
+      "baseAddressHex": "0x1B657940000",
+      "moduleMemorySize": 704512,
+      "endAddressExclusive": 1882665697280
+    },
+    {
+      "moduleName": "AppXDeploymentClient.dll",
+      "path": "C:\\Windows\\System32\\AppXDeploymentClient.dll",
+      "baseAddress": 140710971899904,
+      "baseAddressHex": "0x7FF9D37F0000",
+      "moduleMemorySize": 1056768,
+      "endAddressExclusive": 140710972956672
+    },
+    {
+      "moduleName": "nvoglv64.dll",
+      "path": "C:\\windows\\System32\\DriverStore\\FileRepository\\nv_dispsi.inf_amd64_ccd7fbb71bb72370\\nvoglv64.dll",
+      "baseAddress": 140708658872320,
+      "baseAddressHex": "0x7FF949A10000",
+      "moduleMemorySize": 48939008,
+      "endAddressExclusive": 140708707811328
+    },
+    {
+      "moduleName": "SETUPAPI.dll",
+      "path": "C:\\windows\\System32\\SETUPAPI.dll",
+      "baseAddress": 140711077609472,
+      "baseAddressHex": "0x7FF9D9CC0000",
+      "moduleMemorySize": 4657152,
+      "endAddressExclusive": 140711082266624
+    },
+    {
+      "moduleName": "vl.crx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\vl.crx",
+      "baseAddress": 140707671572480,
+      "baseAddressHex": "0x7FF90EC80000",
+      "moduleMemorySize": 966656,
+      "endAddressExclusive": 140707672539136
+    },
+    {
+      "moduleName": "VLMSG.DLL",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\VLMSG.DLL",
+      "baseAddress": 1882673119232,
+      "baseAddressHex": "0x1B658100000",
+      "moduleMemorySize": 172032,
+      "endAddressExclusive": 1882673291264
+    },
+    {
+      "moduleName": "vllib.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\vllib.dll",
+      "baseAddress": 1883834810368,
+      "baseAddressHex": "0x1B69D4E0000",
+      "moduleMemorySize": 1220608,
+      "endAddressExclusive": 1883836030976
+    },
+    {
+      "moduleName": "acblock.crx",
+      "path": "d:\\cad2020\\autocad 2020\\acblock.crx",
+      "baseAddress": 140707671048192,
+      "baseAddressHex": "0x7FF90EC00000",
+      "moduleMemorySize": 512000,
+      "endAddressExclusive": 140707671560192
+    },
+    {
+      "moduleName": "AcBlockres.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\AcBlockres.dll",
+      "baseAddress": 1882674692096,
+      "baseAddressHex": "0x1B658280000",
+      "moduleMemorySize": 45056,
+      "endAddressExclusive": 1882674737152
+    },
+    {
+      "moduleName": "acxploderes.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\acxploderes.dll",
+      "baseAddress": 1882662502400,
+      "baseAddressHex": "0x1B6576E0000",
+      "moduleMemorySize": 12288,
+      "endAddressExclusive": 1882662514688
+    },
+    {
+      "moduleName": "acvdiff.arx",
+      "path": "d:\\cad2020\\autocad 2020\\acvdiff.arx",
+      "baseAddress": 140710500433920,
+      "baseAddressHex": "0x7FF9B7650000",
+      "moduleMemorySize": 45056,
+      "endAddressExclusive": 140710500478976
+    },
+    {
+      "moduleName": "AcVDiff.crx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcVDiff.crx",
+      "baseAddress": 140707669803008,
+      "baseAddressHex": "0x7FF90EAD0000",
+      "moduleMemorySize": 1183744,
+      "endAddressExclusive": 140707670986752
+    },
+    {
+      "moduleName": "AcVDiffRes.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\AcVDiffRes.dll",
+      "baseAddress": 1882675216384,
+      "baseAddressHex": "0x1B658300000",
+      "moduleMemorySize": 12288,
+      "endAddressExclusive": 1882675228672
+    },
+    {
+      "moduleName": "acsign.arx",
+      "path": "d:\\cad2020\\autocad 2020\\acsign.arx",
+      "baseAddress": 140707828727808,
+      "baseAddressHex": "0x7FF918260000",
+      "moduleMemorySize": 110592,
+      "endAddressExclusive": 140707828838400
+    },
+    {
+      "moduleName": "acsignRes.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\acsignRes.dll",
+      "baseAddress": 1882677837824,
+      "baseAddressHex": "0x1B658580000",
+      "moduleMemorySize": 24576,
+      "endAddressExclusive": 1882677862400
+    },
+    {
+      "moduleName": "acetutil.arx",
+      "path": "d:\\cad2020\\autocad 2020\\express\\acetutil.arx",
+      "baseAddress": 140707784228864,
+      "baseAddressHex": "0x7FF9157F0000",
+      "moduleMemorySize": 131072,
+      "endAddressExclusive": 140707784359936
+    },
+    {
+      "moduleName": "AcExpressRes.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\AcExpressRes.dll",
+      "baseAddress": 1883836121088,
+      "baseAddressHex": "0x1B69D620000",
+      "moduleMemorySize": 57344,
+      "endAddressExclusive": 1883836178432
+    },
+    {
+      "moduleName": "cpcore.arx",
+      "path": "c:\\sow\\智源·云设计\\arx_64\\23.1\\cpcore.arx",
+      "baseAddress": 1883838152704,
+      "baseAddressHex": "0x1B69D810000",
+      "moduleMemorySize": 638976,
+      "endAddressExclusive": 1883838791680
+    },
+    {
+      "moduleName": "acbr23.dbx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acbr23.dbx",
+      "baseAddress": 140707669475328,
+      "baseAddressHex": "0x7FF90EA80000",
+      "moduleMemorySize": 299008,
+      "endAddressExclusive": 140707669774336
+    },
+    {
+      "moduleName": "ASMFCT225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMFCT225A.dll",
+      "baseAddress": 140707666198528,
+      "baseAddressHex": "0x7FF90E760000",
+      "moduleMemorySize": 1802240,
+      "endAddressExclusive": 140707668000768
+    },
+    {
+      "moduleName": "ASMKERN225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMKERN225A.dll",
+      "baseAddress": 140707580805120,
+      "baseAddressHex": "0x7FF9095F0000",
+      "moduleMemorySize": 16699392,
+      "endAddressExclusive": 140707597504512
+    },
+    {
+      "moduleName": "AcGex23.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcGex23.dll",
+      "baseAddress": 140707669147648,
+      "baseAddressHex": "0x7FF90EA30000",
+      "moduleMemorySize": 315392,
+      "endAddressExclusive": 140707669463040
+    },
+    {
+      "moduleName": "ASMBASE225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMBASE225A.dll",
+      "baseAddress": 140707665149952,
+      "baseAddressHex": "0x7FF90E660000",
+      "moduleMemorySize": 1007616,
+      "endAddressExclusive": 140707666157568
+    },
+    {
+      "moduleName": "ASMCSTR225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMCSTR225A.dll",
+      "baseAddress": 140707606495232,
+      "baseAddressHex": "0x7FF90AE70000",
+      "moduleMemorySize": 2056192,
+      "endAddressExclusive": 140707608551424
+    },
+    {
+      "moduleName": "ASMTOPT225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMTOPT225A.dll",
+      "baseAddress": 140707598368768,
+      "baseAddressHex": "0x7FF90A6B0000",
+      "moduleMemorySize": 1490944,
+      "endAddressExclusive": 140707599859712
+    },
+    {
+      "moduleName": "ASMINTR225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMINTR225A.dll",
+      "baseAddress": 140707599876096,
+      "baseAddressHex": "0x7FF90A820000",
+      "moduleMemorySize": 5431296,
+      "endAddressExclusive": 140707605307392
+    },
+    {
+      "moduleName": "ASMLAW225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMLAW225A.dll",
+      "baseAddress": 140707579691008,
+      "baseAddressHex": "0x7FF9094E0000",
+      "moduleMemorySize": 1101824,
+      "endAddressExclusive": 140707580792832
+    },
+    {
+      "moduleName": "tsplines7A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\tsplines7A.dll",
+      "baseAddress": 140707559047168,
+      "baseAddressHex": "0x7FF908130000",
+      "moduleMemorySize": 20586496,
+      "endAddressExclusive": 140707579633664
+    },
+    {
+      "moduleName": "ASMMATRIX225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMMATRIX225A.dll",
+      "baseAddress": 140707657875456,
+      "baseAddressHex": "0x7FF90DF70000",
+      "moduleMemorySize": 397312,
+      "endAddressExclusive": 140707658272768
+    },
+    {
+      "moduleName": "modlr23.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\modlr23.dll",
+      "baseAddress": 140707605315584,
+      "baseAddressHex": "0x7FF90AD50000",
+      "moduleMemorySize": 1179648,
+      "endAddressExclusive": 140707606495232
+    },
+    {
+      "moduleName": "ASMCT225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMCT225A.dll",
+      "baseAddress": 140707657416704,
+      "baseAddressHex": "0x7FF90DF00000",
+      "moduleMemorySize": 425984,
+      "endAddressExclusive": 140707657842688
+    },
+    {
+      "moduleName": "ASMGA225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMGA225A.dll",
+      "baseAddress": 140707558785024,
+      "baseAddressHex": "0x7FF9080F0000",
+      "moduleMemorySize": 262144,
+      "endAddressExclusive": 140707559047168
+    },
+    {
+      "moduleName": "ASMDATAX225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMDATAX225A.dll",
+      "baseAddress": 140707551510528,
+      "baseAddressHex": "0x7FF907A00000",
+      "moduleMemorySize": 950272,
+      "endAddressExclusive": 140707552460800
+    },
+    {
+      "moduleName": "ASMIMPORT225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMIMPORT225A.dll",
+      "baseAddress": 140707549413376,
+      "baseAddressHex": "0x7FF907800000",
+      "moduleMemorySize": 2064384,
+      "endAddressExclusive": 140707551477760
+    },
+    {
+      "moduleName": "ASMNPCH225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMNPCH225A.dll",
+      "baseAddress": 140707546857472,
+      "baseAddressHex": "0x7FF907590000",
+      "moduleMemorySize": 2547712,
+      "endAddressExclusive": 140707549405184
+    },
+    {
+      "moduleName": "ASMSBAP225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMSBAP225A.dll",
+      "baseAddress": 140707544563712,
+      "baseAddressHex": "0x7FF907360000",
+      "moduleMemorySize": 2289664,
+      "endAddressExclusive": 140707546853376
+    },
+    {
+      "moduleName": "ASMCOVR225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMCOVR225A.dll",
+      "baseAddress": 140707598106624,
+      "baseAddressHex": "0x7FF90A670000",
+      "moduleMemorySize": 258048,
+      "endAddressExclusive": 140707598364672
+    },
+    {
+      "moduleName": "ASMBOOL225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMBOOL225A.dll",
+      "baseAddress": 140707511336960,
+      "baseAddressHex": "0x7FF9053B0000",
+      "moduleMemorySize": 3297280,
+      "endAddressExclusive": 140707514634240
+    },
+    {
+      "moduleName": "ASMHEAL225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMHEAL225A.dll",
+      "baseAddress": 140707542728704,
+      "baseAddressHex": "0x7FF9071A0000",
+      "moduleMemorySize": 1822720,
+      "endAddressExclusive": 140707544551424
+    },
+    {
+      "moduleName": "ASMBLND225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMBLND225A.dll",
+      "baseAddress": 140707504717824,
+      "baseAddressHex": "0x7FF904D60000",
+      "moduleMemorySize": 6586368,
+      "endAddressExclusive": 140707511304192
+    },
+    {
+      "moduleName": "ASMSWP225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMSWP225A.dll",
+      "baseAddress": 140707501637632,
+      "baseAddressHex": "0x7FF904A70000",
+      "moduleMemorySize": 3043328,
+      "endAddressExclusive": 140707504680960
+    },
+    {
+      "moduleName": "ASMSKIN225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMSKIN225A.dll",
+      "baseAddress": 140707498164224,
+      "baseAddressHex": "0x7FF904720000",
+      "moduleMemorySize": 3452928,
+      "endAddressExclusive": 140707501617152
+    },
+    {
+      "moduleName": "ASMOFST225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMOFST225A.dll",
+      "baseAddress": 140707497574400,
+      "baseAddressHex": "0x7FF904690000",
+      "moduleMemorySize": 528384,
+      "endAddressExclusive": 140707498102784
+    },
+    {
+      "moduleName": "ASMLOP225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMLOP225A.dll",
+      "baseAddress": 140707493314560,
+      "baseAddressHex": "0x7FF904280000",
+      "moduleMemorySize": 4235264,
+      "endAddressExclusive": 140707497549824
+    },
+    {
+      "moduleName": "ASMREM225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMREM225A.dll",
+      "baseAddress": 140707492593664,
+      "baseAddressHex": "0x7FF9041D0000",
+      "moduleMemorySize": 679936,
+      "endAddressExclusive": 140707493273600
+    },
+    {
+      "moduleName": "ASMSHL225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMSHL225A.dll",
+      "baseAddress": 140707491938304,
+      "baseAddressHex": "0x7FF904130000",
+      "moduleMemorySize": 614400,
+      "endAddressExclusive": 140707492552704
+    },
+    {
+      "moduleName": "ASMAHL225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMAHL225A.dll",
+      "baseAddress": 140707486892032,
+      "baseAddressHex": "0x7FF903C60000",
+      "moduleMemorySize": 5029888,
+      "endAddressExclusive": 140707491921920
+    },
+    {
+      "moduleName": "ASMTWK225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMTWK225A.dll",
+      "baseAddress": 140707597844480,
+      "baseAddressHex": "0x7FF90A630000",
+      "moduleMemorySize": 258048,
+      "endAddressExclusive": 140707598102528
+    },
+    {
+      "moduleName": "ASMDEFM225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMDEFM225A.dll",
+      "baseAddress": 140707542466560,
+      "baseAddressHex": "0x7FF907160000",
+      "moduleMemorySize": 221184,
+      "endAddressExclusive": 140707542687744
+    },
+    {
+      "moduleName": "ASMSBOOL225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMSBOOL225A.dll",
+      "baseAddress": 140707539517440,
+      "baseAddressHex": "0x7FF906E90000",
+      "moduleMemorySize": 290816,
+      "endAddressExclusive": 140707539808256
+    },
+    {
+      "moduleName": "ASMRB225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMRB225A.dll",
+      "baseAddress": 140707486367744,
+      "baseAddressHex": "0x7FF903BE0000",
+      "moduleMemorySize": 516096,
+      "endAddressExclusive": 140707486883840
+    },
+    {
+      "moduleName": "ASMOPER225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMOPER225A.dll",
+      "baseAddress": 140707668492288,
+      "baseAddressHex": "0x7FF90E990000",
+      "moduleMemorySize": 184320,
+      "endAddressExclusive": 140707668676608
+    },
+    {
+      "moduleName": "ASMRBI225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMRBI225A.dll",
+      "baseAddress": 140707484598272,
+      "baseAddressHex": "0x7FF903A30000",
+      "moduleMemorySize": 1716224,
+      "endAddressExclusive": 140707486314496
+    },
+    {
+      "moduleName": "ASMEULR225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMEULR225A.dll",
+      "baseAddress": 140707686449152,
+      "baseAddressHex": "0x7FF90FAB0000",
+      "moduleMemorySize": 114688,
+      "endAddressExclusive": 140707686563840
+    },
+    {
+      "moduleName": "ASMLOPT225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMLOPT225A.dll",
+      "baseAddress": 140707483680768,
+      "baseAddressHex": "0x7FF903950000",
+      "moduleMemorySize": 892928,
+      "endAddressExclusive": 140707484573696
+    },
+    {
+      "moduleName": "errRes.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\errRes.dll",
+      "baseAddress": 1883836317696,
+      "baseAddressHex": "0x1B69D650000",
+      "moduleMemorySize": 32768,
+      "endAddressExclusive": 1883836350464
+    },
+    {
+      "moduleName": "virtdisk.dll",
+      "path": "C:\\windows\\SYSTEM32\\virtdisk.dll",
+      "baseAddress": 140710450429952,
+      "baseAddressHex": "0x7FF9B46A0000",
+      "moduleMemorySize": 77824,
+      "endAddressExclusive": 140710450507776
+    },
+    {
+      "moduleName": "FLTLIB.DLL",
+      "path": "C:\\windows\\SYSTEM32\\FLTLIB.DLL",
+      "baseAddress": 140711058800640,
+      "baseAddressHex": "0x7FF9D8AD0000",
+      "moduleMemorySize": 45056,
+      "endAddressExclusive": 140711058845696
+    },
+    {
+      "moduleName": "rasapi32.dll",
+      "path": "C:\\windows\\SYSTEM32\\rasapi32.dll",
+      "baseAddress": 140710548865024,
+      "baseAddressHex": "0x7FF9BA480000",
+      "moduleMemorySize": 1044480,
+      "endAddressExclusive": 140710549909504
+    },
+    {
+      "moduleName": "rasman.dll",
+      "path": "C:\\windows\\SYSTEM32\\rasman.dll",
+      "baseAddress": 140710548602880,
+      "baseAddressHex": "0x7FF9BA440000",
+      "moduleMemorySize": 217088,
+      "endAddressExclusive": 140710548819968
+    },
+    {
+      "moduleName": "rtutils.dll",
+      "path": "C:\\windows\\SYSTEM32\\rtutils.dll",
+      "baseAddress": 140710601031680,
+      "baseAddressHex": "0x7FF9BD640000",
+      "moduleMemorySize": 90112,
+      "endAddressExclusive": 140710601121792
+    },
+    {
+      "moduleName": "mswsock.dll",
+      "path": "C:\\windows\\system32\\mswsock.dll",
+      "baseAddress": 140711052509184,
+      "baseAddressHex": "0x7FF9D84D0000",
+      "moduleMemorySize": 434176,
+      "endAddressExclusive": 140711052943360
+    },
+    {
+      "moduleName": "winhttp.dll",
+      "path": "C:\\windows\\SYSTEM32\\winhttp.dll",
+      "baseAddress": 140710973734912,
+      "baseAddressHex": "0x7FF9D39B0000",
+      "moduleMemorySize": 1101824,
+      "endAddressExclusive": 140710974836736
+    },
+    {
+      "moduleName": "dhcpcsvc6.DLL",
+      "path": "C:\\windows\\SYSTEM32\\dhcpcsvc6.DLL",
+      "baseAddress": 140710976946176,
+      "baseAddressHex": "0x7FF9D3CC0000",
+      "moduleMemorySize": 94208,
+      "endAddressExclusive": 140710977040384
+    },
+    {
+      "moduleName": "dhcpcsvc.DLL",
+      "path": "C:\\windows\\SYSTEM32\\dhcpcsvc.DLL",
+      "baseAddress": 140710980091904,
+      "baseAddressHex": "0x7FF9D3FC0000",
+      "moduleMemorySize": 118784,
+      "endAddressExclusive": 140710980210688
+    },
+    {
+      "moduleName": "napinsp.dll",
+      "path": "C:\\windows\\system32\\napinsp.dll",
+      "baseAddress": 140709922799616,
+      "baseAddressHex": "0x7FF994F70000",
+      "moduleMemorySize": 94208,
+      "endAddressExclusive": 140709922893824
+    },
+    {
+      "moduleName": "pnrpnsp.dll",
+      "path": "C:\\windows\\system32\\pnrpnsp.dll",
+      "baseAddress": 140709922668544,
+      "baseAddressHex": "0x7FF994F50000",
+      "moduleMemorySize": 110592,
+      "endAddressExclusive": 140709922779136
+    },
+    {
+      "moduleName": "wshbth.dll",
+      "path": "C:\\windows\\system32\\wshbth.dll",
+      "baseAddress": 140710476382208,
+      "baseAddressHex": "0x7FF9B5F60000",
+      "moduleMemorySize": 86016,
+      "endAddressExclusive": 140710476468224
+    },
+    {
+      "moduleName": "NLAapi.dll",
+      "path": "C:\\windows\\system32\\NLAapi.dll",
+      "baseAddress": 140711012859904,
+      "baseAddressHex": "0x7FF9D5F00000",
+      "moduleMemorySize": 118784,
+      "endAddressExclusive": 140711012978688
+    },
+    {
+      "moduleName": "winrnr.dll",
+      "path": "C:\\windows\\System32\\winrnr.dll",
+      "baseAddress": 140709922537472,
+      "baseAddressHex": "0x7FF994F30000",
+      "moduleMemorySize": 73728,
+      "endAddressExclusive": 140709922611200
+    },
+    {
+      "moduleName": "rasadhlp.dll",
+      "path": "C:\\Windows\\System32\\rasadhlp.dll",
+      "baseAddress": 140710609944576,
+      "baseAddressHex": "0x7FF9BDEC0000",
+      "moduleMemorySize": 40960,
+      "endAddressExclusive": 140710609985536
+    },
+    {
+      "moduleName": "fwpuclnt.dll",
+      "path": "C:\\windows\\System32\\fwpuclnt.dll",
+      "baseAddress": 140710615842816,
+      "baseAddressHex": "0x7FF9BE460000",
+      "moduleMemorySize": 524288,
+      "endAddressExclusive": 140710616367104
+    },
+    {
+      "moduleName": "HPSocket4C_U.dll",
+      "path": "C:\\SOW\\智源·云设计\\NET40\\HPSocket4C_U.dll",
+      "baseAddress": 140707597582336,
+      "baseAddressHex": "0x7FF90A5F0000",
+      "moduleMemorySize": 245760,
+      "endAddressExclusive": 140707597828096
+    },
+    {
+      "moduleName": "System.Data.dll",
+      "path": "C:\\windows\\Microsoft.Net\\assembly\\GAC_64\\System.Data\\v4.0_4.0.0.0__b77a5c561934e089\\System.Data.dll",
+      "baseAddress": 140707895640064,
+      "baseAddressHex": "0x7FF91C230000",
+      "moduleMemorySize": 3575808,
+      "endAddressExclusive": 140707899215872
+    },
+    {
+      "moduleName": "gpapi.dll",
+      "path": "C:\\windows\\SYSTEM32\\gpapi.dll",
+      "baseAddress": 140711036846080,
+      "baseAddressHex": "0x7FF9D75E0000",
+      "moduleMemorySize": 143360,
+      "endAddressExclusive": 140711036989440
+    },
+    {
+      "moduleName": "WINNSI.DLL",
+      "path": "C:\\windows\\SYSTEM32\\WINNSI.DLL",
+      "baseAddress": 140710981402624,
+      "baseAddressHex": "0x7FF9D4100000",
+      "moduleMemorySize": 45056,
+      "endAddressExclusive": 140710981447680
+    },
+    {
+      "moduleName": "scml.arx",
+      "path": "c:\\users\\pc\\appdata\\local\\scml\\nativeplugin\\0.5-2019-9e20250c6d02\\scml.arx",
+      "baseAddress": 140707483287552,
+      "baseAddressHex": "0x7FF9038F0000",
+      "moduleMemorySize": 331776,
+      "endAddressExclusive": 140707483619328
+    },
+    {
+      "moduleName": "edputil.dll",
+      "path": "C:\\windows\\SYSTEM32\\edputil.dll",
+      "baseAddress": 140710439485440,
+      "baseAddressHex": "0x7FF9B3C30000",
+      "moduleMemorySize": 147456,
+      "endAddressExclusive": 140710439632896
+    },
+    {
+      "moduleName": "Windows.StateRepositoryPS.dll",
+      "path": "C:\\Windows\\System32\\Windows.StateRepositoryPS.dll",
+      "baseAddress": 140710520684544,
+      "baseAddressHex": "0x7FF9B89A0000",
+      "moduleMemorySize": 1335296,
+      "endAddressExclusive": 140710522019840
+    },
+    {
+      "moduleName": "appresolver.dll",
+      "path": "C:\\Windows\\System32\\appresolver.dll",
+      "baseAddress": 140710474612736,
+      "baseAddressHex": "0x7FF9B5DB0000",
+      "moduleMemorySize": 606208,
+      "endAddressExclusive": 140710475218944
+    },
+    {
+      "moduleName": "SLC.dll",
+      "path": "C:\\Windows\\System32\\SLC.dll",
+      "baseAddress": 140711039664128,
+      "baseAddressHex": "0x7FF9D7890000",
+      "moduleMemorySize": 167936,
+      "endAddressExclusive": 140711039832064
+    },
+    {
+      "moduleName": "sppc.dll",
+      "path": "C:\\Windows\\System32\\sppc.dll",
+      "baseAddress": 140711039467520,
+      "baseAddressHex": "0x7FF9D7860000",
+      "moduleMemorySize": 151552,
+      "endAddressExclusive": 140711039619072
+    },
+    {
+      "moduleName": "OneCoreCommonProxyStub.dll",
+      "path": "C:\\Windows\\System32\\OneCoreCommonProxyStub.dll",
+      "baseAddress": 140710616498176,
+      "baseAddressHex": "0x7FF9BE500000",
+      "moduleMemorySize": 520192,
+      "endAddressExclusive": 140710617018368
+    },
+    {
+      "moduleName": "OneCoreUAPCommonProxyStub.dll",
+      "path": "C:\\Windows\\System32\\OneCoreUAPCommonProxyStub.dll",
+      "baseAddress": 140710855507968,
+      "baseAddressHex": "0x7FF9CC8F0000",
+      "moduleMemorySize": 8208384,
+      "endAddressExclusive": 140710863716352
+    },
+    {
+      "moduleName": "wmiutils.dll",
+      "path": "C:\\windows\\system32\\wbem\\wmiutils.dll",
+      "baseAddress": 140710548406272,
+      "baseAddressHex": "0x7FF9BA410000",
+      "moduleMemorySize": 163840,
+      "endAddressExclusive": 140710548570112
+    },
+    {
+      "moduleName": "wminet_utils.dll",
+      "path": "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\wminet_utils.dll",
+      "baseAddress": 140707558588416,
+      "baseAddressHex": "0x7FF9080C0000",
+      "moduleMemorySize": 196608,
+      "endAddressExclusive": 140707558785024
+    },
+    {
+      "moduleName": "tch_kernal.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_kernal.arx",
+      "baseAddress": 16056320,
+      "baseAddressHex": "0xF50000",
+      "moduleMemorySize": 10440704,
+      "endAddressExclusive": 26497024
+    },
+    {
+      "moduleName": "tch_utility.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_utility.arx",
+      "baseAddress": 26542080,
+      "baseAddressHex": "0x1950000",
+      "moduleMemorySize": 2052096,
+      "endAddressExclusive": 28594176
+    },
+    {
+      "moduleName": "tch_pipewire.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_pipewire.arx",
+      "baseAddress": 28639232,
+      "baseAddressHex": "0x1B50000",
+      "moduleMemorySize": 3461120,
+      "endAddressExclusive": 32100352
+    },
+    {
+      "moduleName": "tch_pipebase.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_pipebase.arx",
+      "baseAddress": 1883962605568,
+      "baseAddressHex": "0x1B6A4EC0000",
+      "moduleMemorySize": 3796992,
+      "endAddressExclusive": 1883966402560
+    },
+    {
+      "moduleName": "tch_initstart.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_initstart.arx",
+      "baseAddress": 32112640,
+      "baseAddressHex": "0x1EA0000",
+      "moduleMemorySize": 22470656,
+      "endAddressExclusive": 54583296
+    },
+    {
+      "moduleName": "tch.dll",
+      "path": "C:\\tangent\\tarcht20v8\\sys23x64\\tch.dll",
+      "baseAddress": 54591488,
+      "baseAddressHex": "0x3410000",
+      "moduleMemorySize": 942080,
+      "endAddressExclusive": 55533568
+    },
+    {
+      "moduleName": "tch_uiframe.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_uiframe.arx",
+      "baseAddress": 140707482238976,
+      "baseAddressHex": "0x7FF9037F0000",
+      "moduleMemorySize": 1024000,
+      "endAddressExclusive": 140707483262976
+    },
+    {
+      "moduleName": "tch_common.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_common.arx",
+      "baseAddress": 55574528,
+      "baseAddressHex": "0x3500000",
+      "moduleMemorySize": 348160,
+      "endAddressExclusive": 55922688
+    },
+    {
+      "moduleName": "TCH_UIPanelAxis.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelAxis.arx",
+      "baseAddress": 1883883896832,
+      "baseAddressHex": "0x1B6A03B0000",
+      "moduleMemorySize": 479232,
+      "endAddressExclusive": 1883884376064
+    },
+    {
+      "moduleName": "TCH_UIPanelColumn.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelColumn.arx",
+      "baseAddress": 1883884421120,
+      "baseAddressHex": "0x1B6A0430000",
+      "moduleMemorySize": 794624,
+      "endAddressExclusive": 1883885215744
+    },
+    {
+      "moduleName": "TCH_UIPanelLayer.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelLayer.arx",
+      "baseAddress": 1883885273088,
+      "baseAddressHex": "0x1B6A0500000",
+      "moduleMemorySize": 696320,
+      "endAddressExclusive": 1883885969408
+    },
+    {
+      "moduleName": "tch_sqlite.dll",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_sqlite.dll",
+      "baseAddress": 140707481518080,
+      "baseAddressHex": "0x7FF903740000",
+      "moduleMemorySize": 720896,
+      "endAddressExclusive": 140707482238976
+    },
+    {
+      "moduleName": "TCH_UIPanelRedLine.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelRedLine.arx",
+      "baseAddress": 1883885993984,
+      "baseAddressHex": "0x1B6A05B0000",
+      "moduleMemorySize": 184320,
+      "endAddressExclusive": 1883886178304
+    },
+    {
+      "moduleName": "TCH_UIPanelWall.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelWall.arx",
+      "baseAddress": 1883886190592,
+      "baseAddressHex": "0x1B6A05E0000",
+      "moduleMemorySize": 593920,
+      "endAddressExclusive": 1883886784512
+    },
+    {
+      "moduleName": "TCH_UIPanelWindowAndDoor.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelWindowAndDoor.arx",
+      "baseAddress": 1884027682816,
+      "baseAddressHex": "0x1B6A8CD0000",
+      "moduleMemorySize": 8130560,
+      "endAddressExclusive": 1884035813376
+    },
+    {
+      "moduleName": "TCH_UIPanelsymbol.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelsymbol.arx",
+      "baseAddress": 1883886845952,
+      "baseAddressHex": "0x1B6A0680000",
+      "moduleMemorySize": 770048,
+      "endAddressExclusive": 1883887616000
+    },
+    {
+      "moduleName": "TCH_UIPanelSymbolManage.ARX",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelSymbolManage.ARX",
+      "baseAddress": 140709514248192,
+      "baseAddressHex": "0x7FF97C9D0000",
+      "moduleMemorySize": 61440,
+      "endAddressExclusive": 140709514309632
+    },
+    {
+      "moduleName": "mlang.dll",
+      "path": "C:\\windows\\system32\\mlang.dll",
+      "baseAddress": 140710611386368,
+      "baseAddressHex": "0x7FF9BE020000",
+      "moduleMemorySize": 270336,
+      "endAddressExclusive": 140710611656704
+    },
+    {
+      "moduleName": "TCH_UIToolBar.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIToolBar.arx",
+      "baseAddress": 1883887632384,
+      "baseAddressHex": "0x1B6A0740000",
+      "moduleMemorySize": 487424,
+      "endAddressExclusive": 1883888119808
+    },
+    {
+      "moduleName": "tch3_kernal.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch3_kernal.arx",
+      "baseAddress": 55967744,
+      "baseAddressHex": "0x3560000",
+      "moduleMemorySize": 430080,
+      "endAddressExclusive": 56397824
+    },
+    {
+      "moduleName": "tch_kerncmd.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_kerncmd.arx",
+      "baseAddress": 56426496,
+      "baseAddressHex": "0x35D0000",
+      "moduleMemorySize": 7954432,
+      "endAddressExclusive": 64380928
+    },
+    {
+      "moduleName": "MSVFW32.dll",
+      "path": "C:\\windows\\SYSTEM32\\MSVFW32.dll",
+      "baseAddress": 140707481321472,
+      "baseAddressHex": "0x7FF903710000",
+      "moduleMemorySize": 176128,
+      "endAddressExclusive": 140707481497600
+    },
+    {
+      "moduleName": "AVIFIL32.dll",
+      "path": "C:\\windows\\SYSTEM32\\AVIFIL32.dll",
+      "baseAddress": 140707481124864,
+      "baseAddressHex": "0x7FF9036E0000",
+      "moduleMemorySize": 135168,
+      "endAddressExclusive": 140707481260032
+    },
+    {
+      "moduleName": "MSACM32.dll",
+      "path": "C:\\windows\\SYSTEM32\\MSACM32.dll",
+      "baseAddress": 140710522519552,
+      "baseAddressHex": "0x7FF9B8B60000",
+      "moduleMemorySize": 122880,
+      "endAddressExclusive": 140710522642432
+    },
+    {
+      "moduleName": "winmmbase.dll",
+      "path": "C:\\windows\\SYSTEM32\\winmmbase.dll",
+      "baseAddress": 140710333710336,
+      "baseAddressHex": "0x7FF9AD750000",
+      "moduleMemorySize": 155648,
+      "endAddressExclusive": 140710333865984
+    },
+    {
+      "moduleName": "tch_annotate.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_annotate.arx",
+      "baseAddress": 64421888,
+      "baseAddressHex": "0x3D70000",
+      "moduleMemorySize": 8466432,
+      "endAddressExclusive": 72888320
+    },
+    {
+      "moduleName": "tch_toolcmd.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_toolcmd.arx",
+      "baseAddress": 72941568,
+      "baseAddressHex": "0x4590000",
+      "moduleMemorySize": 1474560,
+      "endAddressExclusive": 74416128
+    },
+    {
+      "moduleName": "tch_elevation.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_elevation.arx",
+      "baseAddress": 74448896,
+      "baseAddressHex": "0x4700000",
+      "moduleMemorySize": 1081344,
+      "endAddressExclusive": 75530240
+    },
+    {
+      "moduleName": "tch_collision.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_collision.arx",
+      "baseAddress": 1883889205248,
+      "baseAddressHex": "0x1B6A08C0000",
+      "moduleMemorySize": 544768,
+      "endAddressExclusive": 1883889750016
+    },
+    {
+      "moduleName": "tch_structure.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_structure.arx",
+      "baseAddress": 75563008,
+      "baseAddressHex": "0x4810000",
+      "moduleMemorySize": 90112,
+      "endAddressExclusive": 75653120
+    },
+    {
+      "moduleName": "tch_siteplan.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_siteplan.arx",
+      "baseAddress": 75694080,
+      "baseAddressHex": "0x4830000",
+      "moduleMemorySize": 3256320,
+      "endAddressExclusive": 78950400
+    },
+    {
+      "moduleName": "tch_public.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_public.arx",
+      "baseAddress": 78970880,
+      "baseAddressHex": "0x4B50000",
+      "moduleMemorySize": 3055616,
+      "endAddressExclusive": 82026496
+    },
+    {
+      "moduleName": "RICHED32.DLL",
+      "path": "C:\\windows\\SYSTEM32\\RICHED32.DLL",
+      "baseAddress": 140709485871104,
+      "baseAddressHex": "0x7FF97AEC0000",
+      "moduleMemorySize": 28672,
+      "endAddressExclusive": 140709485899776
+    },
+    {
+      "moduleName": "RICHED20.dll",
+      "path": "C:\\windows\\SYSTEM32\\RICHED20.dll",
+      "baseAddress": 140707480469504,
+      "baseAddressHex": "0x7FF903640000",
+      "moduleMemorySize": 630784,
+      "endAddressExclusive": 140707481100288
+    },
+    {
+      "moduleName": "msls31.dll",
+      "path": "C:\\windows\\SYSTEM32\\msls31.dll",
+      "baseAddress": 140707480207360,
+      "baseAddressHex": "0x7FF903600000",
+      "moduleMemorySize": 233472,
+      "endAddressExclusive": 140707480440832
+    },
+    {
+      "moduleName": "tch_blklib.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_blklib.arx",
+      "baseAddress": 82051072,
+      "baseAddressHex": "0x4E40000",
+      "moduleMemorySize": 3117056,
+      "endAddressExclusive": 85168128
+    },
+    {
+      "moduleName": "tch_3dsolids.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_3dsolids.arx",
+      "baseAddress": 85196800,
+      "baseAddressHex": "0x5140000",
+      "moduleMemorySize": 1191936,
+      "endAddressExclusive": 86388736
+    },
+    {
+      "moduleName": "tch_interior.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_interior.arx",
+      "baseAddress": 1883933769728,
+      "baseAddressHex": "0x1B6A3340000",
+      "moduleMemorySize": 421888,
+      "endAddressExclusive": 1883934191616
+    },
+    {
+      "moduleName": "tch_tgedit.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_tgedit.arx",
+      "baseAddress": 86441984,
+      "baseAddressHex": "0x5270000",
+      "moduleMemorySize": 155648,
+      "endAddressExclusive": 86597632
+    },
+    {
+      "moduleName": "tch_tginterior.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_tginterior.arx",
+      "baseAddress": 86638592,
+      "baseAddressHex": "0x52A0000",
+      "moduleMemorySize": 315392,
+      "endAddressExclusive": 86953984
+    },
+    {
+      "moduleName": "tch_tgtool.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_tgtool.arx",
+      "baseAddress": 86966272,
+      "baseAddressHex": "0x52F0000",
+      "moduleMemorySize": 303104,
+      "endAddressExclusive": 87269376
+    },
+    {
+      "moduleName": "vlcom.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\vlcom.dll",
+      "baseAddress": 140707480010752,
+      "baseAddressHex": "0x7FF9035D0000",
+      "moduleMemorySize": 176128,
+      "endAddressExclusive": 140707480186880
+    },
+    {
+      "moduleName": "vlreac.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\vlreac.dll",
+      "baseAddress": 140707479814144,
+      "baseAddressHex": "0x7FF9035A0000",
+      "moduleMemorySize": 151552,
+      "endAddressExclusive": 140707479965696
+    },
+    {
+      "moduleName": "sxs.dll",
+      "path": "C:\\windows\\SYSTEM32\\sxs.dll",
+      "baseAddress": 140711059652608,
+      "baseAddressHex": "0x7FF9D8BA0000",
+      "moduleMemorySize": 663552,
+      "endAddressExclusive": 140711060316160
+    },
+    {
+      "moduleName": "mshtml.dll",
+      "path": "C:\\Windows\\System32\\mshtml.dll",
+      "baseAddress": 140707850747904,
+      "baseAddressHex": "0x7FF919760000",
+      "moduleMemorySize": 23552000,
+      "endAddressExclusive": 140707874299904
+    },
+    {
+      "moduleName": "ManagedMC3.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ManagedMC3.dll",
+      "baseAddress": 140707608657920,
+      "baseAddressHex": "0x7FF90B080000",
+      "moduleMemorySize": 139264,
+      "endAddressExclusive": 140707608797184
+    },
+    {
+      "moduleName": "WindowsCodecsExt.dll",
+      "path": "C:\\windows\\SYSTEM32\\WindowsCodecsExt.dll",
+      "baseAddress": 140707656957952,
+      "baseAddressHex": "0x7FF90DE90000",
+      "moduleMemorySize": 299008,
+      "endAddressExclusive": 140707657256960
+    },
+    {
+      "moduleName": "AdskLicensingSDK_2.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AdskLicensingSDK_2.dll",
+      "baseAddress": 140707475881984,
+      "baseAddressHex": "0x7FF9031E0000",
+      "moduleMemorySize": 3911680,
+      "endAddressExclusive": 140707479793664
+    },
+    {
+      "moduleName": "bcecase_44227fc6.arx",
+      "path": "c:\\program files\\autodesk\\applicationplugins\\codexelevationstage1_44227fc6c4f64da9b4014000b7b3a8a7\\bcecase_44227fc6.arx",
+      "baseAddress": 140709911920640,
+      "baseAddressHex": "0x7FF994510000",
+      "moduleMemorySize": 335872,
+      "endAddressExclusive": 140709912256512
+    }
+  ],
+  "debuggerAttached": false,
+  "processMutated": false
+}

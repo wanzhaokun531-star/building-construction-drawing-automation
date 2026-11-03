@@ -1,0 +1,48 @@
+{
+  "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-111210-3ff2980c",
+  "pid": 33976,
+  "controllerClosure": "resumed same-session standard watch after service interruption; stop70, 4 retired, 6 maintained, owned active0; no reopen/no fatal",
+  "nativeStatus": "closed failed at active custom style readback, no drawables/WorldDraw/text",
+  "files": [
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-111210-3ff2980c\\case\\native-case.json",
+      "snapshot": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v9-custom-style-differences\\case\\native-case.json",
+      "sha256": "FBC65D88B890A3232D73B6C0EAFAA6DEFD295F86973502C89EA3A4075CB92C6C"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-111210-3ff2980c\\case\\gs-result.json",
+      "snapshot": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v9-custom-style-differences\\case\\gs-result.json",
+      "sha256": "C6CF61D98C84D4101A63C37E32799648E563DAD408C4C612AF2D3891E8A05B2E"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-111210-3ff2980c\\case\\gs-trace.jsonl",
+      "snapshot": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v9-custom-style-differences\\case\\gs-trace.jsonl",
+      "sha256": "87074547BD5AA37829824316F0DC014BBF2B153C228A347AF97878A26900A7A3"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-111210-3ff2980c\\case\\lifecycle-1\\result.json",
+      "snapshot": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v9-custom-style-differences\\case\\lifecycle-1\\result.json",
+      "sha256": "AF114F5C97DE6623AE9C80C53958B7BA7C4F0629D1E8B5C5B905746A81A42315"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-111210-3ff2980c\\case\\lifecycle-3\\result.json",
+      "snapshot": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v9-custom-style-differences\\case\\lifecycle-3\\result.json",
+      "sha256": "053878B0CCA78DCBAD67A5F2B5F80547DB24C06298448F95CE15849E8930854B"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-111210-3ff2980c\\case\\lifecycle-2\\result.json",
+      "snapshot": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v9-custom-style-differences\\case\\lifecycle-2\\result.json",
+      "sha256": "E081A6F6E8F3580EC8217AEAEDE6C068E7EC7D639B9423E2A72766325F1B279B"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-111210-3ff2980c\\case\\lifecycle-2\\gs-trace.jsonl",
+      "snapshot": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v9-custom-style-differences\\case\\lifecycle-2\\gs-trace.jsonl",
+      "sha256": "CE5199FAE2AC4D6C47BFAAAE0E0E38DF4B10D76C133E0F0196262681EA31543F"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-111210-3ff2980c\\native-result-closure.json",
+      "snapshot": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v9-custom-style-differences\\native-result-closure.json",
+      "sha256": "47B3188F8054EBACA004E1483FA683EE2727A14CED44CE296B9D266106703499"
+    }
+  ]
+}

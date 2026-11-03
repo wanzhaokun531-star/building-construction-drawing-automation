@@ -1,0 +1,10 @@
+{"message":"real GS resource lifecycle fault control failed: owned software device renderer readback mismatch","event":"execute.cppException.beforeCleanup"}
+{"faultPoint":0,"view":0,"marker":0,"model":0,"device":0,"kernel":0,"database":0,"ruleAttached":false,"event":"cleanup.enter"}
+{"event":"rule.reset.before"}
+{"event":"rule.reset.after"}
+{"event":"sceneRoot.close.before"}
+{"event":"sceneRoot.close.after"}
+{"event":"marker.close.before"}
+{"event":"marker.close.after"}
+{"resourcesReleased":true,"event":"cleanup.return"}
+{"observed":false,"observation":"not-observed-main-not-entered","current":null,"active":null,"workingDatabase":null,"dbmod":null,"writeEvents":null,"event":"ambient.after"}

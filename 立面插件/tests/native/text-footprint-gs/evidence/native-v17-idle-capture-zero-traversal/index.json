@@ -1,0 +1,144 @@
+{
+  "status": "DONE_WITH_CONCERNS",
+  "captureConnected": false,
+  "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-122027-e03879b7",
+  "pid": 32760,
+  "controllerClosure": "standard watch exact stop70/4 retired/6 preserved/owned0, not normal QUIT",
+  "dispatch": "real entry/idle/capture succeeded once; entryCalls2/captureCalls1/queueStatus0/hook removed; GS core returned but native result failed",
+  "threeSnapshots": {
+    "entry": {
+      "pid": 32760,
+      "thread": 39160,
+      "cmdActive": 5,
+      "scriptBitSet": true,
+      "cmdNames": "BCE_TEST_RUN",
+      "inputPending": 0,
+      "quiescent": false,
+      "applicationContext": false,
+      "current": 2125645732064,
+      "active": 2125645732064,
+      "currentDatabase": 2125729545600,
+      "activeDatabase": 2125729545600,
+      "workingDatabase": 2125729545600
+    },
+    "idle-ready": {
+      "pid": 32760,
+      "thread": 39160,
+      "cmdActive": 0,
+      "scriptBitSet": false,
+      "cmdNames": "",
+      "inputPending": 0,
+      "quiescent": true,
+      "applicationContext": true,
+      "current": 2125645732064,
+      "active": 2125645732064,
+      "currentDatabase": 2125729545600,
+      "activeDatabase": 2125729545600,
+      "workingDatabase": 2125729545600
+    },
+    "capture": {
+      "pid": 32760,
+      "thread": 39160,
+      "cmdActive": 1,
+      "scriptBitSet": false,
+      "cmdNames": "BCE_GS_CAPTURE",
+      "inputPending": 0,
+      "quiescent": false,
+      "applicationContext": false,
+      "current": 2125645732064,
+      "active": 2125645732064,
+      "currentDatabase": 2125729545600,
+      "activeDatabase": 2125729545600,
+      "workingDatabase": 2125729545600
+    }
+  },
+  "dispatchFinal": {
+    "contract": "bce.native-gs-dispatch.v1",
+    "event": "gs-core-after",
+    "phase": "capture-finished",
+    "nonce": "e03879b7064446868b1e035072ce0ae4",
+    "tickMs": 664133000,
+    "entryCalls": 2,
+    "captureCalls": 1,
+    "hookAttached": false,
+    "idleReady": true,
+    "queued": true,
+    "queueAccepted": true,
+    "queueStatus": 0,
+    "captureStarted": true,
+    "captureFinished": true,
+    "gsCoreCompleted": true,
+    "error": "",
+    "observed": null
+  },
+  "native": "main and independent nonpersistent control zero attributes/WorldDraw/viewportDraw, raw RGB null; original failure and qualification=false",
+  "protection": "cleanup true, main and diagnostic ambient DBMOD1->1/no write notifications",
+  "interpretation": "specific SCRIPT-active execution condition excluded in this run; GS root cause remains unknown",
+  "files": [
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-122027-e03879b7\\boot.scr",
+      "snapshot": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v17-idle-capture-zero-traversal\\boot.scr",
+      "sha256": "761B0F607B4EF38905AF2BC34A91C61E528488286A8183441B712119C9203787"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-122027-e03879b7\\case\\native-case.json",
+      "snapshot": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v17-idle-capture-zero-traversal\\case\\native-case.json",
+      "sha256": "8F7AF13E70612C37C4AEC5A499F6077B5899D1DB62663E42A9BDA36A6F578ACC"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-122027-e03879b7\\case\\gs-result.json",
+      "snapshot": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v17-idle-capture-zero-traversal\\case\\gs-result.json",
+      "sha256": "2DDDDF37A545AD1B9E8701B9F3AC0BF7BB532DC8DA52642CF42116E36B904B98"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-122027-e03879b7\\case\\gs-trace.jsonl",
+      "snapshot": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v17-idle-capture-zero-traversal\\case\\gs-trace.jsonl",
+      "sha256": "99E1837929A8BF5A25D21399C70842C75B28494F31DBA98EB133B4DE2E5DF4BC"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-122027-e03879b7\\case\\dispatch-trace.jsonl",
+      "snapshot": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v17-idle-capture-zero-traversal\\case\\dispatch-trace.jsonl",
+      "sha256": "DE2EEE0CD1861B74105DCFEA3A954B421DAFADFB9C9ED505D828DB212945377E"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-122027-e03879b7\\case\\dispatch-state.json",
+      "snapshot": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v17-idle-capture-zero-traversal\\case\\dispatch-state.json",
+      "sha256": "B0B4CBABC13DB7943BA4ABA449834431ACA44B0B307168AF73C329FD5394CDA7"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-122027-e03879b7\\case\\lifecycle-1\\result.json",
+      "snapshot": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v17-idle-capture-zero-traversal\\case\\lifecycle-1\\result.json",
+      "sha256": "8F0A56465CE1E586C0135603C37AFAD2184AC503FE2C1B4778E5A7DC392E3CC2"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-122027-e03879b7\\case\\lifecycle-3\\result.json",
+      "snapshot": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v17-idle-capture-zero-traversal\\case\\lifecycle-3\\result.json",
+      "sha256": "885FD739109E7C062E37246CE350D85C946339B708D33E0CBFE024DD1414FA07"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-122027-e03879b7\\case\\lifecycle-2\\result.json",
+      "snapshot": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v17-idle-capture-zero-traversal\\case\\lifecycle-2\\result.json",
+      "sha256": "8658EDC3C5DC893A8B3816AE013FD06CB3EE2A893BDB9BFD3C5A8D6D55BEB9C0"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-122027-e03879b7\\case\\nonpersistent-control\\result.json",
+      "snapshot": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v17-idle-capture-zero-traversal\\case\\nonpersistent-control\\result.json",
+      "sha256": "A0D5D4C98CE7E0F72BA44260FEF5DE541F7C95475D9CC86A1C1BE610D9C7A8BA"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-122027-e03879b7\\case\\nonpersistent-control\\gs-trace.jsonl",
+      "snapshot": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v17-idle-capture-zero-traversal\\case\\nonpersistent-control\\gs-trace.jsonl",
+      "sha256": "3A52991E1967B451907F00D3F816056FAFA18FA318C990525EAE4386FAA43788"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-122027-e03879b7\\native-result-closure.json",
+      "snapshot": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v17-idle-capture-zero-traversal\\native-result-closure.json",
+      "sha256": "4E05F2CAC8B60A5EE9A15AD814DD64CD9BDD10D30ACC7EA9C064B19779BD01DD"
+    },
+    {
+      "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-122027-e03879b7\\reader-retirement.json",
+      "snapshot": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-footprint-gs\\evidence\\native-v17-idle-capture-zero-traversal\\reader-retirement.json",
+      "sha256": "496E979808CFB011D3A23E3E13B42BFE22E1DF0CB334FE8875302D50FBE1116D"
+    }
+  ]
+}

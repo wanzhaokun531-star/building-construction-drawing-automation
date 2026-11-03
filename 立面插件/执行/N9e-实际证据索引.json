@@ -1,0 +1,173 @@
+{
+  "contract": "bce.n9e-actual-evidence-index.v1",
+  "status": "n9e-observation-complete-n9c-capture-incomplete",
+  "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-124216-72c8e7b0",
+  "processId": 22936,
+  "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-124108-755-n9e-gs-boundary-observation-v19-frozen-7958f6f8\\receipt.json",
+  "receiptSHA256": "1921AE812258CE0B3291E820AE0CCE18B1B2A35A30962031D991A8CD23543861",
+  "binarySHA256": "24884E607FA9B727DE2FB72F8AE6CA1A95354E64469EB30F5BC305422664EE1D",
+  "nativeStatus": "failed",
+  "normalQuit": false,
+  "workerExitCode": 70,
+  "forcedTermination": true,
+  "relatedCadEventsNeedReview": true,
+  "otherCadForegroundPid": 47676,
+  "files": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-124216-72c8e7b0\\native-result-closure.json",
+      "SHA256": "C9329C25B9908855212123B1623EDC974F0DCEE2C3B6C5DEA3FC23525C8E07FD"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-124216-72c8e7b0\\isolation-final.json",
+      "SHA256": "331669E433AEF732244101F1B49F61EFB41225C377112E98D776A73BD5E6A2BA"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-124216-72c8e7b0\\reader-retirement.json",
+      "SHA256": "C65CE6F4532716A2F45FF34B0A25F0478BA85B4752D91E614754D5AB50F72361"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-124216-72c8e7b0\\isolation-related-cad-events.jsonl",
+      "SHA256": "162E9D2F1D38F9F1644019AF889B86056277020FE04037DC6143902435F51F40"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-124216-72c8e7b0\\case\\native-case.json",
+      "SHA256": "4C4D23441A865A5D6CF85E937DF4B38E8426E3C8D6E2FCCAB30A903F368B686D"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-124216-72c8e7b0\\case\\dispatch-trace.jsonl",
+      "SHA256": "B7F8F0861F5B49358187501F1F6A5ECC4F0DB67CDFBDC94209CAD73D4C045C40"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-124216-72c8e7b0\\case\\dispatch-state.json",
+      "SHA256": "83F26A0E31FC98F440501EA133F17CAF4B2E08053F6400A60FC26FED098EF442"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-124216-72c8e7b0\\case\\gs-trace.jsonl",
+      "SHA256": "C291E3A4ABC8A5E2305A33C400ADB328F64B08975EB50EF4256AAB18899F3188"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-124216-72c8e7b0\\case\\gs-result.json",
+      "SHA256": "2DDDDF37A545AD1B9E8701B9F3AC0BF7BB532DC8DA52642CF42116E36B904B98"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-124216-72c8e7b0\\case\\nonpersistent-control\\gs-trace.jsonl",
+      "SHA256": "F9EE1B25CBBDF5E27E18B7A9B69ACF1CD5117D94F9486746373C2E5A9EAC3976"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-124216-72c8e7b0\\case\\nonpersistent-control\\result.json",
+      "SHA256": "A0D5D4C98CE7E0F72BA44260FEF5DE541F7C95475D9CC86A1C1BE610D9C7A8BA"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-124216-72c8e7b0\\case\\lifecycle-controls.json",
+      "SHA256": "092BB18D22FB42CB786A4D974D54D2AFE271A7CAC4E9BD73AFD4A6A6EE48D161"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-124216-72c8e7b0\\case\\lifecycle-1\\gs-trace.jsonl",
+      "SHA256": "270108991EF9F680B637CF003CF00B9C0F1CA65E93A982EE123A36E560D41E5A"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-124216-72c8e7b0\\case\\lifecycle-3\\gs-trace.jsonl",
+      "SHA256": "A086F9C887D9295FA25A2404AC96B563A8C6316D0E4491D79F3DD222139C4823"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-124216-72c8e7b0\\case\\lifecycle-2\\gs-trace.jsonl",
+      "SHA256": "ADD2A9AA0700C44602AA7C37BDAF681DF50FC543BE649E40C5828B10D1F35567"
+    }
+  ],
+  "lineIndex": {
+    "dispatch-trace.jsonl": {
+      "idleReady": 4,
+      "capture": 7,
+      "finished": 10
+    },
+    "main gs-trace.jsonl": {
+      "modelKernel": 5,
+      "viewKernel": 16,
+      "emptyModels": [
+        17,
+        20
+      ],
+      "rootNotifications": [
+        23,
+        32,
+        33,
+        55
+      ],
+      "boundModels": [
+        30,
+        34,
+        43,
+        45,
+        48,
+        50
+      ],
+      "config": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "deviceViewUpdates": [
+        46,
+        51
+      ],
+      "observerRemoved": 76,
+      "resourcesReleased": 87,
+      "ambientAfter": 89
+    },
+    "nonpersistent-control gs-trace.jsonl": {
+      "modelKernel": 5,
+      "viewKernel": 16,
+      "emptyModels": [
+        17,
+        20
+      ],
+      "rootNotifications": [
+        23,
+        33,
+        34,
+        56
+      ],
+      "boundModels": [
+        30,
+        35,
+        44,
+        46,
+        49,
+        51
+      ],
+      "config": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "deviceViewUpdates": [
+        47,
+        52
+      ],
+      "observerRemoved": 73,
+      "resourcesReleased": 86
+    },
+    "lifecycle gs-trace.jsonl": {
+      "1": {
+        "observerRemoved": 22,
+        "resourcesReleased": 31
+      },
+      "3": {
+        "observerRemoved": 36,
+        "resourcesReleased": 47
+      },
+      "2": {
+        "observerRemoved": 52,
+        "resourcesReleased": 63
+      }
+    }
+  },
+  "inferenceLimits": [
+    "Configured singleton display driver is not proof of active offscreen driver or enabled acceleration",
+    "All observed boundaries match but root cause of zero traversal remains unknown",
+    "No RGB/context/text frames; BUILD/glyph/full capture qualification remains false",
+    "Other CAD foreground event is retained for review and was not operated on by this task"
+  ]
+}

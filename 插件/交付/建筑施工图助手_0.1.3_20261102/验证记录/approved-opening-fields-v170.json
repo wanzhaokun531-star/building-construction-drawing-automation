@@ -1,0 +1,14 @@
+[
+  {
+    "floor": 1,
+    "openings": 22,
+    "numbered": 21,
+    "allPublicOpeningFieldsMatchApproved": true
+  },
+  {
+    "floor": 2,
+    "openings": 20,
+    "numbered": 19,
+    "allPublicOpeningFieldsMatchApproved": true
+  }
+]

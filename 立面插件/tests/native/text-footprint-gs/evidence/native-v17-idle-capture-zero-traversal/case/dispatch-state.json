@@ -1,0 +1,1 @@
+{"contract":"bce.native-gs-dispatch.v1","event":"gs-core-after","phase":"capture-finished","nonce":"e03879b7064446868b1e035072ce0ae4","tickMs":664133000,"entryCalls":2,"captureCalls":1,"hookAttached":false,"idleReady":true,"queued":true,"queueAccepted":true,"queueStatus":0,"captureStarted":true,"captureFinished":true,"gsCoreCompleted":true,"error":"","observed":null}

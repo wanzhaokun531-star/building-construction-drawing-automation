@@ -25,6 +25,7 @@ class CPoint;
 #include <iomanip>
 #include <cmath>
 #include <algorithm>
+#include <tuple>
 namespace bce::viewport {
 using namespace bce::native;
 using namespace bce::graphics;
@@ -58,6 +59,7 @@ struct QueueReactor final:AcApDocManagerReactor,AcEdCommandStackReactor {
 struct Session {
     Config config;Evidence& evidence;File log;
     AcDbDatabase* ambient{};std::unique_ptr<Monitor> ambientMonitor;
+    AcApDocument* prepareDocument{};DWORD preparePid{},prepareThread{};std::wstring ambientPath;std::string readySHA;bool prepareComplete{};
     std::unique_ptr<AcDbDatabase> source;std::unique_ptr<Monitor> sourceMonitor;
     std::unique_ptr<Monitor> targetMonitor;AcDbDatabase* target{};
     std::string sourceFingerprint,targetSHA;std::uint64_t preparedTargetBytes{};std::vector<std::wstring> rootHandles;
@@ -104,6 +106,48 @@ struct Session {
     ~Session(){trace("session.destroy",{{"queued",queued?"true":"false"},{"capturing",capturing?"true":"false"}});if(commandQueueAttached)acedRegCmds->removeReactor(queue.get());if(queueAttached)acDocManager->removeReactor(queue.get());}
 };
 std::unique_ptr<Session> session;
+auto replayIdentity(const Config& c) {
+    return std::tie(c.nonce,c.session,c.scheme,c.reference,c.output,c.caseName,c.modulePath,c.iniPath,c.desktop,
+        c.expectedModuleSHA256,c.moduleSHA256,c.iniSHA256,c.schemeSHA256,c.referenceSHA256);
+}
+void validatePreparedReplay(const Config& config) {
+    require(session!=nullptr,"N7 replay session missing");auto& s=*session;
+    require(replayIdentity(config)==replayIdentity(s.config),"N7 replay config identity mismatch");
+    require(s.prepareComplete&&!s.target&&!s.queued&&!s.capturing&&!s.targetBecameCurrent&&!s.openCommandStarted&&!s.openCommandEnded,
+        "N7 replay phase mismatch");
+    require(GetCurrentProcessId()==s.preparePid&&GetCurrentThreadId()==s.prepareThread,"N7 replay execution identity mismatch");
+    require(curDoc()&&curDoc()==s.prepareDocument&&curDoc()==acDocManager->mdiActiveDocument()&&curDoc()->database()==s.ambient&&
+        acdbHostApplicationServices()->workingDatabase()==s.ambient,"N7 replay ambient context mismatch");
+    const ACHAR* name{};
+    require(s.ambient->getFilename(name)==Acad::eOk&&name&&s.ambientPath==name,"N7 replay ambient path mismatch");
+    require(s.rootHandles.size()==12&&s.classes.size()==12&&!s.targetSHA.empty()&&!s.readySHA.empty(),"N7 replay preparation incomplete");
+    require(sha256(config.output+L"\\prepare-ready.json")==s.readySHA,"N7 replay ready artifact mismatch");
+    require(sha256(config.output+L"\\viewport-target.dwg")==s.targetSHA,"N7 replay target artifact mismatch");
+    s.guarded();require(fingerprint(*s.source)==s.sourceFingerprint,"N7 replay source fingerprint mismatch");
+}
+void replayProtocolControls(Session& s) {
+    const auto targetSHA=s.targetSHA,readySHA=s.readySHA;const auto beforeEvents=s.eventCount;
+    auto check=[&](const char* label,const Config& config,const char* expectedError){
+        bool accepted=false;std::string error;
+        try{validatePreparedReplay(config);accepted=true;}catch(const std::runtime_error& e){error=e.what();}
+        const bool passed=expectedError?(!accepted&&error==expectedError):accepted;
+        trace("prepareReplay.control",{{"name",q(label)},{"accepted",accepted?"true":"false"},{"error",quote(error)},{"passed",passed?"true":"false"}});
+        require(passed,std::string("N7 replay protocol control failed: ")+label);
+    };
+    check("same-session-complete-preparation",s.config,nullptr);
+    auto mismatch=s.config;mismatch.nonce+=L"-wrong";check("wrong-nonce",mismatch,"N7 replay config identity mismatch");
+    mismatch=s.config;mismatch.session+=L"-wrong";check("wrong-session",mismatch,"N7 replay config identity mismatch");
+    mismatch=s.config;mismatch.output+=L"-wrong";check("wrong-output",mismatch,"N7 replay config identity mismatch");
+    mismatch=s.config;mismatch.caseName=L"OtherRole";check("wrong-role",mismatch,"N7 replay config identity mismatch");
+    // No host state or drawing is changed: only the protocol phase guard is challenged.
+    {struct Restore {bool& flag;bool old;~Restore(){flag=old;}} restore{s.queued,s.queued};s.queued=true;
+     check("already-queued",s.config,"N7 replay phase mismatch");}
+    {struct Restore {DWORD& value;DWORD old;~Restore(){value=old;}} restore{s.prepareThread,s.prepareThread};s.prepareThread=0;
+     check("wrong-thread",s.config,"N7 replay execution identity mismatch");}
+    require(s.targetSHA==targetSHA&&s.readySHA==readySHA&&sha256(s.config.output+L"\\prepare-ready.json")==readySHA&&
+        sha256(s.config.output+L"\\viewport-target.dwg")==targetSHA,"N7 replay fixture rewrote prepared artifacts");
+    trace("prepareReplay.controlsComplete",{{"checks","7"},{"artifactsUnchanged","true"},{"guardObservationsAdded",std::to_string(s.eventCount-beforeEvents)}});
+}
 void QueueReactor::documentBecameCurrent(AcApDocument* doc){
     trace("document.becameCurrent",{{"eventDocPath",quote(std::wstring(doc&&doc->fileName()?doc->fileName():L""))},{"queued",s.queued?"true":"false"},{"capturing",s.capturing?"true":"false"}});
     if(s.queued||s.capturing||!doc||!doc->database())return;
@@ -144,21 +188,20 @@ class Overrule final:public AcGiDrawableOverrule {
 public:
     explicit Overrule(Session& state):s(state){}
     bool isApplicable(const AcRxObject* value) const override {
-        if(!s.capturing)return false;const auto* entity=AcDbEntity::cast(value);
-        if(entity&&entity->database())return entity->database()==s.target;
+        if(!s.capturing)return false;
         const auto* drawable=AcGiDrawable::cast(value);
-        return drawable&&std::find(s.authorizedTransient.begin(),s.authorizedTransient.end(),drawable)!=s.authorizedTransient.end();
+        return drawableAuthorized(s,drawable,classifyDrawable(s,drawable));
     }
     struct Scope {
         Session& s;int index;bool recording;std::size_t depth;
         Scope(Session& state,AcGiDrawable* d,bool viewport):s(state),index(s.index),recording(s.recording),depth(s.path.size()){
-            const auto* e=AcDbEntity::cast(d);const bool resident=e&&e->database();
-            require(resident?e->database()==s.target:std::find(s.authorizedTransient.begin(),s.authorizedTransient.end(),d)!=s.authorizedTransient.end(),"non-target overrule");
-            const auto found=resident?std::find(s.roots.begin(),s.roots.end(),e->objectId()):s.roots.end();
+            const auto identity=classifyDrawable(s,d);const bool resident=identity.ownership==DrawableOwnership::ownedResident;
+            require(drawableAuthorized(s,d,identity),"non-target overrule");
+            const auto found=resident?std::find(s.roots.begin(),s.roots.end(),identity.id):s.roots.end();
             if(found!=s.roots.end()) {s.index=static_cast<int>(found-s.roots.begin());auto& seen=viewport?s.seenViewport:s.seenWorld;
                 s.recording=s.round>=0&&!seen[static_cast<std::size_t>(s.round)][static_cast<std::size_t>(s.index)];
                 if(s.round>=0)seen[static_cast<std::size_t>(s.round)][static_cast<std::size_t>(s.index)]=true;}
-            s.path.push_back(resident?quote(handle(e->objectId())):quote(std::string("transient:")+utf8(d->isA()->name())));
+            s.path.push_back(resident?quote(handle(identity.id)):quote(std::string("transient:")+utf8(d->isA()->name())));
             if(auto* o=s.observation()){++o->coverage.drawRequests;++o->coverage.drawsEntered;}
         }
         ~Scope(){s.index=index;s.recording=recording;s.path.resize(depth);}
@@ -196,6 +239,8 @@ void prepare(const Config& config,Evidence& evidence){
     trace("prepare.implementation.enter",{{"existingSession",session?"true":"false"},{"existingOverrule",overrule?"true":"false"}});
     require(!session&&!overrule,"N7 already prepared");session=std::make_unique<Session>(config,evidence);auto& s=*session;
     s.ambient=acdbHostApplicationServices()->workingDatabase();require(s.ambient,"ambient missing");
+    s.prepareDocument=curDoc();require(s.prepareDocument&&s.prepareDocument->database()==s.ambient,"prepare ambient document mismatch");
+    s.preparePid=GetCurrentProcessId();s.prepareThread=GetCurrentThreadId();const ACHAR* ambientName{};ok(s.ambient->getFilename(ambientName),"prepare ambient filename");require(ambientName,"prepare ambient path missing");s.ambientPath=ambientName;
     const auto sink=[&s](const std::string& line){s.write(line);};s.ambientMonitor=std::make_unique<Monitor>(*s.ambient,"ambient",sink);
     s.ambientMonitor->begin("reference-read");s.source=std::make_unique<AcDbDatabase>(false,true);
     {WorkingDatabase scope(*s.source);ok(s.source->readDwgFile(config.reference.c_str(),AcDbDatabase::kForReadAndAllShare,false,L""),"reference read");ok(s.source->closeInput(true),"reference closeInput");}
@@ -221,7 +266,13 @@ void prepare(const Config& config,Evidence& evidence){
     const auto ready=object({{"contract",q("bce.graphics-viewport-prepare.v1")},{"nonce",quote(config.nonce)},{"pid",std::to_string(GetCurrentProcessId())},{"targetPath",quote(config.output+L"\\viewport-target.dwg")},{"targetSHA256",quote(s.targetSHA)},{"modelRootCount",std::to_string(s.rootHandles.size())},{"rootHandles",array(handles)},{"sourceSHA",object({{"scheme",quote(config.schemeSHA256)},{"reference",quote(config.referenceSHA256)}})}});
     {auto f=create_new(config.output+L"\\prepare-ready.tmp");write_flushed(f.get(),ready);}
     require(MoveFileExW((config.output+L"\\prepare-ready.tmp").c_str(),(config.output+L"\\prepare-ready.json").c_str(),MOVEFILE_WRITE_THROUGH)!=FALSE,"atomic prepare ready publish failed");
+    s.readySHA=sha256(config.output+L"\\prepare-ready.json");s.prepareComplete=true;
+    replayProtocolControls(s);
     trace("prepare.readyPublished");
+}
+void acceptPreparedReplay(const Config& config){
+    trace("prepareReplay.validate.begin");validatePreparedReplay(config);
+    trace("prepareReplay.validate.accepted",{{"readySHA256",quote(session->readySHA)},{"targetSHA256",quote(session->targetSHA)},{"newPreparationCreated","false"}});
 }
 Result capture(const Config& config,Evidence& evidence){
     trace("capture.implementation.enter",{{"existingSession",session?"true":"false"}});

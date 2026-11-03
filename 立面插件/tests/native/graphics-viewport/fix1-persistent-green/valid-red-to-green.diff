@@ -1,0 +1,81 @@
+--- D:\Codex\建筑施工图自动化\立面插件\build\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\src\ViewportForward.h
++++ D:\Codex\建筑施工图自动化\立面插件\build\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\src\ViewportForward.h
+@@ -1,10 +1,30 @@
+ #pragma once
+ // Every public geometry call preserves the host call and return value.
+ // Logging is observation only; unrecorded geometry remains explicitly partial.
+-// Shared preflight seam: exact legacy predicate, exercised without rendering a foreign drawable.
+-void validateChildDrawable(Session& s,AcGiDrawable* d) {
+-    require(d,"null child drawable");const auto* entity=AcDbEntity::cast(d);
+-    require(!entity||!entity->database()||entity->database()==s.target,"child draw references protected external database");
++enum class DrawableOwnership { rejected, ownedResident, transient };
++struct DrawableIdentity {DrawableOwnership ownership{DrawableOwnership::rejected};AcDbObjectId id;};
++// AcDbObject includes persistent non-entities such as block table records.
++// Unknown persistent drawables and inconsistent identities never use pointer authorization.
++DrawableIdentity classifyDrawable(const Session& s,const AcGiDrawable* d) {
++    if(!d)return {};
++    const auto* object=AcDbObject::cast(d);const auto id=d->id();
++    if(object&&object->database()) {
++        if(d->isPersistent()&&object->database()==s.target&&!id.isNull()&&
++            id==object->objectId()&&id.database()==s.target)return {DrawableOwnership::ownedResident,id};
++        return {};
++    }
++    if(d->isPersistent()||!id.isNull()||(object&&!object->objectId().isNull()))return {};
++    return {DrawableOwnership::transient,AcDbObjectId::kNull};
++}
++bool drawableAuthorized(const Session& s,const AcGiDrawable* d,const DrawableIdentity& identity) {
++    return identity.ownership==DrawableOwnership::ownedResident||
++        (identity.ownership==DrawableOwnership::transient&&
++         std::find(s.authorizedTransient.begin(),s.authorizedTransient.end(),d)!=s.authorizedTransient.end());
++}
++DrawableIdentity validateChildDrawable(Session& s,AcGiDrawable* d) {
++    require(d,"null child drawable");const auto identity=classifyDrawable(s,d);
++    require(identity.ownership!=DrawableOwnership::rejected,"child draw references foreign or unknown persistent database");
++    return identity;
+ }
+ template<class Base> class GeometryForward:public Base {
+ public:
+@@ -46,9 +66,11 @@
+     N7_FWD(edge,(const AcArray<AcGeCurve2d*>& e),(e))
+ #undef N7_FWD
+     Adesk::Boolean draw(AcGiDrawable* d) const override {
+-        validateChildDrawable(s,d);
++        const auto identity=validateChildDrawable(s,d);
+         s.emit(g,"draw",{{"class",quote(std::wstring(d->isA()->name()))},{"persistent",d->isPersistent()?"true":"false"}});
+-        s.authorizedTransient.push_back(d);struct Pop {Session& state;~Pop(){state.authorizedTransient.pop_back();}} pop{s};
++        const auto depth=s.authorizedTransient.size();
++        struct Pop {Session& state;std::size_t depth;~Pop(){state.authorizedTransient.resize(depth);}} pop{s,depth};
++        if(identity.ownership==DrawableOwnership::transient)s.authorizedTransient.push_back(d);
+         return g.draw(d);
+     }
+     Adesk::Boolean worldLine(const AcGePoint3d p[2]) override {s.points(g,"worldLine",2,p);return g.worldLine(p);}
+--- D:\Codex\建筑施工图自动化\立面插件\build\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\src\ViewportCapture.cpp
++++ D:\Codex\建筑施工图自动化\立面插件\build\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\src\ViewportCapture.cpp
+@@ -188,21 +188,20 @@
+ public:
+     explicit Overrule(Session& state):s(state){}
+     bool isApplicable(const AcRxObject* value) const override {
+-        if(!s.capturing)return false;const auto* entity=AcDbEntity::cast(value);
+-        if(entity&&entity->database())return entity->database()==s.target;
++        if(!s.capturing)return false;
+         const auto* drawable=AcGiDrawable::cast(value);
+-        return drawable&&std::find(s.authorizedTransient.begin(),s.authorizedTransient.end(),drawable)!=s.authorizedTransient.end();
++        return drawableAuthorized(s,drawable,classifyDrawable(s,drawable));
+     }
+     struct Scope {
+         Session& s;int index;bool recording;std::size_t depth;
+         Scope(Session& state,AcGiDrawable* d,bool viewport):s(state),index(s.index),recording(s.recording),depth(s.path.size()){
+-            const auto* e=AcDbEntity::cast(d);const bool resident=e&&e->database();
+-            require(resident?e->database()==s.target:std::find(s.authorizedTransient.begin(),s.authorizedTransient.end(),d)!=s.authorizedTransient.end(),"non-target overrule");
+-            const auto found=resident?std::find(s.roots.begin(),s.roots.end(),e->objectId()):s.roots.end();
++            const auto identity=classifyDrawable(s,d);const bool resident=identity.ownership==DrawableOwnership::ownedResident;
++            require(drawableAuthorized(s,d,identity),"non-target overrule");
++            const auto found=resident?std::find(s.roots.begin(),s.roots.end(),identity.id):s.roots.end();
+             if(found!=s.roots.end()) {s.index=static_cast<int>(found-s.roots.begin());auto& seen=viewport?s.seenViewport:s.seenWorld;
+                 s.recording=s.round>=0&&!seen[static_cast<std::size_t>(s.round)][static_cast<std::size_t>(s.index)];
+                 if(s.round>=0)seen[static_cast<std::size_t>(s.round)][static_cast<std::size_t>(s.index)]=true;}
+-            s.path.push_back(resident?quote(handle(e->objectId())):quote(std::string("transient:")+utf8(d->isA()->name())));
++            s.path.push_back(resident?quote(handle(identity.id)):quote(std::string("transient:")+utf8(d->isA()->name())));
+             if(auto* o=s.observation()){++o->coverage.drawRequests;++o->coverage.drawsEntered;}
+         }
+         ~Scope(){s.index=index;s.recording=recording;s.path.resize(depth);}

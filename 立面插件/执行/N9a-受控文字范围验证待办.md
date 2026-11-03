@@ -1,0 +1,17 @@
+# N9a 受控文字范围验证（实施简报）
+
+承接已完成的N9公开接口调查，服务Task6的实际避让适配。2026-11-03，N8a尺寸小试及fix1审查闭环后，已派elevation_n9a_text_range_impl作为唯一源码作者；当前尚未取得本任务范围/渲染结果。需求依据见N9-文字范围公开接口调查报告.md，2020官方合同和已有N5/N7事实不重跑。
+
+最小交付为独立tests/native/text-range/探针及tools/build_text_range.ps1，在自有控制文档中把单行SHX/Bigfont的公开extentsBox范围与同一文字的真实原生渲染比较。输出stringRangeComputed、renderContainmentVerified及明确支持域，glyphComplete/capabilityUpgradeAllowed保持false，不改生产Layout门禁。
+
+控制样式显式用解析后的绝对字体文件，绑定原始名、loadStyleRec完整位掩码、加载后名、路径和SHA。findFile候选不冒称原始TCH缓存实际身份。只在可核字体支持域内验证；缺字/替代/TTF/竖写/装饰/完整MText或未知clip另列未支持。尺度、方向/normal、backward/upsideDown、tracking/oblique和净modelToWorld变换各按真实公开输入记录；取得范围后不再次乘字高/宽因子或重复镜像。
+
+用最少独立控制覆盖数字、中文、旋转backward、非均匀嵌套；增加一项tracking不为1且oblique不为0的控制。若首版不实测upsideDown和外层镜像真值，就明确从支持域排除。每项分开原生出无范围框的文字图与范围叠加预览，框线不能进入墨迹提取；图须有非背景墨迹且不碰设备边缘。
+
+以实际设备/view投影及像素足迹比较每个墨迹像素单元与范围，记录固定分辨率、相位、背景/文字色及舍入边界；加第二档分辨率或亚像素相位，失败原样保留越界像素/模型坐标，禁止随意增大margin调过。两档有限渲染不冒称无限分辨率的数学证明。
+
+RED必须用真实原生输出：故意缩框切去可见笔画，及漏掉backward/非均匀净变换，均实际被同一比较器拒绝且定位越界；空图/碰边/字体SHA错/未知basis不能通过。成功仅绑定本次控制，不移给原TCH完整输出。
+
+独立offscreen GS+SideDB真实context另排后续小试；公开接口存在，但database cookie/associate不是已证明context.database指向SideDB。此处用自有控制文档验证，不接管用户文档、不改共享GS关联/全局context，也不伪造viewport或用internal TextEngine/tessellate。
+
+开发协议沿用本项目公开ObjectARX2020/v141/C++17、独占源码作者/独立controller/private host/6输入保护/精确退役，禁止COM/CUA/天正业务命令/私有字段。新原生图面需root实际查看；所有失败保留、正式完整review和必要scoped修正仍由root安排。源码作者不得自行启动CAD；冻结候选由root指定controller运行。详细进度写N9a-受控文字范围验证报告.md，不在本简报追加每轮日志。

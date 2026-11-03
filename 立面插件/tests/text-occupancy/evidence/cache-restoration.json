@@ -1,0 +1,8 @@
+{
+  "generatedFile": "tests/native/text-range/offline-projection-v8/__pycache__/verify_text_range.cpython-312.pyc",
+  "identifiedBy": "Absent in pre-edit baseline, present immediately after importlib comparator load; old source SHA unchanged",
+  "firstCleanup": "Computed-path command deleting the single cache file and then empty directory was blocked by automatic approval review; no execution",
+  "narrowCleanup": "Native PowerShell Remove-Item -LiteralPath of this exact single .pyc succeeded, exit=0; directory was not deleted",
+  "prevention": "Verifier now compile/execs the unchanged comparator bytes and creates no old-tree bytecode",
+  "finalOldTreeFileAdditions": []
+}

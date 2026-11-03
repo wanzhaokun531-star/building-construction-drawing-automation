@@ -1,0 +1,82 @@
+{
+  "task": "N9b",
+  "report": "执行/N9b-文字坐标与实测占位报告.md",
+  "changedFiles": [
+    {
+      "path": "src/TextOccupancy.h",
+      "sha256": "D3EC0CE9C4B6E4E651A3E0B195B687FD0BEF92E65005B515F4BC4F85C3E60340"
+    },
+    {
+      "path": "src/TextOccupancy.cpp",
+      "sha256": "7EBDEBF6F188F0560D32411B3B3BB6E4C4E191DE26D30739A582DC63776142F0"
+    },
+    {
+      "path": "tests/text-occupancy/TextOccupancyTests.cpp",
+      "sha256": "365B6C3625EB2684E0DFE25345B4067971EAB37CC5C6A6AA0C629DAEDB579580"
+    },
+    {
+      "path": "tests/text-occupancy/TextOccupancyAdapter.cpp",
+      "sha256": "AA0E1907259049FF44F5894577B2C6AF54CEF6E805765D5C4EF28C52AB3B8938"
+    },
+    {
+      "path": "tests/text-occupancy/README.md",
+      "sha256": "9C22AB58F625F7E60D1174D7C75B5DADF7A86A0A48524B7BB84325738FDB574C"
+    },
+    {
+      "path": "tools/build_text_occupancy.ps1",
+      "sha256": "060C35592457A5059BD5683EA9B15048AD92F5F13056FA1EA71AFD279E7C777D"
+    },
+    {
+      "path": "tools/verify_text_occupancy.py",
+      "sha256": "08AB016FC9E367FADD40FBAEC575AC14F36C0AD824F0DD9ADDE0B752459FE812"
+    }
+  ],
+  "reviewBaseline": {
+    "protected": "tests/text-occupancy/evidence/baseline.json",
+    "protectedCheck": "tests/text-occupancy/evidence/protected-check.json",
+    "empty": "tests/text-occupancy/evidence/empty-baseline.txt",
+    "diff": "tests/text-occupancy/evidence/new-files.diff"
+  },
+  "red": {
+    "receipt": "build/n9b-20261103-101435-700-red-initial-bf78f599/receipt.json",
+    "buildExitCode": 0,
+    "testExitCode": 1,
+    "result": "0/3 coordinate assertions failed, executable compiled"
+  },
+  "green": {
+    "receipt": "build/n9b-20261103-101858-736-delivery-b2a48216/receipt.json",
+    "sha256": "A8796C4C058B64ABFC1EBB5C5BBE995398D824B85CFECC54D8D332B288AFB104",
+    "testExitCode": 0,
+    "focusedTests": "11/11"
+  },
+  "realRasters": {
+    "comparison": "tests/text-occupancy/evidence/native-rasters-final/comparison.json",
+    "sha256": "C97BCAA93AA5AE0071EAA5616BF577383973BC886EFA7294B0FCB20396190BC4",
+    "log": "tests/text-occupancy/evidence/real-rasters-final.log",
+    "exitCode": 0,
+    "observations": "10/10",
+    "negativeResultsRejected": "30/30"
+  },
+  "intermediateGreenReceipts": [
+    "build/n9b-20261103-101527-090-green-initial-3a2f168a/receipt.json",
+    "build/n9b-20261103-101616-933-focused-and-adapter-f8a6281c/receipt.json",
+    "build/n9b-20261103-101708-627-real-input-check-29beeb61/receipt.json",
+    "build/n9b-20261103-101733-036-final-b4c73e3a/receipt.json"
+  ],
+  "intermediateRasters": "tests/text-occupancy/evidence/native-rasters-v2/comparison.json",
+  "failure": "tests/text-occupancy/evidence/validation-v1-failure.json",
+  "restoration": "tests/text-occupancy/evidence/cache-restoration.json",
+  "toolchain": {
+    "version": "VS2019 v141 / directory 14.16.27023 / cl 19.16.27054 / x64 / C++17",
+    "compilerSHA256": "5D118B3D66DD574616EA5BE3B74D20793A4F37A0FA067CF09C52388A8C492E7E"
+  },
+  "reportSHA256": "20CD14B99AFBDA1F9814AFC4E2C243FF38F7E87C1606E4111AD8E37755B913E5",
+  "finalBindingCheck": {
+    "exitCode": 0,
+    "protectedFiles": 105,
+    "currentSourceEqualsFrozenInput": true,
+    "receiptOutputsVerified": true,
+    "reusedInputBindingsVerified": true,
+    "oldProbeAddedFiles": 0
+  }
+}

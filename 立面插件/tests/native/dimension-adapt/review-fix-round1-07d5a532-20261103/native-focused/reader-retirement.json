@@ -1,0 +1,88 @@
+{
+  "contract": "bce.stage1.reader-retirement.v1",
+  "recorded": "2026-11-03T09:03:38.266479+08:00",
+  "binding": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-428e9c88.json",
+  "bindingSHA256": "5699A7C508F511DF453D1FF37305D727B23842310C9516DCC7765CBA22D08B6D",
+  "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-090208-428e9c88",
+  "nonce": "428e9c88dabf4953a755da537e0c33c5",
+  "processId": 9468,
+  "supervisorFinal": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-090208-428e9c88\\isolation-final.json",
+  "supervisorFinalSHA256": "9F05E6914969E3033B88B17F9F08097DAA9C9285AB29B300D6A10F434FE9836C",
+  "normalQuit": false,
+  "explicitStopEvidencePresent": true,
+  "forcedTermination": true,
+  "removedFiles": [
+    {
+      "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexElevationStage1_428e9c88dabf4953a755da537e0c33c5\\S1Read_428e9c88.arx",
+      "SHA256": "7DB32B15256AF44EE09223CFD105D947FAAD2CE0EEAC85348000103C3F237228",
+      "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-090208-428e9c88\\retired-module-snapshot\\S1Read_428e9c88.arx",
+      "removed": true
+    },
+    {
+      "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexElevationStage1_428e9c88dabf4953a755da537e0c33c5\\S1Read_428e9c88.ini",
+      "SHA256": "259D4A21DF61BFBDE30A7BFBAAB3BB4A83DDEAD93628BE1C4AF04A08ED35DFB2",
+      "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-090208-428e9c88\\retired-module-snapshot\\S1Read_428e9c88.ini",
+      "removed": true
+    },
+    {
+      "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexElevationStage1_428e9c88dabf4953a755da537e0c33c5\\BCECase_428e9c88.arx",
+      "SHA256": "BC0EEB29B77CE4C16F950BFE1CD0B8709EFC572760D38CDD20D3787EBD730885",
+      "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-090208-428e9c88\\retired-module-snapshot\\BCECase_428e9c88.arx",
+      "removed": true
+    },
+    {
+      "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexElevationStage1_428e9c88dabf4953a755da537e0c33c5\\BCECase_428e9c88.ini",
+      "SHA256": "38B2A56E4EAB47A0D5FB9F1CFDB9243731FDC00BFEAB70362E7A2D024825600D",
+      "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-090208-428e9c88\\retired-module-snapshot\\BCECase_428e9c88.ini",
+      "removed": true
+    }
+  ],
+  "stagingRemoved": true,
+  "coreInputChecks": [
+    {
+      "role": "scheme",
+      "kind": "source",
+      "path": "D:\\方案立面.dwg",
+      "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+    },
+    {
+      "role": "scheme",
+      "kind": "snapshot",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\立面需求只读-fdb4cb22\\方案立面.dwg",
+      "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+    },
+    {
+      "role": "scheme",
+      "kind": "inspectionCopy",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-090208-428e9c88\\scheme-input.dwg",
+      "SHA256": "595CE82FBD20C81E83A857AB569385BEFA98ADAF743300A42668E280561559C1"
+    },
+    {
+      "role": "reference",
+      "kind": "source",
+      "path": "D:\\建筑施工图立面图.dwg",
+      "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+    },
+    {
+      "role": "reference",
+      "kind": "snapshot",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段0\\输入快照\\立面需求只读-fdb4cb22\\建筑施工图立面图.dwg",
+      "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+    },
+    {
+      "role": "reference",
+      "kind": "inspectionCopy",
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261103-090208-428e9c88\\reference-input.dwg",
+      "SHA256": "109BDCFEA4C55219793F2B6F9D8C8B619344B51A4C73E9129378C38532B2AF4D"
+    }
+  ],
+  "previewControlChecks": [],
+  "inputDesktopReadErrors": 0,
+  "ownedUserShows": 0,
+  "ownedForeground": 0,
+  "monitorError": null,
+  "relatedCadEventsNeedReview": false,
+  "relatedCadShowEvents": 0,
+  "relatedCadForegroundEvents": 0,
+  "scope": "Only own nonce staging removed after attested worker exit; originals, snapshots and controls retained unchanged; forced exit is not normal QUIT"
+}

@@ -1,0 +1,44 @@
+{
+  "contract": "owned-fatal-dialog-readonly.v1",
+  "nonce": "44227fc6c4f64da9b4014000b7b3a8a7",
+  "pid": 25168,
+  "creationFileTime": "134381483124050078",
+  "desktop": "CodexS1_44227fc6c4f64da9b4014000b7b3a8a7",
+  "identityVerifiedBeforeAndAfter": true,
+  "dialogFreshlyEnumerated": true,
+  "windows": [
+    {
+      "hwnd": 12784228,
+      "pid": 25168,
+      "thread": 19656,
+      "cls": "#32770",
+      "controlId": 0,
+      "visible": true,
+      "text": "AutoCAD 错误中断",
+      "readSucceeded": true
+    },
+    {
+      "hwnd": 16716394,
+      "pid": 25168,
+      "thread": 19656,
+      "cls": "Button",
+      "controlId": 2,
+      "visible": true,
+      "text": "确定",
+      "readSucceeded": true
+    },
+    {
+      "hwnd": 16127262,
+      "pid": 25168,
+      "thread": 19656,
+      "cls": "Static",
+      "controlId": 65535,
+      "visible": true,
+      "text": "\n\n致命错误:  Unhandled Access Violation Reading 0x0000 Exception at 1352F0D7h\n\n",
+      "readSucceeded": true
+    }
+  ],
+  "readMessagesSent": 3,
+  "mutationMessagesSent": 0,
+  "desktopSwitched": false
+}

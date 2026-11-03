@@ -1,0 +1,23 @@
+{
+  "sourceCHM": "C:\\Autodesk\\ObjectARX_for_AutoCAD_2020_Win_64_bit\\docs\\arxref.chm",
+  "sourceSHA256": "92BB53D177903BB780329F5EBD5A72374C434F6DF4AF25CEB5449C90BB928BA2",
+  "originalByteEntries": {
+    "acedRegisterOnIdleWinMsg@AcedOnIdleMsgFn.html": "94070AA72F187CD2D427F29F1C4FF37B99EF668DD87BC41190DA630E3D4339E5",
+    "acedRemoveOnIdleWinMsg@AcedOnIdleMsgFn.html": "7D7418811AA054B987A86AD40EB46798667A0A24BF672C190467734F861378A6",
+    "AcApDocManager__sendStringToExecute@AcApDocument_@ACHAR__@bool@bool@bool.html": "0588F0F5082214DD2FBAA27BAEE39B29CED95C9718C18D24712F5E8F1CD2EA6C",
+    "AcApDocManager__inputPending@AcApDocument_.html": "DA51CD59749181BEF5D61049D81CDCCB39E09CF1A37F3DBBD9160803B31A89B9",
+    "AcApDocument__isQuiescent.html": "BC09B2E39B916AD338CE1D7AFC8B58E3883621B3E4289A4000D38731128DA031"
+  },
+  "declarationSHAs": {
+    "core_rxmfcapi.h": "6A5D8101A4865D226553057B4452810539AF8BD31AD629DCA717A5BB8FE441D9",
+    "acdocman.h": "B10E00BFBE716750A40765CAA06B46377BBD6125E3AC494F4666307D6868D622",
+    "acutmem.h": "C04A2A65A47E26DDF385AB7647C1B931E8DB8921C646DB844DFF33EED306B787"
+  },
+  "readOnlyExistingWorker": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\原生接口探测\\src\\NativeQuietWorker.inc",
+    "sha256": "CE85B74EF4CF2DA4F472BD8E55A5FCA57AE5A02F13C368ED12488332E4591F76",
+    "scope": "quietIdle/start/timer dispatch read only, no bridge modification"
+  },
+  "CMDACTIVE2020": "https://help.autodesk.com/cloudhelp/2020/ENU/AutoCAD-Core/files/GUID-18B2E090-6C94-4C24-A70A-F2D6BDD5569C.htm",
+  "interpretation": "command bit semantics and supported idle/document command queue only; no claim SCRIPT suppresses GS"
+}

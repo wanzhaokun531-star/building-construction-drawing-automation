@@ -1,7 +1,7 @@
 struct ProductInputInventory {
  bcpproduct::ModelCounts counts;int proxies{},generatedCarriers{},dimensions{};std::map<std::wstring,int> types;std::string geometry;
 };
-struct ProductDiagnosticContext {fs::path source,output,log;std::wstring stage=L"入口检查";std::string input="null";};
+struct ProductDiagnosticContext {fs::path source,output,log;std::wstring stage=L"入口检查";std::string input="null";int dbmod=-1;};
 ProductDiagnosticContext productDiagnostic;
 ProductInputInventory productInventory(AcDbDatabase& db){
  Working scope(&db);ProductInputInventory result;std::ostringstream geometry;geometry<<std::setprecision(17)<<'[';bool first=true;
@@ -24,7 +24,7 @@ fs::path productDiagnosticDirectory(){
 }
 fs::path productWriteDiagnostic(const std::string& message,bool success=false){
  const auto directory=productDiagnosticDirectory();fs::create_directories(directory);static unsigned serial{};const auto file=directory/(L"BCP_"+std::to_wstring(GetCurrentProcessId())+L"_"+std::to_wstring(GetTickCount64())+L"_"+std::to_wstring(++serial)+L".json");
- std::ostringstream out;out<<"{\"contract\":\"bcp.input-diagnostic.v1\",\"version\":\"0.1.2\",\"stage\":"<<jsonUtf8(productDiagnostic.stage)<<",\"source\":"<<jsonUtf8(productDiagnostic.source.wstring())<<",\"output\":"<<jsonUtf8(productDiagnostic.output.wstring())<<",\"message\":"<<jsonUtf8(bcpproduct::decodeMessage(message))<<",\"input\":"<<productDiagnostic.input<<",\"success\":"<<(success?"true":"false")<<",\"drawingWritten\":false}";writeNew(file,out.str());productDiagnostic.log=file;return file;
+ std::ostringstream out;out<<"{\"contract\":\"bcp.input-diagnostic.v1\",\"version\":\"0.1.5\",\"stage\":"<<jsonUtf8(productDiagnostic.stage)<<",\"source\":"<<jsonUtf8(productDiagnostic.source.wstring())<<",\"output\":"<<jsonUtf8(productDiagnostic.output.wstring())<<",\"message\":"<<jsonUtf8(bcpproduct::decodeMessage(message))<<",\"input\":"<<productDiagnostic.input<<",\"dbmod\":"<<productDiagnostic.dbmod<<",\"inputBasis\":\"saved-dwg\",\"success\":"<<(success?"true":"false")<<",\"drawingWritten\":false}";writeNew(file,out.str());productDiagnostic.log=file;return file;
 }
 fs::path productCheckDocument(){
  auto* doc=curDoc();require(doc!=nullptr,u8"E_NO_DOCUMENT：请先打开定稿方案图。");
@@ -33,11 +33,15 @@ fs::path productCheckDocument(){
  require(doc->fileName()&&*doc->fileName(),u8"E_INPUT_PATH：CAD未提供当前图纸的文件路径。");
  require(fs::is_regular_file(productDiagnostic.source),u8"E_INPUT_PATH：未找到当前图纸的磁盘文件，请先将DWG解压/保存到本地文件夹。");
  resbuf modified{};require(acedGetVar(L"DBMOD",&modified)==RTNORM&&modified.restype==RTSHORT,u8"E_DOCUMENT_STATE：无法读取图纸修改状态DBMOD。");
- if(modified.resval.rint!=0)throw std::runtime_error(u8"E_DOCUMENT_MODIFIED：当前图纸DBMOD="+std::to_string(modified.resval.rint)+u8"。请先保存并确认定稿后再生成。");return productDiagnostic.source;
+ productDiagnostic.dbmod=modified.resval.rint;
+ if(!bcpproduct::canGenerateSavedDrawing(productDiagnostic.dbmod))throw std::runtime_error(u8"E_DOCUMENT_MODIFIED：图纸有未保存的内容，请先按 Ctrl+S 保存，再输入 BCP。DBMOD="+std::to_string(productDiagnostic.dbmod));
+ acutPrintf(L"\n按已保存的方案生成；当前未保存的显示和系统变量设置不参与生成。\n");return productDiagnostic.source;
 }
 #include "NativeInputProperties.inc"
+std::string approvedInteractionProof(AcDbDatabase&);
 void productInspectFile(const fs::path& source,const fs::path& receipt={}){
- productDiagnostic.source=source;productDiagnostic.stage=L"输入结构读取";productDependencies();AcDbDatabase db(false,true);status(db.readDwgFile(source.c_str(),AcDbDatabase::kForReadAndAllShare,false),"read inspection source");status(db.closeInput(true),"close inspection source");const auto inventory=productInventory(db);productDiagnostic.input=productInventoryJson(inventory);if(productSetting(L"testBehavior")==L"inspect-list"){const auto folder=receipt/L"public-properties";const auto fields=productReadProperties(db,folder);const auto plan=productCurrentPlan(db,source,fields);const auto cache=productPlanCache(plan);std::istringstream check(cache);const auto parsed=bcp::readCache(check);require(parsed.walls.size()==plan.walls.size()&&parsed.openings.size()==plan.openings.size(),"current input cache roundtrip differs");writeNew(receipt/L"current-input.tsv",cache);}
+ productDiagnostic.source=source;productDiagnostic.stage=L"输入结构读取";productDependencies();AcDbDatabase db(false,true);status(db.readDwgFile(source.c_str(),AcDbDatabase::kForReadAndAllShare,false),"read inspection source");status(db.closeInput(true),"close inspection source");const auto inventory=productInventory(db);productDiagnostic.input=productInventoryJson(inventory);if((productSetting(L"testBehavior")==L"inspect-list"||productSetting(L"testBehavior")==L"inspect-edit")){const auto folder=receipt/L"public-properties";const auto fields=productReadProperties(db,folder);const auto plan=productCurrentPlan(db,source,fields);const auto cache=productPlanCache(plan);std::istringstream check(cache);const auto parsed=bcp::readCache(check);require(parsed.walls.size()==plan.walls.size()&&parsed.openings.size()==plan.openings.size(),"current input cache roundtrip differs");writeNew(receipt/L"current-input.tsv",cache);}
+ if(productValidation()&&productSetting(L"testBehavior")==L"inspect-edit"){require(curDoc()&&fs::weakly_canonical(curDoc()->fileName())==fs::weakly_canonical(source),"native interaction probe requires owned active source copy");writeNew(receipt/L"approved-edit-proof.json",approvedInteractionProof(*curDoc()->database()));}
  const auto log=productWriteDiagnostic(u8"输入结构已读取；尚未进行施工图生成。",true);
  acutPrintf(L"\n输入读取完成：模型对象 %d，天正墙体 %d，天正门窗 %d，代理 %d。\n报告：%ls\n",inventory.counts.objects,inventory.counts.walls,inventory.counts.openings,inventory.proxies,log.c_str());
  if(!receipt.empty())writeNew(receipt/L"product-result.json",std::string("{\"contract\":\"bcp.input-inspection.v1\",\"completed\":true,\"drawingWritten\":false,\"sourceSHA256\":\"")+sha(source)+"\",\"input\":"+productDiagnostic.input+",\"report\":"+jsonUtf8(log.wstring())+",\"error\":null}");

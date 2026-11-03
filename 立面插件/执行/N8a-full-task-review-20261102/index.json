@@ -1,0 +1,47 @@
+{
+  "task": "N8a isolated dimension adaptation trial",
+  "base": "cb0b5837e4c0941f71c443948b8d425280d5aa75",
+  "commitsCreated": false,
+  "files": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\dimension-adapt\\DimensionAdaptDriver.cpp",
+      "sha256": "95B520A1BE021C7C1D903C94FCAF0FEEDE25538B01D6278CFBA468F398846570",
+      "bytes": 17504
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\dimension-adapt\\DimensionAdaptGreen.inc",
+      "sha256": "3C18EE165D8D1AC17772510175FDB499534B01E0825BB7F779ECCDDF13173D7C",
+      "bytes": 60915
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\dimension-adapt\\DimensionTopology.h",
+      "sha256": "12E6C5EA8410910D5045AB217AAD073DCDB7246C8829D4991456DDC30C96939B",
+      "bytes": 3527
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\dimension-adapt\\DimensionTopologyTests.cpp",
+      "sha256": "3D2518C314E7E4B63A9EAE896243908486C496083DCC00F2C55B53183AB6D80E",
+      "bytes": 1753
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\dimension-adapt\\ElevationDimensionAdaptCases.vcxproj",
+      "sha256": "4396B9D93D7BFFBC518D3BADBD559DAFC67192BEA1E982B9399516BBCEBCAD41",
+      "bytes": 2566
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\build_dimension_adapt.ps1",
+      "sha256": "046037EDEC085BF8FFADCD6FD916828D4C7B90EF150BB719B4230059AE0B37C7",
+      "bytes": 4166
+    }
+  ],
+  "diff": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\N8a-full-task-review-20261102\\full-task.diff",
+  "brief": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\N8a-尺寸链适配原生小试简报.md",
+  "report": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\N8a-尺寸链适配原生小试报告.md",
+  "finalManifest": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\dimension-adapt\\N8a-final-manifest.json",
+  "nativeBinding": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-03f2f503.json",
+  "diffSHA256": "9D2D97A24BFE9D3D25B85EF03D52725C6700DF28DA059BD2F310D217C034F3D8",
+  "briefSHA256": "265236238487D902C8BFE799C82963C11F3E1E77565AD8EA2B73F71CC484BD64",
+  "reportSHA256": "45124EB0EB6B2E5ABCE051DC8DA8EBE8F71D6B5540C5C068E169E1407B850ABE",
+  "finalManifestSHA256": "B24EDBE53BFDB0CFEDA1622D31109019085BCE14F74B14F745477070F134110A",
+  "nativeBindingSHA256": "6EB5413CEB9C7A237228A4D292E3398AB1C18E08404ECA41AC26B39197848430"
+}

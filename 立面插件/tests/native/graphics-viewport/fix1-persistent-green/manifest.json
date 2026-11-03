@@ -1,0 +1,133 @@
+{
+  "contract": "bce.n7-fix1-persistent-green.v1",
+  "candidate": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67",
+  "candidateSHA256": "5B07F008DEC2615555602F9C67820A7286D4FCF96A60DEE6C0698E82468F5F66",
+  "nativeStatus": "awaiting-controller-green",
+  "validRED": {
+    "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-190426-5bad165f\\case\\native-case.json",
+    "steps": 78,
+    "passed": 74,
+    "errors": [
+      "foreign-persistent-nonentity-child-rejected",
+      "foreign-persistent-nonentity-filter-rejected",
+      "owned-persistent-nonentity-scope-handle-path",
+      "foreign-persistent-nonentity-scope-rejected"
+    ]
+  },
+  "changedFromValidRED": [
+    "ViewportForward.h",
+    "ViewportCapture.cpp"
+  ],
+  "testsAndProtocolUnchanged": true,
+  "inputsMatch": 19,
+  "files": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\\receipt.json",
+      "sha256": "89336A7C766CA0C6450E1B63C59085A827E0612E7C81F123E4636297D2065D7B"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\\build.log",
+      "sha256": "DDA4026040BB1145B634C366A4334CCE1BA176CE4A7EB79BCFC647F0D370F9A5"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\\build-command.cmd",
+      "sha256": "040AD31C924C826200579889E0A0F4AF8DE7B80E39DF2442E392CAB07F07D1B5"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\\out\\ElevationViewportCases.arx",
+      "sha256": "5B07F008DEC2615555602F9C67820A7286D4FCF96A60DEE6C0698E82468F5F66"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-190426-5bad165f\\case\\native-case.json",
+      "sha256": "76B9288D859CD4386C1A25A135FC57A693CABA8E76C7BAD73E426DC5D1138BD6"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\N7-真实宿主视口采集报告.md",
+      "sha256": "CBF54875844E576268C6C8AF617A8C804C6AF861E5CB6852FC403A3FCB8A088A"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\fix1-persistent-green\\valid-red-to-green.diff",
+      "sha256": "FFBAECD058E83CD8C2FA7585E50C5CC8259262E48DD5796E8786BF9F84F82995"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\fix1-persistent-green\\review-b293-to-green.diff",
+      "sha256": "C4D948557F94A4430A4A4C25BD080F82172BCB7A6551158FABB302490C9F571C"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\\src\\NativeEvidence.h",
+      "sha256": "C6B083EE0346AA7CDB51090274CCCADCB2C6DE0AA92A196AD846E11C41C9EBB6"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\\src\\NativeEvidence.cpp",
+      "sha256": "1B3CA34A61CC2C2DB2C42A7FDFD01C029DE7BE82EAE6CE96D9DE1C3B363A8FE2"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\\src\\provenance.json",
+      "sha256": "A2531EE4A9FEE04726946732A3172D8756C3A68B41DF949D1C382821B4E5B450"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\\src\\prepare-ready.schema.json",
+      "sha256": "D0406984B5867225CECB1B1034DAD1EFB384D38A7884E997194CFB0F430399FF"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\\src\\ViewportFixtures.h",
+      "sha256": "69B13CB727BFB2B7A07C956A847568783DDE38381C192AD5FB3B1E0EE341F2D6"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\\src\\ViewportForward.h",
+      "sha256": "E3238E7DED1259E61F5F508A9C6C013C6B105AAF67CA3CEE49A9D949D99F6DB6"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\\src\\ViewportOwnershipTests.h",
+      "sha256": "BECFCEA3AEE9ABC074BF4F857C753FAE147D941E4C37A64405E004F50EAABD3E"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\\src\\OwnedControlPublicContracts.md",
+      "sha256": "EE2965250B4C5CD4BD466D732EE2703809DD2105145FAEC5E454A79667A11FAA"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\\src\\OwnedControlFile.h",
+      "sha256": "F71FCF1B15684F9EA464A084E68487A1A3FB002C831FA5244B22BC3D68FAEEEF"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\\src\\OwnedControlFile.cpp",
+      "sha256": "B03635A275CDD17711F12D78328EF98EE2FBF56184ECCCAC330CE17EDDA55646"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\\src\\OwnedControlFileTests.cpp",
+      "sha256": "4F94DC59716637427191B18E23161A3FD0B9775644DE29755917477F2C400B15"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\\src\\ViewportTrace.h",
+      "sha256": "F3FE5D7B47A95D4C931A7058D962820D5F99B05C6E0D43A5A4EFD4C4016A9BBC"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\\src\\ViewportTrace.cpp",
+      "sha256": "268E9871E2FF1037AF3D943A1892FA0E50AEBE186619B93F55DB72076F30E550"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\\src\\ViewportProbe.h",
+      "sha256": "BF78D5B6E080EE286CD81566B210B3DEF0C5EA4DD8394AE2A604059B8F4D0A2F"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\\src\\ViewportProbe.cpp",
+      "sha256": "D070E757864EF9F441BE5556B840B59423F4DCB97466F52A4F2A55BE73D113BE"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\\src\\ViewportCapture.cpp",
+      "sha256": "1823D13B666045D5CA9A33ACC563A371FAAEB1FD2CF4B7AC1FA2D9B7BE494B09"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\\src\\GraphicsPolicy.h",
+      "sha256": "9F4DD6AF7C950BDA3A5D78444EE4EDFA63381DCFFCA96A39B6BA92B0D4A9DB97"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\\src\\GraphicsControlPolicy.h",
+      "sha256": "4A6AA82F67E722D29934D30184538B46DA7BB727305E7DAC32D809F5DFD95B1E"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-190707-579-fix1-persistent-ownership-green-fd78fb67\\src\\ElevationViewportCases.vcxproj",
+      "sha256": "324447DEE0D6A83D57AB8F55A523FF498F09372DC2C3D2D46DF18DAA80AB480F"
+    }
+  ]
+}

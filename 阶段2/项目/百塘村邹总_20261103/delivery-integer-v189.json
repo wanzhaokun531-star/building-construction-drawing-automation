@@ -1,0 +1,22 @@
+{
+  "output": "D:\\Codex\\建筑施工图自动化\\阶段2\\交付\\百塘村邹总_标注深化_20261103\\百塘村邹总_三层平面_尺寸归整_v4.dwg",
+  "sha256": "F4D3663596C58356781F2630D49768FE4BD2AD54D72076613FF02AAA4CE2A800",
+  "basedOn": "取消区域覆盖_v2",
+  "noWipeout": true,
+  "geometryActuallyModified": true,
+  "wallCount": 126,
+  "nativeOpenings": 46,
+  "wholeDimensions": 59,
+  "integerSegments": 239,
+  "changedDimensionSegments": 154,
+  "areaLabels": 23,
+  "visualReviewFloors": [
+    1,
+    2,
+    3
+  ],
+  "savedReopened": true,
+  "qa": "qa-integer-v189.json",
+  "normalQUIT": true,
+  "productPluginChanged": false
+}

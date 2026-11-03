@@ -1,0 +1,236 @@
+{
+  "contract": "bce.n7-fix1-replay-bound-red.v1",
+  "candidate": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-184823-160-replay-bound-ownership-red-15018a85",
+  "candidateSHA256": "8E71389AC64C56A87BD31BE79BCCF47BE65C1535260014F31E468D034CA286A5",
+  "status": "compiled-awaiting-native-ownership-red",
+  "nativeExpectedAssertions": 78,
+  "protocolControlsSeparate": 7,
+  "oldRunNotValidOwnershipRed": true,
+  "oldOwnershipLogicAndTestsUnchanged": true,
+  "sharedNativeEvidenceUnchanged": true,
+  "archivedBaseReadOnly": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\立面插件\\build\\n7-20261101-223821-220-persistent-nonentity-regression-red-ff352ed6",
+  "noOldBuildRestored": true,
+  "sourceInputsMatch": 19,
+  "files": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\\receipt.json",
+      "sha256": "A141A1D854716A8E9EBCAF94ED76D27F57FD872972EBA2722DDE146E43480EFB"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\\build.log",
+      "sha256": "640282315B4A08ABF91E1359913E5C106AF739B550E91353B8407B1FFF4FBF50"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\\build-command.cmd",
+      "sha256": "040AD31C924C826200579889E0A0F4AF8DE7B80E39DF2442E392CAB07F07D1B5"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\\out\\ElevationViewportCases.arx",
+      "sha256": "8E71389AC64C56A87BD31BE79BCCF47BE65C1535260014F31E468D034CA286A5"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\graphics-viewport\\fix1-replay-bound-red\\ff352-to-driver-protocol.diff",
+      "sha256": "4A9ECA4C5155241AD64BFD1F4725FD2EC0DC2824C6A34767A8940F9BFA76A212"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\N7-真实宿主视口采集报告.md",
+      "sha256": "306D2269A24BB09EC3040180B14452B54A9E3A748320643E36228BEE3BCC5EEF"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\\src\\NativeEvidence.h",
+      "sha256": "C6B083EE0346AA7CDB51090274CCCADCB2C6DE0AA92A196AD846E11C41C9EBB6"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\\src\\NativeEvidence.cpp",
+      "sha256": "1B3CA34A61CC2C2DB2C42A7FDFD01C029DE7BE82EAE6CE96D9DE1C3B363A8FE2"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\\src\\provenance.json",
+      "sha256": "A2531EE4A9FEE04726946732A3172D8756C3A68B41DF949D1C382821B4E5B450"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\\src\\prepare-ready.schema.json",
+      "sha256": "D0406984B5867225CECB1B1034DAD1EFB384D38A7884E997194CFB0F430399FF"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\\src\\ViewportFixtures.h",
+      "sha256": "69B13CB727BFB2B7A07C956A847568783DDE38381C192AD5FB3B1E0EE341F2D6"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\\src\\ViewportForward.h",
+      "sha256": "368B70B5C29155910C5E68412F20114A31DE3C68CA2FFB11C1A94CDD15E64E56"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\\src\\ViewportOwnershipTests.h",
+      "sha256": "BECFCEA3AEE9ABC074BF4F857C753FAE147D941E4C37A64405E004F50EAABD3E"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\\src\\OwnedControlPublicContracts.md",
+      "sha256": "EE2965250B4C5CD4BD466D732EE2703809DD2105145FAEC5E454A79667A11FAA"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\\src\\OwnedControlFile.h",
+      "sha256": "F71FCF1B15684F9EA464A084E68487A1A3FB002C831FA5244B22BC3D68FAEEEF"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\\src\\OwnedControlFile.cpp",
+      "sha256": "B03635A275CDD17711F12D78328EF98EE2FBF56184ECCCAC330CE17EDDA55646"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\\src\\OwnedControlFileTests.cpp",
+      "sha256": "4F94DC59716637427191B18E23161A3FD0B9775644DE29755917477F2C400B15"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\\src\\ViewportTrace.h",
+      "sha256": "F3FE5D7B47A95D4C931A7058D962820D5F99B05C6E0D43A5A4EFD4C4016A9BBC"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\\src\\ViewportTrace.cpp",
+      "sha256": "268E9871E2FF1037AF3D943A1892FA0E50AEBE186619B93F55DB72076F30E550"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\\src\\ViewportProbe.h",
+      "sha256": "BF78D5B6E080EE286CD81566B210B3DEF0C5EA4DD8394AE2A604059B8F4D0A2F"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\\src\\ViewportProbe.cpp",
+      "sha256": "D070E757864EF9F441BE5556B840B59423F4DCB97466F52A4F2A55BE73D113BE"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\\src\\ViewportCapture.cpp",
+      "sha256": "92A4962E1E7DCB560AB48F7A3DBEAD83ACF33F6D0FD7A5DEA82F887C28FFD61E"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\\src\\GraphicsPolicy.h",
+      "sha256": "9F4DD6AF7C950BDA3A5D78444EE4EDFA63381DCFFCA96A39B6BA92B0D4A9DB97"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\\src\\GraphicsControlPolicy.h",
+      "sha256": "4A6AA82F67E722D29934D30184538B46DA7BB727305E7DAC32D809F5DFD95B1E"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n7-20261102-184823-160-replay-bound-ownership-red-15018a85\\src\\ElevationViewportCases.vcxproj",
+      "sha256": "324447DEE0D6A83D57AB8F55A523FF498F09372DC2C3D2D46DF18DAA80AB480F"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\boot.scr",
+      "sha256": "6745728B701EB9F923588C3641B394C334122E4B04B504FF89047A5C17702962"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\dispatch_77ec6d11dac9463eb94c53a507a2d8ac.json",
+      "sha256": "1973D19711DB914435CC1896939FC836812A7A75EBA8E29D9E5741B8B3EA02F2"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\dispatch_a84719bdfe164a80a0a3732ddb49e293.json",
+      "sha256": "3422165450EA0A16F7A0CF0162C6FC36FBB20694BF7D9E384A46B935CC15CB37"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\early-native-autoload-applied.json",
+      "sha256": "D028F3C93C3766EA9B8DC5DC1F71B28393C33E819173B1B945110FA1F5E2D16D"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\early-native-autoload-before.json",
+      "sha256": "65142A8E4FAFBDF0CAA928528A40865F8A1C84052491113E89303C1AD59B98AE"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\isolation-binding.json",
+      "sha256": "775DF064CB00841DAF46D902EA7145F2EC3FC7FCF6F4F8EFE8A2B8873DD22C9F"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\isolation-final.json",
+      "sha256": "91DE315C230A1CB0EF576C6EF47B2B9386DA223B6BE79D9FD4D4FCB2F6C5B0E3"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\isolation-host-heartbeat.json",
+      "sha256": "A5815C6F552BDF195A2F29313BC8E3F55C2A23600FF5E9DF91965D788823AE5E"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\isolation-host-receipt.json",
+      "sha256": "8FEEEC2BA12044B076C8E3A3F03513BA5DF935EE21FDF26C971937D256233B07"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\isolation-related-cad-events.jsonl",
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\isolation-startup-tip-actions.jsonl",
+      "sha256": "D46FC62E84857FC0A157C096DED6D79CB5380135A8E7901CD2689206224AD1F0"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\isolation-stop-20261101-224455-457.json",
+      "sha256": "F8578072CF50F46BAAF3D3C04A0C020815C0AC680F1984FE8ABF9D9FBAECEDCC"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\isolation-user-events.jsonl",
+      "sha256": "17481FFC28EBFC1091C13E0FB049B74C509D89B46579324A243912A100949074"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\isolation-window-samples.jsonl",
+      "sha256": "49602B392607BE85F4130C275886BA9965C5B822C8EE96F4FFF8F5D7BEFDE0BD"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\native-quit-events.jsonl",
+      "sha256": "1851A713C0BB5AF100C52CDE06B3C715B7E22FF7FB488B93355C171C75886CDE"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\native-result-closure.json",
+      "sha256": "21DD909F9EAB4C9F09405E246322F42AE5F33532DBEFE0838BFB36106C346FDF"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\post-startup-native-load-controls.json",
+      "sha256": "7D6E5A0310A904E31EF917F6D80EBA1B562DE8E5D6820ECFEB75025A800A9A6E"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\queue-controller-launch.json",
+      "sha256": "A289B5016F430EBAC9DEC982FF73E115C90CA7CBA5F22D8D026602A2544BC45B"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\quiet-worker-ready.json",
+      "sha256": "307FC8E9C91B9864964221927CE078F438DB572DB73010125A13E1D8E79FD119"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\reader-retirement.json",
+      "sha256": "4991969F19A26E2C0BECE13D98C74AB59A6AA1E305A6C34FB0628F7C0D3A1526"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\worker-config.json",
+      "sha256": "0CBCA1270D5A321110395BD4F82AFC25231A7629327D69844D26B50E0FC14C2D"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\worker-state.json",
+      "sha256": "163E65ED136EC7312C96382D3680DAF4B0A4F8720D329405D19B601D00F7F1BE"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\case\\checkpoint-1.json",
+      "sha256": "6B3864DB4C530428F83292F288F899F75C755A5570A0C63446F6B88716F4CBBC"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\case\\checkpoint-2.json",
+      "sha256": "4FD8A9882A0A58C1F50CEFA1317577225BCAAEFB36F9561F2723D2C7EED88BA1"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\case\\native-case.json",
+      "sha256": "B273DF69CA6BB5D4E05E8C2630AD002AE02D2AFFEB514218316F59BF1BB77E3F"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\case\\prepare-ready.json",
+      "sha256": "D348A9E8CA8392B8EA8339DE6D748365CECC0B52B7BBB0C105566EF4A5E48066"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\case\\viewport-callbacks.jsonl",
+      "sha256": "971D7B80A42282C0BC754C03703D39977892C0AACC03AC3D91133A853C2B95E6"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\case\\viewport-command-trace.jsonl",
+      "sha256": "1347C89571373698F09687682BD37DF3648FD3AEF66C736B95D995E9121BAB3C"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\viewport-native-job\\native-open.json",
+      "sha256": "62640876E46ED0919E998A7BFD279D19D6F88AF9245D0A07FA2D181795CB07BB"
+    },
+    {
+      "path": "D:\\Codex\\项目清理归档\\建筑施工图自动化_20261102-181100\\阶段1\\runs\\elevation-native-20261101-224137-220b5729\\viewport-native-job\\viewport-host-advance.json",
+      "sha256": "CC6D32EBA503A89D38E5E667C66184872FF6015BDC64DE9B4A5B73E6568198AB"
+    }
+  ]
+}

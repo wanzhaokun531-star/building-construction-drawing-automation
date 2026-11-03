@@ -1,0 +1,15 @@
+{
+  "round": 1,
+  "review": "执行/I3a-full-task-review-20261103.md",
+  "scope": [
+    "src/ProjectFacts.cpp",
+    "tests/ProjectFactsTests.cpp"
+  ],
+  "red": "red/receipt.json",
+  "green": "green/receipt.json",
+  "diff": "I3a-fix-round1.diff",
+  "inputCount": 31,
+  "unchangedInputs": 29,
+  "old77Executed": false,
+  "sourceAndFrozenInputHashesMatch": true
+}

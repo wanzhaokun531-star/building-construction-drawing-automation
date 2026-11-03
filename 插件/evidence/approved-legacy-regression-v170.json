@@ -1,0 +1,33 @@
+{
+  "version": "v170",
+  "job": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\approved-legacy-regression-20261102-201226",
+  "error": null,
+  "result": {
+    "contract": "bcp.product-result.v1",
+    "version": "0.1.3",
+    "source": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\approved-legacy-regression-20261102-201226\\control.dwg",
+    "sourceSHA256": "5BC4122C45AE0B6E49551C9AF0DED6F67FBC4339E96CCA7509C529DD3EE1D35E",
+    "output": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\approved-legacy-regression-20261102-201226\\legacy-result.dwg",
+    "outputSHA256": "1535861299142A470E7D0D52D7427C8A2035C1038E1708E9BBB0EC5F2E473BE0",
+    "records": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\approved-legacy-regression-20261102-201226\\legacy-result_生成记录_47060_606008578",
+    "preparedRoots": 390,
+    "finalRoots": 308,
+    "dimensionChains": 24,
+    "dimensionSegments": 106,
+    "openingCaptions": 27,
+    "pendingWallRoles": 4,
+    "preparationDocumentClosed": true,
+    "intermediateDocumentClosed": true,
+    "finalDocumentOpened": true,
+    "sourceUnchanged": true,
+    "sourceMemoryObserved": true,
+    "apronGenerated": false,
+    "COMUsed": false,
+    "ComputerUseUsed": false,
+    "TianzhengCommand": "TMergeDim",
+    "pythonRequiredAtRuntime": false,
+    "completed": true,
+    "constructionDrawingComplete": false,
+    "error": null
+  }
+}

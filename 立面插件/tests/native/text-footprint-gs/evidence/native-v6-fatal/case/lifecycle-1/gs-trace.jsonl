@@ -1,0 +1,8 @@
+{"current":1962510553968,"active":1962510553968,"workingDatabase":1962597810576,"dbmod":1,"event":"ambient.before"}
+{"requirement":"k3DDrawing","capabilityAddress":1962310643712,"descriptorRequires3D":true,"event":"acquireGraphicsKernel.before"}
+{"kernel":1962607249504,"compatibleWith3D":true,"compatibleWith2D":false,"event":"acquireGraphicsKernel.after"}
+{"targetDatabase":1962135399648,"model":1962607277968,"priorModel":0,"readBackModel":1962607277968,"route":"manager.createAutoCADModel + kernel.associate; real context checked separately","event":"ownedModelBinding"}
+{"matches":true,"event":"restoreOwnedDatabaseAssociation"}
+{"event":"destroyAutoCADModel"}
+{"event":"releaseGraphicsKernel"}
+{"event":"destroyOwnedDatabase"}

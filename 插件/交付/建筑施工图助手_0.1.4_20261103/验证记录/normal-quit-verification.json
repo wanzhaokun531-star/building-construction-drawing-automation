@@ -1,0 +1,18 @@
+{
+  "contract": "stage1.normal-quit-observed.v1",
+  "nonce": "430cabb547f94e3caa59d07ae902888d",
+  "processId": 41032,
+  "session": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261103-140600",
+  "exitCode": 0,
+  "forcedTermination": false,
+  "waitedSeconds": 4.265999999945052,
+  "queueToSupervisorExitSeconds": 4.172042369842529,
+  "supervisorFinal": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261103-140600\\isolation-final.json",
+  "supervisorFinalSHA256": "3D072C277BBE3EA5199619D1B0C56B4474D16B87294C4E84893064E439CA45F9",
+  "nativeQuitEvents": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261103-140600\\native-quit-events.jsonl",
+  "nativeQuitEventsSHA256": "12619000D3CA61B026032A448C7F425B6FE393C8019AD57405B779909EF1D0D1",
+  "COMUsed": false,
+  "ComputerUseUsed": false,
+  "completed": true,
+  "scope": "Actual native QUIT notifications, process exit and supervisor cleanup; not merely a queued command; wall time includes slow AutoCAD/TCH shutdown"
+}

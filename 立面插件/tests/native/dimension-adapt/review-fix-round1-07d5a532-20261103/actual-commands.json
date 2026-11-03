@@ -1,0 +1,7 @@
+{
+  "red": "& 'D:/Codex/建筑施工图自动化/立面插件/tools/build_dimension_adapt.ps1' -Label fix1_rejection_helper_red -CaseName DimensionAdaptSourceBindingFocused",
+  "green": "& 'D:/Codex/建筑施工图自动化/立面插件/tools/build_dimension_adapt.ps1' -Label fix1_rejection_focused_green -CaseName DimensionAdaptSourceBindingFocused",
+  "nativeCaseName": "DimensionAdaptSourceBindingFocused",
+  "nativeCommand": "BCE_TEST_RUN",
+  "nativeDispatch": "Only root controller; fresh 428e9c88/20261103-090208 is in progress; exact runtime binding and closure appended separately after receipt of result"
+}

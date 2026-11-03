@@ -3,6 +3,14 @@
 #include <iostream>
 #include <string>
 namespace bce::test {
+void factSelectorsReadActualDefinitionPoints();
+void factElevationUsesConfirmedUnitsDirectionAndDatum();
+void factRotatedWindowRetainsFourCorners();
+void factChangesLocateOnlyRequiredSubset();
+void factReopenRequiresFreshConsistentObservation();
+void factUnsupportedSourcesAndNonfiniteValuesAreRejected();
+void factObservationRejectsAmbiguityAndUnsupportedChanges();
+void factSubsetMatchNeverAuthorizesGeneration();
 void missingConfigDoesNotWriteDrawing();
 void documentSwitchRejectsStaleCommit();
 void repeatedBuildDoesNotDuplicate();
@@ -71,7 +79,15 @@ void hiddenLevelDoesNotAssociate();
 
 namespace {
 struct TestCase { const char* name; void (*run)(); };
-const std::array<TestCase, 77> cases{{
+const std::array<TestCase, 85> cases{{
+    {"FactSelectorsReadActualDefinitionPoints", bce::test::factSelectorsReadActualDefinitionPoints},
+    {"FactElevationUsesConfirmedUnitsDirectionAndDatum", bce::test::factElevationUsesConfirmedUnitsDirectionAndDatum},
+    {"FactRotatedWindowRetainsFourCorners", bce::test::factRotatedWindowRetainsFourCorners},
+    {"FactChangesLocateOnlyRequiredSubset", bce::test::factChangesLocateOnlyRequiredSubset},
+    {"FactReopenRequiresFreshConsistentObservation", bce::test::factReopenRequiresFreshConsistentObservation},
+    {"FactUnsupportedSourcesAndNonfiniteValuesAreRejected", bce::test::factUnsupportedSourcesAndNonfiniteValuesAreRejected},
+    {"FactObservationRejectsAmbiguityAndUnsupportedChanges", bce::test::factObservationRejectsAmbiguityAndUnsupportedChanges},
+    {"FactSubsetMatchNeverAuthorizesGeneration", bce::test::factSubsetMatchNeverAuthorizesGeneration},
     {"MissingConfigDoesNotWriteDrawing", bce::test::missingConfigDoesNotWriteDrawing},
     {"DocumentSwitchRejectsStaleCommit", bce::test::documentSwitchRejectsStaleCommit},
     {"RepeatedBuildDoesNotDuplicate", bce::test::repeatedBuildDoesNotDuplicate},

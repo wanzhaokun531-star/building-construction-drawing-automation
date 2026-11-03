@@ -1,0 +1,15 @@
+{
+  "checkedDate": "2026-11-03",
+  "local2020Contract": "setVisualStyle/getter do not document deferred application",
+  "official2014Background": {
+    "url": "https://blog.autodesk.io/graphic-changes-in-autocad-2015/",
+    "supports": "3D kernel and view visual style APIs; not 2020 timing evidence",
+    "old2015Zip": "https://adndevblog.typepad.com/autocad/Downloads/BlockView-2015.zip",
+    "old2015ZipFetch": "403; not read"
+  },
+  "adnMaintainedRefactoredSample": {
+    "url": "https://github.com/ADN-DevTech/BlockView",
+    "raw": "https://raw.githubusercontent.com/ADN-DevTech/BlockView/master/BlockViewCommands.cpp",
+    "basis": "2022 refactor; onSize before createView/style/add/empty update, later drawable/model/camera; clue only, not 2020 host evidence"
+  }
+}

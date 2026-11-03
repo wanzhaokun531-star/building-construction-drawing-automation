@@ -1,0 +1,121 @@
+{
+  "differences": [],
+  "rootCount": 8525,
+  "areas": [
+    {
+      "sourceBody": "3FBB",
+      "text": "3D4F",
+      "areaM2": 89.65769999999999
+    },
+    {
+      "sourceBody": "3FBD",
+      "text": "3D51",
+      "areaM2": 7.517644
+    },
+    {
+      "sourceBody": "3FBF",
+      "text": "3D53",
+      "areaM2": 5.8992
+    },
+    {
+      "sourceBody": "3FC1",
+      "text": "3D55",
+      "areaM2": 22.689
+    },
+    {
+      "sourceBody": "3FC3",
+      "text": "3D57",
+      "areaM2": 3.92964
+    },
+    {
+      "sourceBody": "3FC5",
+      "text": "3D59",
+      "areaM2": 15.2064
+    },
+    {
+      "sourceBody": "3FC7",
+      "text": "3D5B",
+      "areaM2": 181.516
+    },
+    {
+      "sourceBody": "3FCA",
+      "text": "3D5E",
+      "areaM2": 5.8992
+    },
+    {
+      "sourceBody": "3FCC",
+      "text": "3D60",
+      "areaM2": 7.517644
+    },
+    {
+      "sourceBody": "3FCE",
+      "text": "3D62",
+      "areaM2": 54.626101
+    },
+    {
+      "sourceBody": "3FD0",
+      "text": "3D64",
+      "areaM2": 22.68756
+    },
+    {
+      "sourceBody": "3FD2",
+      "text": "3D66",
+      "areaM2": 31.83336
+    },
+    {
+      "sourceBody": "3FD4",
+      "text": "3D68",
+      "areaM2": 15.2064
+    },
+    {
+      "sourceBody": "3FD6",
+      "text": "3D6A",
+      "areaM2": 4.11528
+    },
+    {
+      "sourceBody": "3FD8",
+      "text": "3D6C",
+      "areaM2": 180.28124
+    },
+    {
+      "sourceBody": "3FDA",
+      "text": "3D6E",
+      "areaM2": 5.8992
+    },
+    {
+      "sourceBody": "3FDC",
+      "text": "3D70",
+      "areaM2": 54.62696
+    },
+    {
+      "sourceBody": "3FDE",
+      "text": "3D72",
+      "areaM2": 22.6764
+    },
+    {
+      "sourceBody": "3FE0",
+      "text": "3D74",
+      "areaM2": 31.8288
+    },
+    {
+      "sourceBody": "3FE2",
+      "text": "3D76",
+      "areaM2": 7.517799999999999
+    },
+    {
+      "sourceBody": "3FE4",
+      "text": "3D78",
+      "areaM2": 4.12152
+    },
+    {
+      "sourceBody": "3FE6",
+      "text": "3D7A",
+      "areaM2": 15.2064
+    },
+    {
+      "sourceBody": "3FE8",
+      "text": "3D7C",
+      "areaM2": 180.268
+    }
+  ]
+}

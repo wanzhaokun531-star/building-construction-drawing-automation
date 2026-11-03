@@ -1,0 +1,902 @@
+diff --git a/src/NativeMaterialTiles.h b/src/NativeMaterialTiles.h
+new file mode 100644
+--- /dev/null
++++ b/src/NativeMaterialTiles.h
+@@ -0,0 +1,47 @@
++#pragma once
++#include "NativeMaterials.h"
++namespace bce {
++struct MaterialTileLimits { std::size_t maxTiles{2048}; unsigned maxDepth{16}; std::size_t maxAttempts{4096}; };
++struct MaterialTileRecord {
++    std::string parentIdentity, viewIdentity;
++    PolygonRegion geometry;
++    double nativeArea{};
++    int nativeLines{};
++    unsigned depth{};
++};
++struct MaterialDatabaseDeleter { void operator()(AcDbDatabase*) const noexcept; };
++struct OwnedMaterialDatabase {
++    std::unique_ptr<AcDbDatabase,MaterialDatabaseDeleter> database;
++    AcDbObjectIdArray roots;
++};
++class PreparedMaterialTiles final {
++public:
++    ~PreparedMaterialTiles();
++    PreparedMaterialTiles(PreparedMaterialTiles&&) noexcept;
++    PreparedMaterialTiles& operator=(PreparedMaterialTiles&&) noexcept;
++    PreparedMaterialTiles(const PreparedMaterialTiles&)=delete;
++    PreparedMaterialTiles& operator=(const PreparedMaterialTiles&)=delete;
++    AcDbDatabase& database() const;
++    const AcDbObjectIdArray& roots() const;
++    const std::vector<MaterialTileRecord>& tiles() const;
++    const MaterialPlan& parentPlan() const;
++    bool intact() const noexcept;
++    Result<OwnedMaterialDatabase> cloneIntoNewOwnedDb() const;
++private:
++    struct State;
++    std::unique_ptr<State> state_;
++    explicit PreparedMaterialTiles(std::unique_ptr<State>);
++    friend Result<PreparedMaterialTiles> prepareMaterialTiles(const MaterialPlan&,const std::vector<ReferenceMaterialSeed>&,const MaterialPreparationOptions&,const MaterialTileLimits&);
++};
++[[nodiscard]] Result<PreparedMaterialTiles> prepareMaterialTiles(const MaterialPlan&,const std::vector<ReferenceMaterialSeed>&,const MaterialPreparationOptions&,const MaterialTileLimits& = {});
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++namespace material_tiles_diagnostics {
++enum class OwnedFault { AfterFirstTile, AfterSecondTile, AfterExportClone, BeforeExportPublish };
++enum class ResourceConflict { LayerColor, DictionaryKey, XrecordPayload, XrecordPolicy, ReusedOwnedKey, ReusedOwnedPayload, ReusedOwnedOwner, ReferenceAlias };
++struct OwnedProbe {bool noResult{},destroyedAll{},workingRestored{},preflightUnchanged{};std::size_t created{},destroyed{};std::string issue,bindings;std::vector<std::pair<std::string,bool>> typedChecks;};
++OwnedProbe ownershipFault(const MaterialPlan&,const std::vector<ReferenceMaterialSeed>&,const MaterialPreparationOptions&,OwnedFault);
++OwnedProbe resourceConflict(const PreparedMaterialTiles&,ResourceConflict);
++OwnedProbe typedXrecordValues(const PreparedMaterialTiles&);
++}
++#endif
++}
+diff --git a/src/NativeMaterialTiles.cpp b/src/NativeMaterialTiles.cpp
+new file mode 100644
+--- /dev/null
++++ b/src/NativeMaterialTiles.cpp
+@@ -0,0 +1,564 @@
++#include "NativeMaterialTiles.h"
++#include <Windows.h>
++#include <acdocman.h>
++#include <dbapserv.h>
++#include <dbHatch.h>
++#include <dbfiler.h>
++#include <dbidmap.h>
++#include <dbsymtb.h>
++#include <dbsymutl.h>
++#include <dbdict.h>
++#include <dbmaterial.h>
++#include <dbplhldr.h>
++#include <dbxrecrd.h>
++#include <dbtrans.h>
++#include <acstring.h>
++#include <gescl3d.h>
++#include <algorithm>
++#include <cmath>
++#include <functional>
++#include <iomanip>
++#include <locale>
++#include <set>
++#include <sstream>
++#include <stdexcept>
++namespace bce {
++namespace {
++void need(bool value,const std::string& reason){if(!value)throw std::runtime_error(reason);}
++void check(Acad::ErrorStatus s,const char* reason){need(s==Acad::eOk,std::string(reason)+":"+std::to_string(s));}
++bool positive(double v){return std::isfinite(v)&&v>0;}
++bool close(double a,double b){return std::isfinite(a)&&std::isfinite(b)&&std::abs(a-b)<=1e-8*(std::max)(1.0,std::abs(b));}
++template<class T> class Open final {
++public:explicit Open(AcDbObjectId id,AcDb::OpenMode mode=AcDb::kForRead){check(acdbOpenObject(p_,id,mode),"open");}~Open(){if(p_)p_->close();}Open(const Open&)=delete;Open& operator=(const Open&)=delete;T* operator->()const{return p_;}T& operator*()const{return *p_;}T* release(){auto* p=p_;p_=nullptr;return p;}
++private:T* p_{};
++};
++class Working final {
++public:explicit Working(AcDbDatabase& db):old_(acdbHostApplicationServices()->workingDatabase()){acdbHostApplicationServices()->setWorkingDatabase(&db);}~Working(){acdbHostApplicationServices()->setWorkingDatabase(old_);}Working(const Working&)=delete;Working& operator=(const Working&)=delete;
++private:AcDbDatabase* old_;
++};
++bool documentDatabase(AcDbDatabase& db){need(acDocManager!=nullptr,"DOCUMENT_MANAGER_REQUIRED");std::unique_ptr<AcApDocumentIterator> it(acDocManager->newAcApDocumentIterator());need(it!=nullptr,"DOCUMENT_ITERATOR_REQUIRED");for(;!it->done();it->step())if(it->document()&&it->document()->database()==&db)return true;return false;}
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++struct TestHooks {
++    std::vector<AcDbDatabase*> live;
++    std::size_t created{},destroyed{};
++    bool destructionWhileWorking{},exporting{};
++    int fault{-1};
++    std::string bindings;
++};
++thread_local TestHooks* testHooks{};
++class HookScope final {
++public:explicit HookScope(TestHooks& hooks){need(!testHooks,"NESTED_MATERIAL_TEST_HOOKS");testHooks=&hooks;}~HookScope(){testHooks=nullptr;}
++};
++void inject(material_tiles_diagnostics::OwnedFault point){if(testHooks&&testHooks->fault==static_cast<int>(point))throw std::runtime_error("INJECTED_OWNED_FAILURE:"+std::to_string(static_cast<int>(point)));}
++#endif
++using OwnedDbPtr=std::unique_ptr<AcDbDatabase,MaterialDatabaseDeleter>;
++OwnedDbPtr newOwnedDatabase(){
++    OwnedDbPtr db(new AcDbDatabase(true,true));need(db.get()!=acdbHostApplicationServices()->workingDatabase()&&!documentDatabase(*db),"FRESH_NON_DOCUMENT_DATABASE_REQUIRED");
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++    if(testHooks){testHooks->live.push_back(db.get());++testHooks->created;}
++#endif
++    return db;
++}
++AcDbObjectIdArray modelRoots(AcDbDatabase& db){Open<AcDbBlockTableRecord> b(acdbSymUtil()->blockModelSpaceId(&db));AcDbBlockTableRecordIterator* raw{};check(b->newIterator(raw),"root iterator");std::unique_ptr<AcDbBlockTableRecordIterator> it(raw);AcDbObjectIdArray ids;for(;!it->done();it->step()){AcDbObjectId id;check(it->getEntityId(id),"root id");ids.append(id);}return ids;}
++struct Rect {double x0,y0,x1,y1;};
++Rect rectangle(const ClosedRing& ring){
++    need(ring.closed,"OPEN_MATERIAL_RING");auto p=ring.vertices;if(p.size()==5&&p.front().x==p.back().x&&p.front().y==p.back().y)p.pop_back();need(p.size()==4,"UNSUPPORTED_NONRECTANGULAR_REGION");
++    Rect r{p[0].x,p[0].y,p[0].x,p[0].y};for(auto v:p){need(std::isfinite(v.x)&&std::isfinite(v.y),"NONFINITE_REGION_POINT");r.x0=(std::min)(r.x0,v.x);r.x1=(std::max)(r.x1,v.x);r.y0=(std::min)(r.y0,v.y);r.y1=(std::max)(r.y1,v.y);}need(positive(r.x1-r.x0)&&positive(r.y1-r.y0),"DEGENERATE_RECTANGLE");std::set<std::pair<double,double>> corners;
++    for(std::size_t i=0;i<4;++i){auto a=p[i],b=p[(i+1)%4];need((a.x==r.x0||a.x==r.x1)&&(a.y==r.y0||a.y==r.y1),"UNSUPPORTED_NONRECTANGULAR_REGION");need((a.x==b.x)!=(a.y==b.y),"UNSUPPORTED_NONRECTANGULAR_REGION");corners.emplace(a.x,a.y);}need(corners.size()==4,"INVALID_RECTANGLE_CORNERS");return r;
++}
++PolygonRegion geometry(Rect r){return {{{{r.x0,r.y0},{r.x1,r.y0},{r.x1,r.y1},{r.x0,r.y1}},true},{}};}
++double area(Rect r){const double v=(r.x1-r.x0)*(r.y1-r.y0);need(positive(v),"NONFINITE_OR_ZERO_TILE_AREA");return v;}
++std::vector<Rect> partition(const MaterialRegionPlan& parent,double units,const MaterialTileLimits& limits){
++    const auto outer=rectangle(parent.geometry.outer);std::vector<Rect> holes;std::vector<double> xs{outer.x0,outer.x1},ys{outer.y0,outer.y1};double net=area(outer);
++    need(parent.geometry.holes.size()<=limits.maxTiles,"TILE_BUDGET");for(const auto& ring:parent.geometry.holes){auto h=rectangle(ring);need(h.x0>outer.x0&&h.y0>outer.y0&&h.x1<outer.x1&&h.y1<outer.y1,"HOLE_NOT_STRICTLY_INSIDE");for(auto other:holes)need(h.x1<other.x0||other.x1<h.x0||h.y1<other.y0||other.y1<h.y0,"INTERSECTING_OR_TOUCHING_HOLES");holes.push_back(h);xs.push_back(h.x0);xs.push_back(h.x1);ys.push_back(h.y0);ys.push_back(h.y1);net-=area(h);}
++    need(positive(net)&&positive(parent.areaSquareMm)&&positive(units*units)&&close(net*units*units,parent.areaSquareMm),"PARENT_MATERIAL_AREA_MISMATCH");
++    auto sort=[](std::vector<double>& values){std::sort(values.begin(),values.end());values.erase(std::unique(values.begin(),values.end()),values.end());};sort(xs);sort(ys);need(xs.size()-1<=limits.maxAttempts/(ys.size()-1),"GRID_ATTEMPT_BUDGET");std::vector<Rect> result;
++    for(std::size_t x=1;x<xs.size();++x)for(std::size_t y=1;y<ys.size();++y){Rect cell{xs[x-1],ys[y-1],xs[x],ys[y]};bool hole=false;for(auto h:holes)if(cell.x0>=h.x0&&cell.x1<=h.x1&&cell.y0>=h.y0&&cell.y1<=h.y1){hole=true;break;}if(!hole){need(result.size()<limits.maxTiles,"TILE_BUDGET");result.push_back(cell);}}
++    need(!result.empty(),"EMPTY_PARTITION");return result;
++}
++
++// Official public filing, opaque typed values, exact standard classes only.
++// No TCH/private decoding. References recurse, with cycle/depth/byte budgets.
++bool standardResource(AcRxClass* c){return c==AcDbLayerTableRecord::desc()||c==AcDbLinetypeTableRecord::desc()||c==AcDbMaterial::desc()||c==AcDbPlaceHolder::desc()||c==AcDbRegAppTableRecord::desc()||c==AcDbDictionary::desc()||c==AcDbXrecord::desc();}
++std::string diagnosticText(const ACHAR* text){
++    if(!text)return "null";const int n=WideCharToMultiByte(CP_UTF8,WC_ERR_INVALID_CHARS,text,-1,nullptr,0,nullptr,nullptr);if(n<=0)return "UTF8_ENCODING_FAILED";std::string out(static_cast<std::size_t>(n),'\0');if(WideCharToMultiByte(CP_UTF8,WC_ERR_INVALID_CHARS,text,-1,&out[0],n,nullptr,nullptr)!=n)return "UTF8_ENCODING_FAILED";out.pop_back();return out;
++}
++std::string diagnosticHandle(AcDbObjectId id){if(id.isNull())return "null";ACHAR buffer[32]{};id.handle().getIntoAsciiBuffer(buffer);return diagnosticText(buffer);}
++std::string diagnosticNode(AcDbObject& object,const char* role,std::size_t depth){
++    auto* cls=object.isA();auto ownerId=object.ownerId();std::ostringstream out;out<<"role="<<role<<",depth="<<depth<<",handle="<<diagnosticHandle(object.objectId())<<",class="<<diagnosticText(cls->name())<<",ownerHandle="<<diagnosticHandle(ownerId);
++    const bool declaredPublic=standardResource(cls)||cls==AcDbHatch::desc()||cls==AcDbDictionary::desc()||cls==AcDbXrecord::desc()||cls==AcDbBlockTableRecord::desc()||cls==AcDbBlockTable::desc()||cls==AcDbLayerTable::desc()||cls==AcDbLinetypeTable::desc()||cls==AcDbRegAppTable::desc();
++    out<<",knownPublicSDKDesc="<<(declaredPublic?"true":"not-in-diagnostic-catalog")<<",productionResourceAllowed="<<(standardResource(cls)?"true":"false");
++    if(!ownerId.isNull()){Open<AcDbObject> owner(ownerId);out<<",ownerClass="<<diagnosticText(owner->isA()->name());if(owner->isA()==AcDbDictionary::desc()){AcString key;const auto status=AcDbDictionary::cast(&*owner)->nameAt(object.objectId(),key);out<<",dictionaryKeyStatus="<<status;if(status==Acad::eOk)out<<",dictionaryKey="<<diagnosticText(key.kACharPtr());}}
++    if(object.isKindOf(AcDbSymbolTableRecord::desc())){AcString name;const auto status=AcDbSymbolTableRecord::cast(&object)->getName(name);out<<",symbolNameStatus="<<status;if(status==Acad::eOk)out<<",symbolName="<<diagnosticText(name.kACharPtr());}return out.str();
++}
++struct Graph;
++class ValueFiler final:public AcDbDwgFiler {
++public:
++    ValueFiler(Graph& graph,AcDbObjectId self,AcDbObjectId owner):graph_(graph),self_(self),owner_(owner){out.imbue(std::locale::classic());out<<std::hexfloat;}
++    Acad::ErrorStatus filerStatus()const override{return status_;}AcDb::FilerType filerType()const override{return AcDb::kBagFiler;}void setFilerStatus(Acad::ErrorStatus s)override{status_=s;}void resetFilerStatus()override{status_=Acad::eOk;}
++    Acad::ErrorStatus dwgVersion(AcDb::AcDbDwgVersion& v,AcDb::MaintenanceReleaseVersion& m)const override{v=AcDb::kDHL_CURRENT;m=AcDb::kMReleaseCurrent;return Acad::eOk;}
++    Acad::ErrorStatus reference(AcDbObjectId id,const char* type);
++    Acad::ErrorStatus dataReference(AcDbObjectId id,const char* type,const std::string& context="XrecordTypedPayload");
++#define BCE_ID_METHOD(Name,Type) Acad::ErrorStatus read##Name(Type*)override{return Acad::eNotApplicable;} Acad::ErrorStatus write##Name(const Type& v)override{return reference(v,#Name);}
++    BCE_ID_METHOD(HardOwnershipId,AcDbHardOwnershipId)
++    BCE_ID_METHOD(SoftOwnershipId,AcDbSoftOwnershipId)
++    BCE_ID_METHOD(HardPointerId,AcDbHardPointerId)
++    BCE_ID_METHOD(SoftPointerId,AcDbSoftPointerId)
++#undef BCE_ID_METHOD
++#define BCE_SCALAR_METHOD(Name,Type) Acad::ErrorStatus read##Name(Type*)override{return Acad::eNotApplicable;} Acad::ErrorStatus write##Name(Type v)override{out<<#Name<<':'<<+v<<';';return Acad::eOk;}
++    BCE_SCALAR_METHOD(Int8,Adesk::Int8)
++    BCE_SCALAR_METHOD(Int16,Adesk::Int16)
++    BCE_SCALAR_METHOD(Int32,Adesk::Int32)
++    BCE_SCALAR_METHOD(Int64,Adesk::Int64)
++    BCE_SCALAR_METHOD(UInt8,Adesk::UInt8)
++    BCE_SCALAR_METHOD(UInt16,Adesk::UInt16)
++    BCE_SCALAR_METHOD(UInt32,Adesk::UInt32)
++    BCE_SCALAR_METHOD(UInt64,Adesk::UInt64)
++    BCE_SCALAR_METHOD(Boolean,Adesk::Boolean)
++    BCE_SCALAR_METHOD(Bool,bool)
++#undef BCE_SCALAR_METHOD
++    Acad::ErrorStatus readDouble(double*)override{return Acad::eNotApplicable;}Acad::ErrorStatus writeDouble(double v)override{need(std::isfinite(v),"RESOURCE_NONFINITE_VALUE");out<<"Double:"<<v<<';';return Acad::eOk;}
++    Acad::ErrorStatus readString(ACHAR**)override{return Acad::eNotApplicable;}Acad::ErrorStatus readString(AcString&)override{return Acad::eNotApplicable;}Acad::ErrorStatus writeString(const AcString& s)override{return writeString(s.kACharPtr());}Acad::ErrorStatus writeString(const ACHAR* s)override{out<<"String:";if(!s){out<<"null;";return Acad::eOk;}while(*s)out<<static_cast<unsigned>(*s++)<<',';out<<';';return Acad::eOk;}
++    Acad::ErrorStatus readBChunk(ads_binary*)override{return Acad::eNotApplicable;}Acad::ErrorStatus writeBChunk(const ads_binary& b)override{return writeBytes(b.buf,static_cast<Adesk::UIntPtr>(b.clen));}
++    Acad::ErrorStatus readAcDbHandle(AcDbHandle*)override{return Acad::eNotApplicable;}Acad::ErrorStatus writeAcDbHandle(const AcDbHandle& h)override{need(h.isNull()||h==self_.handle()||(!owner_.isNull()&&h==owner_.handle()),"UNSUPPORTED_RESOURCE_HANDLE_REFERENCE");out<<"Handle:"<<(h.isNull()?"null":h==self_.handle()?"self":"owner")<<';';return Acad::eOk;}
++#define BCE_VECTOR_METHOD(Name,Type,Fields) Acad::ErrorStatus read##Name(Type*)override{return Acad::eNotApplicable;}Acad::ErrorStatus write##Name(const Type& v)override{out<<#Name<<':';Fields return Acad::eOk;}
++    BCE_VECTOR_METHOD(Point2d,AcGePoint2d,writeDouble(v.x);writeDouble(v.y);)
++    BCE_VECTOR_METHOD(Point3d,AcGePoint3d,writeDouble(v.x);writeDouble(v.y);writeDouble(v.z);)
++    BCE_VECTOR_METHOD(Vector2d,AcGeVector2d,writeDouble(v.x);writeDouble(v.y);)
++    BCE_VECTOR_METHOD(Vector3d,AcGeVector3d,writeDouble(v.x);writeDouble(v.y);writeDouble(v.z);)
++    BCE_VECTOR_METHOD(Scale3d,AcGeScale3d,writeDouble(v.sx);writeDouble(v.sy);writeDouble(v.sz);)
++#undef BCE_VECTOR_METHOD
++    Acad::ErrorStatus readBytes(void*,Adesk::UIntPtr)override{return Acad::eNotApplicable;}Acad::ErrorStatus writeBytes(const void* p,Adesk::UIntPtr n)override{need(n<=1048576,"RESOURCE_BYTES_BUDGET");out<<"Bytes:"<<n<<':';auto* bytes=static_cast<const unsigned char*>(p);need(p||n==0,"RESOURCE_NULL_BYTES");for(Adesk::UIntPtr i=0;i<n;++i)out<<static_cast<unsigned>(bytes[i])<<',';out<<';';return Acad::eOk;}
++    Acad::ErrorStatus readAddress(void**)override{return Acad::eNotApplicable;}Acad::ErrorStatus writeAddress(const void*)override{throw std::runtime_error("UNSUPPORTED_RESOURCE_ADDRESS");}
++    Acad::ErrorStatus seek(Adesk::Int64,int)override{return Acad::eNotApplicable;}Adesk::Int64 tell()const override{return static_cast<Adesk::Int64>(out.str().size());}
++    std::ostringstream out;
++private:Graph& graph_;AcDbObjectId self_,owner_;Acad::ErrorStatus status_{Acad::eOk};
++};
++// Exact standard Xrecord uses its complete public DXF stream. The DWG
++// implementation (even qualified AcDbObject::dwgOutFields) contains derived
++// opaque reference bytes; never infer or filter that internal representation.
++class XrecordDxfFiler final:public AcDbDxfFiler {
++public:
++    XrecordDxfFiler(const AcDbXrecord& record,ValueFiler& values):record_(record),values_(values){}
++    int rewindFiler()override{throw std::runtime_error("UNSUPPORTED_XRECORD_DXF_REWIND");}
++    Acad::ErrorStatus filerStatus()const override{return Acad::eOk;}void resetFilerStatus()override{}
++    Acad::ErrorStatus setError(Acad::ErrorStatus es,const ACHAR*,...)override{throw std::runtime_error("XRECORD_DXF_ERROR:"+std::to_string(es));}
++    Acad::ErrorStatus setError(const ACHAR*,...)override{throw std::runtime_error("XRECORD_DXF_ERROR");}
++    AcDb::FilerType filerType()const override{return AcDb::kFileFiler;}
++    AcDbDatabase* database()const override{return record_.database();}
++    Acad::ErrorStatus dwgVersion(AcDb::AcDbDwgVersion& v,AcDb::MaintenanceReleaseVersion& m)const override{v=AcDb::kDHL_CURRENT;m=AcDb::kMReleaseCurrent;return Acad::eOk;}
++    bool includesDefaultValues()const override{return true;}
++    int precision()const override{return kMaxPrec;}
++    void finish()const{need(sawSelf_&&sawOwner_&&payload_&&controls_.empty(),"XRECORD_DXF_BASE_INCOMPLETE; self="+std::to_string(sawSelf_)+"; owner="+std::to_string(sawOwner_)+"; subclass="+std::to_string(payload_));}
++    Acad::ErrorStatus writeObjectId(AcDb::DxfCode code,const AcDbObjectId& id)override{
++        if(static_cast<int>(code)==5){need(id==record_.objectId(),"XRECORD_DXF_SELF_ID_MISMATCH");return writeAcDbHandle(code,id.handle());}
++        const auto type=acdbGroupCodeToType(code);const char* role=type==AcDb::kDwgHardOwnershipId?"HardOwnershipId":type==AcDb::kDwgSoftOwnershipId?"SoftOwnershipId":type==AcDb::kDwgHardPointerId?"HardPointerId":type==AcDb::kDwgSoftPointerId?"SoftPointerId":nullptr;
++        need(role!=nullptr,"UNSUPPORTED_XRECORD_DXF_ID_CODE:"+std::to_string(code));need(id.isNull()||id.database()==database(),"XRECORD_DXF_REFERENCE_DATABASE_MISMATCH");tag(code);
++        if(!payload_&&!xdata_&&controls_.empty()&&static_cast<int>(code)==330){need(!sawOwner_&&id==record_.ownerId(),"XRECORD_DXF_OWNER_MISMATCH");sawOwner_=true;return values_.reference(id,role);}
++        std::string context="DXF group="+std::to_string(code)+";payload="+std::to_string(payload_)+";xdata="+std::to_string(xdata_)+";controls=";for(const auto& control:controls_)context+=diagnosticText(control.c_str())+"/";return values_.dataReference(id,role,context);
++    }
++    Acad::ErrorStatus writeAcDbHandle(AcDb::DxfCode code,const AcDbHandle& handle)override{
++        if(static_cast<int>(code)==5&&!payload_&&!xdata_&&controls_.empty()){need(!sawSelf_&&handle==record_.objectId().handle(),"XRECORD_DXF_SELF_HANDLE_MISMATCH");sawSelf_=true;tag(code);return values_.writeAcDbHandle(handle);}
++        const auto type=acdbGroupCodeToType(code);need(isReference(type),"UNSUPPORTED_XRECORD_DXF_HANDLE; group="+std::to_string(code));AcDbObjectId id;if(!handle.isNull())check(database()->getAcDbObjectId(id,false,handle),"resolve public DXF reference handle");return writeObjectId(code,id);
++    }
++    Acad::ErrorStatus writeString(AcDb::DxfCode code,const AcString& value)override{return writeString(code,value.kACharPtr());}
++    Acad::ErrorStatus writeString(AcDb::DxfCode code,const ACHAR* value)override{
++        const auto type=acdbGroupCodeToType(code);if(isReference(type)||type==AcDb::kDwgHandle){need(value&&*value,"INVALID_XRECORD_DXF_HANDLE_TEXT");std::size_t n=0;for(const ACHAR* p=value;*p;++p){need(++n<=16&&((*p>=L'0'&&*p<=L'9')||(*p>=L'a'&&*p<=L'f')||(*p>=L'A'&&*p<=L'F')),"INVALID_XRECORD_DXF_HANDLE_TEXT");}return writeAcDbHandle(code,AcDbHandle(value));}
++        tag(code);values_.writeString(value);
++        if(static_cast<int>(code)==1001){need(value&&*value,"XRECORD_DXF_XDATA_APP_NAME");Open<AcDbRegAppTable> apps(database()->regAppTableId());AcDbObjectId app;check(apps->getAt(value,app),"resolve Xrecord XData RegApp");values_.dataReference(app,"HardPointerId","DXF XDataRegApp1001");}
++        if(!payload_&&!xdata_&&static_cast<int>(code)==102){need(value!=nullptr,"INVALID_XRECORD_DXF_CONTROL");if(value[0]==L'{'){need(controls_.size()<32,"XRECORD_DXF_CONTROL_BUDGET");controls_.push_back(value);}else if(wcscmp(value,L"}")==0){need(!controls_.empty(),"XRECORD_DXF_CONTROL_UNBALANCED");controls_.pop_back();}else throw std::runtime_error("UNSUPPORTED_XRECORD_DXF_CONTROL");}
++        if(!payload_&&!xdata_&&static_cast<int>(code)==100&&value&&wcscmp(value,L"AcDbXrecord")==0){need(controls_.empty(),"XRECORD_DXF_SUBCLASS_IN_CONTROL");payload_=true;}
++        return Acad::eOk;
++    }
++    Acad::ErrorStatus writeBChunk(AcDb::DxfCode code,const ads_binary& value)override{tag(code);need(value.clen>=0,"INVALID_XRECORD_DXF_BINARY_LENGTH");return values_.writeBChunk(value);}
++#define BCE_DXF_SCALAR(Name,Type) Acad::ErrorStatus write##Name(AcDb::DxfCode code,Type value)override{tag(code);return values_.write##Name(value);}
++    BCE_DXF_SCALAR(Int8,Adesk::Int8)
++    BCE_DXF_SCALAR(Int16,Adesk::Int16)
++    BCE_DXF_SCALAR(Int32,Adesk::Int32)
++    BCE_DXF_SCALAR(Int64,Adesk::Int64)
++    BCE_DXF_SCALAR(UInt8,Adesk::UInt8)
++    BCE_DXF_SCALAR(UInt16,Adesk::UInt16)
++    BCE_DXF_SCALAR(UInt32,Adesk::UInt32)
++    BCE_DXF_SCALAR(UInt64,Adesk::UInt64)
++    BCE_DXF_SCALAR(Boolean,Adesk::Boolean)
++    BCE_DXF_SCALAR(Bool,bool)
++#undef BCE_DXF_SCALAR
++    Acad::ErrorStatus writeDouble(AcDb::DxfCode code,double value,int=kDfltPrec)override{tag(code);return values_.writeDouble(value);}
++#define BCE_DXF_VECTOR(Name,Type) Acad::ErrorStatus write##Name(AcDb::DxfCode code,const Type& value,int=kDfltPrec)override{tag(code);return values_.write##Name(value);}
++    BCE_DXF_VECTOR(Point2d,AcGePoint2d)
++    BCE_DXF_VECTOR(Point3d,AcGePoint3d)
++    BCE_DXF_VECTOR(Vector2d,AcGeVector2d)
++    BCE_DXF_VECTOR(Vector3d,AcGeVector3d)
++    BCE_DXF_VECTOR(Scale3d,AcGeScale3d)
++#undef BCE_DXF_VECTOR
++    Acad::ErrorStatus writeXDataStart()override{xdata_=true;values_.out<<"DXF_XDATA_START;";return Acad::eOk;}
++    Acad::ErrorStatus writeEmbeddedObjectStart()override{throw std::runtime_error("UNSUPPORTED_XRECORD_DXF_EMBEDDED_OBJECT");}
++    Acad::ErrorStatus writeResBuf(const resbuf& item)override{
++        const auto code=static_cast<AcDb::DxfCode>(item.restype);const auto type=acdbGroupCodeToType(code);const auto& value=item.resval;
++        switch(type){
++        case AcDb::kDwgReal:return writeDouble(code,value.rreal);
++        case AcDb::kDwgInt8:tag(code);values_.out<<"Int8Resbuf:"<<value.rint<<';';return Acad::eOk;
++        case AcDb::kDwgInt16:return writeInt16(code,value.rint);
++        case AcDb::kDwgInt32:return writeInt32(code,value.rlong);
++        case AcDb::kDwgInt64:return writeInt64(code,value.mnInt64);
++        case AcDb::kDwgText:return writeString(code,value.rstring);
++        case AcDb::kDwgBChunk:return writeBChunk(code,value.rbinary);
++        case AcDb::kDwg3Real:return writePoint3d(code,{value.rpoint[0],value.rpoint[1],value.rpoint[2]});
++        case AcDb::kDwgHardOwnershipId:case AcDb::kDwgSoftOwnershipId:case AcDb::kDwgHardPointerId:case AcDb::kDwgSoftPointerId:{AcDbObjectId id;if(value.rlname[0]!=0||value.rlname[1]!=0)check(acdbGetObjectId(id,value.rlname),"resolve public DXF resbuf reference");return writeObjectId(code,id);}
++        default:throw std::runtime_error("UNSUPPORTED_XRECORD_DXF_RESBUF; group="+std::to_string(code)+"; type="+std::to_string(type));
++        }
++    }
++private:
++    static bool isReference(AcDb::DwgDataType type){return type==AcDb::kDwgHardOwnershipId||type==AcDb::kDwgSoftOwnershipId||type==AcDb::kDwgHardPointerId||type==AcDb::kDwgSoftPointerId;}
++    void tag(AcDb::DxfCode code){need(++count_<=8192&&values_.out.tellp()<=4194304,"XRECORD_DXF_BUDGET");values_.out<<"DXFGroup:"<<code<<';';}
++    const AcDbXrecord& record_;ValueFiler& values_;std::vector<std::wstring> controls_;std::size_t count_{};bool sawSelf_{},sawOwner_{},payload_{},xdata_{};
++};
++void publicXrecordValues(const AcDbXrecord& record,ValueFiler& filer){
++    AcDbXrecordIterator iterator(&record);std::size_t count=0;
++    for(iterator.start();!iterator.done();){
++        need(++count<=4096,"XRECORD_TYPED_ITEM_BUDGET");const int code=iterator.curRestype();const auto type=acdbGroupCodeToType(static_cast<AcDb::DxfCode>(code));
++        // Handle-valued items have no verified cross-database binding contract.
++        // Reject them before reading rather than guessing a resbuf union field.
++        need(type!=AcDb::kDwgHandle&&type!=AcDb::kDwgNull&&type!=AcDb::kDwgNotRecognized,"UNSUPPORTED_XRECORD_TYPED_VALUE; group="+std::to_string(code)+"; type="+std::to_string(type));
++        struct Item {resbuf value{};~Item(){acdbFreeResBufContents(&value);}} item;item.value.restype=static_cast<short>(code);check(iterator.getCurResbuf(item.value,record.database()),"public Xrecord typed value");need(item.value.restype==code,"XRECORD_TYPED_GROUP_CHANGED");
++        filer.out<<"XrecordItem:"<<count<<",group="<<code<<",type="<<type<<';';const auto& value=item.value.resval;
++        switch(type){
++        case AcDb::kDwgReal:filer.writeDouble(value.rreal);break;
++        case AcDb::kDwgInt8:filer.out<<"Int8Resbuf:"<<value.rint<<';';break;
++        case AcDb::kDwgInt16:filer.writeInt16(value.rint);break;
++        case AcDb::kDwgInt32:filer.writeInt32(value.rlong);break;
++        case AcDb::kDwgInt64:filer.writeInt64(value.mnInt64);break;
++        case AcDb::kDwgText:filer.writeString(value.rstring);break;
++        case AcDb::kDwgBChunk:need(value.rbinary.clen>=0,"INVALID_XRECORD_BINARY_LENGTH");filer.writeBChunk(value.rbinary);break;
++        case AcDb::kDwg3Real:filer.writePoint3d({value.rpoint[0],value.rpoint[1],value.rpoint[2]});break;
++        case AcDb::kDwgHardOwnershipId:case AcDb::kDwgSoftOwnershipId:case AcDb::kDwgHardPointerId:case AcDb::kDwgSoftPointerId:{
++            AcDbObjectId id;if(value.rlname[0]!=0||value.rlname[1]!=0)check(acdbGetObjectId(id,value.rlname),"resolve public Xrecord object reference");need(id.isNull()||id.database()==record.database(),"XRECORD_REFERENCE_DATABASE_MISMATCH");const char* role=type==AcDb::kDwgHardOwnershipId?"HardOwnershipId":type==AcDb::kDwgSoftOwnershipId?"SoftOwnershipId":type==AcDb::kDwgHardPointerId?"HardPointerId":"SoftPointerId";filer.dataReference(id,role);break;
++        }
++        default:throw std::runtime_error("UNSUPPORTED_XRECORD_TYPED_VALUE; group="+std::to_string(code)+"; type="+std::to_string(type));
++        }
++        need(filer.out.tellp()<=4194304,"XRECORD_TYPED_BYTES_BUDGET");const auto status=iterator.next();need(status==Acad::eOk||(status==Acad::eIteratorDone&&iterator.done()),"XRECORD_TYPED_ITERATOR_FAILED:"+std::to_string(status));
++    }
++    filer.out<<"XrecordItemCount:"<<count<<';';
++}
++struct Graph {
++    struct Edge {AcDbObjectId from,to;std::string role,context;};
++    std::vector<AcDbObjectId> active,resources;
++    std::vector<Edge> edges;
++    std::vector<std::string> diagnosticPath,resourcePaths;
++    std::size_t bytes{};
++    std::string value(AcDbObjectId id,bool root=false,const char* role="root-or-resource-check"){
++        need(!id.isNull()&&!id.isErased(),"INVALID_RESOURCE_REFERENCE");need(active.size()<32&&resources.size()<512,"RESOURCE_GRAPH_BUDGET");auto cycle=std::find(active.begin(),active.end(),id);if(cycle!=active.end())return "cycle-depth:"+std::to_string(std::distance(active.begin(),cycle));
++        Open<AcDbObject> object(id);const auto node=diagnosticNode(*object,role,active.size());if(!(standardResource(object->isA())||(root&&object->isA()==AcDbHatch::desc()))){std::string trace;for(const auto& ancestor:diagnosticPath)trace+="["+ancestor+"] -> ";throw std::runtime_error("UNSUPPORTED_RESOURCE_CLASS; traversal="+trace+"["+node+"]; rejectedNodeFilerStatus=not-entered");}if(!root&&std::find(resources.begin(),resources.end(),id)==resources.end()){resources.push_back(id);std::string path;for(const auto& ancestor:diagnosticPath)path+="["+ancestor+"] -> ";resourcePaths.push_back(path+"["+node+"]");}
++        active.push_back(id);diagnosticPath.push_back(node);struct Pop{std::vector<AcDbObjectId>& stack;std::vector<std::string>& path;~Pop(){path.pop_back();stack.pop_back();}} pop{active,diagnosticPath};ValueFiler filer(*this,id,object->ownerId());filer.writeString(object->isA()->name());
++        Acad::ErrorStatus filingStatus;
++        if(object->isA()==AcDbXrecord::desc()){
++            const auto* record=AcDbXrecord::cast(&*object);filer.out<<"XrecordReferenceTranslation:"<<record->isXlateReferences()<<";XrecordMergeStyle:"<<record->mergeStyle()<<';';
++            XrecordDxfFiler dxf(*record,filer);filingStatus=record->dxfOut(&dxf,true,nullptr);check(filingStatus,"complete public Xrecord DXF");dxf.finish();publicXrecordValues(*record,filer);
++        }else filingStatus=object->dwgOutFields(&filer);
++        need(filingStatus==Acad::eOk&&filer.filerStatus()==Acad::eOk,"PUBLIC_RESOURCE_FILER_FAILED; "+node+"; callStatus="+std::to_string(filingStatus)+"; filerStatus="+std::to_string(filer.filerStatus()));auto result=filer.out.str();need(result.size()<=4194304&&bytes<=16777216-result.size(),"RESOURCE_GRAPH_BYTES_BUDGET");bytes+=result.size();return result;
++    }
++};
++Acad::ErrorStatus ValueFiler::reference(AcDbObjectId id,const char* type){out<<type<<':';if(id.isNull())out<<"null;";else if(id==self_)out<<"self;";else if(id==owner_)out<<"owner;";else{need(graph_.edges.size()<16384,"RESOURCE_EDGE_BUDGET");graph_.edges.push_back({self_,id,type,"DWGTypedReference"});const auto edge=std::string(type)+"(source="+diagnosticHandle(self_)+",filerStatus="+std::to_string(status_)+")";out<<'{'<<graph_.value(id,false,edge.c_str())<<"};";}return Acad::eOk;}
++Acad::ErrorStatus ValueFiler::dataReference(AcDbObjectId id,const char* type,const std::string& context){
++    // Unlike the base object's structural self/owner fields, every non-null
++    // Xrecord data reference remains an explicit edge, including self/owner.
++    out<<type<<':';if(id.isNull()){out<<"null;";return Acad::eOk;}need(graph_.edges.size()<16384,"RESOURCE_EDGE_BUDGET");graph_.edges.push_back({self_,id,type,context});const auto edge=std::string(type)+"(XrecordDataSource="+diagnosticHandle(self_)+")";out<<'{'<<graph_.value(id,false,edge.c_str())<<"};";return Acad::eOk;
++}
++std::string expression(AcDbObjectId id){Graph graph;return graph.value(id,true);}
++void equalResource(AcDbObjectId source,AcDbObjectId target,const char* reason,bool root=false){Graph a,b;const auto left=a.value(source,root),right=b.value(target,root);if(left==right)return;std::size_t offset=0;while(offset<left.size()&&offset<right.size()&&left[offset]==right[offset])++offset;const auto start=offset>64?offset-64:0;Open<AcDbObject> from(source),to(target);throw std::runtime_error(std::string(reason)+"; source=["+diagnosticNode(*from,"compare-source",0)+"]; target=["+diagnosticNode(*to,"compare-target",0)+"]; firstOpaqueDifference="+std::to_string(offset)+"; sourceLength="+std::to_string(left.size())+"; targetLength="+std::to_string(right.size())+"; sourceFragment="+left.substr(start,192)+"; targetFragment="+right.substr(start,192));}
++AcDbObjectId targetResource(AcDbObjectId source,AcDbDatabase& target,unsigned depth=0){
++    need(depth<32,"RESOURCE_OWNER_PATH_BUDGET");Open<AcDbObject> object(source);auto* db=object->database();AcDbObjectId targetOwner;auto owner=object->ownerId();if(owner==db->layerTableId())targetOwner=target.layerTableId();else if(owner==db->linetypeTableId())targetOwner=target.linetypeTableId();else if(owner==db->regAppTableId())targetOwner=target.regAppTableId();else if(owner==db->materialDictionaryId())targetOwner=target.materialDictionaryId();else if(owner==db->plotStyleNameDictionaryId())targetOwner=target.plotStyleNameDictionaryId();else{
++        need(!owner.isNull(),"UNSUPPORTED_RESOURCE_OWNER");Open<AcDbObject> parent(owner);need(standardResource(parent->isA()),"UNSUPPORTED_RESOURCE_OWNER_CLASS");const auto mappedParent=targetResource(owner,target,depth+1);if(mappedParent.isNull())return AcDbObjectId::kNull;
++        if(object->isA()==AcDbDictionary::desc()&&parent->extensionDictionary()==source){Open<AcDbObject> mapped(mappedParent);const auto dictionaryId=mapped->extensionDictionary();if(!dictionaryId.isNull()){Open<AcDbObject> dictionary(dictionaryId);need(dictionary->isA()==AcDbDictionary::desc()&&dictionary->ownerId()==mappedParent,"RESOURCE_EXTENSION_OWNER_MISMATCH");}return dictionaryId;}
++        need(parent->isA()==AcDbDictionary::desc(),"UNSUPPORTED_RESOURCE_OWNER_EDGE");Open<AcDbObject> mapped(mappedParent);need(mapped->isA()==AcDbDictionary::desc(),"RESOURCE_DICTIONARY_OWNER_CLASS_MISMATCH");targetOwner=mappedParent;
++    }
++    AcDbObjectId id;AcString name;if(object->isKindOf(AcDbSymbolTableRecord::desc())){auto* record=AcDbSymbolTableRecord::cast(&*object);check(record->getName(name),"resource name");Open<AcDbSymbolTable> table(targetOwner);if(table->has(name.kACharPtr()))check(table->getAt(name.kACharPtr(),id),"target symbol");}else{Open<AcDbDictionary> old(owner);check(old->nameAt(source,name),"resource dictionary key");Open<AcDbDictionary> dictionary(targetOwner);if(dictionary->has(name.kACharPtr()))check(dictionary->getAt(name.kACharPtr(),id),"target resource dictionary");}return id;
++}
++using ResourcePairs=std::vector<std::pair<AcDbObjectId,AcDbObjectId>>;
++ResourcePairs preflight(const AcDbObjectIdArray& roots,AcDbDatabase& target){Graph graph;for(int i=0;i<roots.length();++i)graph.value(roots[i],true);ResourcePairs existing;for(auto resource:graph.resources){auto destination=targetResource(resource,target);if(!destination.isNull()){equalResource(resource,destination,"RESOURCE_CONFLICT");existing.emplace_back(resource,destination);}}return existing;}
++// SDK map and verified owned-path bindings are separate evidence. Never insert
++// synthetic entries into AcDbIdMapping. One source graph is checked at a time.
++struct VerifiedBinding {
++    AcDbObjectId source,target,reusedSource,reusedTarget;
++    bool sdkPair{},cloned{};
++};
++class BindingVerifier final {
++public:
++    BindingVerifier(AcDbIdMapping& mapping,AcDbDatabase& target,const ResourcePairs& existing,const AcDbObjectIdArray& roots)
++        :mapping_(mapping),target_(target),existing_(existing),roots_(roots){}
++    VerifiedBinding bind(AcDbObjectId source){
++        try{return bindImpl(source);}catch(const std::exception& e){throw std::runtime_error("VERIFIED_BINDING_SOURCE="+diagnosticHandle(source)+"; "+e.what());}
++    }
++private:
++    VerifiedBinding bindImpl(AcDbObjectId source){
++        for(const auto& b:bindings_)if(b.source==source)return b;
++        need(bindings_.size()<4096&&active_.size()<32,"VERIFIED_BINDING_BUDGET");need(std::find(active_.begin(),active_.end(),source)==active_.end(),"RESOURCE_OWNER_CYCLE");active_.push_back(source);struct Pop{std::vector<AcDbObjectId>& v;~Pop(){v.pop_back();}} pop{active_};
++        const bool root=roots_.contains(source);Open<AcDbObject> from(source);need(root?from->isA()==AcDbHatch::desc():standardResource(from->isA()),"UNSUPPORTED_BINDING_CLASS");
++        AcDbIdPair pair;pair.setKey(source);const bool computed=mapping_.compute(pair);VerifiedBinding binding;binding.source=source;binding.sdkPair=computed;
++        if(computed){
++            need(!pair.value().isNull()&&pair.value().database()==&target_&&!pair.value().isErased(),"INVALID_SDK_RESOURCE_MAPPING");binding.target=pair.value();binding.cloned=pair.isCloned();
++            if(root)need(pair.isCloned(),"ROOT_NOT_CLONED");
++            if(!pair.isCloned()){
++                const auto found=std::find(existing_.begin(),existing_.end(),std::make_pair(source,pair.value()));need(found!=existing_.end(),"UNPROVEN_REUSED_SDK_RESOURCE");binding.reusedSource=source;binding.reusedTarget=pair.value();
++            }
++        }else{
++            need(!root&&!from->ownerId().isNull(),"RESOURCE_MAPPING_MISSING_WITHOUT_OWNER");const auto parent=bind(from->ownerId());need(!parent.reusedSource.isNull(),"RESOURCE_MAPPING_MISSING_UNDER_NEW_PARENT");
++            binding.target=targetResource(source,target_);need(!binding.target.isNull(),"RESOURCE_OWNED_PATH_MISSING");ownedPair(source,binding.target,parent.source,parent.target);binding.reusedSource=parent.reusedSource;binding.reusedTarget=parent.reusedTarget;
++        }
++        Open<AcDbObject> to(binding.target);need(to->isA()==from->isA(),"RESOURCE_BINDING_CLASS_MISMATCH");
++        if(root)need(to->ownerId()==acdbSymUtil()->blockModelSpaceId(&target_),"ROOT_TARGET_OWNER_MISMATCH");
++        else need(targetResource(source,target_)==binding.target,"RESOURCE_BINDING_LOCATION_MISMATCH");
++        // Check actual owner, not just an independent same-name lookup.
++        if(!root){const auto owner=from->ownerId();auto* sourceDb=from->database();AcDbObjectId expectedOwner;
++            if(owner==sourceDb->layerTableId())expectedOwner=target_.layerTableId();else if(owner==sourceDb->linetypeTableId())expectedOwner=target_.linetypeTableId();else if(owner==sourceDb->regAppTableId())expectedOwner=target_.regAppTableId();else if(owner==sourceDb->materialDictionaryId())expectedOwner=target_.materialDictionaryId();else if(owner==sourceDb->plotStyleNameDictionaryId())expectedOwner=target_.plotStyleNameDictionaryId();else expectedOwner=bind(owner).target;
++            need(to->ownerId()==expectedOwner,"RESOURCE_BINDING_OWNER_MISMATCH");
++        }
++        equalResource(source,binding.target,"RESOURCE_BINDING_DEFINITION_CONFLICT",root);
++        for(const auto& b:bindings_)need(b.target!=binding.target||b.source==source,"RESOURCE_BINDING_ALIAS_COLLISION");bindings_.push_back(binding);return binding;
++    }
++public:
++    void verifyEdges(const Graph& from,const Graph& to){
++        need(from.edges.size()==to.edges.size(),"RESOURCE_REFERENCE_EDGE_COUNT");
++        for(std::size_t i=0;i<from.edges.size();++i){const auto& a=from.edges[i];const auto& b=to.edges[i];VerifiedBinding child;
++            try{const auto owner=bind(a.from);child=bind(a.to);need(a.role==b.role&&a.context==b.context&&owner.target==b.from&&child.target==b.to,"RESOURCE_REFERENCE_BINDING_MISMATCH");
++                if(!child.sdkPair){
++                    // The incoming edge does not establish a missing SDK map.
++                    // Recheck the independently established owner chain to an
++                    // actual, preflight-verified reused SDK pair first.
++                    recheckOwnedPath(child);
++                    if(a.role=="HardOwnershipId"||a.role=="SoftOwnershipId")ownedPair(a.to,b.to,a.from,b.from);
++                    else{need(a.role=="HardPointerId"||a.role=="SoftPointerId","UNSUPPORTED_NONOWNING_REFERENCE_ROLE");
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++                        if(edgeProofs_.size()<32768)edgeProofs_+="[VerifiedNonowningTarget; "+edgeDiagnostic(a,b,child)+"];";
++#endif
++                    }
++                }
++            }catch(const std::exception& error){throw std::runtime_error(std::string(error.what())+"; edgeIndex="+std::to_string(i)+"; "+edgeDiagnostic(a,b,child));}
++        }
++    }
++    std::string summary()const{std::ostringstream out;for(const auto& b:bindings_)out<<bindingDiagnostic(b);
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++        out<<edgeProofs_;
++#endif
++        return out.str();}
++private:
++    static std::string bindingDiagnostic(const VerifiedBinding& b){std::ostringstream out;out<<"[source="<<diagnosticHandle(b.source)<<",target="<<diagnosticHandle(b.target)<<",kind="<<(b.sdkPair?"SdkPair":"VerifiedOwnedPath")<<",cloned="<<b.cloned<<",reusedSource="<<diagnosticHandle(b.reusedSource)<<",reusedTarget="<<diagnosticHandle(b.reusedTarget)<<"];";return out.str();}
++    static std::string edgeDiagnostic(const Graph::Edge& a,const Graph::Edge& b,const VerifiedBinding& child){
++        try{Open<AcDbObject> af(a.from),at(a.to),bf(b.from),bt(b.to);return "sourceEdge=[role="+a.role+",context="+a.context+",from={"+diagnosticNode(*af,"edge-from",0)+"},to={"+diagnosticNode(*at,"edge-to",0)+"}]; targetEdge=[role="+b.role+",context="+b.context+",from={"+diagnosticNode(*bf,"edge-from",0)+"},to={"+diagnosticNode(*bt,"edge-to",0)+"}]; child="+bindingDiagnostic(child);}
++        catch(const std::exception& detail){return "sourceEdge=[role="+a.role+",context="+a.context+",from="+diagnosticHandle(a.from)+",to="+diagnosticHandle(a.to)+"]; targetEdge=[role="+b.role+",context="+b.context+",from="+diagnosticHandle(b.from)+",to="+diagnosticHandle(b.to)+"]; child="+bindingDiagnostic(child)+"; diagnosticDetailError="+detail.what();}
++    }
++    void recheckOwnedPath(const VerifiedBinding& child){
++        need(!child.sdkPair&&!child.reusedSource.isNull()&&!child.reusedTarget.isNull(),"MISSING_SDK_PAIR_WITHOUT_VERIFIED_OWNED_PATH");auto current=child;std::size_t depth=0;
++        while(!current.sdkPair){need(++depth<=32&&current.reusedSource==child.reusedSource&&current.reusedTarget==child.reusedTarget,"OWNED_PATH_ANCHOR_OR_DEPTH_MISMATCH");Open<AcDbObject> source(current.source);need(!source->ownerId().isNull(),"OWNED_PATH_OWNER_MISSING");const auto parent=bind(source->ownerId());ownedPair(current.source,current.target,parent.source,parent.target);current=parent;}
++        need(!current.cloned&&current.source==child.reusedSource&&current.target==child.reusedTarget,"OWNED_PATH_REUSED_ANCHOR_MISMATCH");AcDbIdPair pair;pair.setKey(current.source);need(mapping_.compute(pair)&&!pair.isCloned()&&pair.value()==current.target,"OWNED_PATH_ANCHOR_SDK_PAIR_CHANGED");need(std::find(existing_.begin(),existing_.end(),std::make_pair(current.source,current.target))!=existing_.end(),"OWNED_PATH_ANCHOR_NOT_PREFLIGHT_VERIFIED");
++        // bindImpl already checked every node's full definition, exact class,
++        // unique target and location in this read-only verification scope.
++    }
++    static void ownedPair(AcDbObjectId source,AcDbObjectId target,AcDbObjectId sourceParent,AcDbObjectId targetParent){
++        Open<AcDbObject> a(source),b(target),pa(sourceParent),pb(targetParent);need(a->ownerId()==sourceParent&&b->ownerId()==targetParent&&pa->isA()==pb->isA()&&a->isA()==b->isA(),"OWNED_BINDING_REVERSE_OWNER_OR_CLASS");
++        if(pa->extensionDictionary()==source){need(a->isA()==AcDbDictionary::desc()&&pb->extensionDictionary()==target,"OWNED_EXTENSION_FORWARD_MISMATCH");return;}
++        need(pa->isA()==AcDbDictionary::desc()&&pb->isA()==AcDbDictionary::desc(),"UNSUPPORTED_OWNED_BINDING_EDGE");auto* da=AcDbDictionary::cast(&*pa);auto* db=AcDbDictionary::cast(&*pb);AcString ka,kb;check(da->nameAt(source,ka),"source owned key");check(db->nameAt(target,kb),"target reverse owned key");need(ka==kb,"OWNED_DICTIONARY_KEY_MISMATCH");AcDbObjectId ia,ib;check(da->getAt(ka.kACharPtr(),ia),"source forward key");check(db->getAt(kb.kACharPtr(),ib),"target forward key");need(ia==source&&ib==target,"OWNED_DICTIONARY_FORWARD_MISMATCH");
++    }
++    AcDbIdMapping& mapping_;AcDbDatabase& target_;const ResourcePairs& existing_;const AcDbObjectIdArray& roots_;std::vector<VerifiedBinding> bindings_;std::vector<AcDbObjectId> active_;
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++    std::string edgeProofs_;
++#endif
++};
++// Only private owned targets reach this core. Failure abandons the entire owner;
++// this function makes no claim that wblockClone changes were rolled back.
++AcDbObjectIdArray cloneVerified(AcDbDatabase& source,const AcDbObjectIdArray& input,AcDbDatabase& target){
++    const auto existing=preflight(input,target);Working work(target);AcDbIdMapping mapping;const auto status=source.wblockCloneObjects(input,acdbSymUtil()->blockModelSpaceId(&target),mapping,AcDb::kDrcIgnore);check(status,"clone verified material tiles");
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++    if(testHooks&&testHooks->exporting)inject(material_tiles_diagnostics::OwnedFault::AfterExportClone);
++#endif
++    BindingVerifier verifier(mapping,target,existing,input);AcDbObjectIdArray result;Graph from,to;
++    for(int i=0;i<input.length();++i){const auto binding=verifier.bind(input[i]);result.append(binding.target);const auto a=from.value(input[i],true),b=to.value(binding.target,true);need(a==b,"CLONED_NATIVE_EXPRESSION_CHANGED");}
++    for(auto resource:from.resources)verifier.bind(resource);verifier.verifyEdges(from,to);
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++    if(testHooks&&testHooks->bindings.size()<262144)testHooks->bindings+=verifier.summary();
++#endif
++    return result;
++}
++std::string snapshot(AcDbDatabase& db,const AcDbObjectIdArray& ids){auto actual=modelRoots(db);need(actual.length()==ids.length(),"TILE_ROOT_SET_CHANGED");std::string data;for(int i=0;i<ids.length();++i){need(actual.contains(ids[i]),"TILE_ROOT_CHANGED");auto text=expression(ids[i]);data+=std::to_string(text.size())+":"+text;}return data;}
++std::pair<double,int> measure(AcDbDatabase& db,AcDbObjectId id,Rect r){
++    Working work(db);Open<AcDbHatch> h(id);need(h->isA()==AcDbHatch::desc()&&!h->associative()&&h->numLoops()==1,"INVALID_NATIVE_TILE");double measured{};check(h->getArea(measured),"native tile area");need(close(measured,area(r)),"NATIVE_TILE_AREA_MISMATCH");
++    Adesk::Int32 type{};AcGePoint2dArray p;AcGeDoubleArray bulges;check(h->getLoopAt(0,type,p,bulges),"native tile loop");need(p.length()==5&&p[0]==AcGePoint2d(r.x0,r.y0)&&p[1]==AcGePoint2d(r.x1,r.y0)&&p[2]==AcGePoint2d(r.x1,r.y1)&&p[3]==AcGePoint2d(r.x0,r.y1)&&p[4]==p[0],"NATIVE_TILE_BOUNDARY_MISMATCH");for(int i=0;i<bulges.length();++i)need(bulges[i]==0,"NATIVE_TILE_BULGE");
++    AcGePoint2dArray starts,ends;check(h->getHatchLinesData(starts,ends),"native tile line data");need(!h->isSolidFill()&&h->numHatchLines()>0&&starts.length()==ends.length()&&starts.length()==h->numHatchLines(),"EMPTY_NATIVE_PATTERN_OUTPUT");const double eps=1e-9*(std::max)({1.0,std::abs(r.x0),std::abs(r.x1),std::abs(r.y0),std::abs(r.y1)});for(int i=0;i<starts.length();++i)for(auto point:{starts[i],ends[i]})need(std::isfinite(point.x)&&std::isfinite(point.y)&&point.x>=r.x0-eps&&point.x<=r.x1+eps&&point.y>=r.y0-eps&&point.y<=r.y1+eps,"NATIVE_TILE_LINES_OUTSIDE_BOUNDARY");return {measured,starts.length()};
++}
++std::string patternKey(AcDbHatch& h){
++    std::ostringstream out;out.imbue(std::locale::classic());out<<std::hexfloat;out<<h.patternType()<<';'<<h.patternScale()<<';'<<h.patternAngle()<<';'<<h.patternSpace()<<';'<<h.patternDouble()<<';'<<h.originPoint().x<<';'<<h.originPoint().y<<';'<<h.color().color()<<';'<<h.numPatternDefinitions()<<';';for(const ACHAR* s=h.patternName();*s;++s)out<<static_cast<unsigned>(*s)<<',';
++    for(int i=0;i<h.numPatternDefinitions();++i){double angle{},x{},y{},dx{},dy{};AcGeDoubleArray d;check(h.getPatternDefinitionAt(i,angle,x,y,dx,dy,d),"native shared pattern");out<<angle<<';'<<x<<';'<<y<<';'<<dx<<';'<<dy<<';';for(int j=0;j<d.length();++j)out<<d[j]<<';';}return out.str();
++}
++void validateSeams(const AcDbObjectIdArray& roots,const std::vector<MaterialTileRecord>& tiles,std::size_t first,double units){
++    struct Tile {Rect box;AcGePoint2dArray starts,ends;};std::vector<Tile> native;std::string physical;const double eps=1e-5/units;
++    for(std::size_t i=first;i<tiles.size();++i){Open<AcDbHatch> h(roots[static_cast<int>(i)]);auto current=patternKey(*h);if(i==first)physical=current;need(physical==current,"INCONSISTENT_GLOBAL_MATERIAL_PHASE");Tile tile;tile.box=rectangle(tiles[i].geometry.outer);check(h->getHatchLinesData(tile.starts,tile.ends),"seam actual lines");need(tile.starts.length()>0&&tile.starts.length()==tile.ends.length(),"EMPTY_NATIVE_PATTERN_OUTPUT");native.push_back(std::move(tile));}
++    auto contacts=[&](const Tile& tile,bool vertical,double at,double lo,double hi){std::vector<double> result;for(int i=0;i<tile.starts.length();++i){auto a=tile.starts[i],b=tile.ends[i];if(std::abs(vertical?a.x-b.x:a.y-b.y)<=eps)continue;for(auto p:{a,b})if(std::abs((vertical?p.x:p.y)-at)<=eps){const double c=vertical?p.y:p.x;if(c>lo+eps&&c<hi-eps)result.push_back(c);}}std::sort(result.begin(),result.end());return result;};
++    for(std::size_t i=0;i<native.size();++i)for(std::size_t j=i+1;j<native.size();++j){auto a=native[i].box,b=native[j].box;double dx=(std::min)(a.x1,b.x1)-(std::max)(a.x0,b.x0),dy=(std::min)(a.y1,b.y1)-(std::max)(a.y0,b.y0);need(!(dx>0&&dy>0),"OVERLAPPING_NATIVE_TILES");const bool vertical=dy>eps&&(a.x1==b.x0||b.x1==a.x0),horizontal=dx>eps&&(a.y1==b.y0||b.y1==a.y0);if(!vertical&&!horizontal)continue;const double at=vertical?(a.x1==b.x0?a.x1:b.x1):(a.y1==b.y0?a.y1:b.y1);const double lo=vertical?(std::max)(a.y0,b.y0):(std::max)(a.x0,b.x0),hi=vertical?(std::min)(a.y1,b.y1):(std::min)(a.x1,b.x1);auto one=contacts(native[i],vertical,at,lo,hi),two=contacts(native[j],vertical,at,lo,hi);need(one.size()==two.size(),"NATIVE_SEAM_CONTACT_COUNT_MISMATCH");for(std::size_t k=0;k<one.size();++k)need(std::abs(one[k]-two[k])<=eps,"NATIVE_SEAM_PHASE_MISMATCH");}
++}
++}
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++namespace material_tiles_diagnostics {
++// Test-only census of every live object handle in a fresh owned database. Full
++// opaque payload is compared for model Hatches, layers and Xrecords; every
++// dictionary is compared by its complete public key/ID/ownership contract.
++std::string resourceCensus(AcDbDatabase& db){
++    Working working(db);const auto seed=db.handseed();need(seed.high()==0&&seed.low()<=65536,"ABORT_PROBE_HANDLE_BUDGET");const auto roots=modelRoots(db);std::ostringstream out;out.imbue(std::locale::classic());out<<"modelRoots=";for(int i=0;i<roots.length();++i)out<<diagnosticHandle(roots[i])<<',';out<<';';
++    for(Adesk::UInt64 value=1;value<seed.low();++value){AcDbObjectId id;const auto lookup=db.getAcDbObjectId(id,false,AcDbHandle(value));if(lookup==Acad::eUnknownHandle)continue;check(lookup,"abort census handle lookup");if(id.isNull()||id.isErased())continue;Open<AcDbObject> object(id);out<<"[handle="<<diagnosticHandle(id)<<",class="<<diagnosticText(object->isA()->name())<<",owner="<<diagnosticHandle(object->ownerId())<<",extension="<<diagnosticHandle(object->extensionDictionary())<<';';
++        if(object->isKindOf(AcDbDictionary::desc())){auto* dictionary=AcDbDictionary::cast(&*object);out<<"dictionary-count="<<dictionary->numEntries()<<",hard="<<dictionary->isTreatElementsAsHard()<<",merge="<<dictionary->mergeStyle()<<';';std::unique_ptr<AcDbDictionaryIterator> iterator(dictionary->newIterator());need(iterator!=nullptr,"abort census dictionary iterator");std::vector<std::pair<std::wstring,AcDbObjectId>> entries;for(;!iterator->done();iterator->next()){need(entries.size()<4096,"ABORT_PROBE_DICTIONARY_BUDGET");entries.push_back({iterator->name(),iterator->objectId()});}std::sort(entries.begin(),entries.end(),[](const auto& a,const auto& b){return a.first<b.first;});for(const auto& entry:entries){Open<AcDbObject> child(entry.second);out<<"key="<<diagnosticText(entry.first.c_str())<<",id="<<diagnosticHandle(entry.second)<<",owner="<<diagnosticHandle(child->ownerId())<<",class="<<diagnosticText(child->isA()->name())<<';';}}
++        if(object->isA()==AcDbLayerTableRecord::desc()||object->isA()==AcDbXrecord::desc()||roots.contains(id)){Graph graph;const auto data=graph.value(id,roots.contains(id));out<<"opaqueLength="<<data.size()<<':'<<data;}out<<"];";need(out.tellp()<=4194304,"ABORT_PROBE_CENSUS_BYTES_BUDGET");
++    }return out.str();
++}
++}
++#endif
++void MaterialDatabaseDeleter::operator()(AcDbDatabase* db)const noexcept{
++    if(!db)return;
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++    bool observed=false;if(testHooks){const auto it=std::find(testHooks->live.begin(),testHooks->live.end(),db);if(it!=testHooks->live.end()){observed=true;testHooks->destructionWhileWorking|=acdbHostApplicationServices()->workingDatabase()==db;testHooks->live.erase(it);}}
++#endif
++    delete db;
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++    if(observed)++testHooks->destroyed; // Witness after the actual SDK destructor.
++#endif
++}
++struct PreparedMaterialTiles::State:AcDbDatabaseReactor {
++    OwnedDbPtr database;AcDbObjectIdArray roots;MaterialPlan parent;std::vector<MaterialTileRecord> tiles;std::vector<PreparedMaterialBatch> children;std::set<AcDbDatabase*> sources;std::string baseline;bool armed{},changed{};
++    ~State(){if(armed)database->removeReactor(this);}
++    void objectAppended(const AcDbDatabase*,const AcDbObject*)override{changed=true;}void objectUnAppended(const AcDbDatabase*,const AcDbObject*)override{changed=true;}void objectReAppended(const AcDbDatabase*,const AcDbObject*)override{changed=true;}void objectOpenedForModify(const AcDbDatabase*,const AcDbObject*)override{changed=true;}void objectModified(const AcDbDatabase*,const AcDbObject*)override{changed=true;}void objectErased(const AcDbDatabase*,const AcDbObject*,Adesk::Boolean)override{changed=true;}void headerSysVarWillChange(const AcDbDatabase*,const ACHAR*)override{changed=true;}
++};
++PreparedMaterialTiles::PreparedMaterialTiles(std::unique_ptr<State> s):state_(std::move(s)){}
++PreparedMaterialTiles::~PreparedMaterialTiles()=default;
++PreparedMaterialTiles::PreparedMaterialTiles(PreparedMaterialTiles&&)noexcept=default;
++PreparedMaterialTiles& PreparedMaterialTiles::operator=(PreparedMaterialTiles&&)noexcept=default;
++AcDbDatabase& PreparedMaterialTiles::database()const{need(state_!=nullptr,"MOVED_TILE_BATCH");return *state_->database;}
++const AcDbObjectIdArray& PreparedMaterialTiles::roots()const{need(state_!=nullptr,"MOVED_TILE_BATCH");return state_->roots;}
++const std::vector<MaterialTileRecord>& PreparedMaterialTiles::tiles()const{need(state_!=nullptr,"MOVED_TILE_BATCH");return state_->tiles;}
++const MaterialPlan& PreparedMaterialTiles::parentPlan()const{need(state_!=nullptr,"MOVED_TILE_BATCH");return state_->parent;}
++bool PreparedMaterialTiles::intact()const noexcept{try{if(!state_||state_->changed)return false;for(const auto& child:state_->children)if(!child.intact())return false;Working work(*state_->database);return snapshot(*state_->database,state_->roots)==state_->baseline;}catch(...){return false;}}
++Result<OwnedMaterialDatabase> PreparedMaterialTiles::cloneIntoNewOwnedDb()const{
++    try{need(intact(),"PREPARED_MATERIAL_TILES_CHANGED");OwnedMaterialDatabase result;result.database=newOwnedDatabase();need(result.database.get()!=state_->database.get()&&state_->sources.count(result.database.get())==0,"NEW_EXPORT_IDENTITY_REQUIRED");result.roots=cloneVerified(*state_->database,state_->roots,*result.database);need(modelRoots(*result.database).length()==result.roots.length()&&static_cast<std::size_t>(result.roots.length())==state_->tiles.size(),"EXTRA_OR_MISSING_CLONED_ROOT");
++        for(int i=0;i<result.roots.length();++i){const auto cell=rectangle(state_->tiles[static_cast<std::size_t>(i)].geometry.outer);const auto measured=measure(*result.database,result.roots[i],cell);need(close(measured.first,state_->tiles[static_cast<std::size_t>(i)].nativeArea)&&measured.second==state_->tiles[static_cast<std::size_t>(i)].nativeLines,"EXPORT_NATIVE_OUTPUT_CHANGED");}
++        need(intact(),"PREPARED_MATERIAL_TILES_CHANGED_DURING_EXPORT");
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++        inject(material_tiles_diagnostics::OwnedFault::BeforeExportPublish);
++#endif
++        return {std::move(result),{}};
++    }catch(const std::exception& e){return {std::nullopt,{{"MATERIAL_TILES_OWNED_EXPORT_REJECTED",e.what(),{},true}}};}
++}
++Result<PreparedMaterialTiles> prepareMaterialTiles(const MaterialPlan& plan,const std::vector<ReferenceMaterialSeed>& seeds,const MaterialPreparationOptions& options,const MaterialTileLimits& limits){
++    std::string diagnosticLocation;
++    try{
++        need(positive(plan.mmPerInputUnit)&&!plan.regions.empty()&&!plan.unitConfirmationSource.empty(),"MATERIAL_FACTS_REQUIRED");need(limits.maxTiles>0&&limits.maxTiles<=4096&&limits.maxAttempts>0&&limits.maxAttempts<=8192&&limits.maxDepth<=32,"INVALID_TILE_LIMITS");need(options.placements.size()==plan.regions.size(),"EXPLICIT_MATERIAL_PLACEMENT_REQUIRED");auto state=std::make_unique<PreparedMaterialTiles::State>();state->database=newOwnedDatabase();state->parent=plan;for(const auto& seed:seeds)if(seed.database)state->sources.insert(seed.database);std::size_t attempts{};std::set<std::pair<std::string,std::string>> identities;
++        for(const auto& parent:plan.regions){need(identities.emplace(parent.viewIdentity,parent.identity).second,"DUPLICATE_MATERIAL_REGION");const MaterialPlacement* placement{};for(const auto& p:options.placements)if(p.regionIdentity==parent.identity&&p.viewIdentity==parent.viewIdentity){need(!placement,"DUPLICATE_PLACEMENT");placement=&p;}need(placement!=nullptr,"MATERIAL_PLACEMENT_REQUIRED");const auto cells=partition(parent,plan.mmPerInputUnit,limits);double total{};AcDbObjectId layer;const auto first=state->tiles.size();
++            std::function<void(Rect,unsigned)> prepare=[&](Rect cell,unsigned depth){
++                {std::ostringstream context;context<<std::setprecision(17)<<"parent="<<parent.viewIdentity<<"/"<<parent.identity<<"; tile=["<<cell.x0<<','<<cell.y0<<','<<cell.x1<<','<<cell.y1<<"]; splitDepth="<<depth<<"; prototype="<<parent.expression.prototypeId;for(const auto& seed:seeds)if(seed.prototypeId==parent.expression.prototypeId)context<<"; originalReferenceHandle="<<seed.handle;diagnosticLocation=context.str();}
++                need(++attempts<=limits.maxAttempts,"TILE_ATTEMPT_BUDGET");need(state->tiles.size()<limits.maxTiles,"TILE_BUDGET");auto childPlan=plan;childPlan.regions={parent};childPlan.regions[0].geometry=geometry(cell);childPlan.regions[0].areaSquareMm=area(cell)*plan.mmPerInputUnit*plan.mmPerInputUnit;need(positive(childPlan.regions[0].areaSquareMm),"NONFINITE_TILE_PHYSICAL_AREA");MaterialPreparationOptions childOptions;childOptions.placements={*placement};auto child=prepareMaterials(childPlan,seeds,childOptions);
++                if(!child.canCommit()){
++                    const auto reason=child.issues.empty()?std::string("MATERIAL_CHILD_FAILED"):child.issues.front().message;need(reason.find("EMPTY_NATIVE_PATTERN_OUTPUT")!=std::string::npos,reason);need(depth<limits.maxDepth,"TILE_DEPTH_BUDGET");Rect left=cell,right=cell;const bool splitX=(cell.x1-cell.x0)>=(cell.y1-cell.y0);if(splitX){double middle=cell.x0+(cell.x1-cell.x0)*.5;need(middle>cell.x0&&middle<cell.x1,"TILE_FLOATING_POINT_SPLIT_EXHAUSTED");left.x1=middle;right.x0=middle;}else{double middle=cell.y0+(cell.y1-cell.y0)*.5;need(middle>cell.y0&&middle<cell.y1,"TILE_FLOATING_POINT_SPLIT_EXHAUSTED");left.y1=middle;right.y0=middle;}prepare(left,depth+1);prepare(right,depth+1);return;
++                }
++                need(child.value->intact()&&child.value->roots().length()==1,"INVALID_CHILD_BATCH");auto measured=measure(child.value->database(),child.value->roots()[0],cell);auto ids=cloneVerified(child.value->database(),child.value->roots(),*state->database);need(ids.length()==1,"TILE_ROOT_MAPPING_COUNT");auto copied=measure(*state->database,ids[0],cell);need(close(measured.first,copied.first)&&measured.second==copied.second,"CLONE_NATIVE_OUTPUT_CHANGED");{Open<AcDbHatch> h(ids[0]);if(layer.isNull())layer=h->layerId();need(h->layerId()==layer,"DUPLICATE_PARENT_MATERIAL_LAYER");}state->roots.append(ids[0]);state->tiles.push_back({parent.identity,parent.viewIdentity,geometry(cell),copied.first,copied.second,depth});state->children.push_back(std::move(*child.value));total+=copied.first;
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++                if(state->tiles.size()==1)inject(material_tiles_diagnostics::OwnedFault::AfterFirstTile);if(state->tiles.size()==2)inject(material_tiles_diagnostics::OwnedFault::AfterSecondTile);
++#endif
++            };
++            for(auto cell:cells)prepare(cell,0);need(close(total*plan.mmPerInputUnit*plan.mmPerInputUnit,parent.areaSquareMm),"NATIVE_WHOLE_MATERIAL_AREA_MISMATCH");{Working work(*state->database);validateSeams(state->roots,state->tiles,first,plan.mmPerInputUnit);}
++        }
++        state->baseline=snapshot(*state->database,state->roots);check(state->database->addReactor(state.get()),"arm immutable tile batch");state->armed=true;return {PreparedMaterialTiles(std::move(state)),{}};
++    }catch(const std::exception& e){return {std::nullopt,{{"MATERIAL_TILES_PREPARATION_REJECTED",diagnosticLocation+"; "+e.what(),{},true}}};}
++}
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++namespace material_tiles_diagnostics {
++namespace {
++void finishProbe(OwnedProbe& result,const TestHooks& hooks,AcDbDatabase* working){result.created=hooks.created;result.destroyed=hooks.destroyed;result.destroyedAll=hooks.created>0&&hooks.created==hooks.destroyed&&hooks.live.empty()&&!hooks.destructionWhileWorking;result.workingRestored=acdbHostApplicationServices()->workingDatabase()==working;result.bindings=hooks.bindings;}
++AcDbObjectId firstXrecord(AcDbObjectId dictionaryId){Open<AcDbDictionary> dictionary(dictionaryId);std::unique_ptr<AcDbDictionaryIterator> it(dictionary->newIterator());need(it!=nullptr,"CONFLICT_FIXTURE_ITERATOR");for(;!it->done();it->next()){Open<AcDbObject> object(it->objectId());if(object->isA()==AcDbXrecord::desc())return it->objectId();}throw std::runtime_error("CONFLICT_FIXTURE_XRECORD_REQUIRED");}
++void extraKey(AcDbObjectId dictionaryId){Open<AcDbDictionary> dictionary(dictionaryId,AcDb::kForWrite);auto object=std::make_unique<AcDbPlaceHolder>();AcDbObjectId id;check(dictionary->setAt(L"BCE_M2_CONFLICT_EXTRA",object.get(),id),"conflict extra dictionary key");object.release()->close();}
++void setReferencePair(AcDbObjectId recordId,AcDbObjectId first,AcDbObjectId second){
++    resbuf a{},b{};a.restype=340;b.restype=340;a.rbnext=&b;check(acdbGetAdsName(a.resval.rlname,first),"first public hard pointer");check(acdbGetAdsName(b.resval.rlname,second),"second public hard pointer");Open<AcDbXrecord> record(recordId,AcDb::kForWrite);record->setXlateReferences(true);check(record->setFromRbChain(a),"public hard-pointer Xrecord fixture");
++}
++void requireReferencePair(AcDbObjectId recordId,AcDbObjectId first,AcDbObjectId second){
++    Open<AcDbXrecord> record(recordId);need(record->isA()==AcDbXrecord::desc()&&record->isXlateReferences(),"ALIAS_FIXTURE_XRECORD_CLASS_POLICY");AcDbXrecordIterator it(&*record);it.start();for(auto expected:{first,second}){need(!it.done()&&it.curRestype()==340,"ALIAS_FIXTURE_REFERENCE_TYPE_COUNT");resbuf value{};check(it.getCurResbuf(value,record->database()),"read public fixture reference");AcDbObjectId actual;check(acdbGetObjectId(actual,value.resval.rlname),"resolve public fixture reference");need(actual==expected,"ALIAS_FIXTURE_REFERENCE_READBACK");const auto status=it.next();need(status==Acad::eOk||(status==Acad::eIteratorDone&&it.done()),"ALIAS_FIXTURE_ITERATOR_END");}need(it.done(),"ALIAS_FIXTURE_EXTRA_REFERENCE");
++}
++OwnedProbe referenceAlias(const PreparedMaterialTiles& batch){
++    OwnedProbe report;auto* working=acdbHostApplicationServices()->workingDatabase();TestHooks hooks;HookScope scope(hooks);
++    try{
++        // Editable owned source copy and owned target only. No plot-style
++        // operation: Xrecord's documented group 340 is a public hard pointer.
++        auto original=batch.cloneIntoNewOwnedDb();need(original.canCommit(),"ALIAS_FIXTURE_SOURCE_COPY_FAILED");auto source=std::move(*original.value);auto target=newOwnedDatabase();const bool sourceMode=source.database->plotStyleMode(),targetMode=target->plotStyleMode();Working sourceWork(*source.database);AcDbObjectId dictionaryId,a,b,recordId;
++        {Open<AcDbHatch> root(source.roots[0]);Open<AcDbLayerTableRecord> layer(root->layerId());dictionaryId=layer->extensionDictionary();need(!dictionaryId.isNull(),"ALIAS_FIXTURE_LAYER_DICTIONARY_REQUIRED");}
++        {Open<AcDbDictionary> dictionary(dictionaryId,AcDb::kForWrite);auto one=std::make_unique<AcDbPlaceHolder>();check(dictionary->setAt(L"BCE_M2_ALIAS_A",one.get(),a),"alias A dictionary fixture");one.release()->close();auto two=std::make_unique<AcDbPlaceHolder>();check(dictionary->setAt(L"BCE_M2_ALIAS_B",two.get(),b),"alias B dictionary fixture");two.release()->close();auto record=std::make_unique<AcDbXrecord>();check(dictionary->setAt(L"BCE_M2_ALIAS_REFERENCES",record.get(),recordId),"alias Xrecord dictionary fixture");record.release()->close();}
++        need(a!=b,"ALIAS_FIXTURE_DISTINCT_IDS");equalResource(a,b,"ALIAS_FIXTURE_PLACEHOLDER_PAYLOAD_NOT_EQUAL");setReferencePair(recordId,a,b);requireReferencePair(recordId,a,b);
++        const auto cloned=cloneVerified(*source.database,source.roots,*target);const auto mappedA=targetResource(a,*target),mappedB=targetResource(b,*target),mappedRecord=targetResource(recordId,*target);need(!mappedA.isNull()&&!mappedB.isNull()&&mappedA!=mappedB&&!mappedRecord.isNull(),"ALIAS_FIXTURE_TARGET_PATHS");requireReferencePair(mappedRecord,mappedA,mappedB);equalResource(mappedA,mappedB,"ALIAS_FIXTURE_TARGET_PAYLOAD_NOT_EQUAL");setReferencePair(mappedRecord,mappedB,mappedB);requireReferencePair(mappedRecord,mappedB,mappedB);requireReferencePair(recordId,a,b);
++        hooks.bindings+="ALIAS_FIXTURE source[A="+diagnosticHandle(a)+",B="+diagnosticHandle(b)+",record="+diagnosticHandle(recordId)+"] target[A="+diagnosticHandle(mappedA)+",B="+diagnosticHandle(mappedB)+",record="+diagnosticHandle(mappedRecord)+"];sourceRefs=A,B;targetRefs=B,B;";
++        for(int i=0;i<cloned.length();++i){Open<AcDbEntity> root(cloned[i],AcDb::kForWrite);check(root->erase(),"clear only alias target fixture roots");}const auto before=resourceCensus(*target);
++        try{cloneVerified(*source.database,source.roots,*target);report.issue="ALIAS_NOT_REJECTED";}catch(const std::exception& e){report.noResult=true;report.issue=e.what();report.preflightUnchanged=resourceCensus(*target)==before;}
++        need(source.database->plotStyleMode()==sourceMode&&target->plotStyleMode()==targetMode,"ALIAS_FIXTURE_PLOTSTYLE_MODE_CHANGED");need(batch.intact(),"ALIAS_FIXTURE_MUTATED_IMMUTABLE_BATCH");
++    }catch(const std::exception& e){report.noResult=false;report.issue=std::string("CONFLICT_FIXTURE_FAILED: ")+e.what();}
++    finishProbe(report,hooks,working);return report;
++}
++}
++OwnedProbe ownershipFault(const MaterialPlan& plan,const std::vector<ReferenceMaterialSeed>& seeds,const MaterialPreparationOptions& options,OwnedFault point){
++    OwnedProbe report;auto* working=acdbHostApplicationServices()->workingDatabase();const bool exportFault=point==OwnedFault::AfterExportClone||point==OwnedFault::BeforeExportPublish;
++    // Export setup is outside the observed scope; only the new output is counted.
++    auto prepared=exportFault?prepareMaterialTiles(plan,seeds,options):Result<PreparedMaterialTiles>{std::nullopt,{}};
++    if(exportFault&&!prepared.canCommit()){report.issue="FAULT_FIXTURE_PREPARATION_FAILED: "+(prepared.issues.empty()?std::string("unknown"):prepared.issues.front().message);return report;}
++    TestHooks hooks;HookScope scope(hooks);hooks.fault=static_cast<int>(point);hooks.exporting=exportFault;
++    if(exportFault){auto output=prepared.value->cloneIntoNewOwnedDb();report.noResult=!output.value&&!output.canCommit();report.issue=output.issues.empty()?"FAULT_NOT_REACHED":output.issues.front().message;need(prepared.value->intact(),"FAULT_MUTATED_PREPARED_SOURCE");}
++    else{auto output=prepareMaterialTiles(plan,seeds,options);report.noResult=!output.value&&!output.canCommit();report.issue=output.issues.empty()?"FAULT_NOT_REACHED":output.issues.front().message;}
++    finishProbe(report,hooks,working);return report;
++}
++OwnedProbe typedXrecordValues(const PreparedMaterialTiles& batch){
++    OwnedProbe report;auto* working=acdbHostApplicationServices()->workingDatabase();TestHooks hooks;HookScope scope(hooks);
++    try{
++        auto original=batch.cloneIntoNewOwnedDb();need(original.canCommit(),"TYPED_FIXTURE_SOURCE_COPY_FAILED");auto source=std::move(*original.value);auto target=newOwnedDatabase();Working sourceWork(*source.database);AcDbObjectId sourceRecord,dictionaryId;
++        {Open<AcDbHatch> root(source.roots[0]);Open<AcDbLayerTableRecord> layer(root->layerId());dictionaryId=layer->extensionDictionary();}
++        {Open<AcDbDictionary> dictionary(dictionaryId,AcDb::kForWrite);auto record=std::make_unique<AcDbXrecord>();check(dictionary->setAt(L"BCE_M2_TYPED_NONREFERENCE",record.get(),sourceRecord),"typed fixture record");record.release()->close();}
++        {Open<AcDbRegAppTable> apps(source.database->regAppTableId(),AcDb::kForWrite);auto app=std::make_unique<AcDbRegAppTableRecord>();check(app->setName(L"BCE_M2_DXF_BASE"),"typed XData RegApp name");AcDbObjectId appId;check(apps->add(appId,app.get()),"typed XData RegApp create");app.release()->close();}
++        const char* names[]={"Real","Int32","Int16","Int8","Text","Binary","Point3","Int64","BaseXData"};
++        auto assign=[&](AcDbObjectId id,int mutation){
++            resbuf items[8]{};for(int i=0;i<7;++i)items[i].rbnext=&items[i+1];
++            items[0].restype=40;items[0].resval.rreal=1.25+(mutation==0?.5:0);
++            items[1].restype=90;items[1].resval.rlong=-1234567+(mutation==1?1:0);
++            items[2].restype=70;items[2].resval.rint=static_cast<short>(-123+(mutation==2?1:0));
++            items[3].restype=280;items[3].resval.rint=static_cast<short>(201+(mutation==3?1:0));
++            ACHAR text[]=L"M2 非引用原值",changed[]=L"M2 非引用变值";items[4].restype=1;items[4].resval.rstring=mutation==4?changed:text;
++            unsigned char bytes[]={0,127,128,0,255,17};if(mutation==5)bytes[3]=5;items[5].restype=310;items[5].resval.rbinary.clen=static_cast<short>(sizeof(bytes));items[5].resval.rbinary.buf=reinterpret_cast<char*>(bytes);
++            items[6].restype=10;items[6].resval.rpoint[0]=-.125;items[6].resval.rpoint[1]=2.5;items[6].resval.rpoint[2]=1000.001+(mutation==6?.25:0);
++            items[7].restype=160;items[7].resval.mnInt64=-0x123456789ABLL+(mutation==7?1:0);
++            const AcDb::DwgDataType types[]={AcDb::kDwgReal,AcDb::kDwgInt32,AcDb::kDwgInt16,AcDb::kDwgInt8,AcDb::kDwgText,AcDb::kDwgBChunk,AcDb::kDwg3Real,AcDb::kDwgInt64};for(int i=0;i<8;++i)need(acdbGroupCodeToType(static_cast<AcDb::DxfCode>(items[i].restype))==types[i],"TYPED_FIXTURE_OFFICIAL_CLASSIFICATION");
++            Open<AcDbXrecord> record(id,AcDb::kForWrite);check(record->setFromRbChain(items[0]),"set complete typed fixture");
++            resbuf xdata[3]{};xdata[0].restype=1001;ACHAR appName[]=L"BCE_M2_DXF_BASE",baseText[]=L"基础扩展数据";xdata[0].resval.rstring=appName;xdata[0].rbnext=&xdata[1];xdata[1].restype=1000;xdata[1].resval.rstring=baseText;xdata[1].rbnext=&xdata[2];xdata[2].restype=1040;xdata[2].resval.rreal=3.125+(mutation==8?.5:0);check(record->setXData(xdata),"set complete base XData fixture");
++        };
++        assign(sourceRecord,-1);AcDbObjectIdArray one;one.append(source.roots[0]);const auto cloned=cloneVerified(*source.database,one,*target);need(cloned.length()==1,"TYPED_FIXTURE_CLONE_ROOT");const auto targetRecord=targetResource(sourceRecord,*target);need(!targetRecord.isNull(),"TYPED_FIXTURE_RECORD_MAPPING");equalResource(sourceRecord,targetRecord,"TYPED_FIXTURE_NORMAL_COPY_CHANGED");report.typedChecks.emplace_back("NormalCrossDatabaseClone",true);bool all=true;
++        for(int mutation=0;mutation<9;++mutation){assign(targetRecord,mutation);const auto before=resourceCensus(*target);bool rejected=false;std::string reason;
++            try{cloneVerified(*source.database,one,*target);reason="MUTATION_NOT_REJECTED";}catch(const std::exception& e){reason=e.what();rejected=reason.find("RESOURCE_CONFLICT")!=std::string::npos&&resourceCensus(*target)==before;}
++            report.typedChecks.emplace_back(names[mutation],rejected);report.issue+=std::string(names[mutation])+":"+reason+";";all=all&&rejected;if(!rejected)break;assign(targetRecord,-1);equalResource(sourceRecord,targetRecord,"TYPED_FIXTURE_RESTORE_CHANGED");
++        }
++        report.noResult=all&&report.typedChecks.size()==10;report.preflightUnchanged=report.noResult;need(batch.intact(),"TYPED_FIXTURE_MUTATED_IMMUTABLE_BATCH");
++    }catch(const std::exception& e){report.noResult=false;report.issue=std::string("TYPED_FIXTURE_FAILED: ")+e.what();}
++    finishProbe(report,hooks,working);return report;
++}
++OwnedProbe resourceConflict(const PreparedMaterialTiles& batch,ResourceConflict mutation){
++    if(mutation==ResourceConflict::ReferenceAlias)return referenceAlias(batch);
++    OwnedProbe report;auto* working=acdbHostApplicationServices()->workingDatabase();TestHooks hooks;HookScope scope(hooks);
++    try{
++        auto initial=batch.cloneIntoNewOwnedDb();need(initial.canCommit(),"CONFLICT_FIXTURE_INITIAL_EXPORT_FAILED");auto owned=std::move(*initial.value);auto& target=*owned.database;AcDbObjectId layerId,layerDictionary,materialDictionary;
++        {Open<AcDbHatch> root(owned.roots[0]);layerId=root->layerId();Open<AcDbLayerTableRecord> layer(layerId);layerDictionary=layer->extensionDictionary();Open<AcDbMaterial> material(layer->materialId());materialDictionary=material->extensionDictionary();}
++        for(int i=0;i<owned.roots.length();++i){Open<AcDbEntity> root(owned.roots[i],AcDb::kForWrite);check(root->erase(),"erase private conflict fixture roots");}
++        if(mutation==ResourceConflict::LayerColor){Open<AcDbLayerTableRecord> layer(layerId,AcDb::kForWrite);AcCmColor color;color.setColorIndex(layer->color().colorIndex()==1?2:1);layer->setColor(color);}
++        else if(mutation==ResourceConflict::DictionaryKey)extraKey(layerDictionary);
++        else if(mutation==ResourceConflict::ReusedOwnedKey)extraKey(materialDictionary);
++        else{
++            const bool reused=mutation==ResourceConflict::ReusedOwnedPayload||mutation==ResourceConflict::ReusedOwnedOwner;const auto record=firstXrecord(reused?materialDictionary:layerDictionary);Open<AcDbXrecord> object(record,AcDb::kForWrite);
++            if(mutation==ResourceConflict::XrecordPolicy)object->setXlateReferences(!object->isXlateReferences());
++            else if(mutation==ResourceConflict::ReusedOwnedOwner)check(object->setOwnerId(layerDictionary),"private conflicting owner fixture");
++            else{resbuf item{};item.restype=90;item.resval.rlong=1729;check(object->appendRbChain(item),"opaque payload conflict fixture");}
++        }
++        const auto before=resourceCensus(target);
++        try{cloneVerified(batch.database(),batch.roots(),target);report.issue="CONFLICT_NOT_REJECTED";}
++        catch(const std::exception& e){report.noResult=true;report.issue=e.what();report.preflightUnchanged=resourceCensus(target)==before;}
++        need(batch.intact(),"CONFLICT_MUTATED_PREPARED_SOURCE");
++    }catch(const std::exception& e){report.noResult=false;report.issue=std::string("CONFLICT_FIXTURE_FAILED: ")+e.what();}
++    finishProbe(report,hooks,working);return report;
++}
++}
++#endif
++}
+diff --git a/tests/native/material-tiles/MaterialTileDriver.cpp b/tests/native/material-tiles/MaterialTileDriver.cpp
+new file mode 100644
+--- /dev/null
++++ b/tests/native/material-tiles/MaterialTileDriver.cpp
+@@ -0,0 +1,62 @@
++#include "MaterialTileFixtures.h"
++#include <rxregsvc.h>
++#include <limits>
++#include <type_traits>
++#include <utility>
++namespace {
++template<class T,class=void>struct HasBorrowedClone:std::false_type{};
++template<class T>struct HasBorrowedClone<T,std::void_t<decltype(std::declval<const T&>().cloneToEmpty(std::declval<AcDbDatabase&>()))>>:std::true_type{};
++static_assert(!HasBorrowedClone<bce::PreparedMaterialTiles>::value,"M2 must not expose a borrowed target writer");
++static_assert(!std::is_copy_constructible<bce::OwnedMaterialDatabase>::value&&std::is_move_constructible<bce::OwnedMaterialDatabase>::value,"owned output must transfer exclusively");
++HMODULE moduleHandle{};
++void runCase()noexcept{
++    bce::native::Config config;std::unique_ptr<bce::native::Evidence> evidence;
++    try{using namespace bce;using namespace bce::native;using namespace bce::tile_test;
++        config=load_config(moduleHandle);evidence=std::make_unique<Evidence>(config);validate_identity(config);require(config.caseName==L"NativeMaterialTiles","unsupported case");auto report=create_new(config.output+L"/material-tiles-case.json");
++        AcDbDatabase source(false,true);ok(source.readDwgFile(config.reference.c_str(),AcDbDatabase::kForReadAndReadShare,false),"reference");source.closeInput(true);
++        MaterialPlan plan;plan.referenceSha256=config.referenceSHA256;plan.mmPerInputUnit=1;plan.unitDeclaration.confirmedMmPerInputUnit=1;plan.unitConfirmationSource="M2 explicit mm fixture";
++        MaterialRegionPlan r;r.identity="whole-wall";r.viewIdentity="fixture-front";r.familyId="explicit-material";r.tableViewIdentity=r.viewIdentity;r.confirmationSource="M2 rectangular wall with opening fixture";r.prototypeApprovalSource="N1 bound 114CF adapter fixture";r.sources={{"fixture","1",1}};r.materialNumber="M1";r.materialName="fixture material";r.geometry.outer={{{0,0},{10000,0},{10000,6000},{0,6000}},true};r.geometry.holes={{{{1200,900},{2400,900},{2400,2400},{1200,2400}},true}};r.areaSquareMm=58200000;r.expression.prototypeId="reference-114CF";r.expression.patternName=u8"大理石";plan.regions={r};
++        ReferenceMaterialSeed seed;seed.database=&source;seed.referenceSha256=config.referenceSHA256;seed.prototypeId=r.expression.prototypeId;seed.handle="114CF";seed.mmPerSourceUnit=1;seed.sourcePaperScale=100;seed.unitConfirmationSource="fixture mm";seed.scaleConfirmationSource="fixture 1:100";seed.prototypeConfirmationSource=r.prototypeApprovalSource;seed.phaseConfirmationSource="source origin";AcDbObjectId sourceId;ok(source.getAcDbObjectId(sourceId,false,AcDbHandle(L"114CF")),"prototype");double sourceScale{},sourceAngle{};{Open<AcDbHatch> h(sourceId);seed.referenceAnchor={h->originPoint().x,h->originPoint().y};sourceScale=h->patternScale();sourceAngle=h->patternAngle();require(h->numPatternDefinitions()==67,"fixture pattern definitions");}
++        MaterialPreparationOptions options;options.placements={{r.identity,r.viewIdentity,100,{12.25,37.5},"fixture scale100","explicit global phase"}};
++        auto* ambient=acDocManager->curDocument()->database();auto textId=appendText(*ambient);Monitor ambientMonitor(*ambient),sourceMonitor(source);auto before=globals();auto* workingBefore=acdbHostApplicationServices()->workingDatabase();auto* docBefore=acDocManager->curDocument();bool passed=true;std::vector<std::string> observations;
++        auto expect=[&](std::string name,bool success,std::string detail){evidence->step(name,success?"passed":"failed",detail);passed=passed&&success;observations.push_back(object({{"name",quote(name)},{"passed",success?"true":"false"},{"detail",quote(detail)}}));};
++        evidence->checkpoint("independent-xrecord-iterator-termination");for(const auto elements:{0U,1U,3U}){const auto actual=independentXrecordCount(elements);expect("XrecordIteratorCount"+std::to_string(elements),actual==elements,"expected="+std::to_string(elements)+" actual="+std::to_string(actual)+"; eIteratorDone accepted only with done()");}
++        evidence->checkpoint("read-only-layer-dictionary-graph");std::vector<std::string> inventories;{Open<AcDbHatch> h(sourceId);inventories.push_back(dictionaryInventory(h->layerId(),"reference-114CF"));}
++        {auto diagnosticPlan=plan;diagnosticPlan.regions[0].geometry.outer={{{0,0},{1200,0},{1200,900},{0,900}},true};diagnosticPlan.regions[0].geometry.holes.clear();diagnosticPlan.regions[0].areaSquareMm=1080000;auto diagnosticChild=prepareMaterials(diagnosticPlan,{seed},options);require(diagnosticChild.canCommit(),"M1 first-cell diagnostic preparation");{Open<AcDbHatch> h(diagnosticChild.value->roots()[0]);inventories.push_back(dictionaryInventory(h->layerId(),"M1-first-grid-cell-resource-clone"));}require(diagnosticChild.value->intact(),"read-only dictionary diagnostic keeps child intact");
++
++        }
++        {auto inventory=create_new(config.output+L"/material-dictionary-inventory.json");const auto json=object({{"diagnosticOnly","true"},{"sourcePrototypeHandle",quote(std::string("114CF"))},{"sourceSHA256",quote(config.referenceSHA256)},{"inventories",array(inventories)},{"scope",quote(std::string("Exact AcDbDictionary public keys/ownership/classes only; unknown leaf payloads not read; no capability authorization"))}});write_flushed(inventory.get(),json);evidence->capability(json);}
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++        {auto faultPlan=plan;faultPlan.regions[0].geometry.outer={{{0,0},{2400,0},{2400,1800},{0,1800}},true};faultPlan.regions[0].geometry.holes={{{{1200,450},{1800,450},{1800,900},{1200,900}},true}};faultPlan.regions[0].areaSquareMm=4050000;using Fault=material_tiles_diagnostics::OwnedFault;const std::pair<Fault,const char*> faults[]={{Fault::AfterFirstTile,"AfterFirstTile"},{Fault::AfterSecondTile,"AfterSecondTile"},{Fault::AfterExportClone,"AfterExportClone"},{Fault::BeforeExportPublish,"BeforeExportPublish"}};
++            for(const auto& item:faults){evidence->checkpoint(std::string("owned-fault-")+item.second);const auto probe=material_tiles_diagnostics::ownershipFault(faultPlan,{seed},options,item.first);const bool hit=probe.issue.find("INJECTED_OWNED_FAILURE:")!=std::string::npos;expect(std::string(item.second)+"FailureDestroysOwnedDatabase",hit&&probe.noResult&&probe.destroyedAll&&probe.workingRestored&&ambientMonitor.changes==0&&sourceMonitor.changes==0,probe.issue+"; created="+std::to_string(probe.created)+" destroyed="+std::to_string(probe.destroyed)+"; external source/ambient monitors unchanged");evidence->capability(object({{"ownedFault",quote(std::string(item.second))},{"hit",hit?"true":"false"},{"noResult",probe.noResult?"true":"false"},{"destroyedAll",probe.destroyedAll?"true":"false"},{"bindings",quote(probe.bindings)}}));}
++        }
++#endif
++        for(int scenario=0;scenario<5;++scenario){auto p=plan;auto o=options;std::string name="WholeWall58M";double factor=1,angle=0;
++            if(scenario==1){name="TranslatedNoninteger";for(auto& v:p.regions[0].geometry.outer.vertices){v.x+=100000.125;v.y-=50000.375;}for(auto& h:p.regions[0].geometry.holes)for(auto& v:h.vertices){v.x+=100000.125;v.y-=50000.375;}o.placements[0].targetAnchor={100012.375,-49962.875};}
++            if(scenario==2){name="PaperScale50";o.placements[0].targetPaperScale=50;factor=.5;}
++            if(scenario==3){name="MetersPaper50";p.mmPerInputUnit=1000;p.unitDeclaration.confirmedMmPerInputUnit=1000;for(auto& v:p.regions[0].geometry.outer.vertices){v.x/=1000;v.y/=1000;}for(auto& h:p.regions[0].geometry.holes)for(auto& v:h.vertices){v.x/=1000;v.y/=1000;}o.placements[0].targetPaperScale=50;o.placements[0].targetAnchor={.01225,.0375};factor=.0005;}
++            if(scenario==4){name="Direction90";p.regions[0].expression.direction={0,1};angle=std::acos(-1.0)*.5;}
++            evidence->checkpoint("prepare-"+name);auto result=prepareMaterialTiles(p,{seed},o);expect(name+"Prepared",result.canCommit(),result.issues.empty()?"native tiled whole wall":result.issues.front().message);if(!result.canCommit())continue;
++            auto& batch=*result.value;auto checked=verify(batch.database(),batch.roots(),batch.tiles(),p,o,false);expect(name+"NativeCoverageAndSeams",true,"native area="+number(checked.area)+" lines="+std::to_string(checked.lines)+" seams="+std::to_string(checked.seams)+" contacts="+std::to_string(checked.contacts));evidence->capability(object({{"scenario",quote(name)},{"tiles",array(checked.rows)},{"nativeArea",number(checked.area)},{"nativeLines",std::to_string(checked.lines)},{"seams",std::to_string(checked.seams)},{"contacts",std::to_string(checked.contacts)}}));
++            {Open<AcDbHatch> h(batch.roots()[0]);Open<AcDbHatch> original(sourceId);expect(name+"ScaleDirection",nearValue(h->patternScale(),sourceScale*factor)&&nearValue(std::sin(h->patternAngle()-sourceAngle),std::sin(angle)),"source scale="+number(sourceScale)+" target="+number(h->patternScale()));const auto definitions=mappedDefinitions(*original.p,*h.p,factor,angle,seed.referenceAnchor,o.placements[0].targetAnchor);auto definitionReport=create_new(config.output+L"/material-pattern-definitions-"+std::to_wstring(scenario)+L".json");write_flushed(definitionReport.get(),object({{"scenario",quote(name)},{"referenceSHA256",quote(config.referenceSHA256)},{"sourcePrototypeHandle",quote(seed.handle)},{"comparison",definitions.json}}));expect(name+"All67MappedDefinitions",definitions.passed,"strict vector transform; unchanged tolerances; firstFailure="+definitions.firstFailure+"; complete source/target/expected/checks in material-pattern-definitions-"+std::to_string(scenario)+".json");}
++            auto clone=batch.cloneIntoNewOwnedDb();expect(name+"OwnedClone",clone.canCommit(),clone.issues.empty()?"new independently owned output":clone.issues.front().message);
++            if(clone.canCommit()){auto& output=*clone.value->database;const auto& ids=clone.value->roots;expect(name+"FreshOutputIdentity",&output!=&batch.database()&&&output!=&source&&&output!=ambient&&&output!=workingBefore,"no caller-supplied destination; new DB identity");verify(output,ids,batch.tiles(),p,o,true);auto path=config.output+L"/material-tiles-"+std::to_wstring(scenario)+L".dwg";require(GetFileAttributesW(path.c_str())==INVALID_FILE_ATTRIBUTES,"exclusive dwg");{Working work(output);ok(output.saveAs(path.c_str(),false,AcDb::kDHL_CURRENT),"save test dwg");}AcDbDatabase reopen(false,true);ok(reopen.readDwgFile(path.c_str(),AcDbDatabase::kForReadAndReadShare,false),"independent reopen");reopen.closeInput(true);AcDbObjectIdArray reids;for(int i=0;i<ids.length();++i){AcDbObjectId id;ok(reopen.getAcDbObjectId(id,false,ids[i].handle()),"roundtrip handle");reids.append(id);}auto again=verify(reopen,reids,batch.tiles(),p,o,true);expect(name+"SaveReopenNativeCoverage",nearValue(again.area,checked.area)&&again.lines==checked.lines,"actual reopened roots loops 67 definitions generated segments seams");}
++            expect(name+"OriginalIntact",batch.intact(),"permanent mutation guard");
++            if(scenario==0){
++#ifdef BCE_MATERIAL_TILE_DIAGNOSTICS
++                using Conflict=material_tiles_diagnostics::ResourceConflict;
++                {const auto probe=material_tiles_diagnostics::typedXrecordValues(batch);const bool all=probe.typedChecks.size()==10&&std::all_of(probe.typedChecks.begin(),probe.typedChecks.end(),[](const auto& check){return check.second;});expect("TypedXrecordAllValuesPreservedAndConflictsRejected",all&&probe.noResult&&probe.destroyedAll&&probe.workingRestored&&ambientMonitor.changes==0&&sourceMonitor.changes==0,probe.issue+"; created="+std::to_string(probe.created)+" destroyed="+std::to_string(probe.destroyed));std::vector<std::string> typed;for(const auto& check:probe.typedChecks)typed.push_back(object({{"type",quote(check.first)},{"passed",check.second?"true":"false"}}));evidence->capability(object({{"typedXrecordChecks",array(typed)},{"destroyedAll",probe.destroyedAll?"true":"false"},{"bindings",quote(probe.bindings)}}));}
++                const std::pair<Conflict,const char*> cases[]={{Conflict::LayerColor,"LayerColor"},{Conflict::DictionaryKey,"DictionaryKey"},{Conflict::XrecordPayload,"XrecordPayload"},{Conflict::XrecordPolicy,"XrecordPolicy"},{Conflict::ReusedOwnedKey,"ReusedOwnedKey"},{Conflict::ReusedOwnedPayload,"ReusedOwnedPayload"},{Conflict::ReusedOwnedOwner,"ReusedOwnedOwner"},{Conflict::ReferenceAlias,"ReferenceAlias"}};
++                for(const auto& item:cases){const auto probe=material_tiles_diagnostics::resourceConflict(batch,item.first);const bool preflightRequired=item.first!=Conflict::ReusedOwnedOwner&&item.first!=Conflict::ReferenceAlias;const bool diagnosis=preflightRequired?probe.issue.find("RESOURCE_CONFLICT")!=std::string::npos:item.first==Conflict::ReferenceAlias?probe.issue.find("RESOURCE_REFERENCE_BINDING_MISMATCH")!=std::string::npos:(probe.issue.find("OWNER")!=std::string::npos||probe.issue.find("RESOURCE_CONFLICT")!=std::string::npos);const bool accepted=diagnosis&&probe.noResult&&probe.destroyedAll&&probe.workingRestored&&(!preflightRequired||probe.preflightUnchanged)&&ambientMonitor.changes==0&&sourceMonitor.changes==0;expect(std::string(item.second)+"OwnedConflictRejected",accepted,probe.issue+"; created="+std::to_string(probe.created)+" destroyed="+std::to_string(probe.destroyed)+" preflightUnchanged="+(probe.preflightUnchanged?"true":"false"));evidence->capability(object({{"ownedConflict",quote(std::string(item.second))},{"noResult",probe.noResult?"true":"false"},{"destroyedAll",probe.destroyedAll?"true":"false"},{"bindings",quote(probe.bindings)}}));}
++#endif
++                {Open<AcDbHatch> h(batch.roots()[0],AcDb::kForWrite);ok(h->setColorIndex(1),"mutation");}auto noCopy=batch.cloneIntoNewOwnedDb();expect("AlteredTilesNoOwnedOutput",!batch.intact()&&!noCopy.canCommit()&&!noCopy.value,"changed immutable set grants no owned export");
++            }
++        }
++        auto rejected=[&](const std::string& name,const std::string& diagnostic,const MaterialPlan& p,const MaterialPreparationOptions& o,const MaterialTileLimits& limits){auto result=prepareMaterialTiles(p,{seed},o,limits);expect(name,!result.value&&!result.canCommit()&&!result.issues.empty()&&result.issues.front().message.find(diagnostic)!=std::string::npos,result.issues.empty()?"missing diagnosis":result.issues.front().message);};
++        auto invalid=plan;invalid.regions[0].geometry.outer.vertices[2].x-=1;rejected("NonRectangularRejected","NONRECTANGULAR",invalid,options,{});invalid=plan;invalid.regions[0].geometry.holes.push_back(invalid.regions[0].geometry.holes[0]);rejected("IntersectingHolesRejected","INTERSECTING",invalid,options,{});invalid=plan;invalid.regions[0].areaSquareMm=std::numeric_limits<double>::infinity();rejected("InfiniteParentAreaRejected","PARENT_MATERIAL_AREA",invalid,options,{});invalid=plan;invalid.regions[0].geometry.outer.closed=false;rejected("OpenRegionRejected","OPEN_MATERIAL_RING",invalid,options,{});auto missing=options;missing.placements[0].phaseConfirmationSource.clear();rejected("MissingPhaseRejected","TARGET_PLACEMENT_REQUIRED",plan,missing,{});missing=options;missing.placements[0].targetPaperScale=0;rejected("MissingScaleRejected","TARGET_PLACEMENT_REQUIRED",plan,missing,{});rejected("BudgetFailureNoPartial","BUDGET",plan,options,{1,0,1});
++        {Open<AcDbText> text(textId);expect("UnsavedChinesePreserved",std::wstring(text->textString())==L"M2 未保存中文保持"&&text->position()==AcGePoint3d(12.25,77.125,0),"current in-memory fixture");}expect("AmbientAndSourceNoMutation",ambientMonitor.changes==0&&sourceMonitor.changes==0,"source="+std::to_string(sourceMonitor.changes)+" ambient="+std::to_string(ambientMonitor.changes));expect("GlobalsWorkingDocumentRestored",globals()==before&&workingBefore==acdbHostApplicationServices()->workingDatabase()&&docBefore==acDocManager->curDocument(),"success and exceptions restored");require(sha256(config.reference)==config.referenceSHA256&&sha256(config.scheme)==config.schemeSHA256,"source files unchanged");write_flushed(report.get(),object({{"status",quote(std::string(passed?"passed":"failed"))},{"assertions",array(observations)},{"scope",quote(std::string("M2 native whole-wall tiled preparation; scratch names only; no CurrentDoc writer"))}}));evidence->finish(config,passed?"passed":"failed");
++    }catch(const std::exception& e){try{if(evidence){evidence->error(e.what());evidence->finish(config,"failed");}}catch(...){}}catch(...){try{if(evidence){evidence->error("unknown ABI failure");evidence->finish(config,"failed");}}catch(...){}}
++}
++}
++BOOL APIENTRY DllMain(HMODULE h,DWORD reason,LPVOID){if(reason==DLL_PROCESS_ATTACH){moduleHandle=h;DisableThreadLibraryCalls(h);}return TRUE;}
++extern "C" __declspec(dllexport) AcRx::AppRetCode acrxEntryPoint(AcRx::AppMsgCode message,void* id){try{if(message==AcRx::kInitAppMsg){acrxDynamicLinker->unlockApplication(id);acrxRegisterAppMDIAware(id);return acedRegCmds->addCommand(L"BCE_MATERIAL_TILE_CASES",L"BCE_TEST_RUN",L"BCE_TEST_RUN",ACRX_CMD_MODAL,runCase)==Acad::eOk?AcRx::kRetOK:AcRx::kRetError;}if(message==AcRx::kUnloadAppMsg)return acedRegCmds->removeGroup(L"BCE_MATERIAL_TILE_CASES")==Acad::eOk?AcRx::kRetOK:AcRx::kRetError;return AcRx::kRetOK;}catch(...){return AcRx::kRetError;}}
+diff --git a/tests/native/material-tiles/MaterialTileFixtures.h b/tests/native/material-tiles/MaterialTileFixtures.h
+new file mode 100644
+--- /dev/null
++++ b/tests/native/material-tiles/MaterialTileFixtures.h
+@@ -0,0 +1,88 @@
++#pragma once
++#include "NativeMaterialTiles.h"
++#include "NativeEvidence.h"
++#include <acdocman.h>
++#include <aced.h>
++#include <acutmem.h>
++#include <adscodes.h>
++#include <dbHatch.h>
++#include <dbapserv.h>
++#include <dbents.h>
++#include <dbsymtb.h>
++#include <dbsymutl.h>
++#include <dbdict.h>
++#include <dbplhldr.h>
++#include <dbxrecrd.h>
++#include <functional>
++#include <cmath>
++#include <iomanip>
++#include <sstream>
++#include <algorithm>
++namespace bce::tile_test {
++inline void ok(Acad::ErrorStatus s,const char* m){native::require(s==Acad::eOk,std::string(m)+":"+std::to_string(s));}
++inline void advanceXrecord(AcDbXrecordIterator& iterator,const char* context){const auto status=iterator.next();native::require(status==Acad::eOk||(status==Acad::eIteratorDone&&iterator.done()),std::string(context)+":"+std::to_string(status));}
++inline std::size_t countXrecord(AcDbXrecord& record){std::size_t count=0;AcDbXrecordIterator iterator(&record);for(iterator.start();!iterator.done();advanceXrecord(iterator,"Xrecord count")){native::require(count<4096,"Xrecord count budget");++count;}return count;}
++inline std::size_t independentXrecordCount(std::size_t elements){AcDbXrecord record;for(std::size_t i=0;i<elements;++i){resbuf item{};item.restype=90;item.resval.rlong=static_cast<Adesk::Int32>(i+1);ok(record.appendRbChain(item),"independent Xrecord element");}return countXrecord(record);}
++template<class T> class Open final {public:explicit Open(AcDbObjectId id,AcDb::OpenMode mode=AcDb::kForRead){ok(acdbOpenObject(p,id,mode),"test open");}~Open(){if(p)p->close();}Open(const Open&)=delete;Open& operator=(const Open&)=delete;T* operator->()const{return p;}T* p{};};
++class Working final {public:explicit Working(AcDbDatabase& db):old(acdbHostApplicationServices()->workingDatabase()){acdbHostApplicationServices()->setWorkingDatabase(&db);}~Working(){acdbHostApplicationServices()->setWorkingDatabase(old);}Working(const Working&)=delete;Working& operator=(const Working&)=delete;AcDbDatabase* old;};
++struct Monitor final:AcDbDatabaseReactor {explicit Monitor(AcDbDatabase& d):db(d){ok(db.addReactor(this),"monitor add");}~Monitor(){db.removeReactor(this);}void objectOpenedForModify(const AcDbDatabase*,const AcDbObject*)override{++changes;}void objectModified(const AcDbDatabase*,const AcDbObject*)override{++changes;}void objectAppended(const AcDbDatabase*,const AcDbObject*)override{++changes;}void objectErased(const AcDbDatabase*,const AcDbObject*,Adesk::Boolean)override{++changes;}void headerSysVarWillChange(const AcDbDatabase*,const ACHAR*)override{++changes;}AcDbDatabase& db;unsigned changes{};};
++inline bool nearValue(double a,double b){return std::isfinite(a)&&std::isfinite(b)&&std::abs(a-b)<=1e-8*(std::max)(1.0,std::abs(b));}
++inline std::string number(double v){std::ostringstream s;s<<std::setprecision(17)<<v;return s.str();}
++inline AcDbObjectIdArray roots(AcDbDatabase& db){Open<AcDbBlockTableRecord> b(acdbSymUtil()->blockModelSpaceId(&db));AcDbBlockTableRecordIterator* raw{};ok(b->newIterator(raw),"iterator");std::unique_ptr<AcDbBlockTableRecordIterator> it(raw);AcDbObjectIdArray a;for(;!it->done();it->step()){AcDbObjectId id;ok(it->getEntityId(id),"root");a.append(id);}return a;}
++inline std::string globals(){std::string out;for(auto name:{L"INSUNITS",L"LTSCALE",L"CELTSCALE",L"DIMSTYLE",L"TEXTSTYLE",L"FRAME",L"HPMAXLINES",L"FILLMODE"}){resbuf r{};native::require(acedGetVar(name,&r)==RTNORM,"globals");if(r.restype==RTSHORT)out+=std::to_string(r.resval.rint);else if(r.restype==RTLONG)out+=std::to_string(r.resval.rlong);else if(r.restype==RTREAL)out+=number(r.resval.rreal);else if(r.restype==RTSTR){out+=native::utf8(r.resval.rstring);acutDelString(r.resval.rstring);}out+=';';}return out;}
++inline AcDbObjectId appendText(AcDbDatabase& db){Working work(db);Open<AcDbBlockTableRecord> b(acdbSymUtil()->blockModelSpaceId(&db),AcDb::kForWrite);auto t=std::make_unique<AcDbText>();t->setDatabaseDefaults(&db);ok(t->setTextString(L"M2 未保存中文保持"),"text");ok(t->setPosition({12.25,77.125,0}),"position");ok(t->setHeight(250),"height");AcDbObjectId id;ok(b->appendAcDbEntity(id,t.get()),"append");t.release()->close();return id;}
++inline std::string handle(AcDbObjectId id){if(id.isNull())return "null";ACHAR text[32]{};id.handle().getIntoAsciiBuffer(text);return native::utf8(text);}
++// Test-only metadata inventory. Unknown leaf classes are named, never serialized,
++// decoded, or authorized. Only exact standard dictionaries are traversed.
++inline std::string dictionaryInventory(AcDbObjectId layerId,const std::string& label){
++    std::vector<std::string> nodes;std::vector<AcDbObjectId> active;std::size_t count{};
++    std::function<void(AcDbObjectId,const std::string&,const std::string&,unsigned)> visit;
++    visit=[&](AcDbObjectId id,const std::string& path,const std::string& role,unsigned depth){
++        native::require(depth<=32&&++count<=512,"diagnostic dictionary budget");if(id.isNull())return;Open<AcDbObject> object(id);const bool cycle=std::find(active.begin(),active.end(),id)!=active.end();native::Fields row={{"path",native::quote(path)},{"edgeRole",native::quote(role)},{"depth",std::to_string(depth)},{"handle",native::quote(handle(id))},{"class",native::quote(std::wstring(object->isA()->name()))},{"ownerHandle",native::quote(handle(object->ownerId()))},{"extensionDictionaryHandle",native::quote(handle(object->extensionDictionary()))},{"cycle",cycle?"true":"false"},{"exactAcDbDictionary",object->isA()==AcDbDictionary::desc()?"true":"false"},{"exactAcDbXrecord",object->isA()==AcDbXrecord::desc()?"true":"false"},{"leafPayloadRead","false"}};
++        if(!object->ownerId().isNull()){Open<AcDbObject> owner(object->ownerId());row.push_back({"ownerClass",native::quote(std::wstring(owner->isA()->name()))});}
++        if(object->isA()==AcDbDictionary::desc()){auto* dictionary=AcDbDictionary::cast(object.p);row.push_back({"numEntries",std::to_string(dictionary->numEntries())});row.push_back({"treatElementsAsHard",dictionary->isTreatElementsAsHard()?"true":"false"});row.push_back({"mergeStyle",std::to_string(dictionary->mergeStyle())});}
++        if(object->isA()==AcDbXrecord::desc()){auto* record=AcDbXrecord::cast(object.p);row.push_back({"xlateReferences",record->isXlateReferences()?"true":"false"});row.push_back({"mergeStyle",std::to_string(record->mergeStyle())});AcDbXrecordIterator iterator(record);std::vector<std::string> codes;for(iterator.start();!iterator.done();advanceXrecord(iterator,"public Xrecord iterator")){native::require(codes.size()<4096,"diagnostic Xrecord type budget");codes.push_back(std::to_string(iterator.curRestype()));}row.push_back({"publicRestypeCodes",native::array(codes)});row.push_back({"businessPayloadInterpreted","false"});}
++        nodes.push_back(native::object(row));if(cycle)return;active.push_back(id);
++        if(object->isA()==AcDbDictionary::desc()){auto* dictionary=AcDbDictionary::cast(object.p);std::unique_ptr<AcDbDictionaryIterator> it(dictionary->newIterator());native::require(it!=nullptr,"dictionary diagnostic iterator");for(;!it->done();it->next()){const auto key=native::utf8(it->name());visit(it->objectId(),path+"/key="+key,dictionary->isTreatElementsAsHard()?"dictionaryEntry/hardElements":"dictionaryEntry/softElements",depth+1);}}
++        const auto extension=object->extensionDictionary();if(!extension.isNull())visit(extension,path+"/extensionDictionary","extensionDictionary/HardOwnership",depth+1);active.pop_back();
++    };
++    visit(layerId,label+"/layer","Hatch.layerId/HardPointer",0);return native::object({{"label",native::quote(label)},{"diagnosticOnly","true"},{"nodes",native::array(nodes)}});
++}
++struct Rect {double x0,y0,x1,y1;};
++inline Rect bounds(const ClosedRing& r){Rect b{r.vertices[0].x,r.vertices[0].y,r.vertices[0].x,r.vertices[0].y};for(auto p:r.vertices){b.x0=(std::min)(b.x0,p.x);b.x1=(std::max)(b.x1,p.x);b.y0=(std::min)(b.y0,p.y);b.y1=(std::max)(b.y1,p.y);}return b;}
++inline bool intersects(AcGePoint2d a,AcGePoint2d b,Rect r,double e){double lo=0,hi=1;double v[2]={a.x,a.y},d[2]={b.x-a.x,b.y-a.y},mn[2]={r.x0+e,r.y0+e},mx[2]={r.x1-e,r.y1-e};for(int k=0;k<2;++k){if(std::abs(d[k])<1e-15){if(v[k]<=mn[k]||v[k]>=mx[k])return false;}else{double t1=(mn[k]-v[k])/d[k],t2=(mx[k]-v[k])/d[k];if(t1>t2)std::swap(t1,t2);lo=(std::max)(lo,t1);hi=(std::min)(hi,t2);if(lo>=hi)return false;}}return hi>lo;}
++inline std::string pattern(AcDbHatch& h){std::ostringstream s;s<<std::hexfloat<<native::utf8(h.patternName())<<';'<<h.patternType()<<';'<<h.patternScale()<<';'<<h.patternAngle()<<';'<<h.patternSpace()<<';'<<h.patternDouble()<<';'<<h.originPoint().x<<';'<<h.originPoint().y<<';'<<h.color().color()<<';'<<h.numPatternDefinitions()<<';';for(int i=0;i<h.numPatternDefinitions();++i){double a,x,y,dx,dy;AcGeDoubleArray d;ok(h.getPatternDefinitionAt(i,a,x,y,dx,dy,d),"67 definitions");s<<a<<';'<<x<<';'<<y<<';'<<dx<<';'<<dy<<';';for(int j=0;j<d.length();++j)s<<d[j]<<';';}return s.str();}
++struct DefinitionComparison {bool passed{};std::string firstFailure,json;};
++inline DefinitionComparison mappedDefinitions(AcDbHatch& source,AcDbHatch& target,double factor,double angle,Point2 anchor,Point2 origin){
++    using namespace native;DefinitionComparison result;result.passed=source.numPatternDefinitions()==target.numPatternDefinitions();if(!result.passed)result.firstFailure="definitionCount";const double c=std::cos(angle),s=std::sin(angle);std::vector<std::string> rows;
++    auto values=[](double a,double x,double y,double dx,double dy,const AcGeDoubleArray& d){std::vector<std::string> dash;for(int j=0;j<d.length();++j)dash.push_back(number(d[j]));return object({{"angle",number(a)},{"baseX",number(x)},{"baseY",number(y)},{"offsetX",number(dx)},{"offsetY",number(dy)},{"dashes",array(dash)}});};
++    const int count=(std::min)(source.numPatternDefinitions(),target.numPatternDefinitions());
++    for(int i=0;i<count;++i){double a,x,y,dx,dy,ta,tx,ty,tdx,tdy;AcGeDoubleArray d,td,expectedDashes;ok(source.getPatternDefinitionAt(i,a,x,y,dx,dy,d),"source pattern definition");ok(target.getPatternDefinitionAt(i,ta,tx,ty,tdx,tdy,td),"target pattern definition");
++        const double ea=a+angle,ex=origin.x+factor*(c*(x-anchor.x)-s*(y-anchor.y)),ey=origin.y+factor*(s*(x-anchor.x)+c*(y-anchor.y)),edx=factor*(c*dx-s*dy),edy=factor*(s*dx+c*dy);for(int j=0;j<d.length();++j)expectedDashes.append(d[j]*factor);std::vector<std::string> checks;bool rowPassed=true;
++        auto field=[&](const std::string& name,double actual,double expected){const bool pass=nearValue(actual,expected);checks.push_back(object({{"field",quote(name)},{"actual",number(actual)},{"expected",number(expected)},{"difference",number(actual-expected)},{"allowedAbsoluteDifference",number(1e-8*(std::max)(1.0,std::abs(expected)))},{"passed",pass?"true":"false"}}));if(!pass){rowPassed=false;if(result.firstFailure.empty())result.firstFailure="definition["+std::to_string(i)+"]."+name;}};
++        // Offset is a coordinate vector: apply scale and rotation, no translation. Raw angle and every
++        // definition value are recorded separately, without normalization.
++        field("sinAngle",std::sin(ta),std::sin(ea));field("cosAngle",std::cos(ta),std::cos(ea));field("baseX",tx,ex);field("baseY",ty,ey);field("offsetX",tdx,edx);field("offsetY",tdy,edy);
++        const bool sameDashes=d.length()==td.length();checks.push_back(object({{"field",quote(std::string("dashCount"))},{"actual",std::to_string(td.length())},{"expected",std::to_string(d.length())},{"passed",sameDashes?"true":"false"}}));if(!sameDashes){rowPassed=false;if(result.firstFailure.empty())result.firstFailure="definition["+std::to_string(i)+"].dashCount";}for(int j=0;j<(std::min)(d.length(),td.length());++j)field("dash["+std::to_string(j)+"]",td[j],expectedDashes[j]);
++        rows.push_back(object({{"index",std::to_string(i)},{"source",values(a,x,y,dx,dy,d)},{"target",values(ta,tx,ty,tdx,tdy,td)},{"expectedUnderVectorTransform",values(ea,ex,ey,edx,edy,expectedDashes)},{"checks",array(checks)},{"passed",rowPassed?"true":"false"}}));result.passed=result.passed&&rowPassed;
++    }
++    result.json=object({{"sourceCount",std::to_string(source.numPatternDefinitions())},{"targetCount",std::to_string(target.numPatternDefinitions())},{"factor",number(factor)},{"rotationRadians",number(angle)},{"sourceAnchor",array({number(anchor.x),number(anchor.y)})},{"targetAnchor",array({number(origin.x),number(origin.y)})},{"offsetVectorTransform","true"},{"scalarTolerancesChanged","false"},{"passed",result.passed?"true":"false"},{"firstFailure",quote(result.firstFailure)},{"definitions",array(rows)}});return result;
++}
++struct Lines {Rect box;std::vector<std::pair<AcGePoint2d,AcGePoint2d>> lines;};
++inline std::vector<double> contacts(const Lines& l,bool vertical,double at,double lo,double hi,double eps){std::vector<double> result;for(auto segment:l.lines){auto a=segment.first,b=segment.second;double aa=vertical?a.x:a.y,bb=vertical?b.x:b.y;if(std::abs(aa-bb)<=eps)continue;for(auto p:{a,b})if(std::abs((vertical?p.x:p.y)-at)<=eps){double c=vertical?p.y:p.x;if(c>lo+eps&&c<hi-eps)result.push_back(c);}}std::sort(result.begin(),result.end());return result;}
++struct Checked {double area{};std::size_t lines{},seams{},contacts{};std::vector<std::string> rows;};
++inline Checked verify(AcDbDatabase& db,const AcDbObjectIdArray& ids,const std::vector<MaterialTileRecord>& tiles,const MaterialPlan& plan,const MaterialPreparationOptions& options,bool evaluate){
++    native::require(plan.regions.size()==1&&ids.length()==static_cast<int>(tiles.size())&&roots(db).length()==ids.length(),"whole exact root list");Working work(db);Checked checked;std::vector<Lines> all;std::string physical;AcDbObjectId commonLayer;const auto outer=bounds(plan.regions[0].geometry.outer);const double eps=1e-5/plan.mmPerInputUnit;
++    for(int i=0;i<ids.length();++i){if(evaluate){Open<AcDbHatch> h(ids[i],AcDb::kForWrite);h->setLineGenerationEnabled(true);ok(h->evaluateHatch(),"reopen native evaluate");}
++        Open<AcDbHatch> h(ids[i]);native::require(h->isA()==AcDbHatch::desc()&&h->numLoops()==1&&!h->associative(),"actual tile Hatch with one detached loop");double area{};ok(h->getArea(area),"native tile area");const auto r=bounds(tiles[i].geometry.outer);native::require(nearValue(area,(r.x1-r.x0)*(r.y1-r.y0))&&nearValue(area,tiles[i].nativeArea),"actual tile area");checked.area+=area;
++        native::require(tiles[i].parentIdentity==plan.regions[0].identity&&tiles[i].viewIdentity==plan.regions[0].viewIdentity,"parent identity");native::require(r.x0>=outer.x0&&r.x1<=outer.x1&&r.y0>=outer.y0&&r.y1<=outer.y1,"no external tile");
++        Adesk::Int32 type{};AcGePoint2dArray p;AcGeDoubleArray b;ok(h->getLoopAt(0,type,p,b),"actual tile loop");native::require((p.length()==4||p.length()==5)&&p[0]==AcGePoint2d(r.x0,r.y0)&&p[1]==AcGePoint2d(r.x1,r.y0)&&p[2]==AcGePoint2d(r.x1,r.y1)&&p[3]==AcGePoint2d(r.x0,r.y1),"exact unrounded loop");for(int k=0;k<b.length();++k)native::require(b[k]==0,"straight tile edge");
++        const auto current=pattern(*h.p);if(i==0){physical=current;commonLayer=h->layerId();}native::require(current==physical&&h->layerId()==commonLayer,"all definitions phase color and one common layer");native::require(h->numPatternDefinitions()==67&&nearValue(h->originPoint().x,options.placements[0].targetAnchor.x)&&nearValue(h->originPoint().y,options.placements[0].targetAnchor.y),"expected global phase/67 definitions");
++        AcGePoint2dArray starts,ends;ok(h->getHatchLinesData(starts,ends),"actual native line output");native::require(starts.length()>0&&starts.length()==ends.length()&&starts.length()==h->numHatchLines(),"no empty tile");Lines actual{r,{}};for(int k=0;k<starts.length();++k){for(auto point:{starts[k],ends[k]})native::require(point.x>=r.x0-eps&&point.x<=r.x1+eps&&point.y>=r.y0-eps&&point.y<=r.y1+eps,"actual line contained in tile");for(const auto& hole:plan.regions[0].geometry.holes)native::require(!intersects(starts[k],ends[k],bounds(hole),eps),"actual pattern does not enter opening");actual.lines.push_back({starts[k],ends[k]});}checked.lines+=actual.lines.size();all.push_back(std::move(actual));
++        checked.rows.push_back(native::object({{"tile",std::to_string(i)},{"area",number(area)},{"lines",std::to_string(starts.length())},{"depth",std::to_string(tiles[i].depth)},{"box",native::array({number(r.x0),number(r.y0),number(r.x1),number(r.y1)})}}));
++    }
++    native::require(nearValue(checked.area*plan.mmPerInputUnit*plan.mmPerInputUnit,plan.regions[0].areaSquareMm),"whole native sum = parent area");
++    for(std::size_t i=0;i<all.size();++i)for(std::size_t j=i+1;j<all.size();++j){auto a=all[i].box,b=all[j].box;double dx=(std::min)(a.x1,b.x1)-(std::max)(a.x0,b.x0),dy=(std::min)(a.y1,b.y1)-(std::max)(a.y0,b.y0);native::require(!(dx>0&&dy>0),"zero overlapping area");bool vertical=dy>eps&&(a.x1==b.x0||b.x1==a.x0),horizontal=dx>eps&&(a.y1==b.y0||b.y1==a.y0);if(!vertical&&!horizontal)continue;double at=vertical?(a.x1==b.x0?a.x1:b.x1):(a.y1==b.y0?a.y1:b.y1);double lo=vertical?(std::max)(a.y0,b.y0):(std::max)(a.x0,b.x0),hi=vertical?(std::min)(a.y1,b.y1):(std::min)(a.x1,b.x1);auto left=contacts(all[i],vertical,at,lo,hi,eps),right=contacts(all[j],vertical,at,lo,hi,eps);native::require(left.size()==right.size(),"actual seam contact count");for(std::size_t k=0;k<left.size();++k)native::require(std::abs(left[k]-right[k])<=eps,"actual seam phase continuity");++checked.seams;checked.contacts+=left.size();}
++    native::require(checked.seams>0&&checked.contacts>0,"actual crossed seams observed");return checked;
++}
++}
+diff --git a/tests/native/material-tiles/OwnedApiCompileCheck.cpp b/tests/native/material-tiles/OwnedApiCompileCheck.cpp
+new file mode 100644
+--- /dev/null
++++ b/tests/native/material-tiles/OwnedApiCompileCheck.cpp
+@@ -0,0 +1,17 @@
++#include "NativeMaterialTiles.h"
++#include <type_traits>
++#include <utility>
++
++template<class T,class=void> struct BorrowedClone : std::false_type {};
++template<class T> struct BorrowedClone<T,std::void_t<decltype(
++    std::declval<const T&>().cloneToEmpty(std::declval<AcDbDatabase&>()))>> : std::true_type {};
++template<class T,class=void> struct SuppliedExportTarget : std::false_type {};
++template<class T> struct SuppliedExportTarget<T,std::void_t<decltype(
++    std::declval<const T&>().cloneIntoNewOwnedDb(std::declval<AcDbDatabase&>()))>> : std::true_type {};
++
++static_assert(!BorrowedClone<bce::PreparedMaterialTiles>::value,"borrowed writer must not be exposed");
++static_assert(!SuppliedExportTarget<bce::PreparedMaterialTiles>::value,"owned export cannot accept any external database");
++static_assert(!std::is_copy_constructible<bce::OwnedMaterialDatabase>::value,"database ownership cannot be copied");
++static_assert(std::is_move_constructible<bce::OwnedMaterialDatabase>::value,"database ownership must be transferable");
++using OwnedExportSignature=bce::Result<bce::OwnedMaterialDatabase>(bce::PreparedMaterialTiles::*)()const;
++static_assert(std::is_same<decltype(&bce::PreparedMaterialTiles::cloneIntoNewOwnedDb),OwnedExportSignature>::value,"exact no-target API contract");
+diff --git a/tests/native/material-tiles/ElevationMaterialTileCases.vcxproj b/tests/native/material-tiles/ElevationMaterialTileCases.vcxproj
+new file mode 100644
+--- /dev/null
++++ b/tests/native/material-tiles/ElevationMaterialTileCases.vcxproj
+@@ -0,0 +1,19 @@
++<?xml version="1.0" encoding="utf-8"?>
++<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <ItemGroup Label="ProjectConfigurations"><ProjectConfiguration Include="Release|x64"><Configuration>Release</Configuration><Platform>x64</Platform></ProjectConfiguration></ItemGroup>
++  <PropertyGroup Label="Globals"><ProjectGuid>{FDE1B897-19BB-446A-9DD1-B81FACAF173A}</ProjectGuid><RootNamespace>ElevationMaterialTileCases</RootNamespace><WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion></PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
++  <PropertyGroup Label="Configuration"><ConfigurationType>DynamicLibrary</ConfigurationType><UseDebugLibraries>false</UseDebugLibraries><PlatformToolset>v141</PlatformToolset><CharacterSet>Unicode</CharacterSet></PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
++  <PropertyGroup><OutDir>..\out\</OutDir><IntDir>..\obj\</IntDir><TargetName>ElevationMaterialTileCases</TargetName><TargetExt>.arx</TargetExt><ObjectArxSdk Condition="'$(ObjectArxSdk)'==''">C:\Autodesk\ObjectARX_for_AutoCAD_2020_Win_64_bit</ObjectArxSdk></PropertyGroup>
++  <ItemDefinitionGroup>
++    <ClCompile><WarningLevel>Level4</WarningLevel><TreatWarningAsError>true</TreatWarningAsError><SDLCheck>true</SDLCheck><ConformanceMode>true</ConformanceMode><LanguageStandard>stdcpp17</LanguageStandard><RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary><DisableSpecificWarnings>4828;%(DisableSpecificWarnings)</DisableSpecificWarnings><AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions><ExceptionHandling>Sync</ExceptionHandling><PreprocessorDefinitions>BCE_MATERIAL_TILE_DIAGNOSTICS;WIN32;_WINDOWS;_USRDLL;UNICODE;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions><AdditionalIncludeDirectories>$(ObjectArxSdk)\inc;$(ObjectArxSdk)\inc-x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories></ClCompile>
++    <Link><SubSystem>Windows</SubSystem><ModuleDefinitionFile>$(ObjectArxSdk)\inc\AcRxDefault.def</ModuleDefinitionFile><AdditionalLibraryDirectories>$(ObjectArxSdk)\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories><AdditionalDependencies>rxapi.lib;acdb23.lib;acge23.lib;accore.lib;ac1st23.lib;Advapi32.lib;User32.lib;%(AdditionalDependencies)</AdditionalDependencies></Link>
++  </ItemDefinitionGroup>
++  <ItemGroup><ClCompile Include="MaterialTileDriver.cpp" /><ClCompile Include="NativeEvidence.cpp" /><ClCompile Include="NativeMaterials.cpp" /><ClCompile Include="NativeMaterialTiles.cpp" /><ClCompile Include="MaterialRules.cpp" /><ClCompile Include="ElevationModel.cpp" /></ItemGroup>
++  
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
++</Project>
++
++
++
+diff --git a/tools/build_material_tiles.ps1 b/tools/build_material_tiles.ps1
+new file mode 100644
+--- /dev/null
++++ b/tools/build_material_tiles.ps1
+@@ -0,0 +1,70 @@
++param([string]$Label = 'red')
++$ErrorActionPreference = 'Stop'
++$projectRoot = Split-Path $PSScriptRoot -Parent
++$buildName = 'm2-' + (Get-Date -Format 'yyyyMMdd-HHmmss-fff') + '-' + ($Label -replace '[^A-Za-z0-9_-]', '_') + '-' + [Guid]::NewGuid().ToString('N').Substring(0,8)
++$buildRoot = Join-Path (Join-Path $projectRoot 'build') $buildName
++$sourceRoot = Join-Path $buildRoot 'src'
++$null = New-Item -ItemType Directory -Path $sourceRoot
++$receipt = [ordered]@{ contract='bce.material-tiles-build.v1'; label=$Label; startedUtc=[DateTime]::UtcNow.ToString('o'); compiledSourcesDirectory=$sourceRoot; sourceFiles=[ordered]@{}; inputOrigins=@(); binary=$null; binarySHA256=$null; log=(Join-Path $buildRoot 'build.log'); exitCode=1; nativeExecuted=$false;toolchain='AutoCAD2020 SDK23.1 / v141 14.16.27023 / x64 / C++17' }
++$exitResult = 1
++try {
++    $inputs = @('src/ElevationModel.h','src/ElevationModel.cpp','src/RuleModel.h','src/Recognition.h','src/MaterialRules.h','src/MaterialRules.cpp','src/NativeMaterials.h','src/NativeMaterials.cpp','tests/native/NativeEvidence.h','tests/native/NativeEvidence.cpp','src/NativeMaterialTiles.h','src/NativeMaterialTiles.cpp','tests/native/material-tiles/MaterialTileDriver.cpp','tests/native/material-tiles/MaterialTileFixtures.h','tests/native/material-tiles/OwnedApiCompileCheck.cpp','tests/native/material-tiles/ElevationMaterialTileCases.vcxproj')
++    $m1Root = Join-Path $projectRoot 'build/m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee'
++    $m1ReceiptPath = Join-Path $m1Root 'receipt.json'
++    $m1Sha = 'A898B95C981FD852953F8500FCBFC244201C022A102CEC28E0D69A511B587BE6'
++    if ((Get-FileHash -LiteralPath $m1ReceiptPath).Hash -ne $m1Sha) { throw 'M1 receipt changed' }
++    $m1 = Get-Content -Raw -LiteralPath $m1ReceiptPath | ConvertFrom-Json
++    $receipt.m1Dependency = @{receipt=$m1ReceiptPath;sha256=$m1Sha}
++    foreach ($relative in $inputs) {
++        $source = Join-Path $projectRoot $relative
++        if ($relative -notmatch 'NativeMaterialTiles|material-tiles') {
++            $source = Join-Path (Join-Path $m1Root 'src') (Split-Path $relative -Leaf)
++            $expected = $m1.sourceFiles.PSObject.Properties[$source].Value
++            if (!$expected -or (Get-FileHash -LiteralPath $source).Hash -ne $expected) { throw ('Frozen dependency changed: '+$source) }
++        }
++        $destination = Join-Path $sourceRoot (Split-Path $relative -Leaf)
++        Copy-Item -LiteralPath $source -Destination $destination
++        $digest = (Get-FileHash -LiteralPath $destination -Algorithm SHA256).Hash
++        $receipt.sourceFiles[$destination] = $digest
++        $receipt.inputOrigins += [ordered]@{ origin=$source; compiledCopy=$destination; sha256=$digest }
++    }
++    Copy-Item -LiteralPath $PSCommandPath -Destination (Join-Path $buildRoot 'build_material_tiles.ps1')
++    $receipt.sourceFiles[(Join-Path $buildRoot 'build_material_tiles.ps1')] = (Get-FileHash -LiteralPath (Join-Path $buildRoot 'build_material_tiles.ps1') -Algorithm SHA256).Hash
++    $vcvars = 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat'
++    $msbuild = 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe'
++    if (!(Test-Path -LiteralPath $vcvars) -or !(Test-Path -LiteralPath $msbuild)) { throw 'v141 build tools missing' }
++    $command = '@echo off' + "`r`n" + 'call "' + $vcvars + '" -vcvars_ver=14.16' + "`r`n" + 'if errorlevel 1 exit /b %errorlevel%' + "`r`n" + '"' + $msbuild + '" ElevationMaterialTileCases.vcxproj /t:Rebuild /p:Configuration=Release /p:Platform=x64 /p:VCToolsVersion=14.16.27023 /m:1 /nologo /verbosity:normal' + "`r`n" + 'if errorlevel 1 exit /b %errorlevel%' + "`r`n"
++    # Separate compile-only checks deliberately omit BCE_MATERIAL_TILE_DIAGNOSTICS.
++    $clOptions = 'cl /nologo /c /std:c++17 /EHsc /MD /W4 /WX /sdl /permissive- /utf-8 /wd4828 /DWIN32 /D_WINDOWS /D_USRDLL /DUNICODE /D_UNICODE /I"C:\Autodesk\ObjectARX_for_AutoCAD_2020_Win_64_bit\inc" /I"C:\Autodesk\ObjectARX_for_AutoCAD_2020_Win_64_bit\inc-x64" '
++    $command += $clOptions + 'NativeMaterialTiles.cpp /Fo"..\obj\NativeMaterialTiles.product.obj"' + "`r`n" + 'if errorlevel 1 exit /b %errorlevel%' + "`r`n"
++    $command += $clOptions + 'OwnedApiCompileCheck.cpp /Fo"..\obj\OwnedApiCompileCheck.obj"' + "`r`n" + 'exit /b %errorlevel%' + "`r`n"
++    Set-Content -LiteralPath (Join-Path $buildRoot 'build-command.cmd') -Value $command -Encoding ascii
++    $receipt.commandFile = Join-Path $buildRoot 'build-command.cmd'
++    $receipt.commandSHA256 = (Get-FileHash -LiteralPath $receipt.commandFile).Hash
++    Push-Location $sourceRoot
++    try { & $env:ComSpec /d /c '..\build-command.cmd' > $receipt.log 2>&1; $exitResult = $LASTEXITCODE } finally { Pop-Location }
++    foreach ($entry in $receipt.inputOrigins) { if ((Get-FileHash -LiteralPath $entry.origin).Hash -ne $entry.sha256) { throw 'Live input changed during build' } }
++    if ($exitResult -eq 0) {
++        $receipt.binary = Join-Path $buildRoot 'out/ElevationMaterialTileCases.arx'
++        $receipt.binarySHA256 = (Get-FileHash -LiteralPath $receipt.binary -Algorithm SHA256).Hash
++        $receipt.offlineOwnedContract = [ordered]@{diagnosticsDefined=$false;hostExecuted=$false;productObject=(Join-Path $buildRoot 'obj/NativeMaterialTiles.product.obj');apiObject=(Join-Path $buildRoot 'obj/OwnedApiCompileCheck.obj')}
++        $receipt.offlineOwnedContract.productObjectSHA256 = (Get-FileHash -LiteralPath $receipt.offlineOwnedContract.productObject).Hash
++        $receipt.offlineOwnedContract.apiObjectSHA256 = (Get-FileHash -LiteralPath $receipt.offlineOwnedContract.apiObject).Hash
++    }
++} catch {
++    $receipt.error = $_.Exception.Message
++    $exitResult = 1
++} finally {
++    $receipt.exitCode = $exitResult
++    $receipt.finishedUtc = [DateTime]::UtcNow.ToString('o')
++    $receipt | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath (Join-Path $buildRoot 'receipt.json') -Encoding utf8
++    Write-Output ('RECEIPT=' + (Join-Path $buildRoot 'receipt.json'))
++    Write-Output ('EXIT_CODE=' + $exitResult)
++}
++exit $exitResult
++
++
++
++
++
++

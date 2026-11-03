@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>AcGiGeometry::polyline</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+<link rel="stylesheet" type="text/css" href="default_plus.css" media="screen, projection, tv " />
+<script language=javascript src="arxref.js"></script>
+<script language=javascript src="ac_common.js"></script>
+<script language=javascript src="ac.acad_ak.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="ObjectARX_Reference_Guide.html">ObjectARX Reference Guide</a> &gt; <a href="AcGi_Classes.html">AcGi Classes</a> &gt; <a href="AcGiGeometry.html">AcGiGeometry Class</a> &gt; <a href="!!MEMBERTYPE_Methods_AcGiGeometry.html">AcGiGeometry Methods</a> &gt; <a href="!!OVERLOADED_polyline_AcGiGeometry.html">polyline Method</a> &gt; <a href="AcGiGeometry__polyline@Adesk__UInt32@AcGePoint3d_@AcGeVector3d_@Adesk__LongPtr@const.html">polyline(Adesk::UInt32, AcGePoint3d*, AcGeVector3d*, Adesk::LongPtr) Method</a></div>
+<div class="Element92">
+<div class="Element5">
+AcGiGeometry::polyline</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<div class="Element58">
+<a name="432B2B"></a><div class="Element99">
+C++</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #871F78">virtual</span></strong> Adesk::Boolean <strong><span style="color: #660000">polyline</span></strong>(
+    <strong><span style="color: #871F78">const</span></strong> Adesk::UInt32 <strong><span style="color: #660000">nbPoints</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> AcGePoint3d* <strong><span style="color: #660000">pVertexList</span></strong>, 
+    <strong><span style="color: #871F78">const</span></strong> AcGeVector3d* <strong><span style="color: #660000">pNormal</span></strong> = NULL, 
+    Adesk::LongPtr <strong><span style="color: #660000">lBaseSubEntMarker</span></strong> = -1
+) <strong><span style="color: #871F78">const</span></strong> = 0;</pre></div></div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element252">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element240" valign="top" width="50%">
+<div class="Element241">
+Parameters&nbsp;</div></td><td class="Element244" valign="top" width="50%">
+<div class="Element245">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+nbPoints&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input number of vertex points in polyline (minimum of two)&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+pVertexList&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input array of vertex points (must be nbPoints in array)&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+pNormal&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Input normal&nbsp;</div></td></tr><tr>
+<td class="Element242" valign="top" width="50%">
+<div class="Element243">
+lBaseSubEntMarker&nbsp;</div></td><td class="Element246" valign="top" width="50%">
+<div class="Element247">
+Sub-entity marker for first segment&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="4465736372697074696F6E"></a><div class="Element14">
+Description</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+Walks down the list of vertex points <span class="Element146">pVertexList</span> drawing line segments from point to point (hence the requirement for a minimum of two points). If a thickness is currently specified it will be applied to the segments of this polyline. &nbsp;</p>
+<p class="Element10">
+The caller is responsible for the memory used by the <span class="Element146">pVertexList</span> array.&nbsp;</p>
+<p class="Element10">
+The <span class="Element146">lBaseSubEntMarker</span> argument has been added to allow the caller to specify sequential sub-entity markers for the segments of the polyline. If <span class="Element146">lBaseSubEntMarker</span><span class="Element146">'n'</span> is greater than zero then the segments of the polyline will be assigned markers beginning with 'n' incrementing by 1 for each segment.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><div class="Element15">
+Note</div>
+<p class="Element10">
+Closed areas created by this function are not fillable. To create fillable areas, use the <span class="Element146">polygon()</span> function.&nbsp;</p>
+<p class="Element10">
+A return value of <span class="Element146">Adesk::kFalse</span> (that is, 0) indicates that the primitive has been successfully stored in the graphics database. A return value of <span class="Element146">Adesk::kTrue</span> indicates that the operation has been terminated and the application wants to get control back as soon as possible.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p></div>
+</div>
+<a name="4C696E6B73"></a><div class="Element14">
+Links</div>
+<div class="Element11">
+<div class="Element10">
+<a href="AcGiGeometry.html">AcGiGeometry</a></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<table class=FooterTable width=100%><tr valign=top>
+<td>&nbsp;</td>
+<td align=right>&nbsp;<span class="CommentsLink" onclick="doComments();" title="Click here to send a comment about this topic.">Comments?</span>&nbsp;</td>
+</tr></table>
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

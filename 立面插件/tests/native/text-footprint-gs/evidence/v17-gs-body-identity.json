@@ -1,0 +1,6 @@
+{
+  "baselineV16Receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9c-20261103-120334-608-nonpersistent-callback-boundary-v16-a5599f21\\receipt.json",
+  "comparison": "GS run function body exact UTF-8 text equality after function rename; no GS body change",
+  "bodySHA256": "3E92F05386829B8ED532CCA46A2036EDA0C74E63EDA75BB9C0DEE927D4D46589",
+  "equal": true
+}

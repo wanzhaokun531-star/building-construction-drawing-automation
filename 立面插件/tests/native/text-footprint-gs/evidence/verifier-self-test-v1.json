@@ -1,0 +1,24 @@
+{
+  "kind": "offline-verifier-only",
+  "positive": {
+    "inkPixels": 6,
+    "allNonwhiteFullCellsCovered": true
+  },
+  "negativeControls": [
+    {
+      "name": "shrunken-quad",
+      "rejected": true,
+      "reason": "nonwhite complete cell outside C++ world quad"
+    },
+    {
+      "name": "missing-mapping",
+      "rejected": true,
+      "reason": "'worldToPixel'"
+    },
+    {
+      "name": "wrong-mapping",
+      "rejected": true,
+      "reason": "mapping differs from independent calibration"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "contract": "bce.text-range-outcome.v1",
+  "status": "DONE_WITH_CONCERNS",
+  "stringRangeComputed": true,
+  "stringRangeCount": 5,
+  "renderContainmentVerified": false,
+  "verifiedFullPixelCellCases": 0,
+  "totalFullPixelCellCases": 10,
+  "realNegativeControlsRejected": 4,
+  "glyphComplete": false,
+  "capabilityUpgradeAllowed": false,
+  "nativeReport": "D:\\Codex\\\u5efa\u7b51\u65bd\u5de5\u56fe\u81ea\u52a8\u5316\\\u9636\u6bb51\\runs\\elevation-native-20261103-093743-84f838a5\\case\\text-range.json",
+  "nativeReportSHA256": "05254B213DC3F1B0C5D20DF1F0C352E8D12D9281DF68B9180D010800EECF6CD1",
+  "publicComparison": "D:\\Codex\\\u5efa\u7b51\u65bd\u5de5\u56fe\u81ea\u52a8\u5316\\\u9636\u6bb51\\runs\\elevation-native-20261103-093743-84f838a5\\case\\text-range-public-measured-v8\\comparison.json",
+  "publicComparisonSHA256": "AF5062EB2194BD4F628215A4AF3BFB9756AE5FBC2865B48F7441508FC66931A8",
+  "negativeComparison": "D:\\Codex\\\u5efa\u7b51\u65bd\u5de5\u56fe\u81ea\u52a8\u5316\\\u9636\u6bb51\\runs\\elevation-native-20261103-093743-84f838a5\\case\\text-range-negative-measured-v8\\comparison.json",
+  "negativeComparisonSHA256": "818FC473AEC7CE1F5C0B792CD4E77811C4722040BD540F13A838CFD235292674",
+  "remaining": [
+    "backward range basis correction requires explicit contract and controlled validation",
+    "PDF coordinate quantization/hairline/antialias complete-pixel footprint requires explicit device occupancy contract or native ink strategy"
+  ],
+  "productionTextAvoidanceComplete": false,
+  "allPublicAPIsImpossibleClaimed": false
+}

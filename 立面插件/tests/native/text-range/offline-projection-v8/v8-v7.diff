@@ -1,0 +1,139 @@
+--- v7/verify_text_range.py
++++ v8/verify_text_range.py
+@@ -6,8 +6,10 @@
+ import hashlib
+ import json
+ import math
++import re
+ import subprocess
+ import sys
++import zlib
+ 
+ import numpy as np
+ from PIL import Image, ImageDraw
+@@ -49,7 +51,7 @@
+ 
+ 
+ def mapping(page, dpi):
+-    m = np.asarray(page['worldToPagePoints'], dtype=float).reshape(2, 3) * (dpi / 72)
++    m = np.asarray(page.get('_measuredWorldToPagePoints', page['worldToPagePoints']), dtype=float).reshape(2, 3) * (dpi / 72)
+     assert np.isfinite(m).all() and abs(np.linalg.det(m[:, :2])) > 1e-8
+     return m
+ 
+@@ -82,8 +84,12 @@
+ def calibration(page, native, output, dpi):
+     path, rgb, mask, xx, yy = render(page, output, dpi)
+     m = mapping(page, dpi)
+-    paper = page['validatedSettings']['paperMM']
+-    assert abs(rgb.shape[1]-paper[0]*dpi/25.4) < 2 and abs(rgb.shape[0]-paper[1]*dpi/25.4) < 2
++    if '_pdfFrame' in page:
++        box=page['_pdfFrame']['mediaBox']
++        assert abs(rgb.shape[1]-(box[2]-box[0])*dpi/72) < 1 and abs(rgb.shape[0]-(box[3]-box[1])*dpi/72) < 1
++    else:
++        paper = page['validatedSettings']['paperMM']
++        assert abs(rgb.shape[1]-paper[0]*dpi/25.4) < 2 and abs(rgb.shape[0]-paper[1]*dpi/25.4) < 2
+     # Each native line is isolated. Associate by the publicly predicted center,
+     # then check the entire ink bbox, both endpoints, and the pixel center.
+     remaining = mask.copy()
+@@ -104,8 +110,77 @@
+         remaining[y0:y1, x0:x1] = False
+         checks.append(dict(modelCenter=center, predictedPixel=predicted.tolist(), observedPixel=actual.tolist(), residualPixel=residual.tolist(), inkBox=box))
+     assert not remaining.any(), 'calibration page contains unexpected ink'
+-    return dict(dpi=dpi, image=str(path), sha256=sha(path), mappingSource='validated settings; no fitted parameters',
+-                independentChecks=5, pixelQuantizationTolerance=1.0, checks=checks)
++    return dict(dpi=dpi, image=str(path), sha256=sha(path), mappingSource='measured native PDF geometry; three fitted, two held out' if '_measuredWorldToPagePoints' in page else 'validated settings; no fitted parameters',
++                independentChecks=2 if '_measuredWorldToPagePoints' in page else 5, fittedIndices=[0,1,2] if '_measuredWorldToPagePoints' in page else [],
++                heldOutIndices=[3,4] if '_measuredWorldToPagePoints' in page else list(range(5)),pixelQuantizationTolerance=1.0, checks=checks)
++
++
++PDF_NUMBER=rb'[-+]?(?:\d+(?:\.\d*)?|\.\d+)'
++
++
++def pdf_frame(page):
++    """Read only the observed controlled Plot PDF subset; reject unknown transforms."""
++    path=Path(page['pdf']);assert sha(path)==page['pdfSHA256']
++    raw=path.read_bytes()
++    boxes=re.findall(rb'/MediaBox\s*\[([^]]+)\]',raw)
++    assert len(boxes)==1,'unknown/multiple PDF page boxes'
++    media=[float(x) for x in boxes[0].split()]
++    assert len(media)==4 and media[:2]==[0,0] and media[2]>0 and media[3]>0
++    crop=re.findall(rb'/CropBox\s*\[([^]]+)\]',raw)
++    assert not crop or len(crop)==1 and [float(x)for x in crop[0].split()]==media,'nontrivial PDF CropBox unsupported'
++    rotate=[int(x)for x in re.findall(rb'/Rotate\s+([-+]?\d+)',raw)]
++    assert not rotate or rotate==[0],'PDF rotation unsupported'
++    streams=[]
++    for stream in re.findall(rb'stream\r?\n(.*?)\r?\nendstream',raw,re.S):
++        try:streams.append(zlib.decompress(stream))
++        except zlib.error:streams.append(stream)
++    cm_pattern=rb'\s+'.join([b'('+PDF_NUMBER+b')']*6)+rb'\s+cm\b'
++    matrices=[[float(v)for v in match]for stream in streams for match in re.findall(cm_pattern,stream)]
++    assert len(matrices)==1,'controlled PDF must have exactly one observed cm transform'
++    cm=matrices[0]
++    assert cm[0]>0 and cm[3]>0 and cm[1]==cm[2]==cm[4]==cm[5]==0,'unknown PDF basis/translation'
++    line_pattern=rb'\s+'.join([b'('+PDF_NUMBER+b')']*2)+rb'\s+m\s+'+rb'\s+'.join([b'('+PDF_NUMBER+b')']*2)+rb'\s+l\s+S\b'
++    lines=[[float(v)for v in match]for stream in streams for match in re.findall(line_pattern,stream)]
++    return dict(mediaBox=media,cropBox=None if not crop else media,rotate=0,allCm=matrices,
++                observedCoordinateUnitPoints=[cm[0],cm[3]],rawSimpleStrokedLines=lines)
++
++
++def measured_maps(pages,native):
++    frames={name:pdf_frame(page)for name,page in pages.items()}
++    reference=frames['projection']
++    for name,frame in frames.items():
++        assert frame['mediaBox']==reference['mediaBox'] and frame['allCm']==reference['allCm'],'text/calibration PDF basis differs'
++        assert pages[name]['validatedSettings']==pages['projection']['validatedSettings'],'text/calibration plot settings differ'
++    lines=np.asarray(reference['rawSimpleStrokedLines'],dtype=float).reshape(-1,2,2)
++    assert lines.shape==(5,2,2),'projection PDF must contain five independent simple stroked lines'
++    assert np.max(abs(lines[:,0,1]-lines[:,1,1]))<1e-10,'projection line direction changed'
++    cm=reference['allCm'][0]
++    actual=lines.mean(axis=1)*np.array([cm[0],cm[3]])
++    actual[:,1]=reference['mediaBox'][3]-actual[:,1]
++    world=np.asarray(native['calibrationCenters'],dtype=float)[:,:2]
++    nominal=np.asarray(pages['projection']['worldToPagePoints']).reshape(2,3)
++    predicted=np.column_stack((world,np.ones(5)))@nominal.T
++    indices=np.argmin(np.linalg.norm(predicted[:,None,:]-actual[None,:,:],axis=2),axis=1)
++    assert len(set(indices.tolist()))==5,'unknown calibration correspondence'
++    assert np.max(np.linalg.norm(predicted-actual[indices],axis=1))<1.0,'calibration not near the nominal plot mapping'
++    actual=actual[indices]
++    fit=np.column_stack((world[:3],np.ones(3)))
++    assert np.linalg.matrix_rank(fit)==3
++    matrix=np.linalg.solve(fit,actual[:3]).T
++    residual=actual-np.column_stack((world,np.ones(5)))@matrix.T
++    # This checks the two held-out calibration points, not a universal mapping
++    # error bound. It NEVER enlarges the string range or the pixel-cell test.
++    tolerance=min(cm[0],cm[3])/2
++    assert np.max(abs(residual[3:]))<=tolerance,'held-out native projection residual exceeds half observed coordinate unit'
++    for name,page in pages.items():
++        page['_measuredWorldToPagePoints']=matrix.reshape(-1).tolist()
++        page['_pdfFrame']=frames[name]
++    return dict(method='three noncollinear actual native PDF line centers fitted; two independent held-out points',
++                fitIndices=[0,1,2],heldOutIndices=[3,4],pdfFrames=frames,correspondenceIndices=indices.tolist(),
++                modelCenters=world.tolist(),actualPageCentersYDown=actual.tolist(),worldToPageMeasured=matrix.tolist(),
++                residualPoints=residual.tolist(),independentTolerancePoints=tolerance,maxHeldOutResidualPoint=float(np.max(abs(residual[3:]))),
++                limitation='finite five-point calibration of this exact Plot output; not a universal affine or infinite-resolution guarantee',
++                geometricContainmentMarginPixel=0)
+ 
+ 
+ def compare(sample, page, rendered, output, dpi, candidate='public'):
+@@ -193,9 +268,12 @@
+     parser=argparse.ArgumentParser()
+     parser.add_argument('binding',type=Path)
+     parser.add_argument('--mode',choices=('negative','public'),required=True)
++    parser.add_argument('--projection',choices=('nominal','measured-pdf'),default='nominal')
++    parser.add_argument('--output-tag',default='')
+     args=parser.parse_args()
+     binding,native,native_path=bound_inputs(args.binding)
+-    output=native_path.parent/f'text-range-{args.mode}'
++    assert re.fullmatch(r'[a-zA-Z0-9_-]*',args.output_tag)
++    output=native_path.parent/(f'text-range-{args.mode}'+('-'+args.output_tag if args.output_tag else ''))
+     output.mkdir()
+     result=dict(contract='bce.text-range-comparison.v1', mode=args.mode, binding=str(args.binding.resolve()),
+                 bindingSHA256=sha(args.binding), nativeReport=str(native_path),nativeReportSHA256=sha(native_path),
+@@ -207,6 +285,7 @@
+     try:
+         pages={p['id']:p for p in native['pages']}
+         assert set(pages)==set(IDS)|{'projection'}
++        if args.projection=='measured-pdf':result['measuredProjection']=measured_maps(pages,native)
+         for dpi in RESOLUTIONS:
+             result['projection'].append(calibration(pages['projection'],native,output,dpi))
+             for sample in native['samples']:

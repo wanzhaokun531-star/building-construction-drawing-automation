@@ -1,0 +1,32 @@
+[
+  {
+    "version": "v193",
+    "nonce": "8bbd64367f834163bdfb8aa55a9c8964",
+    "processId": 39836,
+    "normalQUIT": true,
+    "files": [
+      {
+        "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexStage1Probe_8bbd64367f834163bdfb8aa55a9c8964\\S1Acad_8bbd6436.arx",
+        "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261103-135433\\staging-final-archive\\S1Acad_8bbd6436.arx",
+        "SHA256": "7DB32B15256AF44EE09223CFD105D947FAAD2CE0EEAC85348000103C3F237228"
+      },
+      {
+        "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexStage1Probe_8bbd64367f834163bdfb8aa55a9c8964\\S1Acad_8bbd6436.ini",
+        "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261103-135433\\staging-final-archive\\S1Acad_8bbd6436.ini",
+        "SHA256": "5C7F3AFBF1A7D274EDF83030AF85994F817EB90533B952C0A78A995FC881FB2B"
+      },
+      {
+        "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexStage1Probe_8bbd64367f834163bdfb8aa55a9c8964\\BCP2_8bbd6436.arx",
+        "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261103-135433\\staging-final-archive\\BCP2_8bbd6436.arx",
+        "SHA256": "D037294AD182D7A3F349582D0614F3D5C396A0B6FDB9F230A1F0FB8877846E19"
+      },
+      {
+        "path": "C:\\Program Files\\Autodesk\\ApplicationPlugins\\CodexStage1Probe_8bbd64367f834163bdfb8aa55a9c8964\\BCP2_8bbd6436.ini",
+        "archive": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\isolated-autocad-20261103-135433\\staging-final-archive\\BCP2_8bbd6436.ini",
+        "SHA256": "D21F90216927475963557F4025FC73112AEDF8DA6F45169F9B74FE0C6EB2FD2C"
+      }
+    ],
+    "ownShowEvents": 0,
+    "ownForegroundEvents": 0
+  }
+]

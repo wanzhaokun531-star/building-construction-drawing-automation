@@ -1,0 +1,56 @@
+{
+  "contract": "bce.i3b-review-scope.v1",
+  "scope": "Entire I3b addition only: six newly added files; read-only dependency inspection may confirm contracts, but do not re-review/re-run approved I3a/I2/GS/core matrices.",
+  "files": [
+    {
+      "path": "src/ProjectFactsReader.h",
+      "change": "added",
+      "lines": 23,
+      "sha256": "5FC330E5C1E2D2CC6DB3FAD5462C5FCB93CD2DB9CAA3FD72289AE65B6968D51B"
+    },
+    {
+      "path": "src/ProjectFactsReader.cpp",
+      "change": "added",
+      "lines": 206,
+      "sha256": "4D676610A668590CC10D6EAC7FC3B441E91F0823E48B4CA44196EC495DBED9B7"
+    },
+    {
+      "path": "tests/native/project-facts/ProjectFactsFixture.h",
+      "change": "added",
+      "lines": 116,
+      "sha256": "164D139C45DE8F4AF3375EE5D6FAA772744520E2D8F7F97F1E369209DA93250B"
+    },
+    {
+      "path": "tests/native/project-facts/ProjectFactsDriver.cpp",
+      "change": "added",
+      "lines": 147,
+      "sha256": "B1C57508CEA3C8F254EAE1E01EBE9FF5A0558FD01AE612EF2DC2C5547D53373F"
+    },
+    {
+      "path": "tests/native/project-facts/ElevationProjectFactCases.vcxproj",
+      "change": "added",
+      "lines": 17,
+      "sha256": "22D38DC09F616D734D4A7C7F20687FDD40A3BE2413832A0837AD9ED917D5920A"
+    },
+    {
+      "path": "tools/build_project_facts_reader.ps1",
+      "change": "added",
+      "lines": 53,
+      "sha256": "1B3EE1A721D5E79AA770F543B97848709369B09D9026AEF8E8D32FA16FD76861"
+    }
+  ],
+  "frozenGreenReceipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\i3b-20261103-144226-082-green-39397c2a\\receipt.json",
+  "protectedCore": {
+    "src/ProjectFacts.h": "B2467B244B8DF3287ADFFAECEE3D5038DFA1656C5D39313120EBB0F3A329F52D",
+    "src/ProjectFacts.cpp": "D9209C4C8183F1462B0A6B2A9D4ED5B1B61B8D5B464BC890600B66123F39D3E4"
+  },
+  "excludedProductionChanges": [
+    "SceneReader",
+    "AnalysisReader",
+    "I1/I2/GS drivers",
+    "NativeEvidence/host/watch/bridge",
+    "codec/NOD",
+    "production commands/BUILD"
+  ],
+  "totalAddedLines": 562
+}

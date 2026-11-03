@@ -1,0 +1,116 @@
+--- v5/NativeGsTextFootprint.cpp
++++ v6/NativeGsTextFootprint.cpp
+@@ -9,6 +9,7 @@
+ #include <dbsymtb.h>
+ #include <dbsymutl.h>
+ #include <acgi.h>
++#include <acgivisualstyle.h>
+ #include <drawable.h>
+ #include <rxregsvc.h>
+ class CView;
+@@ -73,11 +74,11 @@
+ };
+ struct Session{
+     Config config;std::unique_ptr<Evidence> evidence;File trace;
+-    AcApDocument* current{};AcApDocument* active{};AcDbDatabase* ambient{};AmbientWatch watch;bool watchAttached{};int dbmodBefore{};
++    AcApDocument* current{};AcApDocument* active{};AcDbDatabase* ambient{};AmbientWatch watch;bool watchAttached{},ambientInitialized{};int dbmodBefore{};
+     std::unique_ptr<AcDbDatabase> db;AcDbObjectId markerId;std::unique_ptr<AcDbPoint,Close> marker;
+     AcGsManager* manager{};AcGsGraphicsKernel* kernel{};AcGsModel* model{};AcGsModel* priorModel{};AcGsDevice* device{};AcGsView* view{};bool associated{};
+     std::unique_ptr<Rule> rule;bool ruleAttached{},priorOverruling{};
+-    int sample{-1};unsigned callbacks{},frameCallbacks{};std::string callbackError;int faultPoint{};
++    int sample{-1};unsigned callbacks{},frameCallbacks{};std::string callbackError,executionFailure;int faultPoint{};
+     std::wstring font,bigfont;std::string fontSHA,bigfontSHA;std::vector<std::string> frames;
+     void log(const char* event,Fields f={}){if(!trace.valid())return;f.push_back({"event",q(event)});write_flushed(trace.get(),object(f)+"\n");}
+     bool ambientSame()const{return current==acDocManager->curDocument()&&active==acDocManager->mdiActiveDocument()&&ambient==acdbHostApplicationServices()->workingDatabase();}
+@@ -176,7 +177,7 @@
+ }
+ void execute(Session& s){
+     s.current=acDocManager->curDocument();s.active=acDocManager->mdiActiveDocument();s.ambient=acdbHostApplicationServices()->workingDatabase();
+-    require(s.current&&s.active==s.current&&s.current->database()==s.ambient,"ambient identities inconsistent");s.dbmodBefore=dbmod();s.ambient->addReactor(&s.watch);s.watchAttached=true;
++    require(s.current&&s.active==s.current&&s.current->database()==s.ambient,"ambient identities inconsistent");s.dbmodBefore=dbmod();s.ambientInitialized=true;s.ambient->addReactor(&s.watch);s.watchAttached=true;
+     s.log("ambient.before",{{"current",address(s.current)},{"active",address(s.active)},{"workingDatabase",address(s.ambient)},{"dbmod",std::to_string(s.dbmodBefore)}});
+     s.db=std::make_unique<AcDbDatabase>(true,true);require(s.db.get()!=s.ambient,"owned database aliases ambient");
+     s.font=resolve(s.db.get(),L"simplex.shx");s.bigfont=resolve(s.db.get(),L"gbcbig.shx");s.fontSHA=sha256(s.font);s.bigfontSHA=sha256(s.bigfont);
+@@ -185,8 +186,11 @@
+     require(_wcsicmp(s.bigfont.c_str(),L"D:\\cad2020\\autocad 2020\\fonts\\gbcbig.shx")==0&&s.bigfontSHA=="B6D7F2C5E3057840A63433EE78A49D59FBD030C999D706F7368A14D52B2A4150","bigfont control differs from N9a identity");
+     {auto ms=open<AcDbBlockTableRecord>(acdbSymUtil()->blockModelSpaceId(s.db.get()),AcDb::kForWrite);auto p=std::make_unique<AcDbPoint>(AcGePoint3d(75,50,0));p->setDatabaseDefaults(s.db.get());ok(ms->appendAcDbEntity(s.markerId,p.get()),"append owned marker");p.release()->close();}
+     s.marker=open<AcDbPoint>(s.markerId);
+-    s.manager=acgsGetGsManager();require(s.manager!=nullptr,"GS manager unavailable");AcGsKernelDescriptor descriptor;descriptor.addRequirement(AcGsKernelDescriptor::k2DDrawing);
+-    s.kernel=AcGsManager::acquireGraphicsKernel(descriptor);require(s.kernel!=nullptr,"2D kernel unavailable");
++    s.manager=acgsGetGsManager();require(s.manager!=nullptr,"GS manager unavailable");AcGsKernelDescriptor descriptor;descriptor.addRequirement(AcGsKernelDescriptor::k3DDrawing);
++    s.log("acquireGraphicsKernel.before",{{"requirement",q("k3DDrawing")},{"capabilityAddress",address(AcGsKernelDescriptor::k3DDrawing)},{"descriptorRequires3D",descriptor.requires(AcGsKernelDescriptor::k3DDrawing)?"true":"false"}});
++    s.kernel=AcGsManager::acquireGraphicsKernel(descriptor);AcGsKernelDescriptor twoD;twoD.addRequirement(AcGsKernelDescriptor::k2DDrawing);
++    s.log("acquireGraphicsKernel.after",{{"kernel",address(s.kernel)},{"compatibleWith3D",s.kernel?(s.kernel->isCompatibleWith(descriptor)?"true":"false"):"null"},{"compatibleWith2D",s.kernel?(s.kernel->isCompatibleWith(twoD)?"true":"false"):"null"}});
++    require(s.kernel!=nullptr,"k3DDrawing kernel unavailable");require(s.kernel->isCompatibleWith(descriptor),"acquired kernel incompatible with requested k3DDrawing");
+     s.model=s.manager->createAutoCADModel(*s.kernel);require(s.model!=nullptr,"AutoCAD model unavailable");
+     const auto dbKey=reinterpret_cast<Adesk::LongPtr>(s.db.get());s.priorModel=s.kernel->find(dbKey,AcGsModel::kMain);s.kernel->associate(dbKey,s.model,AcGsModel::kMain);s.associated=true;
+     s.log("ownedModelBinding",{{"targetDatabase",address(s.db.get())},{"model",address(s.model)},{"priorModel",address(s.priorModel)},{"readBackModel",address(s.kernel->find(dbKey,AcGsModel::kMain))},{"route",q("manager.createAutoCADModel + kernel.associate; real context checked separately")}});
+@@ -196,6 +200,8 @@
+     const auto bg=s.device->getBackgroundColor();require(bg.m_red==255&&bg.m_green==255&&bg.m_blue==255,"background readback not white");
+     std::array<AcGsColor,256> palette{};for(auto& c:palette)c={0,0,0,0};palette[0]={255,255,255,0};s.device->setLogicalPalette(palette.data(),static_cast<int>(palette.size()));
+     s.view=s.manager->createView(s.device);require(s.view!=nullptr,"offscreen view unavailable");s.view->setViewport(AcGePoint2d(0,0),AcGePoint2d(1,1));s.view->setViewportBorderVisibility(false);
++    AcGiVisualStyle wireframe;require(wireframe.setType(AcGiVisualStyle::k3DWireframe),"prepare own k3DWireframe style failed");s.view->setVisualStyle(wireframe);AcGiVisualStyle readback;const bool styleSet=s.view->visualStyle(readback);
++    s.log("ownedViewVisualStyle",{{"requestedType",std::to_string(AcGiVisualStyle::k3DWireframe)},{"styleSet",styleSet?"true":"false"},{"actualType",styleSet?std::to_string(readback.type()):"null"}});require(styleSet&&readback.type()==AcGiVisualStyle::k3DWireframe,"own view visual style readback differs");
+     s.view->setEnableFrontClip(false);s.view->setEnableBackClip(false);
+     s.view->setView({75,50,100},{75,50,0},AcGeVector3d::kYAxis,150,112.5,AcGsView::kParallel);
+     s.log("ownedDeviceSettings",{{"backgroundRGB",array({std::to_string(bg.m_red),std::to_string(bg.m_green),std::to_string(bg.m_blue)})},{"foregroundRGB",array({"0","0","0"})},{"lineweight",q("AcDb::kLnWt000 hairline")},{"frontClip",s.view->isFrontClipped()?"true":"false"},{"backClip",s.view->isBackClipped()?"true":"false"},{"border",s.view->isViewportBorderVisible()?"true":"false"}});
+@@ -207,7 +213,7 @@
+         s.log("viewMatrices",{{"width",std::to_string(w)},{"viewing",matrix(s.view->viewingMatrix())},{"projection",matrix(s.view->projectionMatrix())},{"screen",matrix(s.view->screenMatrix())},{"worldToDevice",matrix(m)},{"worldToPixel",affine(mapping.affine)},{"fieldWidth",num(s.view->fieldWidth())},{"fieldHeight",num(s.view->fieldHeight())},{"perspective",s.view->isPerspective()?"true":"false"},{"border",s.view->isViewportBorderVisible()?"true":"false"}});
+         for(std::size_t i=0;i<controls.size();++i){rgb=render(s,w,h,static_cast<int>(i));const auto id=std::string(controls[i].id)+"-"+std::to_string(w);const auto path=s.config.output+L"\\"+std::wstring(id.begin(),id.end())+L".rgb";
+             save(path,std::string(reinterpret_cast<const char*>(rgb.data()),rgb.size()));
+-            bce::TextRenderContext context;context.deviceIdentity="AutoCAD2020/2D/owned-offscreen/"+std::to_string(w)+"x"+std::to_string(h);context.frameIdentity=utf8(s.config.nonce)+"/"+id;context.fontIdentity=s.fontSHA+"/"+s.bigfontSHA;context.sourceIdentity="owned-AcDbPoint/"+std::to_string(s.markerId.asOldId())+"/"+controls[i].id;
++            bce::TextRenderContext context;context.deviceIdentity="AutoCAD2020/k3DDrawing/XY-k3DWireframe/owned-offscreen/"+std::to_string(w)+"x"+std::to_string(h);context.frameIdentity=utf8(s.config.nonce)+"/"+id;context.fontIdentity=s.fontSHA+"/"+s.bigfontSHA;context.sourceIdentity="owned-AcDbPoint/"+std::to_string(s.markerId.asOldId())+"/"+controls[i].id;
+             // Explicit control paper: view is 150 x 112.5 mm at 1:1. These are conversion values, not a printer capability claim.
+             context.dpiX=w*25.4/150.0;context.dpiY=h*25.4/112.5;context.pixelBoundaryPhase={mapping.phase,mapping.phase};
+             const auto result=bce::measureTextFootprint({rgb.data(),rgb.size(),static_cast<std::size_t>(w),static_cast<std::size_t>(h),static_cast<std::size_t>(w)*3},mapping.affine,context);
+@@ -225,10 +231,10 @@
+         s.config.output+=L"\\lifecycle-"+std::to_wstring(fault);require(CreateDirectoryW(s.config.output.c_str(),nullptr)!=FALSE,"create lifecycle evidence directory");
+         s.trace=File(CreateFileW((s.config.output+L"\\gs-trace.jsonl").c_str(),GENERIC_WRITE,FILE_SHARE_READ,nullptr,CREATE_NEW,FILE_ATTRIBUTE_NORMAL|FILE_FLAG_WRITE_THROUGH,nullptr));require(s.trace.valid(),"lifecycle trace unavailable");
+         std::string observed;try{execute(s);}catch(const std::exception& e){observed=e.what();}
+-        const bool cleaned=s.cleanup();const auto after=dbmod();const bool stable=s.ambientSame()&&s.watch.untouched()&&s.dbmodBefore==after;
++        const bool cleaned=s.cleanup();const auto after=s.ambientInitialized?dbmod():0;const bool stable=s.ambientInitialized&&s.ambientSame()&&s.watch.untouched()&&s.dbmodBefore==after;
+         const auto expected=fault==1?"injected-after-model-association":"injected-after-overrule-install";
+         const bool passed=observed==expected&&cleaned&&stable;
+-        const auto record=object({{"faultPoint",q(expected)},{"observed",quote(observed)},{"cleanupComplete",cleaned?"true":"false"},{"ambientUnchanged",stable?"true":"false"},{"ambientWriteEvents",s.watch.json()},{"dbmodBefore",std::to_string(s.dbmodBefore)},{"dbmodAfter",std::to_string(after)},{"passed",passed?"true":"false"}});
++        const auto record=object({{"faultPoint",q(expected)},{"faultReached",observed==expected?"true":"false"},{"observed",quote(observed)},{"cleanupComplete",cleaned?"true":"false"},{"ambientObserved",s.ambientInitialized?"true":"false"},{"ambientUnchanged",s.ambientInitialized?(stable?"true":"false"):"null"},{"ambientWriteEvents",s.ambientInitialized?s.watch.json():"null"},{"dbmodBefore",s.ambientInitialized?std::to_string(s.dbmodBefore):"null"},{"dbmodAfter",s.ambientInitialized?std::to_string(after):"null"},{"passed",passed?"true":"false"}});
+         save(s.config.output+L"\\result.json",record);results.push_back(record);require(passed,"real GS resource lifecycle fault control failed: "+observed);
+     }
+     save(primary.config.output+L"\\lifecycle-controls.json",array(results));
+@@ -239,14 +245,19 @@
+         session=std::make_unique<Session>();auto& s=*session;s.config=load_config(moduleHandle);s.evidence=std::make_unique<Evidence>(s.config);validate_identity(s.config);require(s.config.caseName==L"NativeGsTextFootprint","case mismatch");
+         s.trace=File(CreateFileW((s.config.output+L"\\gs-trace.jsonl").c_str(),GENERIC_WRITE,FILE_SHARE_READ,nullptr,CREATE_NEW,FILE_ATTRIBUTE_NORMAL|FILE_FLAG_WRITE_THROUGH,nullptr));require(s.trace.valid(),"trace unavailable");
+         std::string failure;try{lifecycleControls(s);execute(s);}catch(const std::exception& e){failure=e.what();}catch(...){failure="unknown native execution exception";}
+-        const bool primaryCleaned=s.cleanup();const bool cleaned=primaryCleaned&&s.resourcesReleased()&&std::all_of(lifecycleSessions.begin(),lifecycleSessions.end(),[](const auto& control){return control->resourcesReleased();});const bool ambientSame=s.ambientSame();const auto dbmodAfter=dbmod();
+-        s.log("ambient.after",{{"current",address(acDocManager->curDocument())},{"active",address(acDocManager->mdiActiveDocument())},{"workingDatabase",address(acdbHostApplicationServices()->workingDatabase())},{"dbmod",std::to_string(dbmodAfter)},{"writeEvents",s.watch.json()}});
+-        save(s.config.output+L"\\gs-result.json",object({{"status",failure.empty()&&cleaned&&ambientSame&&s.watch.untouched()&&s.dbmodBefore==dbmodAfter?q("native-buffer-complete"):q("failed")},{"error",quote(failure)},{"cleanupComplete",cleaned?"true":"false"},{"ambientPointersUnchanged",ambientSame?"true":"false"},{"ambientDBMODBefore",std::to_string(s.dbmodBefore)},{"ambientDBMODAfter",std::to_string(dbmodAfter)},{"ambientWriteEvents",s.watch.json()},{"frames",array(s.frames)},{"glyphComplete","false"},{"capabilityUpgradeAllowed","false"},{"layoutIntegrated","false"}}));
+-        require(cleaned,"cleanup incomplete; module must remain loaded");require(ambientSame,"ambient identities changed");require(s.watch.untouched(),"ambient database received write events");require(failure.empty(),failure);
+-        require(s.dbmodBefore==dbmodAfter,"ambient DBMOD changed");
+-        s.evidence->step("nativeGSBuffer","passed","two independent resolutions, five controls each; same TextOccupancy.cpp; independent nontext calibration");s.evidence->capability(object({{"finiteNativeBuffer","true"},{"glyphComplete","false"},{"capabilityUpgradeAllowed","false"}}));s.evidence->finish(s.config,"passed");completed=true;
+-    }catch(const std::exception& e){if(session&&session->evidence){try{session->evidence->error(e.what());session->evidence->finish(session->config,"failed");}catch(...){}}completed=true;}
+-    catch(...){if(session&&session->evidence){try{session->evidence->error("unknown native command exception");session->evidence->finish(session->config,"failed");}catch(...){}}completed=true;}
++        s.executionFailure=failure;
++        const bool primaryCleaned=s.cleanup();const bool cleaned=primaryCleaned&&s.resourcesReleased()&&std::all_of(lifecycleSessions.begin(),lifecycleSessions.end(),[](const auto& control){return control->resourcesReleased();});const bool ambientSame=s.ambientInitialized&&s.ambientSame();const auto dbmodAfter=s.ambientInitialized?dbmod():0;
++        const bool ambientStable=s.ambientInitialized&&ambientSame&&s.watch.untouched()&&s.dbmodBefore==dbmodAfter;const bool passed=failure.empty()&&cleaned&&ambientStable;
++        s.log("ambient.after",{{"observed",s.ambientInitialized?"true":"false"},{"observation",s.ambientInitialized?q("observed"):q("not-observed-main-not-entered")},{"current",s.ambientInitialized?address(acDocManager->curDocument()):"null"},{"active",s.ambientInitialized?address(acDocManager->mdiActiveDocument()):"null"},{"workingDatabase",s.ambientInitialized?address(acdbHostApplicationServices()->workingDatabase()):"null"},{"dbmod",s.ambientInitialized?std::to_string(dbmodAfter):"null"},{"writeEvents",s.ambientInitialized?s.watch.json():"null"}});
++        save(s.config.output+L"\\gs-result.json",object({{"status",passed?q("native-buffer-complete"):q("failed")},{"error",quote(failure)},{"cleanupComplete",cleaned?"true":"false"},{"ambientObserved",s.ambientInitialized?"true":"false"},{"ambientObservation",s.ambientInitialized?q("observed"):q("not-observed-main-not-entered")},{"ambientPointersUnchanged",s.ambientInitialized?(ambientSame?"true":"false"):"null"},{"ambientDBMODBefore",s.ambientInitialized?std::to_string(s.dbmodBefore):"null"},{"ambientDBMODAfter",s.ambientInitialized?std::to_string(dbmodAfter):"null"},{"ambientWriteEvents",s.ambientInitialized?s.watch.json():"null"},{"frames",array(s.frames)},{"glyphComplete","false"},{"capabilityUpgradeAllowed","false"},{"layoutIntegrated","false"}}));
++        if(!failure.empty())s.evidence->error(failure);
++        if(!cleaned)s.evidence->error("cleanup incomplete; module must remain loaded");
++        if(s.ambientInitialized&&!ambientStable)s.evidence->error("observed ambient identities, DBMOD or write events changed");
++        if(!s.ambientInitialized&&failure.empty())s.evidence->error("main ambient observation unavailable");
++        if(passed){s.evidence->step("nativeGSBuffer","passed","two independent resolutions, five controls each; same TextOccupancy.cpp; independent nontext calibration");s.evidence->capability(object({{"finiteNativeBuffer","true"},{"glyphComplete","false"},{"capabilityUpgradeAllowed","false"}}));}
++        s.evidence->finish(s.config,passed?"passed":"failed");s.evidence.reset();completed=true;
++    }catch(const std::exception& e){if(session&&session->evidence){auto terminal=std::move(session->evidence);try{if(!session->executionFailure.empty())terminal->error(session->executionFailure);terminal->error(e.what());terminal->finish(session->config,"failed");}catch(...){}}completed=true;}
++    catch(...){if(session&&session->evidence){auto terminal=std::move(session->evidence);try{if(!session->executionFailure.empty())terminal->error(session->executionFailure);terminal->error("unknown native command exception");terminal->finish(session->config,"failed");}catch(...){}}completed=true;}
+     running=false;
+ }
+ }
+--- v5/README.md
++++ v6/README.md
+@@ -1,6 +1,6 @@
+ # NativeGsTextFootprint (N9c)
+ 
+-Development-only AutoCAD 2020 / R23.1 x64 ARX. `BCE_TEST_RUN` synchronously creates an owned in-memory database, one persistent point control, one 2D GS kernel/model/offscreen device/view. No working/current database switch, GUI view, DWG save, shared GS/profile modification, Plot, Python, or external converter occurs in the native command.
++Development-only AutoCAD 2020 / R23.1 x64 ARX. `BCE_TEST_RUN` synchronously creates an owned in-memory database, one persistent point control, one k3DDrawing GS kernel/model/offscreen device/view. The owned view is explicitly k3DWireframe with an orthographic XY camera; the kernel request follows the local 2020 SDK ARXDBG sample. There is one fixed request and no fallback loop. No working/current database switch, GUI view, DWG save, shared GS/profile modification, Plot, Python, or external converter occurs in the native command.
+ 
+ The candidate uses `createAutoCADModel` and `kernel.associate(ownedDb, model, kMain)`; the association is only an attempted route. Every genuine WorldDraw independently records and checks its context database, entity database/ObjectId and model binding before drawing. An actual mismatch fails and is preserved in `gs-trace.jsonl`; it does not establish impossibility of other public routes.
+ 

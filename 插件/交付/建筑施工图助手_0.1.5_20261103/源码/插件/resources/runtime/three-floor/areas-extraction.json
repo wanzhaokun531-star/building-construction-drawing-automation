@@ -1,0 +1,140 @@
+[
+  {
+    "text": "3FBB",
+    "area": 89.6577,
+    "total": false,
+    "floor": 1
+  },
+  {
+    "text": "3FBD",
+    "area": 7.517644,
+    "total": false,
+    "floor": 1
+  },
+  {
+    "text": "3FBF",
+    "area": 5.8992,
+    "total": false,
+    "floor": 1
+  },
+  {
+    "text": "3FC1",
+    "area": 22.689,
+    "total": false,
+    "floor": 1
+  },
+  {
+    "text": "3FC3",
+    "area": 3.92964,
+    "total": false,
+    "floor": 1
+  },
+  {
+    "text": "3FC5",
+    "area": 15.2064,
+    "total": false,
+    "floor": 1
+  },
+  {
+    "text": "3FC7",
+    "area": 181.51600000000028,
+    "total": true,
+    "floor": 1
+  },
+  {
+    "text": "3FCA",
+    "area": 5.8992,
+    "total": false,
+    "floor": 2
+  },
+  {
+    "text": "3FCC",
+    "area": 7.517644,
+    "total": false,
+    "floor": 2
+  },
+  {
+    "text": "3FCE",
+    "area": 54.626101,
+    "total": false,
+    "floor": 2
+  },
+  {
+    "text": "3FD0",
+    "area": 22.68756,
+    "total": false,
+    "floor": 2
+  },
+  {
+    "text": "3FD2",
+    "area": 31.83336,
+    "total": false,
+    "floor": 2
+  },
+  {
+    "text": "3FD4",
+    "area": 15.2064,
+    "total": false,
+    "floor": 2
+  },
+  {
+    "text": "3FD6",
+    "area": 4.11528,
+    "total": false,
+    "floor": 2
+  },
+  {
+    "text": "3FD8",
+    "area": 180.2812400000002,
+    "total": true,
+    "floor": 2
+  },
+  {
+    "text": "3FDA",
+    "area": 5.8992,
+    "total": false,
+    "floor": 3
+  },
+  {
+    "text": "3FDC",
+    "area": 54.62696,
+    "total": false,
+    "floor": 3
+  },
+  {
+    "text": "3FDE",
+    "area": 22.6764,
+    "total": false,
+    "floor": 3
+  },
+  {
+    "text": "3FE0",
+    "area": 31.8288,
+    "total": false,
+    "floor": 3
+  },
+  {
+    "text": "3FE2",
+    "area": 7.5178,
+    "total": false,
+    "floor": 3
+  },
+  {
+    "text": "3FE4",
+    "area": 4.12152,
+    "total": false,
+    "floor": 3
+  },
+  {
+    "text": "3FE6",
+    "area": 15.2064,
+    "total": false,
+    "floor": 3
+  },
+  {
+    "text": "3FE8",
+    "area": 180.26800000000026,
+    "total": true,
+    "floor": 3
+  }
+]

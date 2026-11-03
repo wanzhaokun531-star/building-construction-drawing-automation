@@ -1,0 +1,354 @@
+{
+  "contract": "bce.n8a-fix-round1-review-index.v1",
+  "status": "complete_scoped_package_ready_for_original_reviewer",
+  "reviewDecision": "pending_not_self_approved",
+  "sourceIndexUnchanged": {
+    "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/source-index.json",
+    "sha256": "0F2270AB8C8E77332C35CCDD0477D4C412206CA7F5AE0870B3084FB76EF18272",
+    "bytes": 32607
+  },
+  "completeDiff": {
+    "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/fix-round1-complete.diff",
+    "sha256": "FDB3F3797FF409601413AE1C248478D7257EE7069D39BCDF9DA0F186837025C0",
+    "bytes": 20239
+  },
+  "sourceFileChanges": [
+    {
+      "repositoryRelative": "tests/native/dimension-adapt/DimensionAdaptDriver.cpp",
+      "kind": "modified",
+      "base": {
+        "path": "D:/Codex/建筑施工图自动化/立面插件/build/n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f/src/DimensionAdaptDriver.cpp",
+        "sha256": "95B520A1BE021C7C1D903C94FCAF0FEEDE25538B01D6278CFBA468F398846570",
+        "bytes": 17504
+      },
+      "focused": {
+        "path": "D:/Codex/建筑施工图自动化/立面插件/build/n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532/src/DimensionAdaptDriver.cpp",
+        "sha256": "85B543AA75E780DAECF107D17AFEB0690BBFBC4A573BBEAC6CE1F975DABFA0ED",
+        "bytes": 17712
+      }
+    },
+    {
+      "repositoryRelative": "tests/native/dimension-adapt/DimensionAdaptGreen.inc",
+      "kind": "modified",
+      "base": {
+        "path": "D:/Codex/建筑施工图自动化/立面插件/build/n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f/src/DimensionAdaptGreen.inc",
+        "sha256": "3C18EE165D8D1AC17772510175FDB499534B01E0825BB7F779ECCDDF13173D7C",
+        "bytes": 60915
+      },
+      "focused": {
+        "path": "D:/Codex/建筑施工图自动化/立面插件/build/n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532/src/DimensionAdaptGreen.inc",
+        "sha256": "53BBDF2890D3F2D7D5C02CDE577BFA38845B0E4ED7C1EFEBFCFF2C4500BA5145",
+        "bytes": 60691
+      }
+    },
+    {
+      "repositoryRelative": "tests/native/dimension-adapt/RejectionAcceptance.h",
+      "kind": "added",
+      "base": null,
+      "focused": {
+        "path": "D:/Codex/建筑施工图自动化/立面插件/build/n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532/src/RejectionAcceptance.h",
+        "sha256": "61ACDCB41D353450B4051D316B42F074299225B8C9D207EF88B24BC1C6F1B858",
+        "bytes": 732
+      }
+    },
+    {
+      "repositoryRelative": "tests/native/dimension-adapt/RejectionAcceptanceTests.cpp",
+      "kind": "added",
+      "base": null,
+      "focused": {
+        "path": "D:/Codex/建筑施工图自动化/立面插件/build/n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532/src/RejectionAcceptanceTests.cpp",
+        "sha256": "95F0AAD327D4AC7DCEE443963930BA7B6AF37EFA17C2AD9C68006E229912027E",
+        "bytes": 1513
+      }
+    },
+    {
+      "repositoryRelative": "tests/native/dimension-adapt/RejectionFocus.inc",
+      "kind": "added",
+      "base": null,
+      "focused": {
+        "path": "D:/Codex/建筑施工图自动化/立面插件/build/n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532/src/RejectionFocus.inc",
+        "sha256": "E4D1F2A89210526E1D86D4D8D260EAF2C162C86B3D15C5EABCE75BD8614C6739",
+        "bytes": 5729
+      }
+    },
+    {
+      "repositoryRelative": "tools/build_dimension_adapt.ps1",
+      "kind": "modified",
+      "base": {
+        "path": "D:/Codex/建筑施工图自动化/立面插件/build/n8a-20261102-230524-268-green_scratch_derived_binding-1880dc7f/build_dimension_adapt.ps1",
+        "sha256": "046037EDEC085BF8FFADCD6FD916828D4C7B90EF150BB719B4230059AE0B37C7",
+        "bytes": 4166
+      },
+      "focused": {
+        "path": "D:/Codex/建筑施工图自动化/立面插件/build/n8a-20261102-232650-961-fix1_rejection_focused_green-07d5a532/build_dimension_adapt.ps1",
+        "sha256": "F082575A0664419340CE2DB491F04352227DF9C4A2A8E47A5253DD5ADB789D96",
+        "bytes": 4640
+      }
+    }
+  ],
+  "sourceSnapshotCount": 19,
+  "nativeFocusedBinding": {
+    "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/native-focused-binding.json",
+    "sha256": "D283670EF387DA98DFF46BC22416EA63767AF2F13407B08103E1B156FB90A5F2",
+    "bytes": 8031
+  },
+  "actualCommands": {
+    "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/actual-commands-final.json",
+    "sha256": "F3702C6AD580EAF433CC00763FF8300B97EC29F731317452231CFB8360422C87",
+    "bytes": 979
+  },
+  "finalContext": {
+    "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/review-context-final.md",
+    "sha256": "4557220BB2B1574F04CC9EE3C985E273DF1A176C8052AAF049090E45AE820B12",
+    "bytes": 2052
+  },
+  "files": [
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/actual-commands-final.json",
+      "sha256": "F3702C6AD580EAF433CC00763FF8300B97EC29F731317452231CFB8360422C87",
+      "bytes": 979
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/actual-commands.json",
+      "sha256": "3A9AA48404232BF80A96C90B23D580B30EA04D6BE4677411404672F2C8C801B5",
+      "bytes": 624
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/base-source/tests/native/dimension-adapt/DimensionAdaptDriver.cpp",
+      "sha256": "95B520A1BE021C7C1D903C94FCAF0FEEDE25538B01D6278CFBA468F398846570",
+      "bytes": 17504
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/base-source/tests/native/dimension-adapt/DimensionAdaptGreen.inc",
+      "sha256": "3C18EE165D8D1AC17772510175FDB499534B01E0825BB7F779ECCDDF13173D7C",
+      "bytes": 60915
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/base-source/tests/native/dimension-adapt/DimensionTopology.h",
+      "sha256": "12E6C5EA8410910D5045AB217AAD073DCDB7246C8829D4991456DDC30C96939B",
+      "bytes": 3527
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/base-source/tests/native/dimension-adapt/DimensionTopologyTests.cpp",
+      "sha256": "3D2518C314E7E4B63A9EAE896243908486C496083DCC00F2C55B53183AB6D80E",
+      "bytes": 1753
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/base-source/tests/native/dimension-adapt/ElevationDimensionAdaptCases.vcxproj",
+      "sha256": "4396B9D93D7BFFBC518D3BADBD559DAFC67192BEA1E982B9399516BBCEBCAD41",
+      "bytes": 2566
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/base-source/tests/native/NativeEvidence.cpp",
+      "sha256": "1B3CA34A61CC2C2DB2C42A7FDFD01C029DE7BE82EAE6CE96D9DE1C3B363A8FE2",
+      "bytes": 16545
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/base-source/tests/native/NativeEvidence.h",
+      "sha256": "C6B083EE0346AA7CDB51090274CCCADCB2C6DE0AA92A196AD846E11C41C9EBB6",
+      "bytes": 2074
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/base-source/tools/build_dimension_adapt.ps1",
+      "sha256": "046037EDEC085BF8FFADCD6FD916828D4C7B90EF150BB719B4230059AE0B37C7",
+      "bytes": 4166
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/context/fix-round1-final-report.md",
+      "sha256": "64CD17EE81627FCD2556596E9A480744BD27D4F2B90D27D757E1BDB4B13E68C5",
+      "bytes": 5787
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/context/fix-round1-report-before-native.md",
+      "sha256": "485BFFCD834CC17813960703486CE9284BDAAB01C66E7181E153CF7AD72E23A8",
+      "bytes": 2598
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/context/original-fulltask-review.md",
+      "sha256": "3323CF379539363E25A3EE6194796EB661DAB88C6D7071E570B2FD5AA931960F",
+      "bytes": 8265
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/context/task-report-after-focused.md",
+      "sha256": "33C19CFE57067242C2A595D9C7BBF8B7928CBA646EEC26F242F092C125C259A9",
+      "bytes": 37223
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/evidence/base-1880-receipt.json",
+      "sha256": "88149C27572D780786356914DC9B9043C5711A731A94F7A2A37DA6F36F94D720",
+      "bytes": 5833
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/evidence/focused-07d5-receipt.json",
+      "sha256": "70A4682D2BB10040172EB7E7AC85EF2A222218AF50A6BE58E6D0A065D91074DF",
+      "bytes": 7696
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/evidence/focused-build-command.cmd",
+      "sha256": "8C5D8D5CCE970D87F11B3665B58C7A6863115C7578B850ED7389965CBBA7BF09",
+      "bytes": 900
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/evidence/focused-green-build.log",
+      "sha256": "80C3C5DD999B1C2CE5B286B2FB9634F0B84D407D8BBDCEC000C33A7BF029FC0D",
+      "bytes": 4579
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/evidence/offline-red-build.log",
+      "sha256": "60FDB9A30E9418361DA55F02DFFFC4F72AA8333A699A51E44BD44B3FD1B9AF33",
+      "bytes": 4537
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/evidence/offline-red-receipt.json",
+      "sha256": "90BAAD2C5F2D2BAF206DC1240EF65E0EEF5626B6A05438B75EF67271B9061F34",
+      "bytes": 6796
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/fix-round1-complete.diff",
+      "sha256": "FDB3F3797FF409601413AE1C248478D7257EE7069D39BCDF9DA0F186837025C0",
+      "bytes": 20239
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/focused-source/tests/native/dimension-adapt/DimensionAdaptDriver.cpp",
+      "sha256": "85B543AA75E780DAECF107D17AFEB0690BBFBC4A573BBEAC6CE1F975DABFA0ED",
+      "bytes": 17712
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/focused-source/tests/native/dimension-adapt/DimensionAdaptGreen.inc",
+      "sha256": "53BBDF2890D3F2D7D5C02CDE577BFA38845B0E4ED7C1EFEBFCFF2C4500BA5145",
+      "bytes": 60691
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/focused-source/tests/native/dimension-adapt/DimensionTopology.h",
+      "sha256": "12E6C5EA8410910D5045AB217AAD073DCDB7246C8829D4991456DDC30C96939B",
+      "bytes": 3527
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/focused-source/tests/native/dimension-adapt/DimensionTopologyTests.cpp",
+      "sha256": "3D2518C314E7E4B63A9EAE896243908486C496083DCC00F2C55B53183AB6D80E",
+      "bytes": 1753
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/focused-source/tests/native/dimension-adapt/ElevationDimensionAdaptCases.vcxproj",
+      "sha256": "4396B9D93D7BFFBC518D3BADBD559DAFC67192BEA1E982B9399516BBCEBCAD41",
+      "bytes": 2566
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/focused-source/tests/native/dimension-adapt/RejectionAcceptance.h",
+      "sha256": "61ACDCB41D353450B4051D316B42F074299225B8C9D207EF88B24BC1C6F1B858",
+      "bytes": 732
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/focused-source/tests/native/dimension-adapt/RejectionAcceptanceTests.cpp",
+      "sha256": "95F0AAD327D4AC7DCEE443963930BA7B6AF37EFA17C2AD9C68006E229912027E",
+      "bytes": 1513
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/focused-source/tests/native/dimension-adapt/RejectionFocus.inc",
+      "sha256": "E4D1F2A89210526E1D86D4D8D260EAF2C162C86B3D15C5EABCE75BD8614C6739",
+      "bytes": 5729
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/focused-source/tests/native/NativeEvidence.cpp",
+      "sha256": "1B3CA34A61CC2C2DB2C42A7FDFD01C029DE7BE82EAE6CE96D9DE1C3B363A8FE2",
+      "bytes": 16545
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/focused-source/tests/native/NativeEvidence.h",
+      "sha256": "C6B083EE0346AA7CDB51090274CCCADCB2C6DE0AA92A196AD846E11C41C9EBB6",
+      "bytes": 2074
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/focused-source/tools/build_dimension_adapt.ps1",
+      "sha256": "F082575A0664419340CE2DB491F04352227DF9C4A2A8E47A5253DD5ADB789D96",
+      "bytes": 4640
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/native-focused/checkpoint-1.json",
+      "sha256": "85924B14E30A7A963B8D7952EAE3C57EA62CD68778DF08AD6FF8BA7EA8D114E1",
+      "bytes": 104
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/native-focused/checkpoint-2.json",
+      "sha256": "7FB73C426A518ED5479744DACB2ABCC5DCFE2F860B239D6EA95E4F23064AF662",
+      "bytes": 144
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/native-focused/formal-source-sha-rejection.json",
+      "sha256": "6F2AA5DE96B13923F5B9FA9915B526A7883873EBE7DF27BFE57A08C240477D76",
+      "bytes": 1054
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/native-focused/isolation-final.json",
+      "sha256": "9F05E6914969E3033B88B17F9F08097DAA9C9285AB29B300D6A10F434FE9836C",
+      "bytes": 1775
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/native-focused/native-case-host-binding.json",
+      "sha256": "5699A7C508F511DF453D1FF37305D727B23842310C9516DCC7765CBA22D08B6D",
+      "bytes": 13016
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/native-focused/native-case.json",
+      "sha256": "2E25BCE06514F1664A52B92ED5D51C309FA28CC8A2E8E2C6BA4B91D221E5A957",
+      "bytes": 2380
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/native-focused/native-result-closure.json",
+      "sha256": "209DC57EF2D782A2C5A049C9EBE7D575B41329F7B1B23A3DD722057C89FB6E28",
+      "bytes": 1499
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/native-focused/reader-retirement.json",
+      "sha256": "5C8833F0E778580DCB30C2290280B7A0349C5DA8A0CEFD9BE6710AFD2955453F",
+      "bytes": 4544
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/native-focused/rejection-focused.json",
+      "sha256": "A2F83486D421A42AFDE873D7093B3CD244BBD8917B07C9830F5AC8338621FD90",
+      "bytes": 2701
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/native-focused/retired-focused-case.ini",
+      "sha256": "38B2A56E4EAB47A0D5FB9F1CFDB9243731FDC00BFEAB70362E7A2D024825600D",
+      "bytes": 1070
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/native-focused-binding.json",
+      "sha256": "D283670EF387DA98DFF46BC22416EA63767AF2F13407B08103E1B156FB90A5F2",
+      "bytes": 8031
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/preserved-prior-artifacts/N8a-fix-round1-core-preservation.json",
+      "sha256": "772E30B8BC96DD940A3C3CDA99684B42E5F54798933AB203007CF791CC9EC36C",
+      "bytes": 2395
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/preserved-prior-artifacts/N8a-fix-round1-focused-manifest.json",
+      "sha256": "122AEE25E1BC45288949CE404E1B2CB2C9923F41EB44978DDDC6CC389C35BCDF",
+      "bytes": 11609
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/preserved-prior-artifacts/N8a-fix-round1-scoped.diff",
+      "sha256": "C70A05F415F8A26D1DD4EC2AAC5591ADD248437ED67213DAE842C3F39FAC09A4",
+      "bytes": 7370
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/review-context-final.md",
+      "sha256": "4557220BB2B1574F04CC9EE3C985E273DF1A176C8052AAF049090E45AE820B12",
+      "bytes": 2052
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/review-context.md",
+      "sha256": "E6E2A89462235FCC25FCFEC93FD0E3123291C6E162371025A569DCE17014B60B",
+      "bytes": 2313
+    },
+    {
+      "path": "D:/Codex/建筑施工图自动化/立面插件/tests/native/dimension-adapt/review-fix-round1-07d5a532-20261103/source-index.json",
+      "sha256": "0F2270AB8C8E77332C35CCDD0477D4C412206CA7F5AE0870B3084FB76EF18272",
+      "bytes": 32607
+    }
+  ],
+  "oldArtifactsPreserved": true,
+  "onlyFocusedNativeEvidenceAdded": true
+}

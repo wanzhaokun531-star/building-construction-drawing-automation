@@ -28,5 +28,8 @@ int wmain(int argc,wchar_t** argv){if(argc!=2)return 2;const auto root=std::file
  safe=bcpdoor::safeCandidates(std::vector<bcpdoor::Point>{{150,0}},bcpdoor::Point{200,0},[](bcpdoor::Point p){return p.x>100;},kept);if(kept||safe.size()!=1||safe[0].x!=150)return 18;++checks;
  safe=bcpdoor::safeCandidates(std::vector<bcpdoor::Point>{{0,0}},bcpdoor::Point{0,0},[](bcpdoor::Point){return false;},kept);if(!safe.empty())return 19;++checks;
  arc.angle=0;arc.sweep=6.283185307179586;if(!bcpdoor::hits({-910,-20,-880,20},arc))return 20;++checks;
- std::cout<<"policy checks="<<checks<<"\n";return checks==23?0:1;
+ // Generation reads the saved DWG. Unsaved entities/fields must still block it.
+ for(int state:{0,4,8,16,20,24,28}){if(!bcpproduct::canGenerateSavedDrawing(state)){std::cerr<<"saved drawing rejected: DBMOD="<<state<<"\n";return 21;}++checks;}
+ for(int state:{1,2,5,17,21,29,32,36,48,64,-1}){if(bcpproduct::canGenerateSavedDrawing(state)){std::cerr<<"unsaved content accepted: DBMOD="<<state<<"\n";return 22;}++checks;}
+ std::cout<<"policy checks="<<checks<<"\n";return checks==41?0:1;
 }

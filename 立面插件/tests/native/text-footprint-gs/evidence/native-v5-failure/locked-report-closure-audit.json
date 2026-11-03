@@ -1,0 +1,89 @@
+{
+  "contract": "bce.locked-native-report-owned-closure-audit.v1",
+  "recorded": "2026-11-03T10:49:15.104878+08:00",
+  "binding": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-ae74343c.json",
+  "bindingSHA256": "CDC7EC43252E97892E8ECB685BC77E5882D6A280A8A46F42D7B961997147AD9E",
+  "nonce": "ae74343c6dfc4f939b79d617c3aabe6a",
+  "processId": 29716,
+  "candidateSHA256": "DE7D8EBB55D19B2E352467A283028DD345290A5B6A046AEDDE0245A7FB3DC877",
+  "standardWatcherCompleted": false,
+  "watcherClosureCreated": false,
+  "reportReadBeforeExit": "Sharing violation while global Evidence retained report file handle",
+  "cleanupRoute": "Existing queue-exit observed private worker final document modified; QUIT withheld; exact StopOwnedWorker verified exe/creation/private desktop; existing retire verified real supervisor final",
+  "nativeStatus": "failed",
+  "nativeErrors": [
+    "ambient identities changed"
+  ],
+  "gsResult": {
+    "status": "failed",
+    "error": "real GS resource lifecycle fault control failed: 2D kernel unavailable",
+    "cleanupComplete": true,
+    "ambientPointersUnchanged": false,
+    "ambientDBMODBefore": 0,
+    "ambientDBMODAfter": 1,
+    "ambientWriteEvents": {
+      "openedForModify": 0,
+      "modified": 0,
+      "appended": 0,
+      "erased": 0,
+      "headerWrites": 0
+    },
+    "frames": [],
+    "glyphComplete": false,
+    "capabilityUpgradeAllowed": false,
+    "layoutIntegrated": false
+  },
+  "lifecycle1": {
+    "faultPoint": "injected-after-model-association",
+    "observed": "2D kernel unavailable",
+    "cleanupComplete": true,
+    "ambientUnchanged": true,
+    "ambientWriteEvents": {
+      "openedForModify": 0,
+      "modified": 0,
+      "appended": 0,
+      "erased": 0,
+      "headerWrites": 0
+    },
+    "dbmodBefore": 1,
+    "dbmodAfter": 1,
+    "passed": false
+  },
+  "secondLifecycleControlReached": false,
+  "mainSceneFramesProduced": 0,
+  "mainAmbientInterpretation": "Top-level raw diagnostic from unreached main setup; does not establish user/source drawing modification. Lifecycle1 separately observed DBMOD 1-to-1 and zero write events.",
+  "workerExitCode": 70,
+  "explicitStopRequested": true,
+  "forcedTermination": true,
+  "normalQuit": false,
+  "workerExited": true,
+  "desktopClosed": true,
+  "processHandlesClosed": true,
+  "stagedFilesRemoved": 4,
+  "sixInputSHAsUnchanged": true,
+  "ownActive": 0,
+  "remainingCadObserved": [
+    {
+      "ProcessId": 47676,
+      "CreationDate": "/Date(1793670634089)/",
+      "ExecutablePath": "D:\\CAD2020\\AutoCAD 2020\\acad.exe",
+      "CommandLine": "\"D:\\CAD2020\\AutoCAD 2020\\acad.exe\"  /p TArch20V8 /t \"C:\\Tangent\\TArchT20V8\\sys23x64\\acad.dwt\""
+    }
+  ],
+  "userCadTouched": false,
+  "ownedUserShows": 0,
+  "ownedForeground": 0,
+  "monitorError": null,
+  "inputDesktopReadErrors": 0,
+  "relatedCadEventsNeedReview": false,
+  "evidenceSHA256": {
+    "case/native-case.json": "8A2545B84BD1FAAEC8E99811B0FBA53D65FFF562D49335658D1BD8CDA7B810C6",
+    "case/gs-result.json": "C97BE1A1FA88313940983C1B9181B0E52501C8CD23320D6C9618C2A34ABA9D71",
+    "case/gs-trace.jsonl": "4912C9556E473E389F7C24BE854D02A4F082EDB9DC0A4DAB2AA39C470F54E272",
+    "case/lifecycle-1/result.json": "5DF726AD5DA404E7440B732C7B6A65A23146261928092530DD5A30A1AFBEE7AC",
+    "case/lifecycle-1/gs-trace.jsonl": "FFC3D6F3D3C2FF7EB8CA93D0EC36C46CD2C32328F6C26A7D8D3C361B1FD9858B",
+    "isolation-final.json": "D3CDCE733120AD0B303233CA53762101CF3D43BCA78D119CE48BEDF48647A0C1",
+    "reader-retirement.json": "58355C8AA50CB24B098C9DC3ECA92D1CE77E34D9BB0B3366833082A6FDE327D9"
+  },
+  "scope": "Independent cleanup audit only; original native/GS failures retained; no fabricated native-result-closure or normal QUIT; no render or glyph capability established"
+}

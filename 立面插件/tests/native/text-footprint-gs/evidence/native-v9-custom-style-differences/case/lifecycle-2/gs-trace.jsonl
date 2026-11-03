@@ -1,0 +1,36 @@
+{"current":3138630738944,"active":3138630738944,"workingDatabase":3138639755712,"dbmod":1,"event":"ambient.before"}
+{"requirement":"k3DDrawing","capabilityAddress":3139045162976,"descriptorRequires3D":true,"event":"acquireGraphicsKernel.before"}
+{"kernel":3138750646368,"compatibleWith3D":true,"compatibleWith2D":false,"event":"acquireGraphicsKernel.after"}
+{"targetDatabase":3138845976960,"model":3138750674832,"priorModel":0,"readBackModel":3138750674832,"route":"manager.createAutoCADModel + kernel.associate; real context checked separately","event":"ownedModelBinding"}
+{"event":"kernel.createView.before"}
+{"view":3138750677312,"event":"kernel.createView.after"}
+{"event":"device.addView.before"}
+{"added":true,"event":"device.addView.after"}
+{"contract":"XY-custom-invisible-faces-object-color-edges-v1","requestedType":10,"styleSet":true,"actualType":10,"allRawPropertiesEquivalent":false,"activeDrawingPropertiesEquivalent":false,"properties":[{"property":"faceLightingModel","propertyId":0,"expected":{"variantType":2,"value":0},"actual":{"variantType":2,"value":0},"expectedOperation":1,"actualOperation":1,"equivalent":true,"applicable":true,"inapplicableReason":null},{"property":"faceLightingQuality","propertyId":1,"expected":{"variantType":2,"value":0},"actual":{"variantType":2,"value":0},"expectedOperation":1,"actualOperation":1,"equivalent":true,"applicable":false,"inapplicableReason":"kInvisible means faces are not drawn"},{"property":"faceColorMode","propertyId":2,"expected":{"variantType":2,"value":1},"actual":{"variantType":2,"value":1},"expectedOperation":1,"actualOperation":1,"equivalent":true,"applicable":false,"inapplicableReason":"kInvisible means faces are not drawn"},{"property":"faceOpacity","propertyId":4,"expected":{"variantType":3,"value":1},"actual":{"variantType":3,"value":1},"expectedOperation":1,"actualOperation":1,"equivalent":true,"applicable":false,"inapplicableReason":"kInvisible means faces are not drawn"},{"property":"edgeModel","propertyId":7,"expected":{"variantType":2,"value":1},"actual":{"variantType":2,"value":1},"expectedOperation":1,"actualOperation":1,"equivalent":true,"applicable":true,"inapplicableReason":null},{"property":"edgeStyles","propertyId":8,"expected":{"variantType":2,"value":5},"actual":{"variantType":2,"value":4},"expectedOperation":1,"actualOperation":3,"equivalent":false,"applicable":true,"inapplicableReason":null},{"property":"edgeModifiers","propertyId":14,"expected":{"variantType":2,"value":0},"actual":{"variantType":2,"value":8},"expectedOperation":1,"actualOperation":1,"equivalent":false,"applicable":true,"inapplicableReason":null},{"property":"edgeColor","propertyId":15,"expected":{"variantType":4,"value":{"method":192,"index":256,"rgb":[0,0,0]}},"actual":{"variantType":4,"value":{"method":192,"index":256,"rgb":[0,0,0]}},"expectedOperation":1,"actualOperation":1,"equivalent":true,"applicable":true,"inapplicableReason":null},{"property":"edgeOpacity","propertyId":16,"expected":{"variantType":3,"value":1},"actual":{"variantType":3,"value":1},"expectedOperation":1,"actualOperation":1,"equivalent":true,"applicable":true,"inapplicableReason":null},{"property":"edgeWidth","propertyId":17,"expected":{"variantType":2,"value":1},"actual":{"variantType":2,"value":1},"expectedOperation":1,"actualOperation":1,"equivalent":true,"applicable":true,"inapplicableReason":null},{"property":"displayStyles","propertyId":25,"expected":{"variantType":2,"value":1},"actual":{"variantType":2,"value":1},"expectedOperation":1,"actualOperation":1,"equivalent":true,"applicable":true,"inapplicableReason":null},{"property":"displayBrightness","propertyId":26,"expected":{"variantType":3,"value":0},"actual":{"variantType":3,"value":0},"expectedOperation":1,"actualOperation":1,"equivalent":true,"applicable":true,"inapplicableReason":null},{"property":"useDrawOrder","propertyId":28,"expected":{"variantType":1,"value":false},"actual":{"variantType":1,"value":false},"expectedOperation":1,"actualOperation":1,"equivalent":true,"applicable":true,"inapplicableReason":null},{"property":"viewportTransparency","propertyId":29,"expected":{"variantType":1,"value":false},"actual":{"variantType":1,"value":true},"expectedOperation":1,"actualOperation":1,"equivalent":false,"applicable":true,"inapplicableReason":null},{"property":"lightingEnabled","propertyId":30,"expected":{"variantType":1,"value":false},"actual":{"variantType":1,"value":true},"expectedOperation":1,"actualOperation":1,"equivalent":false,"applicable":true,"inapplicableReason":null},{"property":"faceModifiers","propertyId":3,"expected":{"variantType":2,"value":0},"actual":{"variantType":2,"value":0},"expectedOperation":1,"actualOperation":1,"equivalent":true,"applicable":true,"inapplicableReason":null}],"event":"ownedViewVisualStyle"}
+{"message":"own view active custom drawing contract differs","event":"execute.cppException.beforeCleanup"}
+{"faultPoint":2,"view":3138750677312,"marker":3138845996128,"model":3138750674832,"device":3138750675712,"kernel":3138750646368,"database":3138845976960,"ruleAttached":false,"event":"cleanup.enter"}
+{"event":"view.eraseAll.before"}
+{"event":"view.eraseAll.after"}
+{"event":"rule.reset.before"}
+{"event":"rule.reset.after"}
+{"event":"marker.close.before"}
+{"event":"marker.close.after"}
+{"event":"device.eraseView.before"}
+{"removed":true,"event":"device.eraseView.after"}
+{"event":"kernel.deleteView.before"}
+{"event":"kernel.deleteView.after"}
+{"event":"restoreOwnedDatabaseAssociation.before"}
+{"event":"restoreOwnedDatabaseAssociation.after"}
+{"event":"restoredAssociation.find.before"}
+{"matches":true,"event":"restoredAssociation.find.after"}
+{"event":"destroyAutoCADModel.before"}
+{"event":"destroyAutoCADModel.after"}
+{"event":"destroyAutoCADDevice.before"}
+{"event":"destroyAutoCADDevice.after"}
+{"event":"releaseGraphicsKernel.before"}
+{"event":"releaseGraphicsKernel.after"}
+{"event":"destroyOwnedDatabase.before"}
+{"event":"destroyOwnedDatabase.after"}
+{"event":"ambient.removeReactor.before"}
+{"event":"ambient.removeReactor.after"}
+{"resourcesReleased":true,"event":"cleanup.return"}

@@ -1,0 +1,177 @@
+{
+  "contract": "bce.m2-typed-alias-definition-diagnostic.v1",
+  "receipt": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-200352-335-typed-alias-and-67-definition-diagnostic-d3aa5056\\receipt.json",
+  "receiptSHA256": "B686AB0CBEECDC058B33087582A4E8894390AB88CFCBEA59AAFFBF4E5DBB64C7",
+  "binary": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-200352-335-typed-alias-and-67-definition-diagnostic-d3aa5056\\out\\ElevationMaterialTileCases.arx",
+  "binarySHA256": "656592992A521F3DF5C966D563312EE237A3DD5F320214B2158507A3246C2661",
+  "log": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-200352-335-typed-alias-and-67-definition-diagnostic-d3aa5056\\build.log",
+  "logSHA256": "81B8F7A00B220F694BC29D14A030D3F750942A647DCFE6106D9362112753734F",
+  "compiledOnly": true,
+  "nativeExecuted": false,
+  "offlineChecks": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-200352-335-typed-alias-and-67-definition-diagnostic-d3aa5056\\alias-definition-offline-checks.json",
+  "offlineChecksSHA256": "1D9FDC81BD9FD4374D713D10FAB6E6B39D21DA6BA0B642A733FBAF1E2FB661FA",
+  "previousActual": [
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\evidence\\native-case-binding-fa3ccd02.json",
+      "sha256": "7B5E76276B0AED2B3DAD4E1FB23EDB873A0C1B9C852FC83E93E8B3FE31BDBBC8"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-195457-fa3ccd02\\case\\native-case.json",
+      "sha256": "2E79D313689BFAEDF2B6D04EB8FB20A82ABA0EB6418C924D27D7D030BAE095D8"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-195457-fa3ccd02\\material-owned-only-observation.json",
+      "sha256": "8CCD2B935982076B8DA2FAC50342BCBDB891AF82EF76849C2EB35CA4E47DA588"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-195457-fa3ccd02\\case\\material-tiles-0.dwg",
+      "sha256": "1DD2570EB8484122BC710597F0F273CF037452D83B1B4CAEB38E4B01E0DA7A53"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-195457-fa3ccd02\\case\\material-tiles-1.dwg",
+      "sha256": "C99CCFCB938A6B967021C6C5D57DA03D27E9587D06D97C5D7A9ECAAA29756567"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-195457-fa3ccd02\\case\\material-tiles-2.dwg",
+      "sha256": "990CE33277F085232BE322227DE8DCD3C3CDC40EAB3E4D3B4A37B2355938B19B"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-195457-fa3ccd02\\case\\material-tiles-3.dwg",
+      "sha256": "0B73B95F56B2B9F0FB2E56C99E661CB7B7A7CF611C6590F41B0C556BCA97B07B"
+    },
+    {
+      "path": "D:\\Codex\\建筑施工图自动化\\阶段1\\runs\\elevation-native-20261102-195457-fa3ccd02\\case\\material-tiles-4.dwg",
+      "sha256": "1F8E1AD0AA3ECE7E8B49D774E673FD872B35BD45C686C1CC19F2A2837AF5F6A8"
+    }
+  ],
+  "diff": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\material-tiles\\M2-typed-alias-definition-diagnostic.diff",
+  "diffSHA256": "C642A6911C105B2143EA3E883034CC9DC432106F9F428D3D9E19E4345D7ED34E",
+  "report": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\M2-大区域材料准备报告.md",
+  "reportSHA256": "77F9174DE5D3C0B71DFF7CE37ED95D2224409EF7492AEE7F51984AB2B986C1A3",
+  "unchanged": [
+    {
+      "sha256": "BBE24E0A2A387585F609B9D4B45A51CC1782AD888912BE314DC9063A03C2F542",
+      "equalTo9393": true,
+      "file": "NativeMaterials.h"
+    },
+    {
+      "sha256": "771336F29B0152D175B8B17024355C2DC635AF09E616A7E23BA7C81423AAECA8",
+      "equalTo9393": true,
+      "file": "NativeMaterials.cpp"
+    },
+    {
+      "sha256": "C6B083EE0346AA7CDB51090274CCCADCB2C6DE0AA92A196AD846E11C41C9EBB6",
+      "equalTo9393": true,
+      "file": "NativeEvidence.h"
+    },
+    {
+      "sha256": "1B3CA34A61CC2C2DB2C42A7FDFD01C029DE7BE82EAE6CE96D9DE1C3B363A8FE2",
+      "equalTo9393": true,
+      "file": "NativeEvidence.cpp"
+    },
+    {
+      "sha256": "AAF071840B2F7066C95B3A67DB6DEAEBD23F34C275D026BECFEC13531E7D662F",
+      "equalTo9393": true,
+      "file": "NativeMaterialTiles.h"
+    },
+    {
+      "sha256": "6BD85E261442245C18A2E2BD7902BCBCE71AF00928E36E5CE69B7434AEF91654",
+      "equalTo9393": true,
+      "file": "OwnedApiCompileCheck.cpp"
+    },
+    {
+      "sha256": "843E698B40F40C8005BB32E9A7D974A408DABCF8F147D0FC75F9A7498D123360",
+      "equalTo9393": true,
+      "file": "ElevationMaterialTileCases.vcxproj"
+    }
+  ],
+  "inputs": [
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\ElevationModel.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-200352-335-typed-alias-and-67-definition-diagnostic-d3aa5056\\src\\ElevationModel.h",
+      "sha256": "094EAB9687EB8A761E012CE5EF1DC09661B37BA3309D360E268B6A8C1C96454B"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\ElevationModel.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-200352-335-typed-alias-and-67-definition-diagnostic-d3aa5056\\src\\ElevationModel.cpp",
+      "sha256": "A7ECE83C56489793BBF1982F5EEDB7E1587AF360A91C985FF31BC367EDD29A90"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\RuleModel.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-200352-335-typed-alias-and-67-definition-diagnostic-d3aa5056\\src\\RuleModel.h",
+      "sha256": "38B6FC7AFB44FDC5B8A75B89015A671BABE30083513BFD24D689BBCCD1852C5F"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\Recognition.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-200352-335-typed-alias-and-67-definition-diagnostic-d3aa5056\\src\\Recognition.h",
+      "sha256": "994C72FA6DB3BD5670F8FCE3E2B1E98897994168DF3781B1D2F230777413F09A"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\MaterialRules.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-200352-335-typed-alias-and-67-definition-diagnostic-d3aa5056\\src\\MaterialRules.h",
+      "sha256": "B7A17F15731879F56F61BC67DEEA3B358EF293C1062F2216157FAF9E9D4E0053"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\MaterialRules.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-200352-335-typed-alias-and-67-definition-diagnostic-d3aa5056\\src\\MaterialRules.cpp",
+      "sha256": "08F5B4562EA17387CA3B1973BFA1EE52EE5341E2169F335712A82DF4F8124BA6"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\NativeMaterials.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-200352-335-typed-alias-and-67-definition-diagnostic-d3aa5056\\src\\NativeMaterials.h",
+      "sha256": "BBE24E0A2A387585F609B9D4B45A51CC1782AD888912BE314DC9063A03C2F542"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\NativeMaterials.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-200352-335-typed-alias-and-67-definition-diagnostic-d3aa5056\\src\\NativeMaterials.cpp",
+      "sha256": "771336F29B0152D175B8B17024355C2DC635AF09E616A7E23BA7C81423AAECA8"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\NativeEvidence.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-200352-335-typed-alias-and-67-definition-diagnostic-d3aa5056\\src\\NativeEvidence.h",
+      "sha256": "C6B083EE0346AA7CDB51090274CCCADCB2C6DE0AA92A196AD846E11C41C9EBB6"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m1-20261101-221054-935-review-fix1-three-contracts-green-f81070ee\\src\\NativeEvidence.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-200352-335-typed-alias-and-67-definition-diagnostic-d3aa5056\\src\\NativeEvidence.cpp",
+      "sha256": "1B3CA34A61CC2C2DB2C42A7FDFD01C029DE7BE82EAE6CE96D9DE1C3B363A8FE2"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\NativeMaterialTiles.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-200352-335-typed-alias-and-67-definition-diagnostic-d3aa5056\\src\\NativeMaterialTiles.h",
+      "sha256": "AAF071840B2F7066C95B3A67DB6DEAEBD23F34C275D026BECFEC13531E7D662F"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\NativeMaterialTiles.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-200352-335-typed-alias-and-67-definition-diagnostic-d3aa5056\\src\\NativeMaterialTiles.cpp",
+      "sha256": "8D846D17EF3BF672F30CCA64B8F0628D9900DC7D6B01288F43B6D7A7FBA12367"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\material-tiles\\MaterialTileDriver.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-200352-335-typed-alias-and-67-definition-diagnostic-d3aa5056\\src\\MaterialTileDriver.cpp",
+      "sha256": "32B7268F9C8FEF390A3C55D5829621A63337672D6869B25697706113A29DDACD"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\material-tiles\\MaterialTileFixtures.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-200352-335-typed-alias-and-67-definition-diagnostic-d3aa5056\\src\\MaterialTileFixtures.h",
+      "sha256": "13DCC03116F2D2C018BDDE344023F67CB58F5BD183945C9A850FCD1FE022E640"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\material-tiles\\OwnedApiCompileCheck.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-200352-335-typed-alias-and-67-definition-diagnostic-d3aa5056\\src\\OwnedApiCompileCheck.cpp",
+      "sha256": "6BD85E261442245C18A2E2BD7902BCBCE71AF00928E36E5CE69B7434AEF91654"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\material-tiles\\ElevationMaterialTileCases.vcxproj",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\m2-20261102-200352-335-typed-alias-and-67-definition-diagnostic-d3aa5056\\src\\ElevationMaterialTileCases.vcxproj",
+      "sha256": "843E698B40F40C8005BB32E9A7D974A408DABCF8F147D0FC75F9A7498D123360"
+    }
+  ],
+  "expectedNative": [
+    "Five original wall scenarios and DWG names unchanged",
+    "Four destruction fault points and seven prior conflicts unchanged",
+    "Legal Xrecord hard-pointer alias fixture must hit actual reference mismatch",
+    "All67 strict predicate unchanged; complete source target expected difference files 0..4",
+    "Ordinary Plot remains pending"
+  ]
+}

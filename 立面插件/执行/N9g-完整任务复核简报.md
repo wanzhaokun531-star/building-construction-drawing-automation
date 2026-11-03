@@ -1,0 +1,14 @@
+# N9g一次限定完整任务复核
+
+先读N9g-模型创建对照简报.md及N9g-模型创建对照报告.md，Spec+Quality各verdict及全部可行动发现；报告N9g-full-task-review-20261103.md。唯一写此报告，不改树/索引/Git、不派代理/二审、不重构建/跑CAD或旧测试。按review-agent及ObjectARX2020技能；只为具名风险或截断hunk定点补读，不扫描共享dirty树。
+
+Base冻结v21：build/n9c-20261103-125502-105-n9f-style-transport-v21-frozen-b12d7cf0/src；candidate冻结v24：build/n9c-20261103-131202-815-n9g-model-factory-v24-frozen-34b66b1a/src。完整210行diff在v24的n9g-v21-model-factory.diff，同目录自审/SDK合同/receipt；receipt C24B85974744C985602F19C4BD97B77557D5C484A73FA1338D757182FC0A16CC；ARX F84E1C52799F675DDD32F83C88E0B266E2C4C6839AEA02F6B5105E58D36C561D。root已核10输入/live/module；v22/23未native，不重审已PASS的N9e/N9f。
+
+actual 阶段1/runs/elevation-native-20261103-131409-216c3fca，PID54164。执行/N9g-模型创建对照证据索引.json给文件/关键行。A manager/value零WD；B kernel/value创建成功但get实际调用1次，rawID3014301743760/validationFlagfalse/thread20880，返回null/adapter unavailable，release0。必须保留此事实，不把它当“generic也已证普通零WD”、持久adapter已实现或callback正确；raw未知role不解码/猜。无fatal，B model删除返回后provider撤销，owner/线程/互斥与资源寿命是审查重点。
+
+同value/图元/设备相机更新，必要cookie和callback与factory一起改变，不能从表现直接推内部原因。公开callback bool仅“ID是否需验证”；null后的处理没有保证，限定自有开发探针且实际本次无fatal、不进入生产。未知get实际发生后 comparison protectionVerified=false/nextArmAllowedfalse 和native第二错误已记录；这不等于ambient已修改，清理/资源/DBMOD1→1/零写分别真实通过。
+
+原main failed及3controls保持，所有qualificationfalse/noRGB/noGlyph/BUILD。收尾forced=true/explicitStoptrue/exit70/normalQuitfalse，4退役6输入保持own0，relatedReviewfalse；不要套上个session forced=false。
+comparison85AAA61527E354FFCB9B757C60ACF22EE79C30D264BC0058626B5A355EFC1986；Btrace72C72AEF9241936FF9A4312465403F1A19FFC6C681EEF8F018F1E3F72CB0B687；closure37C2B1D1534D3AC4B114BF28358970A9752F956337351970EA64282453702423。
+
+核对factory/destroy对应、provider在createModel之前至deleteModel之后生存、日志/异常不穿host/线程计数安全、拒绝卸载条件、对实际callback/默认model样式/更新/清理和未知解释。不要扩审未来owned-resource provider新设计，本task故意不实现持久adapter；也不把这项诊断完成等同N9c采集完成。只在现有证据无法回答具体疑点才focused检查，不重复整体测试。

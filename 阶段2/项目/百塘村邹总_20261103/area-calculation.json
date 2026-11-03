@@ -1,0 +1,285 @@
+[
+  {
+    "floor": 1,
+    "area": 91.98965382817251,
+    "labels": [
+      "楼梯",
+      "客厅",
+      "客厅"
+    ],
+    "placement": [
+      6360.0,
+      3040.0
+    ],
+    "shaftExcluded": 4.700284787706494
+  },
+  {
+    "floor": 1,
+    "area": 7.520289025759999,
+    "labels": [
+      "储物间"
+    ],
+    "placement": [
+      7360.0,
+      11340.0
+    ],
+    "shaftExcluded": 0.0
+  },
+  {
+    "floor": 1,
+    "area": 3.4627457736540013,
+    "labels": [
+      "公卫"
+    ],
+    "placement": [
+      5460.0,
+      11540.0
+    ],
+    "shaftExcluded": 0.0
+  },
+  {
+    "floor": 1,
+    "area": 22.695335093855995,
+    "labels": [
+      "卧室"
+    ],
+    "placement": [
+      10060.0,
+      2540.0
+    ],
+    "shaftExcluded": 0.0
+  },
+  {
+    "floor": 1,
+    "area": 3.930862180896,
+    "labels": [
+      "公卫"
+    ],
+    "placement": [
+      11460.0,
+      5840.0
+    ],
+    "shaftExcluded": 0.0
+  },
+  {
+    "floor": 1,
+    "area": 15.215085849671999,
+    "labels": [
+      "卧室"
+    ],
+    "placement": [
+      10160.0,
+      10840.0
+    ],
+    "shaftExcluded": 0.0
+  },
+  {
+    "floor": 1,
+    "total": 181.5501838366769,
+    "body": 173.6451890786758,
+    "halfPlatform": 7.904994758001108,
+    "platformBounds": [
+      4319.5513893538655,
+      -2700.535654502847,
+      9281.051221961834,
+      679.7154335453615
+    ],
+    "method": "Source exterior column faces + entrance exterior wall face; subtract body overlap; steps beyond column front excluded"
+  },
+  {
+    "floor": 2,
+    "area": 3.4651636084800033,
+    "labels": [
+      "公卫"
+    ],
+    "placement": [
+      48347.596250418486,
+      11540.0
+    ],
+    "shaftExcluded": 0.0
+  },
+  {
+    "floor": 2,
+    "area": 7.520285184491984,
+    "labels": [
+      "储物间"
+    ],
+    "placement": [
+      50247.596250418486,
+      11340.0
+    ],
+    "shaftExcluded": 0.0
+  },
+  {
+    "floor": 2,
+    "area": 56.97712282819811,
+    "labels": [
+      "楼梯",
+      "客厅"
+    ],
+    "placement": [
+      49247.596250418486,
+      3040.0
+    ],
+    "shaftExcluded": 4.700284657178884
+  },
+  {
+    "floor": 2,
+    "area": 22.68278108235201,
+    "labels": [
+      "卧室"
+    ],
+    "placement": [
+      52947.596250418486,
+      2540.0
+    ],
+    "shaftExcluded": -3.552713678800501e-15
+  },
+  {
+    "floor": 2,
+    "area": 31.83338703507203,
+    "labels": [
+      "卧室"
+    ],
+    "placement": [
+      44847.596250418486,
+      2140.0
+    ],
+    "shaftExcluded": 0.0
+  },
+  {
+    "floor": 2,
+    "area": 15.210906550088007,
+    "labels": [
+      "卧室"
+    ],
+    "placement": [
+      53047.596250418486,
+      10840.0
+    ],
+    "shaftExcluded": 0.0
+  },
+  {
+    "floor": 2,
+    "area": 4.116076279056001,
+    "labels": [
+      "公卫"
+    ],
+    "placement": [
+      54347.596250418486,
+      5840.0
+    ],
+    "shaftExcluded": 0.0
+  },
+  {
+    "floor": 2,
+    "total": 180.29967945385818,
+    "body": 172.39705737858142,
+    "halfPlatform": 7.9026220752767635,
+    "platformBounds": [
+      47208.23568798125,
+      -2700.535654502847,
+      52167.559424171406,
+      679.7154335453615
+    ],
+    "method": "Source exterior column faces + entrance exterior wall face; subtract body overlap; steps beyond column front excluded"
+  },
+  {
+    "floor": 3,
+    "area": 3.461454411723013,
+    "labels": [
+      "公卫"
+    ],
+    "placement": [
+      91495.31487211667,
+      11540.0
+    ],
+    "shaftExcluded": 0.0
+  },
+  {
+    "floor": 3,
+    "area": 56.956900570233074,
+    "labels": [
+      "楼梯",
+      "客厅"
+    ],
+    "placement": [
+      92395.31487211667,
+      3040.0
+    ],
+    "shaftExcluded": 4.695139842880977
+  },
+  {
+    "floor": 3,
+    "area": 22.670854511667002,
+    "labels": [
+      "卧室"
+    ],
+    "placement": [
+      96095.31487211667,
+      2540.0
+    ],
+    "shaftExcluded": 0.0
+  },
+  {
+    "floor": 3,
+    "area": 31.822262248534955,
+    "labels": [
+      "卧室"
+    ],
+    "placement": [
+      87995.31487211667,
+      2140.0
+    ],
+    "shaftExcluded": 0.0
+  },
+  {
+    "floor": 3,
+    "area": 7.5217156767279905,
+    "labels": [
+      "储物间"
+    ],
+    "placement": [
+      93395.31487211667,
+      11340.0
+    ],
+    "shaftExcluded": 0.0
+  },
+  {
+    "floor": 3,
+    "area": 4.117936359209999,
+    "labels": [
+      "公卫"
+    ],
+    "placement": [
+      97495.31487211667,
+      5840.0
+    ],
+    "shaftExcluded": 0.0
+  },
+  {
+    "floor": 3,
+    "area": 15.205505989518008,
+    "labels": [
+      "卧室"
+    ],
+    "placement": [
+      96195.31487211667,
+      10840.0
+    ],
+    "shaftExcluded": 0.0
+  },
+  {
+    "floor": 3,
+    "total": 180.23870275030205,
+    "body": 172.33879153376174,
+    "halfPlatform": 7.899911216540331,
+    "platformBounds": [
+      90355.2311901083,
+      -2696.5577381110834,
+      95313.72491395767,
+      683.1075338554433
+    ],
+    "method": "Source exterior column faces + entrance exterior wall face; subtract body overlap; steps beyond column front excluded"
+  }
+]

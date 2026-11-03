@@ -1,0 +1,8 @@
+{
+  "command": "bundled Python tools/verify_text_occupancy.py --receipt build/n9b-20261103-101708-627-real-input-check-29beeb61/receipt.json --output tests/text-occupancy/evidence/native-rasters-v1",
+  "exitCode": 1,
+  "stage": "after ten image loops, while binding preserved diagnostic report",
+  "error": "FileNotFoundError: expected comparison.json; actual old diagnostic file is diagnostic.json",
+  "resolution": "Read actual directory; bind diagnostic.json before creating output; rerun to a new directory. No old evidence changed.",
+  "artifactNote": "v1 produced console progress only and an empty output directory, no comparison.json; failure was observed in the tool transcript."
+}

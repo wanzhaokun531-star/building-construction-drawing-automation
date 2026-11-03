@@ -1,0 +1,51 @@
+--- v9/NativeGsTextFootprint.cpp
++++ v10/NativeGsTextFootprint.cpp
+@@ -118,7 +118,7 @@
+     }
+     return object({{"variantType",std::to_string(v.type())},{"value",value}});
+ }
+-void verifyStyle(Session& s,const AcGiVisualStyle& requested,const AcGiVisualStyle& actual,bool styleSet){
++bool inspectStyle(Session& s,const AcGiVisualStyle& requested,const AcGiVisualStyle& actual,bool styleSet,const char* stage,bool gateApplied,bool defaultSnapshot=false){
+     using namespace AcGiVisualStyleProperties;
+     const std::array<std::pair<Property,const char*>,16> properties{{
+         {kFaceLightingModel,"faceLightingModel"},{kFaceLightingQuality,"faceLightingQuality"},{kFaceColorMode,"faceColorMode"},{kFaceOpacity,"faceOpacity"},
+@@ -131,8 +131,8 @@
+     for(const auto& p:properties){AcGiVisualStyle::Operation expectedOp,actualOp;const auto& expected=requested.trait(p.first,&expectedOp);const auto& observed=actual.trait(p.first,&actualOp);const bool same=expected==observed&&expectedOp==actualOp;
+         const bool applicable=!(facesInvisible&&(p.first==kFaceLightingQuality||p.first==kFaceColorMode||p.first==kFaceOpacity));rawEqual=rawEqual&&same;if(applicable)activeEqual=activeEqual&&same;
+         traits.push_back(object({{"property",q(p.second)},{"propertyId",std::to_string(p.first)},{"expected",variant(expected)},{"actual",variant(observed)},{"expectedOperation",std::to_string(expectedOp)},{"actualOperation",std::to_string(actualOp)},{"equivalent",same?"true":"false"},{"applicable",applicable?"true":"false"},{"inapplicableReason",applicable?"null":q("kInvisible means faces are not drawn")}}));}
+-    s.log("ownedViewVisualStyle",{{"contract",q("XY-custom-invisible-faces-object-color-edges-v1")},{"requestedType",std::to_string(requested.type())},{"styleSet",styleSet?"true":"false"},{"actualType",styleSet?std::to_string(actual.type()):"null"},{"allRawPropertiesEquivalent",rawEqual?"true":"false"},{"activeDrawingPropertiesEquivalent",activeEqual?"true":"false"},{"properties",array(traits)}});
+-    require(styleSet&&activeEqual,"own view active custom drawing contract differs");
++    s.log("ownedViewVisualStyle",{{"contract",q("XY-custom-invisible-faces-object-color-edges-v1")},{"stage",q(stage)},{"actualOrigin",defaultSnapshot?q("default-object-before-any-getter"):q("getter-output")},{"gateApplied",gateApplied?"true":"false"},{"requestedType",std::to_string(requested.type())},{"styleSet",styleSet?"true":"false"},{"actualType",styleSet||defaultSnapshot?std::to_string(actual.type()):"null"},{"allRawPropertiesEquivalent",rawEqual?"true":"false"},{"activeDrawingPropertiesEquivalent",activeEqual?"true":"false"},{"properties",array(traits)}});
++    return styleSet&&activeEqual;
+ }
+ void configureStyle(AcGiVisualStyle& style){
+     using namespace AcGiVisualStyleProperties;const auto set=AcGiVisualStyleOperations::kSet;
+@@ -247,10 +247,15 @@
+     s.log("device.addView.before");s.viewAttached=s.device->add(s.view);s.log("device.addView.after",{{"added",s.viewAttached?"true":"false"}});require(s.viewAttached,"attach owned kernel view failed");
+     if(s.faultPoint==3)throw std::runtime_error("injected-after-view-attached-before-style-camera");
+     s.view->setViewport(AcGePoint2d(0,0),AcGePoint2d(1,1));s.view->setViewportBorderVisibility(false);
+-    AcGiVisualStyle wireframe;configureStyle(wireframe);s.view->setVisualStyle(wireframe);AcGiVisualStyle readback;const bool styleSet=s.view->visualStyle(readback);
+-    verifyStyle(s,wireframe,readback,styleSet);
++    AcGiVisualStyle wireframe;configureStyle(wireframe);s.view->setVisualStyle(wireframe);
++    {AcGiVisualStyle defaultReadback;inspectStyle(s,wireframe,defaultReadback,false,"D-default-output-object",false,true);}
++    {AcGiVisualStyle observed;const bool styleSet=s.view->visualStyle(observed);inspectStyle(s,wireframe,observed,styleSet,"A-immediate-after-setter",false);}
++    s.device->onSize(1024,768);
+     s.view->setEnableFrontClip(false);s.view->setEnableBackClip(false);
+     s.view->setView({75,50,100},{75,50,0},AcGeVector3d::kYAxis,150,112.5,AcGsView::kParallel);
++    {AcGiVisualStyle observed;const bool styleSet=s.view->visualStyle(observed);inspectStyle(s,wireframe,observed,styleSet,"B-after-size-and-camera",false);}
++    s.log("emptyDevice.update.before");s.device->update();s.log("emptyDevice.update.after");s.log("emptyView.flush.before");s.view->flush();s.log("emptyView.flush.after");
++    {AcGiVisualStyle observed;const bool styleSet=s.view->visualStyle(observed);require(inspectStyle(s,wireframe,observed,styleSet,"C-after-empty-device-update",true),"own view active custom drawing contract differs after empty update");}
+     s.log("ownedDeviceSettings",{{"backgroundRGB",array({std::to_string(bg.m_red),std::to_string(bg.m_green),std::to_string(bg.m_blue)})},{"foregroundRGB",array({"0","0","0"})},{"lineweight",q("AcDb::kLnWt000 hairline")},{"frontClip",s.view->isFrontClipped()?"true":"false"},{"backClip",s.view->isBackClipped()?"true":"false"},{"border",s.view->isViewportBorderVisible()?"true":"false"}});
+     s.rule=std::make_unique<Rule>(s);s.priorOverruling=AcRxOverrule::isOverruling();ok(AcRxOverrule::addOverrule(AcDbPoint::desc(),s.rule.get(),false),"add own overrule");s.ruleAttached=true;AcRxOverrule::setIsOverruling(true);
+     if(s.faultPoint==2)throw std::runtime_error("injected-after-overrule-install");
+--- v9/README.md
++++ v10/README.md
+@@ -2,7 +2,7 @@
+ 
+ Development-only AutoCAD 2020 / R23.1 x64 ARX. `BCE_TEST_RUN` synchronously creates an owned in-memory database, one persistent point control, one k3DDrawing GS kernel/model/offscreen device/view. The owned view uses an explicit custom value style and orthographic XY camera: invisible faces, drawable-color edges without edge modifiers, opaque, no lighting/transparency, fixed width/display mask. Sixteen requested/read-back trait values and operations are retained; active properties require exact equality. Face lighting quality/color/opacity are marked inapplicable only when both sides explicitly use kInvisible/kSet (SDK: faces are not drawn). Kernel createView/device.add pairs with eraseAll/device.erase/kernel.deleteView, including a just-attached-before-style/camera exception regression. The kernel request follows the local 2020 SDK ARXDBG sample. There is one fixed request and no fallback loop. No working/current database switch, GUI view, DWG save, shared GS/profile modification, Plot, Python, or external converter occurs in the native command.
+ 
+-The candidate uses `createAutoCADModel` and `kernel.associate(ownedDb, model, kMain)`; the association is only an attempted route. Every genuine WorldDraw independently records and checks its context database, entity database/ObjectId and model binding before drawing. An actual mismatch fails and is preserved in `gs-trace.jsonl`; it does not establish impossibility of other public routes.
++The candidate uses `createAutoCADModel` and `kernel.associate(ownedDb, model, kMain)`; the association is only an attempted route. Every genuine WorldDraw independently records and checks its context database, entity database/ObjectId and model binding before drawing. An actual mismatch fails and is preserved in `gs-trace.jsonl`; it does not establish impossibility of other public routes. The finite custom style is read at A (immediately after setter), B (after 1024x768 sizing and the prescribed camera), and C (after one empty device update/flush). A/B are diagnostic records only. C must strictly satisfy the same active value/operation contract before the original overrule/text flow proceeds. The 2020 setter/getter contract provides no deferred-application guarantee; this is a bounded timing diagnostic, not a support claim.
+ 
+ Five N9a controls use independently loaded simplex.shx / gbcbig.shx, height 7 and width factor .75. Each control gets a complete, separate 1024x768 and 2048x1536 RGB snapshot with the same 150x112.5 model field. Control-paper conversion is explicitly 150x112.5 mm, 1:1; dpiX/Y are this conversion, not printer specifications. Frame/phase/font/source identity binds each observation. No Layout translation invariance or glyph-complete claim.
+ 

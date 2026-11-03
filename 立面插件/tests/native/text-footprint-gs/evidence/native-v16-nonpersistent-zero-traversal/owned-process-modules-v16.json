@@ -1,0 +1,1507 @@
+{
+  "contract": "owned-process-module-readonly.v1",
+  "recorded": "2026-11-03T12:06:53.1721386+08:00",
+  "authorizationSource": "Root N9c v16 task message: when both paths have zero callbacks, before watch read current exact owned PID module names and paths once for host GS diagnosis; no other process/module mutation",
+  "nonce": "36fd1d3d9a4c4d768e22bbfeb74900e2",
+  "pid": 18476,
+  "creationFileTime": "134381523343332276",
+  "desktop": "CodexS1_36fd1d3d9a4c4d768e22bbfeb74900e2",
+  "attemptCount": 1,
+  "error": null,
+  "modules": [
+    {
+      "moduleName": "acad.exe",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acad.exe"
+    },
+    {
+      "moduleName": "ntdll.dll",
+      "path": "C:\\windows\\SYSTEM32\\ntdll.dll"
+    },
+    {
+      "moduleName": "KERNEL32.DLL",
+      "path": "C:\\windows\\System32\\KERNEL32.DLL"
+    },
+    {
+      "moduleName": "KERNELBASE.dll",
+      "path": "C:\\windows\\System32\\KERNELBASE.dll"
+    },
+    {
+      "moduleName": "apphelp.dll",
+      "path": "C:\\windows\\SYSTEM32\\apphelp.dll"
+    },
+    {
+      "moduleName": "IMM32.dll",
+      "path": "C:\\windows\\System32\\IMM32.dll"
+    },
+    {
+      "moduleName": "USER32.dll",
+      "path": "C:\\windows\\System32\\USER32.dll"
+    },
+    {
+      "moduleName": "win32u.dll",
+      "path": "C:\\windows\\System32\\win32u.dll"
+    },
+    {
+      "moduleName": "gdiplus.dll",
+      "path": "C:\\windows\\WinSxS\\amd64_microsoft.windows.gdiplus_6595b64144ccf1df_1.1.19041.5369_none_91a453e0cc8824e6\\gdiplus.dll"
+    },
+    {
+      "moduleName": "GDI32.dll",
+      "path": "C:\\windows\\System32\\GDI32.dll"
+    },
+    {
+      "moduleName": "msvcrt.dll",
+      "path": "C:\\windows\\System32\\msvcrt.dll"
+    },
+    {
+      "moduleName": "ac1st23.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ac1st23.dll"
+    },
+    {
+      "moduleName": "gdi32full.dll",
+      "path": "C:\\windows\\System32\\gdi32full.dll"
+    },
+    {
+      "moduleName": "MSIMG32.dll",
+      "path": "C:\\windows\\SYSTEM32\\MSIMG32.dll"
+    },
+    {
+      "moduleName": "combase.dll",
+      "path": "C:\\windows\\System32\\combase.dll"
+    },
+    {
+      "moduleName": "msvcp_win.dll",
+      "path": "C:\\windows\\System32\\msvcp_win.dll"
+    },
+    {
+      "moduleName": "ucrtbase.dll",
+      "path": "C:\\windows\\System32\\ucrtbase.dll"
+    },
+    {
+      "moduleName": "AcGe23.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcGe23.dll"
+    },
+    {
+      "moduleName": "RPCRT4.dll",
+      "path": "C:\\windows\\System32\\RPCRT4.dll"
+    },
+    {
+      "moduleName": "WINTRUST.dll",
+      "path": "C:\\windows\\System32\\WINTRUST.dll"
+    },
+    {
+      "moduleName": "COMDLG32.dll",
+      "path": "C:\\windows\\System32\\COMDLG32.dll"
+    },
+    {
+      "moduleName": "acdb23.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acdb23.dll"
+    },
+    {
+      "moduleName": "shcore.dll",
+      "path": "C:\\windows\\System32\\shcore.dll"
+    },
+    {
+      "moduleName": "ole32.dll",
+      "path": "C:\\windows\\System32\\ole32.dll"
+    },
+    {
+      "moduleName": "SHLWAPI.dll",
+      "path": "C:\\windows\\System32\\SHLWAPI.dll"
+    },
+    {
+      "moduleName": "OLEAUT32.dll",
+      "path": "C:\\windows\\System32\\OLEAUT32.dll"
+    },
+    {
+      "moduleName": "ADVAPI32.dll",
+      "path": "C:\\windows\\System32\\ADVAPI32.dll"
+    },
+    {
+      "moduleName": "SHELL32.dll",
+      "path": "C:\\windows\\System32\\SHELL32.dll"
+    },
+    {
+      "moduleName": "sechost.dll",
+      "path": "C:\\windows\\System32\\sechost.dll"
+    },
+    {
+      "moduleName": "bcrypt.dll",
+      "path": "C:\\windows\\System32\\bcrypt.dll"
+    },
+    {
+      "moduleName": "CRYPT32.dll",
+      "path": "C:\\windows\\System32\\CRYPT32.dll"
+    },
+    {
+      "moduleName": "adui23.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\adui23.dll"
+    },
+    {
+      "moduleName": "acui23.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acui23.dll"
+    },
+    {
+      "moduleName": "anav.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\anav.dll"
+    },
+    {
+      "moduleName": "dswhip.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\dswhip.dll"
+    },
+    {
+      "moduleName": "heidi15.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\heidi15.dll"
+    },
+    {
+      "moduleName": "UserData.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\UserData.dll"
+    },
+    {
+      "moduleName": "acbol.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acbol.dll"
+    },
+    {
+      "moduleName": "adhostableui.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\adhostableui.dll"
+    },
+    {
+      "moduleName": "MPR.dll",
+      "path": "C:\\windows\\SYSTEM32\\MPR.dll"
+    },
+    {
+      "moduleName": "WTSAPI32.dll",
+      "path": "C:\\windows\\SYSTEM32\\WTSAPI32.dll"
+    },
+    {
+      "moduleName": "AcPal.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcPal.dll"
+    },
+    {
+      "moduleName": "AcUt.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcUt.dll"
+    },
+    {
+      "moduleName": "UIAutomationCore.DLL",
+      "path": "C:\\windows\\SYSTEM32\\UIAutomationCore.DLL"
+    },
+    {
+      "moduleName": "ADCtrls.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ADCtrls.dll"
+    },
+    {
+      "moduleName": "accore.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\accore.dll"
+    },
+    {
+      "moduleName": "MSVCP140.dll",
+      "path": "C:\\windows\\SYSTEM32\\MSVCP140.dll"
+    },
+    {
+      "moduleName": "mfc140u.dll",
+      "path": "C:\\windows\\SYSTEM32\\mfc140u.dll"
+    },
+    {
+      "moduleName": "AcDs.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcDs.dll"
+    },
+    {
+      "moduleName": "VCOMP140.DLL",
+      "path": "C:\\windows\\SYSTEM32\\VCOMP140.DLL"
+    },
+    {
+      "moduleName": "mscoree.dll",
+      "path": "C:\\windows\\SYSTEM32\\mscoree.dll"
+    },
+    {
+      "moduleName": "VCRUNTIME140.dll",
+      "path": "C:\\windows\\SYSTEM32\\VCRUNTIME140.dll"
+    },
+    {
+      "moduleName": "COMCTL32.dll",
+      "path": "C:\\windows\\WinSxS\\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.4355_none_60b8b9eb71f62e16\\COMCTL32.dll"
+    },
+    {
+      "moduleName": "oledlg.dll",
+      "path": "C:\\windows\\SYSTEM32\\oledlg.dll"
+    },
+    {
+      "moduleName": "CRYPTUI.dll",
+      "path": "C:\\windows\\SYSTEM32\\CRYPTUI.dll"
+    },
+    {
+      "moduleName": "VERSION.dll",
+      "path": "C:\\windows\\SYSTEM32\\VERSION.dll"
+    },
+    {
+      "moduleName": "UxTheme.dll",
+      "path": "C:\\windows\\SYSTEM32\\UxTheme.dll"
+    },
+    {
+      "moduleName": "PROPSYS.dll",
+      "path": "C:\\windows\\SYSTEM32\\PROPSYS.dll"
+    },
+    {
+      "moduleName": "USP10.dll",
+      "path": "C:\\windows\\SYSTEM32\\USP10.dll"
+    },
+    {
+      "moduleName": "Secur32.dll",
+      "path": "C:\\windows\\SYSTEM32\\Secur32.dll"
+    },
+    {
+      "moduleName": "VCRUNTIME140_1.dll",
+      "path": "C:\\windows\\SYSTEM32\\VCRUNTIME140_1.dll"
+    },
+    {
+      "moduleName": "acismobj23.dbx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acismobj23.dbx"
+    },
+    {
+      "moduleName": "WINSPOOL.DRV",
+      "path": "C:\\windows\\SYSTEM32\\WINSPOOL.DRV"
+    },
+    {
+      "moduleName": "AdIntImgServices.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AdIntImgServices.dll"
+    },
+    {
+      "moduleName": "AdImaging.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AdImaging.dll"
+    },
+    {
+      "moduleName": "SSPICLI.DLL",
+      "path": "C:\\windows\\SYSTEM32\\SSPICLI.DLL"
+    },
+    {
+      "moduleName": "tbb.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\tbb.dll"
+    },
+    {
+      "moduleName": "MSASN1.dll",
+      "path": "C:\\windows\\SYSTEM32\\MSASN1.dll"
+    },
+    {
+      "moduleName": "CRYPTBASE.DLL",
+      "path": "C:\\windows\\SYSTEM32\\CRYPTBASE.DLL"
+    },
+    {
+      "moduleName": "bcryptPrimitives.dll",
+      "path": "C:\\windows\\System32\\bcryptPrimitives.dll"
+    },
+    {
+      "moduleName": "mscoreei.dll",
+      "path": "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\mscoreei.dll"
+    },
+    {
+      "moduleName": "kernel.appcore.dll",
+      "path": "C:\\windows\\SYSTEM32\\kernel.appcore.dll"
+    },
+    {
+      "moduleName": "acadres.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\zh-CN\\acadres.dll"
+    },
+    {
+      "moduleName": "AcBrandRes.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcBrandRes.dll"
+    },
+    {
+      "moduleName": "MSCTF.dll",
+      "path": "C:\\windows\\System32\\MSCTF.dll"
+    },
+    {
+      "moduleName": "windows.storage.dll",
+      "path": "C:\\windows\\SYSTEM32\\windows.storage.dll"
+    },
+    {
+      "moduleName": "Wldp.dll",
+      "path": "C:\\windows\\SYSTEM32\\Wldp.dll"
+    },
+    {
+      "moduleName": "profapi.dll",
+      "path": "C:\\windows\\SYSTEM32\\profapi.dll"
+    },
+    {
+      "moduleName": "CRYPTSP.dll",
+      "path": "C:\\windows\\SYSTEM32\\CRYPTSP.dll"
+    },
+    {
+      "moduleName": "rsaenh.dll",
+      "path": "C:\\windows\\system32\\rsaenh.dll"
+    },
+    {
+      "moduleName": "plotcfg15.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\plotcfg15.dll"
+    },
+    {
+      "moduleName": "plcfmgr.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\plcfmgr.dll"
+    },
+    {
+      "moduleName": "plcferr.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\plcferr.dll"
+    },
+    {
+      "moduleName": "pm15.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\pm15.dll"
+    },
+    {
+      "moduleName": "pmutil15.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\pmutil15.dll"
+    },
+    {
+      "moduleName": "hcreg15.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\hcreg15.dll"
+    },
+    {
+      "moduleName": "adui23res.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\adui23res.dll"
+    },
+    {
+      "moduleName": "acui23res.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\acui23res.dll"
+    },
+    {
+      "moduleName": "clr.dll",
+      "path": "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\clr.dll"
+    },
+    {
+      "moduleName": "VCRUNTIME140_CLR0400.dll",
+      "path": "C:\\windows\\SYSTEM32\\VCRUNTIME140_CLR0400.dll"
+    },
+    {
+      "moduleName": "ucrtbase_clr0400.dll",
+      "path": "C:\\windows\\SYSTEM32\\ucrtbase_clr0400.dll"
+    },
+    {
+      "moduleName": "psapi.dll",
+      "path": "C:\\windows\\System32\\psapi.dll"
+    },
+    {
+      "moduleName": "clrjit.dll",
+      "path": "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\clrjit.dll"
+    },
+    {
+      "moduleName": "Acdbmgd.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\Acdbmgd.dll"
+    },
+    {
+      "moduleName": "clbcatq.dll",
+      "path": "C:\\windows\\System32\\clbcatq.dll"
+    },
+    {
+      "moduleName": "AcDrawBridge.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcDrawBridge.dll"
+    },
+    {
+      "moduleName": "OGSObjects.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\OGSObjects.dll"
+    },
+    {
+      "moduleName": "OGSGlobals.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\OGSGlobals.dll"
+    },
+    {
+      "moduleName": "dxgi.dll",
+      "path": "C:\\windows\\SYSTEM32\\dxgi.dll"
+    },
+    {
+      "moduleName": "D3DCOMPILER_47.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\D3DCOMPILER_47.dll"
+    },
+    {
+      "moduleName": "Effects11.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\Effects11.dll"
+    },
+    {
+      "moduleName": "d3d11.dll",
+      "path": "C:\\windows\\SYSTEM32\\d3d11.dll"
+    },
+    {
+      "moduleName": "OGSDevices.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\OGSDevices.dll"
+    },
+    {
+      "moduleName": "OGSGraphics.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\OGSGraphics.dll"
+    },
+    {
+      "moduleName": "WS2_32.dll",
+      "path": "C:\\windows\\System32\\WS2_32.dll"
+    },
+    {
+      "moduleName": "tbbmalloc.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\tbbmalloc.dll"
+    },
+    {
+      "moduleName": "dwrite.dll",
+      "path": "C:\\windows\\SYSTEM32\\dwrite.dll"
+    },
+    {
+      "moduleName": "wpfgfx_v0400.dll",
+      "path": "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\WPF\\wpfgfx_v0400.dll"
+    },
+    {
+      "moduleName": "MSVCP140_CLR0400.dll",
+      "path": "C:\\windows\\SYSTEM32\\MSVCP140_CLR0400.dll"
+    },
+    {
+      "moduleName": "PresentationNative_v0400.dll",
+      "path": "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\WPF\\PresentationNative_v0400.dll"
+    },
+    {
+      "moduleName": "AdApplicationFrame.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AdApplicationFrame.dll"
+    },
+    {
+      "moduleName": "acadbtn.xmx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acadbtn.xmx"
+    },
+    {
+      "moduleName": "windowscodecs.dll",
+      "path": "C:\\windows\\system32\\windowscodecs.dll"
+    },
+    {
+      "moduleName": "mscms.dll",
+      "path": "C:\\windows\\SYSTEM32\\mscms.dll"
+    },
+    {
+      "moduleName": "ColorAdapterClient.dll",
+      "path": "C:\\windows\\SYSTEM32\\ColorAdapterClient.dll"
+    },
+    {
+      "moduleName": "USERENV.dll",
+      "path": "C:\\windows\\SYSTEM32\\USERENV.dll"
+    },
+    {
+      "moduleName": "WINSTA.dll",
+      "path": "C:\\windows\\SYSTEM32\\WINSTA.dll"
+    },
+    {
+      "moduleName": "powrprof.dll",
+      "path": "C:\\windows\\SYSTEM32\\powrprof.dll"
+    },
+    {
+      "moduleName": "UMPDC.dll",
+      "path": "C:\\windows\\SYSTEM32\\UMPDC.dll"
+    },
+    {
+      "moduleName": "DWMAPI.dll",
+      "path": "C:\\windows\\SYSTEM32\\DWMAPI.dll"
+    },
+    {
+      "moduleName": "d3d9.dll",
+      "path": "C:\\windows\\SYSTEM32\\d3d9.dll"
+    },
+    {
+      "moduleName": "nvldumdx.dll",
+      "path": "C:\\windows\\System32\\DriverStore\\FileRepository\\nv_dispsi.inf_amd64_ccd7fbb71bb72370\\nvldumdx.dll"
+    },
+    {
+      "moduleName": "cryptnet.dll",
+      "path": "C:\\windows\\SYSTEM32\\cryptnet.dll"
+    },
+    {
+      "moduleName": "drvstore.dll",
+      "path": "C:\\windows\\SYSTEM32\\drvstore.dll"
+    },
+    {
+      "moduleName": "devobj.dll",
+      "path": "C:\\windows\\SYSTEM32\\devobj.dll"
+    },
+    {
+      "moduleName": "cfgmgr32.dll",
+      "path": "C:\\windows\\System32\\cfgmgr32.dll"
+    },
+    {
+      "moduleName": "imagehlp.dll",
+      "path": "C:\\windows\\System32\\imagehlp.dll"
+    },
+    {
+      "moduleName": "nvgpucomp64.dll",
+      "path": "C:\\windows\\System32\\DriverStore\\FileRepository\\nv_dispsi.inf_amd64_ccd7fbb71bb72370\\nvgpucomp64.dll"
+    },
+    {
+      "moduleName": "NvMessageBus.dll",
+      "path": "C:\\windows\\System32\\DriverStore\\FileRepository\\nv_dispsi.inf_amd64_ccd7fbb71bb72370\\Display.NvContainer\\NvMessageBus.dll"
+    },
+    {
+      "moduleName": "NvMemMapStoragex.dll",
+      "path": "C:\\windows\\System32\\DriverStore\\FileRepository\\nv_dispsi.inf_amd64_ccd7fbb71bb72370\\NvMemMapStoragex.dll"
+    },
+    {
+      "moduleName": "WINMM.dll",
+      "path": "C:\\windows\\SYSTEM32\\WINMM.dll"
+    },
+    {
+      "moduleName": "nvd3dumx.dll",
+      "path": "C:\\windows\\System32\\DriverStore\\FileRepository\\nv_dispsi.inf_amd64_ccd7fbb71bb72370\\nvd3dumx.dll"
+    },
+    {
+      "moduleName": "dataexchange.dll",
+      "path": "C:\\windows\\system32\\dataexchange.dll"
+    },
+    {
+      "moduleName": "dcomp.dll",
+      "path": "C:\\windows\\system32\\dcomp.dll"
+    },
+    {
+      "moduleName": "twinapi.appcore.dll",
+      "path": "C:\\windows\\system32\\twinapi.appcore.dll"
+    },
+    {
+      "moduleName": "urlmon.dll",
+      "path": "C:\\windows\\SYSTEM32\\urlmon.dll"
+    },
+    {
+      "moduleName": "iertutil.dll",
+      "path": "C:\\windows\\SYSTEM32\\iertutil.dll"
+    },
+    {
+      "moduleName": "netutils.dll",
+      "path": "C:\\windows\\SYSTEM32\\netutils.dll"
+    },
+    {
+      "moduleName": "srvcli.dll",
+      "path": "C:\\windows\\SYSTEM32\\srvcli.dll"
+    },
+    {
+      "moduleName": "TextShaping.dll",
+      "path": "C:\\windows\\SYSTEM32\\TextShaping.dll"
+    },
+    {
+      "moduleName": "msxml6.dll",
+      "path": "C:\\Windows\\System32\\msxml6.dll"
+    },
+    {
+      "moduleName": "AdAppMgrSvcInt.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AdAppMgrSvcInt.dll"
+    },
+    {
+      "moduleName": "MSVCP110.dll",
+      "path": "C:\\windows\\SYSTEM32\\MSVCP110.dll"
+    },
+    {
+      "moduleName": "MSVCR110.dll",
+      "path": "C:\\windows\\SYSTEM32\\MSVCR110.dll"
+    },
+    {
+      "moduleName": "upi2.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\upi2.dll"
+    },
+    {
+      "moduleName": "msi.dll",
+      "path": "C:\\windows\\SYSTEM32\\msi.dll"
+    },
+    {
+      "moduleName": "acmgd.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acmgd.dll"
+    },
+    {
+      "moduleName": "accoremgd.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\accoremgd.dll"
+    },
+    {
+      "moduleName": "msxml3.dll",
+      "path": "C:\\windows\\System32\\msxml3.dll"
+    },
+    {
+      "moduleName": "diasymreader.dll",
+      "path": "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\diasymreader.dll"
+    },
+    {
+      "moduleName": "acapp.arx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acapp.arx"
+    },
+    {
+      "moduleName": "acapp.crx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acapp.crx"
+    },
+    {
+      "moduleName": "acappRes.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\acappRes.dll"
+    },
+    {
+      "moduleName": "NETAPI32.DLL",
+      "path": "C:\\windows\\SYSTEM32\\NETAPI32.DLL"
+    },
+    {
+      "moduleName": "acautoloader.crx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acautoloader.crx"
+    },
+    {
+      "moduleName": "AcAutoLoaderRes.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\AcAutoLoaderRes.dll"
+    },
+    {
+      "moduleName": "acautoloader.arx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acautoloader.arx"
+    },
+    {
+      "moduleName": "acexperience.arx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acexperience.arx"
+    },
+    {
+      "moduleName": "UPIBridge.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\UPIBridge.dll"
+    },
+    {
+      "moduleName": "AdpSDKWrapper.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AdpSDKWrapper.dll"
+    },
+    {
+      "moduleName": "AdpSDKCore.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AdpSDKCore.dll"
+    },
+    {
+      "moduleName": "acpublish.arx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acpublish.arx"
+    },
+    {
+      "moduleName": "acpublish.crx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acpublish.crx"
+    },
+    {
+      "moduleName": "AcPltRes.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\AcPltRes.dll"
+    },
+    {
+      "moduleName": "AcPi.arx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcPi.arx"
+    },
+    {
+      "moduleName": "AcPiRes.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\AcPiRes.dll"
+    },
+    {
+      "moduleName": "msctfmonitor.dll",
+      "path": "C:\\windows\\system32\\msctfmonitor.dll"
+    },
+    {
+      "moduleName": "MSUTB.dll",
+      "path": "C:\\windows\\system32\\MSUTB.dll"
+    },
+    {
+      "moduleName": "textinputframework.dll",
+      "path": "C:\\windows\\SYSTEM32\\textinputframework.dll"
+    },
+    {
+      "moduleName": "CoreMessaging.dll",
+      "path": "C:\\windows\\SYSTEM32\\CoreMessaging.dll"
+    },
+    {
+      "moduleName": "CoreUIComponents.dll",
+      "path": "C:\\windows\\SYSTEM32\\CoreUIComponents.dll"
+    },
+    {
+      "moduleName": "ntmarta.dll",
+      "path": "C:\\windows\\SYSTEM32\\ntmarta.dll"
+    },
+    {
+      "moduleName": "wintypes.dll",
+      "path": "C:\\windows\\SYSTEM32\\wintypes.dll"
+    },
+    {
+      "moduleName": "msctfp.dll",
+      "path": "C:\\windows\\system32\\msctfp.dll"
+    },
+    {
+      "moduleName": "InputSwitch.dll",
+      "path": "C:\\Windows\\System32\\InputSwitch.dll"
+    },
+    {
+      "moduleName": "Bcp47Langs.dll",
+      "path": "C:\\Windows\\System32\\Bcp47Langs.dll"
+    },
+    {
+      "moduleName": "WININET.dll",
+      "path": "C:\\Windows\\System32\\WININET.dll"
+    },
+    {
+      "moduleName": "DUI70.dll",
+      "path": "C:\\Windows\\System32\\DUI70.dll"
+    },
+    {
+      "moduleName": "DUser.dll",
+      "path": "C:\\Windows\\System32\\DUser.dll"
+    },
+    {
+      "moduleName": "UIAnimation.dll",
+      "path": "C:\\windows\\System32\\UIAnimation.dll"
+    },
+    {
+      "moduleName": "D3D10Warp.dll",
+      "path": "C:\\windows\\SYSTEM32\\D3D10Warp.dll"
+    },
+    {
+      "moduleName": "dxcore.dll",
+      "path": "C:\\windows\\SYSTEM32\\dxcore.dll"
+    },
+    {
+      "moduleName": "AcIpc_2_x64.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcIpc_2_x64.dll"
+    },
+    {
+      "moduleName": "acjscorestub.crx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acjscorestub.crx"
+    },
+    {
+      "moduleName": "AcDrawStream.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcDrawStream.dll"
+    },
+    {
+      "moduleName": "AcJsCoreStubRes.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\AcJsCoreStubRes.dll"
+    },
+    {
+      "moduleName": "OGSCertificationUtility.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\OGSCertificationUtility.dll"
+    },
+    {
+      "moduleName": "Qt5Network_Ad_5_9.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\Qt5Network_Ad_5_9.dll"
+    },
+    {
+      "moduleName": "Qt5Core_Ad_5_9.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\Qt5Core_Ad_5_9.dll"
+    },
+    {
+      "moduleName": "Qt5Xml_Ad_5_9.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\Qt5Xml_Ad_5_9.dll"
+    },
+    {
+      "moduleName": "adp_core-6_1.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\adp_core-6_1.dll"
+    },
+    {
+      "moduleName": "WLDAP32.dll",
+      "path": "C:\\windows\\System32\\WLDAP32.dll"
+    },
+    {
+      "moduleName": "DNSAPI.dll",
+      "path": "C:\\windows\\SYSTEM32\\DNSAPI.dll"
+    },
+    {
+      "moduleName": "Normaliz.dll",
+      "path": "C:\\windows\\System32\\Normaliz.dll"
+    },
+    {
+      "moduleName": "IPHLPAPI.DLL",
+      "path": "C:\\windows\\SYSTEM32\\IPHLPAPI.DLL"
+    },
+    {
+      "moduleName": "icuin55.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\icuin55.dll"
+    },
+    {
+      "moduleName": "icuuc55.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\icuuc55.dll"
+    },
+    {
+      "moduleName": "icudt55.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\icudt55.dll"
+    },
+    {
+      "moduleName": "NSI.dll",
+      "path": "C:\\windows\\System32\\NSI.dll"
+    },
+    {
+      "moduleName": "nvwgf2umx.dll",
+      "path": "C:\\windows\\System32\\DriverStore\\FileRepository\\nv_dispsi.inf_amd64_ccd7fbb71bb72370\\nvwgf2umx.dll"
+    },
+    {
+      "moduleName": "nvppex.dll",
+      "path": "C:\\windows\\System32\\DriverStore\\FileRepository\\nv_dispsi.inf_amd64_ccd7fbb71bb72370\\nvppex.dll"
+    },
+    {
+      "moduleName": "wbemprox.dll",
+      "path": "C:\\windows\\system32\\wbem\\wbemprox.dll"
+    },
+    {
+      "moduleName": "wbemcomn.dll",
+      "path": "C:\\windows\\SYSTEM32\\wbemcomn.dll"
+    },
+    {
+      "moduleName": "wbemsvc.dll",
+      "path": "C:\\windows\\system32\\wbem\\wbemsvc.dll"
+    },
+    {
+      "moduleName": "fastprox.dll",
+      "path": "C:\\windows\\system32\\wbem\\fastprox.dll"
+    },
+    {
+      "moduleName": "amsi.dll",
+      "path": "C:\\windows\\SYSTEM32\\amsi.dll"
+    },
+    {
+      "moduleName": "acgs.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acgs.dll"
+    },
+    {
+      "moduleName": "gdi15.hdi",
+      "path": "d:\\cad2020\\autocad 2020\\drv\\gdi15.hdi"
+    },
+    {
+      "moduleName": "gdi15Res.dll",
+      "path": "d:\\cad2020\\autocad 2020\\drv\\zh-CN\\gdi15Res.dll"
+    },
+    {
+      "moduleName": "szb15.hdi",
+      "path": "d:\\cad2020\\autocad 2020\\drv\\szb15.hdi"
+    },
+    {
+      "moduleName": "rblast15.hdi",
+      "path": "d:\\cad2020\\autocad 2020\\drv\\rblast15.hdi"
+    },
+    {
+      "moduleName": "gdifont15.hdi",
+      "path": "d:\\cad2020\\autocad 2020\\drv\\gdifont15.hdi"
+    },
+    {
+      "moduleName": "OGSIOIntegration.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\OGSIOIntegration.dll"
+    },
+    {
+      "moduleName": "s1read_36fd1d3d.arx",
+      "path": "c:\\program files\\autodesk\\applicationplugins\\codexelevationstage1_36fd1d3d9a4c4d768e22bbfeb74900e2\\s1read_36fd1d3d.arx"
+    },
+    {
+      "moduleName": "axdb.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\axdb.dll"
+    },
+    {
+      "moduleName": "acvmtools.crx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acvmtools.crx"
+    },
+    {
+      "moduleName": "AcSceneOE.dbx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcSceneOE.dbx"
+    },
+    {
+      "moduleName": "OPENGL32.dll",
+      "path": "C:\\windows\\SYSTEM32\\OPENGL32.dll"
+    },
+    {
+      "moduleName": "GLU32.dll",
+      "path": "C:\\windows\\SYSTEM32\\GLU32.dll"
+    },
+    {
+      "moduleName": "AcVmToolsRes.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\AcVmToolsRes.dll"
+    },
+    {
+      "moduleName": "AppXDeploymentClient.dll",
+      "path": "C:\\Windows\\System32\\AppXDeploymentClient.dll"
+    },
+    {
+      "moduleName": "nvoglv64.dll",
+      "path": "C:\\windows\\System32\\DriverStore\\FileRepository\\nv_dispsi.inf_amd64_ccd7fbb71bb72370\\nvoglv64.dll"
+    },
+    {
+      "moduleName": "SETUPAPI.dll",
+      "path": "C:\\windows\\System32\\SETUPAPI.dll"
+    },
+    {
+      "moduleName": "vl.crx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\vl.crx"
+    },
+    {
+      "moduleName": "VLMSG.DLL",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\VLMSG.DLL"
+    },
+    {
+      "moduleName": "vllib.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\vllib.dll"
+    },
+    {
+      "moduleName": "acblock.crx",
+      "path": "d:\\cad2020\\autocad 2020\\acblock.crx"
+    },
+    {
+      "moduleName": "AcBlockres.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\AcBlockres.dll"
+    },
+    {
+      "moduleName": "acxploderes.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\acxploderes.dll"
+    },
+    {
+      "moduleName": "acvdiff.arx",
+      "path": "d:\\cad2020\\autocad 2020\\acvdiff.arx"
+    },
+    {
+      "moduleName": "AcVDiff.crx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcVDiff.crx"
+    },
+    {
+      "moduleName": "AcVDiffRes.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\AcVDiffRes.dll"
+    },
+    {
+      "moduleName": "acsign.arx",
+      "path": "d:\\cad2020\\autocad 2020\\acsign.arx"
+    },
+    {
+      "moduleName": "acsignRes.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\acsignRes.dll"
+    },
+    {
+      "moduleName": "acetutil.arx",
+      "path": "d:\\cad2020\\autocad 2020\\express\\acetutil.arx"
+    },
+    {
+      "moduleName": "AcExpressRes.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\AcExpressRes.dll"
+    },
+    {
+      "moduleName": "cpcore.arx",
+      "path": "c:\\sow\\智源·云设计\\arx_64\\23.1\\cpcore.arx"
+    },
+    {
+      "moduleName": "acbr23.dbx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acbr23.dbx"
+    },
+    {
+      "moduleName": "ASMKERN225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMKERN225A.dll"
+    },
+    {
+      "moduleName": "ASMFCT225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMFCT225A.dll"
+    },
+    {
+      "moduleName": "AcGex23.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcGex23.dll"
+    },
+    {
+      "moduleName": "ASMBASE225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMBASE225A.dll"
+    },
+    {
+      "moduleName": "ASMCSTR225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMCSTR225A.dll"
+    },
+    {
+      "moduleName": "ASMTOPT225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMTOPT225A.dll"
+    },
+    {
+      "moduleName": "ASMINTR225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMINTR225A.dll"
+    },
+    {
+      "moduleName": "ASMLAW225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMLAW225A.dll"
+    },
+    {
+      "moduleName": "tsplines7A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\tsplines7A.dll"
+    },
+    {
+      "moduleName": "ASMMATRIX225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMMATRIX225A.dll"
+    },
+    {
+      "moduleName": "modlr23.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\modlr23.dll"
+    },
+    {
+      "moduleName": "ASMCT225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMCT225A.dll"
+    },
+    {
+      "moduleName": "ASMGA225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMGA225A.dll"
+    },
+    {
+      "moduleName": "ASMIMPORT225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMIMPORT225A.dll"
+    },
+    {
+      "moduleName": "ASMDATAX225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMDATAX225A.dll"
+    },
+    {
+      "moduleName": "ASMNPCH225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMNPCH225A.dll"
+    },
+    {
+      "moduleName": "ASMSBAP225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMSBAP225A.dll"
+    },
+    {
+      "moduleName": "ASMCOVR225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMCOVR225A.dll"
+    },
+    {
+      "moduleName": "ASMBOOL225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMBOOL225A.dll"
+    },
+    {
+      "moduleName": "ASMHEAL225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMHEAL225A.dll"
+    },
+    {
+      "moduleName": "ASMBLND225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMBLND225A.dll"
+    },
+    {
+      "moduleName": "ASMSWP225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMSWP225A.dll"
+    },
+    {
+      "moduleName": "ASMSKIN225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMSKIN225A.dll"
+    },
+    {
+      "moduleName": "ASMOFST225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMOFST225A.dll"
+    },
+    {
+      "moduleName": "ASMLOP225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMLOP225A.dll"
+    },
+    {
+      "moduleName": "ASMREM225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMREM225A.dll"
+    },
+    {
+      "moduleName": "ASMSHL225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMSHL225A.dll"
+    },
+    {
+      "moduleName": "ASMAHL225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMAHL225A.dll"
+    },
+    {
+      "moduleName": "ASMTWK225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMTWK225A.dll"
+    },
+    {
+      "moduleName": "ASMDEFM225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMDEFM225A.dll"
+    },
+    {
+      "moduleName": "ASMSBOOL225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMSBOOL225A.dll"
+    },
+    {
+      "moduleName": "ASMRB225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMRB225A.dll"
+    },
+    {
+      "moduleName": "ASMOPER225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMOPER225A.dll"
+    },
+    {
+      "moduleName": "ASMRBI225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMRBI225A.dll"
+    },
+    {
+      "moduleName": "ASMEULR225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMEULR225A.dll"
+    },
+    {
+      "moduleName": "ASMLOPT225A.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ASMLOPT225A.dll"
+    },
+    {
+      "moduleName": "errRes.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\errRes.dll"
+    },
+    {
+      "moduleName": "virtdisk.dll",
+      "path": "C:\\windows\\SYSTEM32\\virtdisk.dll"
+    },
+    {
+      "moduleName": "FLTLIB.DLL",
+      "path": "C:\\windows\\SYSTEM32\\FLTLIB.DLL"
+    },
+    {
+      "moduleName": "rasapi32.dll",
+      "path": "C:\\windows\\SYSTEM32\\rasapi32.dll"
+    },
+    {
+      "moduleName": "rasman.dll",
+      "path": "C:\\windows\\SYSTEM32\\rasman.dll"
+    },
+    {
+      "moduleName": "rtutils.dll",
+      "path": "C:\\windows\\SYSTEM32\\rtutils.dll"
+    },
+    {
+      "moduleName": "mswsock.dll",
+      "path": "C:\\windows\\system32\\mswsock.dll"
+    },
+    {
+      "moduleName": "winhttp.dll",
+      "path": "C:\\windows\\SYSTEM32\\winhttp.dll"
+    },
+    {
+      "moduleName": "dhcpcsvc6.DLL",
+      "path": "C:\\windows\\SYSTEM32\\dhcpcsvc6.DLL"
+    },
+    {
+      "moduleName": "dhcpcsvc.DLL",
+      "path": "C:\\windows\\SYSTEM32\\dhcpcsvc.DLL"
+    },
+    {
+      "moduleName": "napinsp.dll",
+      "path": "C:\\windows\\system32\\napinsp.dll"
+    },
+    {
+      "moduleName": "pnrpnsp.dll",
+      "path": "C:\\windows\\system32\\pnrpnsp.dll"
+    },
+    {
+      "moduleName": "wshbth.dll",
+      "path": "C:\\windows\\system32\\wshbth.dll"
+    },
+    {
+      "moduleName": "NLAapi.dll",
+      "path": "C:\\windows\\system32\\NLAapi.dll"
+    },
+    {
+      "moduleName": "winrnr.dll",
+      "path": "C:\\windows\\System32\\winrnr.dll"
+    },
+    {
+      "moduleName": "rasadhlp.dll",
+      "path": "C:\\Windows\\System32\\rasadhlp.dll"
+    },
+    {
+      "moduleName": "fwpuclnt.dll",
+      "path": "C:\\windows\\System32\\fwpuclnt.dll"
+    },
+    {
+      "moduleName": "HPSocket4C_U.dll",
+      "path": "C:\\SOW\\智源·云设计\\NET40\\HPSocket4C_U.dll"
+    },
+    {
+      "moduleName": "System.Data.dll",
+      "path": "C:\\windows\\Microsoft.Net\\assembly\\GAC_64\\System.Data\\v4.0_4.0.0.0__b77a5c561934e089\\System.Data.dll"
+    },
+    {
+      "moduleName": "gpapi.dll",
+      "path": "C:\\windows\\SYSTEM32\\gpapi.dll"
+    },
+    {
+      "moduleName": "WINNSI.DLL",
+      "path": "C:\\windows\\SYSTEM32\\WINNSI.DLL"
+    },
+    {
+      "moduleName": "scml.arx",
+      "path": "c:\\users\\pc\\appdata\\local\\scml\\nativeplugin\\0.5-2019-9e20250c6d02\\scml.arx"
+    },
+    {
+      "moduleName": "edputil.dll",
+      "path": "C:\\windows\\SYSTEM32\\edputil.dll"
+    },
+    {
+      "moduleName": "Windows.StateRepositoryPS.dll",
+      "path": "C:\\Windows\\System32\\Windows.StateRepositoryPS.dll"
+    },
+    {
+      "moduleName": "appresolver.dll",
+      "path": "C:\\Windows\\System32\\appresolver.dll"
+    },
+    {
+      "moduleName": "SLC.dll",
+      "path": "C:\\Windows\\System32\\SLC.dll"
+    },
+    {
+      "moduleName": "sppc.dll",
+      "path": "C:\\Windows\\System32\\sppc.dll"
+    },
+    {
+      "moduleName": "OneCoreCommonProxyStub.dll",
+      "path": "C:\\Windows\\System32\\OneCoreCommonProxyStub.dll"
+    },
+    {
+      "moduleName": "OneCoreUAPCommonProxyStub.dll",
+      "path": "C:\\Windows\\System32\\OneCoreUAPCommonProxyStub.dll"
+    },
+    {
+      "moduleName": "wmiutils.dll",
+      "path": "C:\\windows\\system32\\wbem\\wmiutils.dll"
+    },
+    {
+      "moduleName": "wminet_utils.dll",
+      "path": "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\wminet_utils.dll"
+    },
+    {
+      "moduleName": "tch_kernal.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_kernal.arx"
+    },
+    {
+      "moduleName": "tch_utility.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_utility.arx"
+    },
+    {
+      "moduleName": "tch_pipewire.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_pipewire.arx"
+    },
+    {
+      "moduleName": "tch_pipebase.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_pipebase.arx"
+    },
+    {
+      "moduleName": "tch_initstart.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_initstart.arx"
+    },
+    {
+      "moduleName": "tch.dll",
+      "path": "C:\\tangent\\tarcht20v8\\sys23x64\\tch.dll"
+    },
+    {
+      "moduleName": "tch_uiframe.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_uiframe.arx"
+    },
+    {
+      "moduleName": "tch_common.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_common.arx"
+    },
+    {
+      "moduleName": "TCH_UIPanelAxis.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelAxis.arx"
+    },
+    {
+      "moduleName": "TCH_UIPanelColumn.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelColumn.arx"
+    },
+    {
+      "moduleName": "TCH_UIPanelLayer.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelLayer.arx"
+    },
+    {
+      "moduleName": "tch_sqlite.dll",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_sqlite.dll"
+    },
+    {
+      "moduleName": "TCH_UIPanelRedLine.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelRedLine.arx"
+    },
+    {
+      "moduleName": "TCH_UIPanelWall.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelWall.arx"
+    },
+    {
+      "moduleName": "TCH_UIPanelWindowAndDoor.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelWindowAndDoor.arx"
+    },
+    {
+      "moduleName": "TCH_UIPanelsymbol.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelsymbol.arx"
+    },
+    {
+      "moduleName": "TCH_UIPanelSymbolManage.ARX",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIPanelSymbolManage.ARX"
+    },
+    {
+      "moduleName": "mlang.dll",
+      "path": "C:\\windows\\system32\\mlang.dll"
+    },
+    {
+      "moduleName": "TCH_UIToolBar.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\TCH_UIToolBar.arx"
+    },
+    {
+      "moduleName": "tch3_kernal.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch3_kernal.arx"
+    },
+    {
+      "moduleName": "tch_kerncmd.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_kerncmd.arx"
+    },
+    {
+      "moduleName": "AVIFIL32.dll",
+      "path": "C:\\windows\\SYSTEM32\\AVIFIL32.dll"
+    },
+    {
+      "moduleName": "MSVFW32.dll",
+      "path": "C:\\windows\\SYSTEM32\\MSVFW32.dll"
+    },
+    {
+      "moduleName": "MSACM32.dll",
+      "path": "C:\\windows\\SYSTEM32\\MSACM32.dll"
+    },
+    {
+      "moduleName": "winmmbase.dll",
+      "path": "C:\\windows\\SYSTEM32\\winmmbase.dll"
+    },
+    {
+      "moduleName": "tch_annotate.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_annotate.arx"
+    },
+    {
+      "moduleName": "tch_toolcmd.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_toolcmd.arx"
+    },
+    {
+      "moduleName": "tch_elevation.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_elevation.arx"
+    },
+    {
+      "moduleName": "tch_collision.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_collision.arx"
+    },
+    {
+      "moduleName": "tch_structure.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_structure.arx"
+    },
+    {
+      "moduleName": "tch_siteplan.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_siteplan.arx"
+    },
+    {
+      "moduleName": "tch_public.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_public.arx"
+    },
+    {
+      "moduleName": "RICHED32.DLL",
+      "path": "C:\\windows\\SYSTEM32\\RICHED32.DLL"
+    },
+    {
+      "moduleName": "RICHED20.dll",
+      "path": "C:\\windows\\SYSTEM32\\RICHED20.dll"
+    },
+    {
+      "moduleName": "msls31.dll",
+      "path": "C:\\windows\\SYSTEM32\\msls31.dll"
+    },
+    {
+      "moduleName": "tch_blklib.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_blklib.arx"
+    },
+    {
+      "moduleName": "tch_3dsolids.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_3dsolids.arx"
+    },
+    {
+      "moduleName": "tch_interior.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_interior.arx"
+    },
+    {
+      "moduleName": "tch_tgedit.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_tgedit.arx"
+    },
+    {
+      "moduleName": "tch_tginterior.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_tginterior.arx"
+    },
+    {
+      "moduleName": "tch_tgtool.arx",
+      "path": "c:\\tangent\\tarcht20v8\\sys23x64\\tch_tgtool.arx"
+    },
+    {
+      "moduleName": "vlcom.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\vlcom.dll"
+    },
+    {
+      "moduleName": "vlreac.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\vlreac.dll"
+    },
+    {
+      "moduleName": "sxs.dll",
+      "path": "C:\\windows\\SYSTEM32\\sxs.dll"
+    },
+    {
+      "moduleName": "ManagedMC3.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ManagedMC3.dll"
+    },
+    {
+      "moduleName": "WindowsCodecsExt.dll",
+      "path": "C:\\windows\\SYSTEM32\\WindowsCodecsExt.dll"
+    },
+    {
+      "moduleName": "AdskLicensingSDK_2.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AdskLicensingSDK_2.dll"
+    },
+    {
+      "moduleName": "bcecase_36fd1d3d.arx",
+      "path": "c:\\program files\\autodesk\\applicationplugins\\codexelevationstage1_36fd1d3d9a4c4d768e22bbfeb74900e2\\bcecase_36fd1d3d.arx"
+    },
+    {
+      "moduleName": "null15.hdi",
+      "path": "d:\\cad2020\\autocad 2020\\drv\\null15.hdi"
+    },
+    {
+      "moduleName": "paint15.hdi",
+      "path": "d:\\cad2020\\autocad 2020\\drv\\paint15.hdi"
+    },
+    {
+      "moduleName": "hlr15.hdi",
+      "path": "d:\\cad2020\\autocad 2020\\drv\\hlr15.hdi"
+    },
+    {
+      "moduleName": "acdim.arx",
+      "path": "d:\\cad2020\\autocad 2020\\acdim.arx"
+    },
+    {
+      "moduleName": "acdim.crx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acdim.crx"
+    },
+    {
+      "moduleName": "ShareMFC.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\ShareMFC.dll"
+    },
+    {
+      "moduleName": "AcFdUi.arx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcFdUi.arx"
+    },
+    {
+      "moduleName": "AcFieldRes.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\AcFieldRes.dll"
+    },
+    {
+      "moduleName": "AcDimRes.dll",
+      "path": "d:\\cad2020\\autocad 2020\\zh-cn\\AcDimRes.dll"
+    },
+    {
+      "moduleName": "clrcompression.dll",
+      "path": "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\clrcompression.dll"
+    },
+    {
+      "moduleName": "AcMNUParser.dll",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\AcMNUParser.dll"
+    },
+    {
+      "moduleName": "acadbtn_light.xmx",
+      "path": "D:\\CAD2020\\AutoCAD 2020\\acadbtn_light.xmx"
+    },
+    {
+      "moduleName": "OLEACC.dll",
+      "path": "C:\\windows\\SYSTEM32\\OLEACC.dll"
+    },
+    {
+      "moduleName": "schannel.DLL",
+      "path": "C:\\windows\\system32\\schannel.DLL"
+    },
+    {
+      "moduleName": "AcAxDb23res.dll",
+      "path": "C:\\Program Files\\Common Files\\Autodesk Shared\\en-US\\AcAxDb23res.dll"
+    },
+    {
+      "moduleName": "mskeyprotect.dll",
+      "path": "C:\\windows\\SYSTEM32\\mskeyprotect.dll"
+    },
+    {
+      "moduleName": "NTASN1.dll",
+      "path": "C:\\windows\\SYSTEM32\\NTASN1.dll"
+    },
+    {
+      "moduleName": "ncrypt.dll",
+      "path": "C:\\windows\\SYSTEM32\\ncrypt.dll"
+    },
+    {
+      "moduleName": "ncryptsslp.dll",
+      "path": "C:\\windows\\system32\\ncryptsslp.dll"
+    },
+    {
+      "moduleName": "websocket.dll",
+      "path": "C:\\windows\\system32\\websocket.dll"
+    }
+  ],
+  "debuggerAttached": false,
+  "processMutated": false
+}

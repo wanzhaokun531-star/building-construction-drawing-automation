@@ -1,0 +1,32 @@
+[
+  {
+    "floor": 1,
+    "template": "插件\\resources\\approved-layout\\floor-1.dwg",
+    "templateSHA256": "3B8CC0BD633F8CB30C459F0720FD1F9C6AC10528B845F0CF74E7AE05A5A25A7D",
+    "contractSHA256": "7CCF8C716B2C025D1990A74E53C490455D2F8CABCC4835D9AE13078C85D435F5",
+    "keep": 100,
+    "clone": 158,
+    "sourceWalls": 34,
+    "numbered": 21,
+    "allOpenings": 22,
+    "areas": 9,
+    "areaPolygons": 11,
+    "axisWrappers": 12,
+    "expectedSourceSampleRoots": 258
+  },
+  {
+    "floor": 2,
+    "template": "插件\\resources\\approved-layout\\floor-2.dwg",
+    "templateSHA256": "826A28E22AAE0639868DBE5EE01E0ACD0541E01A8F752185D50C8A1FAAEC2AD7",
+    "contractSHA256": "93025180A59636FFD68062B342061C676616DDCA856427875AE60CE668FA6269",
+    "keep": 104,
+    "clone": 138,
+    "sourceWalls": 34,
+    "numbered": 19,
+    "allOpenings": 20,
+    "areas": 9,
+    "areaPolygons": 11,
+    "axisWrappers": 0,
+    "expectedSourceSampleRoots": 242
+  }
+]

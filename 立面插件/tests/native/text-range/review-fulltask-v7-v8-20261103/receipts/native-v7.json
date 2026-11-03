@@ -1,0 +1,93 @@
+{
+  "contract": "bce.text-range-build.v1",
+  "label": "primitive-contract-v7",
+  "caseName": "ControlledTextRange",
+  "startedUtc": "2026-11-03T01:36:25.8853029Z",
+  "compiledSourcesDirectory": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src",
+  "sourceFiles": {
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src\\NativeEvidence.h": "C6B083EE0346AA7CDB51090274CCCADCB2C6DE0AA92A196AD846E11C41C9EBB6",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src\\NativeEvidence.cpp": "1B3CA34A61CC2C2DB2C42A7FDFD01C029DE7BE82EAE6CE96D9DE1C3B363A8FE2",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src\\TextRangeDriver.cpp": "A3185E8B1FBAD59E87D77A0169A9B582C34EC81075E309AE9CAD1B69232AB874",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src\\OwnedTextControlFile.h": "AFE549CC0482FFBC4B509593836222F24413C96AF60754A196BE3C0CCC2A5086",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src\\OwnedTextControlFile.cpp": "64EB2527F536B840550488BAD905195F1858C98FB69820FB8F61AB1E5271E9BD",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src\\TextRangeReplayPolicy.h": "0B837D9698F3FA4BB180ED9255548C14DC9DD340C9D00B22D17F5985770B14E3",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src\\TextRangeReplayPolicyTests.cpp": "EE5266300439B15506642C042874F435C2018C696C155319F726942CC58BF2E8",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src\\TextRangePlot.inc": "36A6CB2CD14ED28F6FA0542FA8FF7F9C9E1BBB47519A58E750C3BE092F9F8907",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src\\ElevationTextRangeCases.vcxproj": "17ADC4E4901C4A5E59459F9B0DF2F43882CD5F4D80E28F270CF1F6842605779D",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src\\README.md": "372397D77EF3965E2425423808638681F2CA188EFD82CF3F21F955BCDABF7930",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src\\capture_text_range_case.py": "5B4995BCAB9272D0F7807CFFF58735C03A63ABA171F763EA89E10F0B0DF49606",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src\\verify_text_range.py": "E71CCC9A0FC88F09CFBF08953C0921192A4AC6A17B8D2B4CB264486BD0026E1D",
+    "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\build_text_range.ps1": "F18AA17CD0F478B5A95FC6BF4E8480A756EAFEC87A27B03815D6EA801C25D312"
+  },
+  "inputOrigins": [
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\NativeEvidence.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src\\NativeEvidence.h",
+      "sha256": "C6B083EE0346AA7CDB51090274CCCADCB2C6DE0AA92A196AD846E11C41C9EBB6"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\NativeEvidence.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src\\NativeEvidence.cpp",
+      "sha256": "1B3CA34A61CC2C2DB2C42A7FDFD01C029DE7BE82EAE6CE96D9DE1C3B363A8FE2"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-range\\TextRangeDriver.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src\\TextRangeDriver.cpp",
+      "sha256": "A3185E8B1FBAD59E87D77A0169A9B582C34EC81075E309AE9CAD1B69232AB874"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-range\\OwnedTextControlFile.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src\\OwnedTextControlFile.h",
+      "sha256": "AFE549CC0482FFBC4B509593836222F24413C96AF60754A196BE3C0CCC2A5086"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-range\\OwnedTextControlFile.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src\\OwnedTextControlFile.cpp",
+      "sha256": "64EB2527F536B840550488BAD905195F1858C98FB69820FB8F61AB1E5271E9BD"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-range\\TextRangeReplayPolicy.h",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src\\TextRangeReplayPolicy.h",
+      "sha256": "0B837D9698F3FA4BB180ED9255548C14DC9DD340C9D00B22D17F5985770B14E3"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-range\\TextRangeReplayPolicyTests.cpp",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src\\TextRangeReplayPolicyTests.cpp",
+      "sha256": "EE5266300439B15506642C042874F435C2018C696C155319F726942CC58BF2E8"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-range\\TextRangePlot.inc",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src\\TextRangePlot.inc",
+      "sha256": "36A6CB2CD14ED28F6FA0542FA8FF7F9C9E1BBB47519A58E750C3BE092F9F8907"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-range\\ElevationTextRangeCases.vcxproj",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src\\ElevationTextRangeCases.vcxproj",
+      "sha256": "17ADC4E4901C4A5E59459F9B0DF2F43882CD5F4D80E28F270CF1F6842605779D"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tests\\native\\text-range\\README.md",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src\\README.md",
+      "sha256": "372397D77EF3965E2425423808638681F2CA188EFD82CF3F21F955BCDABF7930"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\capture_text_range_case.py",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src\\capture_text_range_case.py",
+      "sha256": "5B4995BCAB9272D0F7807CFFF58735C03A63ABA171F763EA89E10F0B0DF49606"
+    },
+    {
+      "origin": "D:\\Codex\\建筑施工图自动化\\立面插件\\tools\\verify_text_range.py",
+      "compiledCopy": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\src\\verify_text_range.py",
+      "sha256": "E71CCC9A0FC88F09CFBF08953C0921192A4AC6A17B8D2B4CB264486BD0026E1D"
+    }
+  ],
+  "binary": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\out\\ElevationTextRangeCases.arx",
+  "binarySHA256": "51195EEE7C025A06E87CF47C683AF532CA6C4CDEB21232700ED57EF4B85FAE80",
+  "log": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\build.log",
+  "exitCode": 0,
+  "nativeExecuted": false,
+  "toolchain": "AutoCAD2020 SDK23.1 / v141 14.16.27023 / x64 / C++17",
+  "commandFile": "D:\\Codex\\建筑施工图自动化\\立面插件\\build\\n9a-20261103-093625-872-primitive-contract-v7-ec19072f\\build-command.cmd",
+  "commandSHA256": "C221867D8F1DE537C2E420911794B26FC0AF9785049EE6F07767520711C2E2FA",
+  "finishedUtc": "2026-11-03T01:36:31.8062475Z"
+}
