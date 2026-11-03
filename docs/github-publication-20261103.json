@@ -1,0 +1,29 @@
+{
+  "repository": "wanzhaokun531-star/building-construction-drawing-automation",
+  "url": "https://github.com/wanzhaokun531-star/building-construction-drawing-automation",
+  "visibility": "public",
+  "visibilityExplicitlyConfirmedByUser": true,
+  "branch": "main",
+  "sourceCommit": "a55cf5acf9a82adb8595e4ceb3031eb99ff573a6",
+  "sourceCommitMatchesRemote": true,
+  "allFileBlobsVerified": true,
+  "repositoryFileCount": 5729,
+  "changedFiles": 1535,
+  "codexFilesVerified": 30,
+  "projectInstructionsAndSuperpowersPreserved": true,
+  "requiredPathsVerified": [
+    "AGENTS.md",
+    ".codex/config.toml",
+    ".codex/backups/config.user.toml.example",
+    "插件/交付/建筑施工图助手_0.1.5_安装程序.exe",
+    "插件/src/ProductDocumentProbe.inc",
+    "插件/交付/建筑施工图助手_0.1.5_20261103/示例/百塘村邹总_三层平面_插件0.1.5.dwg"
+  ],
+  "releaseFileHashesChecked": 372,
+  "credentialsUploaded": false,
+  "sessionDatabasesUploaded": false,
+  "buildCachesUploaded": false,
+  "localWorkingFilesDeleted": false,
+  "verifiedAt": "2026-11-03T14:59:54.753506+08:00",
+  "note": "This verifies the source upload. A following documentation-only commit records this verification; elevation remains a development candidate."
+}
